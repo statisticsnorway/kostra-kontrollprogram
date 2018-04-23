@@ -1,0 +1,101 @@
+package no.ssb.kostra.control.sensitiv.famvern;
+
+/*
+ * $Log: Control10.java,v $
+ * Revision 1.5  2008/12/13 06:15:41  pll
+ * no message
+ *
+ * Revision 1.4  2008/12/13 06:12:48  pll
+ * no message
+ *
+ * Revision 1.3  2008/12/12 17:00:36  pll
+ * Under construction...
+ *
+ * Revision 1.2  2007/10/25 11:37:03  pll
+ * Implementerer getErrorType.
+ *
+ * Revision 1.1.1.1  2007/09/18 12:24:07  pll
+ * Versjon: 2006-rapporteringen
+ *
+ * Revision 1.2  2006/09/22 09:13:47  lwe
+ * Oppdatert årgang
+ *
+ * Revision 1.1  2006/09/22 08:18:24  lwe
+ * Flyttet 2005-filene over i 2006-katalog - men ikke oppdatert årstallene
+ *
+ * Revision 1.6  2006/01/05 08:16:29  lwe
+ * added logmessage
+ * 
+ */
+ 
+import java.util.Vector;
+import no.ssb.kostra.control.Constants;
+
+public final class Control10B extends no.ssb.kostra.control.Control
+    implements no.ssb.kostra.control.SingleRecordErrorReport
+{
+  private final String ERROR_TEXT = "K10B: Hvis avkrysset for 'Andre' så spesifiser";
+  private Vector<Integer> lineNumbers = new Vector<Integer>();
+
+  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
+  {
+	  boolean lineHasError;
+	  String field_713 = RecordFields.getFieldValue(line, 713);
+	  String field_715 = RecordFields.getFieldValue(line, 715);
+	  
+	  try
+	  {
+		 int kode = Integer.parseInt(field_713);
+		 lineHasError = (kode == 1 && (field_715.trim().length() == 0
+				         || Integer.parseInt(field_715) == 0 ));
+	  }
+	  catch (Exception e)
+	  {
+	    lineHasError = false;
+	  }
+	  if (lineHasError)
+	  {
+	    lineNumbers.add (new Integer (lineNumber));
+	  }
+	  return lineHasError;
+  }
+
+  public String getErrorReport (int totalLineNumber)
+  {
+    String errorReport = ERROR_TEXT + ":" + lf + lf;
+    if (foundError())
+    {
+      int numOfRecords = lineNumbers.size();
+      errorReport += "\tFeil: i " + numOfRecords + 
+      " record" + (numOfRecords == 1 ? "" : "s") + 
+      " Det er krysset for 'Andre, spesifiser' på at primærklienten har etablert kontakt " + lf +
+      "\tmed andre deler av tjenesteapparatet, men spesifiseringen av hvilken instas dette " + lf +
+      "\tgjelder mangler eller inneholder for mange (over 30) karakterer."; 
+      if (numOfRecords <= 10)
+      {
+        errorReport += lf + "\t\t(Gjelder record nr.";
+        for (int i=0; i<numOfRecords; i++)
+        {
+          errorReport += " " + lineNumbers.elementAt(i);
+        }
+        errorReport += ").";
+      }
+    }
+    errorReport += lf + lf;
+    return errorReport;
+  }
+
+  public boolean foundError()
+  {
+    return lineNumbers.size() > 0;
+  }  
+
+  public String getErrorText()
+  {
+    return  ERROR_TEXT;
+  }
+
+  public int getErrorType() {
+    return Constants.NORMAL_ERROR;
+  }
+}

@@ -15,20 +15,6 @@ final class ControlKapitler extends no.ssb.kostra.control.Control {
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         String funksjon = RecordFields.getFunksjon(line);
-        int belop;
-
-        try {
-            belop = RecordFields.getBelopIntValue(line);
-        } catch (Exception e) {
-            // Returnerer her ogsaa. Gir ikke mening med kontroll
-            // hvis belop ikke er angitt.
-            return false;
-        }
-
-        if (funksjon.trim().length() > 0) {
-            return false;
-        }
-
         boolean lineHasError = !validFunksjon(funksjon);
 
         if (lineHasError) {

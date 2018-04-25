@@ -6,14 +6,14 @@ import no.ssb.kostra.control.Constants;
 final class ControlAntallSifferBelop extends no.ssb.kostra.control.Control {
 
   
-  private Vector<String[]> suspekteBelop = new Vector<String[]>();
+  private Vector<String[]> suspekteBelop = new Vector<>();
 
      
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
   
     String belop = RecordFields.getBelop(line);    
     String digits = belop.replaceAll("[ -]","");
-    boolean lineHasError = digits.length() > 6;        
+    boolean lineHasError = digits.length() > 6 || digits.length() == 0;
         
     if (lineHasError) {
     
@@ -45,7 +45,7 @@ final class ControlAntallSifferBelop extends no.ssb.kostra.control.Control {
       String[] container;
       for (int i=0; i<numOfRecords; i++) {
       
-        container = (String[]) suspekteBelop.elementAt(i);
+        container = suspekteBelop.elementAt(i);
         errorReport += 
             "\t\tRecord nr. " + container[0] + ", beløp = " + container[1] + lf;
       }      

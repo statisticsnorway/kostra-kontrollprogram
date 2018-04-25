@@ -16,17 +16,17 @@ public final class ControlProgram {
   private File kildefil = null;
   private File rapportfil = null;
   private int type_filuttrekk;
-  private static final int SOSIALHJELP = 0;
+  public static final int SOSIALHJELP = 0;
 //  public static final int INTRODUKSJONSSTONAD = 1;
-  private static final int BARNEVERN = 2;
-  private static final int FAMILIEVERN = 3;
-  private static final int REGNSKAP = 4;
-  private static final int NO_CONTROL = 5;
-  private static final int FAMILIEVERN_B = 6;
-  private static final int KVALIFISERINGSSTONAD = 7;
-  private static final int FAMILIEVERN_53 = 8;
-  private static final int Meklinger_55 = 9;
-  private static final int VAR_26 = 10;
+  public static final int BARNEVERN = 2;
+  public static final int FAMILIEVERN = 3;
+  public static final int REGNSKAP = 4;
+  public static final int NO_CONTROL = 5;
+  public static final int FAMILIEVERN_B = 6;
+  public static final int KVALIFISERINGSSTONAD = 7;
+  public static final int FAMILIEVERN_53 = 8;
+  public static final int Meklinger_55 = 9;
+  public static final int VAR_26 = 10;
   private final String lf = Constants.lineSeparator;
   private final String USAGE = "Bruk: ControlProgram <regionnummer> " +
                                "[<kildefil> <rapportfil>] <type filuttrekk> [<regnskapstype> || <kontornummer>] " +
@@ -102,7 +102,7 @@ public final class ControlProgram {
   private void parseArguments(String[] args)
       throws IOException, IllegalArgumentException {
 
-    String type_filuttrekk_tmp;
+    String type_filuttrekk_tmp = "-1";
 
 //-----------------------------------------------------------------------------------------------------------------
 //    ----- Argument |    0      |     1       |       2       |     3     |        4                  |    5      |
@@ -220,7 +220,7 @@ public final class ControlProgram {
         validArgument = true;
       }
     } catch (NumberFormatException e) {
-        System.out.println(e.getMessage());
+        System.out.println(e.toString());
     }
 
     return validArgument;

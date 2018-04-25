@@ -16,17 +16,17 @@ public final class ControlProgram {
   private File kildefil = null;
   private File rapportfil = null;
   private int type_filuttrekk;
-  public static final int SOSIALHJELP = 0;
+  private static final int SOSIALHJELP = 0;
 //  public static final int INTRODUKSJONSSTONAD = 1;
-  public static final int BARNEVERN = 2;
-  public static final int FAMILIEVERN = 3;
-  public static final int REGNSKAP = 4;
-  public static final int NO_CONTROL = 5;
-  public static final int FAMILIEVERN_B = 6;
-  public static final int KVALIFISERINGSSTONAD = 7;
-  public static final int FAMILIEVERN_53 = 8;
-  public static final int Meklinger_55 = 9;
-  public static final int VAR_26 = 10;
+  private static final int BARNEVERN = 2;
+  private static final int FAMILIEVERN = 3;
+  private static final int REGNSKAP = 4;
+  private static final int NO_CONTROL = 5;
+  private static final int FAMILIEVERN_B = 6;
+  private static final int KVALIFISERINGSSTONAD = 7;
+  private static final int FAMILIEVERN_53 = 8;
+  private static final int Meklinger_55 = 9;
+  private static final int VAR_26 = 10;
   private final String lf = Constants.lineSeparator;
   private final String USAGE = "Bruk: ControlProgram <regionnummer> " +
                                "[<kildefil> <rapportfil>] <type filuttrekk> [<regnskapstype> || <kontornummer>] " +
@@ -38,7 +38,7 @@ public final class ControlProgram {
     // Metoden parseArguments returnerer ikke (kaster IllegalArgumentException)
     // hvis  argumentene ikke er korrekte.
     parseArguments(args);
-    int error_type_found = Constants.NO_ERROR;
+    int error_type_found;
 
     switch (type_filuttrekk) {
       case SOSIALHJELP:
@@ -77,10 +77,7 @@ public final class ControlProgram {
         error_type_found = new no.ssb.kostra.control.regnskap.ControlProgram
             (region_nr, kildefil, rapportfil, regnskapstype, statistiskEnhet).start();
         break;
-      case VAR_26:
-          error_type_found = new no.ssb.kostra.control.var.avlop.Main
-              (region_nr, kildefil, rapportfil).start();
-          break;
+
  
       case NO_CONTROL:
     	  
@@ -105,7 +102,7 @@ public final class ControlProgram {
   private void parseArguments(String[] args)
       throws IOException, IllegalArgumentException {
 
-    String type_filuttrekk_tmp = "-1";
+    String type_filuttrekk_tmp;
 
 //-----------------------------------------------------------------------------------------------------------------
 //    ----- Argument |    0      |     1       |       2       |     3     |        4                  |    5      |
@@ -131,7 +128,7 @@ public final class ControlProgram {
         regnskapstype = args[2];            // regnskapstypen f.eks. 0A eller 0AK3
         statistiskEnhet = args[3];          // org.nr
 
-      } else if (args.length == 6) {
+      } else {
         kildefil = new File(args[1]);
         rapportfil = new File (args[2]);
         type_filuttrekk_tmp = args[3];      //områdekode f.eks. 4 for regnskap
@@ -157,7 +154,7 @@ public final class ControlProgram {
         type_filuttrekk_tmp = args[1];      //områdekode f.eks. 4 for regnskap
         statistiskEnhet = args[2];          // org.nr
 
-      } else if (args.length == 5) {
+      } else {
         kildefil = new File(args[1]);
         rapportfil = new File (args[2]);
         type_filuttrekk_tmp = args[3];      //områdekode f.eks. 4 for regnskap
@@ -171,15 +168,13 @@ public final class ControlProgram {
             ("Kan ikke lese kildefil: " + kildefil);
 
       // Sjekker om rapportfil kan skrives.
-      boolean rapportfilIsWritable = false;
+      boolean rapportfilIsWritable;
       try {
         rapportfilIsWritable = (rapportfil != null && (
                 (rapportfil.exists() && rapportfil.canWrite())
                 ||
                 rapportfil.createNewFile())
         );
-      } catch (IOException e) {
-        rapportfilIsWritable = false;
       } catch (Exception e) {
         rapportfilIsWritable = false;
       }
@@ -224,7 +219,9 @@ public final class ControlProgram {
 
         validArgument = true;
       }
-    } catch (NumberFormatException e) {}
+    } catch (NumberFormatException e) {
+        System.out.println(e.getMessage());
+    }
 
     return validArgument;
   } // End method typeFiluttrekkIsValid

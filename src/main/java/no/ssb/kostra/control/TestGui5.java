@@ -386,14 +386,6 @@ public class TestGui5 extends JFrame
 //          if (error_type_found == Constants.CRITICAL_ERROR)
 //            showErrorDialog (NO_DATA_FOUND);
         }
-        else if (((String)jComboBox1.getSelectedItem()).equalsIgnoreCase("Vann, avløp og renovasjon 26B"))
-        {
-//          error_type_found =
-        	new ControlProgram().doControl (new String[] {jTextField1.getText(),
-              getInfile(), getOutfile(),Integer.toString(ControlProgram.VAR_26),jTextField2.getText()});
-//          if (error_type_found == Constants.CRITICAL_ERROR)
-//            showErrorDialog (NO_DATA_FOUND);
-        }
         else if (((String)jComboBox1.getSelectedItem()).equalsIgnoreCase("Familievern 52A"))
         {
 //          error_type_found =

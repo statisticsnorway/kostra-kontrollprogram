@@ -20,19 +20,6 @@ final class ControlArter extends no.ssb.kostra.control.Control {
 
 	public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
 		String art = RecordFields.getArt(line);
-
-		// Kontrollen skal ikke foretas hvis belop = 0 og art er definert.
-		try {
-			int belop = RecordFields.getBelopIntValue(line);
-			if (belop == 0 && art.trim().length() > 0) {
-				return false;
-			}
-		} catch (Exception e) {
-			// Returnerer her ogsaa. Gir ikke mening med kontroll
-			// hvis belop ikke er angitt.
-			return false;
-		}
-
 		boolean lineHasError = !isValidArt(art);
 
 		if (lineHasError) {

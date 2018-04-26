@@ -42,10 +42,10 @@ public final class DatoFnr
 // diffdager
 
 
-int diffdager(String d1, String d2)
-{
-  return(daysBetweenDMY(d1,d2)) ;
-}
+//int diffdager(String d1, String d2)
+//{
+//  return(daysBetweenDMY(d1,d2)) ;
+//}
 
 
 
@@ -53,68 +53,68 @@ int diffdager(String d1, String d2)
 // With DDMMYY, it works only for years 1910-2010
 // 
 
-  public static int daysBetweenDMY(String dt1, String dt2)
-  {   int t1, t2, td ;
+//  public static int daysBetweenDMY(String dt1, String dt2)
+//  {   int t1, t2, td ;
+//
+//      if ((dt1.length()==6)&&(dt2.length()==6)) {
+//	if (!(validDateDDMMYY(dt1)==1)&&(validDateDDMMYY(dt2)==1)) return(DATOFEIL) ;
+//	  parseDate(6,dt1) ;
+//          if (year>10) year += 1900 ; else year += 2000 ;
+//          t1 = toJulian() ;
+//          parseDate(6,dt2) ;
+//          if (year>10) year += 1900 ; else year += 2000 ;
+//          t2 = toJulian() ;
+//      }
+//      else if ((dt1.length()==8)&&(dt2.length()==8)) {
+//	if (!(validDateDDMMYYYY(dt1)==1)&&(validDateDDMMYYYY(dt2)==1)) return(DATOFEIL) ;
+//	  parseDate(8,dt1) ;
+//	  t1 = toJulian() ;
+//          parseDate(8,dt2) ;
+//	  t2 = toJulian() ;
+//
+//      }
+//      else return(DATOFEIL) ;
+//      td = t2 - t1 ;
+//      return ( td) ;
+//  }
 
-      if ((dt1.length()==6)&&(dt2.length()==6)) {
-	if (!(validDateDDMMYY(dt1)==1)&&(validDateDDMMYY(dt2)==1)) return(DATOFEIL) ;
-	  parseDate(6,dt1) ;
-          if (year>10) year += 1900 ; else year += 2000 ;
-          t1 = toJulian() ;          
-          parseDate(6,dt2) ;
-          if (year>10) year += 1900 ; else year += 2000 ;
-          t2 = toJulian() ;  
-      }
-      else if ((dt1.length()==8)&&(dt2.length()==8)) {
-	if (!(validDateDDMMYYYY(dt1)==1)&&(validDateDDMMYYYY(dt2)==1)) return(DATOFEIL) ;
-	  parseDate(8,dt1) ;
-	  t1 = toJulian() ;   
-          parseDate(8,dt2) ;
-	  t2 = toJulian() ;   
 
-      }
-      else return(DATOFEIL) ;
-      td = t2 - t1 ; 
-      return ( td) ;
-  }
-
-
-   private static int toJulian()
-   /**
-    * @return The Julian day number that begins at noon of 
-    * this day
-    * Positive year signifies A.D., negative year B.C. 
-    * Remember that the year after 1 B.C. was 1 A.D.
-    *
-    * A convenient reference point is that May 23, 1968 noon
-    * is Julian day 2440000.
-    *
-    * Julian day 0 is a Monday.
-    *
-    * This algorithm is from Press et al., Numerical Recipes
-    * in C, 2nd ed., Cambridge University Press 1992
-    */
-   {  int jy = year;
-      if (year < 0) jy++;
-      int jm = month;
-      if (month > 2) jm++;
-      else
-      {  jy--;
-         jm += 13;
-      }
-      int jul = (int) (java.lang.Math.floor(365.25 * jy) 
-      + java.lang.Math.floor(30.6001*jm) + day + 1720995.0);
-
-      int IGREG = 15 + 31*(10+12*1582);
-         // Gregorian Calendar adopted Oct. 15, 1582
-
-      if (day + 31 * (month + 12 * year) >= IGREG)
-         // change over to Gregorian calendar
-      {  int ja = (int)(0.01 * jy);
-         jul += 2 - ja + (int)(0.25 * ja);
-      }
-      return jul;
-   }
+//   private static int toJulian()
+//   /**
+//    * @return The Julian day number that begins at noon of
+//    * this day
+//    * Positive year signifies A.D., negative year B.C.
+//    * Remember that the year after 1 B.C. was 1 A.D.
+//    *
+//    * A convenient reference point is that May 23, 1968 noon
+//    * is Julian day 2440000.
+//    *
+//    * Julian day 0 is a Monday.
+//    *
+//    * This algorithm is from Press et al., Numerical Recipes
+//    * in C, 2nd ed., Cambridge University Press 1992
+//    */
+//   {  int jy = year;
+//      if (year < 0) jy++;
+//      int jm = month;
+//      if (month > 2) jm++;
+//      else
+//      {  jy--;
+//         jm += 13;
+//      }
+//      int jul = (int) (java.lang.Math.floor(365.25 * jy)
+//      + java.lang.Math.floor(30.6001*jm) + day + 1720995.0);
+//
+//      int IGREG = 15 + 31*(10+12*1582);
+//         // Gregorian Calendar adopted Oct. 15, 1582
+//
+//      if (day + 31 * (month + 12 * year) >= IGREG)
+//         // change over to Gregorian calendar
+//      {  int ja = (int)(0.01 * jy);
+//         jul += 2 - ja + (int)(0.25 * ja);
+//      }
+//      return jul;
+//   }
 
    @SuppressWarnings("unused")
 private static void fromJulian(int j)

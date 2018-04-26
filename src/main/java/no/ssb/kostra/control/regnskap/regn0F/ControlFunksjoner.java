@@ -12,20 +12,8 @@ final class ControlFunksjoner extends no.ssb.kostra.control.Control {
 
 	public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
 		String funksjon = RecordFields.getFunksjon(line);
-
-		// Kontrollen skal ikke foretas hvis belop = 0 og funksjon er definert.
-		try {
-			int belop = RecordFields.getBelopIntValue(line);
-			if (belop == 0 && funksjon.trim().length() > 0) {
-				return false;
-			}
-		} catch (Exception e) {
-			// Returnerer her ogsaa. Gir ikke mening med kontroll
-			// hvis belop ikke er angitt.
-			return false;
-		}
-
 		boolean lineHasError = !validFunksjon(funksjon);
+
 		if (lineHasError) {
 			String[] container = new String[2];
 			container[0] = Integer.toString(lineNumber);

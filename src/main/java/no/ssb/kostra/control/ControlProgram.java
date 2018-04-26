@@ -17,7 +17,7 @@ public final class ControlProgram {
   private File rapportfil = null;
   private int type_filuttrekk;
   public static final int SOSIALHJELP = 0;
-//  public static final int INTRODUKSJONSSTONAD = 1;
+
   public static final int BARNEVERN = 2;
   public static final int FAMILIEVERN = 3;
   public static final int REGNSKAP = 4;
@@ -26,7 +26,7 @@ public final class ControlProgram {
   public static final int KVALIFISERINGSSTONAD = 7;
   public static final int FAMILIEVERN_53 = 8;
   public static final int Meklinger_55 = 9;
-  public static final int VAR_26 = 10;
+
   private final String lf = Constants.lineSeparator;
   private final String USAGE = "Bruk: ControlProgram <regionnummer> " +
                                "[<kildefil> <rapportfil>] <type filuttrekk> [<regnskapstype> || <kontornummer>] " +
@@ -45,10 +45,6 @@ public final class ControlProgram {
         error_type_found = new no.ssb.kostra.control.sensitiv.soshjelp.Main
             (region_nr, kildefil, rapportfil).start();
         break;
-//      case INTRODUKSJONSSTONAD:
-//        error_type_found = new no.ssb.kostra.control.sensitiv.sosintro.Main
-//            (region_nr, kildefil, rapportfil).start();
-//        break;
       case KVALIFISERINGSSTONAD:
         error_type_found = new no.ssb.kostra.control.sensitiv.soskval.Main
             (region_nr, kildefil, rapportfil).start();
@@ -206,7 +202,6 @@ public final class ControlProgram {
       type_filuttrekk = Integer.parseInt(argument);
 
       if (type_filuttrekk == SOSIALHJELP ||
-//          type_filuttrekk == INTRODUKSJONSSTONAD ||
           type_filuttrekk == KVALIFISERINGSSTONAD ||
           type_filuttrekk == BARNEVERN ||
           type_filuttrekk == FAMILIEVERN ||
@@ -214,7 +209,6 @@ public final class ControlProgram {
           type_filuttrekk == FAMILIEVERN_53 ||
           type_filuttrekk == Meklinger_55 ||
           type_filuttrekk == REGNSKAP ||
-          type_filuttrekk == VAR_26 ||
           type_filuttrekk == NO_CONTROL) {
 
         validArgument = true;

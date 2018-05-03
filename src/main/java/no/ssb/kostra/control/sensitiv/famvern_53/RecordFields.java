@@ -19,53 +19,47 @@ final class RecordFields
       case 2:
         fieldValue = record.substring(2, 5);
         break;
-      case 31:
+      case 51:
         fieldValue = record.substring(5, 8);
         break;
-      case 32:
+      case 52:
         fieldValue = record.substring(8, 11);
         break;
-      case 41:
+      case 61:
         fieldValue = record.substring(11, 14 );
         break;
-      case 42:
+      case 62:
         fieldValue = record.substring(14, 17 );
         break;
-      case 51:
+      case 71:
         fieldValue = record.substring(17, 20);
         break;
-      case 52:
+      case 72:
         fieldValue = record.substring(20, 23);
         break;
-      case 61:
+      case 91:
         fieldValue = record.substring(23, 26);
         break;
-      case 62:
+      case 92:
         fieldValue = record.substring(26, 29);
         break;
-      case 71:
+      case 101:
         fieldValue = record.substring(29, 32);
         break;
-      case 72:
+      case 102:
         fieldValue = record.substring(32, 35);
         break;
-      case 81:
+      case 111:
         fieldValue = record.substring(35, 38);
         break;
-      case 82:
+      case 112:
         fieldValue = record.substring(38, 41);
         break;
-      case 91:
+      case 121:
         fieldValue = record.substring(41, 44);
         break;
-      case 92:
+      case 122:
         fieldValue = record.substring(44, 47);
-        break;
-      case 101:
-        fieldValue = record.substring(47, 50);
-        break;
-      case 102:
-        fieldValue = record.substring(50, 53);
         break;
       default:
         fieldValue = null;        

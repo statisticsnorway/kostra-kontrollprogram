@@ -1,27 +1,6 @@
 package no.ssb.kostra.control.sensitiv.famvern;
 
-/*
- * $Log: Control8.java,v $
- * Revision 1.3  2008/12/12 17:00:16  pll
- * no message
- *
- * Revision 1.2  2007/10/25 11:37:03  pll
- * Implementerer getErrorType.
- *
- * Revision 1.1.1.1  2007/09/18 12:24:07  pll
- * Versjon: 2006-rapporteringen
- *
- * Revision 1.2  2006/09/22 09:13:48  lwe
- * Oppdatert årgang
- *
- * Revision 1.1  2006/09/22 08:18:27  lwe
- * Flyttet 2005-filene over i 2006-katalog - men ikke oppdatert årstallene
- *
- * Revision 1.6  2006/01/05 08:16:32  lwe
- * added logmessage
- * 
- */
- 
+
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 

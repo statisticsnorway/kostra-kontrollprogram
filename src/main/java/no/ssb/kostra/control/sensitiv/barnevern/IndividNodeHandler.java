@@ -605,37 +605,37 @@ public class IndividNodeHandler extends NodeHandler {
                             undersokelse.queryString("@SluttDato"),
                             undersokelseKonklusjon);
 
-                    controlTidManederUker(
-                            er,
-                            new ErrorReportEntry(
-                                    saksbehandler,
-                                    journalnummer,
-                                    individId,
-                                    refNr,
-                                    "Undersøkelse Kontroll 5: Behandlingstid for undersøkelse",
-                                    "Undersøkelse ("
-                                            + undersokelseId
-                                            + "). Fristoverskridelse, behandlingstid over 3 måneder for undersøkelse, "
-                                            + meldingSluttDatoString + " -> "
-                                            + undersokelseSluttDatoString,
-                                    Constants.NORMAL_ERROR), meldingStartDato,
-                            undersokelseSluttDato, 3, 1);
-
-                    controlTidManederUker(
-                            er,
-                            new ErrorReportEntry(
-                                    saksbehandler,
-                                    journalnummer,
-                                    individId,
-                                    refNr,
-                                    "Undersøkelse Kontroll 6: Fristoverskridelse for undersøkelse",
-                                    "Undersøkelse ("
-                                            + undersokelseId
-                                            + "). Fristoverskridelse, behandlingstid over 6 måneder for undersøkelse, "
-                                            + meldingSluttDatoString + " -> "
-                                            + undersokelseSluttDatoString,
-                                    Constants.NORMAL_ERROR), meldingStartDato,
-                            undersokelseSluttDato, 6, 1);
+//                    controlTidManederUker(
+//                            er,
+//                            new ErrorReportEntry(
+//                                    saksbehandler,
+//                                    journalnummer,
+//                                    individId,
+//                                    refNr,
+//                                    "Undersøkelse Kontroll 5: Behandlingstid for undersøkelse",
+//                                    "Undersøkelse ("
+//                                            + undersokelseId
+//                                            + "). Fristoverskridelse, behandlingstid over 3 måneder for undersøkelse, "
+//                                            + meldingSluttDatoString + " -> "
+//                                            + undersokelseSluttDatoString,
+//                                    Constants.NORMAL_ERROR), meldingStartDato,
+//                            undersokelseSluttDato, 3, 1);
+//
+//                    controlTidManederUker(
+//                            er,
+//                            new ErrorReportEntry(
+//                                    saksbehandler,
+//                                    journalnummer,
+//                                    individId,
+//                                    refNr,
+//                                    "Undersøkelse Kontroll 6: Fristoverskridelse for undersøkelse",
+//                                    "Undersøkelse ("
+//                                            + undersokelseId
+//                                            + "). Fristoverskridelse, behandlingstid over 6 måneder for undersøkelse, "
+//                                            + meldingSluttDatoString + " -> "
+//                                            + undersokelseSluttDatoString,
+//                                    Constants.NORMAL_ERROR), meldingStartDato,
+//                            undersokelseSluttDato, 6, 1);
 
                     controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
                             er,
@@ -926,7 +926,7 @@ public class IndividNodeHandler extends NodeHandler {
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
                                         + ") krever årsak til opphevelse",
-                                Constants.NORMAL_ERROR), tiltak);
+                                Constants.CRITICAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
                         er,

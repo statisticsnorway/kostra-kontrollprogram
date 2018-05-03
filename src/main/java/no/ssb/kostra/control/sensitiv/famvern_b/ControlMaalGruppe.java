@@ -22,7 +22,7 @@ public final class ControlMaalGruppe extends no.ssb.kostra.control.Control
     try
     {
       int kode = Integer.parseInt(viktigsteGrunn);
-      lineHasError = (kode<1 || kode>4);
+      lineHasError = (kode<1 || kode>5);
     }
     catch (Exception e)
     {

@@ -5,13 +5,13 @@ import no.ssb.kostra.control.Constants;
 
 final class ControlOrgNummer extends no.ssb.kostra.control.Control
 {
-  private Vector<Integer> recordNumbers = new Vector<Integer>();
+  private Vector<Integer> recordNumbers = new Vector<>();
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
   {
     String orgNum = RecordFields.getOrgNummer (line);
 
-    boolean orgNummerIsNotValid = (orgNum.indexOf(" ") != -1 || orgNum.length() != 9);
+    boolean orgNummerIsNotValid = (orgNum.contains(" ") || orgNum.length() != 9);
 
     if (orgNummerIsNotValid)
     {

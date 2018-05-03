@@ -22,6 +22,7 @@ final class ControlKontoklasseOgArtInvestering
           art.equalsIgnoreCase ("548") ||
           art.equalsIgnoreCase ("670") ||
           art.equalsIgnoreCase ("910") ||
+          art.equalsIgnoreCase ("911") ||
           art.equalsIgnoreCase ("929") ||
           art.equalsIgnoreCase ("948") ||
           art.equalsIgnoreCase ("958") ||

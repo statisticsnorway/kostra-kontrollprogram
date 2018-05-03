@@ -11,7 +11,7 @@ public final class ControlRecordlengde extends no.ssb.kostra.control.Control
 {
   private final String ERROR_TEXT = "K1: Recordlengde";
   private Vector<Integer> lineNumbers = new Vector<Integer>();
-  private final int RECORD_LENGTH = 53;
+  private final int RECORD_LENGTH = 47;
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
   {

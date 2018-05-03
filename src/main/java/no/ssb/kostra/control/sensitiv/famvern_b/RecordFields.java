@@ -33,37 +33,37 @@ final class RecordFields
         fieldValue = record.substring(53, 54);
         break;
       case 7:
-        fieldValue = record.substring(54, 55);
+        fieldValue = record.substring(54, 56);
         break;
       case 81:
-        fieldValue = record.substring(55, 58);
+        fieldValue = record.substring(56, 59);
         break;
       case 82:
-        fieldValue = record.substring(58, 61);
+        fieldValue = record.substring(59, 62);
         break;
       case 91:
-        fieldValue = record.substring(61, 64);
+        fieldValue = record.substring(62, 65);
         break;
       case 92:
-        fieldValue = record.substring(64, 67);
+        fieldValue = record.substring(65, 68);
         break;
       case 101:
-        fieldValue = record.substring(67, 70);
+        fieldValue = record.substring(68, 71);
         break;
       case 102:
-        fieldValue = record.substring(70, 73);
+        fieldValue = record.substring(71, 74);
         break;
       case 11:
-        fieldValue = record.substring(73, 75);
+        fieldValue = record.substring(74, 76);
         break;
       case 12:
-        fieldValue = record.substring(75, 76);
-        break;
-      case 13:
         fieldValue = record.substring(76, 77);
         break;
+      case 13:
+        fieldValue = record.substring(77, 78);
+        break;
       case 14:
-        fieldValue = record.substring(77, 85);
+        fieldValue = record.substring(78, 86);
         break;
       default:
         fieldValue = null;        
@@ -94,7 +94,7 @@ final class RecordFields
   static String getAllNumericalFieldsConcatenated (String record)
   {                                                       //Felt:
     String numericalFields = record.substring(0, 15)    + //1-3
-    						 record.substring(46, 85);    //5-14
+    						 record.substring(46, 86);    //5-14
 //                             record.substring(54, 77);    //6-13
 //                             record.substring(95, 98)   + //8-9
 //                             record.substring(128, 143) + //10-11.14

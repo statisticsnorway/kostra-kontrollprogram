@@ -18,8 +18,7 @@ final class ControlKontoklasseOgFunksjon
     { 
       String funksjon = RecordFields.getFunksjon (line);
 
-      if (funksjon.equalsIgnoreCase("840") ||
-          funksjon.equalsIgnoreCase("860"))
+      if (funksjon.equalsIgnoreCase("860"))
       { 
         lineHasError = true;
         String[] container = {kontoklasse, funksjon, Integer.toString (lineNumber)};  

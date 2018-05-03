@@ -11,7 +11,7 @@ public final class ControlHovedinnholdGruppe extends no.ssb.kostra.control.Contr
     implements no.ssb.kostra.control.SingleRecordErrorReport
 {
   private final String ERROR_TEXT = "K10: Gruppens hovedtema";
-  private Vector<Integer> lineNumbers = new Vector<Integer>();
+  private Vector<Integer> lineNumbers = new Vector<>();
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
   {
@@ -22,7 +22,7 @@ public final class ControlHovedinnholdGruppe extends no.ssb.kostra.control.Contr
     try
     {
       int kode = Integer.parseInt(viktigsteGrunn);
-      lineHasError = (kode<1 || kode>7);
+      lineHasError = (kode<1 || kode>11);
     }
     catch (Exception e)
     {

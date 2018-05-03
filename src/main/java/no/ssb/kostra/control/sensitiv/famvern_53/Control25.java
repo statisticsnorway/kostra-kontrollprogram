@@ -18,8 +18,8 @@ public class Control25
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         boolean lineHasError;
-        String fieldTiltak = RecordFields.getFieldValue(line, 111);
-        String fieldTimer = RecordFields.getFieldValue(line, 112);
+        String fieldTiltak = RecordFields.getFieldValue(line, 121);
+        String fieldTimer = RecordFields.getFieldValue(line, 122);
 
         try {
             int tiltak = Integer.parseInt(fieldTiltak);

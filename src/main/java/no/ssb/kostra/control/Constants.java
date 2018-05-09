@@ -16,7 +16,7 @@ package no.ssb.kostra.control;
 public final class Constants {
     
     // Rapporteringsaar.
-    public static final String kostraYear = "2017";
+    public static final String kostraYear = "2018";
     public static final String kvartalKostraYear = "2018";
 
     // Linjeskift til bruk ved skriving av kontrollrapporter.

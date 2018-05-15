@@ -90,7 +90,7 @@ final class RecordFields
 
   static String getAllNumericalFieldsConcatenated (String record)
   {                                                       //Felt:
-    String numericalFields = record.substring(0, 53);     //1-53
+    String numericalFields = record.substring(0, 47);     //1-53
 
     return numericalFields;
   }

@@ -121,13 +121,12 @@ public final class Main
 
   private void initControls()
   {
-    controls = new Control[13];
+    controls = new Control[14];
     controls[0] = new ControlRecordlengde();
     controls[1] = new ControlAargang();
     controls[2] = new ControlFylkeskommunenummer();
     controls[3] = new ControlOrgNummer();
     controls[4] = new ControlKontoklasse();
-//    controls[5] = new ControlOrgNrKontoklasse();
     controls[5] = new ControlKapitler();
     controls[6] = new ControlSektorer();
     controls[7] = new ControlDubletter();
@@ -136,5 +135,7 @@ public final class Main
     controls[10] = new ControlKvartal();
     controls[11] = new ControlRecord();
     controls[12] = new ControlNumericalFields();
+    controls[13] = new ControlMemoriakonti();
+    //    controls[5] = new ControlOrgNrKontoklasse();
   }
 }

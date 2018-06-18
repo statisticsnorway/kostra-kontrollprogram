@@ -33,7 +33,7 @@ public final class Control15 extends no.ssb.kostra.control.Control
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
   {
-    String field_9 = RecordFields.getFieldValue(line, 9);
+    String field_9 = RecordFields.getFieldValue(line, 91);
 
     boolean lineHasError; 
 

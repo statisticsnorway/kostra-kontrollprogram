@@ -7,24 +7,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by ojj on 03.05.2018.
+ * Created by ojj on 18.06.2018.
  */
-public final class Control23
+public class ControlTiltak
         extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
-    private final String ERROR_TEXT = "K23: Foreldreveiledning, timer";
+    private String ERROR_TEXT;
+    private String controlId;
+    private String controlTitle;
+    private int fieldNo;
     private List<Integer> lineNumbers = new ArrayList<>();
+
+    public ControlTiltak(String controlId, String controlTitle, int fieldNo){
+        this.controlId = controlId;
+        this.controlTitle = controlTitle;
+        this.fieldNo = fieldNo;
+        this.ERROR_TEXT = this.ERROR_TEXT.concat(controlId).concat(": ").concat(controlTitle).concat(", tiltak");
+    }
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         boolean lineHasError;
-        String fieldTiltak = RecordFields.getFieldValue(line, 111);
-        String fieldTimer = RecordFields.getFieldValue(line, 112);
+        String tiltak = RecordFields.getFieldValue(line, fieldNo);
 
         try {
-            int tiltak = Integer.parseInt(fieldTiltak);
-            int timer = Integer.parseInt(fieldTimer);
-            lineHasError = 0 < tiltak && timer < 1;
+            int value = Integer.parseInt(tiltak);
+            lineHasError = value < 1;
         } catch (NumberFormatException e) {
             lineHasError = true;
         }
@@ -41,10 +49,9 @@ public final class Control23
         if (foundError()) {
             int numOfRecords = lineNumbers.size();
             errorReport += "\tFeil: i " + numOfRecords +
-                    " record" + (numOfRecords == 1 ? "" : "s") + lf +
-                    "Feltet er ikke fylt ut." + lf +
-                    "Det er ikke fylt ut hvor mange timer kontoret har gjennomført når det gjelder " + lf +
-                    "\t'Tilsyn'. , til tross for at det er oppgitt antall tiltak.";
+                    " record" + (numOfRecords == 1 ? "" : "s") +
+                    " det er ikke fylt hvor mange tiltak kontoret har gjennomført når det gjelder " + lf +
+                    "'" + controlTitle + "'. Sjekk om det er glemt å rapportere tiltak for '" + controlTitle + "'.";
             if (numOfRecords <= 10) {
                 String commaSeparatedNumbers = lineNumbers.stream()
                         .map(item -> item.toString())
@@ -66,6 +73,7 @@ public final class Control23
         return ERROR_TEXT;
     }
 
+    @Override
     public int getErrorType() {
         return Constants.NORMAL_ERROR;
     }

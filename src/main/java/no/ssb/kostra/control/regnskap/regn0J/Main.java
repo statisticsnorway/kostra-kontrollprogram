@@ -121,7 +121,7 @@ public final class Main
 
   private void initControls()
   {
-    controls = new Control[13];
+    controls = new Control[14];
     controls[0] = new ControlRecordlengde();
     controls[1] = new ControlAargang();
     controls[2] = new ControlKommunenummer();
@@ -132,10 +132,12 @@ public final class Main
     controls[7] = new ControlDubletter();
     controls[8] = new ControlSummering();
     controls[9] = new ControlVersjon();
-//    controls[10] = new ControlGyldigOrgNr();
     controls[10] = new ControlRecord();
-//    controls[12] = new no.ssb.kostra.control.regnskap.ControlOrgNr();
     controls[11] = new ControlKvartal();
     controls[12] = new ControlNumericalFields();
+    controls[13] = new ControlMemoriakonti();
+
+//    controls[10] = new ControlGyldigOrgNr();
+//    controls[12] = new no.ssb.kostra.control.regnskap.ControlOrgNr();
   }
 }

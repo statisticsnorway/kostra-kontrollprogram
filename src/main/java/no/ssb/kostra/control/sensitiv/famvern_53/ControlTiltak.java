@@ -13,34 +13,34 @@ public class ControlTiltak
         extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
     private String ERROR_TEXT;
-    private String controlId;
     private String controlTitle;
     private int fieldNo;
     private List<Integer> lineNumbers = new ArrayList<>();
 
-    public ControlTiltak(String controlId, String controlTitle, int fieldNo){
-        this.controlId = controlId;
+    public ControlTiltak(String controlId, String controlTitle, int fieldNo) {
         this.controlTitle = controlTitle;
         this.fieldNo = fieldNo;
-        this.ERROR_TEXT = this.ERROR_TEXT.concat(controlId).concat(": ").concat(controlTitle).concat(", tiltak");
+        this.ERROR_TEXT = new String().concat(controlId).concat(": ").concat(controlTitle).concat(", tiltak");
     }
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError;
         String tiltak = RecordFields.getFieldValue(line, fieldNo);
 
         try {
-            int value = Integer.parseInt(tiltak);
-            lineHasError = value < 1;
-        } catch (NumberFormatException e) {
-            lineHasError = true;
-        }
+            if (tiltak != null) {
+                int value = Integer.parseInt(tiltak);
+                return (value < 1);
 
-        if (lineHasError)
+            } else {
+                throw new NumberFormatException();
+            }
+
+        } catch (NumberFormatException e) {
             lineNumbers.add(new Integer(lineNumber));
 
-        return lineHasError;
+            return true;
+        }
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ControlTiltak
             errorReport += "\tFeil: i " + numOfRecords +
                     " record" + (numOfRecords == 1 ? "" : "s") +
                     " det er ikke fylt hvor mange tiltak kontoret har gjennomført når det gjelder " + lf +
-                    "'" + controlTitle + "'. Sjekk om det er glemt å rapportere tiltak for '" + controlTitle + "'.";
+                    "\t'" + controlTitle + "'. Sjekk om det er glemt å rapportere tiltak for '" + controlTitle + "'.";
             if (numOfRecords <= 10) {
                 String commaSeparatedNumbers = lineNumbers.stream()
                         .map(item -> item.toString())

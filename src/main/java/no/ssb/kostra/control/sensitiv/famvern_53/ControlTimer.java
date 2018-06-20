@@ -19,24 +19,34 @@ public class ControlTimer
     private int fieldNoTimer;
     private List<Integer> lineNumbers = new ArrayList<>();
 
-    public ControlTimer(String controlId, String controlTitle, int fieldNoTiltak, int fieldNoTimer){
+    public ControlTimer(String controlId, String controlTitle, int fieldNoTiltak, int fieldNoTimer) {
         this.controlId = controlId;
         this.controlTitle = controlTitle;
         this.fieldNoTiltak = fieldNoTiltak;
         this.fieldNoTimer = fieldNoTimer;
-        this.ERROR_TEXT = this.ERROR_TEXT.concat(controlId).concat(": ").concat(controlTitle).concat(", timer");
+        this.ERROR_TEXT = new String().concat(controlId).concat(": ").concat(controlTitle).concat(", timer");
     }
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError;
-        String fieldTiltak = RecordFields.getFieldValue(line, fieldNoTiltak);
-        String fieldTimer = RecordFields.getFieldValue(line, fieldNoTimer);
+        boolean lineHasError = false;
+        String fieldTiltak = RecordFields.getFieldValue(line, fieldNoTiltak).trim();
+        String fieldTimer = RecordFields.getFieldValue(line, fieldNoTimer).trim();
 
         try {
-            int tiltak = Integer.parseInt(fieldTiltak);
-            int timer = Integer.parseInt(fieldTimer);
-            lineHasError = 0 < tiltak && timer < 1;
+            if (fieldTiltak != null && 0 < fieldTiltak.length()) {
+                int tiltak = Integer.parseInt(fieldTiltak);
+
+                if (0 < tiltak) {
+                    if (fieldTimer != null) {
+                        int timer = Integer.parseInt(fieldTimer);
+                        lineHasError = timer < 1;
+
+                    } else {
+                        lineHasError = true;
+                    }
+                }
+            }
         } catch (NumberFormatException e) {
             lineHasError = true;
         }
@@ -54,9 +64,9 @@ public class ControlTimer
             int numOfRecords = lineNumbers.size();
             errorReport += "\tFeil: i " + numOfRecords +
                     " record" + (numOfRecords == 1 ? "" : "s") + lf +
-                    "Feltet er ikke fylt ut." + lf +
-                    "Det er ikke fylt ut hvor mange timer kontoret har gjennomført når det gjelder " + lf +
-                    "\t'\" + controlTitle + \"'. , til tross for at det er oppgitt antall tiltak.";
+                    "\tFeltet er ikke fylt ut." + lf +
+                    "\tDet er ikke fylt ut hvor mange timer kontoret har gjennomført når det gjelder " + lf +
+                    "\t'" + controlTitle + "'. , til tross for at det er oppgitt antall tiltak.";
             if (numOfRecords <= 10) {
                 String commaSeparatedNumbers = lineNumbers.stream()
                         .map(item -> item.toString())

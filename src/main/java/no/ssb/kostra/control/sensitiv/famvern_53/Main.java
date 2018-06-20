@@ -165,31 +165,25 @@ public final class Main {
     }
 
     private void initControls() {
-        controls = new Control[15];
+        controls = new Control[19];
         controls[0] = new ControlRecordlengde();
         controls[1] = new ControlNumericalFields();
         controls[2] = new ControlFylkesnummer();
         controls[3] = new ControlKontornummer();
         controls[4] = new ControlFylkeKontornummer();
-        controls[5] = new ControlTiltak("K6", "Grupper for publikum", 31);
-        controls[6] = new ControlTimer("K7", "Grupper for publikum", 31, 32);
-        controls[7] = new ControlTiltak("K8", "Samlivskurs", 41);
-        controls[8] = new ControlTimer("K9", "Samlivskurs", 41, 42);
-        controls[9] = new ControlTiltak("K10", "Andre tiltak mot publikum", 51);
-        controls[10] = new ControlTimer("K11", "Andre tiltak mot publikum", 51, 52);
-        controls[11] = new ControlTiltak("K12", "Undervisning/veiledning studenter", 61);
-        controls[12] = new ControlTimer("K13", "Undervisning/veiledning studenter", 61, 62);
-        controls[13] = new ControlTiltak("K14", "Veiledning/konsultasjon for hjelpeapparatet", 71);
-        controls[14] = new ControlTimer("K15", "Veiledning/konsultasjon for hjelpeapparatet", 71, 72);
-        controls[15] = new ControlTiltak("K16", "Kurs/undervisning for hjelpeapparatet", 81);
-        controls[16] = new ControlTimer("K17", "Kurs/undervisning for hjelpeapparatet", 81, 82);
-        controls[17] = new ControlTiltak("K18", "Informasjon i media", 91);
-        controls[18] = new ControlTimer("K19", "Informasjon i media", 91, 92);
-        controls[19] = new ControlTiltak("K20", "Tilsyn", 101);
-        controls[20] = new ControlTimer("K21", "Tilsyn", 101, 102);
-        controls[21] = new ControlTiltak("K22", "Foreldreveiledning", 111);
-        controls[22] = new ControlTimer("K23", "Foreldreveiledning", 111, 112);
-        controls[23] = new ControlTiltak("K24", "Annet", 121);
-        controls[24] = new ControlTimer("K25", "Annet", 121, 122);
+        controls[5]  = new ControlTiltak("K10", "Andre tiltak mot publikum", 51);
+        controls[6]  = new ControlTimer("K11", "Andre tiltak mot publikum", 51, 52);
+        controls[7]  = new ControlTiltak("K12", "Undervisning/veiledning studenter", 61);
+        controls[8]  = new ControlTimer("K13", "Undervisning/veiledning studenter", 61, 62);
+        controls[9]  = new ControlTiltak("K14", "Veiledning/konsultasjon for hjelpeapparatet", 71);
+        controls[10] = new ControlTimer("K15", "Veiledning/konsultasjon for hjelpeapparatet", 71, 72);
+        controls[11] = new ControlTiltak("K18", "Informasjon i media", 91);
+        controls[12] = new ControlTimer("K19", "Informasjon i media", 91, 92);
+        controls[13] = new ControlTiltak("K20", "Tilsyn", 101);
+        controls[14] = new ControlTimer("K21", "Tilsyn", 101, 102);
+        controls[15] = new ControlTiltak("K22", "Foreldreveiledning", 111);
+        controls[16] = new ControlTimer("K23", "Foreldreveiledning", 111, 112);
+        controls[17] = new ControlTiltak("K24", "Annet", 121);
+        controls[18] = new ControlTimer("K25", "Annet", 121, 122);
     }
 }

@@ -5,6 +5,8 @@ package no.ssb.kostra.control.sensitiv.meklinger_55;
 
 import no.ssb.kostra.control.Constants;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 public final class ControlFylkesnummer extends no.ssb.kostra.control.Control
@@ -13,39 +15,16 @@ public final class ControlFylkesnummer extends no.ssb.kostra.control.Control
     private Vector<Integer> invalidRegions = new Vector<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = true;
+        String recordRegion = RecordFields.getFieldValue(line, 1).replace(' ', '0');
+        List<String> fylker = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+                "14", "15", "16", "17", "18", "19", "20", "50");
 
-        String recordRegion = RecordFields.getFieldValue(line, 1);
-        recordRegion = recordRegion.replace(' ', '0');
-        {
-            if (recordRegion.equalsIgnoreCase("01") ||
-                    recordRegion.equalsIgnoreCase("02") ||
-                    recordRegion.equalsIgnoreCase("03") ||
-                    recordRegion.equalsIgnoreCase("04") ||
-                    recordRegion.equalsIgnoreCase("05") ||
-                    recordRegion.equalsIgnoreCase("06") ||
-                    recordRegion.equalsIgnoreCase("07") ||
-                    recordRegion.equalsIgnoreCase("08") ||
-                    recordRegion.equalsIgnoreCase("09") ||
-                    recordRegion.equalsIgnoreCase("10") ||
-                    recordRegion.equalsIgnoreCase("11") ||
-                    recordRegion.equalsIgnoreCase("12") ||
-                    recordRegion.equalsIgnoreCase("14") ||
-                    recordRegion.equalsIgnoreCase("15") ||
-                    recordRegion.equalsIgnoreCase("16") ||
-                    recordRegion.equalsIgnoreCase("17") ||
-                    recordRegion.equalsIgnoreCase("18") ||
-                    recordRegion.equalsIgnoreCase("19") ||
-                    recordRegion.equalsIgnoreCase("20") ||
-                    recordRegion.equalsIgnoreCase("50")
-                    )
-                lineHasError = false;
-        }
-
-        if (lineHasError) {
+        if (!fylker.contains(recordRegion)) {
             invalidRegions.add(new Integer(lineNumber));
+            return true;
         }
-        return lineHasError;
+
+        return false;
     }
 
     public String getErrorReport(int totalLineNumber) {

@@ -2,33 +2,27 @@ package no.ssb.kostra.control.sensitiv.famvern;
 
 import no.ssb.kostra.control.Constants;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class Control16 extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
     private final String ERROR_TEXT = "K16: Utdypende om primærklientens formelle sivilstand";
-    private Vector<Integer> lineNumbers = new Vector<Integer>();
+    private List<Integer> lineNumbers = new ArrayList<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = false;
-        String field_91 = RecordFields.getFieldValue(line, 91);
-        if (field_91.equalsIgnoreCase("3") || field_91.equalsIgnoreCase("4")) {
+        List<String> samlivsstatusList = Arrays.asList("3", "4");
+        List<String> sivilstandList = Arrays.asList("1", "2", "3", "4", "5", "6");
+        String samlivsstatus = RecordFields.getFieldValue(line, 91);
+        String sivilstand = RecordFields.getFieldValue(line, 92);
 
-            String field_92 = RecordFields.getFieldValue(line, 92);
-            try {
-                int kode = Integer.parseInt(field_92);
-                lineHasError = kode < 1 || kode > 6;
-            } catch (NumberFormatException e) {
-                lineHasError = true;
-            }
+        if (samlivsstatusList.contains(samlivsstatus) && !sivilstandList.contains(sivilstand)) {
+            lineNumbers.add(new Integer(lineNumber));
+            return true;
         }
 
-        if (lineHasError)
-            lineNumbers.add(new Integer(lineNumber));
-
-        return lineHasError;
-
-
+        return false;
     }
 
     public String getErrorReport(int totalLineNumber) {
@@ -43,7 +37,7 @@ public final class Control16 extends no.ssb.kostra.control.Control
             if (numOfRecords <= 10) {
                 errorReport += lf + "\t\t(Gjelder record nr.";
                 for (int i = 0; i < numOfRecords; i++) {
-                    errorReport += " " + lineNumbers.elementAt(i);
+                    errorReport += " " + lineNumbers.get(i);
                 }
                 errorReport += ").";
             }

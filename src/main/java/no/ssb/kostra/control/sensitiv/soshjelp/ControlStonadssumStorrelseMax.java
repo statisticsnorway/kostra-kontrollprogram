@@ -1,44 +1,6 @@
 package no.ssb.kostra.control.sensitiv.soshjelp;
 
-/**
- * $Log: ControlStonadssumStorrelseMax.java,v $
- * Revision 1.3  2009/09/23 07:10:21  pll
- * no message
- *
- * Revision 1.2  2009/09/22 07:17:56  pll
- * Versjon: 2009-rapporteringen.
- *
- * Revision 1.1  2009/09/18 08:29:21  pll
- * Import.
- *
- * Revision 1.5  2008/09/09 07:36:31  pll
- * Tekstendring.
- *
- * Revision 1.4  2008/09/04 13:14:11  pll
- * 2008-rapportering.
- *
- * Revision 1.3  2007/10/25 09:12:28  pll
- * Implementerer getErrorType.
- *
- * Revision 1.2  2007/09/25 07:45:29  pll
- * Versjon: 2007-rapporteringen.
- *
- * Revision 1.1.1.1  2007/09/18 12:24:07  pll
- * Versjon: 2006-rapporteringen
- *
- * Revision 1.2  2006/09/22 09:13:50  lwe
- * Oppdatert årgang
- *
- * Revision 1.1  2006/09/22 08:18:29  lwe
- * Flyttet 2005-filene over i 2006-katalog - men ikke oppdatert årstallene
- *
- * Revision 1.3  2006/01/05 08:31:53  lwe
- * replaced _final class_ with _public final class_
- *
- * Revision 1.2  2005/10/26 17:20:41  lwe
- * endret fra 350-grense til 400 +lagt til CVS-logging i javadoc i begynnelsen av filen
- * 
- */
+
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 

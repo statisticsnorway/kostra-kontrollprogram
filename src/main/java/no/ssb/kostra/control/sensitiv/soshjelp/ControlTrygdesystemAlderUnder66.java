@@ -11,8 +11,8 @@ public final class ControlTrygdesystemAlderUnder66 extends no.ssb.kostra.control
     implements no.ssb.kostra.control.SingleRecordErrorReport
 {
   private final String ERROR_TEXT = 
-          "K22: Tilknytning til trygdesystemet og alder. 66 år eller yngre med alderspensjon";
-  private final int AGE_LIMIT = 66;
+          "K22: Tilknytning til trygdesystemet og alder. 60 år eller yngre med alderspensjon";
+  private final int AGE_LIMIT = 60;
   private Vector<Integer> linesWithError = new Vector<Integer>();
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)

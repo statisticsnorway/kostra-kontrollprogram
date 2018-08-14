@@ -4,6 +4,7 @@ package no.ssb.kostra.control.sensitiv.soskval;
  * 
  */
  
+import java.util.Arrays;
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.utils.DatoFnr;
@@ -21,13 +22,14 @@ public final class Control_37 extends no.ssb.kostra.control.Control
     String field = RecordFields.getFieldValue(line, 24);
     boolean lineHasError;
     
-    if (field.equalsIgnoreCase("3") || field.equalsIgnoreCase("4") || field.equalsIgnoreCase("5")) {
+    if (Arrays.asList(new String[] {"3", "4", "5"}).contains(field)) {
       
       field = RecordFields.getFieldValue(line, 25);
       boolean isValidDate = DatoFnr.validDateDDMMYY(field) == 1;
       if (isValidDate) {
         int year = Integer.parseInt(field.substring(4));
         isValidDate = year <= Constants.getRapporteringsAarTwoDigits();
+
       }
       lineHasError = !isValidDate;
       

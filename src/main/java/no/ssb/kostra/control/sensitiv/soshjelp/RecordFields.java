@@ -195,28 +195,28 @@ final class RecordFields {
             case 252:
                 fieldValue = record.substring(286, 288);
                 break;
-            case 253:
+            case 254:
                 fieldValue = record.substring(288, 290);
                 break;
-            case 254:
+            case 256:
                 fieldValue = record.substring(290, 292);
                 break;
-            case 255:
+            case 257:
                 fieldValue = record.substring(292, 294);
                 break;
-            case 256:
+            case 258:
                 fieldValue = record.substring(294, 296);
                 break;
-            case 257:
+            case 2510:
                 fieldValue = record.substring(296, 298);
                 break;
-            case 258:
+            case 2511:
                 fieldValue = record.substring(298, 300);
                 break;
-            case 259:
+            case 2514:
                 fieldValue = record.substring(300, 302);
                 break;
-            case 2510:
+            case 2515:
                 fieldValue = record.substring(302, 304);
                 break;
             case 26:

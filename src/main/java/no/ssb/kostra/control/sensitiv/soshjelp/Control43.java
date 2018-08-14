@@ -13,42 +13,25 @@ import java.util.Vector;
 public final class Control43 extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
     private final String ERROR_TEXT = "K43: Type vilkår det stilles til mottakeren";
-    private Vector<Integer> linesWithError = new Vector<Integer>();
-
-    static boolean isFilledField25(String line) {
-        boolean isFilled = false;
-        boolean isCorrect = true;
-        List<String> validValues = Arrays.asList("00", "04", "06", "07", "08", "10", "14", "15", "16", "17", "18");
-        String field;
-
-        // Felt 25.1 - 25.9:
-        for (int i = 1; i < 10; i++) {
-            field = RecordFields.getFieldValue(line, (250 + i));
-            field = field.replace(' ', '0');
-            if (validValues.contains(field)) {
-                isFilled = true;
-            } else {
-                isCorrect = false;
-            }
-        }
-
-        // Felt 25.10 - 25.15
-        for (int i = 10; i < 16; i++) {
-            field = RecordFields.getFieldValue(line, (2500 + i));
-            field = field.replace(' ', '0');
-            if (validValues.contains(field)) {
-                isFilled = true;
-            } else {
-                isCorrect = false;
-            }
-        }
-
-        return isFilled && isCorrect;
-    }
+    private Vector<Integer> linesWithError = new Vector<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean isFilled = false;
+        boolean isCorrect = true;
+        List<Integer> fields = Arrays.asList(251, 252, 254, 256, 257, 258, 2510, 2514, 2515);
+        List<String> validValues = Arrays.asList("00", "04", "06", "07", "08", "10", "14", "15", "16", "17", "18");
 
-        boolean lineHasError = !isFilledField25(line);
+        for (int i = 0; i < fields.size(); i++) {
+            String field = RecordFields.getFieldValue(line, fields.get(i));
+            field = field.replace(' ', '0');
+            if (validValues.contains(field)) {
+                isFilled = true;
+            } else {
+                isCorrect = false;
+            }
+        }
+
+        boolean lineHasError = (!(isFilled && isCorrect));
 
         if (lineHasError)
             linesWithError.add(new Integer(lineNumber));

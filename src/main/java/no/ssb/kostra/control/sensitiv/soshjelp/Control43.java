@@ -16,25 +16,27 @@ public final class Control43 extends no.ssb.kostra.control.Control
     private Vector<Integer> linesWithError = new Vector<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean isFilled = false;
-        boolean isCorrect = true;
-        List<Integer> fields = Arrays.asList(251, 252, 254, 256, 257, 258, 2510, 2514, 2515);
-        List<String> validValues = Arrays.asList("00", "04", "06", "07", "08", "10", "14", "15", "16", "17", "18");
+        boolean lineHasError = false;
 
-        for (int i = 0; i < fields.size(); i++) {
-            String field = RecordFields.getFieldValue(line, fields.get(i));
-            field = field.replace(' ', '0');
-            if (validValues.contains(field)) {
-                isFilled = true;
-            } else {
-                isCorrect = false;
+        String field21 = RecordFields.getFieldValue(line, 21);
+        List<Integer> fields = Arrays.asList(251, 252, 254, 256, 257, 258, 2510, 2511, 2514, 2515);
+        List<String> validValues = Arrays.asList("16", "17", "04", "06", "07", "08", "10", "18", "14", "15");
+
+        if (field21.equalsIgnoreCase("1")) {
+            for (int i = 0; i < fields.size(); i++) {
+                String fieldValue = RecordFields.getFieldValue(line, fields.get(i));
+                fieldValue = fieldValue.replace(' ', '0');
+                String validValue = validValues.get(i);
+
+                if (!(fieldValue.equalsIgnoreCase(validValue) || fieldValue.equalsIgnoreCase("00"))) {
+                    lineHasError = true;
+                }
+            }
+
+            if (lineHasError) {
+                linesWithError.add(new Integer(lineNumber));
             }
         }
-
-        boolean lineHasError = (!(isFilled && isCorrect));
-
-        if (lineHasError)
-            linesWithError.add(new Integer(lineNumber));
 
         return lineHasError;
     }

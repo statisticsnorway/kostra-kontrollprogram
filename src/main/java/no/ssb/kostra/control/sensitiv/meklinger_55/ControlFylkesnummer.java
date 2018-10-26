@@ -17,7 +17,7 @@ public final class ControlFylkesnummer extends no.ssb.kostra.control.Control
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         String recordRegion = RecordFields.getFieldValue(line, 1).replace(' ', '0');
         List<String> fylker = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-                "14", "15", "16", "17", "18", "19", "20", "50");
+                "14", "15", "18", "19", "20", "50");
 
         if (!fylker.contains(recordRegion)) {
             invalidRegions.add(new Integer(lineNumber));

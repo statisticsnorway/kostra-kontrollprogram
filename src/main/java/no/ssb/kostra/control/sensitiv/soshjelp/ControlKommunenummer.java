@@ -23,7 +23,7 @@ public final class ControlKommunenummer extends no.ssb.kostra.control.Control
     this.region = region;
   
     String kommunenr = RecordFields.getKommunenummer(line);
-    String bydelnr = (RecordFields.getKommunenummer(line) == "0301") ?  RecordFields.getBydelsnummer(line) :  "00";
+    String bydelnr = (RecordFields.getKommunenummer(line).equals("0301")) ?  RecordFields.getBydelsnummer(line) :  "00";
 
     String recordRegion = kommunenr + bydelnr;
 

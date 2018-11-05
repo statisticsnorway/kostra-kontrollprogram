@@ -127,7 +127,7 @@ public final class Main {
 
   private void initControls() {
 
-    controls = new Control[24];
+    controls = new Control[25];
     controls[0] = new ControlRecordlengde();
     controls[1] = new ControlAargang();
     controls[2] = new ControlKvartal();
@@ -154,5 +154,6 @@ public final class Main {
     controls[21] = new Control23a();
     controls[22] = new Control23b();
     controls[23] = new Control23c();
+    controls[24] = new Control24();
   }
 }

@@ -1,38 +1,6 @@
 package no.ssb.kostra.control.sensitiv.famvern;
 
-/*
- * $Log: ControlFylkeKontornummer.java,v $
- * Revision 1.6  2009/01/05 17:39:09  pll
- * Flyttet impl. av metoden hasCorrectKontorNr
- * til no.ssb.utils.FamilievernKontorNrChecker.
- *
- * Revision 1.5  2008/12/17 13:11:27  pll
- * Endret som følge av endringer i kravspec.
- *
- * Revision 1.4  2008/12/12 15:24:55  pll
- * no message
- *
- * Revision 1.3  2008/12/11 11:33:39  pll
- * RecordFields.getFylkesnummer har endret navn til
- * RecordFields.getRegionNr
- *
- * Revision 1.2  2007/10/25 11:37:03  pll
- * Implementerer getErrorType.
- *
- * Revision 1.1.1.1  2007/09/18 12:24:07  pll
- * Versjon: 2006-rapporteringen
- *
- * Revision 1.2  2006/09/22 09:13:49  lwe
- * Oppdatert årgang
- *
- * Revision 1.1  2006/09/22 08:18:28  lwe
- * Flyttet 2005-filene over i 2006-katalog - men ikke oppdatert årstallene
- *
- * Revision 1.6  2006/01/05 08:16:33  lwe
- * added logmessage
- * 
- */
- 
+
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.utils.FamilievernKontorNrChecker;

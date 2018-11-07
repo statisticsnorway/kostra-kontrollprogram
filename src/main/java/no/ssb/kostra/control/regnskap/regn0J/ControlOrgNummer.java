@@ -4,13 +4,13 @@ import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.utils.OrgNrForIKS;;
 
-final class ControlOrgNummer extends no.ssb.kostra.control.Control {
+public final class ControlOrgNummer extends no.ssb.kostra.control.Control {
 	private Vector<Integer> recordNumbers = new Vector<Integer>();
 
 	public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
 		String orgNum = RecordFields.getOrgNummer(line);
 		OrgNrForIKS o = new OrgNrForIKS();
-		boolean orgNummerIsNotValid = !o.isValidOrgNr(orgNum); 
+		boolean orgNummerIsNotValid = !o.isValidOrgNr(orgNum);
 
 		if (orgNummerIsNotValid) {
 			recordNumbers.add(new Integer(lineNumber));

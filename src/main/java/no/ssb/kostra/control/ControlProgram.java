@@ -38,6 +38,11 @@ public final class ControlProgram {
     // Metoden parseArguments returnerer ikke (kaster IllegalArgumentException)
     // hvis  argumentene ikke er korrekte.
     parseArguments(args);
+
+    System.out.println(region_nr);
+    System.out.println(statistiskEnhet);
+    System.out.println(regnskapstype);
+
     int error_type_found;
 
     switch (type_filuttrekk) {

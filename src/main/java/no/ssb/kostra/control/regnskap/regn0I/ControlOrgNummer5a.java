@@ -19,7 +19,7 @@ final class ControlOrgNummer5a extends no.ssb.kostra.control.Control {
             this.orgNummer = orgNum;
         }
 
-        boolean orgNummerIsNotValid = (!this.orgNummer.equalsIgnoreCase(orgNum)) ? true : false;
+        boolean orgNummerIsNotValid = (!this.orgNummer.equalsIgnoreCase(orgNum));
 
         if (orgNummerIsNotValid) {
             recordNumbers.add(new Integer(lineNumber));

@@ -1,6 +1,8 @@
 package no.ssb.kostra.control.regnskap.regn0L;
 
 import no.ssb.kostra.control.Constants;
+import no.ssb.kostra.control.regnskap.regn0K.*;
+import no.ssb.kostra.utils.OrgNrForIKS;
 
 import java.util.Vector;
 
@@ -14,20 +16,19 @@ final class ControlOrgNummer4a extends no.ssb.kostra.control.Control {
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         String orgNum = RecordFields.getOrgNummer(line).trim();
+        OrgNrForIKS o = new OrgNrForIKS();
+        boolean lineHasError = !o.isValidOrgNr(orgNum);
 
         if (this.orgNummer == null) {
             this.orgNummer = orgNum;
         }
 
-        boolean orgNummerIsNotValid = (this.orgNummer != null
-                && this.orgNummer.length() > 0
-                && orgNum.matches("^0")
-        ) ? true : false;
+        lineHasError = lineHasError || this.orgNummer.length() != 9 | orgNum.matches("^0");
 
-        if (orgNummerIsNotValid) {
+        if (lineHasError) {
             recordNumbers.add(new Integer(lineNumber));
         }
-        return orgNummerIsNotValid;
+        return lineHasError;
     }
 
     @Override

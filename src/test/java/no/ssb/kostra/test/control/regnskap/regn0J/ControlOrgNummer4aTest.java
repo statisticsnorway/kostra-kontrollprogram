@@ -48,7 +48,7 @@ public class ControlOrgNummer4aTest {
 
     @Test
     public void testOrgNummerFail() {
-        assertTrue(t.doControl(f_1, 1, "030100", "970541012"));
+        assertFalse(t.doControl(f_1, 1, "030100", "970541012"));
         assertTrue(t.doControl(f_2, 1, "030100", "970541012"));
         assertTrue(t.doControl(f_3, 1, "030100", "970541012"));
         assertTrue(t.doControl(ok1, 1, "030100", "970541012"));

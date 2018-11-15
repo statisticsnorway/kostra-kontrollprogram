@@ -121,21 +121,22 @@ public final class Main
 
   private void initControls()
   {
-    controls = new Control[14];
+    controls = new Control[15];
     controls[0] = new ControlRecordlengde();
     controls[1] = new ControlAargang();
     controls[2] = new ControlFylkeskommunenummer();
     controls[3] = new ControlOrgNummer();
-    controls[4] = new ControlKontoklasse();
-    controls[5] = new ControlKapitler();
-    controls[6] = new ControlSektorer();
-    controls[7] = new ControlDubletter();
-    controls[8] = new ControlSummering();
-    controls[9] = new ControlVersjon();
-    controls[10] = new ControlKvartal();
-    controls[11] = new ControlRecord();
-    controls[12] = new ControlNumericalFields();
-    controls[13] = new ControlMemoriakonti();
+    controls[4] = new ControlOrgNummer4a();
+    controls[5] = new ControlKontoklasse();
+    controls[6] = new ControlKapitler();
+    controls[7] = new ControlSektorer();
+    controls[8] = new ControlDubletter();
+    controls[9] = new ControlSummering();
+    controls[10] = new ControlVersjon();
+    controls[11] = new ControlKvartal();
+    controls[12] = new ControlRecord();
+    controls[13] = new ControlNumericalFields();
+    controls[14] = new ControlMemoriakonti();
     //    controls[5] = new ControlOrgNrKontoklasse();
   }
 }

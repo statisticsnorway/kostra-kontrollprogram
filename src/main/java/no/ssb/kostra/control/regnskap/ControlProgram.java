@@ -248,22 +248,22 @@ public class ControlProgram {
     } else if (typeRegnskap.equalsIgnoreCase("0I")) {
       
       error_type = new no.ssb.kostra.control.regnskap.regn0I.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+          (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
       
     } else if (typeRegnskap.equalsIgnoreCase("0J")) {
         
       error_type = new no.ssb.kostra.control.regnskap.regn0J.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+          (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
       
     } else if (typeRegnskap.equalsIgnoreCase("0K")) {
         
       error_type = new no.ssb.kostra.control.regnskap.regn0K.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+          (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
       
     } else if (typeRegnskap.equalsIgnoreCase("0L")) {
         
       error_type = new no.ssb.kostra.control.regnskap.regn0L.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+          (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
       
     } else if (typeRegnskap.equalsIgnoreCase("0F")) {
 

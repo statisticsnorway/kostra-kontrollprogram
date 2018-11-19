@@ -1,10 +1,11 @@
 package no.ssb.kostra.control;
 
-import no.ssb.kostra.utils.Regioner;
 import no.ssb.kostra.control.regnskap.UnknownRegnskapException;
+import no.ssb.kostra.utils.Regioner;
 import no.ssb.kostra.utils.RegionerKvartal;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 
 public final class ControlProgram {
@@ -79,10 +80,7 @@ public final class ControlProgram {
             (region_nr, kildefil, rapportfil, regnskapstype, statistiskEnhet).start();
         break;
 
- 
-      case NO_CONTROL:
-    	  
-    	  
+       case NO_CONTROL:
         error_type_found = Constants.NO_ERROR;
         break;
       default:
@@ -100,7 +98,7 @@ public final class ControlProgram {
 
 
 
-  private void parseArguments(String[] args)
+  public void parseArguments(String[] args)
       throws IOException, IllegalArgumentException {
 
     String type_filuttrekk_tmp = "-1";
@@ -261,4 +259,24 @@ public final class ControlProgram {
 
   } // End method main
 
+
+  public String getRegion_nr() {
+    return region_nr;
+  }
+
+  public String getKontor_nr() {
+    return kontor_nr;
+  }
+
+  public String getStatistiskEnhet() {
+    return statistiskEnhet;
+  }
+
+  public String getRegnskapstype() {
+    return regnskapstype;
+  }
+
+  public int getType_filuttrekk() {
+    return type_filuttrekk;
+  }
 } // End class ControlProgram

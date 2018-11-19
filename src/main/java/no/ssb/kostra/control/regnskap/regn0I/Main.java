@@ -18,15 +18,16 @@ public final class Main {
     private File reportFile;
     private String[] regnskap;
     private Control[] controls;
+    private String statistiskEnhet;
 
 
     public Main
-            (String regionNumber, File sourceFile, File reportFile, String[] regnskap) {
+            (String regionNumber, File sourceFile, File reportFile, String[] regnskap, String statistiskEnhet) {
         this.regionNumber = regionNumber;
         this.sourceFile = sourceFile;
         this.reportFile = reportFile;
         this.regnskap = regnskap;
-        initControls();
+        this.statistiskEnhet = statistiskEnhet;
     }
 
     public int start() {
@@ -43,10 +44,10 @@ public final class Main {
                 //Sjekker recordlengde forst, fordi feil reccordlengde
                 //vil kunne odelegge mange andre kontroller
                 //(StringIndexOutOfBoundsException etc.)
-                if (!controls[0].doControl(regnskap[i], lineNumber, regionNumber, "")) {
+                if (!controls[0].doControl(regnskap[i], lineNumber, regionNumber, statistiskEnhet)) {
 
                     for (int j = 1; j < controls.length; j++)
-                        controls[j].doControl(regnskap[i], lineNumber, regionNumber, "");
+                        controls[j].doControl(regnskap[i], lineNumber, regionNumber, statistiskEnhet);
 
                 }
             }
@@ -120,31 +121,30 @@ public final class Main {
     }
 
     private void initControls() {
-        controls = new Control[24];
+        controls = new Control[23];
         controls[0] = new ControlRecordlengde();
         controls[1] = new ControlAargang();
         controls[2] = new ControlKvartal();
         controls[3] = new ControlKommunenummer();
         controls[4] = new ControlOrgNummer();
-        controls[5] = new ControlOrgNummer5a();
-        controls[6] = new ControlKontoklasse();
-        controls[7] = new ControlFunksjoner();
-        controls[8] = new ControlArter();
-        controls[9] = new ControlKontoklasseOgFunksjon();
-        controls[10] = new ControlKontoklasseOgArtInvestering();
-        controls[11] = new ControlKontoklasseOgArtDrift();
-        controls[12] = new ControlDubletter();
-        controls[13] = new ControlSummering();
-        controls[14] = new ControlOverforingDriftInvestering();
-        controls[15] = new ControlAvskrivinger();
-        controls[16] = new Control190();
-        controls[17] = new ControlVersjon();
-        controls[18] = new Control490();
-        controls[19] = new ControlRecord();
-        controls[20] = new ControlNumericalFields();
-        controls[21] = new Control24a();
-        controls[22] = new Control24b();
-        controls[23] = new Control25a();
+        controls[5] = new ControlKontoklasse();
+        controls[6] = new ControlFunksjoner();
+        controls[7] = new ControlArter();
+        controls[8] = new ControlKontoklasseOgFunksjon();
+        controls[9] = new ControlKontoklasseOgArtInvestering();
+        controls[10] = new ControlKontoklasseOgArtDrift();
+        controls[11] = new ControlDubletter();
+        controls[12] = new ControlSummering();
+        controls[13] = new ControlOverforingDriftInvestering();
+        controls[14] = new ControlAvskrivinger();
+        controls[15] = new Control190();
+        controls[16] = new ControlVersjon();
+        controls[17] = new Control490();
+        controls[18] = new ControlRecord();
+        controls[19] = new ControlNumericalFields();
+        controls[20] = new Control24a();
+        controls[21] = new Control24b();
+        controls[22] = new Control25a();
 
 //    controls[13] = new ControlInterneOverforinger();
 //    controls[17] = new Control290();

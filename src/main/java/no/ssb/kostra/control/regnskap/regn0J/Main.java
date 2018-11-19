@@ -18,14 +18,16 @@ public final class Main {
     private File reportFile;
     private String[] regnskap;
     private Control[] controls;
+    private String statistiskEnhet;
 
 
     public Main
-            (String regionNumber, File sourceFile, File reportFile, String[] regnskap) {
+            (String regionNumber, File sourceFile, File reportFile, String[] regnskap, String statistiskEnhet) {
         this.regionNumber = regionNumber;
         this.sourceFile = sourceFile;
         this.reportFile = reportFile;
         this.regnskap = regnskap;
+        this.statistiskEnhet = statistiskEnhet;
         initControls();
     }
 
@@ -42,10 +44,10 @@ public final class Main {
                 //Sjekker recordlengde forst, fordi feil reccordlengde
                 //vil kunne odelegge mange andre kontroller
                 //(StringIndexOutOfBoundsException etc.)
-                if (!controls[0].doControl(regnskap[i], lineNumber, regionNumber, "")) {
+                if (!controls[0].doControl(regnskap[i], lineNumber, regionNumber, statistiskEnhet)) {
 
                     for (int j = 1; j < controls.length; j++)
-                        controls[j].doControl(regnskap[i], lineNumber, regionNumber, "");
+                        controls[j].doControl(regnskap[i], lineNumber, regionNumber, statistiskEnhet);
 
                 }
             }
@@ -114,22 +116,22 @@ public final class Main {
     }
 
     private void initControls() {
-        controls = new Control[15];
+        controls = new Control[14];
         controls[0] = new ControlRecordlengde();
         controls[1] = new ControlAargang();
         controls[2] = new ControlKommunenummer();
         controls[3] = new ControlOrgNummer();
-        controls[4] = new ControlOrgNummer();
-        controls[5] = new ControlKontoklasse();
-        controls[6] = new ControlKapitler();
-        controls[7] = new ControlSektorer();
-        controls[8] = new ControlDubletter();
-        controls[9] = new ControlSummering();
-        controls[10] = new ControlVersjon();
-        controls[11] = new ControlRecord();
-        controls[12] = new ControlKvartal();
-        controls[13] = new ControlNumericalFields();
-        controls[14] = new ControlMemoriakonti();
+        controls[4] = new ControlKontoklasse();
+        controls[5] = new ControlKapitler();
+        controls[6] = new ControlSektorer();
+        controls[7] = new ControlDubletter();
+        controls[8] = new ControlSummering();
+        controls[9] = new ControlVersjon();
+        controls[10] = new ControlRecord();
+        controls[11] = new ControlKvartal();
+        controls[12] = new ControlNumericalFields();
+        controls[13] = new ControlMemoriakonti();
+
 
 //    controls[10] = new ControlGyldigOrgNr();
 //    controls[12] = new no.ssb.kostra.control.regnskap.ControlOrgNr();

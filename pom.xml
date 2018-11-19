@@ -60,7 +60,6 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
                             <mainClass>no.ssb.kostra.control.ControlProgram</mainClass>
                         </manifest>
                     </archive>

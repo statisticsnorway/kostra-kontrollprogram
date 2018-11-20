@@ -27,7 +27,8 @@ public final class Main {
         this.sourceFile = sourceFile;
         this.reportFile = reportFile;
         this.regnskap = regnskap;
-        this.statistiskEnhet = statistiskEnhet;
+        this.statistiskEnhet = (statistiskEnhet != null) ? statistiskEnhet : "0";
+        initControls();
     }
 
     public int start() {

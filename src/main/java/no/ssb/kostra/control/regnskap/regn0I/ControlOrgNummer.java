@@ -20,7 +20,7 @@ public final class ControlOrgNummer extends no.ssb.kostra.control.Control {
     }
 
     public String getErrorReport(int totalLineNumber) {
-        String errorReport = "Kontroll 4, organisasjonsnummer:" + lf + lf;
+        String errorReport = "Kontroll 5, organisasjonsnummer:" + lf + lf;
         int numOfRecords = recordNumbers.size();
         if (numOfRecords > 0) {
             errorReport += "\tFeil: Mangler organisasjonsnummer eller oppgitt organisasjonsnummer er ikke korrekt i hht. Brønnøysundregisterets opplysninger pr oktober." + lf +

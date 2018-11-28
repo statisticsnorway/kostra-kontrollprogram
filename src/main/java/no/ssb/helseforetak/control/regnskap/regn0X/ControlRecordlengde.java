@@ -1,27 +1,5 @@
 package no.ssb.helseforetak.control.regnskap.regn0X;
 
-/**
- * $Log: ControlRecordlengde.java,v $
- * Revision 1.2  2007/10/25 11:33:58  pll
- * Implementerer getErrorType.
- *
- * Revision 1.1  2007/10/23 10:49:10  pll
- * Import av versjon for 2006-rapporteringen.
- *
- * Revision 1.2  2006/11/27 10:16:56  pll
- * Oppdatert aarstall (2005 -> 2006)
- *
- * Revision 1.1  2006/11/27 09:18:06  pll
- * Import av 2005-filer
- *
- * Revision 1.3  2006/01/02 09:58:17  lwe
- * endret etter mail-forespørsel fra Siri Bogen: feilmeldinger i K0, K11, K12
- *
- * Revision 1.2  2005/12/14 13:04:22  lwe
- * updated all 2004 to 2005 (and added logmessage in javadoc)
- *
- */
-
 
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;

@@ -2,22 +2,48 @@ package no.ssb.kostra.control.sensitiv.soshjelp;
 
 import no.ssb.kostra.control.Constants;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
-public final class ControlKommunenummer extends no.ssb.kostra.control.Control
+/**
+ * Created by ojj on 16.01.2019.
+ */
+public class ControlBydelsnummer extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
-    private final String ERROR_TEXT = "K3: Kommunenummer";
+    private final String ERROR_TEXT = "K3a: Bydelsnummer";
     private Vector<Integer> invalidRegions = new Vector<Integer>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         boolean lineHasError = false;
 
         String kommunenr = RecordFields.getKommunenummer(line);
+        String bydelnr = RecordFields.getBydelsnummer(line);
+        List<String> koder = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "99");
 
-        if (!kommunenr.equalsIgnoreCase(region.substring(0, 4))) {
+        if (!region.substring(0, 4).equals("0301")) {
+            return lineHasError;
+        }
+
+        if (!kommunenr.substring(0, 4).equals("0301")) {
             lineHasError = true;
             invalidRegions.add(new Integer(lineNumber));
+            return lineHasError;
         }
+
+        if (region.substring(4, 6).equalsIgnoreCase("00")) {
+            if (!koder.contains(bydelnr)) {
+                lineHasError = true;
+                invalidRegions.add(new Integer(lineNumber));
+            }
+
+        } else {
+            if (!region.substring(4, 6).equalsIgnoreCase(bydelnr)) {
+                lineHasError = true;
+                invalidRegions.add(new Integer(lineNumber));
+            }
+        }
+
         return lineHasError;
     }
 

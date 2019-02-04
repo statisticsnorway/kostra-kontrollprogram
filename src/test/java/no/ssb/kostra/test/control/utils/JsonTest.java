@@ -1,6 +1,7 @@
 package no.ssb.kostra.test.control.utils;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.json.Json;
@@ -30,6 +31,7 @@ public class JsonTest {
     }
 
     @Test
+    @Ignore
     public void testValidFunksjon() {
         InputStream is = getClass().getResourceAsStream("/Regnskap_2017_0A_0C_kontoklasse.json");
 

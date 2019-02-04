@@ -178,6 +178,7 @@ public final class Main {
         controls.add(new ControlRecordlengde());
         controls.add(new ControlNumericalFields());
         controls.add(new ControlKommunenummer());
+        controls.add(new ControlBydelsnummer());
         controls.add(new ControlAargang());
         controls.add(new ControlFodselsnummer());
         controls.add(new ControlAlderUnder18());

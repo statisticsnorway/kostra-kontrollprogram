@@ -2,31 +2,32 @@ package no.ssb.kostra.control.regnskap.regn0I;
 
 import no.ssb.kostra.control.Constants;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 /**
  * Created by ojj on 05.11.2018.
  */
-public class Control25a
+public class Control25
         extends no.ssb.kostra.control.Control {
     private Vector<String[]> invalidCombinations = new Vector<String[]>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         boolean lineHasError = false;
 
-        String funksjon = no.ssb.kostra.control.regnskap.regn0I.RecordFields.getFunksjon(line);
-        String art = no.ssb.kostra.control.regnskap.regn0I.RecordFields.getArt(line);
+        String funksjon = RecordFields.getFunksjon(line);
+        String art = RecordFields.getArt(line);
 
-        if (funksjon.equalsIgnoreCase("899") || art.equalsIgnoreCase("580") || art.equalsIgnoreCase("980")) {
-            if (funksjon.equalsIgnoreCase("899")) {
-                if (!art.equalsIgnoreCase("580") && !art.equalsIgnoreCase("980")) {
-                    lineHasError = true;
-                }
-            } else if (art.equalsIgnoreCase("580") || art.equalsIgnoreCase("980")) {
-                if (!funksjon.equalsIgnoreCase("899")) {
-                    lineHasError = true;
-                }
-            }
+        List<String> funksjonList = Arrays.asList("899");
+        List<String> artList = Arrays.asList("580", "589", "980", "989");
+
+
+        if ((funksjonList.contains(funksjon) && !artList.contains(art))
+                ||
+                (!funksjonList.contains(funksjon) && artList.contains(art))
+                ) {
+            lineHasError = true;
         }
 
         if (lineHasError) {
@@ -38,10 +39,10 @@ public class Control25a
     }
 
     public String getErrorReport(int totalLineNumber) {
-        String errorReport = "Kontroll 24, kombinasjon funksjon og art:" + lf + lf;
+        String errorReport = "Kontroll 25, kombinasjon funksjon og art:" + lf + lf;
         if (foundError()) {
             int numOfRecords = invalidCombinations.size();
-            errorReport += "\tFeil: Artene 580 og 980 er kun tillat brukt i kombinasjon med funksjon 899. Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 580 og 980." + lf;
+            errorReport += "\tFeil: Artene 580, 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 580, 589, 980 og 989." + lf;
             for (int i = 0; i < numOfRecords; i++) {
                 String[] container = (String[]) invalidCombinations.elementAt(i);
                 errorReport += "\t\tFunksjon: " + container[0] +

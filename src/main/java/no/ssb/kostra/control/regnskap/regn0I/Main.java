@@ -145,7 +145,7 @@ public final class Main {
         controls[19] = new ControlNumericalFields();
         controls[20] = new Control24a();
         controls[21] = new Control24b();
-        controls[22] = new Control25a();
+        controls[22] = new Control25();
 
 //    controls[13] = new ControlInterneOverforinger();
 //    controls[17] = new Control290();

@@ -22,12 +22,10 @@ public class ControlBydelsnummer extends no.ssb.kostra.control.Control
         List<String> koder = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "99");
 
         if (!region.substring(0, 4).equals("0301")) {
-            System.out.println("IKKE Oslo");
             return lineHasError;
         }
 
         if (!kommunenr.substring(0, 4).equals("0301")) {
-            System.out.println("1");
             lineHasError = true;
             invalidRegions.add(new Integer(lineNumber));
             return lineHasError;
@@ -35,14 +33,12 @@ public class ControlBydelsnummer extends no.ssb.kostra.control.Control
 
         if (region.substring(4, 6).equalsIgnoreCase("00")) {
             if (!koder.contains(bydelnr)) {
-                System.out.print("2");
                 lineHasError = true;
                 invalidRegions.add(new Integer(lineNumber));
             }
 
         } else {
             if (!region.substring(4, 6).equalsIgnoreCase(bydelnr)) {
-                System.out.print("3");
                 lineHasError = true;
                 invalidRegions.add(new Integer(lineNumber));
             }

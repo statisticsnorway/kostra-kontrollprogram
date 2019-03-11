@@ -1,7 +1,6 @@
 package no.ssb.kostra.control.regnskap.regn0K;
 
 import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.regnskap.regn0I.*;
 
 import java.util.Arrays;
 import java.util.List;

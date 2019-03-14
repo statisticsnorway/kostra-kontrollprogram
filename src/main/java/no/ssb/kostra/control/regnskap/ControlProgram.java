@@ -267,13 +267,13 @@ public class ControlProgram {
       
     } else if (typeRegnskap.equalsIgnoreCase("0F")) {
 
-      error_type = new no.ssb.kostra.control.regnskap.regn0F.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+      error_type = new no.ssb.kostra.control.regnskap.regn0F.Main
+              (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
         
     } else if (typeRegnskap.equalsIgnoreCase("0G")) {
         
-      error_type = new no.ssb.kostra.control.regnskap.regn0G.Main 
-          (regionNumber, sourceFile, reportFile, regnskap).start();
+      error_type = new no.ssb.kostra.control.regnskap.regn0G.Main
+              (regionNumber, sourceFile, reportFile, regnskap, statistiskEnhet).start();
 
     } else if (typeRegnskap.equalsIgnoreCase("0X")) {
         

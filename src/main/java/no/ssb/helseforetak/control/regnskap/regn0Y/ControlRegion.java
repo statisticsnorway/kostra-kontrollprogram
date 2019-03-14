@@ -11,7 +11,7 @@ final class ControlRegion extends no.ssb.kostra.control.Control {
     private Vector<Integer> invalidRegions = new Vector<Integer>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = (!region.equals(RecordFields.getRegion(line)));
+        boolean lineHasError = (!region.substring(0, 2).equalsIgnoreCase(RecordFields.getRegion(line).substring(0, 2)));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

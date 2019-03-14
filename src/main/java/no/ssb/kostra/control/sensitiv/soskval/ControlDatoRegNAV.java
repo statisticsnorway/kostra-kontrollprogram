@@ -34,8 +34,10 @@ public final class ControlDatoRegNAV extends no.ssb.kostra.control.Control
       isAcceptableYear = false;
     }
     
-    boolean lineHasError = !isValidDate || !isAcceptableYear;
-            
+    boolean lineHasError = !isValidDate;
+//    boolean lineHasError = !isValidDate || !isAcceptableYear;
+
+
     if (lineHasError)
     {
       linesWithError.add(new Integer(lineNumber));

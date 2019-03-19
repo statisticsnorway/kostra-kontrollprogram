@@ -29,13 +29,13 @@ public final class ControlDatoRegNAV extends no.ssb.kostra.control.Control
     boolean isAcceptableYear;
     try {
       int year = Integer.parseInt(dato.substring(4));
-      isAcceptableYear = year <= Constants.getRapporteringsAarTwoDigits();
+      isAcceptableYear = year <= Constants.getRapporteringsAarTwoDigits() + 1;
     } catch (NumberFormatException e) {
       isAcceptableYear = false;
     }
     
-    boolean lineHasError = !isValidDate;
-//    boolean lineHasError = !isValidDate || !isAcceptableYear;
+//    boolean lineHasError = !isValidDate;
+    boolean lineHasError = !isValidDate || !isAcceptableYear;
 
 
     if (lineHasError)

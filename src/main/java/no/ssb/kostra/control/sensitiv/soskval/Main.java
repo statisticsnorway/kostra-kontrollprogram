@@ -149,7 +149,7 @@ public final class Main {
                     error_type = Constants.CRITICAL_ERROR;
                 } else {
                     report.append("Ingen feil funnet!");
-                    report.append(controls.get(controls.size() - 1).getErrorReport(lineNumber));
+                    //report.append(controls.get(controls.size() - 1).getErrorReport(lineNumber));
                 }
             }
 

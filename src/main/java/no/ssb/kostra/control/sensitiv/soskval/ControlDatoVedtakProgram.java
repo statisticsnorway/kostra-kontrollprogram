@@ -1,27 +1,6 @@
 package no.ssb.kostra.control.sensitiv.soskval;
 
-/*
- * $Log: ControlDatoVedtakProgram.java,v $
- * Revision 1.5  2009/10/13 12:40:59  pll
- * Tekstendring.
- *
- * Revision 1.4  2009/10/11 19:16:27  pll
- * Bugfix.
- *
- * Revision 1.3  2009/10/11 18:54:18  pll
- * Endret etter endring i kravspec.
- *
- * Revision 1.2  2009/10/01 08:01:10  pll
- * Versjon: 2009-rapporteringen
- *
- * Revision 1.1  2009/09/30 13:21:11  pll
- * Import.
- *
- * Revision 1.1  2009/09/30 12:09:28  pll
- *
- * 
- */
- 
+
 import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.utils.*;
@@ -40,7 +19,7 @@ public final class ControlDatoVedtakProgram extends no.ssb.kostra.control.Contro
     boolean isAcceptableYear;
     try {
       int year = Integer.parseInt(dato.substring(4));
-      isAcceptableYear = year <= Constants.getRapporteringsAarTwoDigits();
+      isAcceptableYear = year <= Constants.getRapporteringsAarTwoDigits() + 1;
     } catch (NumberFormatException e) {
       isAcceptableYear = false;
     }

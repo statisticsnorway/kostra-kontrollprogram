@@ -50,7 +50,7 @@ final class ControlKontoklasseOgArtInvestering
             " art: " + container[1] + " (Record nr. " + container[2] + ")" + lf;
       }
     }
-    errorReport += lf + "\tKorreksjon: Rett opp feil kontoklasse eller art." + lf + lf;
+    errorReport += lf + "\tKorreksjon: Rett opp til art som er gyldig i driftsregnskapet, eller overfør posteringen til  investeringsregnskapet." + lf + lf;
     return errorReport;
   }
 

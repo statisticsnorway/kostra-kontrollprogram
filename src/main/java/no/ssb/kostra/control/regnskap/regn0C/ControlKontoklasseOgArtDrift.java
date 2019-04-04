@@ -49,8 +49,6 @@ final class ControlKontoklasseOgArtDrift
 		  art.equalsIgnoreCase ("590") ||
 		  art.equalsIgnoreCase ("800") ||
 		  art.equalsIgnoreCase ("870") ||
-		  art.equalsIgnoreCase ("874") ||
-		  art.equalsIgnoreCase ("875") ||
 		  art.equalsIgnoreCase ("877") ||
 		  art.equalsIgnoreCase ("909") ||
 		  art.equalsIgnoreCase ("990"))
@@ -77,7 +75,7 @@ final class ControlKontoklasseOgArtDrift
             " art: " + container[1] + " (Record nr. " + container[2] + ")" + lf;
       }
     }
-    errorReport += lf + "\tKorreksjon: Rett opp feil kontoklasse eller art." + lf + lf;
+    errorReport += lf + "\tKorreksjon: Rett opp til art som er gyldig i investeringsregnskapet, eller overfør posteringen til driftsregnskapet." + lf + lf;
     return errorReport;
   }
 

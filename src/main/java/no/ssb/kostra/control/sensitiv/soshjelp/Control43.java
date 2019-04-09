@@ -19,8 +19,8 @@ public final class Control43 extends no.ssb.kostra.control.Control
         boolean lineHasError = false;
 
         String field21 = RecordFields.getFieldValue(line, 21);
-        List<Integer> fields = Arrays.asList(251, 252, 254, 256, 257, 258, 2510, 2511, 2514, 2515);
-        List<String> validValues = Arrays.asList("16", "17", "04", "06", "07", "08", "10", "18", "14", "15");
+        List<Integer> fields = Arrays.asList(251, 252, 254, 256, 257, 258, 2510, 2511, 2514, 2515, 2516);
+        List<String> validValues = Arrays.asList("16", "17", "04", "06", "07", "08", "10", "18", "14", "15", "19");
 
         if (field21.equalsIgnoreCase("1")) {
             for (int i = 0; i < fields.size(); i++) {

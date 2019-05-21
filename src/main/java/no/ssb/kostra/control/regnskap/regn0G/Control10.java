@@ -96,7 +96,7 @@ public boolean doControl(String line, int lineNumber, String region, String stat
     if (!hasBelopKap557) errorReport.append("\tkapittel 557" + lf);
     if (!hasBelopKap558) errorReport.append("\tkapittel 558" + lf);*/
     if (!hasBelopKap55990) errorReport.append("\tkapittel 55990 Kapitalkonto" + lf);
-      
+    errorReport.append("NB! Kontrollen under er en \"advarsel\", dvs. at forekomst av feilmeldingen vil ikke forhindre innsending til SSB." + lf);
     return errorReport.toString();
   }
 

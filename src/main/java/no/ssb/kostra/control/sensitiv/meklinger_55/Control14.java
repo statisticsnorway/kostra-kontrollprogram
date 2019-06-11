@@ -15,7 +15,7 @@ public class Control14 extends no.ssb.kostra.control.Control
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = SumChecker.validateIdenticalSum(line, Arrays.asList(329, 418, 530, 724, 924, 1118));
+        boolean lineHasError = !SumChecker.validateIdenticalSum(line, Arrays.asList(329, 418, 530, 724, 924, 1118));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

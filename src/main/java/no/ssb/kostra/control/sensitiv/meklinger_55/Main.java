@@ -58,7 +58,7 @@ public final class Main {
                             if (controls[i].doControl(line, lineNumber, regionNumber, "")) {
                                 container = new String[3];
                                 container[0] = " " + lineNumber + "  ";
-                                container[1] = line.substring(9, 18) + "  ";
+                                container[1] = RecordFields.getFieldValue(line, 2) + "  ";
                                 container[2] = ((SingleRecordErrorReport) controls[i]).getErrorText();
                                 errorLines.add(container);
                                 printNewline = true;
@@ -75,7 +75,7 @@ public final class Main {
                     } else {
                         container = new String[3];
                         container[0] = " " + lineNumber + " ";
-                        container[1] = " xxxxxxxxx ";
+                        container[1] = " xxxxxxxxxxxxxxxxxx ";
                         container[2] = ((SingleRecordErrorReport) controls[0]).getErrorText() + lf;
                         errorLines.add(container);
                     }

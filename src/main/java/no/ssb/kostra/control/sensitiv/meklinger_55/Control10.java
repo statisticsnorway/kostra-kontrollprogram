@@ -15,7 +15,7 @@ public class Control10 extends no.ssb.kostra.control.Control
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = SumChecker.validateSum(line, 86, Arrays.asList(81, 82, 83, 84, 85));
+        boolean lineHasError = !SumChecker.validateSum(line, 86, Arrays.asList(81, 82, 83, 84, 85));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

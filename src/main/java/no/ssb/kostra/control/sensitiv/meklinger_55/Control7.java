@@ -15,13 +15,13 @@ public class Control7 extends no.ssb.kostra.control.Control
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = SumChecker.validateSum(line, 55, Arrays.asList(51, 52, 53, 54))
-                || SumChecker.validateSum(line, 510, Arrays.asList(56, 57, 58, 59))
-                || SumChecker.validateSum(line, 515, Arrays.asList(511, 512, 513, 514))
-                || SumChecker.validateSum(line, 520, Arrays.asList(516, 517, 518, 519))
-                || SumChecker.validateSum(line, 525, Arrays.asList(521, 522, 523, 524))
-                || SumChecker.validateSum(line, 530, Arrays.asList(526, 527, 528, 529))
-                || SumChecker.validateSum(line, 530, Arrays.asList(55, 510, 515, 520, 525));
+        boolean lineHasError = !SumChecker.validateSum(line, 55, Arrays.asList(51, 52, 53, 54))
+                && !SumChecker.validateSum(line, 510, Arrays.asList(56, 57, 58, 59))
+                && !SumChecker.validateSum(line, 515, Arrays.asList(511, 512, 513, 514))
+                && !SumChecker.validateSum(line, 520, Arrays.asList(516, 517, 518, 519))
+                && !SumChecker.validateSum(line, 525, Arrays.asList(521, 522, 523, 524))
+                && !SumChecker.validateSum(line, 530, Arrays.asList(526, 527, 528, 529))
+                && !SumChecker.validateSum(line, 530, Arrays.asList(55, 510, 515, 520, 525));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

@@ -15,13 +15,13 @@ public class Control6 extends no.ssb.kostra.control.Control
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = SumChecker.validateSum(line, 43, Arrays.asList(41, 42))
-                || SumChecker.validateSum(line, 46, Arrays.asList(44, 45))
-                || SumChecker.validateSum(line, 49, Arrays.asList(47, 48))
-                || SumChecker.validateSum(line, 412, Arrays.asList(410, 411))
-                || SumChecker.validateSum(line, 415, Arrays.asList(413, 414))
-                || SumChecker.validateSum(line, 418, Arrays.asList(416, 417))
-                || SumChecker.validateSum(line, 418, Arrays.asList(43, 46, 49, 412, 415));
+        boolean lineHasError = !SumChecker.validateSum(line, 43, Arrays.asList(41, 42))
+                && !SumChecker.validateSum(line, 46, Arrays.asList(44, 45))
+                && !SumChecker.validateSum(line, 49, Arrays.asList(47, 48))
+                && !SumChecker.validateSum(line, 412, Arrays.asList(410, 411))
+                && !SumChecker.validateSum(line, 415, Arrays.asList(413, 414))
+                && !SumChecker.validateSum(line, 418, Arrays.asList(416, 417))
+                && !SumChecker.validateSum(line, 418, Arrays.asList(43, 46, 49, 412, 415));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

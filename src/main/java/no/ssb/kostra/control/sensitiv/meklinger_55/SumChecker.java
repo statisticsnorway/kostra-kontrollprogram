@@ -8,17 +8,22 @@ import java.util.stream.Collectors;
  */
 public class SumChecker {
     public static boolean validateSum( String line, Integer sum, List<Integer> fields) {
-        int checkSum = fields.stream()
-                .filter(i -> integerFilter(i, line))
-                .mapToInt(Integer::intValue)
-                .map(i -> Integer.parseInt(RecordFields.getFieldValue(line, i)))
-                .sum();
+        if (integerFilter(sum, line)){
+            int checkSum = Integer.parseInt(RecordFields.getFieldValue(line, sum.intValue()));
+            int checkSumList = fields.stream()
+                    .filter(i -> integerFilter(i, line))
+                    .map(Integer::intValue)
+                    .map(i -> Integer.parseInt(RecordFields.getFieldValue(line, i)))
+                    .reduce(0, (total, i) -> total + i);
 
-        return sum == checkSum;
+            return checkSumList == checkSum;
+        }
+
+        return false;
     }
 
     public static boolean validateIdenticalSum( String line, List<Integer> fields) {
-        Integer first = fields.get(0);
+        Integer first = Integer.parseInt(RecordFields.getFieldValue(line, fields.get(0)));
 
         List<Integer> filtered = fields.stream()
                 .filter(i -> integerFilter(i, line))

@@ -561,7 +561,7 @@ final class RecordFields {
     /***********************************************************/
 
     static String getAllNumericalFieldsConcatenated(String record) {
-        String numericalFields = record.substring(22, 593);
+        String numericalFields = record.substring(22, 585);
 
         return numericalFields;
     }

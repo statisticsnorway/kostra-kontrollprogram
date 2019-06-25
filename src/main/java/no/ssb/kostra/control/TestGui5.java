@@ -72,6 +72,10 @@ public class TestGui5 extends JFrame {
         jComboBox2.addItem("0J");
         jComboBox2.addItem("0K");
         jComboBox2.addItem("0L");
+        jComboBox2.addItem("0M");
+        jComboBox2.addItem("0N");
+        jComboBox2.addItem("0P");
+        jComboBox2.addItem("0Q");
         jComboBox2.addItem("0F");
         jComboBox2.addItem("0G");
         jComboBox2.addItem("0X");

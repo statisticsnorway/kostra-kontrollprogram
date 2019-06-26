@@ -27,8 +27,11 @@ public class SumChecker {
 
         List<Integer> filtered = fields.stream()
                 .filter(i -> integerFilter(i, line))
-                .map(i -> Integer.parseInt(RecordFields.getFieldValue(line, i)))
-                .filter(i -> i == first  )
+                .map(Integer::intValue)
+                .filter(i -> {
+                    Integer temp = Integer.parseInt(RecordFields.getFieldValue(line, i));
+                    return temp.intValue() == first.intValue();
+                })
                 .collect(Collectors.toList());
 
         return fields.size() == filtered.size();

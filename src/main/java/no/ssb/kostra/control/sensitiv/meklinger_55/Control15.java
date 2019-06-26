@@ -10,12 +10,12 @@ import java.util.Vector;
  */
 public class Control15 extends no.ssb.kostra.control.Control
         implements no.ssb.kostra.control.SingleRecordErrorReport {
-    private final String ERROR_TEXT = "K15: kontroll av identisk verdi felt 9.24, 10.24";
+    private final String ERROR_TEXT = "K15: kontroll av identisk verdi felt 9.21, 10.24";
     private Vector<Integer> invalidRegions = new Vector<>();
 
     @Override
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-        boolean lineHasError = !SumChecker.validateIdenticalSum(line, Arrays.asList(924, 1024));
+        boolean lineHasError = !SumChecker.validateIdenticalSum(line, Arrays.asList(921, 1024));
 
         if (lineHasError) {
             invalidRegions.add(new Integer(lineNumber));

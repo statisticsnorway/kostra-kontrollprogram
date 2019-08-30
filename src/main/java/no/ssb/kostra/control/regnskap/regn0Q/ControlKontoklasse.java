@@ -11,7 +11,7 @@ final class ControlKontoklasse extends no.ssb.kostra.control.Control
   {
     String kontoklasse = RecordFields.getKontoklasse (line);
 
-    boolean lineHasError = ! kontoklasse.equalsIgnoreCase("2");
+    boolean lineHasError = ! kontoklasse.equalsIgnoreCase("5");
     
     if (lineHasError)
     {
@@ -37,7 +37,7 @@ final class ControlKontoklasse extends no.ssb.kostra.control.Control
         errorReport += ").";
       }
     }
-    errorReport += lf + "\tKorreksjon: Rett kontoklassen. Kontoklasse 2 er gyldig for balanseregnskapet." + lf + lf;
+    errorReport += lf + "\tKorreksjon: Rett kontoklassen. Kontoklasse 5 er gyldig for balanseregnskapet." + lf + lf;
     return errorReport;
   }
 

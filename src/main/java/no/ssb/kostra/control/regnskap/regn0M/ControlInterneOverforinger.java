@@ -61,7 +61,7 @@ final class ControlInterneOverforinger extends no.ssb.kostra.control.Control
       int funksjon = RecordFields.getFunksjonIntValue (line);
       String art = RecordFields.getArt (line);
 
-      boolean rettKontoklasse = (kontoklasse.equalsIgnoreCase("0") || 
+      boolean rettKontoklasse = (kontoklasse.equalsIgnoreCase("4") ||
           kontoklasse.equalsIgnoreCase("1"));
       boolean rettFunksjon = (funksjon >= 100 && funksjon <= 899);
       boolean rettArt = art.equalsIgnoreCase("290");
@@ -83,7 +83,7 @@ final class ControlInterneOverforinger extends no.ssb.kostra.control.Control
       int funksjon = RecordFields.getFunksjonIntValue (line);
       String art = RecordFields.getArt (line);
 
-      boolean rettKontoklasse = (kontoklasse.equalsIgnoreCase("0") || 
+      boolean rettKontoklasse = (kontoklasse.equalsIgnoreCase("4") ||
           kontoklasse.equalsIgnoreCase("1"));
       boolean rettFunksjon = (funksjon >= 100 && funksjon <= 899);
       boolean rettArt = art.equalsIgnoreCase("790");

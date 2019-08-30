@@ -21,7 +21,7 @@ final class Control23a
     {
 	  if (funksjon.equalsIgnoreCase ("841"))
 		{
-			if (!kontoklasse.equalsIgnoreCase("0"))
+			if (!kontoklasse.equalsIgnoreCase("4"))
 			{
 			        lineHasError = true;
 			        String[] container = {kontoklasse, funksjon, Integer.toString (lineNumber)};  
@@ -38,7 +38,7 @@ final class Control23a
     if (foundError())
     {
       int numOfRecords = invalidCombinations.size();
-      errorReport += "\tFeil: Funksjon 841 er kun tillatt brukt i investeringsregnskapet, kontoklasse 0." + lf; 
+      errorReport += "\tFeil: Funksjon 841 er kun tillatt brukt i investeringsregnskapet, kontoklasse 4." + lf;
       for (int i=0; i<numOfRecords; i++)
       {
         String[] container = (String[]) invalidCombinations.elementAt(i);

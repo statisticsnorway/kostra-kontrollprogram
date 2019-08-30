@@ -43,11 +43,11 @@ final class Control290 extends no.ssb.kostra.control.Control {
       errorReport += "\tFeil: Differanse på funksjon for interkommunale samarbeid (§ 27- samarbeid) (funksjon 290): " + lf;
       if (Math.abs (sumForControl_18_1) >= MAX_DIFF)
       {
-        errorReport += "\t\t" + Math.abs (sumForControl_18_1) + "' (Kontoklasse 0)" + lf;  
+        errorReport += "\t\t" + Math.abs (sumForControl_18_1) + "' (Kontoklasse 4)" + lf;
       }
       if (Math.abs (sumForControl_18_2) >= MAX_DIFF)
       {
-        errorReport += "\t\t" + Math.abs (sumForControl_18_2) + "' (Kontoklasse 1)" + lf;  
+        errorReport += "\t\t" + Math.abs (sumForControl_18_2) + "' (Kontoklasse 3)" + lf;
       }
       errorReport += "\tKorreksjon: Rett opp i fila slik at funksjon 290 går i 0." + lf + lf;  
           
@@ -66,7 +66,7 @@ final class Control290 extends no.ssb.kostra.control.Control {
       String kontoklasse = RecordFields.getKontoklasse(line);
       String funksjon = RecordFields.getFunksjon(line);
       int art = RecordFields.getArtIntValue(line);
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("0");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("4");
       boolean rettFunksjon = funksjon.equalsIgnoreCase("290");
       boolean rettArt = ((art >= 10) && (art <= 590)) || ((art >= 600) && (art <= 990));
       return (rettKontoklasse && rettFunksjon && rettArt);
@@ -81,7 +81,7 @@ final class Control290 extends no.ssb.kostra.control.Control {
       String kontoklasse = RecordFields.getKontoklasse(line);
       String funksjon = RecordFields.getFunksjon(line);
       int art = RecordFields.getArtIntValue(line);
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
       boolean rettFunksjon = funksjon.equalsIgnoreCase("290");
       boolean rettArt = ((art >= 10) && (art <= 590)) || ((art >= 600) && (art <= 990));
       return (rettKontoklasse && rettFunksjon && rettArt);

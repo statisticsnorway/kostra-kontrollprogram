@@ -158,7 +158,7 @@ public final class ControlSkatteinntekter extends no.ssb.kostra.control.Control 
 		String funksjon = RecordFields.getFunksjon(line);
 		String art = RecordFields.getArt(line);
 
-		boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+		boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
 		boolean rettFunksjon = (funksjon.equalsIgnoreCase("800"));
 		boolean rettArt = (art.equalsIgnoreCase("870"));
 
@@ -175,7 +175,7 @@ public final class ControlSkatteinntekter extends no.ssb.kostra.control.Control 
 			int funksjon = RecordFields.getFunksjonIntValue(line);
 			String art = RecordFields.getArt(line);
 
-			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
 			boolean rettFunksjon = (funksjon >= 400 && funksjon <= 799);
 			boolean rettArt = (art.equalsIgnoreCase("870"));
 
@@ -199,7 +199,7 @@ public final class ControlSkatteinntekter extends no.ssb.kostra.control.Control 
 			int funksjon = RecordFields.getFunksjonIntValue(line);
 			String art = RecordFields.getArt(line);
 
-			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
 			boolean rettFunksjon = (funksjon >= 840 && funksjon <= 899);
 			boolean rettArt = (art.equalsIgnoreCase("870"));
 
@@ -224,7 +224,7 @@ public final class ControlSkatteinntekter extends no.ssb.kostra.control.Control 
 			int funksjon = RecordFields.getFunksjonIntValue(line);
 			String art = RecordFields.getArt(line);
 
-			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
 			boolean rettFunksjon = (funksjon >= 400 && funksjon <= 800);
 			boolean rettArt = (art.equalsIgnoreCase("800"));
 
@@ -249,7 +249,7 @@ public final class ControlSkatteinntekter extends no.ssb.kostra.control.Control 
 			int funksjon = RecordFields.getFunksjonIntValue(line);
 			String art = RecordFields.getArt(line);
 
-			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+			boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
 			boolean rettFunksjon = (funksjon >= 850 && funksjon <= 899);
 			boolean rettArt = (art.equalsIgnoreCase("800"));
 

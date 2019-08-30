@@ -78,7 +78,7 @@ private int lines = 0;
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon == 9100);
       boolean rettArt = (art >= 0 && art <= 999);
       
@@ -99,7 +99,7 @@ private int lines = 0;
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon == 9200);
       boolean rettArt = (art >= 0 && art <= 999);
       
@@ -120,7 +120,7 @@ private int lines = 0;
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon == 9999);
       boolean rettArt = (art >= 0 && art <= 999);
       
@@ -141,7 +141,7 @@ private int lines = 0;
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon == 9110);
       boolean rettArt = (art >= 0 && art <= 999);
       

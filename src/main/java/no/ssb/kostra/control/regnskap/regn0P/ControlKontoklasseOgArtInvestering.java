@@ -14,7 +14,7 @@ final class ControlKontoklasseOgArtInvestering
   
     String kontoklasse = RecordFields.getKontoklasse (line);
     
-    if (kontoklasse.equalsIgnoreCase("1"))
+    if (kontoklasse.equalsIgnoreCase("3"))
     { 
       String art = RecordFields.getArt (line);
 

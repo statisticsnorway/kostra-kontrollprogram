@@ -82,7 +82,7 @@ final class ControlSummering extends no.ssb.kostra.control.Control
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon >= 10 && funksjon <= 27);
       boolean rettArt = (art >= 0 && art <= 999);
       
@@ -103,7 +103,7 @@ final class ControlSummering extends no.ssb.kostra.control.Control
       int funksjon = RecordFields.getFunksjonIntValue (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
       boolean rettFunksjon = (funksjon >= 31 && funksjon <= 5990);
       boolean rettArt = (art >= 0 && art <= 999);
       

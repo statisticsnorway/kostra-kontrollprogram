@@ -14,7 +14,7 @@ final class ControlKontoklasseOgFunksjon
   
     String kontoklasse = RecordFields.getKontoklasse (line);
     
-    if (kontoklasse.equalsIgnoreCase("0"))
+    if (kontoklasse.equalsIgnoreCase("4"))
     { 
       String funksjon = RecordFields.getFunksjon (line);
 

@@ -22,7 +22,7 @@ final class Control23c
     {
 	  if (art.equalsIgnoreCase ("874") || art.equalsIgnoreCase ("875"))
 		{
-			if (!funksjon.equalsIgnoreCase ("800") && kontoklasse.equalsIgnoreCase("1"))
+			if (!funksjon.equalsIgnoreCase ("800") && kontoklasse.equalsIgnoreCase("3"))
 			{
 			        lineHasError = true;
 			        String[] container = {kontoklasse, funksjon, art, Integer.toString (lineNumber)};  
@@ -39,7 +39,7 @@ final class Control23c
     if (foundError())
     {
       int numOfRecords = invalidCombinations.size();
-      errorReport += "\tFeil: I driftsregnskapet, kontoklasse 1, er artene 874 og 875 kun tillat brukt i kombinasjon med funksjon 800." + lf;
+      errorReport += "\tFeil: I driftsregnskapet, kontoklasse 3, er artene 874 og 875 kun tillat brukt i kombinasjon med funksjon 800." + lf;
       for (int i=0; i<numOfRecords; i++)
       {
         String[] container = (String[]) invalidCombinations.elementAt(i);

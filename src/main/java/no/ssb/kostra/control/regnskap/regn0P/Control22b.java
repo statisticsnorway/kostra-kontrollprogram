@@ -21,7 +21,7 @@ final class Control22b
    {
 		if (art.equalsIgnoreCase ("729"))
 		{
-			if (!funksjon.equalsIgnoreCase ("841") && kontoklasse.equalsIgnoreCase("0"))
+			if (!funksjon.equalsIgnoreCase ("841") && kontoklasse.equalsIgnoreCase("4"))
 			{
 			        lineHasError = true;
 			        String[] container = {kontoklasse, funksjon, art, Integer.toString (lineNumber)};  
@@ -38,7 +38,7 @@ final class Control22b
     if (foundError())
     {
       int numOfRecords = invalidCombinations.size();
-      errorReport += "\tFeil: I investeringsregnskapet, kontoklasse 0, er art 729 kun tillat brukt i kombinasjon med funksjon 841." + lf; 
+      errorReport += "\tFeil: I investeringsregnskapet, kontoklasse 4, er art 729 kun tillat brukt i kombinasjon med funksjon 841." + lf;
       for (int i=0; i<numOfRecords; i++)
       {
         String[] container = (String[]) invalidCombinations.elementAt(i);

@@ -19,7 +19,7 @@ public final class Control8a extends no.ssb.kostra.control.Control {
 		if ((funksjon.equalsIgnoreCase("800")
 				|| funksjon.equalsIgnoreCase("840") || funksjon
 					.equalsIgnoreCase("860"))
-				&& !kontoklasse.equalsIgnoreCase("1")) {
+				&& !kontoklasse.equalsIgnoreCase("3")) {
 			lineHasError = true;
 			String[] container = { kontoklasse, funksjon,
 					Integer.toString(lineNumber) };

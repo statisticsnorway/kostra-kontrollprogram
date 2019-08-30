@@ -11,8 +11,8 @@ final class ControlKontoklasse extends no.ssb.kostra.control.Control
   {
     String kontoklasse = RecordFields.getKontoklasse (line);
 
-    boolean lineHasError = ! (kontoklasse.equalsIgnoreCase("0") || 
-                              kontoklasse.equalsIgnoreCase("1"));
+    boolean lineHasError = ! (kontoklasse.equalsIgnoreCase("3") ||
+                              kontoklasse.equalsIgnoreCase("4"));
     
     if (lineHasError)
     {
@@ -38,7 +38,7 @@ final class ControlKontoklasse extends no.ssb.kostra.control.Control
         errorReport += ").";
       }
     }
-    errorReport += lf + "\tKorreksjon: Rett kontoklasse. Kontoklasse 0 og 1 er gyldige for bevilgningsregnskapet." + lf + lf;
+    errorReport += lf + "\tKorreksjon: Rett kontoklasse. Kontoklasse 3 og 4 er gyldige for bevilgningsregnskapet." + lf + lf;
     return errorReport;
   }
 

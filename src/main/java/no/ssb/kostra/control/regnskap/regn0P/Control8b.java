@@ -13,7 +13,7 @@ public final class Control8b extends no.ssb.kostra.control.Control {
 		String funksjon = RecordFields.getFunksjon(line);
 
 		if (funksjon.equalsIgnoreCase("841")
-				&& !kontoklasse.equalsIgnoreCase("0")) {
+				&& !kontoklasse.equalsIgnoreCase("4")) {
 			lineHasError = true;
 			String[] container = { kontoklasse, funksjon,
 					Integer.toString(lineNumber) };

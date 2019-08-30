@@ -80,7 +80,7 @@ final class Control490 extends no.ssb.kostra.control.Control {
       String funksjon = RecordFields.getFunksjon (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
       boolean rettFunksjon = funksjon.equalsIgnoreCase("490");
       boolean rettArt = (art >= 10 && art <= 590);
       
@@ -97,7 +97,7 @@ final class Control490 extends no.ssb.kostra.control.Control {
       String funksjon = RecordFields.getFunksjon (line);
       int art = RecordFields.getArtIntValue (line);
 
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("1");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("3");
       boolean rettFunksjon = funksjon.equalsIgnoreCase("490");
       boolean rettArt = (art >= 600 && art <= 990);
       
@@ -113,7 +113,7 @@ final class Control490 extends no.ssb.kostra.control.Control {
       String kontoklasse = RecordFields.getKontoklasse(line);
       String funksjon = RecordFields.getFunksjon(line);
       int art = RecordFields.getArtIntValue(line);
-      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("0");
+      boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("4");
       boolean rettFunksjon = funksjon.equalsIgnoreCase("490");
       boolean rettArt = ((art >= 10) && (art <= 590) || (art >= 600) && (art <= 990));
       return (rettKontoklasse && rettFunksjon && rettArt);

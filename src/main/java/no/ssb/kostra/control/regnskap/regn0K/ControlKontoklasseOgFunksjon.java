@@ -43,7 +43,7 @@ final class ControlKontoklasseOgFunksjon
             " funksjon: " + container[1] + " (Record nr. " + container[2] + ")" + lf;
       }
     }
-    errorReport += "\tKorreksjon: Rett opp feil kontoklasse eller funksjon." + lf + lf;
+    errorReport += "\tKorreksjon: Rett opp til funksjon som er gyldig i investeringsregnskapet, eller overfør posteringen til driftsregnskapet." + lf + lf;
     return errorReport;
   }
 

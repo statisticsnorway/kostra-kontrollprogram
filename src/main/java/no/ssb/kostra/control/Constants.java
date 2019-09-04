@@ -1,22 +1,9 @@
-/*
- * Constants.java
- *
- * Created on 24. september 2007, 09:22
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package no.ssb.kostra.control;
 
-/**
- *
- * @author pll
- */
 public final class Constants {
     
     // Rapporteringsaar.
-    public static final String kostraYear = "2018";
+    public static final String kostraYear = "2019";
     public static final String kvartalKostraYear = "2019";
 
     // Linjeskift til bruk ved skriving av kontrollrapporter.

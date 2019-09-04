@@ -1,8 +1,5 @@
 package no.ssb.kostra.control.sensitiv.soshjelp;
 
-/*
- *
-*/
 
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.utils.CompatJdk13;
@@ -20,7 +17,7 @@ public class ControlNumericalFields extends no.ssb.kostra.control.Control
                 + line.substring(41, 259)
                 + line.substring(269, 272)
                 + line.substring(284, 304)
-                + line.substring(310, 322);
+                + line.substring(310, 324);
 
         boolean lineHasError =
                 !CompatJdk13.isNumericalWithSpace(concatenatedNumericalFields);

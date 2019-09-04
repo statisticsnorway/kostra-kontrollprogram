@@ -115,7 +115,7 @@ public final class Main {
     }
 
     private void initControls() {
-        controls = new Control[13];
+        controls = new Control[12];
         controls[0] = new ControlRecordlengde();
         controls[1] = new ControlAargang();
         controls[2] = new ControlKommunenummer();
@@ -124,10 +124,9 @@ public final class Main {
         controls[5] = new ControlKapitler();
         controls[6] = new ControlSummering();
         controls[7] = new ControlDubletter();
-        controls[8] = new ControlAntallSifferBelop();
-        controls[9] = new Control10();
-        controls[10] = new ControlRecord();
-        controls[11] = new no.ssb.kostra.control.regnskap.ControlOrgNr();
-        controls[12] = new ControlNumericalFields();
+        controls[8] = new Control10();
+        controls[9] = new ControlRecord();
+        controls[10] = new no.ssb.kostra.control.regnskap.ControlOrgNr();
+        controls[11] = new ControlNumericalFields();
     }
 }

@@ -1,7 +1,5 @@
 package no.ssb.kostra.control.sensitiv.meklinger_55;
 
-/*
-*/
 
 import no.ssb.kostra.control.Constants;
 
@@ -55,6 +53,6 @@ public final class ControlFylkesnummer extends no.ssb.kostra.control.Control
     }
 
     public int getErrorType() {
-        return Constants.NORMAL_ERROR;
+        return Constants.CRITICAL_ERROR;
     }
 }

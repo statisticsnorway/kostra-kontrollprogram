@@ -38,10 +38,10 @@ final class ControlOverforingDriftInvestering
 
   public String getErrorReport (int totalLineNumber)
   {
-    String errorReport = "Kontroll 13, overfø¸ring mellom drifts- og investeringsregnskap:" + lf + lf;
+    String errorReport = "Kontroll 13, overføring mellom drifts- og investeringsregnskap:" + lf + lf;
     if (foundError())
     {
-      errorReport += "\tFeil: Differanse i overfø¸ring mellom drifts- og investeringsregnskapet (art 570 og 970): " +
+      errorReport += "\tFeil: Differanse i overføring mellom drifts- og investeringsregnskapet (art 570 og 970): " +
           (sumForControl_15_a + sumForControl_15_b) + "'. " +
           "(Art 570: " + sumForControl_15_a + "', art 970: " + sumForControl_15_b + "')" + lf + lf;
     }

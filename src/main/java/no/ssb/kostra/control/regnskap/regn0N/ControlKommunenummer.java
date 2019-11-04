@@ -1,81 +1,51 @@
 package no.ssb.kostra.control.regnskap.regn0N;
 
-import java.util.Vector;
 import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.utils.Regioner;
 
-final class ControlKommunenummer extends no.ssb.kostra.control.Control
-{
-  private Vector<Integer> invalidRegions = new Vector<Integer>();
-  private Vector<Integer> divergingRegions = new Vector<Integer>();
-  private String region = "";
+import java.util.Vector;
 
-  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
-  {
-    boolean lineHasError = false;
-  
-    this.region = region;
-  
-    String knr = RecordFields.getRegion(line);
-    
-    if (! Regioner.kommuneNrIsValid (knr))
-    {
-      lineHasError = true;
-      invalidRegions.add (new Integer (lineNumber));
-    }
-    else if (! knr.equalsIgnoreCase(region))
-    {
-      lineHasError = true;
-      divergingRegions.add(new Integer (lineNumber));
-    }
-    return lineHasError;
-  }
+final class ControlKommunenummer extends no.ssb.kostra.control.Control {
+    private Vector<Integer> divergingRegions = new Vector<Integer>();
+    private String region = "";
 
-  public String getErrorReport (int totalLineNumber)
-  {
-    String errorReport = "Kontroll 3, kommunenummer / bydelsnummer:" + lf;
-    int numOfRecords = invalidRegions.size();
-    if (numOfRecords > 0)
-    {      
-      errorReport += lf + "\tFeil: ukjent kommunenummer i " + numOfRecords + 
-          " record" + (numOfRecords == 1 ? "" : "s") + "."; 
-      if (numOfRecords <= 10)
-      {
-        errorReport += lf + "\t\t(Gjelder record nr.";
-        for (int i=0; i<numOfRecords; i++)
-        {
-          errorReport += " " + invalidRegions.elementAt(i);
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasError = false;
+
+        this.region = region;
+
+        String knr = RecordFields.getRegion(line);
+
+        if (!knr.equalsIgnoreCase(region)) {
+            lineHasError = true;
+            divergingRegions.add(new Integer(lineNumber));
         }
-        errorReport += ").";
-      }
+        return lineHasError;
     }
-    numOfRecords = divergingRegions.size();
-    if (numOfRecords > 0)
-    {
-      errorReport += lf + "\tFeil: Ukjent kommunenummer og / eller bydelsnummer i " + numOfRecords +
-          " record" + (numOfRecords == 1 ? "" : "s") + ".";
+
+    public String getErrorReport(int totalLineNumber) {
+        String errorReport = "Kontroll 3, kommunenummer / bydelsnummer:" + lf;
+        int numOfRecords = divergingRegions.size();
+        if (numOfRecords > 0) {
+            errorReport += lf + "\tFeil: Ukjent kommunenummer og / eller bydelsnummer i " + numOfRecords +
+                    " record" + (numOfRecords == 1 ? "" : "s") + ".";
       /*+ " avviker fra oppgitt kommunenummer (" + region + ")."*/
-      if (numOfRecords <= 10)
-      {
-        errorReport += lf + "\t\t(Gjelder record nr.";
-        for (int i=0; i<numOfRecords; i++)
-        {
-          errorReport += " " + divergingRegions.elementAt(i);
+            if (numOfRecords <= 10) {
+                errorReport += lf + "\t\t(Gjelder record nr.";
+                for (int i = 0; i < numOfRecords; i++) {
+                    errorReport += " " + divergingRegions.elementAt(i);
+                }
+                errorReport += ").";
+            }
         }
-        errorReport += ").";
-      }
+        errorReport += lf + "\tKorreksjon: Rett kommunenummeret / bydelsnummeret." + lf + lf;
+        return errorReport;
     }
-    errorReport += lf + "\tKorreksjon: Rett kommunenummeret / bydelsnummeret." + lf + lf;
-    return errorReport;
-  }
 
-  public boolean foundError()
-  {
-    return (invalidRegions.size() > 0 ||
-            divergingRegions.size() > 0);
-  }  
+    public boolean foundError() {
+        return (divergingRegions.size() > 0);
+    }
 
-  public int getErrorType() {
-    return Constants.CRITICAL_ERROR;
-  }
+    public int getErrorType() {
+        return Constants.CRITICAL_ERROR;
+    }
 }

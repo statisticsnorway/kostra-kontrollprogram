@@ -214,8 +214,8 @@ public final class ControlProgram {
             throw new IllegalArgumentException("Feil antall argumenter!\n" + USAGE);
         }
 
-        if (!Regioner.regionNrIsValid(region_nr) && !RegionerKvartal.regionNrIsValid(region_nr))
-            throw new IllegalArgumentException("Ugyldig regionnr.: " + region_nr);
+//        if (!Regioner.regionNrIsValid(region_nr) && !RegionerKvartal.regionNrIsValid(region_nr))
+//            throw new IllegalArgumentException("Ugyldig regionnr.: " + region_nr);
 
         if (!typeFiluttrekkIsValid(type_filuttrekk_tmp)) {
             throw new IllegalArgumentException

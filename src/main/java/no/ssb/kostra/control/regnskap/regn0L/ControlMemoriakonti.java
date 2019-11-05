@@ -2,28 +2,33 @@ package no.ssb.kostra.control.regnskap.regn0L;
 
 import no.ssb.kostra.control.Constants;
 
-/**
- * Created by ojj on 02.05.2018.
- */
+import java.util.Arrays;
+
 final class ControlMemoriakonti extends no.ssb.kostra.control.Control {
     private final int MAX_DIFF = 10;
-    private int sumForMemoriakonti = 0;
+    private int sumForControl = 0;
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         boolean lineControlled = false;
-        int belop;
 
         try {
+            String kontoklasse = RecordFields.getKontoklasse(line);
+            int funksjon = RecordFields.getFunksjonIntValue(line);
+            int art = RecordFields.getArtIntValue(line);
 
-            belop = RecordFields.getBelopIntValue(line);
+            boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+            boolean rettFunksjon = Arrays.asList(9100, 9110, 9200, 9999).contains(funksjon);
+            boolean rettArt = (art >= 0 && art <= 990);
+
+            if (rettKontoklasse && rettFunksjon && rettArt) {
+                sumForControl += RecordFields.getBelopIntValue(line);
+                lineControlled = true;
+            }
 
         } catch (Exception e) {
-            return lineControlled;
-        }
 
-        if (isMemoriakonti(line)) {
-            lineControlled = true;
-            sumForMemoriakonti += belop;
+            // Exception her er sannsynligvis NumberFormatException.
+            // Det er da OK at lineControlled = false;
         }
 
         return lineControlled;
@@ -32,38 +37,21 @@ final class ControlMemoriakonti extends no.ssb.kostra.control.Control {
     public String getErrorReport(int totalLineNumber) {
         String errorReport = "Kontroll 15, Memoriakonti:" + lf + lf;
 
-        if (Math.abs(sumForMemoriakonti) >= MAX_DIFF) {
-            errorReport += "\tAdvarsel: Differanse mellom memoriakontiene og motkonto for memoriakontiene : " +
-                    (sumForMemoriakonti) + lf;
+        if (foundError()) {
+            errorReport += "\tAdvarsel: Differanse mellom memoriakonti og motkonto for memoriakonti: " +
+                    (sumForControl) + "'";
+            errorReport += lf + "\tKorreksjon: Rett opp differansen mellom aktiva og passiva i balanseregnskapet.";
         }
-        errorReport += lf + "\tKorreksjon: Rett opp differansen mellom aktiva og passiva i balanseregnskapet."
-                + lf + lf;
+        errorReport += lf + lf;
+
         return errorReport;
     }
 
     public boolean foundError() {
-        return Math.abs(sumForMemoriakonti) >= MAX_DIFF;
+        return Math.abs(sumForControl) >= MAX_DIFF;
     }
-
 
     public int getErrorType() {
         return Constants.NORMAL_ERROR;
-    }
-
-    private boolean isMemoriakonti(String line) {
-        try {
-            String kontoklasse = RecordFields.getKontoklasse(line);
-            int funksjon = RecordFields.getFunksjonIntValue(line);
-            int art = RecordFields.getArtIntValue(line);
-
-            boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
-            boolean rettFunksjon = (funksjon == 9100 || funksjon == 9200 || funksjon == 9999);
-            boolean rettArt = (art >= 0 && art <= 999);
-
-            return rettKontoklasse && rettFunksjon && rettArt;
-        } catch (Exception e) {
-            //Maa logges!
-            return false;
-        }
     }
 }

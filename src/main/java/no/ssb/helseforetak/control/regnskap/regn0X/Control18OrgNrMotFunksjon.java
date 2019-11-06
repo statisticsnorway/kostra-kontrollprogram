@@ -35,7 +35,8 @@ final class Control18OrgNrMotFunksjon extends no.ssb.kostra.control.Control {
                         orgnr.equalsIgnoreCase("916879067") ||
                         orgnr.equalsIgnoreCase("818711832") ||
                         orgnr.equalsIgnoreCase("918177833") ||
-                        orgnr.equalsIgnoreCase("918695079"));
+                        orgnr.equalsIgnoreCase("918695079") ||
+                        orgnr.equalsIgnoreCase("922307814"));
             }
 
         }

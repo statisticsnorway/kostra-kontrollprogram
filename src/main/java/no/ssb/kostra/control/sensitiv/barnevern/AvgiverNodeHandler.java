@@ -115,17 +115,17 @@ public class AvgiverNodeHandler extends NodeHandler {
 			 *   - Kontrollerer at kommunenummeret fins i liste over gyldige kommunenumre som er med i denne rapporteringen
 			 * </pre>
 			 */
-//			controlBoolean(
-//					er,
-//					new ErrorReportEntry(
-//							" ",
-//							" ",
-//							" ",
-//							" ",
-//							"Avgiver K5: Gyldig kommunenummer",
-//							"Filen inneholder feil kommunenummer. Fins ikke i listen over gyldige kommunenumre.",
-//							Constants.CRITICAL_ERROR),
-//					no.ssb.kostra.utils.Regioner.kommuneNrIsValid(region));
+			controlBoolean(
+					er,
+					new ErrorReportEntry(
+							" ",
+							" ",
+							" ",
+							" ",
+							"Avgiver K5: Gyldig kommunenummer",
+							"Filen inneholder feil kommunenummer. Fins ikke i listen over gyldige kommunenumre.",
+							Constants.CRITICAL_ERROR),
+					no.ssb.kostra.utils.Regioner.kommuneNrIsValid(region));
 
 			/**
 			 * <pre>

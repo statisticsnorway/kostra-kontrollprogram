@@ -16,7 +16,7 @@ final class ControlMemoriakonti extends no.ssb.kostra.control.Control {
             int funksjon = RecordFields.getFunksjonIntValue(line);
             int art = RecordFields.getArtIntValue(line);
 
-            boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("2");
+            boolean rettKontoklasse = kontoklasse.equalsIgnoreCase("5");
             boolean rettFunksjon = Arrays.asList(9100, 9110, 9200, 9999).contains(funksjon);
             boolean rettArt = (art >= 0 && art <= 990);
 

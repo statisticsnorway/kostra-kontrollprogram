@@ -47,7 +47,8 @@ public final class OrgNummer
 		{{"916879067", "Sykehusinnkjøp HF"},	     								    {"916879067"}},
 		{{"818711832", "Luftambulansetjenesten HF "},                                   {"818711832"}},
 		{{"918177833", "Helse Nord IKT HF "},                                           {"918177833"}},
-		{{"918695079", "Pasientreiser HF "},                                            {"918695079"}}
+		{{"918695079", "Pasientreiser HF "},                                            {"918695079"}},
+        {{"922307814", "Helseplattformen AS"},                                          {"922307814"}}
 	};
 
   

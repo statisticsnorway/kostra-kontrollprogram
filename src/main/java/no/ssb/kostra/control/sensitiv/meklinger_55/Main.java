@@ -8,7 +8,9 @@ import no.ssb.kostra.control.UnreadableDataException;
 import no.ssb.kostra.utils.Regioner;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
 public final class Main {
@@ -17,8 +19,8 @@ public final class Main {
     private String regionNumber;
     private File sourceFile;
     private File reportFile;
-    private Control[] controls;
-    private Vector<String[]> errorLines = new Vector<String[]>();
+    private List<Control> controls;
+    private Vector<String[]> errorLines = new Vector<>();
 
     public Main
             (String regionNumber, File sourceFile, File reportFile)
@@ -49,17 +51,17 @@ public final class Main {
                     //Sjekker recordlengde forst, fordi feil reccordlengde
                     //vil kunne odelegge mange andre kontroller
                     //(StringIndexOutOfBoundsException etc.)
-                    if (!controls[0].doControl(line, lineNumber, regionNumber, "")) {
+                    if (!controls.get(0).doControl(line, lineNumber, regionNumber, "")) {
                         //Kontroll 4 er spesiell: krever kontornummer.
                         //((ControlKontornummer) controls[3]).setKontorNumber (kontorNumber);
 
                         printNewline = false;
-                        for (int i = 1; i < controls.length; i++) {
-                            if (controls[i].doControl(line, lineNumber, regionNumber, "")) {
+                        for (int i = 1; i < controls.size(); i++) {
+                            if (controls.get(i).doControl(line, lineNumber, regionNumber, "")) {
                                 container = new String[3];
                                 container[0] = " " + lineNumber + "  ";
                                 container[1] = RecordFields.getFieldValue(line, 2) + "  ";
-                                container[2] = ((SingleRecordErrorReport) controls[i]).getErrorText();
+                                container[2] = ((SingleRecordErrorReport) controls.get(i)).getErrorText();
                                 errorLines.add(container);
                                 printNewline = true;
                             }
@@ -76,7 +78,7 @@ public final class Main {
                         container = new String[3];
                         container[0] = " " + lineNumber + " ";
                         container[1] = " xxxxxxxxxxxxxxxxxx ";
-                        container[2] = ((SingleRecordErrorReport) controls[0]).getErrorText() + lf;
+                        container[2] = ((SingleRecordErrorReport) controls.get(0)).getErrorText() + lf;
                         errorLines.add(container);
                     }
                 }
@@ -109,16 +111,16 @@ public final class Main {
             int control_error_type;
             StringBuffer buffer = new StringBuffer();
 
-            for (int i = 0; i < controls.length; i++) {
-                if (controls[i].foundError()) {
-                    control_error_type = controls[i].getErrorType();
+            for (int i = 0; i < controls.size(); i++) {
+                if (controls.get(i).foundError()) {
+                    control_error_type = controls.get(i).getErrorType();
                     if (control_error_type > error_type)
                         error_type = control_error_type;
 
                     if (control_error_type == Constants.CRITICAL_ERROR)
                         buffer.append(Constants.CRITICAL_ERROR_TEXT_MSG + lf);
 
-                    buffer.append(controls[i].getErrorReport(lineNumber));
+                    buffer.append(controls.get(i).getErrorReport(lineNumber));
                     numOfErrors += 1;
                 }
             }
@@ -161,21 +163,20 @@ public final class Main {
     }
 
     private void initControls() {
-        controls = new Control[15];
-        controls[0] = new ControlRecordlengde();
-        controls[1] = new ControlNumericalFields();
-        controls[2] = new ControlFylkesnummer();
-        controls[3] = new ControlDubletter();
-        controls[4] = new Control5();
-        controls[5] = new Control6();
-        controls[6] = new Control7();
-        controls[7] = new Control8();
-        controls[8] = new Control9();
-        controls[9] = new Control10();
-        controls[10] = new Control11();
-        controls[11] = new Control12();
-        controls[12] = new Control13();
-        controls[13] = new Control14();
-        controls[14] = new Control15();
+        controls = new ArrayList<>();
+        controls.add( new ControlRecordlengde());
+        controls.add( new ControlNumericalFields());
+        controls.add( new ControlFylkesnummer());
+        controls.add( new Control5());
+        controls.add( new Control6());
+        controls.add( new Control7());
+        controls.add( new Control8());
+        controls.add( new Control9());
+        controls.add( new Control10());
+        controls.add( new Control11());
+        controls.add( new Control12());
+        controls.add( new Control13());
+        controls.add( new Control14());
+        controls.add( new Control15());
     }
 }

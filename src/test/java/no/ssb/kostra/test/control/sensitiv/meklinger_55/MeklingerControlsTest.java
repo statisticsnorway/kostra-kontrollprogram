@@ -25,14 +25,6 @@ public class MeklingerControlsTest {
     }
 
     @Test
-    public void controlDubletterTest() {
-        ControlDubletter c = new ControlDubletter();
-        assertFalse(c.doControl(ok_1, 1, "", ""));
-        assertTrue(c.doControl(ok_1, 1, "", ""));
-        assertTrue(c.doControl(ok_1, 1, "", ""));
-    }
-
-    @Test
     public void control5TestOK() {
         Control5 c = new Control5();
         assertFalse(c.doControl(ok_1, 1, "", ""));

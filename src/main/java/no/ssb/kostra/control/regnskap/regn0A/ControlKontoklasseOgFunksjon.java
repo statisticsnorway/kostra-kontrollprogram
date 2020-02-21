@@ -19,7 +19,6 @@ final class ControlKontoklasseOgFunksjon
       String funksjon = RecordFields.getFunksjon (line);
 
       if (funksjon.equalsIgnoreCase("800") ||
-          funksjon.equalsIgnoreCase("840") ||
           funksjon.equalsIgnoreCase("860"))
       { 
         lineHasError = true;

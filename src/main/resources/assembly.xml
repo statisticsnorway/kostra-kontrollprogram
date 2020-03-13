@@ -7,7 +7,7 @@
   <fileSets>
     <fileSet>
       <directory>target/classes</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory/>
     </fileSet>
   </fileSets>
   <dependencySets>

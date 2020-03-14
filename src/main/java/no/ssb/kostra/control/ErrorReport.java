@@ -12,42 +12,16 @@ import no.ssb.kostra.utils.Regioner;
 
 public class ErrorReport {
 	private final String VERSION = "15." + Constants.kostraYear + ".01";
-	private long antall = 0;
-	private List<ErrorReportEntry> entries = new ArrayList<ErrorReportEntry>();
-	private Map<String, Long> mapEntries = new TreeMap<String, Long>();
-	private Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<String, Map<String, Map<String, List<String>>>>();
+	private long count = 0;
+	private List<ErrorReportEntry> entries = new ArrayList<>();
+	private Map<String, Long> mapEntries = new TreeMap<>();
+	private Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<>();
 	private int errorType = Constants.NO_ERROR;
 	private Date startTime = Calendar.getInstance().getTime();
 
-	public long incrementAntall() {
-		antall++;
-		return antall;
-	}
-
-	public void addEntry2(ErrorReportEntry entry) {
-		try {
-			if (this.errorType < entry.getErrorType()) {
-				this.errorType = entry.getErrorType();
-			}
-
-			if (entry.getErrorType() == Constants.CRITICAL_ERROR) {
-				String errorText = new String("**Hindrer innsending** " + entry.getErrorText());
-				// errorText.concat(Constants.CRITICAL_ERROR_SHORT_TEXT_MSG);
-				entry.setErrorText(errorText);
-			}
-
-			Long l = 0L;
-			if (mapEntries.containsKey(entry.getKontrollNr())) {
-				l = (mapEntries.get(entry.getKontrollNr()) != null) ? mapEntries.get(entry.getKontrollNr()) : 0L;
-			}
-
-			l++;
-			mapEntries.put(entry.getKontrollNr(), l);
-			entries.add(entry);
-
-		} catch (NullPointerException e) {
-			// TODO: handle exception
-		}
+	public long incrementCount() {
+		count++;
+		return count;
 	}
 
 	public void addEntry(ErrorReportEntry entry) {
@@ -83,7 +57,7 @@ public class ErrorReport {
 
 			entriesList.add(entry.getKontrollNr());
 			entriesList.add(entry.getErrorText());
-			entriesList.add(new Integer(entry.getErrorType()).toString());
+			entriesList.add(Integer.toString(entry.getErrorType()));
 
 			journalnummerMap.put(entry.getKontrollNr(), entriesList);
 			saksbehandlerMap.put(entry.getJournalnummer(), journalnummerMap);
@@ -182,57 +156,8 @@ public class ErrorReport {
 
 			
 		} else {
-			if (antall == 0) {
+			if (count == 0) {
 				report.append("Finner ingen data!  :-(");
-				this.errorType = Constants.CRITICAL_ERROR;
-			} else {
-				report.append("Ingen feil funnet!");
-			}
-		}
-
-		return report.toString();
-	}
-
-	public String generateReport2(String regionNumber, File sourceFile, File reportFile) {
-		StringBuffer report = new StringBuffer();
-		String lf = Constants.lineSeparator;
-
-		report.append("-------------------------------------------------" + lf);
-		report.append(lf);
-		report.append(" Kontrollrapport for " + regionNumber + " " + Regioner.getRegionName(regionNumber) + lf);
-		report.append(lf);
-		report.append("-------------------------------------------------" + lf + lf);
-
-		report.append("Kontrollprogramversjon: " + VERSION + lf);
-		report.append("Rapport generert: " + Calendar.getInstance().getTime() + lf);
-		report.append("Kontrollert fil: " + (sourceFile != null ? sourceFile.getAbsolutePath() : "") + lf);
-		report.append("Type filuttrekk: Barnevern " + Constants.kostraYear + lf + lf);
-
-		if (!entries.isEmpty()) {
-			report.append(lf + "Opplisting av feil pr. saksbehandler -> journalnummer -> referansenr -> kontrollnummer og -tekst):" + lf
-					+ "---------------------------------------------------------------------" + lf + lf);
-
-			// report.append("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
-			// + lf);
-			// report.append("00000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999990"
-			// + lf);
-			// report.append("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112"
-			// + lf);
-
-			for (ErrorReportEntry ere : entries) {
-				report.append(String.format("%-15s %-80s %s", ere.getJournalnummer(), ere.getKontrollNr(), ere.getErrorText()) + lf);
-			}
-			report.append(lf + "Oppsummering pr. kontroll:" + lf + "-------------------------------------------------" + lf + lf);
-
-			for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
-				report.append(String.format("Kontroll %s har funnet %d feil eller advarsler", entry.getKey(), entry.getValue()) + lf);
-			}
-
-			report.append(lf + "errorType:" + errorType + lf + "-------------------------------------------------" + lf + lf);
-
-		} else {
-			if (antall == 0) {
-				report.append("Finner ingen data! :-(");
 				this.errorType = Constants.CRITICAL_ERROR;
 			} else {
 				report.append("Ingen feil funnet!");

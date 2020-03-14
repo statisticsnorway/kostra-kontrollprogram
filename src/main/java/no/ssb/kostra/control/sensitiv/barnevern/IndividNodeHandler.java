@@ -140,7 +140,7 @@ public class IndividNodeHandler extends NodeHandler {
                     .queryString("@Id") : "Uoppgitt";
 
             if (journalnummer != null) {
-                er.incrementAntall();
+                er.incrementCount();
             }
 
             // Kontroller for Individ

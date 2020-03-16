@@ -10,37 +10,23 @@ package no.ssb.kostra.utils;
 public final class FamilievernKontorNrChecker {
 
     public static boolean hasCorrectKontorNr(String regionNr, String kontorNr) {
-
-        boolean correctKontorNr;
-        int kontorNrNumVal;
-
         try {
-            kontorNrNumVal = Integer.parseInt(kontorNr);
+            int kontorNrNumVal = Integer.parseInt(kontorNr);
+            switch (regionNr){
+                case "667600": return between(kontorNrNumVal, 17, 52);
+                case "667500": return between(kontorNrNumVal, 61, 101);
+                case "667400": return between(kontorNrNumVal, 111, 142);
+                case "667300": return between(kontorNrNumVal, 151, 172);
+                case "667200": return between(kontorNrNumVal, 181, 205);
+                // Vi har ugyldig regionnr.
+                default: return false;
+            }
         } catch (NumberFormatException e) {
             return false;
         }
+    }
 
-        if (regionNr.equalsIgnoreCase("667600")) {
-            correctKontorNr = kontorNrNumVal >= 17 && kontorNrNumVal <= 52;
-
-        } else if (regionNr.equalsIgnoreCase("667500")) {
-            correctKontorNr = kontorNrNumVal >= 61 && kontorNrNumVal <= 101;
-
-        } else if (regionNr.equalsIgnoreCase("667400")) {
-            correctKontorNr = kontorNrNumVal >= 111 && kontorNrNumVal <= 142;
-
-        } else if (regionNr.equalsIgnoreCase("667300")) {
-            correctKontorNr = kontorNrNumVal >= 151 && kontorNrNumVal <= 172;
-
-        } else if (regionNr.equalsIgnoreCase("667200")) {
-            correctKontorNr = kontorNrNumVal >= 181 && kontorNrNumVal <= 205;
-
-        } else {
-            // Vi har ugyldig regionnr., men det er ikke vårt ansvar å
-            // å rapportere dette...
-            correctKontorNr = true;
-        }
-
-        return correctKontorNr;
+    private static boolean between(int theNumber, int lowerLimit, int upperLimit){
+        return lowerLimit <= theNumber && theNumber <= upperLimit;
     }
 }

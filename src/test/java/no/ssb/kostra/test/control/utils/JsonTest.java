@@ -31,7 +31,7 @@ public class JsonTest {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void testValidFunksjon() {
         InputStream is = getClass().getResourceAsStream("/Regnskap_2017_0A_0C_kontoklasse.json");
 

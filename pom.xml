@@ -58,12 +58,6 @@
                     <descriptors>
                         <descriptor>src/main/resources/assembly.xml</descriptor>
                     </descriptors>
-                    <fileSets>
-                        <fileSet>
-                            <directory>src/main/resources</directory>
-                            <outputDirectory>./</outputDirectory>
-                        </fileSet>
-                    </fileSets>
                     <archive>
                         <manifest>
                             <mainClass>no.ssb.kostra.control.ControlProgram</mainClass>

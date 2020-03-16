@@ -9,7 +9,7 @@ public final class ControlFylkeKontornummer extends no.ssb.kostra.control.Contro
     implements no.ssb.kostra.control.SingleRecordErrorReport
 {
   private final String ERROR_TEXT = "K5: Manglende samsvar mellom regions- og kontornummer";
-  private Vector<Integer> lineNumbers = new Vector<Integer>();
+  private Vector<Integer> lineNumbers = new Vector<>();
 
   public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
   {
@@ -20,7 +20,7 @@ public final class ControlFylkeKontornummer extends no.ssb.kostra.control.Contro
 
     if (lineHasError)
     {
-      lineNumbers.add (new Integer (lineNumber));
+      lineNumbers.add(lineNumber);
     }
     return lineHasError;
   }

@@ -1,7 +1,3 @@
-/*
- * TestGui4.java
- */
-
 package no.ssb.kostra.control;
 
 import javax.swing.*;

@@ -489,29 +489,10 @@ public final class Regioner {
             {"999900", "Hele landet"}
     };
 
-    public static boolean regionNrIsValid(String regionNr) {
-        for (int i = regions.length - 1; i >= 0; i--) {
-            if (regionNr.equalsIgnoreCase(regions[i][0])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static boolean kommuneNrIsValid(String kommuneNr) {
         for (int i = regions.length - 1; i >= 0; i--) {
             if (kommuneNr.equalsIgnoreCase(regions[i][0]) &&
                     !kommuneNr.substring(2, 4).equalsIgnoreCase("00")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean fylkeskommuneNrIsValid(String fylkeskommuneNr) {
-        for (int i = regions.length - 1; i >= 0; i--) {
-            if (fylkeskommuneNr.equalsIgnoreCase(regions[i][0]) &&
-                    fylkeskommuneNr.substring(2, 4).equalsIgnoreCase("00")) {
                 return true;
             }
         }

@@ -97,30 +97,30 @@ final class RecordFields {
 	}
 
 	static int getAargangIntValue(String record) throws Exception {
-		return (new Integer(getAargang(record))).intValue();
+		return Integer.valueOf(getAargang(record));
 	}
 
 	static int getKvartalIntValue(String record) throws Exception {
-		return (new Integer(getKvartal(record))).intValue();
+		return Integer.valueOf(getKvartal(record));
 	}
 
 	static int getKontoklasseIntValue(String record) throws Exception {
-		return (new Integer(getKontoklasse(record))).intValue();
+		return Integer.valueOf(getKontoklasse(record));
 	}
 
 	static int getFunksjonIntValue(String record) throws Exception {
 		String funksjon = getFunksjon(record);
-		return (new Integer(funksjon)).intValue();
+		return Integer.valueOf(funksjon);
 	}
 
 	static int getArtIntValue(String record) throws Exception {
 		String art = getArt(record);
-		return (new Integer(art)).intValue();
+		return Integer.valueOf(art);
 	}
 
 	static int getBelopIntValue(String record) throws NumberFormatException {
 		String belop = getBelop(record);
-		return (new Integer(belop)).intValue();
+		return Integer.valueOf(belop);
 	}
 
 	static String getAllNumericalFieldsConcatenated(String record) {

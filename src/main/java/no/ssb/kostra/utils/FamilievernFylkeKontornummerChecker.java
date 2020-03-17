@@ -1,14 +1,10 @@
 package no.ssb.kostra.utils;
 
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by ojj on 07.11.2018.
- */
 public class FamilievernFylkeKontornummerChecker {
     public static boolean hasCorrectFylkeKontorNr(String fylkesNumber, String kontorNumber) {
         Map<String, List<String>> gyldigeFylkeKontor = new HashMap<>();
@@ -31,13 +27,9 @@ public class FamilievernFylkeKontornummerChecker {
         gyldigeFylkeKontor.put("20", Arrays.asList("201", "202", "203", "204", "205"));
         gyldigeFylkeKontor.put("50", Arrays.asList("162", "171", "172"));
 
-
-        String field = fylkesNumber;
         if (gyldigeFylkeKontor.containsKey(fylkesNumber)) {
             List<String> gyldigeKontor = gyldigeFylkeKontor.get(fylkesNumber);
-            if (gyldigeKontor.contains(kontorNumber)) {
-                return true;
-            }
+            return gyldigeKontor.contains(kontorNumber);
         }
 
         return false;

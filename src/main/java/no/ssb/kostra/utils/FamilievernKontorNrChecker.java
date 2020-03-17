@@ -1,12 +1,5 @@
-/*
- * FamilievernKontorNrChecker.java
- */
-
 package no.ssb.kostra.utils;
 
-/**
- *
- */
 public final class FamilievernKontorNrChecker {
 
     public static boolean hasCorrectKontorNr(String regionNr, String kontorNr) {

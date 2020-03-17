@@ -5,7 +5,7 @@ import no.ssb.kostra.control.Constants;
 import java.util.Vector;
 
 public final class ControlOrgNummer extends no.ssb.kostra.control.Control {
-    private Vector<Integer> recordNumbers = new Vector<Integer>();
+    private Vector<Integer> recordNumbers = new Vector<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
         String orgNum = RecordFields.getOrgNummer(line).trim();
@@ -13,7 +13,7 @@ public final class ControlOrgNummer extends no.ssb.kostra.control.Control {
         boolean lineHasError = (!orgNum.equalsIgnoreCase(statistiskEnhet));
 
         if (lineHasError) {
-            recordNumbers.add(new Integer(lineNumber));
+            recordNumbers.add(lineNumber);
         }
 
         return lineHasError;

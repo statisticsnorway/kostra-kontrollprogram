@@ -1,8 +1,6 @@
 package no.ssb.kostra.control;
 
 import no.ssb.kostra.control.regnskap.UnknownRegnskapException;
-import no.ssb.kostra.utils.Regioner;
-import no.ssb.kostra.utils.RegionerKvartal;
 
 import java.io.File;
 import java.io.IOException;

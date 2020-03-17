@@ -1,15 +1,13 @@
 package no.ssb.kostra.control.regnskap;
 
 import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.utils.RegionerKvartal;
+//import no.ssb.kostra.utils.RegionerKvartal;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Vector;
-
-//import no.ssb.kostra.control.ProgramExitMarker;
 
 
 public class ControlProgram {
@@ -44,7 +42,7 @@ public class ControlProgram {
         // (for 0C-regnskap) eller typeRegnskap=0BK* (for 0D-regnskap).
         // (P.g.a. lazy programming på Hubbus.)
         // Retter dette her.
-        if (RegionerKvartal.fylkeskommuneNrIsValid(regionNumber)) {
+        if (regionNumber.substring(2, 3).equalsIgnoreCase("00")) {
 
             if (typeRegnskap.equalsIgnoreCase("0AK1") ||
                     typeRegnskap.equalsIgnoreCase("0AK2") ||
@@ -189,8 +187,7 @@ public class ControlProgram {
                 typeRegnskap.equalsIgnoreCase("0AK4")) {
 
             error_type = new no.ssb.kostra.control.regnskap.regn0Akvartal.Main
-                    (regionNumber, sourceFile, reportFile, regnskap, new
-                            Integer(typeRegnskap.substring(3, 4))).start();
+                    (regionNumber, sourceFile, reportFile, regnskap, Integer.valueOf(typeRegnskap.substring(3, 4))).start();
 
         } else if (typeRegnskap.equalsIgnoreCase("0BK1") ||
                 typeRegnskap.equalsIgnoreCase("0BK2") ||
@@ -198,8 +195,7 @@ public class ControlProgram {
                 typeRegnskap.equalsIgnoreCase("0BK4")) {
 
             error_type = new no.ssb.kostra.control.regnskap.regn0Bkvartal.Main
-                    (regionNumber, sourceFile, reportFile, regnskap, new
-                            Integer(typeRegnskap.substring(3, 4))).start();
+                    (regionNumber, sourceFile, reportFile, regnskap, Integer.valueOf(typeRegnskap.substring(3, 4))).start();
 
         } else if (typeRegnskap.equalsIgnoreCase("0CK1") ||
                 typeRegnskap.equalsIgnoreCase("0CK2") ||
@@ -207,8 +203,7 @@ public class ControlProgram {
                 typeRegnskap.equalsIgnoreCase("0CK4")) {
 
             error_type = new no.ssb.kostra.control.regnskap.regn0Ckvartal.Main
-                    (regionNumber, sourceFile, reportFile, regnskap, new
-                            Integer(typeRegnskap.substring(3, 4))).start();
+                    (regionNumber, sourceFile, reportFile, regnskap, Integer.valueOf(typeRegnskap.substring(3, 4))).start();
 
         } else if (typeRegnskap.equalsIgnoreCase("0DK1") ||
                 typeRegnskap.equalsIgnoreCase("0DK2") ||
@@ -216,8 +211,7 @@ public class ControlProgram {
                 typeRegnskap.equalsIgnoreCase("0DK4")) {
 
             error_type = new no.ssb.kostra.control.regnskap.regn0Dkvartal.Main
-                    (regionNumber, sourceFile, reportFile, regnskap, new
-                            Integer(typeRegnskap.substring(3, 4))).start();
+                    (regionNumber, sourceFile, reportFile, regnskap, Integer.valueOf(typeRegnskap.substring(3, 4))).start();
 
         } else if (typeRegnskap.equalsIgnoreCase("0A")) {
 

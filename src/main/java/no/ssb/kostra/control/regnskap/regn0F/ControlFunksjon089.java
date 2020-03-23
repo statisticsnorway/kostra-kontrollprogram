@@ -55,6 +55,6 @@ final class ControlFunksjon089 extends no.ssb.kostra.control.Control
 	  }  
 	  
 	  public int getErrorType() {
-	    return Constants.CRITICAL_ERROR;
+	    return Constants.NORMAL_ERROR;
 	  }
 }

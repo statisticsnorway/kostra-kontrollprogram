@@ -11,12 +11,14 @@ import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.sensitiv.barnevern.IndividNodeHandler;
 import no.ssb.kostra.control.sensitiv.barnevern.NodeHandler;
 
+import no.ssb.kostra.controlprogram.Arguments;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
 public class NodeHandlerTest {
 	Map<String, String> avgiver;
+	Arguments args;
 	ErrorReport er;
 	ErrorReportEntry ere;
 	NodeHandler nh;
@@ -29,7 +31,8 @@ public class NodeHandlerTest {
 		avgiver.put("Versjon", "2013");
 		avgiver.put("Kommunenummer", "060200");
 		avgiver.put("Kommunenavn", "Drammen");
-		er = new ErrorReport();
+		args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "060200"});
+		er = new ErrorReport(args);
 		nh = new IndividNodeHandler(er, "060200", avgiver);
 		ere = new ErrorReportEntry();
 

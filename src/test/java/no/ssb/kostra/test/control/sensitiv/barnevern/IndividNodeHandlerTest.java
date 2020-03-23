@@ -1,9 +1,11 @@
 package no.ssb.kostra.test.control.sensitiv.barnevern;
 
+import com.sun.jdi.connect.Connector;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.sensitiv.barnevern.IndividNodeHandler;
+import no.ssb.kostra.controlprogram.Arguments;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import static org.junit.Assert.*;
 
 public class IndividNodeHandlerTest {
     Map<String, String> avgiver;
+    Arguments args;
     ErrorReport er;
     ErrorReportEntry ere;
     IndividNodeHandler inh;
@@ -25,7 +28,8 @@ public class IndividNodeHandlerTest {
     @Before
     public void beforeTest() {
         avgiver = new TreeMap<String, String>();
-        er = new ErrorReport();
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "060200"});
+        er = new ErrorReport(args);
         inh = new IndividNodeHandler(er, "060200", avgiver);
         ere = new ErrorReportEntry();
 

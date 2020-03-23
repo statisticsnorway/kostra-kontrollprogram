@@ -8,16 +8,27 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import no.ssb.kostra.utils.Regioner;
+import no.ssb.kostra.controlprogram.Arguments;
 
 public class ErrorReport {
-	private final String VERSION = "15." + Constants.kostraYear + ".01";
+	private final String VERSION;
 	private long count = 0;
 	private List<ErrorReportEntry> entries = new ArrayList<>();
 	private Map<String, Long> mapEntries = new TreeMap<>();
 	private Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<>();
 	private int errorType = Constants.NO_ERROR;
 	private Date startTime = Calendar.getInstance().getTime();
+	private Arguments args;
+
+	public ErrorReport(){
+		VERSION = Constants.kostraYear + ".01";
+		args = new Arguments(new String[]{"-s", "15F"});
+	}
+
+	public ErrorReport(Arguments args){
+		VERSION = args.getSkjema() + " " + Constants.kostraYear + ".01";
+	}
+
 
 	public long incrementCount() {
 		count++;
@@ -47,13 +58,13 @@ public class ErrorReport {
 
 			// Legg til en entry i hierarkiet
 			Map<String, Map<String, List<String>>> saksbehandlerMap = (rapportMap.containsKey(entry.getSaksbehandler())) ? rapportMap.get(entry
-					.getSaksbehandler()) : new TreeMap<String, Map<String, List<String>>>();
+					.getSaksbehandler()) : new TreeMap<>();
 
 			Map<String, List<String>> journalnummerMap = saksbehandlerMap.containsKey(entry.getJournalnummer()) ? saksbehandlerMap.get(entry
-					.getJournalnummer()) : new TreeMap<String, List<String>>();
+					.getJournalnummer()) : new TreeMap<>();
 
 			List<String> entriesList = (journalnummerMap.containsKey(entry.getKontrollNr())) ? journalnummerMap.get(entry.getKontrollNr())
-					: new ArrayList<String>();
+					: new ArrayList<>();
 
 			entriesList.add(entry.getKontrollNr());
 			entriesList.add(entry.getErrorText());
@@ -70,6 +81,11 @@ public class ErrorReport {
 	}
 
 	public String generateReport(String regionNumber, File sourceFile, File reportFile) {
+		return "";
+	}
+
+	public String generateReport() {
+
 		StringBuffer report = new StringBuffer();
 		String lf = Constants.lineSeparator;
 
@@ -77,14 +93,14 @@ public class ErrorReport {
 		report.append("<html><body>" + lf);
 		report.append("<hr/><br/>" + lf);
 		report.append("<br/>" + lf);
-		report.append("<h3>Kontrollrapport for " + regionNumber + " " + Regioner.getRegionName(regionNumber) + "</h3>"+ lf);
+		report.append("<h3>Kontrollrapport for " + args.getRegion() + " " + args.getNavn() + "</h3>"+ lf);
 		report.append("<br/>" + lf);
 		report.append("<hr/><br/><br/>" + lf + lf);
 
 		report.append("<h4>Kontrollprogramversjon: " + VERSION + "</h4>" + lf);
 		report.append("<h4>Kontroller startet: " + startTime.toString() + "</h4>" + lf);
 		report.append("<h4>Rapport generert: " + Calendar.getInstance().getTime() + "</h4>" + lf);
-		report.append("<h4>Kontrollert fil: " + (sourceFile != null ? sourceFile.getAbsolutePath() : "") + "</h4>" + lf);
+		report.append("<h4>Kontrollert fil: " + args.getInputFilePath() + "</h4>" + lf);
 		report.append("<h4>Type filuttrekk: Barnevern " + Constants.kostraYear + "</h4>" + lf + lf);
 
 		if (!mapEntries.isEmpty()) {

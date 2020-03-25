@@ -1,79 +1,75 @@
 package no.ssb.kostra.control.regnskap.regn0Ckvartal;
 
-import java.util.Vector;
-
 import no.ssb.kostra.control.Constants;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+
 final class ControlFunksjoner extends no.ssb.kostra.control.Control {
-	private String[] validFunksjoner =
-		{
-			"400", "410", "420", "421", "430", "460", "465", "470",
-			"471", "472", "473", "480", "490", "510", "515", "520",
-			"521", "522", "523", "524", "525", "526", "527", "528",
-			"529", "530", "531", "532", "533", "554", "559", "561",
-			"562", "570", "581", "590", "660", "665", "701", "710",
-			"711", "715", "716", "722", "730", "731", "732", "733",
-			"734", "740", "750", "760", "771", "772", "775", "790",
-			"800", "840", "841", "860", "870", "880", "899", "z"
-		};
+    private List<String> validFunksjoner = Arrays.asList(
+            "400", "410", "420", "421", "430", "460", "465", "470", "471", "472", "473", "480",
+            "510", "515", "520", "521", "522", "523", "524", "525",
+            "526", "527", "528", "529", "530", "531", "532", "533", "534", "535", "536", "537",
+            "554", "559", "561", "562", "570", "581", "590",
+            "660", "665",
+            "700", "705", "710", "711", "715", "716", "722", "730", "731", "732", "733", "734", "735", "740",
+            "750", "760", "771", "772", "775", "790",
+            "800", "840", "841", "850", "860", "870", "880", "899",
+            "z"
+    );
 
-	private Vector<String[]> invalidFunksjoner = new Vector<String[]>();
+    private Vector<String[]> invalidFunksjoner = new Vector<>();
 
-	public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-		String funksjon = RecordFields.getFunksjon(line);
-		// Kontrollen skal ikke foretas hvis belop = 0 og funksjon er definert.
-		try {
-			int belop = RecordFields.getBelopIntValue(line);
-			if (belop == 0 && funksjon.trim().length() > 0) {
-				return false;
-			}
-		} catch (Exception e) {
-			// Returnerer her ogsaa. Gir ikke mening med kontroll
-			// hvis belop ikke er angitt.
-			return false;
-		}
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasError = false;
 
-		boolean lineHasError = !validFunksjon(funksjon);
+        String funksjon = RecordFields.getFunksjon(line);
 
-		if (lineHasError) {
-			String[] container = new String[2];
-			container[0] = Integer.toString(lineNumber);
-			container[1] = funksjon;
-			invalidFunksjoner.add(container);
-		}
-		return lineHasError;
-	}
+        // Kontrollen skal ikke foretas hvis belop = 0 og funksjon er definert.
+        try {
+            int belop = RecordFields.getBelopIntValue(line);
+            if (belop == 0 && funksjon.trim().length() > 0) {
+                return false;
+            }
+        } catch (Exception e) {
+            // Returnerer her ogsaa. Gir ikke mening med kontroll
+            // hvis belop ikke er angitt.
+            return false;
+        }
 
-	public String getErrorReport(int totalLineNumber) {
-		String errorReport = "Kontroll 6, gyldige funksjoner:" + lf + lf;
-		int numOfRecords = invalidFunksjoner.size();
-		if (numOfRecords > 0) {
-			errorReport += "\tFeil: Ukjent" + (numOfRecords == 1 ? "" : "e")
-					+ " funksjon" + (numOfRecords == 1 ? "" : "er") + ":" + lf;
-			for (int i = 0; i < numOfRecords; i++) {
-				String[] container = (String[]) invalidFunksjoner.elementAt(i);
-				errorReport += "\t\tfunksjon " + container[1] + " (Record nr. "
-						+ container[0] + ")" + lf;
-			}
-		}
-		errorReport += lf;
-		return errorReport;
-	}
+        if (!validFunksjoner.contains(funksjon)) {
+            lineHasError = true;
+            String[] container = new String[2];
+            container[0] = Integer.toString(lineNumber);
+            container[1] = funksjon;
+            invalidFunksjoner.add(container);
+        }
 
-	public boolean foundError() {
-		return invalidFunksjoner.size() > 0;
-	}
+        return lineHasError;
+    }
 
-	private boolean validFunksjon(String funksjon) {
-		for (int i = validFunksjoner.length - 1; i >= 0; i--) {
-			if (funksjon.equalsIgnoreCase(validFunksjoner[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public String getErrorReport(int totalLineNumber) {
+        String errorReport = "Kontroll 6, gyldige funksjoner:" + lf + lf;
+        int numOfRecords = invalidFunksjoner.size();
+        if (numOfRecords > 0) {
+            errorReport += "\tFeil: Ukjent" + (numOfRecords == 1 ? "" : "e")
+                    + " funksjon" + (numOfRecords == 1 ? "" : "er") + ":" + lf;
+            for (int i = 0; i < numOfRecords; i++) {
+                String[] container = invalidFunksjoner.elementAt(i);
+                errorReport += "\t\tfunksjon " + container[1] + " (Record nr. "
+                        + container[0] + ")" + lf;
+            }
+        }
+        errorReport += lf;
+        return errorReport;
+    }
 
-	public int getErrorType() {
-		return Constants.NORMAL_ERROR;
-	}
+    public boolean foundError() {
+        return (invalidFunksjoner.size() > 0);
+    }
+
+    public int getErrorType() {
+        return Constants.NORMAL_ERROR;
+    }
 }

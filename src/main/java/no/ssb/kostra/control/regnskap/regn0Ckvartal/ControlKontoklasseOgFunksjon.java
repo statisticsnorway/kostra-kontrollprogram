@@ -1,59 +1,47 @@
 package no.ssb.kostra.control.regnskap.regn0Ckvartal;
 
-import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 
-final class ControlKontoklasseOgFunksjon 
-    extends no.ssb.kostra.control.Control
-{
-  private Vector<String[]> invalidCombinations = new Vector<String[]>();
+import java.util.Arrays;
+import java.util.Vector;
 
-  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
-  {
-    boolean lineHasError = false;
-  
-    String kontoklasse = RecordFields.getKontoklasse (line);
-    
-    if (kontoklasse.equalsIgnoreCase("0"))
-    { 
-      String funksjon = RecordFields.getFunksjon (line);
+final class ControlKontoklasseOgFunksjon extends no.ssb.kostra.control.Control {
+    private Vector<String[]> invalidCombinations = new Vector<>();
 
-      if (funksjon.equalsIgnoreCase("800") ||
-          funksjon.equalsIgnoreCase("840") ||
-          funksjon.equalsIgnoreCase("860"))
-      { 
-        lineHasError = true;
-        String[] container = {kontoklasse, funksjon, Integer.toString (lineNumber)};  
-        invalidCombinations.add (container);
-      }
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasError = false;
+
+        String kontoklasse = RecordFields.getKontoklasse(line);
+        String funksjon = RecordFields.getFunksjon(line);
+
+        if (Arrays.asList("800", "840", "860").contains(funksjon) && !kontoklasse.equalsIgnoreCase("1")) {
+            lineHasError = true;
+            String[] container = {kontoklasse, funksjon, Integer.toString(lineNumber)};
+            invalidCombinations.add(container);
+        }
+        return lineHasError;
     }
-    return lineHasError;
-  }
 
-  public String getErrorReport (int totalLineNumber)
-  {
-    String errorReport = "Kontroll 8, kombinasjon kontoklasse og funksjon:" + lf + lf;
-    if (foundError())
-    {
-      int numOfRecords = invalidCombinations.size();
-      errorReport += "\tFeil: Funksjonen er kun tillatt brukt i driftsregnskapet." + lf; 
-      for (int i=0; i<numOfRecords; i++)
-      {
-        String[] container = (String[]) invalidCombinations.elementAt(i);
-        errorReport += "\t\tkontoklasse: " + container[0] + 
-            " funksjon: " + container[1] + " (Record nr. " + container[2] + ")" + lf;
-      }
+    public String getErrorReport(int totalLineNumber) {
+        String errorReport = "Kontroll 8, kombinasjon kontoklasse og funksjon:" + lf + lf;
+        if (foundError()) {
+            int numOfRecords = invalidCombinations.size();
+            errorReport += "\tFeil: Funksjonen er kun tillatt brukt i driftsregnskapet." + lf;
+            for (int i = 0; i < numOfRecords; i++) {
+                String[] container = invalidCombinations.elementAt(i);
+                errorReport += "\t\tkontoklasse: " + container[0] +
+                        " funksjon: " + container[1] + " (Record nr. " + container[2] + ")" + lf;
+            }
+        }
+        errorReport += lf;
+        return errorReport;
     }
-    errorReport += lf;
-    return errorReport;
-  }
 
-  public boolean foundError()
-  {
-    return invalidCombinations.size() > 0;
-  }  
+    public boolean foundError() {
+        return invalidCombinations.size() > 0;
+    }
 
-  public int getErrorType() {
-    return Constants.NORMAL_ERROR;
-  }
+    public int getErrorType() {
+        return Constants.NORMAL_ERROR;
+    }
 }

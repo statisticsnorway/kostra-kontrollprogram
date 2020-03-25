@@ -4,7 +4,7 @@ public final class Constants {
     
     // Rapporteringsaar.
     public static final String kostraYear = "2019";
-    public static final String kvartalKostraYear = "2019";
+    public static final String kvartalKostraYear = "2020";
 
     // Linjeskift til bruk ved skriving av kontrollrapporter.
     public static final String lineSeparator 

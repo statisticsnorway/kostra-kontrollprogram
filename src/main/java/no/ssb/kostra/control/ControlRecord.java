@@ -4,14 +4,10 @@ import java.util.Vector;
 
 
 public class ControlRecord extends Control {
-
-
-    private Vector<Integer> lineNumbers = new Vector<Integer>();
+    private Vector<Integer> lineNumbers = new Vector<>();
     private String[] illegalCharacters = new String[]{"\t"};
 
-
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-
         boolean hasError = false;
 
         for (int i = illegalCharacters.length - 1; i >= 0; i--) {
@@ -24,9 +20,7 @@ public class ControlRecord extends Control {
         return hasError;
     }
 
-
     public String getErrorReport(int totalLineNumber) {
-
         StringBuilder errorReport =
                 new StringBuilder("Kontroll av ulovlige tegn (f.eks. TAB/tabulator-tegn) i filuttrekket:" + lf + lf);
 
@@ -48,16 +42,11 @@ public class ControlRecord extends Control {
         return errorReport.toString();
     }
 
-
     public boolean foundError() {
-
         return lineNumbers.size() > 0;
     }
 
-
     public int getErrorType() {
-
         return Constants.CRITICAL_ERROR;
     }
-
 }

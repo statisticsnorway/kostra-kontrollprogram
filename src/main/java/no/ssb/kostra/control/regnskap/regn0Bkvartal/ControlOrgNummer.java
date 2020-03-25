@@ -1,53 +1,46 @@
 package no.ssb.kostra.control.regnskap.regn0Bkvartal;
 
-import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 
-final class ControlOrgNummer extends no.ssb.kostra.control.Control
-{
-  private Vector<Integer> recordNumbers = new Vector<Integer>();
+import java.util.Vector;
 
-  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
-  {
-    String orgNum = RecordFields.getOrgNummer (line);
+final class ControlOrgNummer extends no.ssb.kostra.control.Control {
+    private Vector<Integer> recordNumbers = new Vector<>();
 
-    boolean lineHasError = ! orgNum.equalsIgnoreCase("         ");
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        String orgNum = RecordFields.getOrgNummer(line);
 
-    if (lineHasError)
-    {
-      recordNumbers.add (new Integer (lineNumber));
-    }
-    return lineHasError;
-  }
+        boolean lineHasError = !orgNum.equalsIgnoreCase("         ");
 
-  public String getErrorReport (int totalLineNumber)
-  {
-    String errorReport = "Kontroll 5, kombinasjonen kontoklasse og organisasjonsnummer:" + lf + lf;
-    int numOfRecords = recordNumbers.size();
-    if (numOfRecords > 0)
-    {
-      errorReport += "\t Feil: Manglende samsvar mellom kontoklasse og regnskapstype. " + lf + 
-          "\t\t" + numOfRecords + " av " + totalLineNumber + " records har utfylt organisasjonsnummer.";
-      if (numOfRecords <= 10)
-      {
-        errorReport += "(Gjelder følgende records:";
-        for (int i=0; i<numOfRecords; i++)
-        {
-          errorReport += " " + recordNumbers.elementAt(i);
+        if (lineHasError) {
+            recordNumbers.add(new Integer(lineNumber));
         }
-        errorReport += ")";
-      }
-      errorReport += lf + lf;
+        return lineHasError;
     }
-    return errorReport;
-  }
 
-  public boolean foundError()
-  {
-    return recordNumbers.size() > 0;
-  }  
+    public String getErrorReport(int totalLineNumber) {
+        String errorReport = "Kontroll 5, kombinasjonen kontoklasse og organisasjonsnummer:" + lf + lf;
+        int numOfRecords = recordNumbers.size();
+        if (numOfRecords > 0) {
+            errorReport += "\t Feil: Manglende samsvar mellom kontoklasse og regnskapstype. " + lf +
+                    "\t\t" + numOfRecords + " av " + totalLineNumber + " records har utfylt organisasjonsnummer.";
+            if (numOfRecords <= 10) {
+                errorReport += "(Gjelder følgende records:";
+                for (int i = 0; i < numOfRecords; i++) {
+                    errorReport += " " + recordNumbers.elementAt(i);
+                }
+                errorReport += ")";
+            }
+            errorReport += lf + lf;
+        }
+        return errorReport;
+    }
 
-  public int getErrorType() {
-    return Constants.NORMAL_ERROR;
-  }
+    public boolean foundError() {
+        return recordNumbers.size() > 0;
+    }
+
+    public int getErrorType() {
+        return Constants.NORMAL_ERROR;
+    }
 }

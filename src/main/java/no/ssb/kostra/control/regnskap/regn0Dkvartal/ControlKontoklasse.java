@@ -1,54 +1,50 @@
 package no.ssb.kostra.control.regnskap.regn0Dkvartal;
 
-import java.util.Vector;
 import no.ssb.kostra.control.Constants;
 
-final class ControlKontoklasse extends no.ssb.kostra.control.Control
-{
-  private Vector<Integer> lineNumbers = new Vector<Integer>();
+import java.util.Arrays;
+import java.util.Vector;
 
-  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet)
-  {
-    String kontoklasse = RecordFields.getKontoklasse (line);
+final class ControlKontoklasse extends no.ssb.kostra.control.Control {
+    private Vector<String[]> invalidKontoklasser = new Vector<>();
 
-    boolean lineHasError = 	!kontoklasse.equalsIgnoreCase("2") && 
-							!kontoklasse.equalsIgnoreCase("z") && 
-							!kontoklasse.equalsIgnoreCase("~");
-    
-    if (lineHasError)
-    {
-      lineNumbers.add (new Integer (lineNumber));
-    }
-    return lineHasError;
-  }
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasError = false;
+        String kontoklasse = RecordFields.getKontoklasse(line);
 
-  public String getErrorReport (int totalLineNumber)
-  {
-    String errorReport = "Kontroll 4, kontoklasse:" + lf + lf;
-    if (foundError())
-    {
-      int numOfRecords = lineNumbers.size();
-      errorReport += "\tFeil: ukjent kontoklasse i " + numOfRecords + " record" + (numOfRecords == 1 ? "" : "s") + "."; 
-      if (numOfRecords <= 10)
-      {
-        errorReport += " (Gjelder record nr.";
-        for (int i=0; i<numOfRecords; i++)
-        {
-          errorReport += " " + lineNumbers.elementAt(i);
+        if (!Arrays.asList("2", "z", "~").contains(kontoklasse)) {
+            lineHasError = true;
+            String[] container = {kontoklasse, Integer.toString(lineNumber)};
+            invalidKontoklasser.add(container);
         }
-        errorReport += ").";
-      }
+
+        return lineHasError;
     }
-    errorReport += lf + lf;
-    return errorReport;
-  }
 
-  public boolean foundError()
-  {
-    return lineNumbers.size() > 0;
-  }  
+    public String getErrorReport(int totalLineNumber) {
+        StringBuilder errorReport = new StringBuilder("Kontroll 4, kontoklasse:" + lf + lf);
+        if (foundError()) {
+            String[] container;
 
-  public int getErrorType() {
-    return Constants.NORMAL_ERROR;
-  }
+            int numOfRecords = invalidKontoklasser.size();
+            errorReport.append("\tFeil: ukjent kontoklasse i " + numOfRecords +
+                    " record" + (numOfRecords == 1 ? "" : "s") + "." + lf);
+
+            for (int i = 0; i < numOfRecords; i++) {
+                container = invalidKontoklasser.elementAt(i);
+                errorReport.append("\t\tkontoklasse " + container[0] + " (Record nr. " + container[1] + ")" + lf);
+            }
+
+        }
+        errorReport.append(lf + lf);
+        return errorReport.toString();
+    }
+
+    public boolean foundError() {
+        return invalidKontoklasser.size() > 0;
+    }
+
+    public int getErrorType() {
+        return Constants.NORMAL_ERROR;
+    }
 }

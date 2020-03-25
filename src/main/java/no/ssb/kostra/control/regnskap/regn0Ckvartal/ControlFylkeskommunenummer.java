@@ -1,49 +1,47 @@
 package no.ssb.kostra.control.regnskap.regn0Ckvartal;
 
-import java.util.Vector;
 import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.regnskap.regn0Akvartal.*;
-import no.ssb.kostra.utils.RegionerKvartal;
 
-final class ControlFylkeskommunenummer extends no.ssb.kostra.control.Control
-{
-  private Vector<Integer> invalidRegions = new Vector<>();
+import java.util.Vector;
 
-  public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
-    boolean lineHasError = false;
-    String knr = RecordFields.getRegion(line);
+final class ControlFylkeskommunenummer extends no.ssb.kostra.control.Control {
+    private Vector<Integer> invalidRegions = new Vector<>();
 
-    if (!knr.equalsIgnoreCase(region)) {
-      lineHasError = true;
-      invalidRegions.add(new Integer(lineNumber));
-    }
+    public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasError = false;
+        String knr = RecordFields.getRegion(line);
 
-    return lineHasError;
-  }
-
-  public String getErrorReport(int totalLineNumber) {
-    String errorReport = "Kontroll 4, Fylkeskommunenummer:" + lf;
-    int numOfRecords = invalidRegions.size();
-    if (numOfRecords > 0) {
-      errorReport += lf + "\tFeil: ukjent fylkeskommunenummer i " + numOfRecords +
-              " record" + (numOfRecords == 1 ? "" : "s") + ".";
-      if (numOfRecords <= 10) {
-        errorReport += lf + "\t\t(Gjelder record nr.";
-        for (int i = 0; i < numOfRecords; i++) {
-          errorReport += " " + invalidRegions.elementAt(i);
+        if (!knr.equalsIgnoreCase(region)) {
+            lineHasError = true;
+            invalidRegions.add(new Integer(lineNumber));
         }
-        errorReport += ").";
-      }
+
+        return lineHasError;
     }
-    errorReport += lf + lf;
-    return errorReport;
-  }
 
-  public boolean foundError() {
-    return (invalidRegions.size() > 0 );
-  }
+    public String getErrorReport(int totalLineNumber) {
+        String errorReport = "Kontroll 4, Fylkeskommunenummer:" + lf;
+        int numOfRecords = invalidRegions.size();
+        if (numOfRecords > 0) {
+            errorReport += lf + "\tFeil: ukjent fylkeskommunenummer i " + numOfRecords +
+                    " record" + (numOfRecords == 1 ? "" : "s") + ".";
+            if (numOfRecords <= 10) {
+                errorReport += lf + "\t\t(Gjelder record nr.";
+                for (int i = 0; i < numOfRecords; i++) {
+                    errorReport += " " + invalidRegions.elementAt(i);
+                }
+                errorReport += ").";
+            }
+        }
+        errorReport += lf + lf;
+        return errorReport;
+    }
 
-  public int getErrorType() {
-    return Constants.CRITICAL_ERROR;
-  }
+    public boolean foundError() {
+        return (invalidRegions.size() > 0);
+    }
+
+    public int getErrorType() {
+        return Constants.CRITICAL_ERROR;
+    }
 }

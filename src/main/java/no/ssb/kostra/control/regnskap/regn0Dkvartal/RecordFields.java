@@ -27,7 +27,7 @@ final class RecordFields {
                 fieldValue = record.substring(31, 32);
                 break;
             case 8:
-                fieldValue = record.substring(32, 36);
+                fieldValue = record.substring(31, 36);
                 break;
             case 9:
                 fieldValue = record.substring(36, 39);

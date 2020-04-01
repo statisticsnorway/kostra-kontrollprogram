@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 final class ControlArter extends no.ssb.kostra.control.Control {
-    private List<String> validArter = Arrays.asList(
+    private List<String> validArterKommune = Arrays.asList(
             "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
             "100", "105", "110", "114", "115", "120", "130", "140",
             "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
@@ -24,26 +24,14 @@ final class ControlArter extends no.ssb.kostra.control.Control {
             "z", "~"
     );
 
-    private List<String> validArterForSpesielleKommuner = Arrays.asList(
-            "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
-            "100", "105", "110", "114", "115", "120", "130", "140",
-            "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
-            "200", "209", "210", "220", "230", "240", "250", "260", "270", "280", "285", "290",
-            "300", "330", "350", "370", "375", "380",
-            "400", "429", "430", "450", "470", "475", "480",
-            "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540",
-            "550", "570", "589", "590",
-            "600", "620", "629", "630", "640", "650", "660", "670",
-            "700", "710", "729", "730", "750", "770", "775", "780", "790",
-            "800", "810", "830", "850", "870", "874", "875", "877", "880", "890", "895",
-            "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940",
-            "950", "970", "980", "989", "990",
-            "z", "~"
+    private List<String> validArterOslo = Arrays.asList(
+            "298", "379", "798"
     );
 
     private Vector<String[]> invalidArter = new Vector<>();
 
     public boolean doControl(String line, int lineNumber, String region, String statistiskEnhet) {
+        boolean lineHasErrors = false;
         String art = RecordFields.getArt(line);
 
         // Kontrollen skal ikke foretas hvis belop = 0 og art er definert.
@@ -57,11 +45,14 @@ final class ControlArter extends no.ssb.kostra.control.Control {
             // hvis belop ikke er angitt.
             return false;
         }
-        boolean lineHasErrors = false;
-        if ((region.equalsIgnoreCase("030100") && !validArterForSpesielleKommuner.contains(art))
-                ||
-                (!validArter.contains(art))
-                ) {
+
+        List<String> validArter = validArterKommune;
+
+        if (region.equalsIgnoreCase("030100")){
+            validArter.addAll(validArterOslo);
+        }
+
+        if (!validArter.contains(art)){
             lineHasErrors = true;
             String[] container = new String[2];
             container[0] = Integer.toString(lineNumber);

@@ -2,6 +2,7 @@ package no.ssb.kostra.control.regnskap.regn0Akvartal;
 
 import no.ssb.kostra.control.Constants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -46,7 +47,7 @@ final class ControlArter extends no.ssb.kostra.control.Control {
             return false;
         }
 
-        List<String> validArter = validArterKommune;
+        List<String> validArter = new ArrayList<>(validArterKommune);
 
         if (region.equalsIgnoreCase("030100")){
             validArter.addAll(validArterOslo);

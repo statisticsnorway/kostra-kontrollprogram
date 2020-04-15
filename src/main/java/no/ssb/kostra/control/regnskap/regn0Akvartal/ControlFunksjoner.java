@@ -20,7 +20,7 @@ final class ControlFunksjoner extends no.ssb.kostra.control.Control {
             "350", "353", "354", "355", "357", "360", "365", "370", "373",
             "375", "377", "380", "381", "383", "385", "386", "390", "392", "393",
             "800", "840", "841", "850", "860", "870", "880", "899",
-            "z"
+            "z", "Z"
     );
 
     private List<String> validFunksjonerFylkeskommune = Arrays.asList(

@@ -22,7 +22,7 @@ final class ControlArter extends no.ssb.kostra.control.Control {
             "800", "810", "830", "850", "870", "874", "875", "877", "880", "890", "895",
             "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940",
             "950", "970", "980", "989", "990",
-            "z", "~"
+            "z", "Z", "~"
     );
 
     private List<String> validArterOslo = Arrays.asList(

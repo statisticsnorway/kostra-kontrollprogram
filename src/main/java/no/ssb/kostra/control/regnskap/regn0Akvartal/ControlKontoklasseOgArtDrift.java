@@ -14,7 +14,7 @@ final class ControlKontoklasseOgArtDrift
         String kontoklasse = RecordFields.getKontoklasse(line);
         String art = RecordFields.getArt(line);
 
-        if (Arrays.asList("509", "540", "570", "590", "800", "870", "874", "875", "877", "909", "990").contains(art)
+        if (Arrays.asList("509", "570", "590", "800", "870", "874", "875", "877", "909", "990").contains(art)
                 && !kontoklasse.equalsIgnoreCase("1")) {
             lineHasError = true;
             String[] container = {kontoklasse, art, Integer.toString(lineNumber)};

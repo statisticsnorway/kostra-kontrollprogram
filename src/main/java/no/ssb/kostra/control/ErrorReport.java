@@ -26,7 +26,7 @@ public class ErrorReport {
 	}
 
 	public ErrorReport(Arguments args){
-		VERSION = args.getSkjema() + " " + Constants.kostraYear + ".01";
+		VERSION = args.getSkjema() + " " + args.getAargang() + ".01";
 	}
 
 

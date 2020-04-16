@@ -1,0 +1,13 @@
+{
+  "filbeskrivelse": [
+    {"number":1,  "name": "skjema",      "dataType": "String",  "viewType": "", "from":  1, "to":  2, "codeList": [], "datePattern": ""},
+    {"number":2,  "name": "aargang",     "dataType": "String",  "viewType": "", "from":  3, "to":  6, "codeList": [], "datePattern": ""},
+    {"number":3,  "name": "kvartal",     "dataType": "String",  "viewType": "", "from":  7, "to":  7, "codeList": [], "datePattern": ""},
+    {"number":4,  "name": "region",      "dataType": "String",  "viewType": "", "from":  8, "to": 13, "codeList": [], "datePattern": ""},
+    {"number":5,  "name": "org_nr",      "dataType": "String",  "viewType": "", "from": 14, "to": 22, "codeList": [], "datePattern": ""},
+    {"number":6,  "name": "foretaksnr",  "dataType": "String",  "viewType": "", "from": 23, "to": 31, "codeList": [], "datePattern": ""},
+    {"number":7,  "name": "kapittel",    "dataType": "String",  "viewType": "", "from": 32, "to": 36, "codeList": [], "datePattern": ""},
+    {"number":8,  "name": "sektor",      "dataType": "String",  "viewType": "", "from": 37, "to": 39, "codeList": [], "datePattern": ""},
+    {"number":9,  "name": "belop",       "dataType": "Integer", "viewType": "", "from": 40, "to": 48, "codeList": [], "datePattern": ""}
+  ]
+}

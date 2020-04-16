@@ -12,7 +12,10 @@ import javax.json.JsonValue;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -62,5 +65,22 @@ public class JsonTest {
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Test
+    public void testStream(){
+        AtomicInteger i = new AtomicInteger(1);
+        List<String> list = Stream.of("A","B","C","D","E","F")
+                .parallel()
+                .peek(System.out::print)
+                .map(s -> s.concat(String.valueOf(i.getAndIncrement())))
+                .peek(System.out::println)
+//                .sorted()
+                .collect(Collectors.toList())
+                .parallelStream()
+                .peek(System.out::println)
+                .collect(Collectors.toList());
+
+        System.out.println(list);
     }
 }

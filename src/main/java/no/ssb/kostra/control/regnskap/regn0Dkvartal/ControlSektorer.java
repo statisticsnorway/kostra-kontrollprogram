@@ -12,7 +12,9 @@ final class ControlSektorer extends no.ssb.kostra.control.Control {
             "200", "320", "355", "395",
             "430", "450", "499", "550", "570",
             "610", "640", "650",
-            "890", "900", "z", "~");
+            "890", "900",
+            "z", "Z", "~"
+    );
 
     private Vector<String[]> invalidArter = new Vector<>();
 

@@ -16,7 +16,7 @@ final class ControlFunksjoner extends no.ssb.kostra.control.Control {
             "701", "710", "711", "715", "716", "722", "730", "731", "732", "733", "734", "735", "740",
             "750", "760", "771", "772", "775", "790",
             "800", "840", "841", "850", "860", "870", "880", "899",
-            "z"
+            "z", "Z"
     );
 
     private Vector<String[]> invalidFunksjoner = new Vector<>();

@@ -41,12 +41,11 @@ public final class Main {
         int lineNumber = 0;
         int error_type = Constants.NO_ERROR;
         CharSequence z = "z";
+        CharSequence Z = "Z";
         CharSequence tilde = "~";
 
         for (int i = 0; i < regnskap.length; i++) {
-
             if (!regnskap[i].equalsIgnoreCase("")) {
-
                 lineNumber += 1;
 
                 //Sjekker recordlengde forst, fordi feil reccordlengde
@@ -54,12 +53,11 @@ public final class Main {
                 //(StringIndexOutOfBoundsException etc.)
                 // Legger på sjekk at linja inneholder z eller ~ så lar vi være å gjøre noe
                 if (!controls.get(0).doControl(regnskap[i], lineNumber, regionNumber, "") &&
-                        !(regnskap[i].contains(z) || regnskap[i].contains(tilde))
+                        !(regnskap[i].contains(z) || regnskap[i].contains(Z) || regnskap[i].contains(tilde))
                         ) {
 
                     for (int j = 1; j < controls.size(); j++)
                         controls.get(j).doControl(regnskap[i], lineNumber, regionNumber, "");
-
                 }
             }
         }

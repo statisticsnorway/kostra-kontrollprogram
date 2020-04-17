@@ -45,9 +45,7 @@ public final class Main {
         CharSequence tilde = "~";
 
         for (int i = 0; i < regnskap.length; i++) {
-
             if (!regnskap[i].equalsIgnoreCase("")) {
-
                 lineNumber += 1;
 
                 //Sjekker recordlengde forst, fordi feil reccordlengde
@@ -60,7 +58,6 @@ public final class Main {
 
                     for (int j = 1; j < controls.size(); j++)
                         controls.get(j).doControl(regnskap[i], lineNumber, regionNumber, "");
-
                 }
             }
         }

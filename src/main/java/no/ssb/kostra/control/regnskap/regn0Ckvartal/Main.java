@@ -35,18 +35,24 @@ public final class Main {
     public int start() {
         int lineNumber = 0;
         int error_type = Constants.NO_ERROR;
+        CharSequence z = "z";
+        CharSequence Z = "Z";
+        CharSequence tilde = "~";
 
-        for (int j = 0; j < regnskap.length; j++) {
-
-            if (!regnskap[j].equalsIgnoreCase("")) {
-
+        for (int i = 0; i < regnskap.length; i++) {
+            if (!regnskap[i].equalsIgnoreCase("")) {
                 lineNumber += 1;
-                //Sjekker recordlengde forst, fordi feil recordlengde
+
+                //Sjekker recordlengde forst, fordi feil reccordlengde
                 //vil kunne odelegge mange andre kontroller
                 //(StringIndexOutOfBoundsException etc.)
-                if (!controls.get(0).doControl(regnskap[j], lineNumber, regionNumber, "")) {
-                    for (int i = 1; i < controls.size(); i++)
-                        controls.get(i).doControl(regnskap[j], lineNumber, regionNumber, "");
+                // Legger på sjekk at linja inneholder z eller ~ så lar vi være å gjøre noe
+                if (!controls.get(0).doControl(regnskap[i], lineNumber, regionNumber, "") &&
+                        !(regnskap[i].contains(z) || regnskap[i].contains(Z) || regnskap[i].contains(tilde))
+                        ) {
+
+                    for (int j = 1; j < controls.size(); j++)
+                        controls.get(j).doControl(regnskap[i], lineNumber, regionNumber, "");
                 }
             }
         }

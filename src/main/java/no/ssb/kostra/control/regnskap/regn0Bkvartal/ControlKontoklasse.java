@@ -12,7 +12,7 @@ final class ControlKontoklasse extends no.ssb.kostra.control.Control {
         boolean lineHasError = false;
         String kontoklasse = RecordFields.getKontoklasse(line);
 
-        if (!Arrays.asList("2", "z", "~").contains(kontoklasse)) {
+        if (!Arrays.asList("2", "z", "Z", "~").contains(kontoklasse)) {
             lineHasError = true;
             String[] container = {kontoklasse, Integer.toString(lineNumber)};
             invalidKontoklasser.add(container);

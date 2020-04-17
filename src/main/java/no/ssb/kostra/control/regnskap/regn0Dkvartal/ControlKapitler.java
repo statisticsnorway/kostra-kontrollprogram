@@ -18,7 +18,7 @@ final class ControlKapitler extends no.ssb.kostra.control.Control {
             "2580", "2581",
             "25900", "25950", "25960", "25970", "25990",
             "29100", "29110", "29200", "29999",
-            "z", "~"
+            "z", "Z", "~"
     );
 
     private Vector<String[]> invalidFunksjoner = new Vector<String[]>();

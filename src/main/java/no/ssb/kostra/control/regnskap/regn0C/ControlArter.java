@@ -19,7 +19,7 @@ final class ControlArter extends no.ssb.kostra.control.Control {
 			"800", "810", "830", "850", "870", "877", "880", "890",
 			"895", "900", "901", "905", "909", "910", "911", "920",
 			"921", "929", "930", "940", "948", "950", "958", "970",
-			"980", "990", "z", "~" };
+			"980", "990" };
 
 	private Vector<String[]> invalidArter = new Vector<String[]>();
 

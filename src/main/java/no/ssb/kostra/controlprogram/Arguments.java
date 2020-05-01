@@ -8,7 +8,7 @@ public class Arguments {
     private String aargang = "    ";
     private String kvartal = " ";
     private String region = "      ";
-    private String navn = "";
+    private String navn = "Uoppgitt";
     private String orgnr = "         ";
     private String foretaknr = "         ";
 
@@ -96,7 +96,13 @@ public class Arguments {
         }
 
         if (region == null || region.trim().length() == 0){
-            throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -y 030100");
+            throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100");
+        }
+
+        if (inputFilePath != null && 0 < inputFilePath.length()){
+            readFileFromPath();
+        } else {
+            readFileFromStdin(System.in);
         }
     }
 
@@ -123,10 +129,10 @@ public class Arguments {
     }
 
     public boolean readFileFromPath(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
 
-            while ((line = reader.readLine()) != null)
+            while (( line = reader.readLine()) != null)
                 inputFileContent.add(line);
 
             return true;
@@ -193,5 +199,24 @@ public class Arguments {
 
     public List<String> getOutputFileContent() {
         return outputFileContent;
+    }
+
+    @Override
+    public String toString() {
+        return "Arguments{" +
+                "skjema='" + skjema + '\'' +
+                ", aargang='" + aargang + '\'' +
+                ", kvartal='" + kvartal + '\'' +
+                ", region='" + region + '\'' +
+                ", navn='" + navn + '\'' +
+                ", orgnr='" + orgnr + '\'' +
+                ", foretaknr='" + foretaknr + '\'' +
+                ", inputFilePath='" + inputFilePath + '\'' +
+                ", outputFilePath='" + outputFilePath + '\'' +
+                ", inputFile=" + inputFile +
+                ", outputFile=" + outputFile +
+                ", inputFileContent=" + inputFileContent +
+                ", outputFileContent=" + outputFileContent +
+                '}';
     }
 }

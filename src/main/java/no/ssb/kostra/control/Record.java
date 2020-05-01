@@ -2,6 +2,7 @@ package no.ssb.kostra.control;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -20,16 +21,20 @@ public class Record {
         this.record = record;
         this.fields = definitionList.stream()
                 .collect(Collectors.toMap(FieldDefinition::getNumber, FieldDefinition::getFieldDefinition));
-        this.valuesByNumber = this.fields.entrySet().stream()
-                .distinct()
-                .peek(System.out::println)
-                .collect(Collectors.toMap(e -> e.getKey(), e -> this.record.substring(e.getValue().getFrom(), e.getValue().getTo())));
 
-        this.valuesByName = this.fields.entrySet().stream()
-                .distinct()
-                .peek(System.out::println)
-                .collect(Collectors.toMap(e -> e.getValue().getName(), e -> this.record.substring(e.getValue().getFrom(), e.getValue().getTo())));
+        try {
+            this.valuesByNumber = this.fields.entrySet().stream()
+                    .distinct()
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> this.record.substring(e.getValue().getFrom() - 1, e.getValue().getTo())));
 
+            this.valuesByName = this.fields.entrySet().stream()
+                    .distinct()
+                    .collect(Collectors.toMap(e -> e.getValue().getName(), e -> this.record.substring(e.getValue().getFrom() - 1, e.getValue().getTo())));
+
+        } catch (StringIndexOutOfBoundsException e){
+            this.valuesByNumber = new HashMap<>();
+            this.valuesByName = new HashMap<>();
+        }
     }
 
     public int getLine() {
@@ -50,7 +55,12 @@ public class Record {
     }
 
     public Integer getFieldAsInteger(String field) {
-        return Integer.valueOf(getFieldAsString(field));
+        try {
+            return Integer.valueOf(getFieldAsTrimmedString(field));
+
+        } catch (NumberFormatException e){
+            return null;
+        }
     }
 
     public LocalDate getFieldAsLocalDate(String field, String dataTimePattern) {

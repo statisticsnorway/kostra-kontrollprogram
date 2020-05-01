@@ -19,14 +19,20 @@ public class ErrorReport {
 	private int errorType = Constants.NO_ERROR;
 	private Date startTime = Calendar.getInstance().getTime();
 	private Arguments args;
+	private String executiveOfficerHeader = "";
+	private String journalNumberHeader = "";
+
 
 	public ErrorReport(){
-		VERSION = Constants.kostraYear + ".01";
-		args = new Arguments(new String[]{"-s", "15F"});
+		this.VERSION = Constants.kostraYear + ".01";
+		this.args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900"});
 	}
 
-	public ErrorReport(Arguments args){
-		VERSION = args.getSkjema() + " " + args.getAargang() + ".01";
+	public ErrorReport(Arguments args) {
+		this.VERSION = Constants.kostraYear + ".01";
+		this.args = args;
+		this.executiveOfficerHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Saksbehandler ": "";
+		this.journalNumberHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Journalnummer ": "";
 	}
 
 
@@ -36,7 +42,7 @@ public class ErrorReport {
 	}
 
 	public void addEntry(ErrorReportEntry entry) {
-		try {
+//		try {
 			// Avklare status
 			if (this.errorType < entry.getErrorType()) {
 				this.errorType = entry.getErrorType();
@@ -75,9 +81,9 @@ public class ErrorReport {
 			rapportMap.put(entry.getSaksbehandler(), saksbehandlerMap);
 			entries.add(entry);
 
-		} catch (NullPointerException e) {
-			// TODO: handle exception
-		}
+//		} catch (NullPointerException e) {
+//			// TODO: handle exception
+//		}
 	}
 
 	public String generateReport(String regionNumber, File sourceFile, File reportFile) {
@@ -89,19 +95,18 @@ public class ErrorReport {
 		StringBuffer report = new StringBuffer();
 		String lf = Constants.lineSeparator;
 
-		report.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lf);
-		report.append("<html><body>" + lf);
-		report.append("<hr/><br/>" + lf);
-		report.append("<br/>" + lf);
-		report.append("<h3>Kontrollrapport for " + args.getRegion() + " " + args.getNavn() + "</h3>"+ lf);
-		report.append("<br/>" + lf);
-		report.append("<hr/><br/><br/>" + lf + lf);
-
-		report.append("<h4>Kontrollprogramversjon: " + VERSION + "</h4>" + lf);
-		report.append("<h4>Kontroller startet: " + startTime.toString() + "</h4>" + lf);
-		report.append("<h4>Rapport generert: " + Calendar.getInstance().getTime() + "</h4>" + lf);
-		report.append("<h4>Kontrollert fil: " + args.getInputFilePath() + "</h4>" + lf);
-		report.append("<h4>Type filuttrekk: Barnevern " + Constants.kostraYear + "</h4>" + lf + lf);
+		report.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lf)
+		.append("<html><body>" + lf)
+		.append("<hr/><br/>" + lf)
+		.append("<br/>" + lf)
+		.append("<h3>Kontrollrapport for " + this.args.getRegion() + " " + args.getNavn() + "</h3>"+ lf)
+		.append("<br/>" + lf)
+		.append("<hr/><br/><br/>" + lf + lf)
+		.append("<h4>Kontrollprogramversjon: " + VERSION + "</h4>" + lf)
+		.append("<h4>Kontroller startet: " + startTime.toString() + "</h4>" + lf)
+		.append("<h4>Rapport generert: " + Calendar.getInstance().getTime() + "</h4>" + lf)
+		.append("<h4>Kontrollert fil: " + this.args.getInputFilePath() + "</h4>" + lf)
+		.append("<h4>Type filuttrekk: " + this.args.getSkjema() + "." + this.args.getAargang() + "</h4>" + lf + lf);
 
 		if (!mapEntries.isEmpty()) {
 			report.append(lf + "<h3>Oppsummering pr. kontroll:</h3>" + lf + "<hr/><br/>" + lf + lf);
@@ -111,28 +116,29 @@ public class ErrorReport {
 				String val = entry.getKey();
 
 				if (val.contains(s)){
-					report.append(String.format("<div style='color: red  '>Kontroll %s har funnet %d feil som hindrer innsending</div>", entry.getKey(), entry.getValue()) + lf);
+					report.append(String.format("<div style='color: red  '>%s har funnet %d feil som hindrer innsending</div>", entry.getKey(), entry.getValue())).append(lf);
 				} else {
-					report.append(String.format("<div style='color: black'>Kontroll %s har funnet %d advarsler</div>", entry.getKey(), entry.getValue()) + lf);
+					report.append(String.format("<div style='color: black'>%s har funnet %d advarsler</div>", entry.getKey(), entry.getValue())).append(lf);
 										
 				}
 			}
 
-			report.append("<br/>" + lf + "<h4>Opplisting av feil og advarsler pr. saksbehandler, journalnr., kontrollnr. og kontrolltekst):</h4>" + lf
-					+ "<hr/><br/><br/>" + lf + lf);
+			report.append("<br/>").append(lf)
+					.append("<h4>Opplisting av feil og advarsler pr. ").append(executiveOfficerHeader).append(", ").append(journalNumberHeader).append(", kontrollnr. og kontrolltekst):</h4>").append(lf)
+					.append("<hr/><br/><br/>").append(lf).append(lf);
 
 			for (String saksbehandler : rapportMap.keySet()) {
 				int kritiskeFeil = 0;
 				int normaleFeil = 0;
 				Map<String, Map<String, List<String>>> saksbehandlerMap = rapportMap.get(saksbehandler);
 				String htmlcolor = "black"; 
-				report.append("<h3>Saksbehandler " + saksbehandler + "</h3>" + lf);
+				report.append("<h3>").append(executiveOfficerHeader).append(" ").append(saksbehandler).append("</h3>").append(lf);
 
-				report.append("   <ul>" + lf);
+				report.append("   <ul>").append(lf);
 				for (String journalnummer : saksbehandlerMap.keySet()) {
 					Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
-					report.append("      <li>Journalnummer " + journalnummer + "</li>" + lf);
-					report.append("      <ul>" + lf);
+					report.append("      <li>").append(journalNumberHeader).append(" ").append(journalnummer).append("</li>").append(lf)
+					.append("      <ul>").append(lf);
 
 					for (String refNr : journalnummerMap.keySet()) {
 						List<String> entrieStringsList = journalnummerMap.get(refNr);
@@ -147,8 +153,8 @@ public class ErrorReport {
 							normaleFeil++;
 						}
 
-						report.append("         <li style='color: " + htmlcolor + "'>" + kontrollnummer + lf);
-						report.append("         <ul><li style='color: " + htmlcolor + "'>"+ kontrolltekst +"</li></ul></li>" + lf);
+						report.append("         <li style='color: " + htmlcolor + "'>" + kontrollnummer + lf)
+						.append("         <ul><li style='color: " + htmlcolor + "'>"+ kontrolltekst +"</li></ul></li>" + lf);
 
 					}
 					report.append("      </ul>" + lf);
@@ -157,18 +163,17 @@ public class ErrorReport {
 
 				htmlcolor = (kritiskeFeil > 0) ? "red  " : "black";
 				
-				report.append(
-						"   <h3 style='color: " + htmlcolor + "'>Oppsummering " + saksbehandler + "</h3>" + lf + 
-						"   <ul><li style='color: " + htmlcolor + "'>Antall feil som hindrer innsending " + kritiskeFeil	+ "</li>" + lf + 
-						"   <li>Antall advarsler som kan sendes inn " + normaleFeil + "</li></ul><br/>"
-						+ lf + lf + lf);
-				report.append("   </ul>" + lf);
-				report.append("</ul><br/>"  + lf);
+				report.append("   <h3 style='color: ").append(htmlcolor).append("'>Oppsummering ").append(saksbehandler).append("</h3>").append(lf)
+						.append("   <ul><li style='color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
+						.append("   <li>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li></ul><br/>").append(lf)
+						.append(lf).append(lf);
+				report.append("   </ul>").append(lf);
+				report.append("</ul><br/>").append(lf);
 
 			}
 
-			report.append(lf + "<div>errorType:" + errorType + lf + "<hr/></div>" + lf + lf);
-			report.append("</body></html>" + lf);
+			report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append(lf).append(lf);
+			report.append("</body></html>").append(lf);
 
 			
 		} else {
@@ -176,7 +181,7 @@ public class ErrorReport {
 				report.append("Finner ingen data!  :-(");
 				this.errorType = Constants.CRITICAL_ERROR;
 			} else {
-				report.append("Ingen feil funnet!");
+				report.append("Ingen feil funnet!<br/>");
 			}
 		}
 

@@ -3,6 +3,7 @@ import no.ssb.kostra.controlprogram.Arguments;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class CLI {
@@ -30,17 +31,15 @@ public class CLI {
         } else if ("11".equalsIgnoreCase(arguments.getSkjema())){
             er = no.ssb.kostra.control.skjema.s11_sosialhjelp.Main.doControls(arguments);
 
+        } else if ("11C".equalsIgnoreCase(arguments.getSkjema())){
+            er = no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad.Main.doControls(arguments);
+
         } else {
             er = new ErrorReport();
         }
 
-        try {
-            PrintStream out = new PrintStream(System.out, true, "UTF-8");
-            out.println(er.generateReport());
-        }
-        catch ( UnsupportedEncodingException e){
-            // do nothing
-        }
-//        System.out.print( er.generateReport());
+        PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+        out.println(er.generateReport());
+        //        System.out.print( er.generateReport());
     }
 }

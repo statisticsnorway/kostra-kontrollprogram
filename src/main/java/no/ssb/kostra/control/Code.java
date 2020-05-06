@@ -1,8 +1,8 @@
 package no.ssb.kostra.control;
 
 public class Code {
-    String code;
-    String value;
+    private String code;
+    private String value;
 
     public Code(String code, String value) {
         this.code = code;
@@ -15,5 +15,9 @@ public class Code {
 
     public String getValue() {
         return value;
+    }
+
+    public String toString(){
+        return getCode() + "=" + getValue();
     }
 }

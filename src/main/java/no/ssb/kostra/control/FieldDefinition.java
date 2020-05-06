@@ -12,8 +12,19 @@ public class FieldDefinition {
     Integer to;
     List<Code> codeList;
     String datePattern;
+    boolean mandatory;
 
-    public FieldDefinition(int number, String name, String dataType, String viewType, int from, int to, List<Code> codeList, String datePattern) {
+    public FieldDefinition(
+            int number,
+            String name,
+            String dataType,
+            String viewType,
+            int from,
+            int to,
+            List<Code> codeList,
+            String datePattern,
+            boolean mandatory
+    ) {
         this.number = number;
         this.name = name;
         this.dataType = dataType;
@@ -22,8 +33,9 @@ public class FieldDefinition {
         this.to = to;
         this.codeList = codeList;
         this.datePattern = datePattern;
+        this.mandatory = mandatory;
 
-        if (this.viewType == null || this.viewType.equalsIgnoreCase("")){
+        if (this.viewType == null || this.viewType.equalsIgnoreCase("")) {
             this.viewType = "inputbox";
         }
 
@@ -37,7 +49,17 @@ public class FieldDefinition {
     }
 
     public FieldDefinition getFieldDefinition() {
-        return new FieldDefinition(this.number, this.name, this.dataType, this.viewType, this.from, this.to, this.codeList, this.datePattern);
+        return new FieldDefinition(
+                this.number,
+                this.name,
+                this.dataType,
+                this.viewType,
+                this.from,
+                this.to,
+                this.codeList,
+                this.datePattern,
+                this.mandatory
+        );
     }
 
     public Integer getNumber() {
@@ -70,5 +92,9 @@ public class FieldDefinition {
 
     public String getDatePattern() {
         return datePattern;
+    }
+
+    public boolean isMandatory() {
+        return mandatory;
     }
 }

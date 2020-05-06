@@ -30,9 +30,9 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2BoolskTest {
         ere = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av Kode i kodeliste", "Feil: fant ikke kode i kodeliste", Constants.CRITICAL_ERROR);
         fieldDefinitions = List.of(
-                new FieldDefinition(1, "felt1", "String", "", 1, 2, new ArrayList<>(), ""),
-                new FieldDefinition(2, "felt2", "String", "", 3, 4, new ArrayList<>(), ""),
-                new FieldDefinition(3, "heltall", "Integer", "", 5, 10, new ArrayList<>(), "")
+                new FieldDefinition(1, "felt1", "String", "", 1, 2, new ArrayList<>(), "", false),
+                new FieldDefinition(2, "felt2", "String", "", 3, 4, new ArrayList<>(), "", false),
+                new FieldDefinition(3, "heltall", "Integer", "", 5, 10, new ArrayList<>(), "", false)
         );
         inputFileContent = "F1F2 12345";
         r = new Record("F1F2 12345", fieldDefinitions);

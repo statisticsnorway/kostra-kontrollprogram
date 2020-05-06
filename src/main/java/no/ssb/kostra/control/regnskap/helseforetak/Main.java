@@ -40,7 +40,7 @@ public class Main {
 
         // integritetskontroller
         regnskap.stream()
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -51,7 +51,7 @@ public class Main {
                         , "skjema"
                         , Collections.singletonList(args.getSkjema())
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -62,7 +62,7 @@ public class Main {
                         , "aargang"
                         , Collections.singletonList(args.getAargang())
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -73,7 +73,7 @@ public class Main {
                         , "kvartal"
                         , List.of(" ")
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -84,7 +84,7 @@ public class Main {
                         , "region"
                         , Collections.singletonList(args.getRegion())
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -95,7 +95,7 @@ public class Main {
                         , "orgnr"
                         , Collections.singletonList(args.getOrgnr())
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -106,7 +106,7 @@ public class Main {
                         , "foretaksnr"
                         , Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(",")).collect(Collectors.toList())
                 ))
-                .peek(p -> ControlFeltInneholderKodeFraKodeliste.doControl(
+                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -119,7 +119,7 @@ public class Main {
                 ))
                 .peek(p -> {
                             if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                                ControlFeltInneholderKodeFraKodeliste.doControl(
+                                ControlFelt1InneholderKodeFraKodeliste.doControl(
                                         p
                                         , er
                                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -135,7 +135,7 @@ public class Main {
                 )
                 .peek(p -> {
                             if (balanseRegnskapList.contains(args.getSkjema())) {
-                                ControlFeltInneholderKodeFraKodeliste.doControl(
+                                ControlFelt1InneholderKodeFraKodeliste.doControl(
                                         p
                                         , er
                                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -151,7 +151,7 @@ public class Main {
                 )
                 .peek(p -> {
                             if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                                ControlFeltInneholderKodeFraKodeliste.doControl(
+                                ControlFelt1InneholderKodeFraKodeliste.doControl(
                                         p
                                         , er
                                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
@@ -167,7 +167,7 @@ public class Main {
                 )
                 .peek(p -> {
                             if (balanseRegnskapList.contains(args.getSkjema())) {
-                                ControlFeltInneholderKodeFraKodeliste.doControl(
+                                ControlFelt1InneholderKodeFraKodeliste.doControl(
                                         p
                                         , er
                                         , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "

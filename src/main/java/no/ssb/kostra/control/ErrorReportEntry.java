@@ -19,8 +19,15 @@ public class ErrorReportEntry implements SingleRecordErrorReport {
 		this.journalnummer = journalnummer;
 	}
 */
-	public ErrorReportEntry(String saksbehandler, String journalnummer, String individId, String refNr, String kontrollNr, String errorText,
-			int errorType) {
+	public ErrorReportEntry(
+			String saksbehandler,
+			String journalnummer,
+			String individId,
+			String refNr,
+			String kontrollNr,
+			String errorText,
+			int errorType
+	) {
 		this.saksbehandler = saksbehandler;
 		this.journalnummer = journalnummer;
 		this.individId = individId;
@@ -85,6 +92,4 @@ public class ErrorReportEntry implements SingleRecordErrorReport {
 	public void setErrorType(int errorType) {
 		this.errorType = errorType;
 	}
-
-
 }

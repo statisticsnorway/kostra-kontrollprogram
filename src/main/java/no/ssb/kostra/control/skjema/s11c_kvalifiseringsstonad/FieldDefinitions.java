@@ -791,7 +791,7 @@ public class FieldDefinitions {
                         false),
                 new FieldDefinition(2612, "AVSL_ANNET_SPES",
                         "String",
-                        "checkBox",
+                        "TextBox",
                         128, 157,
                         List.of(),
                         "",

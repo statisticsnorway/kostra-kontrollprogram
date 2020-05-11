@@ -76,7 +76,7 @@ public class BetweenTest {
     }
 
     @Test
-    public void testInclusive(){
+    public void testBetweenInclusive(){
         assertTrue(Between.betweenInclusive(1,1,3));
         assertTrue(Between.betweenInclusive(2,1,3));
         assertTrue(Between.betweenInclusive(3,1,3));
@@ -86,7 +86,7 @@ public class BetweenTest {
     }
 
     @Test
-    public void testExclusive(){
+    public void testBetweenExclusive(){
         assertFalse(Between.betweenExclusive(1,1,3));
         assertTrue(Between.betweenExclusive(2,1,3));
         assertFalse(Between.betweenExclusive(3,1,3));

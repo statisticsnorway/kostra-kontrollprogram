@@ -50,7 +50,7 @@ public class Arguments {
                         if (skjema.substring(0, 1).equalsIgnoreCase("0A")) {
                             skjema = "0C" + skjema.substring(2);
                         } else if (skjema.substring(0, 1).equalsIgnoreCase("0B")) {
-                            skjema = "0C" + skjema.substring(2);
+                            skjema = "0D" + skjema.substring(2);
                         }
                     }
                     break;
@@ -115,12 +115,11 @@ public class Arguments {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
 
-            while ((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null) {
                 inputFileContent.add(line);
+            }
 
             return true;
-        }  catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,12 +131,11 @@ public class Arguments {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
 
-            while (( line = reader.readLine()) != null)
+            while (( line = reader.readLine()) != null) {
                 inputFileContent.add(line);
+            }
 
             return true;
-        }  catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -79,43 +79,10 @@ public class Record {
         return this.fieldDefinitionByName.get(name);
     }
 
-    public LocalDate getFieldAsLocalDate(String field, String dateTimePattern) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimePattern);
+    public LocalDate getFieldAsLocalDate(String field) {
+        FieldDefinition definition = getFieldDefinitionByName(field);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(definition.getDatePattern());
         return LocalDate.from(formatter.parse(getFieldAsString(field)));
-    }
-
-    public boolean validate(){
-        return this.fieldDefinitionByNumber
-                .values()
-                .stream()
-                .allMatch(f -> {
-                    String value = this.getFieldAsString(f.getName());
-                    String trimmedValue = this.getFieldAsTrimmedString(f.getName());
-
-                    switch (f.getDataType()){
-                        case "String":
-                            return !f.getCodeList().isEmpty()
-                                    && f.codeList.stream().noneMatch(c -> c.getValue().equalsIgnoreCase(value));
-
-                        case "Integer":
-                            return !trimmedValue.equalsIgnoreCase("")
-                                    && this.getFieldAsInteger(f.getName()) == null;
-
-                        case "date":
-                            if (!trimmedValue.equalsIgnoreCase("")) {
-                                try {
-                                    this.getFieldAsLocalDate(f.getName(), f.getDatePattern());
-                                    return false;
-                                } catch (DateTimeParseException e) {
-                                    return true;
-                                }
-                            }
-
-                            return false;
-                    }
-
-                    return false;
-                });
     }
 
     @Override

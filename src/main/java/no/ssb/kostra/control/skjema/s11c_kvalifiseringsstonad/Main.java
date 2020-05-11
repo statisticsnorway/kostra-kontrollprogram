@@ -6,6 +6,7 @@ import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -360,49 +361,243 @@ public class Main {
                         , "KVP_OSLO"
                         , r.getFieldDefinitionByName("KVP_OSLO").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                 ))
+                .peek(r -> ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                        r
+                        , er
+                        , new ErrorReportEntry(
+                                r.getFieldAsString("SAKSBEHANDLER")
+                                , r.getFieldAsString("PERSON_JOURNALNR")
+                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                , " "
+                                , "Kontroll 21 Ytelser de to siste månedene før registrert søknad ved NAV-kontoret"
+                                , "Feltet for \"Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?\" inneholder ugyldige verdier."
+                                , Constants.CRITICAL_ERROR
+                        )
+                        , "YTELSE_SOSHJELP"
+                        , List.of("1")
+                        , "YTELSE_TYPE_SOSHJ"
+                        , r.getFieldDefinitionByName("YTELSE_TYPE_SOSHJ").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                ))
+                .peek(r -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                        r
+                        , er
+                        , new ErrorReportEntry(
+                                r.getFieldAsString("SAKSBEHANDLER")
+                                , r.getFieldAsString("PERSON_JOURNALNR")
+                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                , " "
+                                , "Kontroll 26 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang()
+                                , "Feltet for \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, "
+                                + "kommunal bostøtte eller Husbankens bostøtte?\", er ikke utfylt eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                                , Constants.CRITICAL_ERROR
+                        )
+                        , "KVP_MED_ASTONAD"
+                        , r.getFieldDefinitionByName("KVP_MED_ASTONAD").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                ))
+                // Kontroll 27 sjekker at flere felt skal være utfylt hvis KVP_MED_ASTONAD = 1 (Ja)
+                // Disse feltene sjekkes hver for seg med en ferdig control.
+                // Derfor gjentas kontroll 27 for hver av dem
                 .peek(r -> {
-                    boolean lineHasError = false;
+                    List<String> fields = List.of("KVP_MED_KOMMBOS", "KVP_MED_HUSBANK", "KVP_MED_SOSHJ_ENGANG", "KVP_MED_SOSHJ_PGM", "KVP_MED_SOSHJ_SUP");
 
-                    if (r.getFieldAsString("YTELSE_SOSHJELP").equalsIgnoreCase("1")) {
-                        lineHasError = !List.of("2", "3").contains(r.getFieldAsString("YTELSE_TYPE_SOSHJ"));
+                    if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "1")) {
+                        boolean isNoneFilledIn = fields.stream()
+                                .noneMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
 
+                        if (isNoneFilledIn) {
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            r.getFieldAsString("SAKSBEHANDLER")
+                                            , r.getFieldAsString("PERSON_JOURNALNR")
+                                            , r.getFieldAsString("PERSON_FODSELSNR")
+                                            , " "
+                                            , "Kontroll 27 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang() + ". Svaralternativer."
+                                            , "Svaralternativer for feltet \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
+                                            + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. "
+                                            , Constants.CRITICAL_ERROR
+                                    )
+                            );
+                        }
 
-//      lineHasError =
-//          !(field_15_2.equalsIgnoreCase("2") || field_15_2.equalsIgnoreCase("3"));
-//
-//      field = RecordFields.getFieldValue(line, 153);
-//      lineHasError |=  !(field.equalsIgnoreCase("0") || field.equalsIgnoreCase(" ") || field.equalsIgnoreCase("4"));
-//
-//      field = RecordFields.getFieldValue(line, 154);
-//      lineHasError |=  !(field.equalsIgnoreCase("0") || field.equalsIgnoreCase(" ") || field.equalsIgnoreCase("5"));
-//
-//      field = RecordFields.getFieldValue(line, 155);
-//      lineHasError |=  !(field.equalsIgnoreCase("0") || field.equalsIgnoreCase(" ") || field.equalsIgnoreCase("6"));
-    }
+                    } else {
+                        boolean isNoneBlank = fields.stream()
+                                .anyMatch(field -> List.of(" ", "0").contains(r.getFieldAsString(field)));
 
+                        if (isNoneBlank) {
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            r.getFieldAsString("SAKSBEHANDLER")
+                                            , r.getFieldAsString("PERSON_JOURNALNR")
+                                            , r.getFieldAsString("PERSON_FODSELSNR")
+                                            , " "
+                                            , "Kontroll 27 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang() + ". Svaralternativer."
+                                            , "Svaralternativer for feltet \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
+                                            + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. "
+                                            , Constants.CRITICAL_ERROR
+                                    )
+                            );
+                        }
+                    }
+                })
+                // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
+                .peek(r -> {
+                    Integer stonad = r.getFieldAsInteger("KVP_STONAD");
+                    boolean stonadOK = (stonad != null);
+                    List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
+                    boolean isAnyFilledIn = fields.stream()
+                            .anyMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
 
-                    if (lineHasError) {
+                    if (!isAnyFilledIn) {
                         er.addEntry(
                                 new ErrorReportEntry(
                                         r.getFieldAsString("SAKSBEHANDLER")
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 21 Ytelser de to siste månedene før registrert søknad ved NAV-kontoret.\""
-                                        , "Feltet for " +
-                                        "\"Hadde deltakeren i løpet av de siste to månedene før " + lf +
-                                        "\tregistrert søknad ved NAV-kontoret en eller flere av " +
-                                        "følgende ytelser?\"" + lf + "\tinneholder ugyldige verdier."
+                                        , "Kontroll 28 Måneder med kvalifiseringsstønad. Gyldige koder."
+                                        , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+                                        , Constants.CRITICAL_ERROR
+                                )
+                        );
+                    }
+
+                    if (!stonadOK) {
+                        er.addEntry(
+                                new ErrorReportEntry(
+                                        r.getFieldAsString("SAKSBEHANDLER")
+                                        , r.getFieldAsString("PERSON_JOURNALNR")
+                                        , r.getFieldAsString("PERSON_FODSELSNR")
+                                        , " "
+                                        , "Kontroll 29 Kvalifiseringssum mangler eller har ugyldige tegn."
+                                        , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
                                         , Constants.NORMAL_ERROR
                                 )
                         );
                     }
 
-                }
-                )
+                    if (isAnyFilledIn) {
+                        if (!stonadOK || stonad == 0) {
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            r.getFieldAsString("SAKSBEHANDLER")
+                                            , r.getFieldAsString("PERSON_JOURNALNR")
+                                            , r.getFieldAsString("PERSON_FODSELSNR")
+                                            , " "
+                                            , "Kontroll 30 Har varighet men mangler kvalifiseringssum."
+                                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                                            , Constants.NORMAL_ERROR
+                                    )
+                            );
+                        }
+                    }
 
+                    if (stonadOK && 0 < stonad) {
+                        if (!isAnyFilledIn) {
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            r.getFieldAsString("SAKSBEHANDLER")
+                                            , r.getFieldAsString("PERSON_JOURNALNR")
+                                            , r.getFieldAsString("PERSON_FODSELSNR")
+                                            , " "
+                                            , "Kontroll 31 Har kvalifiseringssum men mangler varighet."
+                                            , "Deltakeren har fått kvalifiseringsstønad i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er obligatorisk å fylle ut."
+                                            , Constants.NORMAL_ERROR
+                                    )
+                            );
+                        }
+                    }
+
+                    if (stonadOK && Definitions.getStonadSumMax() < stonad) {
+                        er.addEntry(
+                                new ErrorReportEntry(
+                                        r.getFieldAsString("SAKSBEHANDLER")
+                                        , r.getFieldAsString("PERSON_JOURNALNR")
+                                        , r.getFieldAsString("PERSON_FODSELSNR")
+                                        , " "
+                                        , "Kontroll 32 Kvalifiseringssum på kr " + Definitions.getStonadSumMax() + ",- eller mer."
+                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + Definitions.getStonadSumMax() + ",-."
+                                        , Constants.NORMAL_ERROR
+                                )
+                        );
+                    }
+
+                    if (stonadOK && stonad < Definitions.getStonadSumMin()) {
+                        er.addEntry(
+                                new ErrorReportEntry(
+                                        r.getFieldAsString("SAKSBEHANDLER")
+                                        , r.getFieldAsString("PERSON_JOURNALNR")
+                                        , r.getFieldAsString("PERSON_FODSELSNR")
+                                        , " "
+                                        , "Kontroll 33 Kvalifiseringsstønad på kr " + Definitions.getStonadSumMin() + ",- eller lavere."
+                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + Definitions.getStonadSumMin() + ",-."
+                                        , Constants.NORMAL_ERROR
+                                )
+                        );
+                    }
+                })
+                .peek(r -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                        r
+                        , er
+                        , new ErrorReportEntry(
+                                r.getFieldAsString("SAKSBEHANDLER")
+                                , r.getFieldAsString("PERSON_JOURNALNR")
+                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                , " "
+                                , "Kontroll 36 Status for deltakelse i kvalifiseringsprogram per 31.12." + args.getAargang() + ". Gyldige verdier."
+                                , "Kontrollere at feltet er utfylt og ikke inneholder andre verdier enn de gyldige 1 – 6. Feltet er obligatorisk å fylle ut."
+                                , Constants.CRITICAL_ERROR
+                        )
+                        , "STATUS"
+                        , r.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                ))
+
+                .peek(r -> {
+                    if (List.of("3", "4", "5").contains(r.getFieldAsString("STATUS"))) {
+                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
+                                r
+                                , er
+                                , new ErrorReportEntry(
+                                        r.getFieldAsString("SAKSBEHANDLER")
+                                        , r.getFieldAsString("PERSON_JOURNALNR")
+                                        , r.getFieldAsString("PERSON_FODSELSNR")
+                                        , " "
+                                        , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
+                                        , "Feltet for \"Hvilken dato avsluttet deltakeren programmet?\" Må fylles ut dersom det er krysset av for svaralternativ"
+                                        + "kode 3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting), "
+                                        + "kode 4 = Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting) eller "
+                                        + "kode 5 = Deltakerens program ble avbrutt på grunn av flytting til annen kommune under feltet for \"Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "\"?"
+                                        , Constants.CRITICAL_ERROR
+                                )
+                                , "STATUS"
+                                , r.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                                , "AVSL_DATO"
+                        );
+                    }
+                })
+                .peek(r -> {
+                    if (r.getFieldAsString("STATUS").equalsIgnoreCase("3")) {
+                        List<String> fields = List.of("AVSL_ORDINAERTARB", "AVSL_ARBLONNSTILS", "AVSL_TILRETTELARB", "AVSL_ARBMARK", "AVSL_SKOLE", "AVSL_AKTIVARBSOK", "AVSL_BEHANDL", "AVSL_AVKLAR_UFOR", "AVSL_INGEN_AKT", "AVSL_ANNET");
+                        boolean isNoneFilledIn = fields.stream()
+                                .noneMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
+
+                        if (isNoneFilledIn) {
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            r.getFieldAsString("SAKSBEHANDLER")
+                                            , r.getFieldAsString("PERSON_JOURNALNR")
+                                            , r.getFieldAsString("PERSON_FODSELSNR")
+                                            , " "
+                                            , "Kontroll 38 Fullførte/avsluttede program – til hvilken livssituasjon gikk deltakeren? Gyldige verdier."
+                                            , "Feltet \"Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – hva var deltakerens viktigste livssituasjon umiddelbart etter avslutningen\"? "
+                                            + "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for "
+                                            + "\"Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "\"?"
+                                            , Constants.CRITICAL_ERROR
+                                    )
+                            );
+                        }
+                    }
+                })
                 .close();
-
 
 
         return er;

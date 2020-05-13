@@ -2,6 +2,7 @@ package no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad;
 
 import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
+import no.ssb.kostra.control.skjema.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.Collections;
@@ -71,24 +72,6 @@ public class Main {
                         );
                     }
                 })
-                .peek(r -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                        r
-                        , er
-                        , new ErrorReportEntry(
-                                r.getFieldAsString("SAKSBEHANDLER")
-                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                , r.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 5 Årgang"
-                                , "Korrigér årgang. Forventet '"
-                                + args.getAargang()
-                                + "', men fant "
-                                + r.getFieldAsTrimmedString("VERSION")
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "VERSION"
-                        , Collections.singletonList(args.getAargang())
-                ))
                 .peek(r -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         r
                         , er
@@ -204,6 +187,7 @@ public class Main {
                 .peek(r -> {
                     List<String> listCodes = r.getFieldDefinitionByName("BU").getCodeList().stream().map(Code::getCode).collect(Collectors.toList());
                     List<String> listTexts = r.getFieldDefinitionByName("BU").getCodeList().stream().map(Code::toString).collect(Collectors.toList());
+
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
                             , er
@@ -225,51 +209,51 @@ public class Main {
                             , "BU"
                             , listCodes
                     );
+
+                    ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 12 Det bor barn under 18 år i husholdningen. Mangler antall barn."
+                                    , "Deltakeren har barn under 18 år, som deltakeren " + lf +
+                                    "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
+                                    "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
+                                    "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
+                                    "\tFeltet er obligatorisk å fylle ut."
+                                    , Constants.CRITICAL_ERROR
+                            )
+                            , "BU"
+                            , List.of("1")
+                            , "ANTBU18"
+                            , "<"
+                            , 0
+                    );
+
+                    ControlFelt1Boolsk.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 13 Det bor barn under 18 år i husholdningen."
+                                    , "Deltakeren har barn under 18 år, som deltakeren " + lf +
+                                    "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
+                                    "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
+                                    "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
+                                    "\tFeltet er obligatorisk å fylle ut."
+                                    , Constants.NORMAL_ERROR
+                            )
+                            , "ANTBU18"
+                            , ">"
+                            , 10
+                    );
                 })
-                .peek(r -> ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                        r
-                        , er
-                        , new ErrorReportEntry(
-                                r.getFieldAsString("SAKSBEHANDLER")
-                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                , r.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 12 Det bor barn under 18 år i husholdningen. Mangler antall barn."
-                                , "Deltakeren har barn under 18 år, som deltakeren " + lf +
-                                "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
-                                "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
-                                "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
-                                "\tFeltet er obligatorisk å fylle ut."
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "BU"
-                        , List.of("1")
-                        , "ANTBU18"
-                        , "<"
-                        , 0
-                ))
-                .peek(r -> ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        r
-                        , er
-                        , new ErrorReportEntry(
-                                r.getFieldAsString("SAKSBEHANDLER")
-                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                , r.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                                , "Deltakeren har barn under 18 år, som deltakeren " + lf +
-                                "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
-                                "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
-                                "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
-                                "\tFeltet er obligatorisk å fylle ut."
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "ANTBU18"
-                        , "<"
-                        , 0
-                        , "BU"
-                        , List.of("1")
-                ))
                 .peek(r -> ControlFelt1Dato.doControl(
                         r
                         , er
@@ -447,6 +431,9 @@ public class Main {
                     boolean isAnyFilledIn = fields.stream()
                             .anyMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
 
+                    int stonadSumMax = 235000;
+                    int stonadSumMin = 8000;
+
                     if (!isAnyFilledIn) {
                         er.addEntry(
                                 new ErrorReportEntry(
@@ -507,29 +494,29 @@ public class Main {
                         }
                     }
 
-                    if (stonadOK && Definitions.getStonadSumMax() < stonad) {
+                    if (stonadOK && stonadSumMax < stonad) {
                         er.addEntry(
                                 new ErrorReportEntry(
                                         r.getFieldAsString("SAKSBEHANDLER")
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 32 Kvalifiseringssum på kr " + Definitions.getStonadSumMax() + ",- eller mer."
-                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + Definitions.getStonadSumMax() + ",-."
+                                        , "Kontroll 32 Kvalifiseringssum på kr " + stonadSumMax + ",- eller mer."
+                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
                                         , Constants.NORMAL_ERROR
                                 )
                         );
                     }
 
-                    if (stonadOK && stonad < Definitions.getStonadSumMin()) {
+                    if (stonadOK && stonad < stonadSumMin) {
                         er.addEntry(
                                 new ErrorReportEntry(
                                         r.getFieldAsString("SAKSBEHANDLER")
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 33 Kvalifiseringsstønad på kr " + Definitions.getStonadSumMin() + ",- eller lavere."
-                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + Definitions.getStonadSumMin() + ",-."
+                                        , "Kontroll 33 Kvalifiseringsstønad på kr " + stonadSumMin + ",- eller lavere."
+                                        , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
                                         , Constants.NORMAL_ERROR
                                 )
                         );

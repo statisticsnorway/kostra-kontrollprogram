@@ -1,4 +1,4 @@
-package no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad;
+package no.ssb.kostra.control.skjema;
 
 import java.util.List;
 
@@ -9,13 +9,5 @@ public class Definitions {
                 "06", "07", "08", "09", "10",
                 "11", "12", "13", "14", "15"
         );
-    }
-
-    public static Integer getStonadSumMax() {
-        return 235000;
-    }
-
-    public static Integer getStonadSumMin() {
-        return 8000;
     }
 }

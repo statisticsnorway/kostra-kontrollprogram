@@ -71,6 +71,11 @@ public class Record {
         }
     }
 
+    public void setFieldAsInteger(String field, Integer i) {
+        this.valuesByName.put(field, String.valueOf(i));
+    }
+
+
     public FieldDefinition getFieldDefinitionByNumber(Integer number){
         return this.fieldDefinitionByNumber.get(number);
     }

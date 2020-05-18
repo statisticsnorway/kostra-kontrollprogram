@@ -1,4 +1,4 @@
-package no.ssb.kostra.control.skjema.s11_sosialhjelp;
+package no.ssb.kostra.control.sosial.s11_sosialhjelp;
 
 import no.ssb.kostra.control.Code;
 import no.ssb.kostra.control.FieldDefinition;

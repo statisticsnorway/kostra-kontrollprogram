@@ -1,4 +1,4 @@
-package no.ssb.kostra.control.skjema;
+package no.ssb.kostra.control.sosial;
 
 import java.util.List;
 

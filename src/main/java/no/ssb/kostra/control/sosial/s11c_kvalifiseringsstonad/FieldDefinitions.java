@@ -1,4 +1,4 @@
-package no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad;
+package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
 
 import no.ssb.kostra.control.Code;
 import no.ssb.kostra.control.FieldDefinition;

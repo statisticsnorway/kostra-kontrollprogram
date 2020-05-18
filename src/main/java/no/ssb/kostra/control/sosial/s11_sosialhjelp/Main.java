@@ -1,8 +1,8 @@
-package no.ssb.kostra.control.skjema.s11_sosialhjelp;
+package no.ssb.kostra.control.sosial.s11_sosialhjelp;
 
 import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
-import no.ssb.kostra.control.skjema.Definitions;
+import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.Toolkit;
 

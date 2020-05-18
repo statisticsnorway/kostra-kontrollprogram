@@ -1,8 +1,8 @@
-package no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad;
+package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
 
 import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
-import no.ssb.kostra.control.skjema.Definitions;
+import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.Collections;

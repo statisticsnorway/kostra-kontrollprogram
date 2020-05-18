@@ -2,7 +2,6 @@ import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.controlprogram.Arguments;
 
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -29,10 +28,10 @@ public class CLI {
             er = no.ssb.kostra.control.regnskap.helseforetak.Main.doControls(arguments);
 
         } else if ("11".equalsIgnoreCase(arguments.getSkjema())){
-            er = no.ssb.kostra.control.skjema.s11_sosialhjelp.Main.doControls(arguments);
+            er = no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.doControls(arguments);
 
         } else if ("11C".equalsIgnoreCase(arguments.getSkjema())){
-            er = no.ssb.kostra.control.skjema.s11c_kvalifiseringsstonad.Main.doControls(arguments);
+            er = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
 
         } else {
             er = new ErrorReport();

@@ -1,3 +1,5 @@
+package no.ssb.kostra.controlprogram;
+
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.controlprogram.Arguments;
 

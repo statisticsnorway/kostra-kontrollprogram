@@ -18,9 +18,9 @@ public class ControlRecordLengde {
                 .sorted()
                 .map(String::valueOf)
                 .collect(Collectors.toList());
+        er.incrementCount();
 
         if (!recordLengdeFeil.isEmpty()) {
-
             er.addEntry(new ErrorReportEntry("Filuttrekk", "Filuttrekk", " ", " "
                     , "Kontroll Recordlengde"
                     , "Korreksjon: Rett opp slik at alle record er på " + length +

@@ -24,12 +24,12 @@ public class ErrorReport {
 
 
 	public ErrorReport(){
-		this.VERSION = Constants.kostraYear + ".01";
+		this.VERSION = args.getAargang() + ".01";
 		this.args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900"});
 	}
 
 	public ErrorReport(Arguments args) {
-		this.VERSION = Constants.kostraYear + ".01";
+		this.VERSION = args.getAargang() + ".01";
 		this.args = args;
 		this.executiveOfficerHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Saksbehandler ": "";
 		this.journalNumberHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Journalnummer ": "";

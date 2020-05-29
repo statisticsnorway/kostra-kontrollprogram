@@ -47,7 +47,7 @@ public class Main {
             return er;
         }
 
-        // integritetskontroller
+        // Sjekk skjematype, hvis den er feil så er det ikke noe vits å fortsette
         regnskap.stream()
                 .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
@@ -60,6 +60,14 @@ public class Main {
                         , "skjema"
                         , Collections.singletonList(args.getSkjema())
                 ))
+                .close();
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
+        // integritetskontroller
+        regnskap.stream()
                 .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er

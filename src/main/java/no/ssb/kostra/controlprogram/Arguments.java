@@ -19,7 +19,7 @@ public class Arguments {
     private List<String> inputFileContent = new ArrayList<>();
     private List<String> outputFileContent = new ArrayList<>();
 
-    public Arguments(String[] argv) {
+    public Arguments(String[] argv){
         GetOptDesc[] options = {
                 new GetOptDesc('s', "schema", true),
                 new GetOptDesc('y', "year", true),
@@ -79,7 +79,7 @@ public class Arguments {
                     outputFilePath = (String) optionsFound.get(key);
                     break;
                 case '?':
-                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
+//                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
                     break;
                 default:
                     System.err.println("Unexpected option character: " + c);
@@ -106,7 +106,7 @@ public class Arguments {
         }
     }
 
-    public boolean readFile() {
+    public boolean readFile() throws IOException {
         return (inputFilePath == null)? readFileFromStdin(System.in): readFileFromPath();
     }
 
@@ -128,7 +128,14 @@ public class Arguments {
     }
 
     public boolean readFileFromPath(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
+            this.inputFile = new File(inputFilePath);
+
+            if (!this.inputFile.canRead()){
+                throw new IOException("Kan ikke lese kildefil: " + this.inputFile);
+            }
+
             String line;
 
             while (( line = reader.readLine()) != null) {

@@ -20,7 +20,7 @@
         </repository>
         <repository>
             <id>ssb-repo</id>
-            <name>kodehus</name>
+            <name>nexus</name>
             <url>https://nexus.ssb.no/content/groups/public</url>
         </repository>
     </repositories>

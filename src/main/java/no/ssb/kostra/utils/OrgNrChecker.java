@@ -11,7 +11,7 @@ public class OrgNrChecker {
         if (orgnr.length() != LENGTH) return false;
 
         for (int i = 1; i < LENGTH; i++) {
-            s[i] = Format.parseInt(orgnr.substring(i, i));
+            s[i-1] = Format.parseInt(orgnr.substring(i, i));
         }
 
         if (s[0] == 0) return false;

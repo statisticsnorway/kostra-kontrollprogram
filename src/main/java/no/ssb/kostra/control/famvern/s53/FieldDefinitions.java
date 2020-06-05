@@ -77,7 +77,7 @@ public class FieldDefinitions {
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(101, "TISYN_TILTAK",
+                new FieldDefinition(101, "TILSYN_TILTAK",
                         "Integer",
                         "textBox",
                         38, 41

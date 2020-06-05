@@ -58,6 +58,10 @@ public class Definitions {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(0), kontor));
     }
 
+    public static boolean isFylkeValid(String fylke) {
+        return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(1), fylke));
+    }
+
     public static boolean isRegionValid(String region) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(2), region));
     }
@@ -65,7 +69,13 @@ public class Definitions {
     public static boolean isRegionAndKontorValid(String region, String kontor) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(
                 r -> Objects.equals(r.get(0), kontor)
-                && Objects.equals(r.get(2), region));
+                        && Objects.equals(r.get(2), region));
+    }
+
+    public static boolean isFylkeAndKontorValid(String fylke, String kontor) {
+        return getKontorFylkeRegionMappingAsList().stream().anyMatch(
+                r -> Objects.equals(r.get(0), kontor)
+                        && Objects.equals(r.get(1), fylke));
     }
 
     public static Map<String, String> getFylkeNavnAsList() {

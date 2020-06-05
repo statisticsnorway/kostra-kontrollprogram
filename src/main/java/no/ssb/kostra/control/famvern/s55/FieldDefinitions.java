@@ -217,7 +217,7 @@ public class FieldDefinitions {
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(329, "MEKLING_TOT_ALLE",
+                new FieldDefinition(329, "MEKLING_TOT_TOT",
                         "Integer",
                         "textBox",
                         107, 110
@@ -336,21 +336,21 @@ public class FieldDefinitions {
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(416, "BEGGE_TOT",
+                new FieldDefinition(416, "TOT_BEGGE",
                         "Integer",
                         "textBox",
                         161, 164
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(417, "EN_TOT",
+                new FieldDefinition(417, "TOT_EN",
                         "Integer",
                         "textBox",
                         165, 168
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(418, "ENBEGGE_TOT",
+                new FieldDefinition(418, "TOT_TOT",
                         "Integer",
                         "textBox",
                         169, 172

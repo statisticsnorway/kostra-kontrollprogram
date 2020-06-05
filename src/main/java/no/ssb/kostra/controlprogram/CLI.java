@@ -42,6 +42,18 @@ public class CLI {
             } else if ("11C".equalsIgnoreCase(arguments.getSkjema())) {
                 er = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
 
+            } else if ("52AF".equalsIgnoreCase(arguments.getSkjema())) {
+                er = no.ssb.kostra.control.famvern.s52a.Main.doControls(arguments);
+
+            } else if ("52BF".equalsIgnoreCase(arguments.getSkjema())) {
+                er = no.ssb.kostra.control.famvern.s52b.Main.doControls(arguments);
+
+            } else if ("53F".equalsIgnoreCase(arguments.getSkjema())) {
+                er = no.ssb.kostra.control.famvern.s53.Main.doControls(arguments);
+
+            } else if ("55F".equalsIgnoreCase(arguments.getSkjema())) {
+                er = no.ssb.kostra.control.famvern.s55.Main.doControls(arguments);
+
             } else {
                 er = new ErrorReport();
             }

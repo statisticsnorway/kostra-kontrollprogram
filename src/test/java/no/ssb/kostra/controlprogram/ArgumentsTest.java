@@ -43,14 +43,13 @@ public class ArgumentsTest {
         try {
             args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
 
-            String result = String.join("\n", args.getInputFileContent());
+            String result = String.join("\n", args.getInputContentAsStringList());
             assertTrue(result.length() == inputFileContent.length());
             assertTrue(result.equalsIgnoreCase(inputFileContent));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Test

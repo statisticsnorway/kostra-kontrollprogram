@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
-        List<String> list1 = args.getInputFileContent();
+        List<String> list1 = args.getInputContentAsStringList();
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<String> bevilgningRegnskapList = List.of("0X");
         List<String> balanseRegnskapList = List.of("0Y");

@@ -57,14 +57,14 @@ public class ControlRecordLengthTest {
 
     @Test
     public void testContentOK1() {
-        content = args.getInputFileContent();
+        content = args.getInputContentAsStringList();
 
         assertNotNull("Has content", content);
     }
 
     @Test
     public void testPosteringListOK1() {
-        content = args.getInputFileContent();
+        content = args.getInputContentAsStringList();
         List<Record> posteringList = content.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
@@ -74,7 +74,7 @@ public class ControlRecordLengthTest {
 
     @Test
     public void testControlRecordLengthOK1() {
-        content = args.getInputFileContent();
+        content = args.getInputContentAsStringList();
         Stream<Record> posteringStream = content.stream()
                 .map(line -> new Record(line, fieldDefinitions));
 
@@ -86,7 +86,7 @@ public class ControlRecordLengthTest {
 
     @Test
     public void testControlRecordLengthFail1() {
-        content = args.getInputFileContent();
+        content = args.getInputContentAsStringList();
         Stream<Record> posteringStream = content.stream()
                 .map(line -> new Record(line, fieldDefinitions));
 

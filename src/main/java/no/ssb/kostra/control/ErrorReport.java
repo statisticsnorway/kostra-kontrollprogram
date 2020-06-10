@@ -105,7 +105,6 @@ public class ErrorReport {
 		.append("<h4>Kontrollprogramversjon: " + VERSION + "</h4>" + lf)
 		.append("<h4>Kontroller startet: " + startTime.toString() + "</h4>" + lf)
 		.append("<h4>Rapport generert: " + Calendar.getInstance().getTime() + "</h4>" + lf)
-		.append("<h4>Kontrollert fil: " + this.args.getInputFilePath() + "</h4>" + lf)
 		.append("<h4>Type filuttrekk: " + this.args.getSkjema() + "." + this.args.getAargang() + "</h4>" + lf + lf);
 
 		if (!mapEntries.isEmpty()) {

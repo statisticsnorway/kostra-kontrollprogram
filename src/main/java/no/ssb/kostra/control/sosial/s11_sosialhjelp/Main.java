@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
-        List<String> inputFileContent = args.getInputFileContent();
+        List<String> inputFileContent = args.getInputContentAsStringList();
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))

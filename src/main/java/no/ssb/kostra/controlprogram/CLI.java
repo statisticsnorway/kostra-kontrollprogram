@@ -14,7 +14,6 @@ public class CLI {
     public static void main(String[] args) {
         ErrorReport er;
         int error_type_found;
-        BufferedWriter fileWriter = null;
 
         try {
             Arguments arguments = new Arguments(args);
@@ -36,11 +35,14 @@ public class CLI {
             } else if (List.of("0X", "0Y").contains(arguments.getSkjema())) {
                 er = no.ssb.kostra.control.regnskap.helseforetak.Main.doControls(arguments);
 
-            } else if ("11".equalsIgnoreCase(arguments.getSkjema())) {
+            } else if ("11F".equalsIgnoreCase(arguments.getSkjema())) {
                 er = no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.doControls(arguments);
 
-            } else if ("11C".equalsIgnoreCase(arguments.getSkjema())) {
+            } else if ("11CF".equalsIgnoreCase(arguments.getSkjema())) {
                 er = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
+
+            } else if ("15F".equalsIgnoreCase(arguments.getSkjema())) {
+                er = no.ssb.kostra.control.barnevern.s15.Main.doControls(arguments);
 
             } else if ("52AF".equalsIgnoreCase(arguments.getSkjema())) {
                 er = no.ssb.kostra.control.famvern.s52a.Main.doControls(arguments);
@@ -60,29 +62,13 @@ public class CLI {
 
             error_type_found = er.getErrorType();
 
-            if (arguments.getOutputFile() != null) {
-                fileWriter = new BufferedWriter(new FileWriter(arguments.getOutputFile()));
-            }
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+            out.print(er.generateReport());
 
-            if (fileWriter != null) {
-                fileWriter.write(er.generateReport());
-                fileWriter.close();
-            } else {
-                PrintStream out = new PrintStream(System.out, true, StandardCharsets.ISO_8859_1);
-                out.println(er.generateReport());
-            }
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             error_type_found = Constants.PARAMETER_ERROR;
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            error_type_found = Constants.IO_ERROR;
-
-//        } catch (UnreadableDataException e) {
-//            System.out.println(e.getExceptionMessage());
-//            error_type_found = Constants.CRITICAL_ERROR;
 
         } catch (NullPointerException e) {
             error_type_found = Constants.CRITICAL_ERROR;

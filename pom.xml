@@ -51,23 +51,29 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifestFile>MANIFEST.MF</manifestFile>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>default-jar</id>
-                        <phase>package</phase>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
                         <goals>
-                            <goal>jar</goal>
+                            <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <finalName>kontrollprogram</finalName>
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>src/main/resources/assembly.xml</descriptor>
+                            </descriptors>
+                            <archive>
+                                <manifest>
+                                    <mainClass>no.ssb.kostra.controlprogram.CLI</mainClass>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                </manifest>
+                            </archive>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

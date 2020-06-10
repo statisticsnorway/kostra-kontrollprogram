@@ -12,10 +12,6 @@ public class Arguments {
     private String orgnr = "         ";
     private String foretaknr = "         ";
 
-    private String inputFilePath = "";
-    private String outputFilePath = "";
-    private File inputFile = null;
-    private File outputFile = null;
     private List<String> inputFileContent = new ArrayList<>();
     private List<String> outputFileContent = new ArrayList<>();
 
@@ -27,9 +23,7 @@ public class Arguments {
                 new GetOptDesc('r', "region", true),
                 new GetOptDesc('n', "name", true),
                 new GetOptDesc('u', "unit-orgnr", true),
-                new GetOptDesc('c', "company-orgnr", true),
-                new GetOptDesc('i', "input-file", true),
-                new GetOptDesc('o', "output-file", true),
+                new GetOptDesc('c', "company-orgnr", true)
         };
 
         GetOpt parser = new GetOpt(options);
@@ -72,12 +66,6 @@ public class Arguments {
                 case 'c':
                     foretaknr = (String) optionsFound.get(key);
                     break;
-                case 'i':
-                    inputFilePath = (String) optionsFound.get(key);
-                    break;
-                case 'o':
-                    outputFilePath = (String) optionsFound.get(key);
-                    break;
                 case '?':
 //                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
                     break;
@@ -98,56 +86,6 @@ public class Arguments {
         if (region == null || region.trim().length() == 0){
             throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100");
         }
-
-        if (inputFilePath != null && 0 < inputFilePath.length()){
-            readFileFromPath();
-        } else {
-            readFileFromStdin(System.in);
-        }
-    }
-
-    public boolean readFile() throws IOException {
-        return (inputFilePath == null)? readFileFromStdin(System.in): readFileFromPath();
-    }
-
-
-    public boolean readFileFromStdin(InputStream inputStream){
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                inputFileContent.add(line);
-            }
-
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    public boolean readFileFromPath(){
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
-            this.inputFile = new File(inputFilePath);
-
-            if (!this.inputFile.canRead()){
-                throw new IOException("Kan ikke lese kildefil: " + this.inputFile);
-            }
-
-            String line;
-
-            while (( line = reader.readLine()) != null) {
-                inputFileContent.add(line);
-            }
-
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
     }
 
     public String getSkjema() {
@@ -178,24 +116,25 @@ public class Arguments {
         return foretaknr;
     }
 
-    public String getInputFilePath() {
-        return inputFilePath;
-    }
+    public List<String> getInputContentAsStringList() {
+        if (inputFileContent.isEmpty()){
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+                String line;
 
-    public String getOutputFilePath() {
-        return outputFilePath;
-    }
+                while ((line = reader.readLine()) != null) {
+                    inputFileContent.add(line);
+                }
 
-    public File getInputFile() {
-        return inputFile;
-    }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-    public File getOutputFile() {
-        return outputFile;
-    }
-
-    public List<String> getInputFileContent() {
         return inputFileContent;
+    }
+
+    public InputStream getInputContentAsInputStream() {
+        return System.in;
     }
 
     public void setInputFileContent(List<String> inputFileContent) {
@@ -216,10 +155,6 @@ public class Arguments {
                 ", navn='" + navn + '\'' +
                 ", orgnr='" + orgnr + '\'' +
                 ", foretaknr='" + foretaknr + '\'' +
-                ", inputFilePath='" + inputFilePath + '\'' +
-                ", outputFilePath='" + outputFilePath + '\'' +
-                ", inputFile=" + inputFile +
-                ", outputFile=" + outputFile +
                 ", inputFileContent=" + inputFileContent +
                 ", outputFileContent=" + outputFileContent +
                 '}';

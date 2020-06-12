@@ -18,8 +18,8 @@ public final class Main {
 			// We can add several handlers which are triggered for a given node
 			// name. The complete sub-dom of this node is then parsed and made
 			// available as a StructuredNode
-			r.addHandler("Avgiver", new AvgiverNodeHandler(er, regionNumber, avgiver));
-			r.addHandler("Individ", new IndividNodeHandler(er, regionNumber, avgiver));
+			r.addHandler("Avgiver", new AvgiverNodeHandler(er, args));
+			r.addHandler("Individ", new IndividNodeHandler(er, args));
 			r.parse(args.getInputContentAsInputStream());
 
 		} catch (Exception e) {

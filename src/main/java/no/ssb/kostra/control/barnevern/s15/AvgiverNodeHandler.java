@@ -3,14 +3,14 @@ package no.ssb.kostra.control.barnevern.s15;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.controlprogram.Arguments;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.util.Map;
 
 public class AvgiverNodeHandler extends NodeHandler {
-	public AvgiverNodeHandler(ErrorReport er, String region,
-			Map<String, String> avgiver) {
-		super(er, region, avgiver);
+	public AvgiverNodeHandler(ErrorReport er, Arguments args) {
+		super(er, args);
 	}
 
 	/**
@@ -37,16 +37,6 @@ public class AvgiverNodeHandler extends NodeHandler {
 	public void process(StructuredNode node) {
 		try {
 			/**
-			 * Tar vare på avgiverinformasjon da denne også trengs ved
-			 * kontrollering av Individ-noder
-			 */
-			avgiver.put("Organisasjonsnummer",
-					node.queryString("@Organisasjonsnummer"));
-			avgiver.put("Versjon", node.queryString("@Versjon"));
-			avgiver.put("Kommunenummer", node.queryString("@Kommunenummer"));
-			avgiver.put("Kommunenavn", node.queryString("@Kommunenavn"));
-
-			/**
 			 * <pre>
 			 * - Avgiver K1: Validering av avgiver
 			 *   - Kontrollerer mot filbeskrivelse for avgiver, Avgiver.xsd
@@ -66,7 +56,7 @@ public class AvgiverNodeHandler extends NodeHandler {
 			 */
 			controlEquals(er, new ErrorReportEntry(" ", "", " ", " ",
 					"Avgiver K2: Årgang",
-					"Filen inneholder feil rapporteringsår (" + node.queryString("@Versjon") + "), forventet " + Constants.kostraYear + ".",
+					"Filen inneholder feil rapporteringsår (" + node.queryString("@Versjon") + "), forventet " + args.getAargang() + ".",
 					Constants.CRITICAL_ERROR), node.queryString("@Versjon"),
 					Constants.kostraYear);
 
@@ -98,27 +88,29 @@ public class AvgiverNodeHandler extends NodeHandler {
 							"Avgiver K4: Kommunenummer",
 							"Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema og filuttrekk."
 									+ node.queryString("@Kommunenummer")
-									+ " : " + this.region,
+									+ " : " + args.getRegion().substring(0, 4),
 							Constants.CRITICAL_ERROR),
-					node.queryString("@Kommunenummer"), region.substring(0, 4));
+					node.queryString("@Kommunenummer"), args.getRegion().substring(0, 4));
 
+// TODO
+// Denne utelates da K4 er god nok kontroll av kommunenummer
 			/**
 			 * <pre>
 			 * - Avgiver K5: Gyldig kommunenummer
 			 *   - Kontrollerer at kommunenummeret fins i liste over gyldige kommunenumre som er med i denne rapporteringen
 			 * </pre>
 			 */
-			controlBoolean(
-					er,
-					new ErrorReportEntry(
-							" ",
-							" ",
-							" ",
-							" ",
-							"Avgiver K5: Gyldig kommunenummer",
-							"Filen inneholder feil kommunenummer. Fins ikke i listen over gyldige kommunenumre.",
-							Constants.CRITICAL_ERROR),
-					no.ssb.kostra.utils.Regioner.kommuneNrIsValid(region));
+//			controlBoolean(
+//					er,
+//					new ErrorReportEntry(
+//							" ",
+//							" ",
+//							" ",
+//							" ",
+//							"Avgiver K5: Gyldig kommunenummer",
+//							"Filen inneholder feil kommunenummer. Fins ikke i listen over gyldige kommunenumre.",
+//							Constants.CRITICAL_ERROR),
+//					no.ssb.kostra.utils.Regioner.kommuneNrIsValid(region));
 
 			/**
 			 * <pre>

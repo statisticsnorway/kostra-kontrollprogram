@@ -3,58 +3,53 @@ package no.ssb.kostra.control.barnevern.s15;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.DatoFnr;
-import org.joda.time.DateTime;
-import org.joda.time.Years;
 
 import javax.xml.xpath.XPathExpressionException;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author ojj
- */
 
 public class IndividNodeHandler extends NodeHandler {
-    private static Map<String, List<String>> mapDublettJournalnummer = new TreeMap<String, List<String>>();
-    private static Map<String, List<String>> mapDublettFodselsnummer = new TreeMap<String, List<String>>();
-    private static Map<String, Integer> mapUniqueID = new TreeMap<String, Integer>();
-    private DateTime individStartDato;
-    private DateTime individSluttDato;
-    private DateTime fodselsDato;
-    private DateTime telleDato;
-    private DateTime forrigeTelleDato;
-    private int individAlder = -1;
+    private static Map<String, List<String>> mapDublettJournalnummer = new TreeMap<>();
+    private static Map<String, List<String>> mapDublettFodselsnummer = new TreeMap<>();
+    private LocalDate forrigeTelleDato;
+    private long individAlder = -1;
 
-    public IndividNodeHandler(ErrorReport er, String region,
-                              Map<String, String> avgiver) {
-        super(er, region, avgiver);
+    public IndividNodeHandler(ErrorReport er, Arguments args) {
+        super(er, args);
     }
 
     public static void reset() {
-        mapDublettJournalnummer = new TreeMap<String, List<String>>();
-        mapDublettFodselsnummer = new TreeMap<String, List<String>>();
+        mapDublettJournalnummer = new TreeMap<>();
+        mapDublettFodselsnummer = new TreeMap<>();
     }
 
     /**
      * Setter individets alder ved å finne forskjellen i antall år fra
      * fødselsdato til telledato
      *
-     * @param fodselsDato
-     * @param telleDato
+     * @param fodselsDato - Fødselsdato på individet
+     * @param telleDato   - 31. des i rapporteringsåret
      */
-    public void setIndividAlder(DateTime fodselsDato, DateTime telleDato) {
+    public void setIndividAlder(LocalDate fodselsDato, LocalDate telleDato) {
         if (fodselsDato != null && telleDato != null) {
-            Years years = Years.yearsBetween(fodselsDato, telleDato);
-            this.individAlder = years.getYears();
+            this.individAlder = ChronoUnit.YEARS.between(fodselsDato, telleDato);
         }
     }
 
     /**
-     * @return int Individets alder
+     * @return long Individets alder
      */
-    public int getIndividAlder() {
+    public long getIndividAlder() {
         return this.individAlder;
     }
 
@@ -63,15 +58,15 @@ public class IndividNodeHandler extends NodeHandler {
      */
     @Override
     void process(StructuredNode individ) {
-        String saksbehandler = "";
+        String saksbehandler;
         String journalnummer = "";
         String individId = "";
-        String fodselsnummer = "";
-        String fodselsnummerString = "";
+        String fodselsnummer;
+        String fodselsnummerString;
         String refNr = "";
-        String avgiverVersjon = "";
-        String avslutta3112 = "";
-        String bydelsnummer = "";
+        String avgiverVersjon;
+        String avslutta3112;
+        String bydelsnummer;
 
         try {
             // We can now conveniently query the sub-dom of each node
@@ -82,12 +77,12 @@ public class IndividNodeHandler extends NodeHandler {
             fodselsnummerString = fodselsnummer = individ
                     .queryString("@Fodselsnummer");
             refNr = "";
-            avgiverVersjon = avgiver.get("Versjon");
+            avgiverVersjon = args.getAargang();
             avslutta3112 = individ.queryString("@Avslutta3112");
 
             // Oslo sender inn på alle bydeler, et individ skal ha muligheten
             // til å være registret i flere bydeler
-            if (region.startsWith("0301")) {
+            if (args.getRegion().startsWith("0301")) {
                 bydelsnummer = (individ.queryString("@Bydelsnummer") != null && individ
                         .queryString("@Bydelsnummer").length() > 0) ? individ
                         .queryString("@Bydelsnummer") : "99";
@@ -114,30 +109,19 @@ public class IndividNodeHandler extends NodeHandler {
                             .getOwnerDocument(), "Individ.xsd");
 
             String tempVersjon = avgiverVersjon + "-12-31";
-            telleDato = assignDateFromString(tempVersjon,
+            LocalDate telleDato = assignDateFromString(tempVersjon,
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
-            fodselsDato = (fodselsnummer != null) ? assignDateFromString(
-                    fodselsnummer.substring(0, 6),
-                    Constants.datoFormatKort) : null;
-            individStartDato = assignDateFromString(
-                    individ.queryString("@StartDato"),
-                    Constants.datoFormatLangt);
-            individSluttDato = assignDateFromString(
-                    individ.queryString("@SluttDato"),
-                    Constants.datoFormatLangt);
+            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
+            LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
+            LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
 
-            String individStartDatoString = (individStartDato != null) ? individStartDato
-                    .toString(Constants.datoFormatKort) : "uoppgitt";
-            String individSluttDatoString = (individSluttDato != null) ? individSluttDato
-                    .toString(Constants.datoFormatKort) : "uoppgitt";
-            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato
-                    .toString(Constants.datoFormatKort) : "uoppgitt";
+            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
+            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
+            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
 
-            individId = (individ.queryString("@Id") != null && individ
-                    .queryString("@Id").length() > 0) ? individ
-                    .queryString("@Id") : "Uoppgitt";
+            individId = (individ.queryString("@Id") != null && individ.queryString("@Id").length() > 0) ? individ.queryString("@Id") : "Uoppgitt";
 
             if (journalnummer != null) {
                 er.incrementCount();
@@ -178,7 +162,6 @@ public class IndividNodeHandler extends NodeHandler {
 
             // Datokontroll 02e utgår fordi individstart sjekkes mot selv
 
-            // TODO:HER
             controlFodselsnummerOgDUFnummer(er, new ErrorReportEntry(
                             saksbehandler, journalnummer, individId, refNr,
                             "Individ Kontroll 03: Fødselsnummer og DUFnummer", " ",
@@ -237,7 +220,7 @@ public class IndividNodeHandler extends NodeHandler {
                             Constants.NORMAL_ERROR), this.getIndividAlder(),
                     18, individ.queryNodeList("Tiltak"));
 
-            if (region.startsWith("0301")) {
+            if (args.getRegion().startsWith("0301")) {
                 controlExists(er,
                         new ErrorReportEntry(saksbehandler, journalnummer,
                                 individId, refNr,
@@ -265,23 +248,22 @@ public class IndividNodeHandler extends NodeHandler {
             List<StructuredNode> meldingList = individ.queryNodeList("Melding");
 
             for (StructuredNode melding : meldingList) {
-                String meldingId = (melding.queryString("@Id") != null && melding
-                        .queryString("@Id").length() > 0) ? melding
-                        .queryString("@Id") : "uoppgitt";
-                DateTime meldingStartDato = assignDateFromString(
+                String meldingId = defaultString(melding.queryString("@Id"), "uoppgitt");
+                LocalDate meldingStartDato = assignDateFromString(
                         melding.queryString("@StartDato"),
                         Constants.datoFormatLangt);
-                DateTime meldingSluttDato = assignDateFromString(
+                LocalDate meldingSluttDato = assignDateFromString(
                         melding.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
-                String meldingStartDatoString = (meldingStartDato != null) ? meldingStartDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
-                String meldingSluttDatoString = (meldingSluttDato != null) ? meldingSluttDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
+                String meldingStartDatoString = (meldingStartDato != null) 
+                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                        : "uoppgitt";
+                String meldingSluttDatoString = (meldingSluttDato != null) 
+                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                        : "uoppgitt";
                 String henlagt = "1";
                 String meldingKonklusjon = melding.queryString("@Konklusjon");
-                String meldingKonklusjonString = (meldingKonklusjon != null) ? meldingKonklusjon
-                        : "uoppgitt";
+                String meldingKonklusjonString = defaultString(meldingKonklusjon, "uoppgitt");
 
                 controlDatoEtterDato(
                         er,
@@ -405,7 +387,7 @@ public class IndividNodeHandler extends NodeHandler {
                         for (StructuredNode melder : melderList) {
                             // 22 = Andre offentlige instanser
                             // 23 = Andre
-                            String[] koder = {"22", "23"};
+                            List<String> koder = List.of("22", "23");
                             String melderKode = (melder.queryString("@Kode") != null && melder
                                     .queryString("@Kode").length() > 0) ? melder
                                     .queryString("@Kode") : "";
@@ -436,14 +418,9 @@ public class IndividNodeHandler extends NodeHandler {
                         for (StructuredNode saksinnhold : saksinnholdList) {
                             // 18 = Andre forhold ved foreldre/familien
                             // 19 = Andre forhold ved barnets situasjon
-                            String[] koder = {"18", "19"};
-                            String saksinnholdKode = (saksinnhold
-                                    .queryString("@Kode") != null && saksinnhold
-                                    .queryString("@Kode").length() > 0) ? saksinnhold
-                                    .queryString("@Kode") : "";
-                            String saksinnholdKodeString = (saksinnholdKode
-                                    .length() > 0) ? saksinnholdKode
-                                    : "uoppgitt";
+                            List<String> koder = List.of("18", "19");
+                            String saksinnholdKode = defaultString(saksinnhold.queryString("@Kode"), "");
+                            String saksinnholdKodeString = defaultString(saksinnholdKode, "uoppgitt");
 
                             controlPresisering(
                                     er,
@@ -466,27 +443,23 @@ public class IndividNodeHandler extends NodeHandler {
 
                 // Kontroller for Undersokelse
                 if (undersokelse != null) {
-                    String undersokelseId = (undersokelse.queryString("@Id") != null && undersokelse
-                            .queryString("@Id").length() > 0) ? undersokelse
-                            .queryString("@Id") : "uoppgitt";
-                    DateTime undersokelseStartDato = assignDateFromString(
+                    String undersokelseId = defaultString(undersokelse.queryString("@Id"), "uoppgitt");
+                    LocalDate undersokelseStartDato = assignDateFromString(
                             undersokelse.queryString("@StartDato"),
                             Constants.datoFormatLangt);
-                    DateTime undersokelseSluttDato = assignDateFromString(
+                    assert undersokelseStartDato != null;
+
+                    LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
                             Constants.datoFormatLangt);
-                    String undersokelseStartDatoString = (undersokelseStartDato != null) ? undersokelseStartDato
-                            .toString(Constants.datoFormatKort) : "uoppgitt";
-                    String undersokelseSluttDatoString = (undersokelseSluttDato != null) ? undersokelseSluttDato
-                            .toString(Constants.datoFormatKort) : "uoppgitt";
-                    String undersokelseKonklusjon = (undersokelse
-                            .queryString("@Konklusjon") != null && undersokelse
-                            .queryString("@Konklusjon").length() > 0) ? undersokelse
-                            .queryString("@Konklusjon") : "";
-                    String undersokelsePresisering = (undersokelse
-                            .queryString("Presisering") != null && undersokelse
-                            .queryString("Presisering").length() > 0) ? undersokelse
-                            .queryString("Presisering") : "";
+                    String undersokelseStartDatoString = (undersokelseStartDato != null) 
+                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                            : "uoppgitt";
+                    String undersokelseSluttDatoString = (undersokelseSluttDato != null) 
+                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                            : "uoppgitt";
+                    String undersokelseKonklusjon = defaultString(undersokelse.queryString("@Konklusjon"), "");
+                    String undersokelsePresisering = defaultString(undersokelse.queryString("Presisering"), "");
 
                     controlDatoEtterDato(
                             er,
@@ -572,7 +545,7 @@ public class IndividNodeHandler extends NodeHandler {
                             individStartDato, undersokelseStartDato);
 
                     // 5 = Undersøkelsen er henlagt pga flytting
-                    String[] koderPresisering = {"5"};
+                    List<String> koderPresisering = List.of("5");
                     controlPresisering(
                             er,
                             new ErrorReportEntry(
@@ -605,38 +578,6 @@ public class IndividNodeHandler extends NodeHandler {
                             undersokelse.queryString("@SluttDato"),
                             undersokelseKonklusjon);
 
-//                    controlTidManederUker(
-//                            er,
-//                            new ErrorReportEntry(
-//                                    saksbehandler,
-//                                    journalnummer,
-//                                    individId,
-//                                    refNr,
-//                                    "Undersøkelse Kontroll 5: Behandlingstid for undersøkelse",
-//                                    "Undersøkelse ("
-//                                            + undersokelseId
-//                                            + "). Fristoverskridelse, behandlingstid over 3 måneder for undersøkelse, "
-//                                            + meldingSluttDatoString + " -> "
-//                                            + undersokelseSluttDatoString,
-//                                    Constants.NORMAL_ERROR), meldingStartDato,
-//                            undersokelseSluttDato, 3, 1);
-//
-//                    controlTidManederUker(
-//                            er,
-//                            new ErrorReportEntry(
-//                                    saksbehandler,
-//                                    journalnummer,
-//                                    individId,
-//                                    refNr,
-//                                    "Undersøkelse Kontroll 6: Fristoverskridelse for undersøkelse",
-//                                    "Undersøkelse ("
-//                                            + undersokelseId
-//                                            + "). Fristoverskridelse, behandlingstid over 6 måneder for undersøkelse, "
-//                                            + meldingSluttDatoString + " -> "
-//                                            + undersokelseSluttDatoString,
-//                                    Constants.NORMAL_ERROR), meldingStartDato,
-//                            undersokelseSluttDato, 6, 1);
-
                     controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
                             er,
                             new ErrorReportEntry(
@@ -658,7 +599,7 @@ public class IndividNodeHandler extends NodeHandler {
 
                     // 1 = Barneverntjenesten fatter vedtak om tiltak
                     // 2 = Begjæring om tiltak for fylkesnemnda
-                    String[] koderKonklusjon = {"1", "2"};
+                    List<String> koderKonklusjon = List.of("1", "2");
                     controlFeltMedKoderSkalHaUndernoder(
                             er,
                             new ErrorReportEntry(
@@ -679,15 +620,9 @@ public class IndividNodeHandler extends NodeHandler {
                         for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
                             // 18 = Andre forhold ved foreldre/familien
                             // 19 = Andre forhold ved barnets situasjon
-                            String[] kodelisteVedtaksgrunnlag = {"18", "19"};
-                            String vedtaksgrunnlagKode = (vedtaksgrunnlag
-                                    .queryString("@Kode") != null && vedtaksgrunnlag
-                                    .queryString("@Kode").length() > 0) ? vedtaksgrunnlag
-                                    .queryString("@Kode") : "";
-                            String vedtaksgrunnlagPresisering = (vedtaksgrunnlag
-                                    .queryString("Presisering") != null && vedtaksgrunnlag
-                                    .queryString("Presisering").length() > 0) ? vedtaksgrunnlag
-                                    .queryString("Presisering") : "";
+                            List<String> kodelisteVedtaksgrunnlag = List.of("18", "19");
+                            String vedtaksgrunnlagKode = defaultString(vedtaksgrunnlag.queryString("@Kode"), "");
+                            String vedtaksgrunnlagPresisering = defaultString(vedtaksgrunnlag.queryString("Presisering"), "");
 
                             controlPresisering(
                                     er,
@@ -712,20 +647,20 @@ public class IndividNodeHandler extends NodeHandler {
             // Kontroller for Plan
             List<StructuredNode> planList = individ.queryNodeList("Plan");
             for (StructuredNode plan : planList) {
-                String planId = (plan.queryString("@Id") != null && plan
-                        .queryString("@Id").length() > 0) ? plan
-                        .queryString("@Id") : "uoppgitt";
+                String planId = defaultString(plan.queryString("@Id"), "uoppgitt");
 
-                DateTime planStartDato = assignDateFromString(
+                LocalDate planStartDato = assignDateFromString(
                         plan.queryString("@StartDato"),
                         Constants.datoFormatLangt);
-                DateTime planSluttDato = assignDateFromString(
+                LocalDate planSluttDato = assignDateFromString(
                         plan.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
-                String planStartDatoString = (planStartDato != null) ? planStartDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
-                String planSluttDatoString = (planSluttDato != null) ? planSluttDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
+                String planStartDatoString = (planStartDato != null)
+                        ? planStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        : "uoppgitt";
+                String planSluttDatoString = (planSluttDato != null)
+                        ? planSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        : "uoppgitt";
 
                 controlDatoEtterDato(
                         er,
@@ -796,41 +731,29 @@ public class IndividNodeHandler extends NodeHandler {
 
             // Kontroller for tiltak
             List<StructuredNode> tiltakList = individ.queryNodeList("Tiltak");
-            Collections.sort(tiltakList, new ComparatorNodeByStartDato());
+            tiltakList.sort(new ComparatorNodeByStartDato());
 
             for (StructuredNode tiltak : tiltakList) {
-                String tiltakId = (tiltak.queryString("@Id") != null && tiltak
-                        .queryString("@Id").length() > 0) ? tiltak
-                        .queryString("@Id") : "uoppgitt";
-                DateTime tiltakStartDato = assignDateFromString(
+                String tiltakId = defaultString(tiltak.queryString("@Id"), "uoppgitt");
+                LocalDate tiltakStartDato = assignDateFromString(
                         tiltak.queryString("@StartDato"),
                         Constants.datoFormatLangt);
-                DateTime tiltakSluttDato = assignDateFromString(
+                LocalDate tiltakSluttDato = assignDateFromString(
                         tiltak.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
-                String tiltakStartDatoString = (tiltakStartDato != null) ? tiltakStartDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
-                String tiltakSluttDatoString = (tiltakSluttDato != null) ? tiltakSluttDato
-                        .toString(Constants.datoFormatKort) : "uoppgitt";
-                String tiltakKategoriKode = (tiltak
-                        .queryString("Kategori/@Kode") != null && tiltak
-                        .queryString("Kategori/@Kode").length() > 0) ? tiltak
-                        .queryString("Kategori/@Kode") : "";
-                String[] kodelisteKategoriKode = {"1.99", "2.99", "3.7",
-                        "3.99", "4.99", "5.99", "6.99", "7.99", "8.99"};
-                String tiltakKategoriPresisering = (tiltak
-                        .queryString("Kategori/Presisering") != null && tiltak
-                        .queryString("Kategori/Presisering").length() > 0) ? tiltak
-                        .queryString("Kategori/Presisering") : "";
-                String tiltakOpphevelseKode = (tiltak
-                        .queryString("Opphevelse/@Kode") != null && tiltak
-                        .queryString("Opphevelse/@Kode").length() > 0) ? tiltak
-                        .queryString("Opphevelse/@Kode") : "";
-                String[] kodelisteOpphevelseKode = {"4"};
-                String tiltakOpphevelsePresisering = (tiltak
-                        .queryString("Opphevelse/Presisering") != null && tiltak
-                        .queryString("Opphevelse/Presisering").length() > 0) ? tiltak
-                        .queryString("Opphevelse/Presisering") : "";
+                String tiltakStartDatoString = (tiltakStartDato != null)
+                        ? tiltakStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        : "uoppgitt";
+                String tiltakSluttDatoString = (tiltakSluttDato != null)
+                        ? tiltakSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        : "uoppgitt";
+                String tiltakKategoriKode = defaultString(tiltak.queryString("Kategori/@Kode"), "");
+                List<String> kodelisteKategoriKode = List.of("1.99", "2.99", "3.7",
+                        "3.99", "4.99", "5.99", "6.99", "7.99", "8.99");
+                String tiltakKategoriPresisering = defaultString(tiltak.queryString("Kategori/Presisering"), "");
+                String tiltakOpphevelseKode = defaultString(tiltak.queryString("Opphevelse/@Kode"), "");
+                List<String> kodelisteOpphevelseKode = List.of("4");
+                String tiltakOpphevelsePresisering = defaultString(tiltak.queryString("Opphevelse/Presisering"), "");
 
                 controlDatoEtterDato(er, new ErrorReportEntry(saksbehandler,
                                 journalnummer, individId, refNr,
@@ -899,7 +822,6 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR), individStartDato,
                         tiltakStartDato);
 
-                // TODO: ekstra sjekk mot kravspek
                 controlAlderOverAldersgrenseSkalHaUndernoder(
                         er,
                         new ErrorReportEntry(
@@ -988,7 +910,7 @@ public class IndividNodeHandler extends NodeHandler {
                         tiltakOpphevelsePresisering);
 
                 // Kontroll av Lovhjemmel-relaterte ting
-                List<StructuredNode> lovhjemmelList = new ArrayList<StructuredNode>();
+                List<StructuredNode> lovhjemmelList = new ArrayList<>();
                 lovhjemmelList.add(tiltak.queryNode("Lovhjemmel"));
                 lovhjemmelList.addAll(tiltak.queryNodeList("JmfrLovhjemmel"));
 
@@ -1054,8 +976,7 @@ public class IndividNodeHandler extends NodeHandler {
                 }
             }
 
-            String[] kodelistePlasseringsTiltak = {"1.1", "1.2", "1.99", "2.1", "2.2",
-                    "2.3", "2.4", "2.5", "2.99", "8.2"};
+            List<String> kodelistePlasseringsTiltak = List.of("1.1", "1.2", "1.99", "2.1", "2.2", "2.3", "2.4", "2.5", "2.99", "8.2");
 
             controlFlerePlasseringstiltakISammePeriode(
                     er,
@@ -1067,11 +988,8 @@ public class IndividNodeHandler extends NodeHandler {
                             "Tiltak Kontroll 9: Flere plasseringstiltak i samme periode",
                             "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder",
                             Constants.NORMAL_ERROR), tiltakList,
-                    kodelistePlasseringsTiltak, 3, telleDato,
+                    kodelistePlasseringsTiltak, 3,
                     "Uhåndterlig feil i forbindelse med tiltak");
-
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -1081,26 +999,7 @@ public class IndividNodeHandler extends NodeHandler {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
 
-    /**
-     * Sjekker om tekststreng ikke eksisterer eller har innhold. Returnérer true
-     * hvis den ikke fins eller har innhold, ellers false samt at
-     * ErrorReportEntry legges til i ErrorReport
-     *
-     * @param er
-     * @param ere
-     * @param val1
-     * @return boolean
-     */
-    public boolean controlUndefinedOrHasLength(ErrorReport er,
-                                               ErrorReportEntry ere, String val1) {
-        if (val1 == null || !val1.isEmpty()) {
-            return true;
-        } else {
-            er.addEntry(ere);
-            return false;
         }
     }
 
@@ -1109,20 +1008,16 @@ public class IndividNodeHandler extends NodeHandler {
      * dato2, returnéres false samt at ErrorReportEntry legges til i
      * ErrorReport, ellers returneres true
      *
-     * @param er
-     * @param ere
-     * @param dato1
-     * @param dato2
-     * @return boolean
+     * @param er    - ErrorReport
+     * @param ere   - ErrorReportEntry
+     * @param dato1 - LocalDate
+     * @param dato2 - LocalDate
      */
-    public boolean controlDatoEtterDato(ErrorReport er, ErrorReportEntry ere,
-                                        DateTime dato1, DateTime dato2) {
+    public void controlDatoEtterDato(ErrorReport er, ErrorReportEntry ere, LocalDate dato1, LocalDate dato2) {
         if (dato1 != null && dato2 != null && dato1.isAfter(dato2)) {
             er.addEntry(ere);
-            return false;
         }
 
-        return true;
     }
 
     /**
@@ -1130,16 +1025,15 @@ public class IndividNodeHandler extends NodeHandler {
      * sjekkes DUF-nummer om det er korrekt. Ved feil eller at begge mangler
      * returneres false samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param fodselsnummer
-     * @param duFnummer
-     * @return boolean
+     * @param er            - ErrorReport
+     * @param ere           - ErrorReportEntry
+     * @param fodselsnummer - String
+     * @param duFnummer     - String
      */
-    public boolean controlFodselsnummerOgDUFnummer(ErrorReport er,
-                                                   ErrorReportEntry ere, String fodselsnummer, String duFnummer,
-                                                   String errorTextFodselsnummer, String errorTextDUFnummer,
-                                                   String errorTextMangler) {
+    public void controlFodselsnummerOgDUFnummer(ErrorReport er,
+                                                ErrorReportEntry ere, String fodselsnummer, String duFnummer,
+                                                String errorTextFodselsnummer, String errorTextDUFnummer,
+                                                String errorTextMangler) {
         if (fodselsnummer != null) {
             if (!((DatoFnr.validNorwId(fodselsnummer) == 1)
                     || fodselsnummer.endsWith("00100")
@@ -1148,7 +1042,6 @@ public class IndividNodeHandler extends NodeHandler {
                     || fodselsnummer.endsWith("99999"))) {
                 ere.setErrorText(errorTextFodselsnummer);
                 er.addEntry(ere);
-                return false;
             }
 
         } else if (duFnummer != null) {
@@ -1158,37 +1051,31 @@ public class IndividNodeHandler extends NodeHandler {
             if (!m.matches()) {
                 ere.setErrorText(errorTextDUFnummer);
                 er.addEntry(ere);
-                return false;
 
             }
         } else {
             ere.setErrorText(errorTextMangler);
             er.addEntry(ere);
-            return false;
         }
 
-        return true;
     }
 
     /**
      * Kontrollerer at fødselsnummer er korrekt. Ved feil eller mangler
      * returneres false samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param fodselsnummer
-     * @return boolean
+     * @param er            - ErrorReport
+     * @param ere           - ErrorReportEntry
+     * @param fodselsnummer - String
      */
-    public boolean controlFodselsnummer(ErrorReport er,
-                                        ErrorReportEntry ere, String fodselsnummer,
-                                        String errorTextFodselsnummer) {
-        if (fodselsnummer == null || (!(DatoFnr.validNorwId(fodselsnummer) == 1) || fodselsnummer.endsWith("55555"))) {
+    public void controlFodselsnummer(ErrorReport er,
+                                     ErrorReportEntry ere, String fodselsnummer,
+                                     String errorTextFodselsnummer) {
+        if (empty(fodselsnummer) || (!(DatoFnr.validNorwId(fodselsnummer) == 1) || fodselsnummer.endsWith("55555"))) {
             ere.setErrorText(errorTextFodselsnummer);
             er.addEntry(ere);
-            return false;
         }
 
-        return true;
     }
 
     /**
@@ -1196,15 +1083,12 @@ public class IndividNodeHandler extends NodeHandler {
      * feil lages en liste hvor fodselnummeret forekommer, returneres false samt
      * at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param fodselsnummer
-     * @return boolean
+     * @param er            - ErrorReport
+     * @param ere           - ErrorReportEntry
+     * @param fodselsnummer - String
      */
-    public boolean controlDublettFodselsnummer(ErrorReport er,
-                                               ErrorReportEntry ere, String fodselsnummer) {
-        List<String> l = new ArrayList<String>();
-        boolean flag = true;
+    public void controlDublettFodselsnummer(ErrorReport er, ErrorReportEntry ere, String fodselsnummer) {
+        List<String> l = new ArrayList<>();
 
         try {
             synchronized (this) {
@@ -1216,7 +1100,7 @@ public class IndividNodeHandler extends NodeHandler {
 
                         if (mapDublettFodselsnummer.containsKey(fodselsnummer)) {
                             l = mapDublettFodselsnummer.get(fodselsnummer);
-                            StringBuffer concatinatedErrorText = new StringBuffer();
+                            StringBuilder concatinatedErrorText = new StringBuilder();
                             concatinatedErrorText.append(ere.getErrorText());
                             concatinatedErrorText
                                     .append("Fins også i følgende journaler: ");
@@ -1227,7 +1111,6 @@ public class IndividNodeHandler extends NodeHandler {
 
                             ere.setErrorText(concatinatedErrorText.toString());
                             er.addEntry(ere);
-                            flag = false;
                         }
                         l.add(ere.getJournalnummer());
                         mapDublettFodselsnummer.put(fodselsnummer, l);
@@ -1237,10 +1120,8 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             ere.setErrorText("NullPointerException !!");
             er.addEntry(ere);
-            return false;
         }
 
-        return flag;
     }
 
     /**
@@ -1248,31 +1129,26 @@ public class IndividNodeHandler extends NodeHandler {
      * Ved feil lages en liste hvor journalnummeret forekommer, returneres false
      * samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param fodselsnummer
-     * @return boolean
+     * @param er            - ErrorReport
+     * @param ere           - ErrorReportEntry
+     * @param fodselsnummer - String
      */
-    public boolean controlDublettJournalnummer(ErrorReport er,
-                                               ErrorReportEntry ere, String fodselsnummer) {
-        List<String> l = new ArrayList<String>();
-        boolean flag = true;
+    public void controlDublettJournalnummer(ErrorReport er, ErrorReportEntry ere, String fodselsnummer) {
+        List<String> l = new ArrayList<>();
         try {
 
             if (fodselsnummer != null) {
                 if (mapDublettJournalnummer.containsKey(ere.getJournalnummer())) {
                     l = mapDublettJournalnummer.get(ere.getJournalnummer());
-                    StringBuffer concatinatedErrorText = new StringBuffer();
+                    StringBuilder concatinatedErrorText = new StringBuilder();
                     concatinatedErrorText.append(ere.getErrorText());
-                    concatinatedErrorText
-                            .append("Fins i følgende personnummer: ");
+                    concatinatedErrorText.append("Fins i følgende personnummer: ");
 
                     for (String element : l) {
                         concatinatedErrorText.append(element);
                     }
                     ere.setErrorText(concatinatedErrorText.toString());
                     er.addEntry(ere);
-                    flag = false;
                 }
 
                 l.add(fodselsnummer.substring(0, 4).concat("*******"));
@@ -1282,69 +1158,54 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             ere.setErrorText("NullPointerException !!");
             er.addEntry(ere);
-            return false;
         }
 
-        return flag;
     }
 
     /**
      * Kontrollerer at listen har innhold, hvis den er tom returneres false samt
      * at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param list
-     * @return boolean
+     * @param er   - ErrorReport
+     * @param ere  - ErrorReportEntry
+     * @param list - List<StructuredNode>
      */
-    public boolean controlHarInnhold(ErrorReport er, ErrorReportEntry ere,
-                                     List<StructuredNode> list) {
+    public void controlHarInnhold(ErrorReport er, ErrorReportEntry ere,
+                                  List<StructuredNode> list) {
         if (list.isEmpty()) {
             er.addEntry(ere);
-            return false;
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at hvis felt1 har innhold skal også felt2 ha innhold, ellers
      * returneres false samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param felt1
-     * @param felt2
-     * @return boolean
+     * @param er    - ErrorReport
+     * @param ere   - ErrorReportEntry
+     * @param felt1 - String
+     * @param felt2 - String
      */
-    public boolean controlHarInnhold(ErrorReport er, ErrorReportEntry ere,
-                                     String felt1, String felt2) {
-        if (felt1 != null && !felt1.isEmpty()) {
-            if (felt2 == null || felt2.isEmpty()) {
-                er.addEntry(ere);
-                return false;
-            }
+    public void controlHarInnhold(ErrorReport er, ErrorReportEntry ere, String felt1, String felt2) {
+        if (!empty(felt1) && empty(felt2)) {
+            er.addEntry(ere);
         }
-
-        return true;
     }
+
 
     /**
      * Kontrollerer at alder på klient er 23 år eller yngre. Hvis alder er over
      * 23 år returneres false samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param alder
-     * @return boolean
+     * @param er    - ErrorReport
+     * @param ere   - ErrorReportEntry
+     * @param alder - int
      */
-    public boolean controlAlder(ErrorReport er, ErrorReportEntry ere, int alder) {
-        if (23 < alder) {
+    public void controlAlder(ErrorReport er, ErrorReportEntry ere, long alder) {
+        if (23L < alder) {
             er.addEntry(ere);
-            return false;
         }
 
-        return true;
     }
 
     /**
@@ -1352,127 +1213,28 @@ public class IndividNodeHandler extends NodeHandler {
      * antallKalenderDager, ellers returneres false samt at ErrorReportEntry
      * legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param dato1
-     * @param dato2
-     * @param antallKalenderDager
-     * @return boolean
+     * @param er                  - ErrorReport
+     * @param ere                 - ErrorReportEntry
+     * @param dato1               - LocalDate
+     * @param dato2               - LocalDate
+     * @param antallKalenderDager - int
      */
-    public boolean controlTidDager(ErrorReport er, ErrorReportEntry ere,
-                                   DateTime dato1, DateTime dato2, int antallKalenderDager) {
+    public void controlTidDager(ErrorReport er, ErrorReportEntry ere,
+                                LocalDate dato1, LocalDate dato2, int antallKalenderDager) {
         // hvis dato1 ikke er blank, dvs. har innhold/dato
         if (dato1 != null) {
             // Finner dato for frist
-            DateTime frist = dato1.plusDays(antallKalenderDager);
+            LocalDate frist = dato1.plusDays(antallKalenderDager);
 
             // hvis dato2 ikke er blank og er etter fristen
             if (dato2 != null && dato2.isAfter(frist)) {
                 // legg til feilmelding
                 er.addEntry(ere);
-                return false;
             }
         }
 
         // alt gikk bra, ellers så manglet det informasjon som gjør kontrollen
         // ikke lar seg kjøre
-        return true;
-    }
-
-    /**
-     * Kontrollerer at et tidsspenn mellom dato1 og dato2 er innenfor
-     * antallMaaneder + antallUker, ellers returneres false samt at
-     * ErrorReportEntry legges til i ErrorReport.
-     *
-     * @param er
-     * @param ere
-     * @param dato1
-     * @param dato2
-     * @param antallMaaneder
-     * @param antallUker
-     * @return boolean
-     */
-    public boolean controlTidManederUker(ErrorReport er, ErrorReportEntry ere,
-                                         DateTime dato1, DateTime dato2, int antallMaaneder, int antallUker) {
-
-        // hvis dato1 ikke er blank, dvs. har innhold/dato
-        if (dato1 != null) {
-            // Finner dato for frist
-            DateTime frist = dato1.plusMonths(antallMaaneder).plusWeeks(
-                    antallUker);
-
-            // hvis dato2 ikke er blank og er etter fristen
-            if (dato2 != null && dato2.isAfter(frist)) {
-                // legg til feilmelding
-                er.addEntry(ere);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Kontrollerer at et tidsspenn mellom dato1 og (dato2 eller telledato) er innenfor
-     * antallMaaneder, ellers returneres false samt at ErrorReportEntry legges
-     * til i ErrorReport.
-     *
-     * @param er
-     * @param ere
-     * @param dato1
-     * @param dato2
-     * @param antallMaaneder
-     * @return boolean
-     */
-    public boolean controlTidManeder(ErrorReport er, ErrorReportEntry ere,
-                                     DateTime dato1, DateTime dato2, DateTime telledato, int antallMaaneder) {
-        // hvis dato1 ikke er blank, dvs. har innhold/dato
-        if (dato1 != null) {
-            // Finner dato for frist
-            DateTime frist = dato1.plusMonths(antallMaaneder);
-
-            // hvis dato2 er blank så sett dato2 (f.eks sluttDato) til telledato (31.12)
-            if (dato2 == null) {
-                dato2 = telledato;
-            }
-
-            // hvis dato2 ikke er blank og er etter fristen
-            if (dato2 != null && dato2.isAfter(frist)) {
-                // legg til feilmelding
-                er.addEntry(ere);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Kontrollerer at et tidsspenn mellom dato1 og dato2 er innenfor antallAar,
-     * ellers returneres false samt at ErrorReportEntry legges til i
-     * ErrorReport.
-     *
-     * @param er
-     * @param ere
-     * @param dato1
-     * @param dato2
-     * @param antallAar
-     * @return boolean
-     */
-    public boolean controlTidAar(ErrorReport er, ErrorReportEntry ere,
-                                 DateTime dato1, DateTime dato2, int antallAar) {
-        // hvis dato1 ikke er blank, dvs. har innhold/dato
-        if (dato1 != null) {
-            // Finner dato for frist
-            DateTime frist = dato1.plusYears(antallAar);
-
-            // hvis dato2 ikke er blank og er etter fristen
-            if (dato2 != null && dato2.isAfter(frist)) {
-                // legg til feilmelding
-                er.addEntry(ere);
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -1480,134 +1242,113 @@ public class IndividNodeHandler extends NodeHandler {
      * innhold, ellers returneres false samt at ErrorReportEntry legges til i
      * ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param alder
-     * @param aldersgrense
-     * @param list
-     * @return boolean
+     * @param er           - ErrorReport
+     * @param ere          - ErrorReportEntry
+     * @param alder        - int
+     * @param aldersgrense - int
+     * @param list         - List<StructuredNode>
      */
-    public boolean controlAlderOverAldersgrenseSkalHaUndernoder(ErrorReport er,
-                                                                ErrorReportEntry ere, int alder, int aldersgrense,
-                                                                List<StructuredNode> list) {
+    public void controlAlderOverAldersgrenseSkalHaUndernoder(ErrorReport er,
+                                                             ErrorReportEntry ere, long alder, long aldersgrense,
+                                                             List<StructuredNode> list) {
         if (aldersgrense < alder) {
             if (list.isEmpty()) {
                 er.addEntry(ere);
-                return false;
             }
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at hvis kode er i kodeliste så skal list ha innhold, ellers
      * returneres false samt at ErrorReportEntry legges til i ErrorReport.
      *
-     * @param er
-     * @param ere
-     * @param kode
-     * @param kodeliste
-     * @param list
-     * @return boolean
+     * @param er        - ErrorReport
+     * @param ere       - ErrorReportEntry
+     * @param kode      - String
+     * @param kodeliste - List<String>
+     * @param list      - List<StructuredNode>
      */
-    public boolean controlFeltMedKoderSkalHaUndernoder(ErrorReport er,
-                                                       ErrorReportEntry ere, String kode, String[] kodeliste,
-                                                       List<StructuredNode> list) {
+    public void controlFeltMedKoderSkalHaUndernoder(ErrorReport er,
+                                                    ErrorReportEntry ere, String kode, List<String> kodeliste,
+                                                    List<StructuredNode> list) {
         try {
             if (erKodeIKodeliste(kode, kodeliste) && list.isEmpty()) {
                 er.addEntry(ere);
-                return false;
             }
 
         } catch (Exception e) {
             er.addEntry(ere);
-            return false;
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at konkluderte meldinger har gitt undernode (kan f.eks være
      * Melder eller Saksinnhold)
      *
-     * @param er
-     * @param ere
-     * @param melding
-     * @param exceptionMelding
-     * @return boolean
+     * @param er               - ErrorReport
+     * @param ere              - ErrorReportEntry
+     * @param melding          - StructuredNode
+     * @param underNode        - String
+     * @param exceptionMelding - String
      */
-    public boolean controlKonkludertMeldingUnderNoder(ErrorReport er,
-                                                      ErrorReportEntry ere, StructuredNode melding, String underNode,
-                                                      String exceptionMelding) {
+    public void controlKonkludertMeldingUnderNoder(ErrorReport er,
+                                                   ErrorReportEntry ere, StructuredNode melding, String underNode,
+                                                   String exceptionMelding) {
         try {
             //
             // Kode for konklusjon
             String konklusjon = melding.queryString("@Konklusjon");
-            String[] kodelisteKonklusjon = {"1", "2"};
+            List<String> kodelisteKonklusjon = List.of("1", "2");
 
             // Sluttdato for Melding
-            DateTime sluttDato = assignDateFromString(
+            LocalDate sluttDato = assignDateFromString(
                     melding.queryString("@SluttDato"),
                     Constants.datoFormatLangt);
             List<StructuredNode> list = melding.queryNodeList(underNode);
 
-            if (forrigeTelleDato.getYear() < sluttDato.getYear()
-                    && erKodeIKodeliste(konklusjon, kodelisteKonklusjon)
-                    && sluttDato != null && list.isEmpty()) {
+            if (forrigeTelleDato.getYear() < sluttDato.getYear() && erKodeIKodeliste(konklusjon, kodelisteKonklusjon) && list.isEmpty()) {
                 er.addEntry(ere);
-                return false;
             }
 
         } catch (XPathExpressionException e) {
             ere.setErrorText(exceptionMelding);
             er.addEntry(ere);
-            return false;
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at undersøkelser som er startet før 1. juli skal være
      * konkludert
      *
-     * @param er
-     * @param ere
-     * @param versjon
-     * @param startDato
-     * @param sluttDato
-     * @return boolean
+     * @param er        - ErrorReport
+     * @param ere       - ErrorReportEntry
+     * @param versjon   - String
+     * @param startDato - LocalDate
+     * @param sluttDato - LocalDate
      */
-    public boolean controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
+    public void controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
             ErrorReport er, ErrorReportEntry ere, String versjon,
-            DateTime startDato, DateTime sluttDato) {
+            LocalDate startDato, LocalDate sluttDato) {
         String fristDatoString = versjon + "-07-01";
-        DateTime frist = assignDateFromString(fristDatoString,
+        LocalDate frist = assignDateFromString(fristDatoString,
                 Constants.datoFormatLangt);
 
         if (startDato.isBefore(frist) && sluttDato == null) {
             er.addEntry(ere);
-            return false;
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at alle omsorgstiltak skal ha presisering
      *
-     * @param er
-     * @param ere
-     * @param tiltak
-     * @return boolean
+     * @param er     - ErrorReport
+     * @param ere    - ErrorReportEntry
+     * @param tiltak - StructuredNode
      */
-    public boolean controlTiltakOmsorgstiltakPresisering(ErrorReport er,
-                                                         ErrorReportEntry ere, StructuredNode tiltak) {
+    public void controlTiltakOmsorgstiltakPresisering(ErrorReport er,
+                                                      ErrorReportEntry ere, StructuredNode tiltak) {
         try {
-            List<StructuredNode> lovhjemmelList = tiltak
-                    .queryNodeList("JmfrLovhjemmel");
+            List<StructuredNode> lovhjemmelList = tiltak.queryNodeList("JmfrLovhjemmel");
             lovhjemmelList.add(tiltak.queryNode("Lovhjemmel"));
 
             boolean bool = false;
@@ -1616,115 +1357,97 @@ public class IndividNodeHandler extends NodeHandler {
                 String kapittel = lovhjemmel.queryString("Kapittel");
                 String paragraf = lovhjemmel.queryString("Paragraf");
                 String ledd = lovhjemmel.queryString("Ledd");
-                String opphevelse = tiltak
-                        .queryString("Opphevelse/Presisering");
+                String opphevelse = tiltak.queryString("Opphevelse/Presisering");
 
-                if (kapittel == "4" && (paragraf == "12")
-                        || (paragraf == "8" && (ledd == "2" || ledd == "3"))) {
+                if (kapittel.equals("4") && (paragraf.equals("12"))
+                        || (paragraf.equals("8") && (ledd.equals("2") || ledd.equals("3")))) {
                     if (opphevelse != null && opphevelse.length() > 0) {
                         bool = true;
                     }
                 }
             }
 
-            if (bool == true) {
+            if (bool) {
                 er.addEntry(ere);
-                return false;
             }
 
         } catch (XPathExpressionException e) {
             // No need to handle exception
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at alle omsorgstiltak skal ha sluttdato
      *
-     * @param er
-     * @param ere
-     * @param SluttDato
-     * @param kapittel
-     * @param paragraf
-     * @param ledd
-     * @param tiltakOpphevelseKode
-     * @param kodelisteOpphevelseKode
-     * @param opphevelse
-     * @return boolean
+     * @param er                      - ErrorReport
+     * @param ere                     - ErrorReportEntry
+     * @param SluttDato               - LocalDate
+     * @param kapittel                - String
+     * @param paragraf                - String
+     * @param ledd                    - String
+     * @param tiltakOpphevelseKode    - String
+     * @param kodelisteOpphevelseKode - List<String>
+     * @param opphevelse              - String
      */
-    public boolean controlTiltakLovhjemmelOmsorgstiltakSluttDato(
-            ErrorReport er, ErrorReportEntry ere, DateTime SluttDato,
+    public void controlTiltakLovhjemmelOmsorgstiltakSluttDato(
+            ErrorReport er, ErrorReportEntry ere, LocalDate SluttDato,
             String kapittel, String paragraf, String ledd,
-            String tiltakOpphevelseKode, String[] kodelisteOpphevelseKode,
+            String tiltakOpphevelseKode, List<String> kodelisteOpphevelseKode,
             String opphevelse) {
         try {
-            if (kapittel.equalsIgnoreCase("4")
-                    && (paragraf.equalsIgnoreCase("12"))
-                    || (paragraf.equalsIgnoreCase("8") && (ledd
-                    .equalsIgnoreCase("2") || ledd
-                    .equalsIgnoreCase("3")))) {
-                if (SluttDato != null
-                        && (opphevelse == null || opphevelse.length() == 0)) {
+            if ("4".equalsIgnoreCase(kapittel)
+                    && List.of("8", "12").contains(paragraf)
+                    && List.of("2", "3").contains(ledd)) {
+                if (SluttDato != null && empty(opphevelse)) {
                     for (String kode : kodelisteOpphevelseKode) {
                         if (tiltakOpphevelseKode.equalsIgnoreCase(kode)) {
                             er.addEntry(ere);
-                            return false;
+                            return;
                         }
                     }
                 }
             }
-
         } catch (NullPointerException e) {
             // No need to handle exception
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at Lovhjemmel sine koder for kapittel og paragraf ikke
      * starter med 0
      *
-     * @param er
-     * @param ere
-     * @param kapittel
-     * @param paragraf
-     * @return boolean
+     * @param er       - ErrorReport
+     * @param ere      - ErrorReportEntry
+     * @param kapittel - String
+     * @param paragraf - String
      */
-    public boolean controlTiltakLovhjemmel(ErrorReport er,
-                                           ErrorReportEntry ere, String kapittel, String paragraf) {
+    public void controlTiltakLovhjemmel(ErrorReport er, ErrorReportEntry ere, String kapittel, String paragraf) {
         try {
             if (kapittel.startsWith("0") || paragraf.startsWith("0")) {
                 er.addEntry(ere);
-                return false;
             }
 
         } catch (NullPointerException e) {
             // No need to handle exception
         }
-
-        return true;
     }
 
     /**
      * Kontrollerer at overlappende plasseringstiltak ikke overlapper med mer
      * enn 3 måneder
      *
-     * @param er
-     * @param ere
-     * @param tiltakList
-     * @param plasseringstiltakKodeList
-     * @param antallMaaneder
-     * @param defaultSluttDato
-     * @param exceptionMelding
-     * @return boolean
+     * @param er                        - ErrorReport
+     * @param ere                       - ErrorReportEntry
+     * @param tiltakList                - List<StructuredNode>
+     * @param plasseringstiltakKodeList - List<String>
+     * @param antallMaaneder            - int
+     * @param exceptionMelding          - String
      */
-    public boolean controlFlerePlasseringstiltakISammePeriode(ErrorReport er,
-                                                              ErrorReportEntry ere, List<StructuredNode> tiltakList,
-                                                              String[] plasseringstiltakKodeList, int antallMaaneder,
-                                                              DateTime defaultSluttDato, String exceptionMelding) {
-        List<StructuredNode> plasseringstiltakList = new ArrayList<StructuredNode>();
+    public void controlFlerePlasseringstiltakISammePeriode(ErrorReport er,
+                                                           ErrorReportEntry ere, List<StructuredNode> tiltakList,
+                                                           List<String> plasseringstiltakKodeList, int antallMaaneder,
+                                                           String exceptionMelding) {
+        List<StructuredNode> plasseringstiltakList = new ArrayList<>();
         // Skal bare gjelde de tiltak.kategori med @Kode = /^[1|2|8]/ og kunne
         // ha 3 måneder overlapp mellom nr 1 og 2
         if (tiltakList != null && !tiltakList.isEmpty()
@@ -1745,89 +1468,83 @@ public class IndividNodeHandler extends NodeHandler {
 
                 for (int i = 1; i < plasseringstiltakList.size(); i++) {
                     StructuredNode first = plasseringstiltakList.get(i - 1);
-                    String firstId = "";
+                    String firstId;
                     StructuredNode second = plasseringstiltakList.get(i);
-                    String secondId = "";
+                    String secondId;
 
                     try {
                         firstId = first.queryString("@Id");
                         secondId = second.queryString("@Id");
 
-                        DateTime firstStartDateTime = first
-                                .assignDateFromString(
+                        LocalDate firstStartLocalDate = first.assignDateFromString(
                                         first.queryString("@StartDato"),
                                         Constants.datoFormatLangt);
 
-                        DateTime firstSluttDateTime = first
+                        LocalDate firstSluttLocalDate = first
                                 .assignDateFromString(
                                         first.queryString("@SluttDato"),
                                         Constants.datoFormatLangt);
 
-                        DateTime secondStartDateTime = second
+                        LocalDate secondStartLocalDate = second
                                 .assignDateFromString(
                                         second.queryString("@StartDato"),
                                         Constants.datoFormatLangt);
 
-                        if (firstStartDateTime != null
-                                && firstSluttDateTime != null
-                                && secondStartDateTime != null
-                                && firstStartDateTime
-                                .isBefore(firstSluttDateTime
+                        if (firstStartLocalDate != null
+                                && firstSluttLocalDate != null
+                                && secondStartLocalDate != null
+                                && firstStartLocalDate
+                                .isBefore(firstSluttLocalDate
                                         .minusMonths(antallMaaneder))
                                 // periode for first må være mer enn 3 mnd for å
                                 // at det skal kunne bli 3 mnd med overlapp
-                                && secondStartDateTime
-                                .isAfter(firstStartDateTime)
+                                && secondStartLocalDate
+                                .isAfter(firstStartLocalDate)
                                 // andres startdato skal etter førstes startdato
-                                && secondStartDateTime
-                                .isBefore(firstSluttDateTime
+                                && secondStartLocalDate
+                                .isBefore(firstSluttLocalDate
                                         .minusMonths(antallMaaneder))
                             // OG tre måneder før førstes sluttdato -> medfører 3
                             // måneder eller mer overlapp
-                                ) {
+                        ) {
                             String feilmelding = "Plasseringstiltak "
                                     + firstId
                                     + " med sluttdato "
-                                    + firstSluttDateTime.toString("dd.MM.yyyy")
+                                    + firstSluttLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                                     + " er mer enn 3 måneder etter "
                                     + secondId
                                     + " med startdato "
-                                    + secondStartDateTime
-                                    .toString("dd.MM.yyyy")
+                                    + secondStartLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                                     + ". Dette gir en overlapp på mer enn 3 måneder.";
                             ere.setErrorText(feilmelding);
                             er.addEntry(ere);
-                            return false;
+                            return;
                         }
 
                     } catch (XPathExpressionException e) {
                         ere.setErrorText(exceptionMelding);
                         er.addEntry(ere);
-                        return false;
+                        return;
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
-
-        return true;
     }
 
     /**
      * Kontroller at klienter over 18 ikke er på omsorgstiltak
      *
-     * @param er
-     * @param ere
-     * @param kapittel
-     * @param paragraf
-     * @param ledd
-     * @param alder
-     * @return boolean
+     * @param er       - ErrorReport
+     * @param ere      - ErrorReportEntry
+     * @param kapittel - String
+     * @param paragraf - String
+     * @param ledd     - String
+     * @param alder    - int
      */
-    public boolean controlTiltakLovhjemmelOver18OgPaOmsorgstiltak(
-            ErrorReport er, ErrorReportEntry ere, String kapittel,
-            String paragraf, String ledd, int alder) {
+    public void controlTiltakLovhjemmelOver18OgPaOmsorgstiltak(
+            ErrorReport er, ErrorReportEntry ere, String kapittel, String paragraf, String ledd, long alder) {
         try {
             if (alder > 18
                     && (kapittel.equalsIgnoreCase("4")
@@ -1836,123 +1553,63 @@ public class IndividNodeHandler extends NodeHandler {
                     .equalsIgnoreCase("2") || ledd
                     .equalsIgnoreCase("3"))))) {
                 er.addEntry(ere);
-                return false;
             }
 
         } catch (NullPointerException e) {
             // No need to handle exception
         }
-
-        return true;
-    }
-
-    /**
-     * Kontroller at barn over 7 ikke er i barnehage
-     *
-     * @param er
-     * @param ere
-     * @param kode
-     * @param alder
-     * @return boolean
-     */
-    public boolean controlOver7OgIBarnehage(ErrorReport er,
-                                            ErrorReportEntry ere, String kode, int alder) {
-        if (alder > 7 && kode.equalsIgnoreCase("4.1")) {
-            er.addEntry(ere);
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Kontroller at barn over 11 år ikke er i SFO
-     *
-     * @param er
-     * @param ere
-     * @param kode
-     * @param alder
-     * @return boolean
-     */
-    public boolean controlOver11OgISFO(ErrorReport er, ErrorReportEntry ere,
-                                       String kode, int alder) {
-        if (alder > 11 && kode.equalsIgnoreCase("4.2")) {
-            er.addEntry(ere);
-            return false;
-        }
-
-        return true;
     }
 
     // TODO: FEILER, lag tester individ 9 og 10
 
     /**
+     * Kontroller at barn over 7 ikke er i barnehage
+     *
+     * @param er    - ErrorReport
+     * @param ere   - ErrorReportEntry
+     * @param kode  - String
+     * @param alder - int
+     */
+    public void controlOver7OgIBarnehage(ErrorReport er,
+                                         ErrorReportEntry ere, String kode, long alder) {
+        if (alder > 7 && kode.equalsIgnoreCase("4.1")) {
+            er.addEntry(ere);
+        }
+    }
+
+    /**
+     * Kontroller at barn over 11 år ikke er i SFO
+     *
+     * @param er    - ErrorReport
+     * @param ere   - ErrorReportEntry
+     * @param kode  - String
+     * @param alder - int
+     */
+    public void controlOver11OgISFO(ErrorReport er, ErrorReportEntry ere, String kode, long alder) {
+        if (alder > 11 && kode.equalsIgnoreCase("4.2")) {
+            er.addEntry(ere);
+        }
+    }
+
+    /**
      * Kontrollerer at sluttdato er satt
      *
-     * @param er
-     * @param ere
-     * @param kode
-     * @param sluttDato
-     * @param frist
-     * @return boolean
+     * @param er        - ErrorReport
+     * @param ere       - ErrorReportEntry
+     * @param kode      - String
+     * @param sluttDato - LocalDate
+     * @param frist     - LocalDate
      */
-    public boolean controlAvslutta3112(ErrorReport er, ErrorReportEntry ere,
-                                       String kode, DateTime sluttDato, DateTime frist) {
+    public void controlAvslutta3112(ErrorReport er, ErrorReportEntry ere, String kode, LocalDate sluttDato, LocalDate frist) {
         try {
             if (kode.equalsIgnoreCase("1")) {
                 if (sluttDato == null || frist == null
                         || sluttDato.isAfter(frist)) {
                     er.addEntry(ere);
-                    return false;
                 }
             }
         } catch (NullPointerException e) {
             er.addEntry(ere);
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Kontrollerer at kombinasjonen elementType og id er unik
-     *
-     * @param er
-     * @param ere
-     * @param elementType
-     * @param id
-     * @return boolean
-     */
-    public boolean controlUniqueID(ErrorReport er, ErrorReportEntry ere,
-                                   String elementType, String id) {
-        try {
-            synchronized (this) {
-                if (elementType == null) {
-                    elementType = "null";
-                }
-
-                if (id == null) {
-                    id = "null";
-                }
-
-                String key = elementType + id;
-
-                if (mapUniqueID.containsKey(key)) {
-                    Integer value = mapUniqueID.get(key);
-                    value++;
-                    mapUniqueID.put(key, value);
-                    er.addEntry(ere);
-                    return false;
-                }
-
-                mapUniqueID.put(key, 1);
-                return true;
-            }
-
-        } catch (NullPointerException e) {
-            ere.setErrorText("NullPointerException !!");
-            er.addEntry(ere);
-            return false;
         }
     }
 }

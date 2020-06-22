@@ -47,7 +47,7 @@ public class ControlHeltallTest {
     public void testHeltallFail1() {
         Record p = new Record("0A20194040200                  1120 010WILL FAIL", fieldDefinitions);
         Integer value = p.getFieldAsInteger("belop");
-        assertNull(value);
+        assertEquals(Integer.valueOf(0), value);
 
     }
 

@@ -38,7 +38,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return (List<String>) getKontoklasseAsMap(skjema).values();
+        return new ArrayList<>(getKontoklasseAsMap(skjema).values());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {

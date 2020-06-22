@@ -190,7 +190,8 @@ public class Main {
                                 , Constants.CRITICAL_ERROR
                         )
                         , "belop"
-                ));
+                ))
+                .close();
 
         // Kombinasjonskontroller
         // Dublett kontroll

@@ -2,10 +2,8 @@ package no.ssb.kostra.controlprogram;
 
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
+import no.ssb.kostra.control.ErrorReportEntry;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -57,12 +55,25 @@ public class CLI {
                 er = no.ssb.kostra.control.famvern.s55.Main.doControls(arguments);
 
             } else {
-                er = new ErrorReport();
+                er = new ErrorReport(arguments);
+                er.addEntry(
+                        new ErrorReportEntry(
+                                " "
+                                , " "
+                                , " "
+                                , " "
+                                , "Ukjent skjema"
+                                , "Korrigér filutrekket. Forventet '"
+                                + arguments.getSkjema()
+                                + "', men fant ikke noe. Avslutter...."
+                                , Constants.CRITICAL_ERROR
+                        )
+                );
             }
 
             error_type_found = er.getErrorType();
 
-            PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+            PrintStream out = new PrintStream(System.out, true, StandardCharsets.ISO_8859_1);
             out.print(er.generateReport());
 
 

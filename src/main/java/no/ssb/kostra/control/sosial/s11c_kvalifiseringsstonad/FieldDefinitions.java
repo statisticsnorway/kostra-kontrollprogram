@@ -75,7 +75,7 @@ public class FieldDefinitions {
                                 new Code("5", "Enke/enkemann")),
                         "",
                         false),
-                new FieldDefinition(91, "BU",
+                new FieldDefinition(91, "BU18",
                         "String",
                         "dropDownList",
                         32, 32,

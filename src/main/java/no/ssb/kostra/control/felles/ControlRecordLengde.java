@@ -7,6 +7,7 @@ import no.ssb.kostra.control.Record;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,17 +19,21 @@ public class ControlRecordLengde {
                 .sorted()
                 .map(String::valueOf)
                 .collect(Collectors.toList());
+
         er.incrementCount();
 
         if (!recordLengdeFeil.isEmpty()) {
-            er.addEntry(new ErrorReportEntry("Filuttrekk", "Filuttrekk", " ", " "
+            er.addEntry(new ErrorReportEntry("Filuttrekk", "Integritetskontroller", " ", " "
                     , "Kontroll Recordlengde"
                     , "Korreksjon: Rett opp slik at alle record er på " + length +
-                    " tegn og avslutter med linjeskift. <br/>\n(Gjelder for linjene:" + String.join(", ", recordLengdeFeil) + ")"
+                    " tegn og avslutter med linjeskift. <br/>"
+                    + "Denne feilen hindrer de andre kontrollene i å bli kjørt<br/>"
+                    + "\n(Gjelder for linjene:" + String.join(", ", recordLengdeFeil) + ")"
                     , Constants.CRITICAL_ERROR
             ));
             return true;
         }
+
         return false;
     }
 }

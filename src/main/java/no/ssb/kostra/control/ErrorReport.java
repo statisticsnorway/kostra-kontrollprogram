@@ -97,15 +97,14 @@ public class ErrorReport {
 
 		report.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + lf)
 		.append("<html><body>" + lf)
-		.append("<hr/><br/>" + lf)
-		.append("<br/>" + lf)
-		.append("<h3>Kontrollrapport for " + this.args.getRegion() + " " + args.getNavn() + "</h3>"+ lf)
-		.append("<br/>" + lf)
-		.append("<hr/><br/><br/>" + lf + lf)
+		.append("<hr/>" + lf)
+		.append("<h2>Kontrollrapport for " + this.args.getRegion() + " " + args.getNavn() + "</h2>"+ lf)
+		.append("<hr/>" + lf + lf)
 		.append("<h4>Kontrollprogramversjon: " + VERSION + "</h4>" + lf)
 		.append("<h4>Kontroller startet: " + startTime.toString() + "</h4>" + lf)
 		.append("<h4>Rapport generert: " + Calendar.getInstance().getTime() + "</h4>" + lf)
-		.append("<h4>Type filuttrekk: " + this.args.getSkjema() + "." + this.args.getAargang() + "</h4>" + lf + lf);
+		.append("<h4>Type filuttrekk: " + this.args.getSkjema() + "." + this.args.getAargang() + "</h4>" + lf)
+		.append("<h4>Antall sjekker utført: " + this.count + "</h4>" + lf + lf);
 
 		if (!mapEntries.isEmpty()) {
 			report.append(lf + "<h3>Oppsummering pr. kontroll:</h3>" + lf + "<hr/><br/>" + lf + lf);
@@ -171,7 +170,7 @@ public class ErrorReport {
 
 			}
 
-			report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append(lf).append(lf);
+			report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append("<br/><br/><br/><br/><br/>").append(lf).append(lf);
 			report.append("</body></html>").append(lf);
 
 			

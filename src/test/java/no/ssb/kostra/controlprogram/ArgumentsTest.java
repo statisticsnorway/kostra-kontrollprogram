@@ -53,39 +53,6 @@ public class ArgumentsTest {
     }
 
     @Test
-    public void readFileFromClassPath1() {
-        Path resourceFile = Paths.get("src", "test", "resources", "0A_V2019_K4_R040200_OK.dat");
-        String absolutePath = resourceFile.toFile().getAbsolutePath();
-
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(absolutePath), StandardCharsets.ISO_8859_1);
-            String fileContent = String.join("\n", lines);
-            assertTrue(!fileContent.isEmpty());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        assertTrue(absolutePath.endsWith("0A_V2019_K4_R040200_OK.dat"));
-    }
-
-    @Test
-    public void readFileFromClassPath2() {
-        Path resourceFile = Paths.get("src", "test", "resources", "15F_V2019_R040200_OK.xml");
-        String absolutePath = resourceFile.toFile().getAbsolutePath();
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(absolutePath), StandardCharsets.ISO_8859_1);
-            String fileContent = String.join("\n", lines);
-            assertTrue(!fileContent.isEmpty());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        assertTrue(absolutePath.endsWith("15F_V2019_R040200_OK.xml"));
-    }
-
-    @Test
     public void testArguments() {
         args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F_V2019_R040200_OK.xml"});
 

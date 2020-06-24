@@ -31,7 +31,7 @@ public class ControlHeltallTest {
     public void testHeltallOK1() {
         Record p = new Record("0A20194040200                  1120 010    36328", fieldDefinitions);
         Integer value = p.getFieldAsInteger("belop");
-        Integer expected = Integer.valueOf(36328);
+        Integer expected = 36328;
         assertEquals(expected, value);
     }
 
@@ -39,7 +39,7 @@ public class ControlHeltallTest {
     public void testHeltallOK2() {
         Record p = new Record("0A20194040200                  1120 010   -36328", fieldDefinitions);
         Integer value = p.getFieldAsInteger("belop");
-        Integer expected = Integer.valueOf(-36328);
+        Integer expected = -36328;
         assertEquals(expected, value);
     }
 
@@ -47,7 +47,8 @@ public class ControlHeltallTest {
     public void testHeltallFail1() {
         Record p = new Record("0A20194040200                  1120 010WILL FAIL", fieldDefinitions);
         Integer value = p.getFieldAsInteger("belop");
-        assertEquals(Integer.valueOf(0), value);
+        assertNull(value);
+//        assertEquals(Integer.valueOf(0), value);
 
     }
 
@@ -59,5 +60,7 @@ public class ControlHeltallTest {
                 ere,
                 "belop"
         );
+
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 }

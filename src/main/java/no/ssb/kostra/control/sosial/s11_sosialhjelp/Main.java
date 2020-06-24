@@ -8,6 +8,7 @@ import no.ssb.kostra.utils.Toolkit;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -40,6 +41,8 @@ public class Main {
                     return r;
                 })
                 .forEach(r -> {
+                    ControlFilbeskrivelse.doControl(r, er);
+
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
                             , er
@@ -386,7 +389,7 @@ public class Main {
                             , "TRYGDESIT"
                             , r.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
-
+// TODO
                     ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
                             r
                             , er
@@ -486,16 +489,31 @@ public class Main {
                                 );
 
                         Integer bidrag = r.getFieldAsInteger("BIDRAG");
-                        boolean bidragOK = (bidrag != null);
+                        boolean bidragOK;
+
+                        try {
+                            Integer.valueOf(r.getFieldAsTrimmedString("BIDRAG"));
+                            bidragOK = true;
+
+                        } catch (NumberFormatException e){
+                            bidragOK = false;
+                        }
 
                         Integer laan = r.getFieldAsInteger("LAAN");
-                        boolean laanOK = (laan != null);
+                        boolean laanOK;
 
-                        Integer stonad = bidrag + laan;
+                        try {
+                            Integer.valueOf(r.getFieldAsTrimmedString("LAAN"));
+                            laanOK = true;
+
+                        } catch (NumberFormatException e){
+                            laanOK = false;
+                        }
+                        int stonad = bidrag + laan;
                         boolean stonadOK = bidragOK || laanOK;
 
-                        Integer stonadSumMax = 500000;
-                        Integer stonadSumMin = 50;
+                        int stonadSumMax = 500000;
+                        int stonadSumMin = 50;
 
                         if (!isAnyFilledIn) {
                             er.addEntry(
@@ -650,11 +668,10 @@ public class Main {
                                 .stream()
                                 .map(field -> {
                                     try {
-                                        return r.getFieldAsInteger(field);
+                                        return Objects.requireNonNullElse(r.getFieldAsInteger(field), 0);
                                     } catch (NullPointerException e) {
                                         return 0;
                                     }
-
                                 })
                                 .reduce(0, Integer::sum);
 
@@ -681,7 +698,13 @@ public class Main {
                                 "BIDRAG_JUL", "BIDRAG_AUG", "BIDRAG_SEP",
                                 "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
                                 .stream()
-                                .map(r::getFieldAsInteger)
+                                .map(field -> {
+                                    try {
+                                        return Objects.requireNonNullElse(r.getFieldAsInteger(field), 0);
+                                    } catch (NullPointerException e) {
+                                        return 0;
+                                    }
+                                })
                                 .reduce(0, Integer::sum);
 
                         if (0 < laan && laan != laanSum) {

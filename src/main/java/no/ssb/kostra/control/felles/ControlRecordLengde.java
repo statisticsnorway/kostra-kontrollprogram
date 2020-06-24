@@ -23,8 +23,9 @@ public class ControlRecordLengde {
         er.incrementCount();
 
         if (!recordLengdeFeil.isEmpty()) {
-            er.addEntry(new ErrorReportEntry("Filuttrekk", "Integritetskontroller", " ", " "
-                    , "Kontroll Recordlengde"
+            er.addEntry(new ErrorReportEntry("Filuttrekk"
+                    , "Integritetskontroller", " ", " "
+                    , "Kontroll 01 Recordlengde"
                     , "Korreksjon: Rett opp slik at alle record er på " + length +
                     " tegn og avslutter med linjeskift. <br/>"
                     + "Denne feilen hindrer de andre kontrollene i å bli kjørt<br/>"

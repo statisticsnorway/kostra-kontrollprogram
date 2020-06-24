@@ -101,12 +101,6 @@ public class Definitions {
                         result.addAll(finansielleFunksjoner);
                         break;
 
-                    case "500100":
-                        result.addAll(fylkeskommunaleFunksjoner);
-                        result.addAll(kommunaleFunkjoner);
-                        result.addAll(finansielleFunksjoner);
-                        break;
-
                     default:
                         result.addAll(kommunaleFunkjoner);
                         result.addAll(finansielleFunksjoner);

@@ -2,7 +2,6 @@ package no.ssb.kostra.control;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ public class Record {
     private static int lineCount;
     private final int line;
     private final String record;
+    List<FieldDefinition> fieldDefinitions;
     Map<Integer, FieldDefinition> fieldDefinitionByNumber;
     Map<String, FieldDefinition> fieldDefinitionByName;
     Map<Integer, String> valuesByNumber;
@@ -21,6 +21,7 @@ public class Record {
     public Record(final String record, final List<FieldDefinition> definitionList) {
         this.line = ++lineCount;
         this.record = record;
+        this.fieldDefinitions = definitionList;
         this.fieldDefinitionByNumber = definitionList.stream()
                 .collect(Collectors.toMap(FieldDefinition::getNumber, FieldDefinition::getFieldDefinition));
         this.fieldDefinitionByName = definitionList.stream()
@@ -39,7 +40,7 @@ public class Record {
                             e -> e.getValue().getName(),
                             e -> this.record.substring(e.getValue().getFrom() - 1, e.getValue().getTo())));
 
-        } catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             this.valuesByNumber = new HashMap<>();
             this.valuesByName = new HashMap<>();
         }
@@ -64,10 +65,10 @@ public class Record {
 
     public Integer getFieldAsInteger(String field) {
         try {
-            return Integer.valueOf(getFieldAsTrimmedString(field));
+            return Integer.parseInt(getFieldAsTrimmedString(field));
 
-        } catch (NumberFormatException e){
-            return 0;
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 
@@ -76,11 +77,11 @@ public class Record {
     }
 
 
-    public FieldDefinition getFieldDefinitionByNumber(Integer number){
+    public FieldDefinition getFieldDefinitionByNumber(Integer number) {
         return this.fieldDefinitionByNumber.get(number);
     }
 
-    public FieldDefinition getFieldDefinitionByName(String name){
+    public FieldDefinition getFieldDefinitionByName(String name) {
         return this.fieldDefinitionByName.get(name);
     }
 
@@ -88,6 +89,10 @@ public class Record {
         FieldDefinition definition = getFieldDefinitionByName(field);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(definition.getDatePattern());
         return LocalDate.from(formatter.parse(getFieldAsString(field)));
+    }
+
+    public List<FieldDefinition> getFieldDefinitions() {
+        return fieldDefinitions;
     }
 
     @Override

@@ -41,6 +41,8 @@ public class Main {
                     return r;
                 })
                 .forEach(r -> {
+                    // TODO Legge til kontroll 02 Filbeskrivelse
+
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
                             , er
@@ -69,7 +71,7 @@ public class Main {
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 04 Bydelsnummer"
+                                        , "Kontroll 03 Bydelsnummer"
                                         , "Korrigér bydel. Forventet én av  '"
                                         + Definitions.getBydelerAsList()
                                         + "', men fant '"
@@ -89,7 +91,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 05 Årgang"
+                                    , "Kontroll 04 Årgang"
                                     , "Korrigér årgang. Forventet '"
                                     + args.getAargang().substring(0, 2)
                                     + "', men fant '"
@@ -108,7 +110,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 06 Fødselsnummer"
+                                    , "Kontroll 05 Fødselsnummer"
                                     , "Det er ikke oppgitt fødselsnummer/d-nummer på "
                                     + "deltakeren" + lf + "\teller fødselsnummeret/d-nummeret inneholder" +
                                     " feil." + lf + "\tMed mindre det er snakk om en utenlandsk " +
@@ -128,7 +130,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 07 Alder under 18 år"
+                                    , "Kontroll 06 Alder under 18 år"
                                     , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er under 18 år."
                                     , Constants.NORMAL_ERROR
                             )
@@ -145,7 +147,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 08 Alder er 96 år eller over"
+                                    , "Kontroll 07 Alder er 96 år eller over"
                                     , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
                                     , Constants.NORMAL_ERROR
                             )
@@ -162,7 +164,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 09 Kjønn"
+                                    , "Kontroll 08 Kjønn"
                                     , "Korrigér kjønn. Forventet én av  '"
                                     + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
                                     + "', men fant '"
@@ -181,7 +183,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 10 Sivilstand"
+                                    , "Kontroll 09 Sivilstand"
                                     , "Korrigér sivilstand. Forventet én av  '"
                                     + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
                                     + "', men fant '"
@@ -200,7 +202,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 11 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
+                                    , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
                                     , "Det er ikke krysset av for om deltakeren har barn under 18 år, " + lf +
                                     "som deltakeren (eventuelt ektefelle/samboer) har \n" +
                                     "forsørgerplikt for," + lf + "\tog som bor i husholdningen ved\n" +
@@ -214,6 +216,7 @@ public class Main {
                             , r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
 
+                    // TODO Denne feiler
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
                             r
                             , er
@@ -222,7 +225,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 12 Det bor barn under 18 år i husholdningen. Mangler antall barn."
+                                    , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
                                     , "Deltakeren har barn under 18 år, som deltakeren " + lf +
                                     "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
                                     "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
@@ -233,10 +236,13 @@ public class Main {
                             , "BU18"
                             , List.of("1")
                             , "ANTBU18"
-                            , "<"
+                            , ">"
                             , 0
                     );
 
+                    // TODO kontrol 12 mangler
+
+                    // TODO Feil i kontroll 13
                     ControlFelt1Boolsk.doControl(
                             r
                             , er
@@ -262,7 +268,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 15 Dato for registrert søknad ved NAV-kontoret."
+                                    , "Kontroll 14 Dato for registrert søknad ved NAV-kontoret."
                                     , "Feltet for Hvilken dato ble søknaden registrert ved NAV-kontoret? mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -277,7 +283,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 16 Dato for fattet vedtak om program (søknad innvilget)"
+                                    , "Kontroll 15 Dato for fattet vedtak om program (søknad innvilget)"
                                     , "Feltet for Hvilken dato det ble fattet vedtak om program (søknad innvilget) mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -292,7 +298,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 17 Dato for når deltakeren begynte i program (iverksettelse)."
+                                    , "Kontroll 16 Dato for når deltakeren begynte i program (iverksettelse)."
                                     , "Feltet for Hvilken dato begynte deltakeren i program? (iverksettelse) mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -315,6 +321,7 @@ public class Main {
                             , r.getFieldDefinitionByName("KVP_KOMM").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
 
+                    // TODO feiler med riktige data
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                             r
                             , er

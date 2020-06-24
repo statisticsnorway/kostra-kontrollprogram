@@ -27,65 +27,58 @@ public class Main {
             return er;
         }
 
-        records.stream()
-                // Kontroll 3: Regionsnummer
-                .peek(r -> {
-                    if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_B"))) {
-                        er.addEntry(
-                                new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 3 Regionsnummer"
-                                        , "Regionsnummeret som er oppgitt i kontrollprogrammet stemmer ikke med regions-nummeret som er oppgitt i recorden (filuttrekket). "
-                                        + "Kontroller at riktig regionsnummeret ble oppgitt til kontrollprogrammet. "
-                                        + "Hvis dette stemmer, må regionsnummeret i recorden (filuttrekket) rettes."
-                                        , Constants.NORMAL_ERROR
-                                )
+        records.forEach(r -> {
+            // Kontroll 3: Regionsnummer
+            if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
+                er.addEntry(
+                        new ErrorReportEntry(
+                                r.getFieldAsString("KONTOR_NR_A")
+                                , r.getFieldAsString("JOURNAL_NR_A")
+                                , String.valueOf(r.getLine())
+                                , " "
+                                , "Kontroll 03 Regionsnummer"
+                                , "Regionsnummeret som er oppgitt i kontrollprogrammet stemmer ikke med regions-nummeret som er oppgitt i recorden (filuttrekket). "
+                                + "Kontroller at riktig regionsnummeret ble oppgitt til kontrollprogrammet. "
+                                + "Hvis dette stemmer, må regionsnummeret i recorden (filuttrekket) rettes."
+                                , Constants.NORMAL_ERROR
+                        )
+                );
+            }
 
-                        );
-                    }
-                })
-                // Kontroll 4: Kontornummer
-                .peek(r -> {
-                    if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_B"))) {
-                        er.addEntry(
-                                new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 4 Kontornummer"
-                                        , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut. "
-                                        , Constants.NORMAL_ERROR
-                                )
+            // Kontroll 4: Kontornummer
+            if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_A"))) {
+                er.addEntry(
+                        new ErrorReportEntry(
+                                r.getFieldAsString("KONTOR_NR_A")
+                                , r.getFieldAsString("JOURNAL_NR_A")
+                                , String.valueOf(r.getLine())
+                                , " "
+                                , "Kontroll 04 Kontornummer"
+                                , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut. "
+                                , Constants.NORMAL_ERROR
+                        )
+                );
+            }
 
-                        );
-                    }
-                })
-                // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
-                .peek(r -> {
-                    if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_B"), r.getFieldAsString("KONTOR_NR_B"))) {
-                        er.addEntry(
-                                new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 5 Manglende samsvar mellom regions- og kontornummer."
-                                        , "Regionsnummer og kontornummer stemmer ikke overens."
-                                        , Constants.NORMAL_ERROR
-                                )
-
-                        );
-                    }
-                })
-                .close();
+            // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
+            if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_A"), r.getFieldAsString("KONTOR_NR_A"))) {
+                er.addEntry(
+                        new ErrorReportEntry(
+                                r.getFieldAsString("KONTOR_NR_A")
+                                , r.getFieldAsString("JOURNAL_NR_A")
+                                , String.valueOf(r.getLine())
+                                , " "
+                                , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
+                                , "Regionsnummer og kontornummer stemmer ikke overens."
+                                , Constants.NORMAL_ERROR
+                        )
+                );
+            }
+        });
 
         // Kontroll 6 Dublett på journalnummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("GRUPPE_NR_B"))
+                .map(r -> r.getFieldAsString("JOURNAL_NR_A"))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
@@ -97,7 +90,7 @@ public class Main {
         if (!dubletter.isEmpty()) {
             er.addEntry(
                     new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
-                            , "Kontroll Dubletter"
+                            , "Kontroll 06 Dubletter"
                             , "Dubletter på journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR
                     ));

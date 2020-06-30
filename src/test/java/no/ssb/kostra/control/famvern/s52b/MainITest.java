@@ -1,5 +1,6 @@
 package no.ssb.kostra.control.famvern.s52b;
 
+import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.FieldDefinition;
 import no.ssb.kostra.controlprogram.Arguments;
@@ -11,6 +12,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class MainITest {
 
@@ -64,15 +68,15 @@ public class MainITest {
         System.setIn(sysInBackup);
     }
 
-    // TODO !!!
     @Test
     public void testDoControl() {
-//        er = Main.doControls(args);
-//        System.out.print(er.generateReport());
+        er = Main.doControls(args);
 
-//        assertNotNull("Has content ErrorReport", er);
-//        assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
     }
-
-
 }

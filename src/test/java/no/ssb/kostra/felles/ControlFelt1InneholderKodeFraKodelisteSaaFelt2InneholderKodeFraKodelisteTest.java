@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodelisteTest {
@@ -45,29 +46,29 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKode
 
     @Test
     public void testOK1() {
-        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("F1"), "felt2", List.of("F2"));
-        assertTrue(er.getErrorType() == Constants.NO_ERROR);
+        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("F1","C2"), "felt2", List.of("F2"));
+        assertEquals(Constants.NO_ERROR, er.getErrorType());
 
     }
 
     @Test
     public void testOK2() {
         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("NOT IN LIST"), "felt2", List.of("F2"));
-        assertTrue(er.getErrorType() == Constants.NO_ERROR);
+        assertEquals(Constants.NO_ERROR, er.getErrorType());
 
     }
 
     @Test
     public void testFail1() {
         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("F1"), "felt2", List.of("FAIL"));
-        assertTrue(er.getErrorType() == Constants.CRITICAL_ERROR);
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
 
     }
 
     @Test
     public void testFail2() {
         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("NOT IN LIST"), "felt2", List.of("FAIL"));
-        assertTrue(er.getErrorType() == Constants.NO_ERROR);
+        assertEquals(Constants.NO_ERROR, er.getErrorType());
 
     }
 }

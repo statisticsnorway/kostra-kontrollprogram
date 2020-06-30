@@ -6,19 +6,21 @@ import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.Record;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ControlRecordLengde {
-    public static boolean doControl(Stream<Record> s, ErrorReport er, int length) {
-        List<String> recordLengdeFeil = s
-                .filter(p -> p.getRecord().length() != length)
-                .map(Record::getLine)
-                .sorted()
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+    public static boolean doControl(List<String> s, ErrorReport er, int length) {
+        List<String> recordLengdeFeil = new ArrayList<>();
+
+        for (int i = 0; i < s.size(); i++) {
+            if (s.get(i).length() != length){
+                recordLengdeFeil.add(String.valueOf(i+1));
+            }
+        }
 
         er.incrementCount();
 

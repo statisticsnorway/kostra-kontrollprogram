@@ -80,7 +80,7 @@ public class FieldDefinitions {
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(81, "ANTMOTERTOT_OPPR_B",
+                new FieldDefinition(82, "ANTMOTERTOT_OPPR_B",
                         "Integer",
                         "textBox",
                         60, 62

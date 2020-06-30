@@ -1,105 +1,131 @@
 package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.control.*;
+import no.ssb.kostra.utils.Format;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ControlFilbeskrivelse {
-    public static void doControl(Record r, ErrorReport er) {
+    private static String createLinenumber(Integer l, int line) {
+        return "Linjenummer " + Format.sprintf("%0" + l + "d", line);
+    }
+
+    public static void doControl(Record r, ErrorReport er, int noOfRecordsLength) {
         er.incrementCount();
 
         r.getFieldDefinitions()
                 .forEach(fieldDefinition -> {
                     int length = fieldDefinition.getTo() - fieldDefinition.getFrom() + 1;
+                    boolean mandatory = fieldDefinition.isMandatory();
+                    String fieldName = fieldDefinition.getName();
+                    String stringValue = r.getFieldAsString(fieldDefinition.getName());
+                    String trimmedStringValue = r.getFieldAsTrimmedString(fieldDefinition.getName());
+                    int trimmedStringLength = trimmedStringValue.length();
+                    Integer integerValue = r.getFieldAsInteger(fieldDefinition.getName());
+                    boolean hasIntegerValue = integerValue != null;
+                    List<Code> codeList = new ArrayList<>(fieldDefinition.getCodeList());
+                    boolean hasCodeList = !codeList.isEmpty();
+                    String datePattern = r.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern();
+                    String dataType = fieldDefinition.getDataType();
 
-                    // sjekk mot eventuell kodeliste
-                    if (!fieldDefinition.getCodeList().isEmpty()) {
-                        List<Code> codeList = new ArrayList<>(fieldDefinition.getCodeList());
-
-                        if (!fieldDefinition.isMandatory()) {
-                            codeList.add(new Code(" ".repeat(length), "Uoppgitt"));
-                        }
-
-                        if (codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(r.getFieldAsString(fieldDefinition.getName())))) {
-                            er.addEntry(
-                                    new ErrorReportEntry(
-                                            "Filuttrekk"
-                                            , "Linjenummer " + r.getLine()
-                                            , " "
-                                            , " "
-                                            , "Kontroll 02 Filbeskrivelse"
-                                            , "Korreksjon: Felt '" + fieldDefinition.getName() + "' sin verdi skal være 1 av "
-                                            + codeList + ", men fant '" + r.getFieldAsString(fieldDefinition.getName()) + "'"
-                                            , Constants.CRITICAL_ERROR
-                                    )
-                            );
-                        }
+                    // sjekker at feltdefinisjonen har antall tegn større enn 0
+                    if (length < 1) {
+                        er.addEntry(
+                                new ErrorReportEntry(
+                                        "Filuttrekk"
+                                        , createLinenumber(noOfRecordsLength, r.getLine())
+                                        , " "
+                                        , " "
+                                        , "Kontroll 02 Filbeskrivelse"
+                                        , "Korreksjon: Felt '" + fieldName + "' sin feltdefinisjonlengde skal være større enn 0 "
+                                        + ", fant '" + length + "'"
+                                        , Constants.CRITICAL_ERROR
+                                )
+                        );
                     }
 
-                    // sjekk hvis feltet er obligatorisk
-                    if (fieldDefinition.isMandatory()) {
-                        if (r.getFieldAsString(fieldDefinition.getName()).equalsIgnoreCase(" ".repeat(length))) {
-                            er.addEntry(
-                                    new ErrorReportEntry(
-                                            "Filuttrekk"
-                                            , "Linjenummer " + r.getLine()
-                                            , " "
-                                            , " "
-                                            , "Kontroll 02 Filbeskrivelse"
-                                            , "Korreksjon: Felt '" + fieldDefinition.getName() + "' er obligatorisk, men mangler verdi"
-                                            , Constants.CRITICAL_ERROR
-                                    )
-                            );
-                        }
-                    }
-
-                    switch (fieldDefinition.getDataType()) {
-                        case "Integer":
-                            try {
-                                r.getFieldAsInteger(fieldDefinition.getName());
-                            } catch (NumberFormatException e) {
+                    // sjekker at vi har en verdi
+                    if (trimmedStringLength != 0) {
+                        // verdi fins
+                        // kontrollerer mot eventuell kodeliste
+                        if (hasCodeList) {
+                            if (codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(stringValue))) {
                                 er.addEntry(
                                         new ErrorReportEntry(
                                                 "Filuttrekk"
-                                                , "Linjenummer " + r.getLine()
+                                                , createLinenumber(noOfRecordsLength, r.getLine())
                                                 , " "
                                                 , " "
                                                 , "Kontroll 02 Filbeskrivelse"
-                                                , "Korreksjon: Felt '" + fieldDefinition.getName()
-                                                + "' er et tallfelt, men inneholder '" + r.getFieldAsString(fieldDefinition.getName()) + "'"
+                                                , "Korreksjon: Felt '" + fieldName + "' sin verdi '" + stringValue + "' fins ikke i " + codeList
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );
-                            } catch (NullPointerException e){
                             }
-                            break;
+                        }
 
-//                case "Date":
-//                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(r.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern());
-//
-//                    try {
-//                        LocalDate.parse(r.getFieldAsString(fieldDefinition.getName()), dtf);
-//                    } catch (Exception e) {
-//                        er.addEntry(
-//                                new ErrorReportEntry(
-//                                        "Filuttrekk"
-//                                        , "Linjenummer " + r.getLine()
-//                                        , " "
-//                                        , " "
-//                                        , "Kontroll 02 Filbeskrivelse"
-//                                        , "Korreksjon: Felt '" + fieldDefinition.getName()
-//                                        + "' er et datofelt med datomønster ('"
-//                                        + r.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern()
-//                                        + "'), men inneholder '" + r.getFieldAsString(fieldDefinition.getName()) + "'"
-//                                        , Constants.CRITICAL_ERROR
-//                                )
-//                        );
-//                    }
-//                    break;
-//
-                        default:
-                            break;
+                        switch (dataType) {
+                            case "Integer":
+                                if (!hasIntegerValue) {
+                                    er.addEntry(
+                                            new ErrorReportEntry(
+                                                    "Filuttrekk"
+                                                    , createLinenumber(noOfRecordsLength, r.getLine())
+                                                    , " "
+                                                    , " "
+                                                    , "Kontroll 02 Filbeskrivelse"
+                                                    , "Korreksjon: Felt '" + fieldName
+                                                    + "' er et tallfelt, men inneholder '" + stringValue + "'"
+                                                    , Constants.CRITICAL_ERROR
+                                            )
+                                    );
+                                }
+
+                                break;
+
+                            case "Date":
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern(datePattern);
+
+                                try {
+                                    LocalDate.parse(stringValue, dtf);
+                                } catch (Exception e) {
+                                    er.addEntry(
+                                            new ErrorReportEntry(
+                                                    "Filuttrekk"
+                                                    , createLinenumber(noOfRecordsLength, r.getLine())
+                                                    , " "
+                                                    , " "
+                                                    , "Kontroll 02 Filbeskrivelse"
+                                                    , "Korreksjon: Felt '" + fieldDefinition.getName()
+                                                    + "' er et datofelt med datomønster ('"
+                                                    + datePattern.toUpperCase()
+                                                    + "'), men inneholder '" + stringValue + "'"
+                                                    , Constants.CRITICAL_ERROR
+                                            )
+                                    );
+                                }
+                                break;
+                        }
+
+
+                    } else {
+                        if (mandatory) {
+                            // verdien kan ikke være blank
+                            er.addEntry(
+                                    new ErrorReportEntry(
+                                            "Filuttrekk"
+                                            , createLinenumber(noOfRecordsLength, r.getLine())
+                                            , " "
+                                            , " "
+                                            , "Kontroll 02 Filbeskrivelse"
+                                            , "Korreksjon: Felt '" + fieldName + "' er obligatorisk, men mangler verdi"
+                                            , Constants.CRITICAL_ERROR
+                                    )
+                            );
+                        }
                     }
                 });
     }

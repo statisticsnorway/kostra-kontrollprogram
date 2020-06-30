@@ -18,6 +18,15 @@ public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> list1 = args.getInputContentAsStringList();
+
+        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
+        // Kontroll Recordlengde
+        boolean hasErrors = ControlRecordLengde.doControl(list1, er, FieldDefinitions.getFieldLength());
+
+        if (hasErrors) {
+            return er;
+        }
+
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<String> bevilgningRegnskapList = List.of("0A", "0C");
         List<String> balanseRegnskapList = List.of("0B", "0D");
@@ -30,15 +39,6 @@ public class Main {
         String journalnummer = "Linje ";
         Integer n = regnskap.size();
         Integer l = String.valueOf(n).length();
-
-
-        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(regnskap.stream(), er, FieldDefinitions.getFieldLength());
-
-        if (hasErrors) {
-            return er;
-        }
 
         // integritetskontroller
         regnskap.stream()

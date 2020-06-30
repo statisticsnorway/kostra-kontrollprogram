@@ -11,17 +11,17 @@ public class ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste {
         boolean doCheck = false;
 
         if (operator1.equalsIgnoreCase("<")){
-            doCheck = !(p.getFieldAsInteger(field1) < value1);
+            doCheck = (p.getFieldAsInteger(field1) < value1);
 
         } else if (operator1.equalsIgnoreCase(">")){
-            doCheck = !(p.getFieldAsInteger(field1) > value1);
+            doCheck = (p.getFieldAsInteger(field1) > value1);
 
         } else if (operator1.equalsIgnoreCase("==")){
-            doCheck = !(p.getFieldAsInteger(field1).intValue() == value1);
+            doCheck = (p.getFieldAsInteger(field1).intValue() == value1);
         }
 
         if (doCheck){
-            if (!codeList2.contains(p.getFieldAsString(field2))) {
+            if (codeList2.stream().noneMatch(n -> n.equalsIgnoreCase(p.getFieldAsString(field2)))) {
                 ere.setRefNr(String.valueOf(p.getLine()));
                 er.addEntry(ere);
             }

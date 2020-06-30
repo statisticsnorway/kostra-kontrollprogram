@@ -170,18 +170,17 @@ public class ErrorReport {
 
 			}
 
-			report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append("<br/><br/><br/><br/><br/>").append(lf).append(lf);
-			report.append("</body></html>").append(lf);
-
-			
 		} else {
 			if (count == 0) {
 				report.append("Finner ingen data!  :-(");
 				this.errorType = Constants.CRITICAL_ERROR;
 			} else {
-				report.append("Ingen feil funnet!<br/>");
+				report.append("Ingen feil funnet!<br/><br/><br/><br/>").append(lf).append(lf).append(lf).append(lf);
 			}
 		}
+
+		report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append("<br/><br/><br/><br/><br/>").append(lf).append(lf);
+		report.append("</body></html>").append(lf);
 
 		return report.toString();
 	}

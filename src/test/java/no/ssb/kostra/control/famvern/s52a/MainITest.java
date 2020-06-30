@@ -2,6 +2,7 @@ package no.ssb.kostra.control.famvern.s52a;
 
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
+
 import no.ssb.kostra.control.FieldDefinition;
 import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;
@@ -84,7 +85,10 @@ public class MainITest {
     @Test
     public void testDoControl() {
         er = Main.doControls(args);
-        System.out.print(er.generateReport());
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
 
         assertNotNull("Has content ErrorReport", er);
         assertEquals(Constants.NORMAL_ERROR, er.getErrorType());

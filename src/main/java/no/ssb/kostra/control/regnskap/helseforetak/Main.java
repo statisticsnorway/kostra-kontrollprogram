@@ -15,183 +15,243 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
+    private static String createLinenumber(Integer l, int line, String record) {
+        return "Linje " + Format.sprintf("%0" + l + "d", line) + " : <pre>" + record + "</pre>";
+    }
+
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> list1 = args.getInputContentAsStringList();
-        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<String> bevilgningRegnskapList = List.of("0X");
-        List<String> balanseRegnskapList = List.of("0Y");
-        List<Record> regnskap = list1.stream()
-                .map(p -> new Record(p, fieldDefinitions))
-                .collect(Collectors.toList());
-        String saksbehandler = "Filuttrekk";
-        String journalnummer = "Linje ";
-        Integer n = regnskap.size();
-        Integer l = String.valueOf(n).length();
-
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(regnskap.stream(), er, FieldDefinitions.getFieldLength());
+        boolean hasErrors = ControlRecordLengde.doControl(list1, er, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
             return er;
         }
 
-        // integritetskontroller
-        regnskap.stream()
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        List<FieldDefinition> fieldDefinitionsWithCLIParametres = fieldDefinitions.stream()
+                .map(d -> {
+                    if (d.getName().equalsIgnoreCase("skjema")){
+                        d.setCodeList(List.of(new Code(args.getSkjema(), "Skjematype")));
+                    }
+
+                    return d;
+                })
+                .map(d -> {
+                    if (d.getName().equalsIgnoreCase("aargang")){
+                        d.setCodeList(List.of(new Code(args.getAargang(), "Årgang")));
+                    }
+
+                    return d;
+                })
+                .map(d -> {
+                    if (d.getName().equalsIgnoreCase("region")){
+                        d.setCodeList(List.of(new Code(args.getRegion(), "Region")));
+                    }
+
+                    return d;
+                })
+                .map(d -> {
+                    if (d.getName().equalsIgnoreCase("orgnr")){
+                        d.setCodeList(List.of(new Code(args.getOrgnr(), "Organisasjonsnummer")));
+                    }
+
+                    return d;
+                })
+                .map(d -> {
+                    List<Code> list = Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
+                            .collect(Collectors.toList())
+                            .stream()
+                            .map(n -> new Code(n, n))
+                            .collect(Collectors.toList());
+                    if (d.getName().equalsIgnoreCase("foretaksnr")){
+                        d.setCodeList(list);
+                    }
+
+                    return d;
+                })
+                .collect(Collectors.toList());
+
+
+
+        List<String> bevilgningRegnskapList = List.of("0X");
+        List<String> balanseRegnskapList = List.of("0Y");
+        List<Record> regnskap = list1.stream()
+                .map(p -> new Record(p, fieldDefinitionsWithCLIParametres))
+                .collect(Collectors.toList());
+        String saksbehandler = "Filuttrekk";
+        Integer n = regnskap.size();
+        Integer l = String.valueOf(n).length();
+
+        // filbeskrivelsesskontroller
+        regnskap.forEach(p -> {
+            ControlFilbeskrivelse.doControl(p, er, l);
+        });
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
+        // Sjekk skjematype, hvis den er feil så er det ikke noe vits å fortsette
+        regnskap.forEach(p ->
+                ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Regnskapstype"
                                 , "Korreksjon: Rett opp til rett filuttrekk (" + args.getSkjema() + ")"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "skjema"
                         , Collections.singletonList(args.getSkjema())
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                ));
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
+
+        // integritetskontroller
+        regnskap.forEach(p -> {
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Årgang"
+                            , "Korreksjon: Rett opp til rett årgang (" + args.getAargang() + ")"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "aargang"
+                    , Collections.singletonList(args.getAargang())
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Kvartal"
+                            , "Rett opp i fila slik at posisjon 7 er blank"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "kvartal"
+                    , List.of(" ")
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Region"
+                            , "Korreksjon: Rett regionskode"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "region"
+                    , Collections.singletonList(args.getRegion())
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Organisasjonsnummer."
+                            , "Korreksjon: Korrigér organisasjonsnummer i filutrekket. (" + args.getOrgnr() + ")"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "orgnr"
+                    , Collections.singletonList(args.getOrgnr())
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Foretaksnummer."
+                            , "Korreksjon: Foretaksnummer ('" + p.getFieldAsString("foretaksnr") + "') er forskjellig fra forventet foretaksnummer ('" + args.getForetaknr() + "')"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "foretaksnr"
+                    , Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(",")).collect(Collectors.toList())
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll Kontoklasse."
+                            , "Posisjon 32 skal rapporteres som en blank posisjon"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "kontoklasse"
+                    , List.of(" ")
+            );
+
+            if (bevilgningRegnskapList.contains(args.getSkjema())) {
+                ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Årgang"
-                                , "Korreksjon: Rett opp til rett årgang (" + args.getAargang() + ")"
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Funksjon, resultatregnskap"
+                                , "Korreksjon: Rett opp feil funksjon ('" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') med riktig funksjon i henhold til liste"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "aargang"
-                        , Collections.singletonList(args.getAargang())
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                        , "funksjon_kapittel"
+                        , Definitions.getFunksjonAsList(p.getFieldAsString("skjema"))
+                );
+
+                ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Kvartal"
-                                , "Rett opp i fila slik at posisjon 7 er blank"
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Kontokoder, resultatregnskap"
+                                , "Korreksjon: Rett opp feil kontokode ('" + p.getFieldAsTrimmedString("art_sektor") + "') med riktig kontokode i henhold til liste"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "kvartal"
-                        , List.of(" ")
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                        , "art_sektor"
+                        , Definitions.getKontokodeAsList(p.getFieldAsString("skjema"))
+                );
+            }
+
+            if (balanseRegnskapList.contains(args.getSkjema())) {
+                ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Region"
-                                , "Korreksjon: Rett regionskode"
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Funksjon, balanseregnskap"
+                                , "Posisjoner for funksjonskode ('" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') skal rapporteres blankt for balanseregnskapet"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "region"
-                        , Collections.singletonList(args.getRegion())
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
+                        , "funksjon_kapittel"
+                        , Definitions.getFunksjonAsList(p.getFieldAsString("skjema"))
+                );
+
+                ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Organisasjonsnummer."
-                                , "Korreksjon: Korrigér organisasjonsnummer i filutrekket. (" + args.getOrgnr() + ")"
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Kontokoder, balanseregnskap"
+                                , "Korreksjon: Rett opp feil kontokode ('" + p.getFieldAsTrimmedString("art_sektor") + "') med riktig kontokode i henhold til liste"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "orgnr"
-                        , Collections.singletonList(args.getOrgnr())
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Foretaksnummer."
-                                , "Korreksjon: Foretaksnummer ('" + p.getFieldAsString("foretaksnr") + "') er forskjellig fra forventet foretaksnummer ('" + args.getForetaknr() + "')"
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "foretaksnr"
-                        , Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(",")).collect(Collectors.toList())
-                ))
-                .peek(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll Kontoklasse."
-                                , "Posisjon 32 skal rapporteres som en blank posisjon"
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "kontoklasse"
-                        , List.of(" ")
-                ))
-                .peek(p -> {
-                            if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                                ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                        p
-                                        , er
-                                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                                , "Kontroll Funksjon."
-                                                , "Korreksjon: Rett opp feil funksjon ('" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') med riktig funksjon i henhold til liste"
-                                                , Constants.CRITICAL_ERROR
-                                        )
-                                        , "funksjon_kapittel"
-                                        , Definitions.getFunksjonAsList(p.getFieldAsString("skjema"))
-                                );
-                            }
-                        }
-                )
-                .peek(p -> {
-                            if (balanseRegnskapList.contains(args.getSkjema())) {
-                                ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                        p
-                                        , er
-                                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                                , "Kontroll Funksjon."
-                                                , "Posisjoner for funksjonskode ('" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') skal rapporteres blankt for balanseregnskapet"
-                                                , Constants.CRITICAL_ERROR
-                                        )
-                                        , "funksjon_kapittel"
-                                        , Definitions.getKontokodeAsList(p.getFieldAsString("skjema"))
-                                );
-                            }
-                        }
-                )
-                .peek(p -> {
-                            if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                                ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                        p
-                                        , er
-                                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                                , "Kontroll Kontokoder"
-                                                , "Korreksjon: Rett opp feil kontokode ('" + p.getFieldAsTrimmedString("art_sektor") + "') med riktig kontokode i henhold til liste"
-                                                , Constants.CRITICAL_ERROR
-                                        )
-                                        , "art_sektor"
-                                        , Definitions.getKontokodeAsList(p.getFieldAsString("skjema"))
-                                );
-                            }
-                        }
-                )
-                .peek(p -> {
-                            if (balanseRegnskapList.contains(args.getSkjema())) {
-                                ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                        p
-                                        , er
-                                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                                , "Kontroll Kontokoder."
-                                                , "Korreksjon: Rett opp feil kontokode ('" + p.getFieldAsTrimmedString("art_sektor") + "') med riktig kontokode i henhold til liste"
-                                                , Constants.CRITICAL_ERROR
-                                        )
-                                        , "art_sektor"
-                                        , Definitions.getKontokodeAsList(p.getFieldAsString("skjema"))
-                                );
-                            }
-                        }
-                )
-                .peek(p -> ControlHeltall.doControl(
-                        p
-                        , er
-                        , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                , "Kontroll beløp."
-                                , "Korreksjon: Rett opp feil beløp('" + p.getFieldAsTrimmedString("belop") + "') til en gyldig heltall"
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "belop"
-                ))
-                .close();
+                        , "art_sektor"
+                        , Definitions.getKontokodeAsList(p.getFieldAsString("skjema"))
+                );
+            }
+
+            ControlHeltall.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                            , "Kontroll beløp."
+                            , "Korreksjon: Rett opp feil beløp('" + p.getFieldAsTrimmedString("belop") + "') til en gyldig heltall"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "belop"
+            );
+
+        });
 
         // Kombinasjonskontroller
         // Dublett kontroll
@@ -227,60 +287,56 @@ public class Main {
                     ));
         }
 
-        regnskap.stream()
-                .peek(p -> {
-                    // Kontroll Funksjon 400
-                    if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                                p
-                                , er
-                                , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                        , "Kontroll Funksjon 400"
-                                        , "Ugyldig funksjon. Funksjonen '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "funksjon_kapittel"
-                                , List.of("400")
-                                , "orgnr"
-                                , Definitions.getFunksjon400Orgnr());
-                    }
-                })
-                .peek(p -> {
-                    // Kontroll Kontokode 320
-                    if (bevilgningRegnskapList.contains(args.getSkjema())) {
-                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                                p
-                                , er
-                                , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                        , "Kontroll Funksjon 400"
-                                        , "Ugyldig funksjon. Kontokode 320  – ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus funksjon (" + String.join(", ", Definitions.getKontokode320Funksjoner()) + ")"
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "art_sektor"
-                                , List.of("320")
-                                , "funksjon_kapittel"
-                                , Definitions.getKontokode320Funksjoner());
-                    }
-                })
-                .peek(p -> {
-                    // Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp
-                    if (balanseRegnskapList.contains(args.getSkjema())) {
-                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                                p
-                                , er
-                                , new ErrorReportEntry(saksbehandler, journalnummer + Format.sprintf("%0" + l + "d", p.getLine()), " ", " "
-                                        , "Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp"
-                                        , "Kun positive beløp er gyldig"
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "art_sektor"
-                                , Definitions.getKontokodePositiveTall()
-                                , "belop"
-                                , ">"
-                                , 0);
-                    }
-                })
-        ;
+        regnskap.forEach(p -> {
+            if (bevilgningRegnskapList.contains(args.getSkjema())) {
+                // Kontroll Funksjon 400
+                ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                        p
+                        , er
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Funksjon 400"
+                                , "Ugyldig funksjon. Funksjonen '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
+                                , Constants.NORMAL_ERROR
+                        )
+                        , "funksjon_kapittel"
+                        , List.of("400")
+                        , "orgnr"
+                        , Definitions.getFunksjon400Orgnr()
+                );
+
+                // Kontroll Kontokode 320
+                ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                        p
+                        , er
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Kontokode 320"
+                                , "Ugyldig funksjon. Kontokode 320  – ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus funksjon (" + String.join(", ", Definitions.getKontokode320Funksjoner()) + ")"
+                                , Constants.NORMAL_ERROR
+                        )
+                        , "art_sektor"
+                        , List.of("320")
+                        , "funksjon_kapittel"
+                        , Definitions.getKontokode320Funksjoner());
+            }
+
+            if (balanseRegnskapList.contains(args.getSkjema())) {
+                // Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp
+                ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
+                        p
+                        , er
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                                , "Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp"
+                                , "Kun positive beløp er gyldig"
+                                , Constants.NORMAL_ERROR
+                        )
+                        , "art_sektor"
+                        , Definitions.getKontokodePositiveTall()
+                        , "belop"
+                        , ">"
+                        , 0);
+            }
+        });
+
 
         // Summeringskontroller
         // Kontroll Sum inntekter og kostnader = 0

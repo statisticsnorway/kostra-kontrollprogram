@@ -67,7 +67,7 @@ public class Record {
         try {
             return Integer.parseInt(getFieldAsTrimmedString(field));
 
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return null;
         }
     }

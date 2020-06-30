@@ -3,7 +3,7 @@ package no.ssb.kostra.control;
 public final class Constants {
     
     // Rapporteringsaar.
-    public static final String kostraYear = "2019";
+    public static final String kostraYear = "2020";
     public static final String kvartalKostraYear = "2020";
 
     // Linjeskift til bruk ved skriving av kontrollrapporter.
@@ -86,4 +86,5 @@ public final class Constants {
       return aar;
     }
 
+    public static final boolean DEBUG = true;
 } // End class Constants.

@@ -1,6 +1,9 @@
 package no.ssb.kostra.felles;
 
-import no.ssb.kostra.control.*;
+import no.ssb.kostra.control.Constants;
+import no.ssb.kostra.control.ErrorReport;
+import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.control.FieldDefinition;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
@@ -12,8 +15,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -65,20 +66,14 @@ public class ControlRecordLengthTest {
     @Test
     public void testPosteringListOK1() {
         content = args.getInputContentAsStringList();
-        List<Record> posteringList = content.stream()
-                .map(p -> new Record(p, fieldDefinitions))
-                .collect(Collectors.toList());
-
-        assertFalse(posteringList.isEmpty());
+        assertFalse(content.isEmpty());
     }
 
     @Test
     public void testControlRecordLengthOK1() {
         content = args.getInputContentAsStringList();
-        Stream<Record> posteringStream = content.stream()
-                .map(line -> new Record(line, fieldDefinitions));
 
-        ControlRecordLengde.doControl(posteringStream, er, lengthOK);
+        ControlRecordLengde.doControl(content, er, lengthOK);
 
 //        assertTrue(er.isEmpty());
         assertEquals(er.getErrorType(), Constants.NO_ERROR);
@@ -87,10 +82,7 @@ public class ControlRecordLengthTest {
     @Test
     public void testControlRecordLengthFail1() {
         content = args.getInputContentAsStringList();
-        Stream<Record> posteringStream = content.stream()
-                .map(line -> new Record(line, fieldDefinitions));
-
-        ControlRecordLengde.doControl(posteringStream, er, lengthFail);
+        ControlRecordLengde.doControl(content, er, lengthFail);
 
         assertFalse(er.isEmpty());
         assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);

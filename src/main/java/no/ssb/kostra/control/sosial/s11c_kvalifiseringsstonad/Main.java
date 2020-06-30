@@ -6,28 +6,32 @@ import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.Toolkit;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
+
+        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
+        // Kontroll Recordlengde
+        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, er, FieldDefinitions.getFieldLength());
+
+        if (hasErrors) {
+            return er;
+        }
+
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
         final String lf = Constants.lineSeparator;
-
-        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(records.stream(), er, FieldDefinitions.getFieldLength());
-
-        if (hasErrors) {
-            return er;
-        }
+        Integer n = records.size();
+        int l = String.valueOf(n).length();
 
         records.stream()
                 // utled ALDER
@@ -41,7 +45,7 @@ public class Main {
                     return r;
                 })
                 .forEach(r -> {
-                    // TODO Legge til kontroll 02 Filbeskrivelse
+                    ControlFilbeskrivelse.doControl(r, er, l);
 
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
@@ -216,7 +220,6 @@ public class Main {
                             , r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
 
-                    // TODO Denne feiler
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
                             r
                             , er
@@ -229,7 +232,7 @@ public class Main {
                                     , "Deltakeren har barn under 18 år, som deltakeren " + lf +
                                     "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
                                     "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
-                                    "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
+                                    "ikke oppgitt hvor mange barn ('" + r.getFieldAsTrimmedString("ANTBU18") + "') som bor i husholdningen. " + lf +
                                     "\tFeltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -240,9 +243,29 @@ public class Main {
                             , 0
                     );
 
-                    // TODO kontrol 12 mangler
+                    ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 12 Det bor barn under 18 år i husholdningen."
+                                    , "Det er oppgitt antall barn ('" + r.getFieldAsTrimmedString("ANTBU18") + "') under 18 år som bor i husholdningen "
+                                    + "som deltakeren eller ektefelle/samboer har forsørgerplikt for, "
+                                    + "men det er ikke oppgitt at Deltakeren har barn under 18 år, "
+                                    + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, "
+                                    + "og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
+                                    , Constants.CRITICAL_ERROR
+                            )
+                            , "ANTBU18"
+                            , ">"
+                            , 0
+                            , "BU18"
+                            , List.of("1")
+                    );
 
-                    // TODO Feil i kontroll 13
                     ControlFelt1Boolsk.doControl(
                             r
                             , er
@@ -252,11 +275,11 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                                    , "Antall barn under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                                    , "Antall barn ('" + r.getFieldAsTrimmedString("ANTBU18") + "') under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                                     , Constants.NORMAL_ERROR
                             )
                             , "ANTBU18"
-                            , ">"
+                            , "<"
                             , 10
                     );
 
@@ -321,7 +344,6 @@ public class Main {
                             , r.getFieldDefinitionByName("KVP_KOMM").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
 
-                    // TODO feiler med riktige data
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                             r
                             , er
@@ -331,7 +353,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 20 Kvalifiseringsprogram i annen kommune. Kommunenummer."
-                                    , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune, men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
+                                    , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune ('" + r.getFieldAsString("KOMMNR_KVP_KOMM") + "'), men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KVP_KOMM"
@@ -386,7 +408,8 @@ public class Main {
                                     , " "
                                     , "Kontroll 26 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang()
                                     , "Feltet for \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, "
-                                    + "kommunal bostøtte eller Husbankens bostøtte?\", er ikke utfylt eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                                    + "kommunal bostøtte eller Husbankens bostøtte?\", er ikke utfylt eller feil kode (" + r.getFieldAsString("KVP_MED_ASTONAD") + ") er benyttet. Feltet er obligatorisk å fylle ut."
+                                    + r.getFieldDefinitionByName("KVP_MED_ASTONAD").getCodeList().stream().collect(Collectors.toMap(Code::getCode, Code::getValue))
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KVP_MED_ASTONAD"
@@ -398,6 +421,9 @@ public class Main {
                     // Derfor gjentas kontroll 27 for hver av dem
                     {
                         List<String> fields = List.of("KVP_MED_KOMMBOS", "KVP_MED_HUSBANK", "KVP_MED_SOSHJ_ENGANG", "KVP_MED_SOSHJ_PGM", "KVP_MED_SOSHJ_SUP");
+
+                        Map<String, String> values = fields.stream()
+                                .collect(Collectors.toMap(s -> s, r::getFieldAsString));
 
                         if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "1")) {
                             boolean isNoneFilledIn = fields.stream()
@@ -412,26 +438,26 @@ public class Main {
                                                 , " "
                                                 , "Kontroll 27 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang() + ". Svaralternativer."
                                                 , "Svaralternativer for feltet \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
-                                                + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. "
+                                                + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte. " + values
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );
                             }
 
-                        } else {
-                            boolean isNoneBlank = fields.stream()
-                                    .anyMatch(field -> List.of(" ", "0").contains(r.getFieldAsString(field)));
+                        } else if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "2")) {
+                            boolean isAllBlank = fields.stream()
+                                    .allMatch(field -> List.of(" ", "0").contains(r.getFieldAsString(field)));
 
-                            if (isNoneBlank) {
+                            if (!isAllBlank) {
                                 er.addEntry(
                                         new ErrorReportEntry(
                                                 r.getFieldAsString("SAKSBEHANDLER")
                                                 , r.getFieldAsString("PERSON_JOURNALNR")
                                                 , r.getFieldAsString("PERSON_FODSELSNR")
                                                 , " "
-                                                , "Kontroll 27 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang() + ". Svaralternativer."
+                                                , "Kontroll 27 Ikke mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang() + ". Svaralternativer."
                                                 , "Svaralternativer for feltet \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
-                                                + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. "
+                                                + "kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte. " + values
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );
@@ -442,7 +468,7 @@ public class Main {
                     // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
                     {
                         Integer stonad = r.getFieldAsInteger("KVP_STONAD");
-                        boolean stonadOK = (stonad != 0);
+                        boolean stonadOK = (stonad != null);
                         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
                         boolean isAnyFilledIn = fields.stream()
                                 .anyMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));

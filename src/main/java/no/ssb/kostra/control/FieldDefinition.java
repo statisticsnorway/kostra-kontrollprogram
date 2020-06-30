@@ -90,6 +90,10 @@ public class FieldDefinition {
         return codeList;
     }
 
+    public void setCodeList(List<Code> codeList) {
+        this.codeList = codeList;
+    }
+
     public String getDatePattern() {
         return datePattern;
     }

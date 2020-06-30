@@ -16,6 +16,15 @@ public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
+
+        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
+        // Kontroll Recordlengde
+        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, er, FieldDefinitions.getFieldLength());
+
+        if (hasErrors) {
+            return er;
+        }
+
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
@@ -23,14 +32,6 @@ public class Main {
         Integer n = records.size();
         Integer l = String.valueOf(n).length();
         final String lf = Constants.lineSeparator;
-
-        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(records.stream(), er, FieldDefinitions.getFieldLength());
-
-        if (hasErrors) {
-            return er;
-        }
 
         records.stream()
                 // Kontroll 3: Fylkesnummer

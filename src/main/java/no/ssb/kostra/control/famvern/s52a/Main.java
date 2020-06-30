@@ -15,18 +15,19 @@ public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
-        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<Record> records = inputFileContent.stream()
-                .map(p -> new Record(p, fieldDefinitions))
-                .collect(Collectors.toList());
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(records.stream(), er, FieldDefinitions.getFieldLength());
+        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, er, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
             return er;
         }
+
+        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        List<Record> records = inputFileContent.stream()
+                .map(p -> new Record(p, fieldDefinitions))
+                .collect(Collectors.toList());
 
         records.forEach(r -> {
             // Kontroll 3: Regionsnummer

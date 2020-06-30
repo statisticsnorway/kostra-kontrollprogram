@@ -15,19 +15,22 @@ public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
+
+        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
+        // Kontroll Recordlengde
+        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, er, FieldDefinitions.getFieldLength());
+
+        if (hasErrors) {
+            return er;
+        }
+
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
         final String lf = Constants.lineSeparator;
-
-        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(records.stream(), er, FieldDefinitions.getFieldLength());
-
-        if (hasErrors) {
-            return er;
-        }
+        Integer n = records.size();
+        int l = String.valueOf(n).length();
 
         records.stream()
                 // utled ALDER
@@ -41,7 +44,7 @@ public class Main {
                     return r;
                 })
                 .forEach(r -> {
-                    ControlFilbeskrivelse.doControl(r, er);
+                    ControlFilbeskrivelse.doControl(r, er, l);
 
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
@@ -71,7 +74,7 @@ public class Main {
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 04 Bydelsnummer"
+                                        , "Kontroll 03 Bydelsnummer"
                                         , "Korrigér bydel. Forventet én av  '"
                                         + Definitions.getBydelerAsList()
                                         + "', men fant '"
@@ -91,7 +94,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 05 Årgang"
+                                    , "Kontroll 04 Årgang"
                                     , "Korrigér årgang. Forventet '"
                                     + args.getAargang().substring(0, 2)
                                     + "', men fant '"
@@ -110,7 +113,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 06 Fødselsnummer"
+                                    , "Kontroll 05 Fødselsnummer"
                                     , "Det er ikke oppgitt fødselsnummer/d-nummer på "
                                     + "deltakeren" + lf + "\teller fødselsnummeret/d-nummeret inneholder" +
                                     " feil." + lf + "\tMed mindre det er snakk om en utenlandsk " +
@@ -129,7 +132,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 07 Alder under 18 år"
+                                    , "Kontroll 06 Alder under 18 år"
                                     , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er under 18 år."
                                     , Constants.NORMAL_ERROR
                             )
@@ -146,7 +149,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 08 Alder er 96 år eller over"
+                                    , "Kontroll 07 Alder er 96 år eller over"
                                     , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
                                     , Constants.NORMAL_ERROR
                             )
@@ -163,7 +166,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 09 Kjønn"
+                                    , "Kontroll 08 Kjønn"
                                     , "Korrigér kjønn. Forventet én av  '"
                                     + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
                                     + "', men fant '"
@@ -182,7 +185,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 10 Sivilstand"
+                                    , "Kontroll 09 Sivilstand"
                                     , "Korrigér sivilstand. Forventet én av  '"
                                     + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
                                     + "', men fant '"
@@ -201,7 +204,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 11 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
+                                    , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
                                     , "Det er ikke krysset av for om deltakeren har barn under 18 år, " + lf +
                                     "som deltakeren (eventuelt ektefelle/samboer) har \n" +
                                     "forsørgerplikt for," + lf + "\tog som bor i husholdningen ved\n" +
@@ -223,7 +226,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 12 Det bor barn under 18 år i husholdningen. Mangler antall barn."
+                                    , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
                                     , "Deltakeren har barn under 18 år, som deltakeren " + lf +
                                     "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
                                     "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
@@ -238,6 +241,30 @@ public class Main {
                             , 0
                     );
 
+                    ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 12 Det bor barn under 18 år i husholdningen."
+                                    , "Det er oppgitt antall barn under 18 år som bor i husholdningen som "
+                                    + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
+                                    + "oppgitt at det bor barn i husholdningen. "
+                                    + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
+                                    , Constants.CRITICAL_ERROR
+                            )
+                            , "ANTBU18"
+                            , "<"
+                            , 0
+                            , "BU18"
+                            , List.of("1")
+
+                    );
+
+
                     ControlFelt1Boolsk.doControl(
                             r
                             , er
@@ -246,12 +273,12 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 13 Det bor barn under 18 år i husholdningen."
+                                    , "Kontroll 13 Det bor barn under 18 år i husholdningen, >= 10 ."
                                     , "Antall barn under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                                     , Constants.NORMAL_ERROR
                             )
                             , "ANTBU18"
-                            , ">"
+                            , ">="
                             , 10
                     );
 
@@ -453,9 +480,8 @@ public class Main {
                                         , r.getFieldAsString("PERSON_JOURNALNR")
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
-                                        , "Kontroll 24B Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt Arbeidsløs, ikke registrert på arbeidssituasjon"
-                                        , "Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt Arbeidsledig, "
-                                        + "men ikke registrert hos NAV, på arbeidssituasjon."
+                                        , "Kontroll 24B Tilknytning til trygdesystemet og arbeidssituasjon. Arbeidsavklaringspenger."
+                                        , "Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt Arbeidsløs, ikke registrert på arbeidssituasjon"
                                         , Constants.NORMAL_ERROR
                                 )
                         );
@@ -693,10 +719,10 @@ public class Main {
                     {
                         Integer laan = r.getFieldAsInteger("LAAN");
                         Integer laanSum = List.of(
-                                "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MAR",
-                                "BIDRAG_APR", "BIDRAG_MAI", "BIDRAG_JUN",
-                                "BIDRAG_JUL", "BIDRAG_AUG", "BIDRAG_SEP",
-                                "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
+                                "LAAN_JAN", "LAAN_FEB", "LAAN_MAR",
+                                "LAAN_APR", "LAAN_MAI", "LAAN_JUN",
+                                "LAAN_JUL", "LAAN_AUG", "LAAN_SEP",
+                                "LAAN_OKT", "LAAN_NOV", "LAAN_DES")
                                 .stream()
                                 .map(field -> {
                                     try {
@@ -707,7 +733,7 @@ public class Main {
                                 })
                                 .reduce(0, Integer::sum);
 
-                        if (0 < laan && laan != laanSum) {
+                        if (0 < laan && !laan.equals(laanSum)) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")

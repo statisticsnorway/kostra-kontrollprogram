@@ -6,7 +6,9 @@ import no.ssb.kostra.control.Record;
 
 public class ControlHeltall {
     public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String field) {
-        if (p.getFieldAsInteger(field) == null) {
+        Integer i = p.getFieldAsInteger(field);
+
+        if (i == null) {
             ere.setRefNr(String.valueOf(p.getLine()));
             er.addEntry(ere);
         }

@@ -2,10 +2,7 @@ package no.ssb.kostra.control;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Record {
@@ -94,6 +91,15 @@ public class Record {
     public List<FieldDefinition> getFieldDefinitions() {
         return fieldDefinitions;
     }
+
+    public List<String> getNames(){
+        return new ArrayList<>(this.valuesByName.keySet());
+    }
+
+    public boolean hasNames(){
+        return 0 < this.getNames().size() ;
+    }
+
 
     @Override
     public boolean equals(Object o) {

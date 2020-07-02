@@ -25,7 +25,7 @@ public class ControlFilbeskrivelse {
                     String trimmedStringValue = r.getFieldAsTrimmedString(fieldDefinition.getName());
                     int trimmedStringLength = trimmedStringValue.length();
                     Integer integerValue = r.getFieldAsInteger(fieldDefinition.getName());
-                    boolean hasIntegerValue = integerValue != null;
+                    boolean hasIntegerValue = (integerValue != null);
                     List<Code> codeList = new ArrayList<>(fieldDefinition.getCodeList());
                     boolean hasCodeList = !codeList.isEmpty();
                     String datePattern = r.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern();
@@ -39,7 +39,7 @@ public class ControlFilbeskrivelse {
                                         , createLinenumber(noOfRecordsLength, r.getLine())
                                         , " "
                                         , " "
-                                        , "Kontroll 02 Filbeskrivelse"
+                                        , "Kontroll 02 Filbeskrivelse, feltdefinisjonlengde"
                                         , "Korreksjon: Felt '" + fieldName + "' sin feltdefinisjonlengde skal være større enn 0 "
                                         + ", fant '" + length + "'"
                                         , Constants.CRITICAL_ERROR
@@ -59,7 +59,7 @@ public class ControlFilbeskrivelse {
                                                 , createLinenumber(noOfRecordsLength, r.getLine())
                                                 , " "
                                                 , " "
-                                                , "Kontroll 02 Filbeskrivelse"
+                                                , "Kontroll 02 Filbeskrivelse, feil kode i forhold til kodeliste"
                                                 , "Korreksjon: Felt '" + fieldName + "' sin verdi '" + stringValue + "' fins ikke i " + codeList
                                                 , Constants.CRITICAL_ERROR
                                         )
@@ -76,7 +76,7 @@ public class ControlFilbeskrivelse {
                                                     , createLinenumber(noOfRecordsLength, r.getLine())
                                                     , " "
                                                     , " "
-                                                    , "Kontroll 02 Filbeskrivelse"
+                                                    , "Kontroll 02 Filbeskrivelse, feil i heltall-felt"
                                                     , "Korreksjon: Felt '" + fieldName
                                                     + "' er et tallfelt, men inneholder '" + stringValue + "'"
                                                     , Constants.CRITICAL_ERROR
@@ -98,7 +98,7 @@ public class ControlFilbeskrivelse {
                                                     , createLinenumber(noOfRecordsLength, r.getLine())
                                                     , " "
                                                     , " "
-                                                    , "Kontroll 02 Filbeskrivelse"
+                                                    , "Kontroll 02 Filbeskrivelse, feil i dato-felt"
                                                     , "Korreksjon: Felt '" + fieldDefinition.getName()
                                                     + "' er et datofelt med datomønster ('"
                                                     + datePattern.toUpperCase()
@@ -120,7 +120,7 @@ public class ControlFilbeskrivelse {
                                             , createLinenumber(noOfRecordsLength, r.getLine())
                                             , " "
                                             , " "
-                                            , "Kontroll 02 Filbeskrivelse"
+                                            , "Kontroll 02 Filbeskrivelse, mangler obligatorisk verdi"
                                             , "Korreksjon: Felt '" + fieldName + "' er obligatorisk, men mangler verdi"
                                             , Constants.CRITICAL_ERROR
                                     )

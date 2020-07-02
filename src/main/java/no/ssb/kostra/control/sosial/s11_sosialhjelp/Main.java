@@ -273,7 +273,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 13 Det bor barn under 18 år i husholdningen, >= 10 ."
+                                    , "Kontroll 13 Mange barn under 18 år i husholdningen."
                                     , "Antall barn under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                                     , Constants.NORMAL_ERROR
                             )
@@ -515,28 +515,23 @@ public class Main {
                                 );
 
                         Integer bidrag = r.getFieldAsInteger("BIDRAG");
-                        boolean bidragOK;
+                        boolean bidragOK = bidrag != null;
 
-                        try {
-                            Integer.valueOf(r.getFieldAsTrimmedString("BIDRAG"));
-                            bidragOK = true;
-
-                        } catch (NumberFormatException e){
-                            bidragOK = false;
-                        }
 
                         Integer laan = r.getFieldAsInteger("LAAN");
-                        boolean laanOK;
+                        boolean laanOK = laan != null;
 
-                        try {
-                            Integer.valueOf(r.getFieldAsTrimmedString("LAAN"));
-                            laanOK = true;
-
-                        } catch (NumberFormatException e){
-                            laanOK = false;
-                        }
-                        int stonad = bidrag + laan;
+                        int stonad = 0;
                         boolean stonadOK = bidragOK || laanOK;
+
+                        if (bidragOK){
+                            stonad += bidrag;
+                        }
+
+                        if (laanOK){
+                            stonad += laan;
+                        }
+
 
                         int stonadSumMax = 500000;
                         int stonadSumMin = 50;
@@ -701,7 +696,7 @@ public class Main {
                                 })
                                 .reduce(0, Integer::sum);
 
-                        if (0 < bidrag && !bidrag.equals(bidragSum)) {
+                        if (bidrag != null && 0 < bidrag && bidragSum != null && !bidrag.equals(bidragSum)) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -733,7 +728,7 @@ public class Main {
                                 })
                                 .reduce(0, Integer::sum);
 
-                        if (0 < laan && !laan.equals(laanSum)) {
+                        if (laan != null && 0 < laan && laanSum != null && !laan.equals(laanSum)) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")

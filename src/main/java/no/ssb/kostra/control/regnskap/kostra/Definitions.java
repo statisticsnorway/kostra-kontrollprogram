@@ -5,40 +5,70 @@ import java.util.stream.Collectors;
 
 public class Definitions {
     public static Map<String, String> getKontoklasseAsMap(String skjema) {
-        Map<String, String> map = new HashMap<>();
-        switch (skjema) {
-            case "0A":
-            case "0C":
-                map.put("D", "1");
-                map.put("I", "0");
-                break;
+        if (List.of("0A", "0C").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return Map.of("D", "1", "I", "0");
 
-            case "0I":
-            case "0K":
-            case "0M":
-            case "0P":
-                map.put("D", "3");
-                map.put("I", "4");
-                break;
+        } else if (List.of("0B", "0D").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return Map.of("B", "2");
 
-            case "0B":
-            case "0D":
-                map.put("B", "2");
-                break;
+        } else if (List.of("0I", "0K", "0M", "0P").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return Map.of("D", "3", "I", "4");
 
-            case "0J":
-            case "0L":
-            case "0N":
-            case "0Q":
-                map.put("B", "5");
-                break;
+        } else if (List.of("0J", "0L", "0N", "0Q").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return Map.of("B", "5");
+
+        } else {
+            return Map.of();
         }
 
-        return map;
+
+
+
+
+
+//        switch (skjema) {
+//            case "0A":
+//            case "0C":
+//                return Map.of("D", "1", "I", "0");
+//
+//            case "0B":
+//            case "0D":
+//                return Map.of("B", "2");
+//
+//            case "0I":
+//            case "0K":
+//            case "0M":
+//            case "0P":
+//                return Map.of("D", "3", "I", "4");
+//
+//            case "0J":
+//            case "0L":
+//            case "0N":
+//            case "0Q":
+//                return Map.of("B", "5");
+//
+//            default:
+//                return Map.of("R", " ");
+//        }
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return new ArrayList<>(getKontoklasseAsMap(skjema).values());
+        if (List.of("0A", "0C").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return List.of("1", "0");
+
+        } else if (List.of("0B", "0D").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return List.of("2");
+
+        } else if (List.of("0I", "0K", "0M", "0P").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return List.of("3", "4");
+
+        } else if (List.of("0J", "0L", "0N", "0Q").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
+            return List.of("5");
+
+        } else {
+            return List.of();
+        }
+        //return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -79,7 +109,7 @@ public class Definitions {
         List<String> basisKapitler = List.of(
                 "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23", "24", "27", "28", "29",
                 "31", "32", "33", "34", "35", "39", "40", "41", "42", "43", "45", "47", "51", "53", "55", "56", "580", "581",
-                "5900", "5950", "5960", "5970", "5990",
+                "5900", "5970", "5990",
                 "9100", "9110", "9200", "9999"
         );
 
@@ -166,8 +196,12 @@ public class Definitions {
                 "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
                 "600", "620", "629", "630", "640", "650", "660", "670",
                 "700", "710", "729", "730", "750", "770", "775",
-                "800", "810", "830", "850", "870", "874", "875", "877", "890", "895",
+                "810", "830", "850", "870", "874", "875", "877", "890", "895",
                 "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940", "950", "970", "980", "989", "990"
+        );
+
+        List<String> kommunaleArter = List.of(
+                "800"
         );
 
         List<String> konserninterneArter = List.of(
@@ -187,6 +221,10 @@ public class Definitions {
 
         if (Arrays.asList("0A", "0C", "0I", "0K", "0M", "0P").contains(skjema)){
             result.addAll(basisArter);
+
+            if (Arrays.asList("0A", "0C", "0M", "0P").contains(skjema)){
+                result.addAll(kommunaleArter);
+            }
 
             if (Arrays.asList("0A", "0C", "0I", "0K").contains(skjema)){
                 result.addAll(konserninterneArter);

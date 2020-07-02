@@ -28,8 +28,13 @@ public class Main {
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
+        Integer n = records.size();
+        int l = String.valueOf(n).length();
 
         records.forEach(r -> {
+            // Kontroll 2: Filbeskrivelse
+            ControlFilbeskrivelse.doControl(r, er, l);
+
             // Kontroll 3: Regionsnummer
             if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
                 er.addEntry(
@@ -272,7 +277,7 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere"
+                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
                             , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
                             , Constants.NORMAL_ERROR
                     )
@@ -290,7 +295,7 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere"
+                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
                             , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
                             , Constants.NORMAL_ERROR
                     )
@@ -348,9 +353,9 @@ public class Main {
                                 .contains(r.getFieldAsString(field)))) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("SAKSBEHANDLER")
-                                    , r.getFieldAsString("PERSON_JOURNALNR")
-                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    r.getFieldAsString("KONTOR_NR_A")
+                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 22 Områder det har vært arbeidet med i saken"
                                     , "Det er ikke fylt ut hvilke områder det har vært arbeidet med siden saken ble opprettet. "
@@ -391,9 +396,9 @@ public class Main {
             ) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("SAKSBEHANDLER")
-                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                r.getFieldAsString("KONTOR_NR_A")
+                                , r.getFieldAsString("JOURNAL_NR_A")
+                                , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 24 Deltagelse i behandlingssamtaler med primærklienten i løpet av året."
                                 , "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler "
@@ -419,9 +424,9 @@ public class Main {
             ) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("SAKSBEHANDLER")
-                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                r.getFieldAsString("KONTOR_NR_A")
+                                , r.getFieldAsString("JOURNAL_NR_A")
+                                , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 25 Behandlingssamtaler for de involverte i saken i løpet av året"
                                 , "Det er ikke oppgitt hvor mange behandlingssamtaler de ulike deltakerne "
@@ -450,9 +455,9 @@ public class Main {
                                         r,
                                         er,
                                         new ErrorReportEntry(
-                                                r.getFieldAsString("SAKSBEHANDLER")
-                                                , r.getFieldAsString("PERSON_JOURNALNR")
-                                                , r.getFieldAsString("PERSON_FODSELSNR")
+                                                r.getFieldAsString("KONTOR_NR_A")
+                                                , r.getFieldAsString("JOURNAL_NR_A")
+                                                , String.valueOf(r.getLine())
                                                 , " "
                                                 , "Kontroll 26 Relasjon mellom antall behandlingssamtaler og hvem som har deltatt"
                                                 , "Det er oppgitt at andre personer har deltatt i samtaler med primærklient i løpet av året, "
@@ -475,9 +480,9 @@ public class Main {
                 if (List.of("ANTSAMT_HOVEDT_A", "ANTSAMT_ANDREANS_A").stream().noneMatch(field -> 0 < r.getFieldAsInteger(field))) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("SAKSBEHANDLER")
-                                    , r.getFieldAsString("PERSON_JOURNALNR")
-                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    r.getFieldAsString("KONTOR_NR_A")
+                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 27 Antall behandlingssamtaler for ansatte ved kontoret i løpet av året"
                                     , "Det er ikke oppgitt hvor mange behandlingssamtaler hovedterapeut eller andre ansatte har deltatt i gjennom året. Feltet er obligatorisk å fylle ut."
@@ -491,9 +496,9 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("SAKSBEHANDLER")
-                            , r.getFieldAsString("PERSON_JOURNALNR")
-                            , r.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString("KONTOR_NR_A")
+                            , r.getFieldAsString("JOURNAL_NR_A")
+                            , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 28 Antall behandlingssamtaler i løpet av året"
                             , "Det er ikke fylt ut hvor mange behandlingssamtaler det er gjennomført i saken i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
@@ -508,9 +513,9 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("SAKSBEHANDLER")
-                            , r.getFieldAsString("PERSON_JOURNALNR")
-                            , r.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString("KONTOR_NR_A")
+                            , r.getFieldAsString("JOURNAL_NR_A")
+                            , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 29 Antall behandlingssamtaler siden opprettelsen"
                             , "Det er ikke fylt ut hvor mange behandlingssamtaler det er gjennomført siden saken ble opprettet. Feltet er obligatorisk å fylle ut."
@@ -525,9 +530,9 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("SAKSBEHANDLER")
-                            , r.getFieldAsString("PERSON_JOURNALNR")
-                            , r.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString("KONTOR_NR_A")
+                            , r.getFieldAsString("JOURNAL_NR_A")
+                            , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 30 Totalt antall timer i løpet av året"
                             , "Det er ikke fylt ut hvor mange timer hovedterapeut eller andre ved kontoret har anvendt på saken "
@@ -544,9 +549,9 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("SAKSBEHANDLER")
-                            , r.getFieldAsString("PERSON_JOURNALNR")
-                            , r.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString("KONTOR_NR_A")
+                            , r.getFieldAsString("JOURNAL_NR_A")
+                            , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 31 Totalt antall timer siden saken ble opprettet"
                             , "Det er ikke fylt ut hvor mange timer hovedterapeut eller andre ved kontoret har anvendt siden saken ble opprettet "
@@ -574,9 +579,9 @@ public class Main {
                 ) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("SAKSBEHANDLER")
-                                    , r.getFieldAsString("PERSON_JOURNALNR")
-                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    r.getFieldAsString("KONTOR_NR_A")
+                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 32 Samarbeid med andre instanser siden opprettelsen"
                                     , "Det er ikke krysset av for om det har vært samarbeid med andre instanser "

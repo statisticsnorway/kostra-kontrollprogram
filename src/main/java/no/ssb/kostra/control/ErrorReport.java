@@ -151,8 +151,8 @@ public class ErrorReport {
 							normaleFeil++;
 						}
 
-						report.append("         <li style='color: " + htmlcolor + "'>" + kontrollnummer + lf)
-						.append("         <ul><li style='color: " + htmlcolor + "'>"+ kontrolltekst +"</li></ul></li>" + lf);
+						report.append("         <li style='color: " + htmlcolor + "'><pre>" + kontrollnummer + "</pre>" + lf)
+						.append("         <ul><li style='color: " + htmlcolor + "'><pre>"+ kontrolltekst +"</pre></li></ul></li>" + lf);
 
 					}
 					report.append("      </ul>" + lf);

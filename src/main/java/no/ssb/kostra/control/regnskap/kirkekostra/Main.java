@@ -223,7 +223,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i investeringsregnskapet"
-                                , "Rett opp til art som er gyldig i investeringsregnskapet, eller overfør posteringen til driftsregnskapet"
+                                , "Rett opp til art som er gyldig i investeringsregnskapet, eller overfør posteringen til investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -238,7 +238,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i driftsregnskapet"
-                                , "Rett opp til art som er gyldig i driftsregnskapet, eller overfør posteringen til investeringsregnskapet"
+                                , "Rett opp til art som er gyldig i driftsregnskapet, eller overfør posteringen til driftsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -300,7 +300,7 @@ public class Main {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Summeringskontroller investeringsregnskap, differanse"
-                        , "Rett opp differansen (" + sumInvestering + ") mellom inntekter (" + sumInvesteringsInntekter + ") og utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
+                        , "Rett opp differansen (" + sumInvestering + ") mellom inntekter (" + sumInvesteringsInntekter + ") og utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet. Differanse +/- 30' godtas."
                         , Constants.CRITICAL_ERROR
                 ));
             }
@@ -344,24 +344,22 @@ public class Main {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Summeringskontroller bevilgningsregnskap, differanse"
-                        , "Rett opp differansen (" + sumDrift + ") mellom inntekter og utgifter i driftsregnskapet"
+                        , "Rett opp differansen (" + sumDrift + ") mellom utgifter (" + sumDriftsUtgifter + ") og inntekter (" + sumDriftsInntekter + ") i driftsregnskapet.  Differanse +/- 30' godtas."
                         , Constants.CRITICAL_ERROR
                 ));
             }
 
             // 5) Sum art 830 for sum funksjoner 3.089 < 0
-            int sumOverforinger = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
-                            && p.getFieldAsString("funksjon_kapittel").equalsIgnoreCase("089 ")
-                            && p.getFieldAsString("art_sektor").equalsIgnoreCase("830"))
+            int sumTilskudd = regnskap.stream()
+                    .filter(p -> p.getFieldAsString("art_sektor").equalsIgnoreCase("830"))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
 
-            if (!(sumOverforinger < 0)) {
+            if (!(sumTilskudd < 0)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Summeringskontroller bevilgningsregnskap, tilskudd"
-                        , "Rett opp slik at fila inneholder tilskudd fra kommunen"
+                        , "Rett opp slik at fila inneholder tilskudd (" + sumTilskudd + ") fra kommunen"
                         , Constants.CRITICAL_ERROR
                 ));
             }
@@ -420,44 +418,65 @@ public class Main {
         //D = Driftsregnskap (kontoklasse 3)
         //I = Investeringsregnskap (kontoklasse 4)
         if (bevilgningRegnskapList.contains(args.getSkjema())) {
-            int sumInternKjopOgSalg = regnskap.stream()
-                    .filter(p -> List.of("380", "780").contains(p.getFieldAsString("art_sektor")))
+            int sumInternKjop = regnskap.stream()
+                    .filter(p -> List.of("380").contains(p.getFieldAsString("art_sektor")))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
+
+            int sumInternSalg = regnskap.stream()
+                    .filter(p -> List.of("780").contains(p.getFieldAsString("art_sektor")))
+                    .map(p -> p.getFieldAsInteger("belop"))
+                    .reduce(0, Integer::sum);
+
+            int sumInternKjopOgSalg = sumInternKjop + sumInternSalg;
 
             if (!Between.betweenInclusive(sumInternKjopOgSalg, -30, 30)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Interne overføringer, internkjøp og internsalg"
-                        , "Rett opp i fila slik at internkjøp og internsalg (" + sumInternKjopOgSalg + ") stemmer overens (margin på +/- 30')"
+                        , "Rett opp i fila slik at differansen (" + sumInternKjopOgSalg + ") mellom internkjøp (" + sumInternKjop + ") og internsalg (" + sumInternSalg + ")  stemmer overens (margin på +/- 30')"
                         , Constants.CRITICAL_ERROR
                 ));
             }
 
-            int sumKalkulatoriske = regnskap.stream()
-                    .filter(p -> List.of("380", "780").contains(p.getFieldAsString("art_sektor")))
+            int sumKalkulatoriskeUtgifter = regnskap.stream()
+                    .filter(p -> List.of("390").contains(p.getFieldAsString("art_sektor")))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
+
+            int sumKalkulatoriskeInntekter = regnskap.stream()
+                    .filter(p -> List.of("790").contains(p.getFieldAsString("art_sektor")))
+                    .map(p -> p.getFieldAsInteger("belop"))
+                    .reduce(0, Integer::sum);
+
+            int sumKalkulatoriske = sumKalkulatoriskeUtgifter + sumKalkulatoriskeInntekter;
 
             if (!Between.betweenInclusive(sumKalkulatoriske, -30, 30)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Interne overføringer, kalkulatoriske utgifter og inntekter"
-                        , "Rett opp i fila slik at kalkulatoriske utgifter og inntekter ved kommunal tjenesteytelse (" + sumKalkulatoriske + ") stemmer overens (margin på +/- 30')"
+                        , "Rett opp i fila slik at differansen (" + sumKalkulatoriske + ") mellom kalkulatoriske utgifter (" + sumKalkulatoriskeUtgifter + ") og inntekter (" + sumKalkulatoriskeInntekter + ")ved kommunal tjenesteytelse stemmer overens (margin på +/- 30')"
                         , Constants.CRITICAL_ERROR
                 ));
             }
 
-            int sumOverforingerMidler = regnskap.stream()
-                    .filter(p -> List.of("465", "865").contains(p.getFieldAsString("art_sektor")))
+            int overforingerMidler = regnskap.stream()
+                    .filter(p -> List.of("465").contains(p.getFieldAsString("art_sektor")))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
+
+            int innsamledeMidler = regnskap.stream()
+                    .filter(p -> List.of("865").contains(p.getFieldAsString("art_sektor")))
+                    .map(p -> p.getFieldAsInteger("belop"))
+                    .reduce(0, Integer::sum);
+
+            int sumOverforingerMidler = overforingerMidler + innsamledeMidler;
 
             if (!Between.betweenInclusive(sumOverforingerMidler, -30, 30)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Interne overføringer, midler"
-                        , "Rett opp i fila slik at overføringer av midler og innsamlede midler (" + sumOverforingerMidler + ") stemmer overens (margin på +/- 30')"
+                        , "Rett opp i fila slik at differansen (" + sumOverforingerMidler + ") mellom overføringer av midler (" + overforingerMidler + ") og innsamlede midler (" + innsamledeMidler + ") stemmer overens (margin på +/- 30')"
                         , Constants.CRITICAL_ERROR
                 ));
             }
@@ -487,7 +506,7 @@ public class Main {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Overføring mellom drifts- og investeringsregnskap"
-                        , "Rett opp i fila slik at overføringer mellom drifts (" + driftsoverforinger + ")- og investeringsregnskapet (" + investeringsoverforinger + ") stemmer overens"
+                        , "Rett opp i fila slik at differansen (" + differanse + ") overføringer mellom drifts (" + driftsoverforinger + ")- og investeringsregnskapet (" + investeringsoverforinger + ") stemmer overens"
                         , Constants.CRITICAL_ERROR
                 ));
             }
@@ -500,17 +519,25 @@ public class Main {
             // 1) Art 590 for sum funksjoner D.041-D.089 + art 990 for sum funksjoner D.041-D.089 = < 30 og > - 30. Differanser opptil +30' godtas, og skal ikke utlistes.
             int avskrivninger = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
-                            && List.of("590", "990").contains(p.getFieldAsString("art_sektor"))
+                            && List.of("590").contains(p.getFieldAsString("art_sektor"))
                     )
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
 
+            int motpostAvskrivninger = regnskap.stream()
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                            && List.of("990").contains(p.getFieldAsString("art_sektor"))
+                    )
+                    .map(p -> p.getFieldAsInteger("belop"))
+                    .reduce(0, Integer::sum);
 
-            if (!Between.betweenInclusive(avskrivninger, -30, 30)) {
+            int sumAvskrivninger = avskrivninger + motpostAvskrivninger;
+
+            if (!Between.betweenInclusive(sumAvskrivninger, -30, 30)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, " ", " ", " "
                         , "Kontroll Avskrivninger, art 590, art 990"
-                        , "Rett opp i fila slik at art 590 stemmer overens med art 990 (margin på +/- 30')"
+                        , "Rett opp i fila slik at differansen (" + sumAvskrivninger + ") mellom art 590 (" + avskrivninger + ") stemmer overens med art 990 (" + motpostAvskrivninger + ") (margin på +/- 30')"
                         , Constants.CRITICAL_ERROR
                 ));
             }

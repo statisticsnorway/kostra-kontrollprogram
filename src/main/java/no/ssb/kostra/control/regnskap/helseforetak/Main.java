@@ -22,10 +22,15 @@ public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> list1 = args.getInputContentAsStringList();
+        List<String> list2 = list1.stream()
+                .map(String::trim)
+                .filter(l -> l.length() != 0)
+                .collect(Collectors.toList());
+
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(list1, er, FieldDefinitions.getFieldLength());
+        boolean hasErrors = ControlRecordLengde.doControl(list2, er, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
             return er;
@@ -56,18 +61,25 @@ public class Main {
                 })
                 .map(d -> {
                     if (d.getName().equalsIgnoreCase("orgnr")){
-                        d.setCodeList(List.of(new Code(args.getOrgnr(), "Organisasjonsnummer")));
+                        List<Code> list = Stream.of(args.getOrgnr().split(","))
+                                .collect(Collectors.toList())
+                                .stream()
+                                .map(n -> new Code(n, "Organisasjonsnummer"))
+                                .collect(Collectors.toList());
+
+                        d.setCodeList(list);
                     }
 
                     return d;
                 })
                 .map(d -> {
-                    List<Code> list = Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
-                            .collect(Collectors.toList())
-                            .stream()
-                            .map(n -> new Code(n, n))
-                            .collect(Collectors.toList());
                     if (d.getName().equalsIgnoreCase("foretaksnr")){
+                        List<Code> list = Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
+                                .collect(Collectors.toList())
+                                .stream()
+                                .map(n -> new Code(n, "Foretaksnummer"))
+                                .collect(Collectors.toList());
+
                         d.setCodeList(list);
                     }
 
@@ -79,7 +91,7 @@ public class Main {
 
         List<String> bevilgningRegnskapList = List.of("0X");
         List<String> balanseRegnskapList = List.of("0Y");
-        List<Record> regnskap = list1.stream()
+        List<Record> regnskap = list2.stream()
                 .map(p -> new Record(p, fieldDefinitionsWithCLIParametres))
                 .collect(Collectors.toList());
         String saksbehandler = "Filuttrekk";
@@ -161,7 +173,7 @@ public class Main {
                             , Constants.CRITICAL_ERROR
                     )
                     , "orgnr"
-                    , Collections.singletonList(args.getOrgnr())
+                    , Stream.of(args.getOrgnr().split(",")).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -349,7 +361,7 @@ public class Main {
                 er.addEntry(new ErrorReportEntry(
                         " ", " ", " ", " "
                         , "Kontroll Sum inntekter og kostnader = 0"
-                        , "Sjekk at sum kontonr 300 til og med kontonr 899 skal være 0, her (" + differanse + "). Differanse +/- 100 000 kroner godtas."
+                        , "Sjekk at sum kontonr 300 til og med kontonr 899 skal være 0, her (" + differanse + "). Differanse +/- 100' kroner godtas."
                         , Constants.CRITICAL_ERROR
                 ));
             }
@@ -358,25 +370,31 @@ public class Main {
         // Kontroll Eiendeler = egenkapital + gjeld
         if (balanseRegnskapList.contains(args.getSkjema())) {
             // 1) Balanse må ha føring på aktiva / eiendelskontiene , dvs. være høyere enn 0
-            int sumAktiva = regnskap.stream()
+            int sumEiendeler = regnskap.stream()
                     .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 100, 195))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
 
             // 2) Balanse må ha føring på passiva / egenkapitalskontoer + gjeldskontoer, dvs. være mindre enn 0
-            int sumPassiva = regnskap.stream()
-                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 200, 299))
+            int sumEgenkapital = regnskap.stream()
+                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 200, 209))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
 
-            // 3) Aktiva skal være lik passiva. Differanser opptil +10' godtas, og skal ikke utlistes.
-            int sumBalanse = sumAktiva + sumPassiva;
+            int sumGjeld = regnskap.stream()
+                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 210, 299))
+                    .map(p -> p.getFieldAsInteger("belop"))
+                    .reduce(0, Integer::sum);
+
+
+            // 3) sumEiendeler skal være lik Egenkapital + Gjeld. Differanser opptil +10' godtas, og skal ikke utlistes.
+            int sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld);
 
             if (!Between.betweenInclusive(sumBalanse, -50, 50)) {
                 er.addEntry(new ErrorReportEntry(
                         " ", " ", " ", " "
                         , "Kontroll Eiendeler = egenkapital + gjeld"
-                        , "Balansen (" + sumBalanse + ") skal balansere ved at sum eiendeler (" + sumAktiva + ")  = sum egenkapital + sum gjeld (" + sumPassiva + ") . Differanser +/- 50 000 kroner godtas"
+                        , "Balansen (" + sumBalanse + ") skal balansere ved at sum eiendeler (" + sumEiendeler + ")  = sum egenkapital (" + sumEgenkapital + ") + sum gjeld (" + sumGjeld + ") . Differanser +/- 50' kroner godtas"
                         , Constants.NORMAL_ERROR
                 ));
             }

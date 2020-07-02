@@ -30,11 +30,11 @@ public class Main {
 
         records.forEach(r -> {
             // Kontroll 3: Regionsnummer
-            if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
+            if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                r.getFieldAsString("KONTOR_NR_B")
+                                , r.getFieldAsString("JOURNAL_NR_B")
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 03 Regionsnummer"
@@ -47,11 +47,11 @@ public class Main {
             }
 
             // Kontroll 4: Kontornummer
-            if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_A"))) {
+            if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                r.getFieldAsString("KONTOR_NR_B")
+                                , r.getFieldAsString("JOURNAL_NR_B")
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 04 Kontornummer"
@@ -62,11 +62,11 @@ public class Main {
             }
 
             // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
-            if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_A"), r.getFieldAsString("KONTOR_NR_A"))) {
+            if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_B"), r.getFieldAsString("KONTOR_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                r.getFieldAsString("KONTOR_NR_B")
+                                , r.getFieldAsString("JOURNAL_NR_B")
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
@@ -79,7 +79,7 @@ public class Main {
 
         // Kontroll 6 Dublett på journalnummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("JOURNAL_NR_A"))
+                .map(r -> r.getFieldAsString("JOURNAL_NR_B"))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()

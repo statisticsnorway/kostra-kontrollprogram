@@ -62,6 +62,9 @@ public class ControlFelt1InneholderKodeFraKodelisteTest {
         ControlFelt1InneholderKodeFraKodeliste.doControl(r, er, ere, "kontoklasse", Collections.singletonList("0"));
         assertEquals(Constants.NO_ERROR, er.getErrorType());
 
+        ControlFelt1InneholderKodeFraKodeliste.doControl(r, er, ere, "kontoklasse", List.of("0", "1"));
+        assertEquals(Constants.NO_ERROR, er.getErrorType());
+
         ControlFelt1InneholderKodeFraKodeliste.doControl(r, er, ere, "funksjon_kapittel", Collections.singletonList("100 "));
         assertEquals(Constants.NO_ERROR, er.getErrorType());
 
@@ -74,6 +77,13 @@ public class ControlFelt1InneholderKodeFraKodelisteTest {
         ControlFelt1InneholderKodeFraKodeliste.doControl(r, er, ere, "skjema", List.of("FA"));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
+
+    @Test
+    public void testFail2() {
+        ControlFelt1InneholderKodeFraKodeliste.doControl(r, er, ere, "kontoklasse", List.of("1", "2"));
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
+
 
     @Test
     public void testBlank1() {

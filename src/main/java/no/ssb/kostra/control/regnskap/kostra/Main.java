@@ -43,28 +43,17 @@ public class Main {
         List<String> svalbard = List.of("211100");
         List<Record> regnskap = list1.stream()
                 .map(p -> new Record(p, fieldDefinitions))
-                .filter(p -> p.getFieldAsInteger("belop") != 0)
+                .filter(p -> {
+                    try {
+                        return p.getFieldAsInteger("belop") != 0;
+                    } catch (NullPointerException e){
+                        return true;
+                    }
+                })
                 .collect(Collectors.toList());
         String saksbehandler = "Filuttrekk";
         Integer n = regnskap.size();
         Integer l = String.valueOf(n).length();
-
-        // Sjekk skjematype, hvis den er feil så er det ikke noe vits å fortsette
-        regnskap.forEach(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                p
-                , er
-                , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
-                        , "Kontroll Regnskapstype"
-                        , "Korreksjon: Rett opp til rett filuttrekk (" + args.getSkjema() + ")"
-                        , Constants.CRITICAL_ERROR
-                )
-                , "skjema"
-                , Collections.singletonList(args.getSkjema())
-        ));
-
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
-        }
 
         // integritetskontroller
         regnskap.forEach(p -> {
@@ -75,7 +64,7 @@ public class Main {
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Regnskapstype"
-                            , "Korreksjon: Rett opp til rett filuttrekk (" + args.getSkjema() + ")"
+                            , "Korrigér regnskapstype. Fant '" + p.getFieldAsString("skjema") + "', forventet '" + args.getSkjema() + "'"
                             , Constants.CRITICAL_ERROR
                     )
                     , "skjema"
@@ -87,7 +76,7 @@ public class Main {
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Årgang"
-                            , "Korreksjon: Rett opp til rett årgang (" + args.getAargang() + ")"
+                            , "Korrigér årgang. Fant  '" + p.getFieldAsString("aargang") + "', forventet '" + args.getAargang() + "'"
                             , Constants.CRITICAL_ERROR
                     )
                     , "aargang"
@@ -99,7 +88,7 @@ public class Main {
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Kvartal"
-                            , "Korreksjon: Rett opp til rett kvartal (" + args.getKvartal() + ")"
+                            , "Korrigér kvartal. Fant  '" + p.getFieldAsString("kvartal") + "', forventet '" + args.getKvartal() + "'"
                             , Constants.CRITICAL_ERROR
                     )
                     , "kvartal"
@@ -110,50 +99,50 @@ public class Main {
                     p
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
-                            , "Kontroll fylkeskommune-/kommune-/bydelsnummeret."
-                            , "Korreksjon: Rett fylkeskommune-/kommune-/bydelsnummeret. (" + args.getRegion() + ")"
+                            , "Kontroll fylkeskommune-/kommune-/bydelsnummer."
+                            , "Korrigér fylkeskommune-/kommune-/bydelsnummer. Fant  '" + p.getFieldAsString("region") + "', forventet '" + args.getRegion() + "'"
                             , Constants.CRITICAL_ERROR
                     )
                     , "region"
                     , Collections.singletonList(args.getRegion())
             );
 
-            if (Arrays.asList("0I", "0J", "0K", "0L").contains(args.getSkjema())) {
+//            if (Arrays.asList("0I", "0J", "0K", "0L").contains(args.getSkjema())) {
                 ControlFelt1InneholderKodeFraKodeliste.doControl(
                         p
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Organisasjonsnummer."
-                                , "Korreksjon: Korrigér organisasjonsnummer i filutrekket. (" + args.getOrgnr() + ")"
+                                , "Korrigér organisasjonsnummer. Fant  '" + p.getFieldAsString("orgnr") + "', forventet '" + args.getOrgnr() + "'"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "orgnr"
                         , Collections.singletonList(args.getOrgnr())
                 );
-            } else {
-                ControlFelt1InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
-                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
-                                , "Kontroll Organisasjonsnummer."
-                                , "Korreksjon: Organisasjonsnummer skal være 9 blanke tegn / mellomrom. (" + args.getOrgnr() + ")"
-                                , Constants.CRITICAL_ERROR
-                        )
-                        , "orgnr"
-                        , Collections.singletonList("         ")
-                );
-            }
+//            } else {
+//                ControlFelt1InneholderKodeFraKodeliste.doControl(
+//                        p
+//                        , er
+//                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+//                                , "Kontroll Organisasjonsnummer."
+//                                , "Korreksjon: Rett organisasjonsnummeret. Fant  '" + p.getFieldAsString("orgnr") + "', forventet '" + args.getOrgnr() + "'"
+//                                , Constants.CRITICAL_ERROR
+//                        )
+//                        , "orgnr"
+//                        , Collections.singletonList("         ")
+//                );
+//            }
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     p
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Foretaksnummer."
-                            , "Korreksjon: Foretaksnummer skal være 9 blanke tegn / mellomrom. (" + args.getForetaknr() + ")"
+                            , "Korrigér foretaksnummer. Fant '" + p.getFieldAsString("foretaksnr") + "', forventet '" + args.getForetaknr() + "'"
                             , Constants.CRITICAL_ERROR
                     )
                     , "foretaksnr"
-                    , Collections.singletonList("         ")
+                    , Collections.singletonList(args.getForetaknr())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -161,7 +150,9 @@ public class Main {
                     , er
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Kontoklasse."
-                            , "Korreksjon: Rett kontoklassen. (" + p.getFieldAsString("kontoklasse") + ")"
+                            , "Korreksjon: Rett kontoklassen. Fant '" + p.getFieldAsString("kontoklasse") + "', forventet én av :  "
+                            + Definitions.getKontoklasseAsList(p.getFieldAsString("skjema"))
+                            .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                             , Constants.CRITICAL_ERROR
                     )
                     , "kontoklasse"
@@ -174,7 +165,9 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Funksjon."
-                                , "Korreksjon: Rett opp feil funksjon med riktig funksjon i henhold til liste. (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ")"
+                                , "Korrigér funksjon. Fant '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "', forventet én av :  "
+                                + Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "funksjon_kapittel"
@@ -186,7 +179,9 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Art."
-                                , "Korreksjon: Rett opp feil art med riktig art i henhold til liste. (" + p.getFieldAsString("art_sektor") + ")"
+                                , "Korrigér art. Fant '" + p.getFieldAsString("art_sektor") + "', forventet én av : "
+                                + Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -200,7 +195,9 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll kapittel."
-                                , "Korreksjon: Rett opp feil kapittel med riktig kapittel i henhold til liste. (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ")"
+                                , "Korrigér kapittel. Fant '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "', forventet én av : "
+                                + Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "funksjon_kapittel"
@@ -212,7 +209,9 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll sektor."
-                                , "Korreksjon: Rett opp feil sektor med riktig sektor i henhold til liste. (" + p.getFieldAsString("art_sektor") + ")"
+                                , "Korrigér sektor. Fant '" + p.getFieldAsString("art_sektor") + "', forventet én av : "
+                                + Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -241,7 +240,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i investeringsregnskapet"
-                                , "Rett opp til art som er gyldig i investeringsregnskapet, eller overfør posteringen til driftsregnskapet"
+                                , "Rett opp kontoklasse eller art"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -254,7 +253,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i driftsregnskapet"
-                                , "Rett opp til art som er gyldig i driftsregnskapet, eller overfør posteringen til investeringsregnskapet"
+                                , "Rett opp kontoklasse eller art"
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
@@ -296,6 +295,7 @@ public class Main {
                             , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                     , "Kontroll Kombinasjon kontoklasse, funksjon og art i investeringsregnskapet"
                                     , "Rett opp til riktig kombinasjon av kontoklasse, funksjon og art. "
+                                    + "Art 729 er kun gyldig i kombinasjon funksjon 841 i investeringsregnskapet. "
                                     + "Mva-kompensasjonen for anskaffelser i investeringsregnskapet er frie midler som skal "
                                     + "benyttes til felles finansiering av investeringer i bygninger, anlegg og andre varige driftsmidler."
                                     , Constants.CRITICAL_ERROR
@@ -399,7 +399,7 @@ public class Main {
                     if (!(0 < sumInvesteringsUtgifter)) {
                         er.addEntry(new ErrorReportEntry(
                                 saksbehandler, "Summeringskontroller", " ", " "
-                                , "Kontroll Summeringskontroller bevilgningsregnskap"
+                                , "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer investeringsregnskapet"
                                 , "Rett opp slik at fila inneholder utgiftsposteringene (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         ));
@@ -417,7 +417,7 @@ public class Main {
                     if (!(sumInvesteringsInntekter < 0)) {
                         er.addEntry(new ErrorReportEntry(
                                 saksbehandler, "Summeringskontroller", " ", " "
-                                , "Kontroll Summeringskontroller bevilgningsregnskap"
+                                , "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringene investeringsregnskapet"
                                 , "Rett opp slik at fila inneholder inntektsposteringene (" + sumInvesteringsInntekter + ") i investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         ));
@@ -430,7 +430,7 @@ public class Main {
                 if (!Between.betweenInclusive(sumInvestering, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             saksbehandler, "Summeringskontroller", " ", " "
-                            , "Kontroll Summeringskontroller bevilgningsregnskap"
+                            , "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet"
                             , "Rett opp differansen (" + sumInvestering + ") mellom "
                             + "inntekter (" + sumInvesteringsInntekter + ") og "
                             + "utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
@@ -448,7 +448,7 @@ public class Main {
                 if (!(0 < sumDriftsUtgifter)) {
                     er.addEntry(new ErrorReportEntry(
                             saksbehandler, "Summeringskontroller", " ", " "
-                            , "Kontroll Summeringskontroller bevilgningsregnskap"
+                            , "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer driftsregnskapet"
                             , "Rett opp slik at fila inneholder utgiftsposteringene (" + sumDriftsUtgifter + ") i driftsregnskapet"
                             , Constants.CRITICAL_ERROR
                     ));
@@ -464,7 +464,7 @@ public class Main {
                 if (!(sumDriftsInntekter < 0)) {
                     er.addEntry(new ErrorReportEntry(
                             saksbehandler, "Summeringskontroller", " ", " "
-                            , "Kontroll Summeringskontroller bevilgningsregnskap"
+                            , "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer driftsregnskapet"
                             , "Rett opp slik at fila inneholder inntektsposteringene (" + sumDriftsInntekter + ") i driftsregnskapet"
                             , Constants.CRITICAL_ERROR
                     ));
@@ -476,7 +476,7 @@ public class Main {
                 if (!Between.betweenInclusive(sumDrift, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             saksbehandler, "Summeringskontroller", " ", " "
-                            , "Kontroll Summeringskontroller bevilgningsregnskap"
+                            , "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet"
                             , "Rett opp differansen (" + sumDrift + ") mellom "
                             + "inntekter (" + sumDriftsInntekter + ") og "
                             + "utgifter (" + sumDriftsUtgifter + ") i driftsregnskapet"
@@ -499,7 +499,7 @@ public class Main {
             if (!(0 < sumAktiva)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, "Summeringskontroller", " ", " "
-                        , "Kontroll Summeringskontroller balanseregnskap"
+                        , "Kontroll Summeringskontroller balanseregnskap, registrering av aktiva"
                         , "Rett opp slik at fila inneholder registrering av aktiva (" + sumAktiva + ") i balanse."
                         , Constants.CRITICAL_ERROR
                 ));
@@ -515,7 +515,7 @@ public class Main {
             if (!(sumPassiva < 0)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, "Summeringskontroller", " ", " "
-                        , "Kontroll Summeringskontroller balanseregnskap"
+                        , "Kontroll Summeringskontroller balanseregnskap, registrering av passiva"
                         , "Rett opp slik at fila inneholder registrering av passiva (" + sumPassiva + ") i balanse."
                         , Constants.CRITICAL_ERROR
                 ));
@@ -527,7 +527,7 @@ public class Main {
             if (!Between.betweenInclusive(sumBalanse, -10, 10)) {
                 er.addEntry(new ErrorReportEntry(
                         saksbehandler, "Summeringskontroller", " ", " "
-                        , "Kontroll Summeringskontroller balanseregnskap"
+                        , "Kontroll Summeringskontroller balanseregnskap, differanse"
                         , "Rett opp differansen (" + sumBalanse + ") mellom "
                         + "aktiva (" + sumAktiva + ") og "
                         + "passiva (" + sumPassiva + ") i fila (Differanser opptil ±10' godtas)"

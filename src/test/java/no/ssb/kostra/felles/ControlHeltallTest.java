@@ -63,4 +63,16 @@ public class ControlHeltallTest {
 
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
+
+    @Test
+    public void testHeltallFail3() {
+        ControlHeltall.doControl(
+                new Record("0A20194040200                  1120 010      ...", fieldDefinitions),
+                er,
+                ere,
+                "belop"
+        );
+
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
 }

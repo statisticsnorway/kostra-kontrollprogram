@@ -31,10 +31,15 @@ public class Main {
         Integer n = records.size();
         int l = String.valueOf(n).length();
 
-        records.forEach(r -> {
-            // Kontroll 2: Filbeskrivelse
-            ControlFilbeskrivelse.doControl(r, er, l);
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(records, er);
 
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
+
+        records.forEach(r -> {
             // Kontroll 3: Regionsnummer
             if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
                 er.addEntry(

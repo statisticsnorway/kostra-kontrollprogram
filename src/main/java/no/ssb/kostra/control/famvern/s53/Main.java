@@ -4,6 +4,7 @@ import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.ControlFelt1Boolsk;
 import no.ssb.kostra.control.felles.ControlFelt1BoolskSaaFelt2Boolsk;
+import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
 
@@ -32,6 +33,13 @@ public class Main {
         Integer n = records.size();
         Integer l = String.valueOf(n).length();
         final String lf = Constants.lineSeparator;
+
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(records, er);
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
 
         records.stream()
                 // Kontroll 3: Fylkesnummer

@@ -33,6 +33,13 @@ public class Main {
         Integer n = records.size();
         int l = String.valueOf(n).length();
 
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(records, er);
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
         records.stream()
                 // utled ALDER
                 .map(r -> {
@@ -45,8 +52,6 @@ public class Main {
                     return r;
                 })
                 .forEach(r -> {
-                    ControlFilbeskrivelse.doControl(r, er, l);
-
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r
                             , er

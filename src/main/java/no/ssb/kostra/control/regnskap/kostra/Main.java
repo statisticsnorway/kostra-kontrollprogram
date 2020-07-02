@@ -21,7 +21,9 @@ public class Main {
 
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
-        List<String> list1 = args.getInputContentAsStringList();
+        List<String> list1 = args.getInputContentAsStringList().stream()
+                .filter(l -> l.trim().length() != 0)
+                .collect(Collectors.toList());
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
@@ -55,9 +57,16 @@ public class Main {
         Integer n = regnskap.size();
         Integer l = String.valueOf(n).length();
 
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(regnskap, er);
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
+
+
         // integritetskontroller
         regnskap.forEach(p -> {
-            ControlFilbeskrivelse.doControl(p, er, l);
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     p

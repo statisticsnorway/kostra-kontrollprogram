@@ -8,37 +8,40 @@ public class ControlFelt1BoolskSaaFelt2Boolsk {
     public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1, String operator1, Integer value1, String field2, String operator2, Integer value2) {
         boolean hasErrors = false;
 
-        if (operator1.equalsIgnoreCase("<")) {
-            hasErrors = !(r.getFieldAsInteger(field1) < value1);
+        if (r.getFieldAsInteger(field1) != null) {
+            if (operator1.equalsIgnoreCase("<")) {
+                hasErrors = !(r.getFieldAsInteger(field1) < value1);
 
-        } else if (operator1.equalsIgnoreCase("<=")) {
-            hasErrors = !(r.getFieldAsInteger(field1) <= value1);
+            } else if (operator1.equalsIgnoreCase("<=")) {
+                hasErrors = !(r.getFieldAsInteger(field1) <= value1);
 
-        } else if (operator1.equalsIgnoreCase(">")) {
-            hasErrors = !(r.getFieldAsInteger(field1) > value1);
+            } else if (operator1.equalsIgnoreCase(">")) {
+                hasErrors = !(r.getFieldAsInteger(field1) > value1);
 
-        } else if (operator1.equalsIgnoreCase(">=")) {
-            hasErrors = !(r.getFieldAsInteger(field1) >= value1);
+            } else if (operator1.equalsIgnoreCase(">=")) {
+                hasErrors = !(r.getFieldAsInteger(field1) >= value1);
 
-        } else if (operator1.equalsIgnoreCase("==")) {
-            hasErrors = !(r.getFieldAsInteger(field1).intValue() == value1);
+            } else if (operator1.equalsIgnoreCase("==")) {
+                hasErrors = !(r.getFieldAsInteger(field1).intValue() == value1);
+            }
         }
-
         if (!hasErrors){
-            if (operator2.equalsIgnoreCase("<")) {
-                hasErrors = !(r.getFieldAsInteger(field2) < value2);
+            if (r.getFieldAsInteger(field1) != null) {
+                if (operator2.equalsIgnoreCase("<")) {
+                    hasErrors = !(r.getFieldAsInteger(field2) < value2);
 
-            } else if (operator2.equalsIgnoreCase("<=")) {
-                hasErrors = !(r.getFieldAsInteger(field2) <= value2);
+                } else if (operator2.equalsIgnoreCase("<=")) {
+                    hasErrors = !(r.getFieldAsInteger(field2) <= value2);
 
-            } else if (operator2.equalsIgnoreCase(">")) {
-                hasErrors = !(r.getFieldAsInteger(field2) > value2);
+                } else if (operator2.equalsIgnoreCase(">")) {
+                    hasErrors = !(r.getFieldAsInteger(field2) > value2);
 
-            } else if (operator2.equalsIgnoreCase(">=")) {
-                hasErrors = !(r.getFieldAsInteger(field2) >= value2);
+                } else if (operator2.equalsIgnoreCase(">=")) {
+                    hasErrors = !(r.getFieldAsInteger(field2) >= value2);
 
-            } else if (operator2.equalsIgnoreCase("==")) {
-                hasErrors = !(r.getFieldAsInteger(field2).intValue() == value2);
+                } else if (operator2.equalsIgnoreCase("==")) {
+                    hasErrors = !(r.getFieldAsInteger(field2).intValue() == value2);
+                }
             }
         }
 

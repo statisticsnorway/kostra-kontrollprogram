@@ -4,6 +4,7 @@ import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.ControlAlleFeltIListeHarLikSum;
 import no.ssb.kostra.control.felles.ControlFelt1LikSumAvListe;
+import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
 
@@ -27,6 +28,14 @@ public class Main {
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
+
+
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(records, er);
+
+        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+            return er;
+        }
 
         List<String> c1 = List.of("SEP", "SAM", "SAK", "TILB", "FLY", "TOT");
         List<String> c2 = List.of("TOT", "1", "2", "3");

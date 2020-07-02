@@ -165,14 +165,14 @@ public class MainITest {
 
     @Test
     public void testDoControl() {
-//        er = Main.doControls(args);
-//
-//        if (Constants.DEBUG) {
-//            System.out.print(er.generateReport());
-//        }
-//
-//        assertNotNull("Has content ErrorReport", er);
-//        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        er = Main.doControls(args);
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
 }

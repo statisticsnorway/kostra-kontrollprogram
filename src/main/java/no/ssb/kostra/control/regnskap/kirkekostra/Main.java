@@ -40,18 +40,8 @@ public class Main {
         Integer n = regnskap.size();
         Integer l = String.valueOf(n).length();
 
-        // Sjekk skjematype, hvis den er feil så er det ikke noe vits å fortsette
-        regnskap.forEach(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                p
-                , er
-                , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
-                        , "Kontroll Regnskapstype"
-                        , "Korreksjon: Rett opp til rett filuttrekk (" + args.getSkjema() + ")"
-                        , Constants.CRITICAL_ERROR
-                )
-                , "skjema"
-                , Collections.singletonList(args.getSkjema())
-        ));
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(regnskap, er);
 
         if (er.getErrorType() == Constants.CRITICAL_ERROR) {
             return er;
@@ -59,8 +49,6 @@ public class Main {
 
         // integritetskontroller
         regnskap.forEach(p -> {
-            ControlFilbeskrivelse.doControl(p, er, l);
-
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     p
                     , er

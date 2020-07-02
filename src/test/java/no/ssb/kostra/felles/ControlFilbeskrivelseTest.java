@@ -35,7 +35,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "OK   ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -55,7 +55,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -77,7 +77,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "OK   ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -97,7 +97,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -117,7 +117,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "OKstr";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -137,7 +137,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -157,7 +157,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "ABCDE";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -177,7 +177,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -197,7 +197,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -217,7 +217,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "ABCDE";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -237,7 +237,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -257,7 +257,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -277,7 +277,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "    1";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -297,7 +297,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -317,7 +317,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -337,7 +337,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "    1";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -357,7 +357,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -377,7 +377,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -398,7 +398,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -418,7 +418,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20202020";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -438,7 +438,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "        ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -458,7 +458,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -478,7 +478,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!   ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -500,7 +500,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -520,7 +520,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20202020";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -540,7 +540,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "        ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -560,7 +560,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());
@@ -580,7 +580,7 @@ public class ControlFilbeskrivelseTest {
         String record1 = "FAIL!   ";
         r = new Record(record1, fieldDefinitions);
 
-        ControlFilbeskrivelse.doControl(r, er, 1);
+        ControlFilbeskrivelse.doControl(List.of(r), er);
 
         if (Constants.DEBUG){
             System.out.print(er.generateReport());

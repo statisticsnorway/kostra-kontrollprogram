@@ -23,8 +23,8 @@ public class Main {
         ErrorReport er = new ErrorReport(args);
         List<String> list1 = args.getInputContentAsStringList();
         List<String> list2 = list1.stream()
-                .map(String::trim)
-                .filter(l -> l.length() != 0)
+                // filtrerer ut blanke linjer
+                .filter(l -> l.trim().length() != 0)
                 .collect(Collectors.toList());
 
 
@@ -99,9 +99,7 @@ public class Main {
         Integer l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
-        regnskap.forEach(p -> {
-            ControlFilbeskrivelse.doControl(p, er, l);
-        });
+        ControlFilbeskrivelse.doControl(regnskap, er);
 
         if (er.getErrorType() == Constants.CRITICAL_ERROR) {
             return er;

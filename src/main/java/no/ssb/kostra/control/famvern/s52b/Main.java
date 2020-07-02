@@ -97,277 +97,297 @@ public class Main {
                     ));
         }
 
-        records.stream()
-                .peek(r ->
-                        ControlFelt1Lengde.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 7 Gruppenavn"
-                                        , "Dette er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "GRUPPE_NAVN_B"
-                        )
-                )
-                .peek(r -> ControlFelt1Dato.doControl(
-                        r
-                        , er
-                        , new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_B")
-                                , r.getFieldAsString("GRUPPE_NR_B")
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 8 Start dato"
-                                , "Dette er ikke oppgitt dato for gruppebehandlingens start, eller feltet har ugyldig format."
-                                , Constants.NORMAL_ERROR
-                        )
-                        , "DATO_GRSTART_B"
-                ))
-                .peek(r ->
-                        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 9 Målgruppe"
-                                        , "Det er ikke fylt ut hva som er målgruppe for behandlingen."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "STRUKTUR_GR_B"
-                                , r.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 10 Gruppens hovedtema"
-                                        , "Det er ikke fylt ut hva som er hovedtema for gruppen."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "HOVEDI_GR_B"
-                                , r.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 11 Antall gruppemøter gjennomført totalt i løpet av året"
-                                        , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt i løpet av rapporteringsåret."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "ANTMOTERTOT_IARET_B"
-                                , ">"
-                                , 0
 
-                        )
-                )
+        records.forEach(r -> {
+            ControlFelt1Lengde.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 7 Gruppenavn"
+                            , "Dette er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "GRUPPE_NAVN_B"
+            );
 
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
-                                        , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "ANTMOTERTOT_OPPR_B"
-                                , ">"
-                                , 0
+            ControlFelt1Dato.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 8 Start dato"
+                            , "Dette er ikke oppgitt dato for gruppebehandlingens start, eller feltet har ugyldig format."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "DATO_GRSTART_B"
+            );
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 13 Antall timer anvendt i gruppen totalt i løpet av året"
-                                        , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen i løpet av året. (For og etterarbeid skal ikke regnes med)."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "TIMERTOT_IARET_B"
-                                , ">"
-                                , 0
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 9 Målgruppe"
+                            , "Det er ikke fylt ut hva som er målgruppe for behandlingen."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "STRUKTUR_GR_B"
+                    , r.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+            );
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 14 Antall timer siden opprettelsen"
-                                        , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen siden opprettelsen "
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "TIMERTOT_OPPR_B"
-                                , ">"
-                                , 0
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 10 Gruppens hovedtema"
+                            , "Det er ikke fylt ut hva som er hovedtema for gruppen."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "HOVEDI_GR_B"
+                    , r.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+            );
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 15 Antall deltagere i gruppen i løpet av året"
-                                        , "Det er ikke fylt ut hvor mange som har deltatt i gruppen i løpet av året. Terapeuter holdes utenom."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "ANTDELT_IARET_B"
-                                , ">"
-                                , 0
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 11 Antall gruppemøter gjennomført totalt i løpet av året"
+                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt i løpet av rapporteringsåret."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTMOTERTOT_IARET_B"
+                    , ">"
+                    , 0
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 16 Antall deltagere i gruppen siden opprettelsen"
-                                        , "Det er ikke fylt ut hvor mange som har deltatt i gruppen siden opprettelsen. Terapeuter holdes utenom"
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "ANTDELT_OPPR_B"
-                                , ">"
-                                , 0
+            );
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1Boolsk.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 17 Antall terapeuter involvert i gruppebehandlingen"
-                                        , "Det er ikke oppgitt hvor mange hovedterapeut eller andre ansatte som har deltatt i gruppen."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "ANTTER_GRUPPEB_B"
-                                , ">"
-                                , 0
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
+                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTMOTERTOT_OPPR_B"
+                    , ">"
+                    , 0
 
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 18 Er det benyttet tolk i minst én gruppesamtale?"
-                                        , "Kontroller at feltet er utfylt og ikke inneholder andre verdier enn de gyldige 1 til 2."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "TOLK_B"
-                                , r.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 19 Status ved året slutt"
-                                        , "Det er ikke fylt ut hva som er gruppens status ved utgangen av året."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "STATUS_ARETSSL_B"
-                                , r.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 20 Gruppebehandlingen er avsluttet, men avslutningsdato mangler"
-                                        , "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, men ikke fylt ut dato for avslutning av saken."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "STATUS_ARETSSL_B"
-                                , List.of("2")
-                                , "DATO_GRAVSLUTN_B"
-                        )
-                )
-                .peek(r ->
-                        ControlFelt1DatoSaaFelt2Dato.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_B")
-                                        , r.getFieldAsString("GRUPPE_NR_B")
-                                        , String.valueOf(r.getLine())
-                                        , " "
-                                        , "Kontroll 21 Avslutningsdato før første samtale"
-                                        , "Dato for avslutting av gruppebehandlingen kommer før dato for gruppebehandlingens start."
-                                        , Constants.NORMAL_ERROR
-                                )
-                                , "DATO_GRSTART_B"
-                                , "DATO_GRAVSLUTN_B"
-                        )
-                )
+            );
 
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
+                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTMOTERTOT_OPPR_B"
+                    , ">"
+                    , 0
 
-                .close();
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
+                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTMOTERTOT_OPPR_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 13 Antall timer anvendt i gruppen totalt i løpet av året"
+                            , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen i løpet av året. (For og etterarbeid skal ikke regnes med)."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "TIMERTOT_IARET_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 14 Antall timer siden opprettelsen"
+                            , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen siden opprettelsen "
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "TIMERTOT_OPPR_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 15 Antall deltagere i gruppen i løpet av året"
+                            , "Det er ikke fylt ut hvor mange som har deltatt i gruppen i løpet av året. Terapeuter holdes utenom."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTDELT_IARET_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 16 Antall deltagere i gruppen siden opprettelsen"
+                            , "Det er ikke fylt ut hvor mange som har deltatt i gruppen siden opprettelsen. Terapeuter holdes utenom"
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTDELT_OPPR_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1Boolsk.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 17 Antall terapeuter involvert i gruppebehandlingen"
+                            , "Det er ikke oppgitt hvor mange hovedterapeut eller andre ansatte som har deltatt i gruppen."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "ANTTER_GRUPPEB_B"
+                    , ">"
+                    , 0
+
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 18 Er det benyttet tolk i minst én gruppesamtale?"
+                            , "Kontroller at feltet er utfylt og ikke inneholder andre verdier enn de gyldige 1 til 2."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "TOLK_B"
+                    , r.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+            );
+
+            ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 19 Status ved året slutt"
+                            , "Det er ikke fylt ut hva som er gruppens status ved utgangen av året."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "STATUS_ARETSSL_B"
+                    , r.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+            );
+
+            ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 20 Gruppebehandlingen er avsluttet, men avslutningsdato mangler"
+                            , "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, men ikke fylt ut dato for avslutning av saken."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "STATUS_ARETSSL_B"
+                    , List.of("2")
+                    , "DATO_GRAVSLUTN_B"
+            );
+
+            ControlFelt1DatoSaaFelt2Dato.doControl(
+                    r
+                    , er
+                    , new ErrorReportEntry(
+                            r.getFieldAsString("KONTOR_NR_B")
+                            , r.getFieldAsString("GRUPPE_NR_B")
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 21 Avslutningsdato før første samtale"
+                            , "Dato for avslutting av gruppebehandlingen kommer før dato for gruppebehandlingens start."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , "DATO_GRSTART_B"
+                    , "DATO_GRAVSLUTN_B"
+            );
+        });
 
         return er;
     }

@@ -9,6 +9,8 @@ import no.ssb.kostra.utils.Toolkit;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -35,9 +37,9 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
 
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
-        }
+//        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+//            return er;
+//        }
 
 
         records.stream()
@@ -100,7 +102,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 04 Årgang"
+                                    , "Kontroll 04 Oppgaveår"
                                     , "Korrigér årgang. Forventet '"
                                     + args.getAargang().substring(0, 2)
                                     + "', men fant '"
@@ -160,7 +162,7 @@ public class Main {
                                     , Constants.NORMAL_ERROR
                             )
                             , "ALDER"
-                            , "<="
+                            , "<"
                             , 96
                     );
 
@@ -233,7 +235,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
-                                    , "Deltakeren har barn under 18 år, som deltakeren " + lf +
+                                    , "Deltakeren har " + r.getFieldAsInteger("ANTBU18") + " barn under 18 år, som deltakeren " + lf +
                                     "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
                                     "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
                                     "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
@@ -243,7 +245,7 @@ public class Main {
                             , "BU18"
                             , List.of("1")
                             , "ANTBU18"
-                            , "<"
+                            , ">"
                             , 0
                     );
 
@@ -256,14 +258,14 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 12 Det bor barn under 18 år i husholdningen."
-                                    , "Det er oppgitt antall barn under 18 år som bor i husholdningen som "
+                                    , "Det er oppgitt " + r.getFieldAsInteger("ANTBU18") + " barn under 18 år som bor i husholdningen som "
                                     + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
                                     + "oppgitt at det bor barn i husholdningen. "
                                     + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "ANTBU18"
-                            , "<"
+                            , "=="
                             , 0
                             , "BU18"
                             , List.of("1")
@@ -280,11 +282,11 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 13 Mange barn under 18 år i husholdningen."
-                                    , "Antall barn under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                                    , "Antall barn (" + r.getFieldAsInteger("ANTBU18") + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                                     , Constants.NORMAL_ERROR
                             )
                             , "ANTBU18"
-                            , ">="
+                            , "<"
                             , 10
                     );
 
@@ -323,7 +325,7 @@ public class Main {
                             , "VKLO"
                             , List.of("1")
                             , "ARBSIT"
-                            , List.of("1", "2")
+                            , List.of("01", "02")
                     );
 
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -432,11 +434,11 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 22 Tilknytning til trygdesystemet og alder. 60 år eller yngre med alderspensjon."
-                                    , "Mottakeren er 60 år eller yngre og mottar alderspensjon."
+                                    , "Mottakeren (" + r.getFieldAsInteger("ALDER") + " år) er 60 år eller yngre og mottar alderspensjon."
                                     , Constants.NORMAL_ERROR
                             )
                             , "ALDER"
-                            , "<="
+                            , ">"
                             , Definitions.getAgeLimit()
                             , "TRYGDESIT"
                             , r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::getCode).filter(s -> !s.equalsIgnoreCase("07")).collect(Collectors.toList())
@@ -458,23 +460,41 @@ public class Main {
                                 )
                         );
                     }
-                    ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                            r
-                            , er
-                            , new ErrorReportEntry(
-                                    r.getFieldAsString("SAKSBEHANDLER")
-                                    , r.getFieldAsString("PERSON_JOURNALNR")
-                                    , r.getFieldAsString("PERSON_FODSELSNR")
-                                    , " "
-                                    , "Kontroll 24 Tilknytning til trygdesystemet og arbeidssituasjon. Uføretrygd/alderspensjon og ikke arbeidssøker."
-                                    , "Mottakeren mottar trygd, men det er ikke oppgitt Ikke arbeidssøker på arbeidssituasjon."
-                                    , Constants.CRITICAL_ERROR
-                            )
-                            , "TRYGDESIT"
-                            , List.of("04", "07")
-                            , "ARBSIT"
-                            , r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).filter(c -> !c.equalsIgnoreCase("04")).collect(Collectors.toList())
-                    );
+
+                    {
+                        List<Code> trygdeSituasjon = r.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(r.getFieldAsString("TRYGDESIT"))).collect(Collectors.toList());
+                        Code t = new Code("Uoppgitt", "Uoppgitt");
+
+                        if (!trygdeSituasjon.isEmpty()){
+                            t = trygdeSituasjon.get(0);
+                        }
+
+                        List<Code> arbeidSituasjon = r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(r.getFieldAsString("ARBSIT"))).collect(Collectors.toList());
+                        Code a = new Code("Uoppgitt", "Uoppgitt");
+
+                        if (!arbeidSituasjon.isEmpty()){
+                            a = arbeidSituasjon.get(0);
+                        }
+
+
+                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                                r
+                                , er
+                                , new ErrorReportEntry(
+                                        r.getFieldAsString("SAKSBEHANDLER")
+                                        , r.getFieldAsString("PERSON_JOURNALNR")
+                                        , r.getFieldAsString("PERSON_FODSELSNR")
+                                        , " "
+                                        , "Kontroll 24 Tilknytning til trygdesystemet og arbeidssituasjon. Uføretrygd/alderspensjon og ikke arbeidssøker."
+                                        , "Mottakeren mottar trygd (" + t + "), men det er ikke oppgitt Ikke arbeidssøker på arbeidssituasjon (" + a + ")."
+                                        , Constants.CRITICAL_ERROR
+                                )
+                                , "TRYGDESIT"
+                                , List.of("04", "07")
+                                , "ARBSIT"
+                                , r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).filter(c -> c.equalsIgnoreCase("04")).collect(Collectors.toList())
+                        );
+                    }
 
                     if (r.getFieldAsString("VKLO").equalsIgnoreCase("3")
                             && r.getFieldAsString("TRYGDESIT").equalsIgnoreCase("11")
@@ -511,7 +531,7 @@ public class Main {
 
                     {
                         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
-                        boolean isAnyFilledIn = fields.stream()
+                        boolean harVarighet = fields.stream()
                                 .anyMatch(field -> r.getFieldDefinitionByName(field)
                                         .getCodeList()
                                         .stream()
@@ -542,7 +562,7 @@ public class Main {
                         int stonadSumMax = 500000;
                         int stonadSumMin = 50;
 
-                        if (!isAnyFilledIn) {
+                        if (!harVarighet) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -572,8 +592,8 @@ public class Main {
                             );
                         }
 
-                        if (isAnyFilledIn) {
-                            if (stonadOK && 0 < stonad) {
+                        if (harVarighet) {
+                            if (!stonadOK) {
                                 er.addEntry(
                                         new ErrorReportEntry(
                                                 r.getFieldAsString("SAKSBEHANDLER")
@@ -590,7 +610,7 @@ public class Main {
                         }
 
                         if (stonadOK && 0 < stonad) {
-                            if (!isAnyFilledIn) {
+                            if (!harVarighet) {
                                 er.addEntry(
                                         new ErrorReportEntry(
                                                 r.getFieldAsString("SAKSBEHANDLER")

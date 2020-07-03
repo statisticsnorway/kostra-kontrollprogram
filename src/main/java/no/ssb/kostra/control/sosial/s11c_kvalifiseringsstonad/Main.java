@@ -36,9 +36,9 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
 
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
-        }
+//        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+//            return er;
+//        }
 
         records.stream()
                 // utled ALDER

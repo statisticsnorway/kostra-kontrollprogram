@@ -9,7 +9,7 @@ public class ControlFelt1Boolsk {
         boolean hasErrors = false;
         Integer recordValue = r.getFieldAsInteger(field1);
 
-        if (recordValue != null) {
+        if (recordValue != null && !operator1.isEmpty() && value1 != null) {
             int rv = recordValue;
             int v = value1;
 
@@ -27,6 +27,9 @@ public class ControlFelt1Boolsk {
 
             } else if (operator1.equalsIgnoreCase("==")) {
                 hasErrors = !(rv == v);
+
+            } else if (operator1.equalsIgnoreCase("!=")) {
+                hasErrors = rv == v;
             }
 
             if (hasErrors) {

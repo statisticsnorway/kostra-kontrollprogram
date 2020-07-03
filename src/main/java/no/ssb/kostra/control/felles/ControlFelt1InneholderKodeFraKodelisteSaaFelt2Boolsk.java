@@ -25,6 +25,9 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk {
 
             } else if (operator2.equalsIgnoreCase("==")) {
                 hasErrors = !(r.getFieldAsInteger(field2).intValue() == value2);
+
+            } else if (operator2.equalsIgnoreCase("!=")) {
+                hasErrors = r.getFieldAsInteger(field2).intValue() == value2;
             }
 
             if (hasErrors) {

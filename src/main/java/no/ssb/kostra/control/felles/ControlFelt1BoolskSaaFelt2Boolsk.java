@@ -26,7 +26,7 @@ public class ControlFelt1BoolskSaaFelt2Boolsk {
             }
         }
         if (!hasErrors){
-            if (r.getFieldAsInteger(field1) != null) {
+            if (r.getFieldAsInteger(field2) != null) {
                 if (operator2.equalsIgnoreCase("<")) {
                     hasErrors = !(r.getFieldAsInteger(field2) < value2);
 

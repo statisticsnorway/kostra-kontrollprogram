@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class MainITest {
-
     InputStream sysInBackup;
     private Arguments args;
     private ErrorReport er;
@@ -27,9 +26,11 @@ public class MainITest {
 
     @Before
     public void beforeTest() {
-        //                  00000000011111111112222222222333333333344444444445555555555666666666677777777778888888
-        //                  12345678901234567890123456789012345678901234567890123456789012345678901234567890123456
-        inputFileContent = "667600017000011aaabbb                        01022020203003005012015010013022209022020\n" +
+        inputFileContent =
+        //@formatter:off
+                //0000000011111111112222222222333333333344444444445555555555666666666677777777778888888
+                //2345678901234567890123456789012345678901234567890123456789012345678901234567890123456
+                "667600017000011aaabbb                        01022020203003005012015010013022209022020\n" +
                 "667600017000012aaabbb                        01022020203003005012015010013022209022020\n" +
                 "667600017000013aaabbb                        01022020203003005012015010013022209022020\n" +
                 "667600017000014aaabbb                        01022020203003005012015010013022209022020\n" +
@@ -53,6 +54,8 @@ public class MainITest {
                 "667600017000031aaabbb                        01022020203003005012015010013022201012020\n" +
                 "667600017000032aaabbb                        01022020203003005012015010013022209022020\n" +
                 "667600017000033aaabbbæøå                     01022020203003005012015010013022209022020\n";
+
+        //@formatter:on
 
         sysInBackup = System.in; // backup System.in to restore it later
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));

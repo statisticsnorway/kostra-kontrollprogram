@@ -160,12 +160,12 @@ public class Main {
                     , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                             , "Kontroll Kontoklasse."
                             , "Korreksjon: Rett kontoklassen. Fant '" + p.getFieldAsString("kontoklasse") + "', forventet én av :  "
-                            + Definitions.getKontoklasseAsList(p.getFieldAsString("skjema"))
+                            + Definitions.getKontoklasseAsList(args.getSkjema())
                             .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                             , Constants.CRITICAL_ERROR
                     )
                     , "kontoklasse"
-                    , Definitions.getKontoklasseAsList(p.getFieldAsString("skjema"))
+                    , Definitions.getKontoklasseAsList(args.getSkjema())
             );
 
             if (bevilgningRegnskapList.contains(args.getSkjema())) {
@@ -175,12 +175,12 @@ public class Main {
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Funksjon."
                                 , "Korrigér funksjon. Fant '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "', forventet én av :  "
-                                + Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                + Definitions.getFunksjonKapittelAsList(args.getSkjema(), p.getFieldAsString("region"))
                                 .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "funksjon_kapittel"
-                        , Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                        , Definitions.getFunksjonKapittelAsList(args.getSkjema(), p.getFieldAsString("region"))
                 );
 
                 ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -189,12 +189,12 @@ public class Main {
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Art."
                                 , "Korrigér art. Fant '" + p.getFieldAsString("art_sektor") + "', forventet én av : "
-                                + Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                + Definitions.getArtSektorAsList(args.getSkjema(), p.getFieldAsString("region"))
                                 .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
-                        , Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                        , Definitions.getArtSektorAsList(args.getSkjema(), p.getFieldAsString("region"))
                 );
             }
 
@@ -205,12 +205,12 @@ public class Main {
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll kapittel."
                                 , "Korrigér kapittel. Fant '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "', forventet én av : "
-                                + Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                + Definitions.getFunksjonKapittelAsList(args.getSkjema(), p.getFieldAsString("region"))
                                 .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "funksjon_kapittel"
-                        , Definitions.getFunksjonKapittelAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                        , Definitions.getFunksjonKapittelAsList(args.getSkjema(), p.getFieldAsString("region"))
                 );
 
                 ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -219,12 +219,12 @@ public class Main {
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll sektor."
                                 , "Korrigér sektor. Fant '" + p.getFieldAsString("art_sektor") + "', forventet én av : "
-                                + Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                                + Definitions.getArtSektorAsList(args.getSkjema(), p.getFieldAsString("region"))
                                 .stream().map(String::trim).map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
                                 , Constants.CRITICAL_ERROR
                         )
                         , "art_sektor"
-                        , Definitions.getArtSektorAsList(p.getFieldAsString("skjema"), p.getFieldAsString("region"))
+                        , Definitions.getArtSektorAsList(args.getSkjema(), p.getFieldAsString("region"))
                 );
             }
 
@@ -255,7 +255,7 @@ public class Main {
                         , "art_sektor"
                         , List.of("512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970")
                         , "kontoklasse"
-                        , List.of(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I")));
+                        , List.of(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I")));
 
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                         p
@@ -268,7 +268,7 @@ public class Main {
                         , "art_sektor"
                         , List.of("240", "509", "540", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990")
                         , "kontoklasse"
-                        , List.of(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D")));
+                        , List.of(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D")));
 
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                         p
@@ -282,7 +282,7 @@ public class Main {
                         , "funksjon_kapittel"
                         , List.of("841 ")
                         , "kontoklasse"
-                        , List.of(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I")));
+                        , List.of(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I")));
 
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                         p
@@ -295,9 +295,9 @@ public class Main {
                         , "funksjon_kapittel"
                         , List.of("800 ", "840 ", "860 ")
                         , "kontoklasse"
-                        , List.of(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D")));
+                        , List.of(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D")));
 
-                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))) {
+                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                             p
                             , er
@@ -348,7 +348,7 @@ public class Main {
             }
 
             if (Arrays.asList("0A", "0M").contains(args.getSkjema())) {
-                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))) {
+                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                             p
                             , er
@@ -399,7 +399,7 @@ public class Main {
             if (!osloBydeler.contains(args.getRegion())) {
                 // 1) Investeringsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
                 int sumInvesteringsUtgifter = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
                                 && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 10, 590))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -417,7 +417,7 @@ public class Main {
 
                 // 2) Investeringsregnskapet må ha inntekter, dvs. være mindre enn 0
                 int sumInvesteringsInntekter = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
                                 && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 600, 990))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -449,7 +449,7 @@ public class Main {
 
                 // 4) Driftsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
                 int sumDriftsUtgifter = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 10, 590))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -465,7 +465,7 @@ public class Main {
 
                 // 5) Driftsregnskapet må ha inntektsføringer, dvs. være mindre enn 0
                 int sumDriftsInntekter = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 600, 990))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -500,7 +500,7 @@ public class Main {
         if (balanseRegnskapList.contains(args.getSkjema())) {
             // 1) Balanse må ha føring på aktiva, dvs. være høyere enn 0
             int sumAktiva = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
                             && Between.betweenInclusive(p.getFieldAsInteger("funksjon_kapittel"), 10, 27))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
@@ -516,7 +516,7 @@ public class Main {
 
             // 2) Balanse må ha føring på passiva, dvs. være mindre enn 0
             int sumPassiva = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
                             && Between.betweenInclusive(p.getFieldAsInteger("funksjon_kapittel"), 31, 5990))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
@@ -554,7 +554,7 @@ public class Main {
             if (!osloBydeler.contains(args.getRegion()) && !svalbard.contains(args.getRegion())) {
                 // 1) Driftsregnskapet skal ha skatteinntekter; Kontoklasse D, Funksjon 800, art 870 < 0)
                 int sumSkatteInntekter = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("800")
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("870"))
                         .map(p -> p.getFieldAsInteger("belop"))
@@ -571,7 +571,7 @@ public class Main {
 
                 // 2) Skatteinntekter skal føres på funksjon 800. Ingen andre funksjoner skal være gyldig i kombinasjon med art 870.
                 int sumSkatteInntekterAndreFunksjoner = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("870")
                                 && !p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("800"))
                         .map(p -> p.getFieldAsInteger("belop"))
@@ -589,7 +589,7 @@ public class Main {
 
                 // 3) Rammetilskudd skal føres på funksjon 840. Ingen andre funksjoner skal være gyldig i kombinasjon med art 800.
                 int funksjon800art840Andre = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("800")
                                 && !p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("840"))
                         .map(p -> p.getFieldAsInteger("belop"))
@@ -613,13 +613,13 @@ public class Main {
         if (bevilgningRegnskapList.contains(args.getSkjema())) {
             if (!osloBydeler.contains(args.getRegion())) {
                 int driftsoverforinger = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("570"))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
 
                 int investeringsoverforinger = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("970"))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -651,7 +651,7 @@ public class Main {
             if (!osloBydeler.contains(args.getRegion()) && !exceptionsOrgnr.contains(args.getOrgnr())) {
                 // 1) Funksjon D.860, art 990 ≠ 0
                 int funksjon860art990 = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("860")
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("990")
                         )
@@ -669,7 +669,7 @@ public class Main {
 
                 // 2) Art 590 for sum funksjoner D.100-D.899 + art 990 for funksjon D.860 = < 30 og > - 30. Differanser opptil +-30' godtas, og skal ikke utlistes.
                 int sumArt590 = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("590"))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -687,7 +687,7 @@ public class Main {
 
                 // 3) Funksjon D.800..D.899, art 590 = 0
                 int sumFunksjon8XXArt590 = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("590")
                                 && Between.betweenInclusive(p.getFieldAsInteger("funksjon_kapittel"), 800, 899)
                         )
@@ -705,7 +705,7 @@ public class Main {
 
                 // 4) Sum funksjoner (D.100..D.850)+(D.870..D.899), art 990 = 0
                 int motpostAvskrivninger = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("990")
                                 && !p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("860")
                         )
@@ -731,7 +731,7 @@ public class Main {
             if (!osloBydeler.contains(args.getRegion())) {
                 // 1) Funksjon I.290 for sum artene 010-590 + funksjon I.290 for sum artene 600-990  = < 30 og > - 30. Differanser opptil +30' godtas, og skal ikke utlistes.
                 int funksjon290Investering = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
                                 && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("290"))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -747,7 +747,7 @@ public class Main {
 
                 // 2) Funksjon D.290 for sum artene 010-590 + funksjon D.290 for sum artene 600-990 = < 30 og > - 30. Differanser opptil +30' godtas, og skal ikke utlistes.
                 int funksjon290Drift = regnskap.stream()
-                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                        .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("290"))
                         .map(p -> p.getFieldAsInteger("belop"))
                         .reduce(0, Integer::sum);
@@ -769,7 +769,7 @@ public class Main {
         if (List.of("0C", "0P").contains(args.getSkjema())) {
             // 1) Funksjon I.465 for sum artene 010-590 + funksjon I.465 for sum artene 600-990  = < 30 og > - 30. Differanser opptil +30' godtas, og skal ikke utlistes.
             int funksjon465Investering = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
                             && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("465"))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
@@ -785,7 +785,7 @@ public class Main {
 
             // 2) Funksjon D.465 for sum artene 010-590 + funksjon D.465 for sum artene 600-990 = < 30 og > - 30. Differanser opptil +-30' godtas, og skal ikke utlistes.
             int funksjon465Drift = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                             && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("465"))
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
@@ -804,14 +804,14 @@ public class Main {
         //B = Balanseregnskap (kontoklasse 2 / 5)
         if (balanseRegnskapList.contains(args.getSkjema())) {
             int sumMemoriaKonti = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
                             && List.of("9100", "9110", "9200").contains(p.getFieldAsTrimmedString("funksjon_kapittel"))
                     )
                     .map(p -> p.getFieldAsInteger("belop"))
                     .reduce(0, Integer::sum);
 
             int sumMotkontoMemoriaKonti = regnskap.stream()
-                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
+                    .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
                             && List.of("9999").contains(p.getFieldAsTrimmedString("funksjon_kapittel"))
                     )
                     .map(p -> p.getFieldAsInteger("belop"))

@@ -197,8 +197,8 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 				<xs:documentation>Kode for konklusjon av meldingen: 
 1 = Henlagt 
 2 = Ikke henlagt – konklusjonsdato melding (eventuelt 7 dager etter mottatt melding) er startdato undersøkelse
-3 = Henlagt pga. aktiv tiltakssak
-4 = Melding i allerede pågående undersøkelsessak
+3 = Henlagt pga. aktive tiltak
+4 = Melding i pågående undersøkelse
 </xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>

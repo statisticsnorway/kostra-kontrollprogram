@@ -3,7 +3,7 @@ package no.ssb.kostra.control;
 public final class Constants {
     
     // Rapporteringsaar.
-    public static final String kostraYear = "2019";
+    public static final String kostraYear = "2020";
     public static final String kvartalKostraYear = "2020";
 
     // Linjeskift til bruk ved skriving av kontrollrapporter.
@@ -41,23 +41,6 @@ public final class Constants {
     // Feil antall eller type argumenter ved start av programmet.
     public static final int PARAMETER_ERROR = 254;
 
-    // F.eks. hvis kildefil ikke lar seg lese, eller rapportfil ikke 
-    // er skrivbar.
-    public static final int IO_ERROR = 255;   
-    
-    ////////////////////////////////////////////////////////////////////////////
-    //
-    // Tekstmeldinger.
-    //
-    ////////////////////////////////////////////////////////////////////////////
-    
-    public static final String CRITICAL_ERROR_TEXT_MSG = 
-        "********************************************************************************************************" + lineSeparator +
-        "*** NB! Kontrollen under er \"kritisk\", dvs. at forekomst av feil vil forhindre innsending til SSB. ***" + lineSeparator +
-        "********************************************************************************************************";
-
-    public static final String CRITICAL_ERROR_SHORT_TEXT_MSG = "\t*** NB! Denne feilen hindrer innsending! ***";
-    
     public static int getRapporteringsAar() {
       
       int aar;
@@ -86,4 +69,5 @@ public final class Constants {
       return aar;
     }
 
+    public static final boolean DEBUG = true;
 } // End class Constants.

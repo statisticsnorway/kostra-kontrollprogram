@@ -10,7 +10,6 @@
 package no.ssb.kostra.utils;
 
 import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.sensitiv.InvalidFnrException;
 
 import java.util.Calendar;
 
@@ -18,7 +17,7 @@ import java.util.Calendar;
  * @author pll
  */
 public final class Toolkit {
-    public static int getAlderFromFnr(String fnr) throws InvalidFnrException {
+    public static int getAlderFromFnr(String fnr) throws Exception {
 
         int alder;
 
@@ -33,7 +32,7 @@ public final class Toolkit {
     }
 
 
-    private static int getAlderFromInvalidFnr(String fnr) throws InvalidFnrException {
+    private static int getAlderFromInvalidFnr(String fnr) throws Exception {
 
         int fodselsAar, alder;
 
@@ -51,7 +50,7 @@ public final class Toolkit {
 
         } else {
 
-            throw new InvalidFnrException("Ugyldig datodel i fødselsnummer.");
+            throw new Exception("Ugyldig datodel i fødselsnummer.");
         }
 
         alder = Constants.getRapporteringsAar() - fodselsAar;
@@ -60,7 +59,7 @@ public final class Toolkit {
     }
 
 
-    private static int getAlderFromValidFnr(String fnr) throws InvalidFnrException {
+    private static int getAlderFromValidFnr(String fnr) throws Exception {
         int alder, fodselsAar;
         int individNr = Integer.parseInt(fnr.substring(6, 9));
         int fAar = Integer.parseInt(fnr.substring(4, 6));

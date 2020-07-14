@@ -1,6 +1,6 @@
 package no.ssb.kostra.control;
 
-public class ErrorReportEntry implements SingleRecordErrorReport {
+public class ErrorReportEntry {
 	String saksbehandler = "";
 	String journalnummer = "";
 	String individId = "";
@@ -11,14 +11,7 @@ public class ErrorReportEntry implements SingleRecordErrorReport {
 
 	public ErrorReportEntry() {
 	}
-/*
-	public ErrorReportEntry(String kontrollNr, int errorType, String errorText, String journalnummer) {
-		this.kontrollNr = kontrollNr;
-		this.errorType = errorType;
-		this.errorText = errorText;
-		this.journalnummer = journalnummer;
-	}
-*/
+
 	public ErrorReportEntry(
 			String saksbehandler,
 			String journalnummer,

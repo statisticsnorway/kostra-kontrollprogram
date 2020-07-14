@@ -1,4 +1,4 @@
-package no.ssb.kostra.test.control.utils;
+package no.ssb.kostra.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

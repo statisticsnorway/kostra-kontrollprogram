@@ -21,6 +21,7 @@ public class ErrorReport {
 	private Arguments args;
 	private String executiveOfficerHeader = "";
 	private String journalNumberHeader = "";
+	private final String CRITICAL_ERROR_SHORT_TEXT_MSG = " *** NB! Denne feilen hindrer innsending! ***";
 
 
 	public ErrorReport(){
@@ -50,7 +51,7 @@ public class ErrorReport {
 
 			// Hvis kontrollen hindrer innsending, legg til standardtekst slik dette vises også i oppsummeringen.
 			if (entry.getErrorType() == Constants.CRITICAL_ERROR) {
-				entry.setKontrollNr(entry.getKontrollNr().concat(Constants.CRITICAL_ERROR_SHORT_TEXT_MSG));
+				entry.setKontrollNr(entry.getKontrollNr().concat(CRITICAL_ERROR_SHORT_TEXT_MSG));
 			}
 
 			// Legg til entry'en i en liste for oppsummering

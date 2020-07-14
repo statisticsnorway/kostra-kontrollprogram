@@ -1,4 +1,4 @@
-package no.ssb.kostra.test.control.utils;
+package no.ssb.kostra.utils;
 
 
 import no.ssb.kostra.utils.OrgNrChecker;

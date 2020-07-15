@@ -100,17 +100,5 @@
             <version>4.13</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.java.dev.swing-layout/swing-layout -->
-        <dependency>
-            <groupId>net.java.dev.swing-layout</groupId>
-            <artifactId>swing-layout</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.10.5</version>
-        </dependency>
     </dependencies>
 </project>

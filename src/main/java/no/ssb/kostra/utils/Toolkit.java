@@ -11,8 +11,6 @@ package no.ssb.kostra.utils;
 
 import no.ssb.kostra.control.Constants;
 
-import java.util.Calendar;
-
 /**
  * @author pll
  */
@@ -82,40 +80,6 @@ public final class Toolkit {
         return alder;
     }
 
-
-    public static boolean isFirstDateBeforeLastDate_DDMMYYYY(String firstDate, String lastDate) throws Exception {
-        if (CompatJdk13.isNumerical(firstDate) && CompatJdk13.isNumerical(lastDate)) {
-            int checkValue = 0;
-            checkValue = DatoFnr.validDateDDMMYY(firstDate);
-            checkValue += DatoFnr.validDateDDMMYY(lastDate);
-            if (checkValue == 2) {
-                int year_firstDate = DatoFnr.findYearYYYY(Integer.parseInt(firstDate.substring(4)));
-                Calendar date_firstDate = Calendar.getInstance();
-                date_firstDate.set(year_firstDate,
-                        Integer.parseInt(firstDate.substring(2, 4)) - 1,
-                        Integer.parseInt(firstDate.substring(0, 2)));
-                int year_lastDate = DatoFnr.findYearYYYY(Integer.parseInt(lastDate.substring(4)));
-                Calendar date_lastDate = Calendar.getInstance();
-                date_lastDate.set(year_lastDate,
-                        Integer.parseInt(lastDate.substring(2, 4)) - 1,
-                        Integer.parseInt(lastDate.substring(0, 2)));
-                return date_firstDate.before(date_lastDate);
-            }
-        }
-
-        throw new Exception("Not valid DDMMYYYY date format.");
-    }
-
-
-    public static boolean isFirstDateBeforeLastDateOrEqual_DDMMYYYY(String firstDate, String lastDate) throws Exception {
-
-        if (firstDate.equalsIgnoreCase(lastDate))
-            // Sjekk av at dati har riktig format er ikke metodens ansvar.
-            return true;
-        else
-            return isFirstDateBeforeLastDate_DDMMYYYY(firstDate, lastDate);
-
-    }
 
 }
 

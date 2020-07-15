@@ -7,20 +7,12 @@ import no.ssb.kostra.utils.Toolkit;
 
 public class ControlAlderFraFodselsnummer {
     public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String fieldSSN1, String operator, int age1) {
-        boolean hasErrors = false;
+        boolean hasErrors;
 
         try {
             int age = Toolkit.getAlderFromFnr(p.getFieldAsString(fieldSSN1));
+            hasErrors = !Comparator.compareIntegerOperatorInteger(age, operator, age1);
 
-            if (operator.equalsIgnoreCase("<")) {
-                hasErrors = !(age < age1);
-
-            } else if (operator.equalsIgnoreCase(">")) {
-                hasErrors = !(age > age1);
-
-            } else if (operator.equalsIgnoreCase("==")) {
-                hasErrors = !(age == age1);
-            }
         } catch (Exception e) {
             hasErrors = true;
         }

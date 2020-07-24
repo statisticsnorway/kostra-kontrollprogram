@@ -1,10 +1,28 @@
 package no.ssb.kostra.control.regnskap.helseforetak;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Definitions {
-    public static List<String> getFunksjonAsList(String skjema) {
+    public static Map<String, String> getKontoklasseAsMap(String skjema) {
+        switch (skjema) {
+            case "0X":
+                return Map.of("R", " ");
+
+            case "0Y":
+                return Map.of("B", " ");
+
+            default:
+                return Map.of();
+        }
+    }
+
+    public static List<String> getKontoklasseAsList(String skjema) {
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
+    }
+
+    public static List<String> getFunksjonKapittelAsList(String skjema) {
         switch (skjema) {
             case "0X":
                 // Funksjoner
@@ -21,7 +39,7 @@ public class Definitions {
         return List.of();
     }
 
-    public static List<String> getKontokodeAsList(String skjema) {
+    public static List<String> getArtSektorAsList(String skjema) {
         switch (skjema) {
             case "0X":
                 // Arter / kontokoder

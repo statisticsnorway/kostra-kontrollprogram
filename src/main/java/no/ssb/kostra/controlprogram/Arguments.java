@@ -122,7 +122,10 @@ public class Arguments {
                 String line;
 
                 while ((line = reader.readLine()) != null) {
-                    inputFileContent.add(line);
+                    // utelater tomme linjer
+                    if (line.trim().length() != 0) {
+                        inputFileContent.add(line);
+                    }
                 }
 
             } catch (IOException e) {

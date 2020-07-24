@@ -1,74 +1,44 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
-import java.util.*;
+import no.ssb.kostra.control.felles.Comparator;
+import no.ssb.kostra.control.felles.Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Definitions {
     public static Map<String, String> getKontoklasseAsMap(String skjema) {
-        if (List.of("0A", "0C").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return Map.of("D", "1", "I", "0");
+        switch (skjema) {
+            case "0A":
+            case "0C":
+                return Map.of("D", "1", "I", "0");
 
-        } else if (List.of("0B", "0D").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return Map.of("B", "2");
+            case "0B":
+            case "0D":
+                return Map.of("B", "2");
 
-        } else if (List.of("0I", "0K", "0M", "0P").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return Map.of("D", "3", "I", "4");
+            case "0I":
+            case "0K":
+            case "0M":
+            case "0P":
+                return Map.of("D", "3", "I", "4");
 
-        } else if (List.of("0J", "0L", "0N", "0Q").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return Map.of("B", "5");
+            case "0J":
+            case "0L":
+            case "0N":
+            case "0Q":
+                return Map.of("B", "5");
 
-        } else {
-            return Map.of();
+            default:
+                return Map.of("R", " ");
         }
-
-
-
-
-
-
-//        switch (skjema) {
-//            case "0A":
-//            case "0C":
-//                return Map.of("D", "1", "I", "0");
-//
-//            case "0B":
-//            case "0D":
-//                return Map.of("B", "2");
-//
-//            case "0I":
-//            case "0K":
-//            case "0M":
-//            case "0P":
-//                return Map.of("D", "3", "I", "4");
-//
-//            case "0J":
-//            case "0L":
-//            case "0N":
-//            case "0Q":
-//                return Map.of("B", "5");
-//
-//            default:
-//                return Map.of("R", " ");
-//        }
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        if (List.of("0A", "0C").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return List.of("1", "0");
-
-        } else if (List.of("0B", "0D").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return List.of("2");
-
-        } else if (List.of("0I", "0K", "0M", "0P").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return List.of("3", "4");
-
-        } else if (List.of("0J", "0L", "0N", "0Q").stream().anyMatch(s -> s.equalsIgnoreCase(skjema))){
-            return List.of("5");
-
-        } else {
-            return List.of();
-        }
-        //return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -123,19 +93,12 @@ public class Definitions {
             // Funksjoner
             case "0A":
             case "0M":
-                switch (region) {
-                    case "030100":
-                        result.addAll(osloFunksjoner);
-                        result.addAll(fylkeskommunaleFunksjoner);
-                        result.addAll(kommunaleFunkjoner);
-                        result.addAll(finansielleFunksjoner);
-                        break;
-
-                    default:
-                        result.addAll(kommunaleFunkjoner);
-                        result.addAll(finansielleFunksjoner);
-                        break;
+                if ("030100".equals(region)) {
+                    result.addAll(osloFunksjoner);
+                    result.addAll(fylkeskommunaleFunksjoner);
                 }
+                result.addAll(kommunaleFunkjoner);
+                result.addAll(finansielleFunksjoner);
                 break;
 
             case "0C":
@@ -171,10 +134,7 @@ public class Definitions {
 
         }
 
-        return result.stream()
-                // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
-                .map(c -> String.format("%1$-4s", c))
-                .collect(Collectors.toList());
+        return Utils.rpadList(result.stream().sorted().collect(Collectors.toList()), 4);
     }
 
     public static List<String> getArtSektorAsList(String skjema, String region) {
@@ -219,18 +179,18 @@ public class Definitions {
 
         List<String> result = new ArrayList<>();
 
-        if (Arrays.asList("0A", "0C", "0I", "0K", "0M", "0P").contains(skjema)){
+        if (Arrays.asList("0A", "0C", "0I", "0K", "0M", "0P").contains(skjema)) {
             result.addAll(basisArter);
 
-            if (Arrays.asList("0A", "0C", "0M", "0P").contains(skjema)){
+            if (Arrays.asList("0A", "0C", "0M", "0P").contains(skjema)) {
                 result.addAll(kommunaleArter);
             }
 
-            if (Arrays.asList("0A", "0C", "0I", "0K").contains(skjema)){
+            if (Arrays.asList("0A", "0C", "0I", "0K").contains(skjema)) {
                 result.addAll(konserninterneArter);
             }
 
-            if (osloKommuner.contains(region)){
+            if (osloKommuner.contains(region)) {
                 result.addAll(osloArter);
             }
         }
@@ -240,6 +200,46 @@ public class Definitions {
         }
 
         return result;
+    }
+
+    public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {
+        List<String> alle = getFunksjonKapittelAsList(skjema, region);
+        // Kun gyldig i investering og skal fjernes fra drift
+        List<String> ugyldigDrift = List.of("841");
+        // Kun gyldig i drift og skal fjernes fra investering
+        List<String> ugyldigInvestering = List.of("800", "840", "860");
+
+        return Utils.rpadList(getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering).stream().sorted().collect(Collectors.toList()), 4);
+    }
+
+    public static List<String> getSpesifikkeArter(String skjema, String region, String kontoklasse) {
+        List<String> alle = getArtSektorAsList(skjema, region);
+        // Kun gyldig i investering og skal fjernes fra drift
+        List<String> ugyldigDrift = List.of("512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
+        // Kun gyldig i drift og skal fjernes fra investering
+        List<String> ugyldigInvestering = List.of("240", "509", "540", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990");
+
+        return getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering);
+    }
+
+    private static List<String> getList(String kontoklasse, List<String> alle, List<String> ugyldigDrift, List<String> ugyldigInvestering) {
+        switch (kontoklasse) {
+            // Drift
+            case "1":
+            case "3":
+                return alle.stream()
+                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .collect(Collectors.toList());
+            // Investering
+            case "0":
+            case "4":
+                return alle.stream()
+                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .collect(Collectors.toList());
+
+            default:
+                return List.of();
+        }
     }
 }
 

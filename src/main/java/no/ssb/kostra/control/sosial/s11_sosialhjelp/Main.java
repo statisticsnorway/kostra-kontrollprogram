@@ -63,10 +63,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 03 kommunenummer"
-                                    , "Korrigér kommunenummeret. Forventet '"
-                                    + args.getRegion().substring(0, 4)
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("KOMMUNE_NR") + "'."
+                                    , "Korrigér kommunenummeret. Fant '" + r.getFieldAsTrimmedString("KOMMUNE_NR") + "', "
+                                    + "forventet '" + args.getRegion().substring(0, 4) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KOMMUNE_NR"
@@ -83,10 +81,8 @@ public class Main {
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
                                         , "Kontroll 03 Bydelsnummer"
-                                        , "Korrigér bydel. Forventet én av  '"
-                                        + Definitions.getBydelerAsList()
-                                        + "', men fant '"
-                                        + r.getFieldAsTrimmedString("BYDELSNR") + "'."
+                                        , "Korrigér bydel. Fant '" + r.getFieldAsTrimmedString("BYDELSNR") + "', "
+                                        + "forventet én av '" + Definitions.getBydelerAsList() + "'."
                                         , Constants.CRITICAL_ERROR
                                 )
                                 , "BYDELSNR"
@@ -103,10 +99,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 04 Oppgaveår"
-                                    , "Korrigér årgang. Forventet '"
-                                    + args.getAargang().substring(0, 2)
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("VERSION") + "'."
+                                    , "Korrigér årgang. Fant '" + r.getFieldAsTrimmedString("VERSION") + "', "
+                                    + "forventet '" + args.getAargang().substring(0, 2) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VERSION"
@@ -122,11 +116,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 05 Fødselsnummer"
-                                    , "Det er ikke oppgitt fødselsnummer/d-nummer på "
-                                    + "deltakeren" + lf + "\teller fødselsnummeret/d-nummeret inneholder" +
-                                    " feil." + lf + "\tMed mindre det er snakk om en utenlandsk " +
-                                    "statsborger som ikke er" + lf + "\ttildelt norsk personnummer eller d-nummer, " +
-                                    "skal feltet inneholde" + lf + "\tdeltakeren fødselsnummer/d-nummer (11 siffer)."
+                                    , "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret inneholder feil. "
+                                    + "Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt norsk personnummer eller d-nummer, "
+                                    + "skal feltet inneholde deltakeren fødselsnummer/d-nummer (11 siffer)."
                                     , Constants.NORMAL_ERROR
                             )
                             , "PERSON_FODSELSNR"
@@ -175,10 +167,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 08 Kjønn"
-                                    , "Korrigér kjønn. Forventet én av  '"
-                                    + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("KJONN") + "'."
+                                    , "Korrigér kjønn. Fant '" + r.getFieldAsTrimmedString("KJONN") + "', "
+                                    + "forventet én av '" + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Mottakerens kjønn er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KJONN"
@@ -194,11 +185,10 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 09 Sivilstand"
-                                    , "Korrigér sivilstand. Forventet én av  '"
-                                    + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("EKTSTAT") + "'."
-                                    , Constants.NORMAL_ERROR
+                                    , "Korrigér sivilstand. Fant '" + r.getFieldAsTrimmedString("EKTSTAT") + "', "
+                                    + "forventet én av '" + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Mottakerens sivilstand/sivilstatus ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                                    , Constants.CRITICAL_ERROR
                             )
                             , "EKTSTAT"
                             , r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
@@ -213,13 +203,11 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
-                                    , "Det er ikke krysset av for om deltakeren har barn under 18 år, " + lf +
-                                    "som deltakeren (eventuelt ektefelle/samboer) har \n" +
-                                    "forsørgerplikt for," + lf + "\tog som bor i husholdningen ved\n" +
-                                    "siste kontakt. Feltet er obligatorisk å fylle ut."
-                                    + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant "
-                                    + r.getFieldAsTrimmedString("BU18")
+                                    , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsTrimmedString("BU18") + "', "
+                                    + "forventet én av " + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Det er ikke krysset av for om deltakeren har barn under 18 år, "
+                                    + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
+
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BU18"
@@ -235,11 +223,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
-                                    , "Deltakeren har " + r.getFieldAsInteger("ANTBU18") + " barn under 18 år, som deltakeren " + lf +
-                                    "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
-                                    "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
-                                    "ikke oppgitt hvor mange barn som bor i husholdningen. " + lf +
-                                    "\tFeltet er obligatorisk å fylle ut."
+                                    , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
+                                    + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsInteger("ANTBU18") + ")' som bor i husholdningen. "
+                                    + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BU18"
@@ -265,7 +251,7 @@ public class Main {
                                     , Constants.CRITICAL_ERROR
                             )
                             , "ANTBU18"
-                            , "=="
+                            , ">"
                             , 0
                             , "BU18"
                             , List.of("1")
@@ -286,7 +272,7 @@ public class Main {
                                     , Constants.NORMAL_ERROR
                             )
                             , "ANTBU18"
-                            , "<"
+                            , "<="
                             , 10
                     );
 
@@ -299,10 +285,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 14 Viktigste kilde til livsopphold. Gyldige verdier"
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Rett feltet til en av de gyldige kodene: "
-                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("VKLO") + "'."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Fant '" + r.getFieldAsTrimmedString("VKLO") + ", forventet én av '"
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VKLO"
@@ -317,9 +301,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 15 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Arbeidsinntekt."
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er arbeidsinntekt, "
-                                    + "men arbeidssituasjonen er ikke arbeid heltid/deltid. Feltet er obligatorisk å fylle ut"
+                                    , "Kontroll 15 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("01", "02"))).map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "VKLO"
@@ -336,10 +324,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 16 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Kursstønad/lønn i arbeidsmarkedstiltak."
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er Kursstønad/lønn i arbeidsmarkedstiltak, "
-                                    + "men arbeidssituasjonen er ikke Under utdanning, På arbeidsmarkedstiltak (statlig), Kommunal tiltaksplass, "
-                                    + "Kurs gjennom Introduksjonsordning eller Kvalifiseringsprogram. Feltet er obligatorisk å fylle ut."
+                                    , "Kontroll 16 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("2"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("2"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("03", "05", "06", "09", "10"))).map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "VKLO"
@@ -356,9 +347,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 17 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Stipend/lån."
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er Stipend/lån, "
-                                    + "men arbeidssituasjonen er ikke Under utdanning. Feltet er obligatorisk å fylle ut."
+                                    , "Kontroll 17 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("4"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("4"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("03"))).map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "VKLO"
@@ -375,9 +370,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 18 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Introduksjonsstøtte."
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er Introduksjonsstøtte, "
-                                    + "men arbeidssituasjonen er ikke Kurs gjennom introduksjonsordning. Feltet er obligatorisk å fylle ut."
+                                    , "Kontroll 18 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("6"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("6"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("09"))).map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "VKLO"
@@ -394,9 +393,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 19 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Kvalifiseringsstønad."
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er Kvalifiseringsstønad, "
-                                    + "men arbeidssituasjonen er ikke Kvalifiseringsprogram. Feltet er obligatorisk å fylle ut."
+                                    , "Kontroll 19 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("8"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("8"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("10"))).map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "VKLO"
@@ -413,10 +416,13 @@ public class Main {
                                     , r.getFieldAsString("PERSON_JOURNALNR")
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
-                                    , "Kontroll 20 Viktigste kilde til livsopphold i relasjon til tilknytning til trygdesystemet. Trygd."
-                                    , "Det er oppgitt at mottakerens viktigste kilde til livsopphold er Trygd/pensjon, "
-                                    + "men det er ikke oppgitt hvilken trygd som utgjorde største verdi ved siste kontakt med sosial-/NAVkontoret. "
-                                    + "Feltet er obligatorisk å fylle ut."
+                                    , "Kontroll 20 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                                    + r.getFieldDefinitionByName("VKLO").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                                    + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString("ARBSIT") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VKLO"
@@ -424,8 +430,8 @@ public class Main {
                             , "TRYGDESIT"
                             , r.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     );
-// TODO
-                    ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
+
+                    ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
                             r
                             , er
                             , new ErrorReportEntry(
@@ -437,16 +443,16 @@ public class Main {
                                     , "Mottakeren (" + r.getFieldAsInteger("ALDER") + " år) er 60 år eller yngre og mottar alderspensjon."
                                     , Constants.NORMAL_ERROR
                             )
+                            , "TRYGDESIT"
+                            , List.of("07")
                             , "ALDER"
                             , ">"
-                            , Definitions.getAgeLimit()
-                            , "TRYGDESIT"
-                            , r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::getCode).filter(s -> !s.equalsIgnoreCase("07")).collect(Collectors.toList())
+                            , 60
                     );
 
                     if (r.getFieldAsString("TRYGDESIT").equalsIgnoreCase("05")
                             && !r.getFieldAsString("BU18").equalsIgnoreCase("1")
-                            && r.getFieldAsInteger("ANTBU18") == 0
+                            && r.getFieldAsIntegerDefaultEquals0("ANTBU18") == 0
                     ) {
                         er.addEntry(
                                 new ErrorReportEntry(
@@ -455,7 +461,7 @@ public class Main {
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
                                         , "Kontroll 23 Tilknytning til trygdesystemet og barn. Overgangsstønad."
-                                        , "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.  "
+                                        , "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen."
                                         , Constants.NORMAL_ERROR
                                 )
                         );
@@ -486,7 +492,7 @@ public class Main {
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
                                         , "Kontroll 24 Tilknytning til trygdesystemet og arbeidssituasjon. Uføretrygd/alderspensjon og ikke arbeidssøker."
-                                        , "Mottakeren mottar trygd (" + t + "), men det er ikke oppgitt Ikke arbeidssøker på arbeidssituasjon (" + a + ")."
+                                        , "Mottakeren mottar trygd (" + t + "), men det er ikke oppgitt 'Ikke arbeidssøker' på arbeidssituasjon (" + a + ")."
                                         , Constants.CRITICAL_ERROR
                                 )
                                 , "TRYGDESIT"
@@ -507,7 +513,7 @@ public class Main {
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
                                         , "Kontroll 24B Tilknytning til trygdesystemet og arbeidssituasjon. Arbeidsavklaringspenger."
-                                        , "Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt Arbeidsløs, ikke registrert på arbeidssituasjon"
+                                        , "Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt 'Arbeidsløs, ikke registrert' på arbeidssituasjon"
                                         , Constants.NORMAL_ERROR
                                 )
                         );
@@ -522,7 +528,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 25 Arbeidssituasjon. Gyldige koder."
-                                    , "Mottakerens arbeidssituasjon ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                                    , "Mottakerens arbeidssituasjon ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Utfylt verdi er '"
+                                    + r.getFieldAsString("ARBSIT")
+                                    + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "ARBSIT"
@@ -587,7 +595,7 @@ public class Main {
                                             , "Kontroll 27 Stønadssum mangler eller har ugyldige tegn."
                                             , "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
                                             + "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
-                                            , Constants.NORMAL_ERROR
+                                            , Constants.CRITICAL_ERROR
                                     )
                             );
                         }
@@ -600,10 +608,10 @@ public class Main {
                                                 , r.getFieldAsString("PERSON_JOURNALNR")
                                                 , r.getFieldAsString("PERSON_FODSELSNR")
                                                 , " "
-                                                , "Kontroll 28 Har varighet men mangler stønadssum"
+                                                , "Kontroll 28 Har varighet, men mangler stønadssum"
                                                 , "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
                                                 + "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
-                                                , Constants.NORMAL_ERROR
+                                                , Constants.CRITICAL_ERROR
                                         )
                                 );
                             }
@@ -620,7 +628,7 @@ public class Main {
                                                 , "Kontroll 29 Har stønadssum men mangler varighet"
                                                 , "Mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
                                                 + "men mangler utfylling for hvilke måneder i løpet av året mottakeren har mottatt økonomisk stønad."
-                                                , Constants.NORMAL_ERROR
+                                                , Constants.CRITICAL_ERROR
                                         )
                                 );
                             }
@@ -633,7 +641,7 @@ public class Main {
                                             , r.getFieldAsString("PERSON_JOURNALNR")
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
-                                            , "Kontroll 30 Kvalifiseringssum på kr " + stonadSumMax + ",- eller mer."
+                                            , "Kontroll 30 Stønadssum på kr " + stonadSumMax + ",- eller mer."
                                             , "Det samlede stønadsbeløpet (summen " + stonad + " av bidrag " + bidrag + " og lån " + laan + ") "
                                             + "som mottakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
                                             , Constants.NORMAL_ERROR
@@ -641,7 +649,7 @@ public class Main {
                             );
                         }
 
-                        if (stonadOK && stonad < stonadSumMin) {
+                        if (stonadOK && stonad <= stonadSumMin) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -666,7 +674,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 32 Økonomiskrådgivning. Gyldige koder."
-                                    , "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med utbetaling av økonomisk sosialhjelp. Feltet er obligatorisk å fylle ut."
+                                    , "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med utbetaling av økonomisk sosialhjelp. "
+                                    + "Utfylt verdi er '" + r.getFieldAsString("GITT_OKONOMIRAD") + "'. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "GITT_OKONOMIRAD"
@@ -682,7 +691,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 33 Utarbeidelse av individuell plan"
-                                    , "Det er ikke krysset av for om mottakeren har fått utarbeidet individuell plan. Feltet er obligatorisk."
+                                    , "Det er ikke krysset av for om mottakeren har fått utarbeidet individuell plan. "
+                                    + "Utfylt verdi er '" + r.getFieldAsString("FAAT_INDIVIDUELL_PLAN") + "'. Feltet er obligatorisk."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "FAAT_INDIVIDUELL_PLAN"
@@ -698,7 +708,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 35 Boligsituasjon"
-                                    , "Det er ikke krysset av for mottakerens boligsituasjon. Feltet er obligatorisk."
+                                    , "Det er ikke krysset av for mottakerens boligsituasjon. "
+                                    + "Utfylt verdi er '" + r.getFieldAsString("BOSIT") + "'. Feltet er obligatorisk."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BOSIT"
@@ -706,23 +717,17 @@ public class Main {
                     );
 
                     {
-                        Integer bidrag = r.getFieldAsInteger("BIDRAG");
-                        Integer bidragSum = List.of(
+                        Integer bidrag = r.getFieldAsIntegerDefaultEquals0("BIDRAG");
+                        Integer bidragMaanederSum = List.of(
                                 "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MAR",
                                 "BIDRAG_APR", "BIDRAG_MAI", "BIDRAG_JUN",
                                 "BIDRAG_JUL", "BIDRAG_AUG", "BIDRAG_SEP",
                                 "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
                                 .stream()
-                                .map(field -> {
-                                    try {
-                                        return Objects.requireNonNullElse(r.getFieldAsInteger(field), 0);
-                                    } catch (NullPointerException e) {
-                                        return 0;
-                                    }
-                                })
+                                .map(r::getFieldAsIntegerDefaultEquals0)
                                 .reduce(0, Integer::sum);
 
-                        if (bidrag != null && 0 < bidrag && bidragSum != null && !bidrag.equals(bidragSum)) {
+                        if (0 < bidrag && !bidrag.equals(bidragMaanederSum)) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -730,31 +735,25 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 36 Bidrag fordelt på måneder"
-                                            , "Det er ikke fylt ut bidrag (" + bidrag + ") fordelt på måneder eller sum (" + bidragSum + ") stemmer ikke med sum bidrag utbetalt i løpet av året."
-                                            , Constants.CRITICAL_ERROR
+                                            , "Det er ikke fylt ut bidrag (" + bidragMaanederSum + ") fordelt på måneder eller sum stemmer ikke med sum bidrag (" + bidrag + ") utbetalt i løpet av året."
+                                            , Constants.NORMAL_ERROR
                                     )
                             );
                         }
                     }
 
                     {
-                        Integer laan = r.getFieldAsInteger("LAAN");
-                        Integer laanSum = List.of(
+                        Integer laan = r.getFieldAsIntegerDefaultEquals0("LAAN");
+                        Integer laanMaanederSum = List.of(
                                 "LAAN_JAN", "LAAN_FEB", "LAAN_MAR",
                                 "LAAN_APR", "LAAN_MAI", "LAAN_JUN",
                                 "LAAN_JUL", "LAAN_AUG", "LAAN_SEP",
                                 "LAAN_OKT", "LAAN_NOV", "LAAN_DES")
                                 .stream()
-                                .map(field -> {
-                                    try {
-                                        return Objects.requireNonNullElse(r.getFieldAsInteger(field), 0);
-                                    } catch (NullPointerException e) {
-                                        return 0;
-                                    }
-                                })
+                                .map(r::getFieldAsIntegerDefaultEquals0)
                                 .reduce(0, Integer::sum);
 
-                        if (laan != null && 0 < laan && laanSum != null && !laan.equals(laanSum)) {
+                        if (0 < laan && !laan.equals(laanMaanederSum)) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -762,8 +761,8 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 37 Lån fordelt på måneder"
-                                            , "Det er ikke fylt ut laan (" + laan + ") fordelt på måneder eller sum (" + laanSum + ") stemmer ikke med sum lån utbetalt i løpet av året."
-                                            , Constants.CRITICAL_ERROR
+                                            , "Det er ikke fylt ut laan (" + laanMaanederSum + ") fordelt på måneder eller sum stemmer ikke med sum lån (" + laan + ") utbetalt i løpet av året."
+                                            , Constants.NORMAL_ERROR
                                     )
                             );
                         }
@@ -829,7 +828,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 41 Dato for utbetalingsvedtak"
-                                    , "Feltet for Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven, "
+                                    , "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven', "
                                     + "så skal utbetalingsvedtakets dato (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -847,8 +846,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 42 Til og med dato for utbetalingsvedtak"
-                                    , "Feltet for Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven, "
-                                    + "så skal utbetalingsvedtakets dato (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven', "
+                                    + "så skal utbetalingsvedtakets til og med dato (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VILKARSOSLOV"
@@ -880,7 +879,7 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 43 Type vilkår det stilles til mottakeren"
-                                            , "Feltet for Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven, "
+                                            , "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven', "
                                             + "så skal det oppgis hvilke vilkår som stilles til mottakeren. Feltet er obligatorisk å fylle ut."
                                             , Constants.CRITICAL_ERROR
                                     )

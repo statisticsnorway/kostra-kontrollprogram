@@ -75,19 +75,37 @@ public class Definitions {
 
         // Sektorer
         List<String> sektorer = List.of(
-                "000", "070", "080", "110", "151", "152", "200", "320", "355", "395", "430", "450", "499", "550", "570", "610", "640", "650", "890", "900"
+                "   ", "000", "070", "080", "110", "151", "152", "200", "320", "355", "395", "430", "450", "499", "550", "570", "610", "640", "650", "890", "900"
         );
 
         List<String> result = new ArrayList<>();
 
-        if (List.of("0F").contains(skjema)) {
+        if (Objects.equals("0F", skjema)) {
             result.addAll(arter);
         }
 
-        if (List.of("0G").contains(skjema)) {
+        if (Objects.equals("0G", skjema)) {
             result.addAll(sektorer);
         }
 
         return result;
     }
+
+    public static List<String> getSpesifikkeArter(String kontoklasse) {
+        return List.of();
+    }
+
+    public static List<String> getSpesifikkeFunksjoner(String kontoklasse) {
+        switch (kontoklasse) {
+            case "3":
+                return List.of("570", "590", "990");
+
+            case "4":
+                return List.of("280", "285", "670", "910", "970");
+
+            default:
+                return List.of();
+        }
+    }
+
 }

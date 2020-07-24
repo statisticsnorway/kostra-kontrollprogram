@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class ControlFelt1InneholderKodeFraKodeliste {
-    public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String field1, List<String> codeList1) {
-        if (codeList1.stream().noneMatch(code -> Objects.equals(code, p.getFieldAsString(field1)))) {
-            ere.setRefNr(String.valueOf(p.getLine()));
+    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1, List<String> codeList1) {
+        if (!Comparator.isCodeInCodelist(r.getFieldAsString(field1), codeList1)) {
+            ere.setRefNr(String.valueOf(r.getLine()));
             er.addEntry(ere);
         }
 
-        return p;
+        return r;
     }
 }

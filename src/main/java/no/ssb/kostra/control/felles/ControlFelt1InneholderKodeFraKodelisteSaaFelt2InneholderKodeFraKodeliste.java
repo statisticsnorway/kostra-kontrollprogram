@@ -7,14 +7,14 @@ import no.ssb.kostra.control.Record;
 import java.util.List;
 
 public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste {
-    public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String field1, List<String> codeList1, String field2, List<String> codeList2) {
-        if (codeList1.stream().anyMatch(code -> code.equalsIgnoreCase(p.getFieldAsString(field1)))){
-                if (codeList2.stream().noneMatch(code -> code.equalsIgnoreCase(p.getFieldAsString(field2)))){
-                    ere.setRefNr(String.valueOf(p.getLine()));
+    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1, List<String> codeList1, String field2, List<String> codeList2) {
+        if (Comparator.isCodeInCodelist(r.getFieldAsString(field1), codeList1)){
+                if (!Comparator.isCodeInCodelist(r.getFieldAsString(field2), codeList2)){
+                    ere.setRefNr(String.valueOf(r.getLine()));
                     er.addEntry(ere);
                 }
         }
 
-        return p;
+        return r;
     }
 }

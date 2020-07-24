@@ -28,8 +28,8 @@ public class ControlRecordLengde {
             er.addEntry(new ErrorReportEntry("Filuttrekk"
                     , "Integritetskontroller", " ", " "
                     , "Kontroll 01 Recordlengde"
-                    , "Korreksjon: Rett opp slik at alle record er på " + length +
-                    " tegn og avslutter med linjeskift. <br/>"
+                    , "Korrigér filen slik at alle record er på " + length +
+                    " tegn, mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift. <br/>"
                     + "Denne feilen hindrer de andre kontrollene i å bli kjørt<br/>"
                     + "\n(Gjelder for linjene:" + String.join(", ", recordLengdeFeil) + ")"
                     , Constants.CRITICAL_ERROR

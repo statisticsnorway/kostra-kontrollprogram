@@ -69,6 +69,12 @@ public class Record {
         }
     }
 
+    public Integer getFieldAsIntegerDefaultEquals0(String field) {
+        Integer value = getFieldAsInteger(field);
+
+        return (value != null) ? value : 0;
+    }
+
     public void setFieldAsInteger(String field, Integer i) {
         this.valuesByName.put(field, String.valueOf(i));
     }

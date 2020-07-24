@@ -27,14 +27,6 @@ public final class DatoFnr {
         }
     }
 
-    public static int findYearYYYY(int year) {
-        if (year <= 50) {
-            return (2000 + year);
-        } else {
-            return (1900 + year);
-        }
-    }
-
     public static int validDateDDMMYY(String dt) {
         try {
             Integer.parseInt(dt);
@@ -51,24 +43,6 @@ public final class DatoFnr {
 
     }
 
-    public static int validDateDDMMYYYY(String dt) {
-        try {
-            Integer.parseInt(dt);
-        } catch (Exception e) {
-            return 0;
-        }
-        boolean isLeap = false;
-        if (dt.length() < 8) return (0);
-        parseDate(8, dt);
-        // Check leap year
-        if (((year % 4 == 0) && (year % 100 != 0)) ||
-                ((year % 4 == 0) && (year % 100 == 0) && (year % 400 == 0))) isLeap = true;
-
-        if ((month < 1) || (month > 12)) return (0);
-
-        if (((day > 0) && (day <= ANT_DAGER[month])) || ((month == 2) && (day == 29) && isLeap)) return (1);
-        else return (0);
-    }
 
     public static int validNorwId(String fnr) {
         int[] s = new int[12];

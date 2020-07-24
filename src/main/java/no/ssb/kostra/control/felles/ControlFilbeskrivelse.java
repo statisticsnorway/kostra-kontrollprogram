@@ -30,6 +30,7 @@ public class ControlFilbeskrivelse {
                         int length = to - from + 1;
                         boolean mandatory = fieldDefinition.isMandatory();
                         String fieldName = fieldDefinition.getName();
+                        Integer fieldNumber = fieldDefinition.getNumber();
                         String stringValue = r.getFieldAsString(fieldDefinition.getName());
                         String trimmedStringValue = r.getFieldAsTrimmedString(fieldDefinition.getName());
                         int trimmedStringLength = trimmedStringValue.length();
@@ -49,9 +50,8 @@ public class ControlFilbeskrivelse {
                                             , " "
                                             , " "
                                             , "Kontroll 02 Filbeskrivelse, feltdefinisjonlengde"
-                                            , "Korreksjon: Felt '" + fieldName + "' (posisjon fra og med " + from + ", til og med " + to + ") sin feltdefinisjonlengde skal være større enn 0 "
-                                            + ", fant '" + length + "'.<br/>\n"
-                                            + "Denne feilen HINDRER de andre kontrollene i å bli kjørt."
+                                            , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                            + "sin feltdefinisjonlengde skal være større enn 0, men fant '" + length + "'.<br/>\n"
                                             , Constants.CRITICAL_ERROR
                                     )
                             );
@@ -70,8 +70,8 @@ public class ControlFilbeskrivelse {
                                                     , " "
                                                     , " "
                                                     , "Kontroll 02 Filbeskrivelse, feil kode i forhold til kodeliste"
-                                                    , "Korreksjon: Felt '" + fieldName + "' (posisjon fra og med " + from + ", til og med " + to + ") sin kode '" + stringValue + "' fins ikke i " + codeList+ ".<br/>\n"
-                                                    + "Denne feilen HINDRER de andre kontrollene i å bli kjørt."
+                                                    , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                                    + "sin kode '" + stringValue + "' fins ikke i " + codeList + ".<br/>\n"
                                                     , Constants.CRITICAL_ERROR
                                             )
                                     );
@@ -88,9 +88,8 @@ public class ControlFilbeskrivelse {
                                                         , " "
                                                         , " "
                                                         , "Kontroll 02 Filbeskrivelse, feil i heltall-felt"
-                                                        , "Korreksjon: Felt '" + fieldName
-                                                        + "' (posisjon fra og med " + from + ", til og med " + to + ") er et tallfelt, men inneholder '" + stringValue + "'.<br/>\n"
-                                                        + "Denne feilen HINDRER de andre kontrollene i å bli kjørt."
+                                                        , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                                        + "er et tallfelt, men inneholder '" + stringValue + "'.<br/>\n"
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
@@ -111,11 +110,8 @@ public class ControlFilbeskrivelse {
                                                         , " "
                                                         , " "
                                                         , "Kontroll 02 Filbeskrivelse, feil i dato-felt"
-                                                        , "Korreksjon: Felt '" + fieldDefinition.getName()
-                                                        + "' (posisjon fra og med " + from + ", til og med " + to + ") er et datofelt med datomønster ('"
-                                                        + datePattern.toUpperCase()
-                                                        + "'), men inneholder '" + stringValue+ "'.<br/>\n"
-                                                        + "Denne feilen HINDRER de andre kontrollene i å bli kjørt."
+                                                        , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                                        + "er et datofelt med datomønster ('" + datePattern.toUpperCase() + "'), men inneholder '" + stringValue+ "'.<br/>\n"
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
@@ -134,8 +130,8 @@ public class ControlFilbeskrivelse {
                                                 , " "
                                                 , " "
                                                 , "Kontroll 02 Filbeskrivelse, mangler obligatorisk verdi"
-                                                , "Korreksjon: Felt '" + fieldName + "' (posisjon fra og med " + from + ", til og med " + to + ") er obligatorisk, men mangler verdi.<br/>\n"
-                                                + "Denne feilen HINDRER de andre kontrollene i å bli kjørt."
+                                                , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                                + "er obligatorisk, men mangler verdi.<br/>\n"
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );

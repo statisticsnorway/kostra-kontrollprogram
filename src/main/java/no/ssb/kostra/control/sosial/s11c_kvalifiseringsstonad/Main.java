@@ -6,11 +6,11 @@ import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.Toolkit;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toMap;
 
 public class Main {
     public static ErrorReport doControls(Arguments args) {
@@ -61,10 +61,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 03 kommunenummer"
-                                    , "Korrigér kommunenummeret. Forventet '"
-                                    + args.getRegion().substring(0, 4)
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("KOMMUNE_NR") + "'."
+                                    , "Korrigér kommunenummeret. Fant '" + r.getFieldAsTrimmedString("KOMMUNE_NR") + "', "
+                                    + "forventet '" + args.getRegion().substring(0, 4) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KOMMUNE_NR"
@@ -81,10 +79,8 @@ public class Main {
                                         , r.getFieldAsString("PERSON_FODSELSNR")
                                         , " "
                                         , "Kontroll 03 Bydelsnummer"
-                                        , "Korrigér bydel. Forventet én av  '"
-                                        + Definitions.getBydelerAsList()
-                                        + "', men fant '"
-                                        + r.getFieldAsTrimmedString("BYDELSNR") + "'."
+                                        , "Korrigér bydel. Fant '" + r.getFieldAsTrimmedString("BYDELSNR") + "', "
+                                        + "forventet én av '" + Definitions.getBydelerAsList() + "'."
                                         , Constants.CRITICAL_ERROR
                                 )
                                 , "BYDELSNR"
@@ -101,10 +97,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 04 Årgang"
-                                    , "Korrigér årgang. Forventet '"
-                                    + args.getAargang().substring(0, 2)
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("VERSION") + "'."
+                                    , "Korrigér årgang. Fant '" + r.getFieldAsTrimmedString("VERSION") + "', "
+                                    + "forventet '" + args.getAargang().substring(0, 2) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VERSION"
@@ -120,11 +114,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 05 Fødselsnummer"
-                                    , "Det er ikke oppgitt fødselsnummer/d-nummer på "
-                                    + "deltakeren" + lf + "\teller fødselsnummeret/d-nummeret inneholder" +
-                                    " feil." + lf + "\tMed mindre det er snakk om en utenlandsk " +
-                                    "statsborger som ikke er" + lf + "\ttildelt norsk personnummer eller d-nummer, " +
-                                    "skal feltet inneholde" + lf + "\tdeltakeren fødselsnummer/d-nummer (11 siffer)."
+                                    , "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret inneholder feil. "
+                                    + "Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt norsk personnummer eller d-nummer, "
+                                    + "skal feltet inneholde deltakeren fødselsnummer/d-nummer (11 siffer)."
                                     , Constants.NORMAL_ERROR
                             )
                             , "PERSON_FODSELSNR"
@@ -174,10 +166,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 08 Kjønn"
-                                    , "Korrigér kjønn. Forventet én av  '"
-                                    + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("KJONN") + "'."
+                                    , "Korrigér kjønn. Fant '" + r.getFieldAsTrimmedString("KJONN") + "', "
+                                    + "forventet én av '" + r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Mottakerens kjønn er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KJONN"
@@ -193,10 +184,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 09 Sivilstand"
-                                    , "Korrigér sivilstand. Forventet én av  '"
-                                    + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant '"
-                                    + r.getFieldAsTrimmedString("EKTSTAT") + "'."
+                                    , "Korrigér sivilstand. Fant '" + r.getFieldAsTrimmedString("EKTSTAT") + "', "
+                                    + "forventet én av '" + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Mottakerens sivilstand/sivilstatus ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                             , "EKTSTAT"
@@ -212,13 +202,10 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
-                                    , "Det er ikke krysset av for om deltakeren har barn under 18 år, " + lf +
-                                    "som deltakeren (eventuelt ektefelle/samboer) har \n" +
-                                    "forsørgerplikt for," + lf + "\tog som bor i husholdningen ved\n" +
-                                    "siste kontakt. Feltet er obligatorisk å fylle ut."
-                                    + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList())
-                                    + "', men fant "
-                                    + r.getFieldAsTrimmedString("BU18")
+                                    , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsTrimmedString("BU18") + "', "
+                                    + "forventet én av " + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Det er ikke krysset av for om deltakeren har barn under 18 år, "
+                                    + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BU18"
@@ -234,11 +221,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
-                                    , "Deltakeren har barn under 18 år, som deltakeren " + lf +
-                                    "\t(eventuelt ektefelle/samboer) har forsørgerplikt for, " +
-                                    "og som bor i husholdningen" + lf + "\tved siste kontakt, men det er " +
-                                    "ikke oppgitt hvor mange barn ('" + r.getFieldAsTrimmedString("ANTBU18") + "') som bor i husholdningen. " + lf +
-                                    "\tFeltet er obligatorisk å fylle ut."
+                                    , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
+                                    + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsInteger("ANTBU18") + ")' som bor i husholdningen. "
+                                    + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BU18"
@@ -257,11 +242,10 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 12 Det bor barn under 18 år i husholdningen."
-                                    , "Det er oppgitt antall barn ('" + r.getFieldAsTrimmedString("ANTBU18") + "') under 18 år som bor i husholdningen "
-                                    + "som deltakeren eller ektefelle/samboer har forsørgerplikt for, "
-                                    + "men det er ikke oppgitt at Deltakeren har barn under 18 år, "
-                                    + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, "
-                                    + "og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
+                                    , "Det er oppgitt " + r.getFieldAsInteger("ANTBU18") + " barn under 18 år som bor i husholdningen som "
+                                    + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
+                                    + "oppgitt at det bor barn i husholdningen. "
+                                    + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "ANTBU18"
@@ -284,7 +268,7 @@ public class Main {
                                     , Constants.NORMAL_ERROR
                             )
                             , "ANTBU18"
-                            , "<"
+                            , "<="
                             , 10
                     );
 
@@ -297,7 +281,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 14 Dato for registrert søknad ved NAV-kontoret."
-                                    , "Feltet for Hvilken dato ble søknaden registrert ved NAV-kontoret? mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString("REG_DATO") + "). Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "REG_DATO"
@@ -312,7 +296,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 15 Dato for fattet vedtak om program (søknad innvilget)"
-                                    , "Feltet for Hvilken dato det ble fattet vedtak om program (søknad innvilget) mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Hvilken dato det ble fattet vedtak om program (søknad innvilget)' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString("VEDTAK_DATO") + "). Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VEDTAK_DATO"
@@ -327,7 +311,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 16 Dato for når deltakeren begynte i program (iverksettelse)."
-                                    , "Feltet for Hvilken dato begynte deltakeren i program? (iverksettelse) mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString("BEGYNT_DATO") + "). Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "BEGYNT_DATO"
@@ -342,7 +326,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 19 Kvalifiseringsprogram i annen kommune"
-                                    , "Feltet for Kommer deltakeren fra kvalifiseringsprogram i annen kommune? er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke fylt ut, eller feil kode er benyttet (" + r.getFieldAsString("KVP_KOMM") + "). Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "KVP_KOMM"
@@ -376,7 +360,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 20a Fra kvalifiseringsprogram i annen bydel i Oslo."
-                                    , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune, men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
+                                    , "Manglende/ugyldig utfylling for om deltakeren kommer fra kvalifiseringsprogram i annen bydel (). Feltet er obligatorisk å fylle ut for Oslo."
                                     , Constants.NORMAL_ERROR
                             )
                             , "KOMMUNE_NR"
@@ -394,7 +378,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 21 Ytelser de to siste månedene før registrert søknad ved NAV-kontoret"
-                                    , "Feltet for \"Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?\" inneholder ugyldige verdier."
+                                    , "Feltet for 'Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?' inneholder ugyldige verdier."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "YTELSE_SOSHJELP"
@@ -412,8 +396,8 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 26 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + args.getAargang()
-                                    , "Feltet for \"Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, "
-                                    + "kommunal bostøtte eller Husbankens bostøtte?\", er ikke utfylt eller feil kode (" + r.getFieldAsString("KVP_MED_ASTONAD") + ") er benyttet. Feltet er obligatorisk å fylle ut."
+                                    , "Feltet for 'Har deltakeren i " + args.getAargang() + " i løpet av perioden med kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, "
+                                    + "kommunal bostøtte eller Husbankens bostøtte?', er ikke utfylt eller feil kode (" + r.getFieldAsString("KVP_MED_ASTONAD") + ") er benyttet. Feltet er obligatorisk å fylle ut."
                                     + r.getFieldDefinitionByName("KVP_MED_ASTONAD").getCodeList().stream().collect(Collectors.toMap(Code::getCode, Code::getValue))
                                     , Constants.CRITICAL_ERROR
                             )
@@ -451,7 +435,7 @@ public class Main {
 
                         } else if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "2")) {
                             boolean isAllBlank = fields.stream()
-                                    .allMatch(field -> List.of(" ", "0").contains(r.getFieldAsString(field)));
+                                    .allMatch(field -> Comparator.isCodeInCodelist(r.getFieldAsString(field), List.of(" ", "0")));
 
                             if (!isAllBlank) {
                                 er.addEntry(
@@ -475,13 +459,18 @@ public class Main {
                         Integer stonad = r.getFieldAsInteger("KVP_STONAD");
                         boolean stonadOK = (stonad != null);
                         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
-                        boolean isAnyFilledIn = fields.stream()
-                                .anyMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
+                        boolean harVarighet = fields.stream()
+                                .anyMatch(field -> r.getFieldDefinitionByName(field)
+                                        .getCodeList()
+                                        .stream()
+                                        .map(Code::getCode)
+                                        .collect(Collectors.toList())
+                                        .contains(r.getFieldAsString(field)));
 
                         int stonadSumMax = 235000;
                         int stonadSumMin = 8000;
 
-                        if (!isAnyFilledIn) {
+                        if (!harVarighet) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -489,7 +478,7 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 28 Måneder med kvalifiseringsstønad. Gyldige koder."
-                                            , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+                                            , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad (" + r.getFieldAsString("KVP_STONAD") + ") i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
                                             , Constants.CRITICAL_ERROR
                                     )
                             );
@@ -503,13 +492,13 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 29 Kvalifiseringssum mangler eller har ugyldige tegn."
-                                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + r.getFieldAsString("KVP_STONAD") + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
                                             , Constants.NORMAL_ERROR
                                     )
                             );
                         }
 
-                        if (isAnyFilledIn) {
+                        if (harVarighet) {
                             if (!stonadOK) {
                                 er.addEntry(
                                         new ErrorReportEntry(
@@ -517,8 +506,8 @@ public class Main {
                                                 , r.getFieldAsString("PERSON_JOURNALNR")
                                                 , r.getFieldAsString("PERSON_FODSELSNR")
                                                 , " "
-                                                , "Kontroll 30 Har varighet men mangler kvalifiseringssum."
-                                                , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                                                , "Kontroll 30 Har varighet, men mangler kvalifiseringssum."
+                                                , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + r.getFieldAsString("KVP_STONAD") + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
                                                 , Constants.NORMAL_ERROR
                                         )
                                 );
@@ -526,15 +515,15 @@ public class Main {
                         }
 
                         if (stonadOK && 0 < stonad) {
-                            if (!isAnyFilledIn) {
+                            if (!harVarighet) {
                                 er.addEntry(
                                         new ErrorReportEntry(
                                                 r.getFieldAsString("SAKSBEHANDLER")
                                                 , r.getFieldAsString("PERSON_JOURNALNR")
                                                 , r.getFieldAsString("PERSON_FODSELSNR")
                                                 , " "
-                                                , "Kontroll 31 Har kvalifiseringssum men mangler varighet."
-                                                , "Deltakeren har fått kvalifiseringsstønad i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er obligatorisk å fylle ut."
+                                                , "Kontroll 31 Har kvalifiseringssum, men mangler varighet."
+                                                , "Deltakeren har fått kvalifiseringsstønad (" + r.getFieldAsString("KVP_STONAD") + ") i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er obligatorisk å fylle ut."
                                                 , Constants.NORMAL_ERROR
                                         )
                                 );
@@ -549,7 +538,7 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 32 Kvalifiseringssum på kr " + stonadSumMax + ",- eller mer."
-                                            , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
+                                            , "Kvalifiseringsstønaden (" + r.getFieldAsString("KVP_STONAD") + ") som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
                                             , Constants.NORMAL_ERROR
                                     )
                             );
@@ -563,7 +552,7 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 33 Kvalifiseringsstønad på kr " + stonadSumMin + ",- eller lavere."
-                                            , "Kvalifiseringsstønaden som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
+                                            , "Kvalifiseringsstønaden (" + r.getFieldAsString("KVP_STONAD") + ") som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
                                             , Constants.NORMAL_ERROR
                                     )
                             );
@@ -579,7 +568,9 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 36 Status for deltakelse i kvalifiseringsprogram per 31.12." + args.getAargang() + ". Gyldige verdier."
-                                    , "Kontrollere at feltet er utfylt og ikke inneholder andre verdier enn de gyldige 1 – 6. Feltet er obligatorisk å fylle ut."
+                                    , "Korrigér status. Fant '" + r.getFieldAsTrimmedString("STATUS") + "', forventet én av '"
+                                    + r.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                                    + "Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "STATUS"
@@ -587,27 +578,24 @@ public class Main {
                     );
 
 
-                    if (List.of("3", "4", "5").contains(r.getFieldAsString("STATUS"))) {
-                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("SAKSBEHANDLER")
-                                        , r.getFieldAsString("PERSON_JOURNALNR")
-                                        , r.getFieldAsString("PERSON_FODSELSNR")
-                                        , " "
-                                        , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
-                                        , "Feltet for \"Hvilken dato avsluttet deltakeren programmet?\" Må fylles ut dersom det er krysset av for svaralternativ"
-                                        + "kode 3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting), "
-                                        + "kode 4 = Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting) eller "
-                                        + "kode 5 = Deltakerens program ble avbrutt på grunn av flytting til annen kommune under feltet for \"Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "\"?"
-                                        , Constants.CRITICAL_ERROR
-                                )
-                                , "STATUS"
-                                , r.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                                , "AVSL_DATO"
-                        );
-                    }
+                    ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
+                                    , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?' Må fylles ut dersom det er krysset av for svaralternativ "
+                                    + r.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                                    + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "'?"
+                                    , Constants.CRITICAL_ERROR
+                            )
+                            , "STATUS"
+                            , r.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::getCode).collect(Collectors.toList())
+                            , "AVSL_DATO"
+                    );
 
                     if (r.getFieldAsString("STATUS").equalsIgnoreCase("3")) {
                         List<String> fields = List.of("AVSL_ORDINAERTARB", "AVSL_ARBLONNSTILS", "AVSL_TILRETTELARB", "AVSL_ARBMARK", "AVSL_SKOLE", "AVSL_AKTIVARBSOK", "AVSL_BEHANDL", "AVSL_AVKLAR_UFOR", "AVSL_INGEN_AKT", "AVSL_ANNET");
@@ -622,9 +610,9 @@ public class Main {
                                             , r.getFieldAsString("PERSON_FODSELSNR")
                                             , " "
                                             , "Kontroll 38 Fullførte/avsluttede program – til hvilken livssituasjon gikk deltakeren? Gyldige verdier."
-                                            , "Feltet \"Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – hva var deltakerens viktigste livssituasjon umiddelbart etter avslutningen\"? "
+                                            , "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – hva var deltakerens viktigste livssituasjon umiddelbart etter avslutningen'? "
                                             + "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for "
-                                            + "\"Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "\"?"
+                                            + "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "'?"
                                             , Constants.CRITICAL_ERROR
                                     )
                             );

@@ -1,5 +1,8 @@
 package no.ssb.kostra.control.regnskap.kvartal;
 
+import no.ssb.kostra.control.felles.Comparator;
+import no.ssb.kostra.control.felles.Utils;
+
 import java.util.*;
 import java.util.stream.Collectors;
 // TODO full gjennomgang av Definitions mot kravspek
@@ -171,6 +174,46 @@ public class Definitions {
         }
 
         return result;
+    }
+
+    public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {
+        List<String> alle = getFunksjonKapittelAsList(skjema, region);
+        // Kun gyldig i investering og skal fjernes fra drift
+        List<String> ugyldigDrift = List.of();
+        // Kun gyldig i drift og skal fjernes fra investering
+        List<String> ugyldigInvestering = List.of("800", "840", "860");
+
+        return Utils.rpadList(getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering).stream().sorted().collect(Collectors.toList()), 4);
+    }
+
+    public static List<String> getSpesifikkeArter(String skjema, String region, String kontoklasse) {
+        List<String> alle = getArtSektorAsList(skjema, region);
+        // Kun gyldig i investering og skal fjernes fra drift
+        List<String> ugyldigDrift = List.of("529", "670", "910", "911", "929", "970");
+        // Kun gyldig i drift og skal fjernes fra investering
+        List<String> ugyldigInvestering = List.of("509", "570", "590", "800", "870", "874", "875", "877", "909", "990");
+
+        return getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering);
+    }
+
+    private static List<String> getList(String kontoklasse, List<String> alle, List<String> ugyldigDrift, List<String> ugyldigInvestering) {
+        switch (kontoklasse) {
+            // Drift
+            case "1":
+            case "3":
+                return alle.stream()
+                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .collect(Collectors.toList());
+            // Investering
+            case "0":
+            case "4":
+                return alle.stream()
+                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .collect(Collectors.toList());
+
+            default:
+                return List.of();
+        }
     }
 }
 

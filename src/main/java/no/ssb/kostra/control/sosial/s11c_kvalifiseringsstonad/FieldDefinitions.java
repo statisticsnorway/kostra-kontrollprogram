@@ -117,6 +117,8 @@ public class FieldDefinitions {
                         "dropDownList",
                         53, 53,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("1", "Ja"),
                                 new Code("2", "Nei")),
                         "",
@@ -501,6 +503,8 @@ public class FieldDefinitions {
                         "checkBox",
                         59, 59,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("1", "Sosialhjelp")),
                         "",
                         false),
@@ -509,6 +513,8 @@ public class FieldDefinitions {
                         "dropDownList",
                         60, 60,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                                 new Code("3", "Supplerende sosialhjelp")),
                         "",
@@ -518,6 +524,8 @@ public class FieldDefinitions {
                         "checkBox",
                         61, 61,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("4", "Introduksjonsstønad")),
                         "",
                         false),
@@ -526,6 +534,8 @@ public class FieldDefinitions {
                         "checkBox",
                         62, 62,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")),
                         "",
                         false),
@@ -534,6 +544,8 @@ public class FieldDefinitions {
                         "checkBox",
                         63, 63,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")),
                         "",
                         false),
@@ -542,6 +554,8 @@ public class FieldDefinitions {
                         "dropDownList",
                         64, 64,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("1", "Ja"),
                                 new Code("2", "Nei")),
                         "",
@@ -551,38 +565,48 @@ public class FieldDefinitions {
                         "checkBox",
                         65, 65,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("4", "Kommunal bostøtte")),
                         "",
                         false),
-                        new FieldDefinition(203, "KVP_MED_HUSBANK",
-                                "String",
-                                "checkBox",
-                                66, 66,
-                                List.of(
-                                        new Code("5", "Husbankens bostøtte")),
-                                "",
-                                false),
-                        new FieldDefinition(204, "KVP_MED_SOSHJ_ENGANG",
-                                "String",
-                                "checkBox",
-                                67, 67,
-                                List.of(
-                                        new Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")),
-                                "",
-                                false),
-                        new FieldDefinition(205, "KVP_MED_SOSHJ_PGM",
-                                "String",
-                                "checkBox",
-                                68, 68,
-                                List.of(
-                                        new Code("8", "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet")),
-                                "",
-                                false),
-                        new FieldDefinition(206, "KVP_MED_SOSHJ_SUP",
+                new FieldDefinition(203, "KVP_MED_HUSBANK",
+                        "String",
+                        "checkBox",
+                        66, 66,
+                        List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
+                                new Code("5", "Husbankens bostøtte")),
+                        "",
+                        false),
+                new FieldDefinition(204, "KVP_MED_SOSHJ_ENGANG",
+                        "String",
+                        "checkBox",
+                        67, 67,
+                        List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
+                                new Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")),
+                        "",
+                        false),
+                new FieldDefinition(205, "KVP_MED_SOSHJ_PGM",
+                        "String",
+                        "checkBox",
+                        68, 68,
+                        List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
+                                new Code("8", "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet")),
+                        "",
+                        false),
+                new FieldDefinition(206, "KVP_MED_SOSHJ_SUP",
                         "String",
                         "checkBox",
                         69, 69,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("7", "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter")),
                         "",
                         false),
@@ -591,6 +615,8 @@ public class FieldDefinitions {
                         "checkBox",
                         70, 71,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("01", "Januar")),
                         "",
                         false),
@@ -599,6 +625,8 @@ public class FieldDefinitions {
                         "checkBox",
                         72, 73,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("02", "Februar")),
                         "",
                         false),
@@ -607,6 +635,8 @@ public class FieldDefinitions {
                         "checkBox",
                         74, 75,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("03", "Mars")),
                         "",
                         false),
@@ -615,6 +645,8 @@ public class FieldDefinitions {
                         "checkBox",
                         76, 77,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("04", "April")),
                         "",
                         false),
@@ -623,6 +655,8 @@ public class FieldDefinitions {
                         "checkBox",
                         78, 79,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("05", "Mai")),
                         "",
                         false),
@@ -631,6 +665,8 @@ public class FieldDefinitions {
                         "checkBox",
                         80, 81,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("06", "Juni")),
                         "",
                         false),
@@ -639,6 +675,8 @@ public class FieldDefinitions {
                         "checkBox",
                         82, 83,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("07", "Juli")),
                         "",
                         false),
@@ -647,6 +685,8 @@ public class FieldDefinitions {
                         "checkBox",
                         84, 85,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("08", "August")),
                         "",
                         false),
@@ -655,6 +695,8 @@ public class FieldDefinitions {
                         "checkBox",
                         86, 87,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("09", "September")),
                         "",
                         false),
@@ -663,6 +705,8 @@ public class FieldDefinitions {
                         "checkBox",
                         88, 89,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("10", "Oktober")),
                         "",
                         false),
@@ -671,6 +715,8 @@ public class FieldDefinitions {
                         "checkBox",
                         90, 91,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("11", "November")),
                         "",
                         false),
@@ -679,6 +725,8 @@ public class FieldDefinitions {
                         "checkBox",
                         92, 93,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("12", "Desember")),
                         "",
                         false),
@@ -694,6 +742,8 @@ public class FieldDefinitions {
                         "dropDownList",
                         101, 101,
                         List.of(
+                                new Code("0", "Uoppgitt"),
+                                new Code(" ", "Blank"),
                                 new Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                                 new Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
                                 new Code("3", "Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)"),
@@ -722,6 +772,8 @@ public class FieldDefinitions {
                         "checkBox",
                         110, 111,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("11", "Arbeid med lønnstilskudd (heltid/deltid)")),
                         "",
                         false),
@@ -730,6 +782,8 @@ public class FieldDefinitions {
                         "checkBox",
                         112, 113,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("02", "Tilrettelagt arbeid")),
                         "",
                         false),
@@ -738,6 +792,8 @@ public class FieldDefinitions {
                         "checkBox",
                         114, 115,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("03", "Deltaker på arbeidsmarkedstiltak i statlig regi (jf forskrift om arbeidsmarkedstiltak)")),
                         "",
                         false),
@@ -746,6 +802,8 @@ public class FieldDefinitions {
                         "checkBox",
                         116, 117,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("04", "Skole/utdanning")),
                         "",
                         false),
@@ -754,6 +812,8 @@ public class FieldDefinitions {
                         "checkBox",
                         118, 119,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("05", "Aktiv arbeidssøker")),
                         "",
                         false),
@@ -762,6 +822,8 @@ public class FieldDefinitions {
                         "checkBox",
                         120, 121,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("06", "Behandling")),
                         "",
                         false),
@@ -770,6 +832,8 @@ public class FieldDefinitions {
                         "checkBox",
                         122, 123,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("12", "Avventer avklaring av søknad om uføretrygd/arbeidsavklaringspenger")),
                         "",
                         false),
@@ -778,6 +842,8 @@ public class FieldDefinitions {
                         "checkBox",
                         124, 125,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("13", "Ingen spesiell aktivitet eller søknad om uføretrygd/arbeidsavklaringspenger")),
                         "",
                         false),
@@ -786,6 +852,8 @@ public class FieldDefinitions {
                         "checkBox",
                         126, 127,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("10", "Annet")),
                         "",
                         false),

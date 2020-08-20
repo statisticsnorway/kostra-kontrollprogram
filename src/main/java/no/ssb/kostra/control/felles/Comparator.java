@@ -5,8 +5,11 @@ import java.util.List;
 public class Comparator {
     public static boolean compareIntegerOperatorInteger(Integer a, String op, Integer b) {
         boolean ok = true;
+        if (a == null){
+            a = 0;
+        }
 
-        if (a != null && !op.isEmpty() && b != null) {
+        if (!op.isEmpty() && b != null) {
             if (op.equalsIgnoreCase("<")) {
                 ok = (a < b);
 

@@ -587,7 +587,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
-                                    , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?' Må fylles ut dersom det er krysset av for svaralternativ "
+                                    , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + r.getFieldAsString("AVSL_DATO") + "), må fylles ut dersom det er krysset av for svaralternativ "
                                     + r.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
                                     + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + args.getAargang() + "'?"
                                     , Constants.CRITICAL_ERROR

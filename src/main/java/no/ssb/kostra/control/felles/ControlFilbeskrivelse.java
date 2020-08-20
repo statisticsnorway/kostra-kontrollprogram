@@ -99,9 +99,12 @@ public class ControlFilbeskrivelse {
 
                                 case "Date":
                                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(datePattern);
+                                    String defaultDate = "0".repeat(datePattern.length());
 
                                     try {
-                                        LocalDate.parse(stringValue, dtf);
+                                        if (!stringValue.equalsIgnoreCase(defaultDate)) {
+                                            LocalDate.parse(stringValue, dtf);
+                                        }
                                     } catch (Exception e) {
                                         er.addEntry(
                                                 new ErrorReportEntry(

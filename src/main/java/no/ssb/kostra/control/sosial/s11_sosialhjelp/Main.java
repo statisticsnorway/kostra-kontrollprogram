@@ -224,7 +224,7 @@ public class Main {
                                     , " "
                                     , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
                                     , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
-                                    + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsInteger("ANTBU18") + ")' som bor i husholdningen. "
+                                    + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsIntegerDefaultEquals0("ANTBU18") + ")' som bor i husholdningen. "
                                     + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -829,7 +829,7 @@ public class Main {
                                     , " "
                                     , "Kontroll 41 Dato for utbetalingsvedtak"
                                     , "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven', "
-                                    + "så skal utbetalingsvedtakets dato (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
+                                    + "så skal utbetalingsvedtakets dato (" + r.getFieldAsString("UTBETDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VILKARSOSLOV"
@@ -847,7 +847,7 @@ public class Main {
                                     , " "
                                     , "Kontroll 42 Til og med dato for utbetalingsvedtak"
                                     , "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter sosialtjenesteloven', "
-                                    + "så skal utbetalingsvedtakets til og med dato (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
+                                    + "så skal utbetalingsvedtakets til og med dato (" + r.getFieldAsString("UTBETTOMDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
                             )
                             , "VILKARSOSLOV"

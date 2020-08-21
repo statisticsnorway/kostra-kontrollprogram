@@ -131,7 +131,7 @@ public class Main {
             }
 
             // Kontroll 08 Avsluttede meklinger, ikke overholdt tidsfrist
-               {
+            {
                 List<List<String>> fieldLists = List.of(List.of("FORHOLD_TOT", "FORHOLD_MEKLER", "FORHOLD_KLIENT"));
 
                 ControlFelt1LikSumAvListe.doControl(
@@ -174,7 +174,10 @@ public class Main {
             // Kontroll 10 Avsluttede meklinger hvor barn har deltatt
             {
                 String measure = "BARNDELT";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, List.of("TOT"));
+                List<List<String>> fieldLists = List.of(
+                        clTSSSTF.stream()
+                                .map(item -> measure.concat("_").concat(item).concat("_TOT"))
+                                .collect(Collectors.toList()));
 
                 ControlFelt1LikSumAvListe.doControl(
                         r

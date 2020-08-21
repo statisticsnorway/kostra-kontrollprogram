@@ -50,7 +50,7 @@ public class Main {
                                 , r.getFieldAsString("KONTORNR")
                                 , String.valueOf(r.getLine())
                                 , " "
-                                , "Kontroll 03 fylkesnummer"
+                                , "Kontroll 03 Fylkesnummer"
                                 , "Det er ikke oppgitt fylkesnummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
@@ -66,7 +66,7 @@ public class Main {
                                 , r.getFieldAsString("KONTORNR")
                                 , String.valueOf(r.getLine())
                                 , " "
-                                , "Kontroll 04 kontornummer"
+                                , "Kontroll 04 Kontornummer"
                                 , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
@@ -90,9 +90,7 @@ public class Main {
                 );
             }
 
-            // Kontroll 10 - 15, 18 - 25 blir fra 6 - 18
-            // Kontrollene kommer i par for TILTAK og TIMER
-            AtomicInteger i = new AtomicInteger(10);
+            // Kontroll 10
             List.of(
                     List.of("TILTAK_PUBLIKUM", "Andre tiltak mot publikum"),
                     List.of("VEILEDNING_STUDENTER", "Undervisning/veiledning studenter"),
@@ -107,7 +105,7 @@ public class Main {
 
                         // Kontrollere tiltak
                         String tiltakField = String.join("_", baseField, "TILTAK");
-                        String tiltakKontrollNr = String.join(", ", String.join(" ", "Kontroll", String.valueOf(i.getAndIncrement()), title), "tiltak");
+                        String tiltakKontrollNr = String.join(", ", String.join(" ", "Kontroll 10", title), "tiltak");
                         String tiltakErrorText = MessageFormat.format("Det er ikke fylt hvor mange tiltak ({1}) kontoret har gjennomført når det gjelder ”{0}, tiltak”. Sjekk om det er glemt å rapportere {0}, tiltak.", title, r.getFieldAsInteger(tiltakField));
 
                         ControlFelt1Boolsk.doControl(
@@ -130,7 +128,7 @@ public class Main {
 
                         // Kontrollere timer
                         String timerField = String.join("_", baseField, "TIMER");
-                        String timerKontrollNr = String.join(", ", String.join(" ", "Kontroll", String.valueOf(i.getAndIncrement()), title), "timer");
+                        String timerKontrollNr = String.join(", ", String.join(" ", "Kontroll 10", title), "timer");
                         String timerErrorText = MessageFormat.format("Det er ikke fylt hvor mange timer ({1}) kontoret har gjennomført når det gjelder ”{0}, timer”. Sjekk om det er glemt å rapportere {0}, timer.", title, r.getFieldAsInteger(timerField));
                         ControlFelt1BoolskSaaFelt2Boolsk.doControl(
                                 r

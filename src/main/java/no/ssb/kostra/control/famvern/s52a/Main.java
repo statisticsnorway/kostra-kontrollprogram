@@ -90,7 +90,7 @@ public class Main {
 
         // Kontroll 6 Dublett på journalnummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("JOURNAL_NR_A"))
+                .map(r -> r.getFieldAsString("JOURNAL_NR_A").concat("-").concat(r.getFieldAsString("KONTOR_NR_A")))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
@@ -103,7 +103,7 @@ public class Main {
             er.addEntry(
                     new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
                             , "Kontroll 06 Dubletter"
-                            , "Dubletter på journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR
                     ));
         }
@@ -119,8 +119,8 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 07 Dato for registrert søknad ved NAV-kontoret."
-                            , "Feltet for Hvilken dato ble søknaden registrert ved NAV-kontoret? mangler utfylling eller har ugyldig dato. Feltet er obligatorisk å fylle ut."
+                            , "Kontroll 07 Henvendelsesdato"
+                            , "Dette er ikke oppgitt dato (" + r.getFieldAsString("HENV_DATO_A") + ") for når primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "HENV_DATO_A"
@@ -134,8 +134,11 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere."
-                            , "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                            , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere"
+                            , "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("KONTAKT_TIDL_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "KONTAKT_TIDL_A"
@@ -151,7 +154,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt."
-                            , "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format. Feltet er obligatorisk."
+                            , "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format."
+                            + "Fant '" + r.getFieldAsString("HENV_GRUNN_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "HENV_GRUNN_A"
@@ -167,7 +173,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 13 Primærklientens kjønn"
-                            , "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. Feltet er obligatorisk."
+                            , "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("PRIMK_KJONN_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_KJONN_A"
@@ -183,7 +192,7 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 14 Primærklientens fødselsår"
-                            , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Feltet er obligatorisk å fylle ut."
+                            , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Fant '" + r.getFieldAsString("PRIMK_FODT_A") + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_FODT_A"
@@ -198,7 +207,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 15 Primærklientens samlivsstatus"
-                            , "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                            , "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("PRIMK_SIVILS_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_SIVILS_A"
@@ -215,6 +227,8 @@ public class Main {
                             , " "
                             , "Kontroll 16 Utdypende om primærklientens formelle sivilstand"
                             , "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens korrekt sivilstand"
+                            + "Fant '" + r.getFieldAsString("FORMELL_SIVILS_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_SIVILS_A"
@@ -232,7 +246,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 17 Primærklientens bosituasjon ved opprettelsen"
-                            , "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("PRIMK_SAMBO_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_SAMBO_A"
@@ -248,7 +265,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv"
-                            , "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("PRIMK_ARBSIT_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_ARBSIT_A"
@@ -264,7 +284,9 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"
-                            , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere."
+                            , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                            + "Fant '" + r.getFieldAsString("PART_LENGDE_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_VSRELASJ_A"
@@ -273,7 +295,6 @@ public class Main {
                     , r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
-            // Kontroll 19 sjekker 2 forskjellige forhold og blir derfor repetert
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                     r
                     , er
@@ -282,8 +303,10 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
+                            , "Kontroll 19B1 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
                             , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                            + "Fant '" + r.getFieldAsString("EKSPART_LENGDE_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_VSRELASJ_A"
@@ -300,8 +323,10 @@ public class Main {
                             , r.getFieldAsString("JOURNAL_NR_A")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 19B Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
+                            , "Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
                             , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                            + "Fant '" + r.getFieldAsString("EKSPART_VARIGH_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "PRIMK_VSRELASJ_A"
@@ -320,7 +345,9 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 20 Dato for første behandlingssamtale"
-                            , "Dette er ikke oppgitt dato for første behandlingssamtale eller feltet har ugyldig format. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke oppgitt dato for første behandlingssamtale eller feltet har ugyldig format. "
+                            + "Fant '" + r.getFieldAsString("FORSTE_SAMT_A") + "'. "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "FORSTE_SAMT_A"
@@ -335,7 +362,8 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 21 Første behandlingssamtale er før henvendelsesdato"
-                            , "Dato for første behandlingssamtale er før dato for primærklientens henvendelse til familievernkontoret."
+                            , "Dato for første behandlingssamtale (" + r.getFieldAsString("FORSTE_SAMT_A") + ") "
+                            + "er før dato for primærklientens henvendelse (" + r.getFieldAsString("HENV_DATO_A") + ") til familievernkontoret."
                             , Constants.NORMAL_ERROR
                     )
                     , "HENV_DATO_A"
@@ -380,7 +408,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 23 Hovedform på behandlingstilbudet"
-                            , "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden saken ble opprettet, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden saken ble opprettet, eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("HOVEDF_BEHAND_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "HOVEDF_BEHAND_A"
@@ -388,11 +419,11 @@ public class Main {
             );
 
 
-            if (!List.of(
+            if (List.of(
                     "BEKYMR_MELD_A", "DELT_PARTNER_A", "DELT_EKSPART_A", "DELT_BARNU18_A",
                     "DELT_BARNO18_A", "DELT_FORELDRE_A", "DELT_OVRFAM_A", "DELT_VENN_A", "DELT_ANDR_A")
                     .stream()
-                    .allMatch(field -> r.getFieldDefinitionByName(field)
+                    .noneMatch(field -> r.getFieldDefinitionByName(field)
                             .getCodeList()
                             .stream()
                             .map(Code::getCode)
@@ -444,39 +475,38 @@ public class Main {
 
             {
                 List<List<String>> fieldPairs = List.of(
-                        List.of("DELT_PARTNER_A", "SAMT_PARTNER_A"),
-                        List.of("DELT_EKSPART_A", "SAMT_EKSPART_A"),
-                        List.of("DELT_BARNU18_A", "SAMT_BARNU18_A"),
-                        List.of("DELT_BARNO18_A", "SAMT_BARNO18_A"),
-                        List.of("DELT_FORELDRE_A", "SAMT_FORELDRE_A"),
-                        List.of("DELT_OVRFAM_A", "SAMT_OVRFAM_A"),
-                        List.of("DELT_VENN_A", "SAMT_VENN_A"),
-                        List.of("DELT_ANDR_A", "SAMT_ANDRE_A")
+                        List.of("Partner", "DELT_PARTNER_A", "SAMT_PARTNER_A"),
+                        List.of("Ekspartner", "DELT_EKSPART_A", "SAMT_EKSPART_A"),
+                        List.of("Barn under 18år", "DELT_BARNU18_A", "SAMT_BARNU18_A"),
+                        List.of("Barn over 18år", "DELT_BARNO18_A", "SAMT_BARNO18_A"),
+                        List.of("Foreldre", "DELT_FORELDRE_A", "SAMT_FORELDRE_A"),
+                        List.of("Øvrige familie", "DELT_OVRFAM_A", "SAMT_OVRFAM_A"),
+                        List.of("Venner", "DELT_VENN_A", "SAMT_VENN_A"),
+                        List.of("Andre", "DELT_ANDR_A", "SAMT_ANDRE_A")
                 );
 
-                fieldPairs.stream()
-                        .peek(fieldPair ->
-                                ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                                        r,
-                                        er,
-                                        new ErrorReportEntry(
-                                                r.getFieldAsString("KONTOR_NR_A")
-                                                , r.getFieldAsString("JOURNAL_NR_A")
-                                                , String.valueOf(r.getLine())
-                                                , " "
-                                                , "Kontroll 26 Relasjon mellom antall behandlingssamtaler og hvem som har deltatt"
-                                                , "Det er oppgitt at andre personer har deltatt i samtaler med primærklient i løpet av året, "
-                                                + "men det er ikke oppgitt hvor mange behandlingssamtaler de ulike personene har deltatt i gjennom av året."
-                                                , Constants.NORMAL_ERROR
-                                        ),
-                                        fieldPair.get(0),
-                                        r.getFieldDefinitionByName(fieldPair.get(0)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()),
-                                        fieldPair.get(1),
-                                        "<",
-                                        0
-                                )
+                fieldPairs.forEach(fieldPair ->
+                        ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
+                                r,
+                                er,
+                                new ErrorReportEntry(
+                                        r.getFieldAsString("KONTOR_NR_A")
+                                        , r.getFieldAsString("JOURNAL_NR_A")
+                                        , String.valueOf(r.getLine())
+                                        , " "
+                                        , "Kontroll 26 Relasjon mellom antall behandlingssamtaler og hvem som har deltatt"
+                                        , "Det er oppgitt at andre personer (" + fieldPair.get(0) + ") har deltatt i samtaler med primærklient i løpet av året, "
+                                        + "men det er ikke oppgitt hvor mange behandlingssamtaler (" + r.getFieldAsString(fieldPair.get(2)) + ") de ulike personene har deltatt i gjennom av året."
+                                        , Constants.NORMAL_ERROR
+                                ),
+                                fieldPair.get(1),
+                                r.getFieldDefinitionByName(fieldPair.get(0)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()),
+                                fieldPair.get(2),
+                                "<",
+                                0
                         )
-                        .close();
+                );
+
             }
 
             {
@@ -606,7 +636,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 33 Status ved året slutt"
-                            , "Det er ikke fylt ut hva som er sakens status ved utgangen av året. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke fylt ut hva som er sakens status ved utgangen av året. "
+                            + "Fant '" + r.getFieldAsString("STATUS_ARETSSL_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , "STATUS_ARETSSL_A"
@@ -623,6 +656,8 @@ public class Main {
                             , " "
                             , "Kontroll 34 Sakens hovedtema (Fylles ut når saken avsluttes)."
                             , "Det er krysset av for at saken er avsluttet i rapporteringsåret, men ikke fylt ut hovedtema for saken, eller feltet har ugyldig format."
+                            + "Fant '" + r.getFieldAsString("HOVEDTEMA_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "STATUS_ARETSSL_A"
@@ -640,7 +675,8 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 35 Saken avsluttet, men ikke satt avslutningsdato"
-                            , "Det er krysset av for at saken er avsluttet i rapporteringsåret, men ikke fylt ut dato for avslutning av saken."
+                            , "Det er krysset av for at saken er avsluttet i rapporteringsåret, "
+                            + "men ikke fylt ut dato (" + r.getFieldAsString("DATO_AVSL_A") + ") for avslutning av saken."
                             , Constants.NORMAL_ERROR
                     )
                     , "STATUS_ARETSSL_A"
@@ -657,7 +693,8 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 36 Avslutningsdato før første samtale"
-                            , "Dato for avslutting av saken kommer før dato for første behandlingssamtale."
+                            , "Dato for avslutting av saken (" + r.getFieldAsString("DATO_AVSL_A") + ") "
+                            + "kommer før dato for første behandlingssamtale (" + r.getFieldAsString("FORSTE_SAMT_A") + ")."
                             , Constants.NORMAL_ERROR
                     )
                     , "FORSTE_SAMT_A"
@@ -673,7 +710,10 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 37 Bekymringsmelding sendt barnevernet"
-                            , ""
+                            , "Det er ikke svart på hvorvidt bekymringsmelding er sendt barnevernet eller ei, eller feil kode er benyttet. "
+                            + "Fant '" + r.getFieldAsString("BEKYMR_MELD_A") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "Feltet er obligatorisk."
                             , Constants.NORMAL_ERROR
                     )
                     , "BEKYMR_MELD_A"

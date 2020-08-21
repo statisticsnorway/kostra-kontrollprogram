@@ -5,6 +5,7 @@ import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.Record;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControlAlleFeltIListeHarLikSum {
     public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<String> fieldList) {
@@ -14,8 +15,27 @@ public class ControlAlleFeltIListeHarLikSum {
                 .allMatch(item -> item == sum);
 
         if (!allSumsEqual) {
-            ere.setRefNr(String.valueOf(r.getLine()));
-            er.addEntry(ere);
+            String errorText = "Én eller flere i følgende liste har ulik verdi i forhold til de andre: "
+                    + fieldList.stream()
+                    .map(f -> "("
+                            .concat(f)
+                            .concat(" = ")
+                            .concat(r.getFieldAsIntegerDefaultEquals0(f).toString())
+                            .concat(")")
+                    )
+                    .collect(Collectors.joining(", "));
+
+            ErrorReportEntry e = new ErrorReportEntry(
+                    ere.getSaksbehandler()
+                    , ere.getJournalnummer()
+                    , ere.getIndividId()
+                    , String.valueOf(r.getLine())
+                    , ere.getKontrollNr()
+                    , errorText
+                    , ere.getErrorType()
+            );
+
+            er.addEntry(e);
         }
 
         return r;

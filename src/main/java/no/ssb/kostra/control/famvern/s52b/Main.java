@@ -28,6 +28,9 @@ public class Main {
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
 
+        // filbeskrivelsesskontroller
+        ControlFilbeskrivelse.doControl(records, er);
+
         records.forEach(r -> {
             // Kontroll 3: Regionsnummer
             if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_B"))) {
@@ -77,9 +80,9 @@ public class Main {
             }
         });
 
-        // Kontroll 6 Dublett på journalnummer
+        // Kontroll 6 Dublett på gruppenummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("JOURNAL_NR_B"))
+                .map(r -> r.getFieldAsString("JOURNAL_NR_B").concat("-").concat(r.getFieldAsString("KONTOR_NR_B")))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
@@ -92,7 +95,7 @@ public class Main {
             er.addEntry(
                     new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
                             , "Kontroll 06 Dubletter"
-                            , "Dubletter på journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , "Gruppenummeret er benyttet på mer enn en sak. Dubletter på gruppenummeret. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR
                     ));
         }
@@ -107,8 +110,8 @@ public class Main {
                             , r.getFieldAsString("GRUPPE_NR_B")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 7 Gruppenavn"
-                            , "Dette er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner."
+                            , "Kontroll 07 Gruppenavn"
+                            , "Det er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner."
                             , Constants.NORMAL_ERROR
                     )
                     , "GRUPPE_NAVN_B"
@@ -122,8 +125,9 @@ public class Main {
                             , r.getFieldAsString("GRUPPE_NR_B")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 8 Start dato"
-                            , "Dette er ikke oppgitt dato for gruppebehandlingens start, eller feltet har ugyldig format."
+                            , "Kontroll 08 Start dato"
+                            , "Det er ikke oppgitt dato for gruppebehandlingens start, eller feltet har ugyldig format."
+                            + "Fant '" + r.getFieldAsString("DATO_GRSTART_B") + "'."
                             , Constants.NORMAL_ERROR
                     )
                     , "DATO_GRSTART_B"
@@ -137,8 +141,11 @@ public class Main {
                             , r.getFieldAsString("GRUPPE_NR_B")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 9 Målgruppe"
-                            , "Det er ikke fylt ut hva som er målgruppe for behandlingen."
+                            , "Kontroll 09 Målgruppe"
+                            , "Det er ikke fylt ut hva som er målgruppe for behandlingen. "
+                            + "Fant '" + r.getFieldAsString("STRUKTUR_GR_B") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+
                             , Constants.NORMAL_ERROR
                     )
                     , "STRUKTUR_GR_B"
@@ -155,6 +162,8 @@ public class Main {
                             , " "
                             , "Kontroll 10 Gruppens hovedtema"
                             , "Det er ikke fylt ut hva som er hovedtema for gruppen."
+                            + "Fant '" + r.getFieldAsString("HOVEDI_GR_B") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "HOVEDI_GR_B"
@@ -205,42 +214,6 @@ public class Main {
                             , r.getFieldAsString("GRUPPE_NR_B")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
-                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , "ANTMOTERTOT_OPPR_B"
-                    , ">"
-                    , 0
-
-            );
-
-            ControlFelt1Boolsk.doControl(
-                    r
-                    , er
-                    , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
-                            , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , "ANTMOTERTOT_OPPR_B"
-                    , ">"
-                    , 0
-
-            );
-
-            ControlFelt1Boolsk.doControl(
-                    r
-                    , er
-                    , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
-                            , String.valueOf(r.getLine())
-                            , " "
                             , "Kontroll 13 Antall timer anvendt i gruppen totalt i løpet av året"
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen i løpet av året. (For og etterarbeid skal ikke regnes med)."
                             , Constants.NORMAL_ERROR
@@ -259,7 +232,7 @@ public class Main {
                             , r.getFieldAsString("GRUPPE_NR_B")
                             , String.valueOf(r.getLine())
                             , " "
-                            , "Kontroll 14 Antall timer siden opprettelsen"
+                            , "Kontroll 14 Antall timer anvendt i gruppen totalt siden opprettelsen"
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen siden opprettelsen "
                             , Constants.NORMAL_ERROR
                     )
@@ -332,7 +305,9 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 18 Er det benyttet tolk i minst én gruppesamtale?"
-                            , "Kontroller at feltet er utfylt og ikke inneholder andre verdier enn de gyldige 1 til 2."
+                            , "Kontroller at feltet er utfylt. "
+                            + "Fant '" + r.getFieldAsString("TOLK_B") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "TOLK_B"
@@ -349,6 +324,8 @@ public class Main {
                             , " "
                             , "Kontroll 19 Status ved året slutt"
                             , "Det er ikke fylt ut hva som er gruppens status ved utgangen av året."
+                            + "Fant '" + r.getFieldAsString("STATUS_ARETSSL_B") + "', "
+                            + "forventet én av: " + r.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , "STATUS_ARETSSL_B"
@@ -364,7 +341,8 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 20 Gruppebehandlingen er avsluttet, men avslutningsdato mangler"
-                            , "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, men ikke fylt ut dato for avslutning av saken."
+                            , "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, "
+                            + "men ikke fylt ut dato (" + r.getFieldAsString("DATO_GRAVSLUTN_B") + ") for avslutning av saken."
                             , Constants.NORMAL_ERROR
                     )
                     , "STATUS_ARETSSL_B"
@@ -381,7 +359,8 @@ public class Main {
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 21 Avslutningsdato før første samtale"
-                            , "Dato for avslutting av gruppebehandlingen kommer før dato for gruppebehandlingens start."
+                            , "Dato for avslutting av gruppebehandlingen (" + r.getFieldAsString("DATO_GRAVSLUTN_B") + ") "
+                            + "kommer før dato for gruppebehandlingens start (" + r.getFieldAsString("DATO_GRSTART_B") + ")."
                             , Constants.NORMAL_ERROR
                     )
                     , "DATO_GRSTART_B"

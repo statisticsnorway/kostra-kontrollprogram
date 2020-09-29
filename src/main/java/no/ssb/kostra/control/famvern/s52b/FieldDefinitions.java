@@ -60,15 +60,15 @@ public class FieldDefinitions {
                         "dropDownList",
                         55, 56
                         , List.of(
-                        new Code("1", "Samlivskurs")
-                        , new Code("2", "Samlivsbrudd")
-                        , new Code("3", "Samarbeid om barn etter brudd")
-                        , new Code("4", "Barn som har opplevd brudd i familien")
-                        , new Code("5", "Vold/overgrep")
-                        , new Code("6", "Sinnemestring")
-                        , new Code("7", "Kultur-/Minoritetsspørsmål")
-                        , new Code("8", "Foreldreveiledning")
-                        , new Code("9", "Foreldre som har mistet omsorgen for egne barn")
+                        new Code("01", "Samlivskurs")
+                        , new Code("02", "Samlivsbrudd")
+                        , new Code("03", "Samarbeid om barn etter brudd")
+                        , new Code("04", "Barn som har opplevd brudd i familien")
+                        , new Code("05", "Vold/overgrep")
+                        , new Code("06", "Sinnemestring")
+                        , new Code("07", "Kultur-/Minoritetsspørsmål")
+                        , new Code("08", "Foreldreveiledning")
+                        , new Code("09", "Foreldre som har mistet omsorgen for egne barn")
                         , new Code("10", "Andre alvorlige hendelser")
                         , new Code("11", "Annet, spesifiser")),
                         "",

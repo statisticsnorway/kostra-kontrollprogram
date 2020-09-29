@@ -80,6 +80,6 @@ public class MainITest {
         }
 
         assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
     }
 }

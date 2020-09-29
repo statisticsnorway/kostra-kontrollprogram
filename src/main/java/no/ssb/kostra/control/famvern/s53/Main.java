@@ -8,12 +8,19 @@ import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
 
-import java.text.MessageFormat;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class Main {
+    private static String createFylkeNr(String fylkenr) {
+        return "Fylkenummer ".concat(fylkenr);
+    }
+
+    private static String createKontorNr(String kontornr, String linjenr) {
+        return "Kontornummer ".concat(kontornr).concat(" / Linjenummer ").concat(linjenr);
+    }
+
+
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
@@ -46,12 +53,13 @@ public class Main {
             if (!Definitions.isFylkeValid(r.getFieldAsString("FYLKE_NR"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("FYLKE_NR")
-                                , r.getFieldAsString("KONTORNR")
+                                createFylkeNr(r.getFieldAsString("FYLKE_NR"))
+                                , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 03 Fylkesnummer"
-                                , "Det er ikke oppgitt fylkesnummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut."
+                                , "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. "
+                                + "Fant '" + r.getFieldAsString("FYLKE_NR") + "', forventet én av : " + Definitions.getFylkeAsList() + ". "
                                 , Constants.NORMAL_ERROR
                         )
 
@@ -62,12 +70,14 @@ public class Main {
             if (!Definitions.isKontorValid(r.getFieldAsString("KONTORNR"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("FYLKE_NR")
-                                , r.getFieldAsString("KONTORNR")
+                                createFylkeNr(r.getFieldAsString("FYLKE_NR"))
+                                , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 04 Kontornummer"
-                                , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut."
+                                , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
+                                + "Fant '" + r.getFieldAsString("KONTORNR") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
+                                + "Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
 
@@ -78,12 +88,13 @@ public class Main {
             if (!Definitions.isFylkeAndKontorValid(r.getFieldAsString("FYLKE_NR"), r.getFieldAsString("KONTORNR"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("FYLKE_NR")
-                                , r.getFieldAsString("KONTORNR")
+                                createFylkeNr(r.getFieldAsString("FYLKE_NR"))
+                                , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 05 Manglende samsvar mellom fylkes- og kontornummer"
-                                , "Fylkesnummer og kontornummer stemmer ikke overens."
+                                , "Fylkesnummer (" + r.getFieldAsString("FYLKE_NR") + ") og "
+                                + "kontornummer (" + r.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
                                 , Constants.NORMAL_ERROR
                         )
 
@@ -106,14 +117,20 @@ public class Main {
                         // Kontrollere tiltak
                         String tiltakField = String.join("_", baseField, "TILTAK");
                         String tiltakKontrollNr = String.join(", ", String.join(" ", "Kontroll 10", title), "tiltak");
-                        String tiltakErrorText = MessageFormat.format("Det er ikke fylt hvor mange tiltak ({1}) kontoret har gjennomført når det gjelder ”{0}, tiltak”. Sjekk om det er glemt å rapportere {0}, tiltak.", title, r.getFieldAsInteger(tiltakField));
+                        String tiltakErrorText = "Det er ikke fylt hvor mange tiltak ("
+                                .concat(String.valueOf(r.getFieldAsIntegerDefaultEquals0(tiltakField)))
+                                .concat(") kontoret har gjennomført når det gjelder '")
+                                .concat(title)
+                                .concat(", tiltak'. Sjekk om det er glemt å rapportere ")
+                                .concat(title)
+                                .concat(", tiltak.");
 
                         ControlFelt1Boolsk.doControl(
                                 r
                                 , er
                                 , new ErrorReportEntry(
-                                        r.getFieldAsString("FYLKE_NR")
-                                        , r.getFieldAsString("KONTORNR")
+                                        createFylkeNr(r.getFieldAsString("FYLKE_NR"))
+                                        , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
                                         , String.valueOf(r.getLine())
                                         , " "
                                         , tiltakKontrollNr
@@ -123,19 +140,25 @@ public class Main {
                                 , tiltakField
                                 , ">"
                                 , 0
-
                         );
 
                         // Kontrollere timer
                         String timerField = String.join("_", baseField, "TIMER");
                         String timerKontrollNr = String.join(", ", String.join(" ", "Kontroll 10", title), "timer");
-                        String timerErrorText = MessageFormat.format("Det er ikke fylt hvor mange timer ({1}) kontoret har gjennomført når det gjelder ”{0}, timer”. Sjekk om det er glemt å rapportere {0}, timer.", title, r.getFieldAsInteger(timerField));
+                        String timerErrorText = "For '"
+                                .concat(title)
+                                .concat("' er det rapportert (")
+                                .concat(String.valueOf(r.getFieldAsIntegerDefaultEquals0(tiltakField)))
+                                .concat(") tiltak, men det mangler hvor mange timer (")
+                                .concat(String.valueOf(r.getFieldAsIntegerDefaultEquals0(timerField)))
+                                .concat(") kontoret har brukt for å gjennomføre tiltakene. Sjekk om det er glemt å rapportere. ");
+
                         ControlFelt1BoolskSaaFelt2Boolsk.doControl(
                                 r
                                 , er
                                 , new ErrorReportEntry(
-                                        r.getFieldAsString("FYLKE_NR")
-                                        , r.getFieldAsString("KONTORNR")
+                                        createFylkeNr(r.getFieldAsString("FYLKE_NR"))
+                                        , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
                                         , String.valueOf(r.getLine())
                                         , " "
                                         , timerKontrollNr

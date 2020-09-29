@@ -106,6 +106,10 @@ public class Record {
         return 0 < this.getNames().size() ;
     }
 
+    @Override
+    public String toString(){
+        return this.valuesByName.toString();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -11,6 +11,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
+    private static String createKontorNr(String kontornr){
+        return "Kontornummer ".concat(kontornr);
+    }
+
+    private static String createJournalNr(String gruppenr, String gruppenavn, String linjenr){
+        return "Gruppenr ".concat(gruppenr).concat(" ").concat(gruppenavn).concat(" / Linjenummer ").concat(linjenr);
+    }
+    
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
@@ -36,14 +44,13 @@ public class Main {
             if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_B")
-                                , r.getFieldAsString("JOURNAL_NR_B")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                                , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 03 Regionsnummer"
-                                , "Regionsnummeret som er oppgitt i kontrollprogrammet stemmer ikke med regions-nummeret som er oppgitt i recorden (filuttrekket). "
-                                + "Kontroller at riktig regionsnummeret ble oppgitt til kontrollprogrammet. "
-                                + "Hvis dette stemmer, må regionsnummeret i recorden (filuttrekket) rettes."
+                                , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
+                                + "Fant '" + r.getFieldAsString("REGION_NR_B") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -53,12 +60,14 @@ public class Main {
             if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_B")
-                                , r.getFieldAsString("JOURNAL_NR_B")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                                , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 04 Kontornummer"
-                                , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut. "
+                                , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
+                                + "Fant '" + r.getFieldAsString("KONTOR_NR_B") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
+                                + "Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -68,12 +77,13 @@ public class Main {
             if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_B"), r.getFieldAsString("KONTOR_NR_B"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_B")
-                                , r.getFieldAsString("JOURNAL_NR_B")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                                , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
-                                , "Regionsnummer og kontornummer stemmer ikke overens."
+                                , "Regionsnummer (" + r.getFieldAsString("REGION_NR_B") + ") og "
+                                + "kontornummer (" + r.getFieldAsString("KONTOR_NR_B") + ") stemmer ikke overens."
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -82,7 +92,12 @@ public class Main {
 
         // Kontroll 6 Dublett på gruppenummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("JOURNAL_NR_B").concat("-").concat(r.getFieldAsString("KONTOR_NR_B")))
+                .map(r -> "Kontornummer "
+                        .concat(r.getFieldAsString("KONTOR_NR_B"))
+                        .concat(" - Gruppe ")
+                        .concat(r.getFieldAsString("GRUPPE_NR_B"))
+                        .concat(" ")
+                        .concat(r.getFieldAsString("GRUPPE_NAVN_B")))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
@@ -95,7 +110,7 @@ public class Main {
             er.addEntry(
                     new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
                             , "Kontroll 06 Dubletter"
-                            , "Gruppenummeret er benyttet på mer enn en sak. Dubletter på gruppenummeret. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , "Gruppenummeret er benyttet på mer enn en sak. Dubletter på kontornummer - gruppenummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR
                     ));
         }
@@ -106,8 +121,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 07 Gruppenavn"
@@ -121,8 +136,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 08 Start dato"
@@ -137,8 +152,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 09 Målgruppe"
@@ -156,8 +171,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 10 Gruppens hovedtema"
@@ -174,8 +189,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 11 Antall gruppemøter gjennomført totalt i løpet av året"
@@ -192,8 +207,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 12 Antall gruppemøter gjennomført siden opprettelsen"
@@ -210,8 +225,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 13 Antall timer anvendt i gruppen totalt i løpet av året"
@@ -228,8 +243,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 14 Antall timer anvendt i gruppen totalt siden opprettelsen"
@@ -246,8 +261,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 15 Antall deltagere i gruppen i løpet av året"
@@ -264,8 +279,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 16 Antall deltagere i gruppen siden opprettelsen"
@@ -282,8 +297,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 17 Antall terapeuter involvert i gruppebehandlingen"
@@ -300,8 +315,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 18 Er det benyttet tolk i minst én gruppesamtale?"
@@ -318,8 +333,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 19 Status ved året slutt"
@@ -336,8 +351,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 20 Gruppebehandlingen er avsluttet, men avslutningsdato mangler"
@@ -354,8 +369,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_B")
-                            , r.getFieldAsString("GRUPPE_NR_B")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
+                            , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 21 Avslutningsdato før første samtale"

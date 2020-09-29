@@ -12,6 +12,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
+    private static String createKontorNr(String kontornr){
+        return "Kontornummer ".concat(kontornr);
+    }
+
+    private static String createJournalNr(String journalnr, String linjenr){
+        return "Journalnummer ".concat(journalnr).concat(" / Linjenummer ").concat(linjenr);
+    }
+
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         List<String> inputFileContent = args.getInputContentAsStringList();
@@ -34,9 +42,9 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
 
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
-        }
+//        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
+//            return er;
+//        }
 
 
         records.forEach(r -> {
@@ -44,14 +52,13 @@ public class Main {
             if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 03 Regionsnummer"
-                                , "Regionsnummeret som er oppgitt i kontrollprogrammet stemmer ikke med regions-nummeret som er oppgitt i recorden (filuttrekket). "
-                                + "Kontroller at riktig regionsnummeret ble oppgitt til kontrollprogrammet. "
-                                + "Hvis dette stemmer, må regionsnummeret i recorden (filuttrekket) rettes."
+                                , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
+                                + "Fant '" + r.getFieldAsString("REGION_NR_A") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -61,12 +68,13 @@ public class Main {
             if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_A"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 04 Kontornummer"
-                                , "Det er ikke oppgitt kontornummer, eller feil kode er benyttet. Feltet er obligatorisk og må fylles ut. "
+                                , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
+                                        + "Fant '" + r.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -76,12 +84,13 @@ public class Main {
             if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_A"), r.getFieldAsString("KONTOR_NR_A"))) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
-                                , "Regionsnummer og kontornummer stemmer ikke overens."
+                                , "Regionsnummer (" + r.getFieldAsString("REGION_NR_A") + ") og "
+                                + "kontornummer (" + r.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -90,7 +99,7 @@ public class Main {
 
         // Kontroll 6 Dublett på journalnummer
         List<String> dubletter = records.stream()
-                .map(r -> r.getFieldAsString("JOURNAL_NR_A").concat("-").concat(r.getFieldAsString("KONTOR_NR_A")))
+                .map(r -> "Kontornummer ".concat(r.getFieldAsString("KONTOR_NR_A")).concat(" - Journalnummer ").concat(r.getFieldAsString("JOURNAL_NR_A")))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
@@ -103,7 +112,7 @@ public class Main {
             er.addEntry(
                     new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
                             , "Kontroll 06 Dubletter"
-                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på kontornummer - journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR
                     ));
         }
@@ -115,8 +124,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 07 Henvendelsesdato"
@@ -130,8 +139,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere"
@@ -149,8 +158,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt."
@@ -168,8 +177,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 13 Primærklientens kjønn"
@@ -187,8 +196,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 14 Primærklientens fødselsår"
@@ -202,8 +211,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 15 Primærklientens samlivsstatus"
@@ -221,8 +230,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 16 Utdypende om primærklientens formelle sivilstand"
@@ -241,8 +250,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 17 Primærklientens bosituasjon ved opprettelsen"
@@ -260,8 +269,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv"
@@ -279,8 +288,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"
@@ -299,8 +308,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 19B1 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
@@ -319,8 +328,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
@@ -340,8 +349,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 20 Dato for første behandlingssamtale"
@@ -357,8 +366,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 21 Første behandlingssamtale er før henvendelsesdato"
@@ -386,8 +395,8 @@ public class Main {
                                 .contains(r.getFieldAsString(field)))) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("KONTOR_NR_A")
-                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                    , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                     , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 22 Områder det har vært arbeidet med i saken"
@@ -403,8 +412,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 23 Hovedform på behandlingstilbudet"
@@ -432,8 +441,8 @@ public class Main {
             ) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 24 Deltagelse i behandlingssamtaler med primærklienten i løpet av året."
@@ -460,8 +469,8 @@ public class Main {
             ) {
                 er.addEntry(
                         new ErrorReportEntry(
-                                r.getFieldAsString("KONTOR_NR_A")
-                                , r.getFieldAsString("JOURNAL_NR_A")
+                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 25 Behandlingssamtaler for de involverte i saken i løpet av året"
@@ -490,19 +499,19 @@ public class Main {
                                 r,
                                 er,
                                 new ErrorReportEntry(
-                                        r.getFieldAsString("KONTOR_NR_A")
-                                        , r.getFieldAsString("JOURNAL_NR_A")
+                                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                         , String.valueOf(r.getLine())
                                         , " "
-                                        , "Kontroll 26 Relasjon mellom antall behandlingssamtaler og hvem som har deltatt"
+                                        , "Kontroll 26 Relasjon mellom antall behandlingssamtaler og hvem som har deltatt, " + fieldPair.get(0)
                                         , "Det er oppgitt at andre personer (" + fieldPair.get(0) + ") har deltatt i samtaler med primærklient i løpet av året, "
                                         + "men det er ikke oppgitt hvor mange behandlingssamtaler (" + r.getFieldAsString(fieldPair.get(2)) + ") de ulike personene har deltatt i gjennom av året."
                                         , Constants.NORMAL_ERROR
                                 ),
                                 fieldPair.get(1),
-                                r.getFieldDefinitionByName(fieldPair.get(0)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()),
+                                r.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.getValue().equalsIgnoreCase("Ja")).map(Code::getCode).collect(Collectors.toList()),
                                 fieldPair.get(2),
-                                "<",
+                                ">",
                                 0
                         )
                 );
@@ -515,8 +524,8 @@ public class Main {
                 if (List.of("ANTSAMT_HOVEDT_A", "ANTSAMT_ANDREANS_A").stream().noneMatch(field -> 0 < r.getFieldAsInteger(field))) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("KONTOR_NR_A")
-                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                    , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                     , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 27 Antall behandlingssamtaler for ansatte ved kontoret i løpet av året"
@@ -531,8 +540,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 28 Antall behandlingssamtaler i løpet av året"
@@ -548,8 +557,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 29 Antall behandlingssamtaler siden opprettelsen"
@@ -565,8 +574,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 30 Totalt antall timer i løpet av året"
@@ -584,8 +593,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 31 Totalt antall timer siden saken ble opprettet"
@@ -614,8 +623,8 @@ public class Main {
                 ) {
                     er.addEntry(
                             new ErrorReportEntry(
-                                    r.getFieldAsString("KONTOR_NR_A")
-                                    , r.getFieldAsString("JOURNAL_NR_A")
+                                    createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                    , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                                     , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 32 Samarbeid med andre instanser siden opprettelsen"
@@ -631,8 +640,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 33 Status ved året slutt"
@@ -650,8 +659,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 34 Sakens hovedtema (Fylles ut når saken avsluttes)."
@@ -670,8 +679,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 35 Saken avsluttet, men ikke satt avslutningsdato"
@@ -688,8 +697,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 36 Avslutningsdato før første samtale"
@@ -705,8 +714,8 @@ public class Main {
                     r
                     , er
                     , new ErrorReportEntry(
-                            r.getFieldAsString("KONTOR_NR_A")
-                            , r.getFieldAsString("JOURNAL_NR_A")
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
                             , String.valueOf(r.getLine())
                             , " "
                             , "Kontroll 37 Bekymringsmelding sendt barnevernet"

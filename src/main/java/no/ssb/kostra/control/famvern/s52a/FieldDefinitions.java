@@ -103,7 +103,7 @@ public class FieldDefinitions {
                         "dropDownList",
                         36, 36
                         , List.of(
-                        new Code("1", "Partner (og ev. barn)")
+                        new Code("1", "Partner (og eventuelt barn)")
                         , new Code("2", "Barn")
                         , new Code("3", "Foreldre / Andre omsorgspersoner")
                         , new Code("4", "Andre")

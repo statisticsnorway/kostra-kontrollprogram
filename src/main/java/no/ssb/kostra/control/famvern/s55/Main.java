@@ -61,7 +61,9 @@ public class Main {
                                 , String.valueOf(r.getLine())
                                 , " "
                                 , "Kontroll 03 fylkesnummer"
-                                , "Det er ikke oppgitt fylkesnummer, eller feil kode er benyttet (" + r.getFieldAsString("FYLKE_NR") + "). Feltet er obligatorisk og må fylles ut."
+                                , "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. "
+                                + "Fant '" + r.getFieldAsString("FYLKE_NR") + "', forventet én av : " + Definitions.getFylkeAsList() + ". "
+                                + "Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
 

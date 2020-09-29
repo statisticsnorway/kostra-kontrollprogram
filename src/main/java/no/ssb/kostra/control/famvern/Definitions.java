@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,6 +53,28 @@ public class Definitions {
                 List.of("203", "54", "667200"),
                 List.of("205", "54", "667200")
         );
+    }
+
+    public static List<String> getFieldAsList(int index){
+        return getKontorFylkeRegionMappingAsList().stream()
+                .map(l -> l.get(index))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .keySet()
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> getKontorAsList(){
+        return getFieldAsList(0);
+    }
+
+    public static List<String> getFylkeAsList(){
+        return getFieldAsList(1);
+    }
+
+    public static List<String> getRegionAsList(){
+        return getFieldAsList(2);
     }
 
     public static boolean isKontorValid(String kontor) {

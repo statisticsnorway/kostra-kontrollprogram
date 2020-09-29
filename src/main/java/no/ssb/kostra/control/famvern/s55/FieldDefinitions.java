@@ -525,7 +525,7 @@ public class FieldDefinitions {
                         , List.of(),
                         "",
                         false),
-                new FieldDefinition(525, "VENTETID_FLT_TOT",
+                new FieldDefinition(525, "VENTETID_FLY_TOT",
                         "Integer",
                         "textBox",
                         244, 247

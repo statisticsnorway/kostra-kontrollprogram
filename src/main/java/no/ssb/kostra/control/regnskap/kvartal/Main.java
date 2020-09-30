@@ -10,6 +10,18 @@ import java.util.List;
 
 public class Main {
     public static ErrorReport doControls(Arguments args) {
+        // fjern kvartalsdelen av skjemanummeret da kvartalet også kommer som et eget argument
+        args.setSkjema(args.getSkjema().substring(0, 2));
+
+        if (args.getRegion().endsWith("0000")){
+            if (args.getSkjema().equalsIgnoreCase("0A")){
+                args.setSkjema("0C");
+            } else if (args.getSkjema().equalsIgnoreCase("0B")){
+                args.setSkjema("0D");
+            }
+
+        }
+
         ErrorReport er = new ErrorReport(args);
         List<String> list1 = args.getInputContentAsStringList();
 

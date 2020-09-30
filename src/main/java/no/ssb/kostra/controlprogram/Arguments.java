@@ -92,6 +92,10 @@ public class Arguments {
         return skjema;
     }
 
+    public void setSkjema(String skjema) {
+        this.skjema = skjema;
+    }
+
     public String getAargang() {
         return aargang;
     }

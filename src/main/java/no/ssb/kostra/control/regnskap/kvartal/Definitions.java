@@ -26,7 +26,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return (List<String>) getKontoklasseAsMap(skjema).values();
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -83,12 +83,6 @@ public class Definitions {
                 switch (region) {
                     case "030100":
                         result.addAll(osloFunksjoner);
-                        result.addAll(fylkeskommunaleFunksjoner);
-                        result.addAll(kommunaleFunkjoner);
-                        result.addAll(finansielleFunksjoner);
-                        break;
-
-                    case "500100":
                         result.addAll(fylkeskommunaleFunksjoner);
                         result.addAll(kommunaleFunkjoner);
                         result.addAll(finansielleFunksjoner);

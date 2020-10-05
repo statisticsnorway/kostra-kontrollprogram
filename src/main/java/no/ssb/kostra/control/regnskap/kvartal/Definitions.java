@@ -26,14 +26,14 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return (List<String>) getKontoklasseAsMap(skjema).values();
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
         // Funksjoner
         List<String> kommunaleFunkjoner = List.of(
                 "100", "110", "120", "121", "130",
-                "170", "171", "172", "173", "180",
+                "170", "171", "172", "173", "180", "190",
                 "201", "202", "211", "213", "215", "221", "222", "223", "231", "232", "233", "234", "241", "242", "243", "244",
                 "251", "252", "253", "254", "256", "261", "265", "273", "275", "276", "281", "283", "285", "290",
                 "301", "302", "303", "315", "320", "321", "325", "329", "330", "332", "335", "338", "339", "340", "345",
@@ -42,7 +42,7 @@ public class Definitions {
 
         List<String> fylkeskommunaleFunksjoner = List.of(
                 "400", "410", "420", "421", "430",
-                "460", "465", "470", "471", "472", "473", "480",
+                "460", "465", "470", "471", "472", "473", "480", "490",
                 "510", "515", "520", "521", "522", "523", "524", "525", "526", "527", "528", "529", "530", "531", "532", "533", "534", "535", "536", "537",
                 "554", "559", "561", "562", "570", "581", "590",
                 "660",
@@ -83,12 +83,6 @@ public class Definitions {
                 switch (region) {
                     case "030100":
                         result.addAll(osloFunksjoner);
-                        result.addAll(fylkeskommunaleFunksjoner);
-                        result.addAll(kommunaleFunkjoner);
-                        result.addAll(finansielleFunksjoner);
-                        break;
-
-                    case "500100":
                         result.addAll(fylkeskommunaleFunksjoner);
                         result.addAll(kommunaleFunkjoner);
                         result.addAll(finansielleFunksjoner);
@@ -138,7 +132,7 @@ public class Definitions {
                 "300", "330", "350", "370", "375",
                 "400", "429", "430", "450", "470", "475",
                 "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
-                "600", "620", "629", "630", "640", "650", "660", "670",
+                "600", "620", "629", "630", "640", "650", "660", "670", "690",
                 "700", "710", "729", "730", "750", "770", "775",
                 "800", "810", "830", "850", "870", "874", "875", "877", "890", "895",
                 "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940", "950", "970", "980", "989", "990"

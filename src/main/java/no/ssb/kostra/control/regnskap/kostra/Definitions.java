@@ -38,7 +38,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -199,7 +199,7 @@ public class Definitions {
             result.addAll(basisSektorer);
         }
 
-        return result;
+        return result.stream().sorted().collect(Collectors.toList());
     }
 
     public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {
@@ -229,12 +229,14 @@ public class Definitions {
             case "3":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .sorted()
                         .collect(Collectors.toList());
             // Investering
             case "0":
             case "4":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .sorted()
                         .collect(Collectors.toList());
 
             default:

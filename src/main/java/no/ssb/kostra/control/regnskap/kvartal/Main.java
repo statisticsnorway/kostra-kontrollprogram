@@ -52,9 +52,9 @@ public class Main {
         // Kombinasjonskontroller, per record
         regnskap.forEach(p -> {
             if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(no.ssb.kostra.control.regnskap.kostra.Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
+                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
                     // driftsregnskapet
-                    List<String> gyldigeDriftFunksjoner = no.ssb.kostra.control.regnskap.kostra.Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
+                    List<String> gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             p
                             , er
@@ -63,7 +63,7 @@ public class Main {
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
                                     + gyldigeDriftFunksjoner
                                     + "), eller overfør posteringen til investeringsregnskapet."
-                                    , Constants.CRITICAL_ERROR
+                                    , Constants.NORMAL_ERROR
                             )
                             , "funksjon_kapittel"
                             , gyldigeDriftFunksjoner);
@@ -77,7 +77,7 @@ public class Main {
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
                                     + gyldigeDriftArter
                                     + "), eller overfør posteringen til investeringsregnskapet."
-                                    , Constants.CRITICAL_ERROR
+                                    , Constants.NORMAL_ERROR
                             )
                             , "art_sektor"
                             , gyldigeDriftArter);
@@ -92,7 +92,7 @@ public class Main {
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
                                     + gyldigeInvesteringArter
                                     + "), eller overfør posteringen til driftsregnskapet."
-                                    , Constants.CRITICAL_ERROR
+                                    , Constants.NORMAL_ERROR
                             )
                             , "art_sektor"
                             , gyldigeInvesteringArter);

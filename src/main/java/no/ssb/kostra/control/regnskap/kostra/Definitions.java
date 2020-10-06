@@ -217,7 +217,7 @@ public class Definitions {
         // Kun gyldig i investering og skal fjernes fra drift
         List<String> ugyldigDrift = List.of("512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
         // Kun gyldig i drift og skal fjernes fra investering
-        List<String> ugyldigInvestering = List.of("240", "509", "540", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990");
+        List<String> ugyldigInvestering = List.of("240", "509", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990");
 
         return getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering);
     }

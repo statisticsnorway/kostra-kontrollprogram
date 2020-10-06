@@ -21,7 +21,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return new ArrayList<>(getKontoklasseAsMap(skjema).values());
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -55,6 +55,7 @@ public class Definitions {
         return result.stream()
                 // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                 .map(c -> String.format("%1$-4s", c))
+                .sorted()
                 .collect(Collectors.toList());
     }
 
@@ -88,7 +89,7 @@ public class Definitions {
             result.addAll(sektorer);
         }
 
-        return result;
+        return result.stream().sorted().collect(Collectors.toList());
     }
 
     public static List<String> getSpesifikkeArter(String kontoklasse) {

@@ -38,7 +38,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -199,7 +199,7 @@ public class Definitions {
             result.addAll(basisSektorer);
         }
 
-        return result;
+        return result.stream().sorted().collect(Collectors.toList());
     }
 
     public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {
@@ -217,7 +217,7 @@ public class Definitions {
         // Kun gyldig i investering og skal fjernes fra drift
         List<String> ugyldigDrift = List.of("512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
         // Kun gyldig i drift og skal fjernes fra investering
-        List<String> ugyldigInvestering = List.of("240", "509", "540", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990");
+        List<String> ugyldigInvestering = List.of("240", "509", "570", "590", "600", "629", "640", "800", "870", "874", "875", "877", "909", "990");
 
         return getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering);
     }
@@ -229,12 +229,14 @@ public class Definitions {
             case "3":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .sorted()
                         .collect(Collectors.toList());
             // Investering
             case "0":
             case "4":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .sorted()
                         .collect(Collectors.toList());
 
             default:

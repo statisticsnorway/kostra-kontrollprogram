@@ -26,7 +26,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
+        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -57,10 +57,6 @@ public class Definitions {
 
         List<String> finansielleFunksjoner = List.of(
                 "800", "840", "841", "850", "860", "870", "880", "899"
-        );
-
-        List<String> finansielleSbdrFunksjoner = List.of(
-                "841", "850", "860", "870", "880", "899"
         );
 
         // Kapitler
@@ -112,6 +108,7 @@ public class Definitions {
         return result.stream()
                 // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                 .map(c -> String.format("%1$-4s", c))
+                .sorted()
                 .collect(Collectors.toList());
     }
 
@@ -167,7 +164,7 @@ public class Definitions {
             result.addAll(basisSektorer);
         }
 
-        return result;
+        return result.stream().sorted().collect(Collectors.toList());
     }
 
     public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {
@@ -197,12 +194,14 @@ public class Definitions {
             case "3":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .sorted()
                         .collect(Collectors.toList());
             // Investering
             case "0":
             case "4":
                 return alle.stream()
                         .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .sorted()
                         .collect(Collectors.toList());
 
             default:

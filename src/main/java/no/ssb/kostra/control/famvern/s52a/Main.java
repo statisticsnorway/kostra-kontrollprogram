@@ -12,11 +12,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
-    private static String createKontorNr(String kontornr){
+    private static String createKontorNr(String kontornr) {
         return "Kontornummer ".concat(kontornr);
     }
 
-    private static String createJournalNr(String journalnr, String linjenr){
+    private static String createJournalNr(String journalnr, String linjenr) {
         return "Journalnummer ".concat(journalnr).concat(" / Linjenummer ").concat(linjenr);
     }
 
@@ -36,8 +36,6 @@ public class Main {
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
-        Integer n = records.size();
-        int l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
@@ -74,7 +72,7 @@ public class Main {
                                 , " "
                                 , "Kontroll 04 Kontornummer"
                                 , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
-                                        + "Fant '" + r.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
+                                + "Fant '" + r.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
                                 , Constants.NORMAL_ERROR
                         )
                 );
@@ -427,32 +425,33 @@ public class Main {
                     , r.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
-
-            if (List.of(
-                    "BEKYMR_MELD_A", "DELT_PARTNER_A", "DELT_EKSPART_A", "DELT_BARNU18_A",
-                    "DELT_BARNO18_A", "DELT_FORELDRE_A", "DELT_OVRFAM_A", "DELT_VENN_A", "DELT_ANDR_A")
-                    .stream()
-                    .noneMatch(field -> r.getFieldDefinitionByName(field)
-                            .getCodeList()
-                            .stream()
-                            .map(Code::getCode)
-                            .collect(Collectors.toList())
-                            .contains(r.getFieldAsString(field)))
-            ) {
-                er.addEntry(
-                        new ErrorReportEntry(
-                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 24 Deltagelse i behandlingssamtaler med primærklienten i løpet av året."
-                                , "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler "
-                                + "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut."
-                                , Constants.NORMAL_ERROR
-                        )
-                );
-            }
-
+            List.of(
+                    List.of("Partner", "DELT_PARTNER_A"),
+                    List.of("Ekspartner", "DELT_EKSPART_A"),
+                    List.of("Barn under 18år", "DELT_BARNU18_A"),
+                    List.of("Barn over 18år", "DELT_BARNO18_A"),
+                    List.of("Foreldre", "DELT_FORELDRE_A"),
+                    List.of("Øvrige familie", "DELT_OVRFAM_A"),
+                    List.of("Venner", "DELT_VENN_A"),
+                    List.of("Andre", "DELT_ANDR_A")
+            ).forEach(fieldPair ->
+                    ControlFelt1InneholderKodeFraKodeliste.doControl(
+                            r,
+                            er,
+                            new ErrorReportEntry(
+                                    createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                                    , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                                    , String.valueOf(r.getLine())
+                                    , " "
+                                    , "Kontroll 24 Deltagelse i behandlingssamtaler med primærklienten i løpet av året, " + fieldPair.get(0)
+                                    , "Det er ikke krysset av for om andre deltakere (" + fieldPair.get(0) + ") i saken har deltatt i samtaler "
+                                    + "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.<br/>\n"
+                                    , Constants.NORMAL_ERROR
+                            ),
+                            fieldPair.get(1),
+                            r.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                    )
+            );
 
             if (List.of(
                     "SAMT_PRIMK_A", "SAMT_PARTNER_A", "SAMT_EKSPART_A", "SAMT_BARNU18_A", "SAMT_BARNO18_A",
@@ -519,9 +518,7 @@ public class Main {
             }
 
             {
-
-
-                if (List.of("ANTSAMT_HOVEDT_A", "ANTSAMT_ANDREANS_A").stream().noneMatch(field -> 0 < r.getFieldAsInteger(field))) {
+                if (List.of("ANTSAMT_HOVEDT_A", "ANTSAMT_ANDREANS_A").stream().noneMatch(field -> 0 < r.getFieldAsIntegerDefaultEquals0(field))) {
                     er.addEntry(
                             new ErrorReportEntry(
                                     createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
@@ -529,7 +526,8 @@ public class Main {
                                     , String.valueOf(r.getLine())
                                     , " "
                                     , "Kontroll 27 Antall behandlingssamtaler for ansatte ved kontoret i løpet av året"
-                                    , "Det er ikke oppgitt hvor mange behandlingssamtaler hovedterapeut eller andre ansatte har deltatt i gjennom året. Feltet er obligatorisk å fylle ut."
+                                    , "Det er ikke oppgitt hvor mange behandlingssamtaler hovedterapeut (" + r.getFieldAsIntegerDefaultEquals0("ANTSAMT_HOVEDT_A") + ") "
+                                    + "eller andre ansatte (" + r.getFieldAsIntegerDefaultEquals0("ANTSAMT_HOVEDT_A") + ") har deltatt i gjennom året. Feltet er obligatorisk å fylle ut."
                                     , Constants.NORMAL_ERROR
                             )
                     );

@@ -75,17 +75,17 @@ public class ErrorReport {
         entries.add(entry);
     }
 
-//	public String generateReport(String regionNumber, File sourceFile, File reportFile) {
-//		return "";
-//	}
-
     public String generateReport() {
 
         StringBuilder report = new StringBuilder();
         String lf = Constants.lineSeparator;
 
-        report.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(lf)
-                .append("<html><body>").append(lf)
+        report
+                .append("<html>")
+                .append("<head>").append(lf)
+                .append("<title>Kontrollrapport</title>").append(lf)
+                .append("</head>").append(lf)
+                .append("<body>").append(lf)
                 .append("<hr/>").append(lf)
                 .append("<h2>Kontrollrapport for ").append(this.args.getRegion()).append(" ").append(args.getNavn()).append("</h2>").append(lf)
                 .append("<hr/>").append(lf).append(lf).append("<h4>Kontrollprogramversjon: ").append(VERSION).append("</h4>").append(lf)
@@ -95,7 +95,7 @@ public class ErrorReport {
                 .append("<h4>Antall sjekker utført: ").append(this.count).append("</h4>").append(lf).append(lf);
 
         if (!mapEntries.isEmpty()) {
-            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf).append("<hr/><br/>").append(lf).append(lf);
+            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf).append("<hr/>").append(lf).append(lf);
 
             for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
                 CharSequence s = "***";
@@ -105,13 +105,12 @@ public class ErrorReport {
                     report.append(String.format("<div style='color: red  '>%s har funnet %d feil som hindrer innsending</div>", entry.getKey(), entry.getValue())).append(lf);
                 } else {
                     report.append(String.format("<div style='color: black'>%s har funnet %d advarsler</div>", entry.getKey(), entry.getValue())).append(lf);
-
                 }
             }
 
-            report.append("<br/>").append(lf)
+            report
                     .append("<h4>Opplisting av feil og advarsler pr. ").append(executiveOfficerHeader).append(", ").append(journalNumberHeader).append(", kontrollnr. og kontrolltekst):</h4>").append(lf)
-                    .append("<hr/><br/><br/>").append(lf).append(lf);
+                    .append("<hr/>").append(lf);
 
             for (String saksbehandler : rapportMap.keySet()) {
                 int kritiskeFeil = 0;
@@ -123,7 +122,7 @@ public class ErrorReport {
                 report.append("   <ul>").append(lf);
                 for (String journalnummer : saksbehandlerMap.keySet()) {
                     Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
-                    report.append("      <li>").append(journalNumberHeader).append(" ").append(journalnummer).append("</li>").append(lf)
+                    report.append("      <li style='font-size:14pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
                             .append("      <ul>").append(lf);
 
                     for (String refNr : journalnummerMap.keySet()) {
@@ -139,23 +138,27 @@ public class ErrorReport {
                             normaleFeil++;
                         }
 
-                        report.append("         <li style='color: ").append(htmlcolor).append("'><pre>").append(kontrollnummer).append("</pre>").append(lf)
-								.append("         <ul><li style='color: ").append(htmlcolor).append("'><pre>").append(kontrolltekst).append("</pre></li></ul></li>").append(lf);
+                        report.append("         <li style='font-size:14pt; color: ").append(htmlcolor).append("'><pre>").append(kontrollnummer).append("</pre>").append(lf)
+                                .append("         <ul><li style='font-size:14pt; color: ").append(htmlcolor).append("'><pre>").append(kontrolltekst).append("</pre></li></ul></li>").append(lf);
 
                     }
-                    report.append("      </ul>").append(lf);
+
+                    report
+                            .append("      </ul>").append(lf)
+                            .append("</li>");
+
 
                 }
+
+                report.append("      </ul>").append(lf);
 
                 htmlcolor = (kritiskeFeil > 0) ? "red  " : "black";
 
                 report.append("   <h3 style='color: ").append(htmlcolor).append("'>Oppsummering ").append(saksbehandler).append("</h3>").append(lf)
-                        .append("   <ul><li style='color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
-                        .append("   <li>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li></ul><br/>").append(lf)
-                        .append(lf).append(lf);
+                        .append("   <ul>")
+                        .append("    <li style='font-size:14pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
+                        .append("    <li style='font-size:14pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
                 report.append("   </ul>").append(lf);
-                report.append("</ul><br/>").append(lf);
-
             }
 
         } else {
@@ -163,11 +166,11 @@ public class ErrorReport {
                 report.append("Finner ingen data!  :-(");
                 this.errorType = Constants.CRITICAL_ERROR;
             } else {
-                report.append("Ingen feil funnet!<br/><br/><br/><br/>").append(lf).append(lf).append(lf).append(lf);
+                report.append("Ingen feil funnet!").append(lf);
             }
         }
 
-        report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append("<br/><br/><br/><br/><br/>").append(lf).append(lf);
+        report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append(lf).append(lf);
         report.append("</body></html>").append(lf);
 
         return report.toString();

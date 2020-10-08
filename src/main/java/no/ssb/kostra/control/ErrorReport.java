@@ -122,7 +122,7 @@ public class ErrorReport {
                 report.append("   <ul>").append(lf);
                 for (String journalnummer : saksbehandlerMap.keySet()) {
                     Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
-                    report.append("      <li style='font-size:14pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
+                    report.append("      <li style='font-size:12pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
                             .append("      <ul>").append(lf);
 
                     for (String refNr : journalnummerMap.keySet()) {
@@ -138,8 +138,8 @@ public class ErrorReport {
                             normaleFeil++;
                         }
 
-                        report.append("         <li style='font-size:14pt; color: ").append(htmlcolor).append("'><pre>").append(kontrollnummer).append("</pre>").append(lf)
-                                .append("         <ul><li style='font-size:14pt; color: ").append(htmlcolor).append("'><pre>").append(kontrolltekst).append("</pre></li></ul></li>").append(lf);
+                        report.append("         <li style='font-size:12pt; color: ").append(htmlcolor).append("'><pre>").append(kontrollnummer).append("</pre>").append(lf)
+                                .append("         <ul><li style='font-size:12pt; color: ").append(htmlcolor).append("'><pre>").append(kontrolltekst).append("</pre></li></ul></li>").append(lf);
 
                     }
 
@@ -156,8 +156,8 @@ public class ErrorReport {
 
                 report.append("   <h3 style='color: ").append(htmlcolor).append("'>Oppsummering ").append(saksbehandler).append("</h3>").append(lf)
                         .append("   <ul>")
-                        .append("    <li style='font-size:14pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
-                        .append("    <li style='font-size:14pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
+                        .append("    <li style='font-size:12pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
+                        .append("    <li style='font-size:12pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
                 report.append("   </ul>").append(lf);
             }
 

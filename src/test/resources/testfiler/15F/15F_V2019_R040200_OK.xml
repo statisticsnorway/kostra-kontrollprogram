@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Barnevern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Avgiver Organisasjonsnummer="944117784" Versjon="2019" Kommunenummer="0402" Kommunenavn="Kongsvinger"/>
+    <Individ Avslutta3112="1" Saksbehandler="TEST" StartDato="2019-01-23" Id="123456" SluttDato="2019-05-18" Fodselsnummer="13100400200" Journalnummer="112233">
+        <Melding SluttDato="2019-02-28" Konklusjon="2" Id="3553" StartDato="2019-02-23">
+            <Melder Kode="9"/>
+            <Saksinnhold Kode="7"/>
+            <Undersokelse SluttDato="2019-05-17" Konklusjon="3" Id="1234" StartDato="2019-02-28"/>
+        </Melding>
+    </Individ>
+    <Individ Avslutta3112="1" Saksbehandler="TEST" StartDato="2019-02-23" Id="123789" SluttDato="2019-05-18" Fodselsnummer="01060900200" Journalnummer="111111">
+        <Melding SluttDato="2019-02-28" Konklusjon="2" Id="4567" StartDato="2019-02-23">
+            <Melder Kode="9"/>
+            <Saksinnhold Kode="7"/>
+            <Undersokelse SluttDato="2019-05-17" Konklusjon="3" Id="1597" StartDato="2019-02-28"/>
+        </Melding>
+    </Individ>
+</Barnevern>

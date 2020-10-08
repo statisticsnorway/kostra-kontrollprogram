@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Created-By: 13.0.2 (OpenJDK)
+Main-Class: no.ssb.kostra.controlprogram.CLI

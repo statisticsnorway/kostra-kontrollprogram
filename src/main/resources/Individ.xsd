@@ -196,7 +196,10 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 			<xs:annotation>
 				<xs:documentation>Kode for konklusjon av meldingen: 
 1 = Henlagt 
-2 = Ikke henlagt – konklusjonsdato melding (eventuelt 7 dager etter mottatt melding) er startdato undersøkelse</xs:documentation>
+2 = Ikke henlagt – konklusjonsdato melding (eventuelt 7 dager etter mottatt melding) er startdato undersøkelse
+3 = Henlagt pga. aktive tiltak
+4 = Melding i pågående undersøkelse
+</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:list>
@@ -206,6 +209,8 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 							<xs:maxLength value="1"/>
 							<xs:enumeration value="1"/>
 							<xs:enumeration value="2"/>
+							<xs:enumeration value="3"/>
+							<xs:enumeration value="4"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:list>

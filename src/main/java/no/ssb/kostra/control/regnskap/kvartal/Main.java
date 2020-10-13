@@ -52,7 +52,7 @@ public class Main {
         // Kombinasjonskontroller, per record
         regnskap.forEach(p -> {
             if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-                if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
+                if (Comparator.isCodeInCodelist(p.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
                     // driftsregnskapet
                     List<String> gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -82,7 +82,7 @@ public class Main {
                             , "art_sektor"
                             , gyldigeDriftArter);
 
-                } else if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
+                } else if (Comparator.isCodeInCodelist(p.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
                     List<String> gyldigeInvesteringArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             p

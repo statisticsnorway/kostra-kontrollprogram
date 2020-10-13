@@ -7,18 +7,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 // TODO full gjennomgang av Definitions mot kravspek
 public class Definitions {
-    public static Map<String, String> getKontoklasseAsMap(String skjema) {
-        Map<String, String> map = new HashMap<>();
+    public static Map<String, List<String>> getKontoklasseAsMap(String skjema) {
+        Map<String, List<String>> map = new HashMap<>();
         switch (skjema) {
             case "0A":
             case "0C":
-                map.put("D", "1");
-                map.put("I", "0");
+                map.put("D", List.of("1"));
+                map.put("I", List.of("0"));
                 break;
 
             case "0B":
             case "0D":
-                map.put("B", "2");
+                map.put("B", List.of("2", "Z", "z", "~"));
                 break;
         }
 
@@ -26,7 +26,7 @@ public class Definitions {
     }
 
     public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
+        return getKontoklasseAsMap(skjema).values().stream().flatMap(List::stream).map(String::trim).sorted().collect(Collectors.toList());
     }
 
     public static List<String> getFunksjonKapittelAsList(String skjema, String region) {
@@ -56,7 +56,8 @@ public class Definitions {
         );
 
         List<String> finansielleFunksjoner = List.of(
-                "800", "840", "841", "850", "860", "870", "880", "899"
+                "800", "840", "841", "850", "860", "870", "880", "899",
+                "Z", "z", "~"
         );
 
         // Kapitler
@@ -64,7 +65,9 @@ public class Definitions {
                 "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23", "24", "27", "28", "29",
                 "31", "32", "33", "34", "35", "39", "40", "41", "42", "43", "45", "47", "51", "53", "55", "56", "580", "581",
                 "5900", "5950", "5960", "5970", "5990",
-                "9100", "9110", "9200", "9999"
+                "9100", "9110", "9200", "9999",
+                "Z", "z", "~", ""
+
         );
 
         List<String> regionaleKapitler = List.of(
@@ -132,7 +135,8 @@ public class Definitions {
                 "600", "620", "629", "630", "640", "650", "660", "670", "690",
                 "700", "710", "729", "730", "750", "770", "775",
                 "800", "810", "830", "850", "870", "874", "875", "877", "890", "895",
-                "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940", "950", "970", "980", "989", "990"
+                "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "930", "940", "950", "970", "980", "989", "990",
+                "Z", "z", "~"
         );
 
         List<String> konserninterneArter = List.of(
@@ -145,7 +149,8 @@ public class Definitions {
 
         // Sektorer
         List<String> basisSektorer = List.of(
-                "000", "070", "080", "110", "151", "152", "200", "320", "355", "395", "430", "450", "499", "550", "570", "610", "640", "650", "890", "900"
+                "000", "070", "080", "110", "151", "152", "200", "320", "355", "395", "430", "450", "499", "550", "570", "610", "640", "650", "890", "900",
+                "Z", "z", "~"
         );
 
         List<String> result = new ArrayList<>();
@@ -164,7 +169,12 @@ public class Definitions {
             result.addAll(basisSektorer);
         }
 
-        return result.stream().sorted().collect(Collectors.toList());
+        return result.stream()
+                // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 3 tegn lange
+                .map(c -> String.format("%1$-3s", c))
+                .sorted()
+                .collect(Collectors.toList());
+
     }
 
     public static List<String> getSpesifikkeFunksjoner(String skjema, String region, String kontoklasse) {

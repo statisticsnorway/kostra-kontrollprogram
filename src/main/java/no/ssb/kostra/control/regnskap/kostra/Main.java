@@ -452,7 +452,7 @@ public class Main {
         //I = Investeringsregnskap (kontoklasse 0 / 4)
         List<String> exceptionsOrgnr = List.of(
                 "958935420" // 0301 Oslo
-                , "939214895" // 3005 Drammen
+                , "921234554" // 3005 Drammen
                 , "964338531" // 4601 Bergen
                 , "817920632" // 5000 Sør-Trøndelag
         );

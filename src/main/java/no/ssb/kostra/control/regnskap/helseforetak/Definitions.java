@@ -5,23 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Definitions {
-    public static Map<String, String> getKontoklasseAsMap(String skjema) {
-        switch (skjema) {
-            case "0X":
-                return Map.of("R", " ");
-
-            case "0Y":
-                return Map.of("B", " ");
-
-            default:
-                return Map.of();
-        }
-    }
-
-    public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).collect(Collectors.toList());
-    }
-
     public static List<String> getFunksjonKapittelAsList(String skjema) {
         switch (skjema) {
             case "0X":

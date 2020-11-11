@@ -44,7 +44,7 @@ public class Main {
 
         // integritetskontroller
         ControlIntegritet.doControl(regnskap, er, l, args, bevilgningRegnskapList, balanseRegnskapList
-                , Definitions.getKontoklasseAsList(args.getSkjema())
+                , List.of(" ")
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema())
                 , Definitions.getArtSektorAsList(args.getSkjema())
         );

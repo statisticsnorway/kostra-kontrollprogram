@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class ControlAlleFeltIListeHarLikSum {
     public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<String> fieldList) {
-        int sum = r.getFieldAsInteger(fieldList.get(0));
+        int sum = r.getFieldAsIntegerDefaultEquals0(fieldList.get(0));
         boolean allSumsEqual = fieldList.stream()
-                .map(r::getFieldAsInteger)
+                .map(r::getFieldAsIntegerDefaultEquals0)
                 .allMatch(item -> item == sum);
 
         if (!allSumsEqual) {

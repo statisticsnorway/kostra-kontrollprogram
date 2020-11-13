@@ -93,7 +93,8 @@ public class Main {
 
             // Kontroll 06 Avsluttede meklinger etter deltakere
             {
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(clTSSSTF, clTBE);
+                String measure = "OPPMOTE";
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clTBE);
 
                 ControlFelt1LikSumAvListe.doControl(
                         r
@@ -262,7 +263,7 @@ public class Main {
 
             // Kontroll 14 Kontroll av totalsummer for meklinger
             {
-                List<String> fieldLists = List.of("MEKLING_TOT_TOT", "TOT_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
+                List<String> fieldLists = List.of("MEKLING_TOT_TOT", "OPPMOTE_TOT_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
 
                 ControlAlleFeltIListeHarLikSum.doControl(
                         r

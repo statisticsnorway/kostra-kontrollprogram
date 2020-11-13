@@ -123,7 +123,7 @@ public class Main {
                         " ", " ", " ", " "
                         , "Kontroll Sum inntekter og kostnader = 0"
                         , "Sjekk at sum art 300 til og med art 899 skal være 0, her (" + differanse + "). Differanse +/- 100' kroner godtas."
-                        , Constants.CRITICAL_ERROR
+                        , Constants.NORMAL_ERROR
                 ));
             }
         }

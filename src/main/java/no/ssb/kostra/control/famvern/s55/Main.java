@@ -285,7 +285,7 @@ public class Main {
 
             // Kontroll 14 Kontroll av totalsummer for meklinger
             {
-                List<String> fieldLists = List.of("MEKLING_TOT_TOT", "OPPMOTE_TOT_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
+                List<String> fieldLists = List.of("MEKLING_TOT_ALLE", "ENBEGGE_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
 
                 ControlAlleFeltIListeHarLikSum.doControl(
                         r

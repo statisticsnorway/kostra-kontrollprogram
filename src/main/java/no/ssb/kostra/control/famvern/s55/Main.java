@@ -73,7 +73,18 @@ public class Main {
             // Kontroll 05 Avsluttede meklinger etter tidsbruk
             {
                 String measure = "MEKLING";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123)
+                        // Listen med feltnavn i filbeskrivelsen er inkonsistent.
+                        // Mekker litt på de genererte feltnavnene slik at de passer med filbeskrivelsen.
+                        .stream()
+                        .map(sublist -> sublist
+                                .stream()
+                                .map(item -> (item.equalsIgnoreCase("MEKLING_TOT_TOT") ? "MEKLING_TOT_ALLE" : item))
+                                .collect(Collectors.toList())
+
+                        )
+                        .collect(Collectors.toList());
+
 
                 ControlFelt1LikSumAvListe.doControl(
                         r
@@ -93,8 +104,19 @@ public class Main {
 
             // Kontroll 06 Avsluttede meklinger etter deltakere
             {
-                String measure = "OPPMOTE";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clTBE);
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(clTSSSTF, clTBE)
+                        // Listen med feltnavn i filbeskrivelsen er inkonsistent.
+                        // Mekker litt på de genererte feltnavnene slik at de passer med filbeskrivelsen.
+                        .stream()
+                        .map(sublist -> sublist
+                                .stream()
+                                .map(item -> (item.equalsIgnoreCase("TOT_BEGGE") ? "BEGGE_TOT" : item))
+                                .map(item -> (item.equalsIgnoreCase("TOT_EN") ? "EN_TOT" : item))
+                                .map(item -> (item.equalsIgnoreCase("TOT_TOT") ? "ENBEGGE_TOT" : item))
+                                .collect(Collectors.toList())
+
+                        )
+                        .collect(Collectors.toList());
 
                 ControlFelt1LikSumAvListe.doControl(
                         r

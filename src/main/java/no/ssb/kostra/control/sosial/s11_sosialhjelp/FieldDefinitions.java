@@ -476,6 +476,7 @@ public class FieldDefinitions {
                                 new Code("2", "Bor i leid kommunal bolig"),
                                 new Code("3", "Bor i eid bolig"),
                                 new Code("4", "Er uten bolig"),
+                                new Code("5", "Annet"),
                                 new Code("6", "Bor i institusjon"),
                                 new Code("7", "Annet")),
                         "",

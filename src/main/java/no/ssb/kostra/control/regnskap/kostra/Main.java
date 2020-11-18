@@ -35,7 +35,8 @@ public class Main {
                 "030111", "030112", "030113", "030114", "030115"
         );
         List<String> svalbard = List.of("211100");
-        String saksbehandler = "Filuttrekk";
+        String kombinasjonskontroller = "4. Kombinasjonskontroller";
+        String summeringskontroller = "5. Summeringskontroller";
         Integer n = regnskap.size();
         int l = String.valueOf(n).length();
 
@@ -60,7 +61,7 @@ public class Main {
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             p
                             , er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og funksjon"
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
                                     + gyldigeDriftFunksjoner
@@ -74,7 +75,7 @@ public class Main {
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             p
                             , er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
                                     + gyldigeDriftArter
@@ -88,7 +89,7 @@ public class Main {
                         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                                 p
                                 , er
-                                , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                                , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                         , "Kontroll Kombinasjon i driftsregnskapet kontoklasse, funksjon og art"
                                         , "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. "
                                         + "I driftsregnskapet, kontoklasse " + p.getFieldAsString("kontoklasse") + ", er artene 874 og 875 kun tillat brukt i kombinasjon med funksjon 800"
@@ -106,7 +107,7 @@ public class Main {
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                             p
                             , er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og funksjon"
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i investeringsregnskapet, én av ("
                                     + gyldigeInvesteringFunksjoner
@@ -123,7 +124,7 @@ public class Main {
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             p
                             , er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
                                     + gyldigeInvesteringArter
@@ -138,7 +139,7 @@ public class Main {
                         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                                 p
                                 , er
-                                , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                                , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                         , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse, funksjon og art"
                                         , "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. "
                                         + "Art 729 er kun gyldig i kombinasjon funksjon 841 i investeringsregnskapet. "
@@ -158,7 +159,7 @@ public class Main {
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                        , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon funksjon og art"
                                 , "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
                                 + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989"
@@ -172,7 +173,7 @@ public class Main {
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                         p
                         , er
-                        , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                        , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon funksjon og art"
                                 , "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
                                 + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989"
@@ -209,7 +210,7 @@ public class Main {
                 if (regionaleBevilgningRegnskapList.contains(args.getSkjema())) {
                     if (!(0 < sumInvesteringsUtgifter)) {
                         er.addEntry(new ErrorReportEntry(
-                                saksbehandler, "Summeringskontroller", " ", " "
+                                summeringskontroller, "Investeringsregnskapet", " ", " "
                                 , "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer investeringsregnskapet"
                                 , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
@@ -227,8 +228,8 @@ public class Main {
                 if (regionaleBevilgningRegnskapList.contains(args.getSkjema())) {
                     if (!(sumInvesteringsInntekter < 0)) {
                         er.addEntry(new ErrorReportEntry(
-                                saksbehandler, "Summeringskontroller", " ", " "
-                                , "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringene investeringsregnskapet"
+                                summeringskontroller, "Investeringsregnskapet", " ", " "
+                                , "Kontroll Summeringskontroller investeringsregnskap, inntektsposteringene investeringsregnskapet"
                                 , "Korrigér slik at fila inneholder inntektsposteringene (" + sumInvesteringsInntekter + ") i investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         ));
@@ -240,7 +241,7 @@ public class Main {
 
                 if (!Between.betweenInclusive(sumInvestering, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Investeringsregnskapet", " ", " "
                             , "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet"
                             , "Korrigér differansen (" + sumInvestering + ") mellom "
                             + "inntekter (" + sumInvesteringsInntekter + ") og "
@@ -259,7 +260,7 @@ public class Main {
                 if (Comparator.isCodeInCodelist(args.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
                     if (!(0 < sumDriftsUtgifter)) {
                         er.addEntry(new ErrorReportEntry(
-                                saksbehandler, "Summeringskontroller", " ", " "
+                                summeringskontroller, "Driftsregnskapet", " ", " "
                                 , "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer driftsregnskapet"
                                 , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumDriftsUtgifter + ") i driftsregnskapet"
                                 , Constants.CRITICAL_ERROR
@@ -277,7 +278,7 @@ public class Main {
                 if (Comparator.isCodeInCodelist(args.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
                     if (!(sumDriftsInntekter < 0)) {
                         er.addEntry(new ErrorReportEntry(
-                                saksbehandler, "Summeringskontroller", " ", " "
+                                summeringskontroller, "Driftsregnskapet", " ", " "
                                 , "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer driftsregnskapet"
                                 , "Korrigér slik at fila inneholder inntektsposteringene (" + sumDriftsInntekter + ") i driftsregnskapet"
                                 , Constants.CRITICAL_ERROR
@@ -290,7 +291,7 @@ public class Main {
 
                 if (!Between.betweenInclusive(sumDrift, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Driftsregnskapet", " ", " "
                             , "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet"
                             , "Korrigér differansen (" + sumDrift + ") mellom "
                             + "inntekter (" + sumDriftsInntekter + ") og "
@@ -313,7 +314,7 @@ public class Main {
 
             if (!(0 < sumAktiva)) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, registrering av aktiva"
                         , "Korrigér slik at fila inneholder registrering av aktiva (" + sumAktiva + ") i balanse."
                         , Constants.CRITICAL_ERROR
@@ -329,7 +330,7 @@ public class Main {
 
             if (!(sumPassiva < 0)) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, registrering av passiva"
                         , "Korrigér slik at fila inneholder registrering av passiva (" + sumPassiva + ") i balanse."
                         , Constants.CRITICAL_ERROR
@@ -341,7 +342,7 @@ public class Main {
 
             if (!Between.betweenInclusive(sumBalanse, -10, 10)) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, differanse"
                         , "Korrigér differansen (" + sumBalanse + ") mellom "
                         + "aktiva (" + sumAktiva + ") og "
@@ -368,7 +369,7 @@ public class Main {
 
                 if (!(sumSkatteInntekter < 0)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Skatteinntekter og rammetilskudd", " ", " "
                             , "Kontroll Skatteinntekter og rammetilskudd, skatteinntekter"
                             , "Korrigér slik at fila inneholder skatteinntekter (" + sumSkatteInntekter + ")."
                             , Constants.CRITICAL_ERROR
@@ -385,7 +386,7 @@ public class Main {
 
                 if (!(sumSkatteInntekterAndreFunksjoner == 0)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Skatteinntekter og rammetilskudd", " ", " "
                             , "Kontroll Skatteinntekter og rammetilskudd, funksjon 800, art 870"
                             , "Korrigér slik at skatteinntekter kun er ført på funksjon 800, art 870. "
                             + "Sum skatteinntekter fra andre funksjoner/art870 er (" + sumSkatteInntekterAndreFunksjoner + ")"
@@ -403,7 +404,7 @@ public class Main {
 
                 if (!(sumRammetilskuddAndreFunksjoner == 0)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Skatteinntekter og rammetilskudd", " ", " "
                             , "Kontroll Skatteinntekter og rammetilskudd, art 800"
                             , "Korrigér slik at rammetilskudd kun er ført på funksjon 840, art 800. "
                             + "Sum rammetilskudd fra andre funksjoner/art800 er (" + sumRammetilskuddAndreFunksjoner + ")"
@@ -435,7 +436,7 @@ public class Main {
 
                 if (!Between.betweenInclusive(differanse, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Overføringer", " ", " "
                             , "Kontroll Overføring mellom drifts- og investeringsregnskap"
                             , "Korrigér i fila slik at differansen (" + differanse
                             + ") i overføringer mellom drifts- (" + driftsoverforinger
@@ -456,8 +457,8 @@ public class Main {
                 , "964338531" // 4601 Bergen
                 , "817920632" // 5000 Sør-Trøndelag
         );
-        if (bevilgningRegnskapList.contains(args.getSkjema())) {
-            if (!osloBydeler.contains(args.getRegion()) && !exceptionsOrgnr.contains(args.getOrgnr())) {
+        if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+            if (!Comparator.isCodeInCodelist(args.getRegion(), osloBydeler) && !Comparator.isCodeInCodelist(args.getOrgnr(), exceptionsOrgnr)) {
                 int motpostAvskrivninger = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
                                 && p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("860")
@@ -467,11 +468,14 @@ public class Main {
                         .reduce(0, Integer::sum);
 
                 if (motpostAvskrivninger == 0) {
+                    // For 0I og 0K: Myk kontroll / NORMAL_ERROR, For alle andre: hard kontroll / CRITICAL_ERROR
+                    int errorType = (Comparator.isCodeInCodelist(args.getSkjema(), List.of("0I", "0K")))? Constants.NORMAL_ERROR : Constants.CRITICAL_ERROR;
+
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, motpost avskrivninger"
                             , "Korrigér i fila slik at den inneholder motpost avskrivninger (" + motpostAvskrivninger + "), føres på funksjon 860 og art 990."
-                            , Constants.CRITICAL_ERROR
+                            , errorType
                     ));
                 }
 
@@ -484,7 +488,7 @@ public class Main {
 
                 if (avskrivninger == 0) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, avskrivninger"
                             , "Korrigér i fila slik at den inneholder avskrivninger (" + avskrivninger + "), føres på tjenestefunksjon og art 590."
                             , Constants.NORMAL_ERROR
@@ -495,7 +499,7 @@ public class Main {
 
                 if (!Between.betweenInclusive(differanse, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, differanse"
                             , "Korrigér i fila slik at avskrivninger (" + avskrivninger + ") stemmer overens med motpost avskrivninger (" + motpostAvskrivninger + ") (margin på +/- 30')"
                             , Constants.CRITICAL_ERROR
@@ -512,7 +516,7 @@ public class Main {
 
                 if (!(avskrivningerAndreFunksjoner == 0)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, avskrivninger ført på andre funksjoner"
                             , "Korrigér i fila slik at avskrivningene føres på tjenestefunksjon. Avskrivninger fra andre funksjoner/art590 er (" + avskrivningerAndreFunksjoner + ")"
                             , Constants.CRITICAL_ERROR
@@ -529,7 +533,7 @@ public class Main {
 
                 if (!(motpostAvskrivningerAndreFunksjoner == 0)) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, motpost avskrivninger ført på andre funksjoner"
                             , "Korrigér i fila slik at motpost avskrivninger kun er ført på funksjon 860, art 990."
                             + "Sum motpost avskrivninger fra andre funksjoner/art 990 er (" + motpostAvskrivningerAndreFunksjoner + ")"
@@ -554,7 +558,7 @@ public class Main {
 
                 if (!(Between.betweenInclusive(funksjon290Investering, -30, 30))) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Funksjon 290", " ", " "
                             , "Kontroll Funksjon 290, investeringsregnskapet"
                             , "Korrigér i fila slik at differanse (" + funksjon290Investering + ") på funksjon 290 interkommunale samarbeid (§27-samarbeid) går i 0 i investeringsregnskapet . (margin på +/- 30')"
                             , Constants.CRITICAL_ERROR
@@ -570,7 +574,7 @@ public class Main {
 
                 if (!(Between.betweenInclusive(funksjon290Drift, -30, 30))) {
                     er.addEntry(new ErrorReportEntry(
-                            saksbehandler, "Summeringskontroller", " ", " "
+                            summeringskontroller, "Funksjon 290", " ", " "
                             , "Kontroll Funksjon 290, driftsregnskapet"
                             , "Korrigér i fila slik at differanse (" + funksjon290Drift + ") på funksjon 290 interkommunale samarbeid (§27-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')"
                             , Constants.CRITICAL_ERROR
@@ -592,7 +596,7 @@ public class Main {
 
             if (!(Between.betweenInclusive(funksjon465Investering, -30, 30))) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Funksjon 465", " ", " "
                         , "Kontroll Funksjon 465, investeringsregnskapet"
                         , "Korrigér i fila slik at differanse (" + funksjon465Investering + ") på "
                         + "funksjon 465 Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet . (margin på +/- 30')"
@@ -609,7 +613,7 @@ public class Main {
 
             if (!(Between.betweenInclusive(funksjon465Drift, -30, 30))) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Funksjon 465", " ", " "
                         , "Kontroll Funksjon 465, driftsregnskapet"
                         , "Korrigér i fila slik at differanse (" + funksjon465Drift + ") på "
                         + "funksjon 465 Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')"
@@ -639,7 +643,7 @@ public class Main {
 
             if (!(Between.betweenInclusive(differanse, -10, 10))) {
                 er.addEntry(new ErrorReportEntry(
-                        saksbehandler, "Summeringskontroller", " ", " "
+                        summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Memoriakonti"
                         , "Korrigér i fila slik at differansen (" + differanse + ") mellom "
                         + "memoriakontiene (" + sumMemoriaKonti + ") og "

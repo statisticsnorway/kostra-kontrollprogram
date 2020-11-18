@@ -12,7 +12,7 @@ public class ControlIntegritetFelt1InneholderKodeFraKodeliste {
         ControlFelt1InneholderKodeFraKodeliste.doControl(
                 r
                 , er
-                , new ErrorReportEntry("Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
+                , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
                         , "Kontroll " + title
                         , "Korrigér " + title.toLowerCase() + ". Fant '" + r.getFieldAsString(field) + "', forventet én av : "
                         + expectedList.stream().map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))

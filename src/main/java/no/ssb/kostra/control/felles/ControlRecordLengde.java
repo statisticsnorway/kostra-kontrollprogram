@@ -25,8 +25,8 @@ public class ControlRecordLengde {
         er.incrementCount();
 
         if (!recordLengdeFeil.isEmpty()) {
-            er.addEntry(new ErrorReportEntry("Filuttrekk"
-                    , "Integritetskontroller", " ", " "
+            er.addEntry(new ErrorReportEntry("1. Filbeskrivelse"
+                    , "", " ", " "
                     , "Kontroll 01 Recordlengde"
                     , "Korrigér filen slik at alle record er på " + length +
                     " tegn, mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift. <br/>"

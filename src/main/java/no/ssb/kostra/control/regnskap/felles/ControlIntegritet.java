@@ -41,7 +41,7 @@ public class ControlIntegritet {
             ControlHeltall.doControl(
                     p
                     , er
-                    , new ErrorReportEntry("Integritetskontroller", Utils.createLinenumber(l, p), " ", " "
+                    , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, p), " ", " "
                             , "Kontroll beløp."
                             , "Korrigér feil beløp (" + p.getFieldAsString("belop") + ")"
                             , Constants.CRITICAL_ERROR

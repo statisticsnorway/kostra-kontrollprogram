@@ -25,7 +25,7 @@ public class ControlDubletter {
 
         if (!dubletter.isEmpty()) {
             er.addEntry(
-                    new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
+                    new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
                             , "Kontroll Dubletter"
                             , "Dubletter (lik " + String.join(" * ", fieldList) + ") summeres sammen. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
                             , Constants.NORMAL_ERROR

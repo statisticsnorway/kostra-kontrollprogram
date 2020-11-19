@@ -11,7 +11,7 @@ public class ControlIntegritetFelt1InneholderKode {
         ControlFelt1InneholderKodeFraKodeliste.doControl(
                 r
                 , er
-                , new ErrorReportEntry("Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
+                , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
                         , "Kontroll " + title
                         , "Korrigér " + title.toLowerCase() + ". Fant '" + r.getFieldAsString(field) + "', forventet '" + expected + "'"
                         , errorType

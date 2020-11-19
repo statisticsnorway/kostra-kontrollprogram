@@ -15,7 +15,7 @@ public class ControlFilbeskrivelse {
 
     public static void doControl(List<Record> records, ErrorReport er) {
         er.incrementCount();
-        Integer n = records.size();
+        int n = records.size();
         Integer l = String.valueOf(n).length();
 
 
@@ -45,7 +45,7 @@ public class ControlFilbeskrivelse {
                         if (length < 1) {
                             er.addEntry(
                                     new ErrorReportEntry(
-                                            "Filuttrekk"
+                                            "2. Filbeskrivelse"
                                             , createLinenumber(l, line)
                                             , " "
                                             , " "
@@ -65,7 +65,7 @@ public class ControlFilbeskrivelse {
                                 if (codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(stringValue))) {
                                     er.addEntry(
                                             new ErrorReportEntry(
-                                                    "Filuttrekk"
+                                                    "2. Filbeskrivelse"
                                                     , createLinenumber(l, line)
                                                     , " "
                                                     , " "
@@ -83,7 +83,7 @@ public class ControlFilbeskrivelse {
                                     if (!hasIntegerValue) {
                                         er.addEntry(
                                                 new ErrorReportEntry(
-                                                        "Filuttrekk"
+                                                        "2. Filbeskrivelse"
                                                         , createLinenumber(l, line)
                                                         , " "
                                                         , " "
@@ -108,7 +108,7 @@ public class ControlFilbeskrivelse {
                                     } catch (Exception e) {
                                         er.addEntry(
                                                 new ErrorReportEntry(
-                                                        "Filuttrekk"
+                                                        "2. Filbeskrivelse"
                                                         , createLinenumber(l, line)
                                                         , " "
                                                         , " "
@@ -128,7 +128,7 @@ public class ControlFilbeskrivelse {
                                 // verdien kan ikke være blank
                                 er.addEntry(
                                         new ErrorReportEntry(
-                                                "Filuttrekk"
+                                                "2. Filbeskrivelse"
                                                 , createLinenumber(l, line)
                                                 , " "
                                                 , " "

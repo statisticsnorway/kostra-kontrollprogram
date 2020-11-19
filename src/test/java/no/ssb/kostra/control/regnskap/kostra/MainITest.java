@@ -2,8 +2,6 @@ package no.ssb.kostra.control.regnskap.kostra;
 
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.FieldDefinition;
-import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;
 import org.junit.Before;
@@ -12,25 +10,21 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 public class MainITest {
     InputStream sysInBackup;
     private Arguments args;
-    private ErrorReport er;
-    private String inputFileContent;
-    private List<FieldDefinition> fieldDefinitions;
 
 
     @Before
     public void beforeTest() {
         //@formatter:off
-        inputFileContent =
-                //00000000111111111122222222223333333333444444444
-                //23456789012345678901234567890123456789012345678
-                "0C2020 340000                  1860 990  .......\n" +
+        //00000000111111111122222222223333333333444444444
+        //23456789012345678901234567890123456789012345678
+        String inputFileContent = "0C2020 340000                  1860 990  .......\n" +
                 "0C2020 340000                  1860 990  -503152\n" +
                 "0C2020 340000                  1841 990        0\n" +
                 "0C2020 340000                  1790 950     -195\n" +
@@ -153,8 +147,6 @@ public class MainITest {
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
         System.setIn(in);
 
-        fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-
         args = new Arguments(new String[]{"-s", "0C", "-y", "2020", "-r", "340000"});
     }
 
@@ -165,7 +157,7 @@ public class MainITest {
 
     @Test
     public void testDoControl() {
-        er = Main.doControls(args);
+        ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {
             System.out.print(er.generateReport());

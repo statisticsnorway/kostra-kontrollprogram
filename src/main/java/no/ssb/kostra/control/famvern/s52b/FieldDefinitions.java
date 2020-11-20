@@ -56,7 +56,7 @@ public class FieldDefinitions {
                         "",
                         false),
                 new FieldDefinition(7, "HOVEDI_GR_B",
-                        "Integer",
+                        "String",
                         "dropDownList",
                         55, 56
                         , List.of(

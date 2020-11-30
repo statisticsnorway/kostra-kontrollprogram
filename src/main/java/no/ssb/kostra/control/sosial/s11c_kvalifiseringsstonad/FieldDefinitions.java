@@ -764,6 +764,8 @@ public class FieldDefinitions {
                         "checkBox",
                         108, 109,
                         List.of(
+                                new Code("00", "Uoppgitt"),
+                                new Code("  ", "Blank"),
                                 new Code("01", "Ordinært arbeid (heltid/deltid)")),
                         "",
                         false),

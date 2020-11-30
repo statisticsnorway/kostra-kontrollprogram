@@ -10,12 +10,10 @@ import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 public class IndividNodeHandler extends NodeHandler {
@@ -99,10 +97,10 @@ public class IndividNodeHandler extends NodeHandler {
             controlValidateByXSD(
                     er,
                     new ErrorReportEntry(
-                            "Kontrollprogram ",
-                            journalnummer,
-                            individId,
-                            refNr,
+                            " ",
+                            " ",
+                            " ",
+                            " ",
                             "Individ Kontroll 01: Validering av individ",
                             "Definisjon av Individ er feil i forhold til filspesifikasjonen",
                             Constants.CRITICAL_ERROR), individ.getNode()
@@ -156,7 +154,7 @@ public class IndividNodeHandler extends NodeHandler {
                             refNr,
                             "Individ Kontroll 02d: Avslutta 31 12 medfører at sluttdato skal være satt",
                             "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er "
-                                    + individSluttDatoString + " ",
+                                    + individSluttDatoString + ". Kode for avsluttet er '" + avslutta3112 + "'.",
                             Constants.CRITICAL_ERROR), avslutta3112,
                     individSluttDato, telleDato);
 
@@ -361,8 +359,11 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Melding ("
                                         + meldingId
                                         + "). Konkludert melding mangler melder(e).",
-                                Constants.CRITICAL_ERROR), melding, "Melder",
-                        "exceptionMelding");
+                                Constants.CRITICAL_ERROR), melding,
+                        "Melder",
+                        "Melding ("
+                                + meldingId
+                                + "). Konkludert melding mangler melder(e).");
 
                 controlKonkludertMeldingUnderNoder(
                         er,
@@ -376,18 +377,20 @@ public class IndividNodeHandler extends NodeHandler {
                                         + meldingId
                                         + "). Konkludert melding mangler saksinnhold.",
                                 Constants.CRITICAL_ERROR), melding,
-                        "Saksinnhold", "exceptionMelding");
+                        "Saksinnhold",
+                        "Melding ("
+                                + meldingId
+                                + "). Konkludert melding mangler saksinnhold.");
 
                 List<StructuredNode> melderList = melding
                         .queryNodeList("Melder");
 
                 // Kontroller for Melder
-                if (meldingSluttDato.isAfter(forrigeTelleDato)) {
+                if (meldingSluttDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
                     if (melderList != null) {
                         for (StructuredNode melder : melderList) {
                             // 22 = Andre offentlige instanser
-                            // 23 = Andre
-                            List<String> koder = List.of("22", "23");
+                            List<String> koder = List.of("22");
                             String melderKode = (melder.queryString("@Kode") != null && melder
                                     .queryString("@Kode").length() > 0) ? melder
                                     .queryString("@Kode") : "";
@@ -976,7 +979,7 @@ public class IndividNodeHandler extends NodeHandler {
                 }
             }
 
-            List<String> kodelistePlasseringsTiltak = List.of("1.1", "1.2", "1.99", "2.1", "2.2", "2.3", "2.4", "2.5", "2.99", "8.2");
+            List<String> kodelistePlasseringsTiltak = List.of("1.1", "1.2", "1.99", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.99", "8.2");
 
             controlFlerePlasseringstiltakISammePeriode(
                     er,
@@ -994,8 +997,8 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             e.printStackTrace();
             er.addEntry(new ErrorReportEntry("Kontrollprogram", journalnummer,
-                    individId, refNr, "Individ K1: Feil for individet", e
-                    .getMessage(), Constants.CRITICAL_ERROR));
+                    individId, refNr, "Individ K1: Feil for individet",
+                    Arrays.stream(e.getStackTrace()).collect(Collectors.toList()).toString(), Constants.CRITICAL_ERROR));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1310,7 +1313,7 @@ public class IndividNodeHandler extends NodeHandler {
                 er.addEntry(ere);
             }
 
-        } catch (XPathExpressionException e) {
+        } catch (XPathExpressionException | NullPointerException e) {
             ere.setErrorText(exceptionMelding);
             er.addEntry(ere);
         }

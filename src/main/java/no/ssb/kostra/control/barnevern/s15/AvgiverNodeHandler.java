@@ -42,8 +42,8 @@ public class AvgiverNodeHandler extends NodeHandler {
 			 *   - Kontrollerer mot filbeskrivelse for avgiver, Avgiver.xsd
 			 * </pre>
 			 */
-			controlValidateByXSD(er, new ErrorReportEntry("Kontrollprogrammet",
-					"0", "0", "0", "Avgiver K1: Validering av avgiver",
+			controlValidateByXSD(er, new ErrorReportEntry(" ",
+					" ", " ", " ", "Avgiver K1: Validering av avgiver",
 					"Klarer ikke å validere Avgiver mot filspesifikasjon",
 					Constants.CRITICAL_ERROR), node.getNode()
 					.getOwnerDocument(), "Avgiver.xsd");
@@ -66,11 +66,11 @@ public class AvgiverNodeHandler extends NodeHandler {
 			 *   - Kontrollerer at filen har organisasjonsnummer for avgiver
 			 * </pre>
 			 */
-			controlExists(er, new ErrorReportEntry(" ", " ", " ", " ",
+			controlOrgnr(er, new ErrorReportEntry(" ", " ", " ", " ",
 					"Avgiver K3: Organisasjonnummer",
-					"Filen mangler organisasjonsnummer.",
+					"Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '"+ node.queryString("@Organisasjonsnummer").trim() +"'",
 					Constants.CRITICAL_ERROR),
-					node.queryString("@Organisasjonsnummer"));
+					node.queryString("@Organisasjonsnummer").trim());
 
 			/**
 			 * <pre>
@@ -92,25 +92,6 @@ public class AvgiverNodeHandler extends NodeHandler {
 							Constants.CRITICAL_ERROR),
 					node.queryString("@Kommunenummer"), args.getRegion().substring(0, 4));
 
-// TODO
-// Denne utelates da K4 er god nok kontroll av kommunenummer
-			/**
-			 * <pre>
-			 * - Avgiver K5: Gyldig kommunenummer
-			 *   - Kontrollerer at kommunenummeret fins i liste over gyldige kommunenumre som er med i denne rapporteringen
-			 * </pre>
-			 */
-//			controlBoolean(
-//					er,
-//					new ErrorReportEntry(
-//							" ",
-//							" ",
-//							" ",
-//							" ",
-//							"Avgiver K5: Gyldig kommunenummer",
-//							"Filen inneholder feil kommunenummer. Fins ikke i listen over gyldige kommunenumre.",
-//							Constants.CRITICAL_ERROR),
-//					no.ssb.kostra.utils.Regioner.kommuneNrIsValid(region));
 
 			/**
 			 * <pre>
@@ -118,9 +99,9 @@ public class AvgiverNodeHandler extends NodeHandler {
 			 *   - Kontrollerer at kommunenavn fins i filen
 			 * </pre>
 			 */
-			controlExists(er, new ErrorReportEntry(" ", " ", " ", " ",
+			controlExistsAndHasLength(er, new ErrorReportEntry(" ", " ", " ", " ",
 					"Avgiver K6: Kommunenavn", "Filen mangler kommunenavn.",
-					Constants.CRITICAL_ERROR), node.queryString("@Kommunenavn"));
+					Constants.CRITICAL_ERROR), node.queryString("@Kommunenavn").trim());
 
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();

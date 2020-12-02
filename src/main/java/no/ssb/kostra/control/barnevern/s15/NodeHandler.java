@@ -44,6 +44,10 @@ public abstract class NodeHandler {
         return s == null || s.trim().isEmpty();
     }
 
+    protected static String datePresentionFormat(){
+        return "dd-MM-yyyy";
+    }
+
     /**
      * Abstract metode som arves og implementeres mot den XML-noden som skal
      * sjekkes

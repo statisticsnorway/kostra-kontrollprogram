@@ -3,11 +3,13 @@ package no.ssb.kostra.control.barnevern.s15;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.DatoFnr;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -40,7 +42,8 @@ public class IndividNodeHandler extends NodeHandler {
      */
     public void setIndividAlder(LocalDate fodselsDato, LocalDate telleDato) {
         if (fodselsDato != null && telleDato != null) {
-            this.individAlder = ChronoUnit.YEARS.between(fodselsDato, telleDato);
+            Period p = Period.between(fodselsDato, telleDato);
+            this.individAlder = p.getYears();
         }
     }
 
@@ -111,13 +114,16 @@ public class IndividNodeHandler extends NodeHandler {
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
             LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
+            if (fodselsDato.isAfter(telleDato)){
+                fodselsDato = fodselsDato.minusYears(100L);
+            }
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
 
-            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
-            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
-            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
+            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
+            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
+            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
 
             individId = (individ.queryString("@Id") != null && individ.queryString("@Id").length() > 0) ? individ.queryString("@Id") : "Uoppgitt";
 
@@ -240,7 +246,7 @@ public class IndividNodeHandler extends NodeHandler {
                             saksbehandler, journalnummer, individId, refNr,
                             "Individ Kontroll 11: Fødselsnummer", " ",
                             Constants.NORMAL_ERROR), fodselsnummer,
-                    "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer for individ med journalnummer" + journalnummer + ".");
+                    "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.");
 
             // Kontroller for Melding
             List<StructuredNode> meldingList = individ.queryNodeList("Melding");
@@ -253,11 +259,11 @@ public class IndividNodeHandler extends NodeHandler {
                 LocalDate meldingSluttDato = assignDateFromString(
                         melding.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
-                String meldingStartDatoString = (meldingStartDato != null) 
-                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                String meldingStartDatoString = (meldingStartDato != null)
+                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
-                String meldingSluttDatoString = (meldingSluttDato != null) 
-                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                String meldingSluttDatoString = (meldingSluttDato != null)
+                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
                 String henlagt = "1";
                 String meldingKonklusjon = melding.queryString("@Konklusjon");
@@ -403,7 +409,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             journalnummer,
                                             individId,
                                             refNr,
-                                            "Melder Kontroll 2: Kontroll av kode og presisering",
+                                            "Melder Kontroll 2: Kontroll av kode " + melderKodeString + " og presisering",
                                             "Melder med kode ("
                                                     + melderKodeString
                                                     + ") mangler presisering",
@@ -432,7 +438,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             journalnummer,
                                             individId,
                                             refNr,
-                                            "Saksinnhold Kontroll 2: Kontroll av kode og presisering",
+                                            "Saksinnhold Kontroll 2: Kontroll av kode " + saksinnholdKodeString + " og presisering",
                                             "Saksinnhold med kode ("
                                                     + saksinnholdKodeString
                                                     + ") mangler presisering",
@@ -455,11 +461,11 @@ public class IndividNodeHandler extends NodeHandler {
                     LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
                             Constants.datoFormatLangt);
-                    String undersokelseStartDatoString = (undersokelseStartDato != null) 
-                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                    String undersokelseStartDatoString = (undersokelseStartDato != null)
+                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                             : "uoppgitt";
-                    String undersokelseSluttDatoString = (undersokelseSluttDato != null) 
-                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                    String undersokelseSluttDatoString = (undersokelseSluttDato != null)
+                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                             : "uoppgitt";
                     String undersokelseKonklusjon = defaultString(undersokelse.queryString("@Konklusjon"), "");
                     String undersokelsePresisering = defaultString(undersokelse.queryString("Presisering"), "");
@@ -1360,10 +1366,21 @@ public class IndividNodeHandler extends NodeHandler {
                 String kapittel = lovhjemmel.queryString("Kapittel");
                 String paragraf = lovhjemmel.queryString("Paragraf");
                 String ledd = lovhjemmel.queryString("Ledd");
-                String opphevelse = tiltak.queryString("Opphevelse/Presisering");
 
-                if (kapittel.equals("4") && (paragraf.equals("12"))
-                        || (paragraf.equals("8") && (ledd.equals("2") || ledd.equals("3")))) {
+                if (Comparator.isCodeInCodelist(kapittel, List.of("4"))
+                        &&
+                        (
+                                Comparator.isCodeInCodelist(paragraf, List.of("12"))
+                                        ||
+                                        (
+                                                Comparator.isCodeInCodelist(paragraf, List.of("8"))
+                                                        &&
+                                                        Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
+                                        )
+                        )
+                ) {
+                    String opphevelse = tiltak.queryString("Opphevelse/Presisering");
+
                     if (opphevelse != null && opphevelse.length() > 0) {
                         bool = true;
                     }
@@ -1480,8 +1497,8 @@ public class IndividNodeHandler extends NodeHandler {
                         secondId = second.queryString("@Id");
 
                         LocalDate firstStartLocalDate = first.assignDateFromString(
-                                        first.queryString("@StartDato"),
-                                        Constants.datoFormatLangt);
+                                first.queryString("@StartDato"),
+                                Constants.datoFormatLangt);
 
                         LocalDate firstSluttLocalDate = first
                                 .assignDateFromString(

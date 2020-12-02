@@ -69,5 +69,5 @@ public final class Constants {
       return aar;
     }
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 } // End class Constants.

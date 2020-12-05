@@ -27,7 +27,7 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKode
 
     @Before
     public void beforeTest() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888", "-i", "src/test/resources/15F_V2019_R040200_OK.xml"});
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
         er = new ErrorReport(args);
         ere = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av Kode i kodeliste", "Feil: fant ikke kode i kodeliste", Constants.CRITICAL_ERROR);

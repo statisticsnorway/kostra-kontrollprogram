@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Barnevern>
+    <Avgiver Versjon="2020" Kommunenummer="0301" Kommunenavn="Oslo" Organisasjonsnummer="958935420"/>
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
+        <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
+            <Melder Kode="1"/>
+            <Melder Kode="2"/>
+            <Melder Kode="3"/>
+            <Melder Kode="4"/>
+            <Melder Kode="5"/>
+            <Melder Kode="6"/>
+            <Melder Kode="7"/>
+            <Melder Kode="8"/>
+            <Melder Kode="9"/>
+            <Melder Kode="10"/>
+            <Melder Kode="11"/>
+            <Melder Kode="12"/>
+            <Melder Kode="13"/>
+            <Melder Kode="14"/>
+            <Melder Kode="15"/>
+            <Melder Kode="16"/>
+            <Melder Kode="17"/>
+            <Melder Kode="18"/>
+            <Melder Kode="19"/>
+            <Melder Kode="20"/>
+            <Melder Kode="21"/>
+            <Melder Kode="22">
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Melder Kode="23">
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Saksinnhold Kode="1"/>
+            <Saksinnhold Kode="2"/>
+            <Saksinnhold Kode="3"/>
+            <Saksinnhold Kode="4"/>
+            <Saksinnhold Kode="5"/>
+            <Saksinnhold Kode="6"/>
+            <Saksinnhold Kode="7"/>
+            <Saksinnhold Kode="8"/>
+            <Saksinnhold Kode="9"/>
+            <Saksinnhold Kode="10"/>
+            <Saksinnhold Kode="11"/>
+            <Saksinnhold Kode="12"/>
+            <Saksinnhold Kode="13"/>
+            <Saksinnhold Kode="14"/>
+            <Saksinnhold Kode="15"/>
+            <Saksinnhold Kode="16"/>
+            <Saksinnhold Kode="17"/>
+            <Saksinnhold Kode="18">
+                <Presisering>Presiseringstekst</Presisering>
+            </Saksinnhold>
+            <Saksinnhold Kode="19">
+                <Presisering>Presiseringstekst</Presisering>
+            </Saksinnhold>
+            <Undersokelse StartDato="2020-02-17" Id="U1" Konklusjon="1" SluttDato="2020-06-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+    </Individ>
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="2" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i2" Fodselsnummer="01011099293" Journalnummer="J2">
+        <Melding Id="M2" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Saksinnhold Kode="20"/>
+            <Saksinnhold Kode="21"/>
+            <Saksinnhold Kode="22"/>
+            <Saksinnhold Kode="23"/>
+            <Saksinnhold Kode="24"/>
+            <Saksinnhold Kode="25"/>
+            <Saksinnhold Kode="26"/>
+            <Saksinnhold Kode="27"/>
+            <Undersokelse StartDato="2020-02-17" Id="U2" Konklusjon="1" SluttDato="2020-05-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M3" StartDato="2020-02-10" Konklusjon="2" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U3" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M4" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U4" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M5" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U5" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M6" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U2" Konklusjon="1" SluttDato="2020-05-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M7" StartDato="2020-02-10" Konklusjon="2" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U3" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M8" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U4" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M9" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U5" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="18">
+                    <Presisering>Presisering</Presisering>
+                </Vedtaksgrunnlag>
+                <Vedtaksgrunnlag Kode="19">
+                    <Presisering>Presisering</Presisering>
+                </Vedtaksgrunnlag>
+            </Undersokelse>
+        </Melding>
+    </Individ>
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="02011088123" Journalnummer="J3">
+        <Plan StartDato="2020-02-11" Id="P1" Plantype="1" SluttDato="2020-06-17"/>
+    </Individ>
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="03011199282" Journalnummer="J4">
+        <Tiltak StartDato="2020-02-10" Id="T1" SluttDato="2020-03-10">
+            <Lovhjemmel Kapittel="4" Paragraf="12" Lov="BVL" Ledd="1"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="2"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="3"/>
+            <Kategori Kode="1.99">
+                <Presisering>Presisering</Presisering>
+            </Kategori>
+            <Opphevelse Kode="1">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+        <Tiltak StartDato="2020-02-10" Id="T2" SluttDato="2020-04-10">
+            <Lovhjemmel Kapittel="4" Paragraf="12" Lov="BVL" Ledd="1"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="2"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="3"/>
+            <Kategori Kode="1.99">
+                <Presisering>Presisering</Presisering>
+            </Kategori>
+            <Opphevelse Kode="1">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+    </Individ>
+</Barnevern>

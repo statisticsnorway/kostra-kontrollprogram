@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Barnevern>
+    <Avgiver Organisasjonsnummer="944117784" Versjon="2020" Kommunenummer="3401" Kommunenavn="SSB-TESTFIL FOR BARNEVERN"/>
+    <Individ Avslutta3112="1" Saksbehandler="00 Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
+        <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
+            <Melder Kode="1"/>
+            <Melder Kode="2"/>
+            <Melder Kode="3"/>
+            <Melder Kode="4"/>
+            <Melder Kode="5"/>
+            <Melder Kode="6"/>
+            <Melder Kode="7"/>
+            <Melder Kode="8"/>
+            <Melder Kode="9"/>
+            <Melder Kode="10"/>
+            <Melder Kode="11"/>
+            <Melder Kode="12"/>
+            <Melder Kode="13"/>
+            <Melder Kode="14"/>
+            <Melder Kode="15"/>
+            <Melder Kode="16"/>
+            <Melder Kode="17"/>
+            <Melder Kode="18"/>
+            <Melder Kode="19"/>
+            <Melder Kode="20"/>
+            <Melder Kode="21"/>
+            <Melder Kode="22">
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Melder Kode="23">
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Saksinnhold Kode="1"/>
+            <Saksinnhold Kode="2"/>
+            <Saksinnhold Kode="3"/>
+            <Saksinnhold Kode="4"/>
+            <Saksinnhold Kode="5"/>
+            <Saksinnhold Kode="6"/>
+            <Saksinnhold Kode="7"/>
+            <Saksinnhold Kode="8"/>
+            <Saksinnhold Kode="9"/>
+            <Saksinnhold Kode="10"/>
+            <Saksinnhold Kode="11"/>
+            <Saksinnhold Kode="12"/>
+            <Saksinnhold Kode="13"/>
+            <Saksinnhold Kode="14"/>
+            <Saksinnhold Kode="15"/>
+            <Saksinnhold Kode="16"/>
+            <Saksinnhold Kode="17"/>
+            <Saksinnhold Kode="18">
+                <Presisering>Presiseringstekst</Presisering>
+            </Saksinnhold>
+            <Saksinnhold Kode="19">
+                <Presisering>Presiseringstekst</Presisering>
+            </Saksinnhold>
+            <Undersokelse StartDato="2020-02-17" Id="U1" Konklusjon="1" SluttDato="2020-06-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+    </Individ>
+    <Individ Avslutta3112="2" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i2" Fodselsnummer="01011099293" Journalnummer="J2">
+        <Melding Id="M2" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Saksinnhold Kode="20"/>
+            <Saksinnhold Kode="21"/>
+            <Saksinnhold Kode="22"/>
+            <Saksinnhold Kode="23"/>
+            <Saksinnhold Kode="24"/>
+            <Saksinnhold Kode="25"/>
+            <Saksinnhold Kode="26"/>
+            <Saksinnhold Kode="27"/>
+            <Undersokelse StartDato="2020-02-17" Id="U2" Konklusjon="1" SluttDato="2020-05-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M3" StartDato="2020-02-10" Konklusjon="2" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U3" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M4" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U4" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M5" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U5" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M6" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U2" Konklusjon="1" SluttDato="2020-05-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M7" StartDato="2020-02-10" Konklusjon="2" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U3" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M8" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U4" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+        <Melding Id="M9" StartDato="2020-02-10" Konklusjon="3" SluttDato="2020-02-17">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-17" Id="U5" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+    </Individ>
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I5" Journalnummer="Individ K 04 #1" Fodselsnummer="03011199282">
+        <Plan StartDato="2020-02-02" SluttDato="2020-05-05" Id="P2" Plantype="1"/>
+    </Individ>
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" SluttDato="2020-05-05" Id="I7" Journalnummer="Individ K 05 #1" Fodselsnummer="04011288133">
+        <Plan StartDato="2020-02-02" Id="P4" Plantype="1"/>
+    </Individ>
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 08" Fodselsnummer="01010199286">
+        <Tiltak StartDato="2000-02-02" Id="P7">
+            <Lovhjemmel Kapittel="4" Paragraf="4" Lov="BVL" Ledd="2"/>
+            <Kategori Kode="1.1"/>
+        </Tiltak>
+    </Individ>
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 11" Fodselsnummer="01011655555">
+        <Plan StartDato="2000-02-02" Id="P8" Plantype="1"/>
+    </Individ>
+    <!-- Kontroller for Melding -->
+    <Individ Saksbehandler="02 Melvin Meldingskontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-01-20" Id="I14" Journalnummer="Melding K 3" Fodselsnummer="14011288295">
+        <Melding StartDato="2020-01-10" SluttDato="2020-01-20" Id="M5" Konklusjon="3">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+        </Melding>
+    </Individ>
+    <!-- Kontroller for Undersøkelse -->
+    <Individ Saksbehandler="05 Undis Undersøkelseskontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I27" Journalnummer="Undersøkelse K 8" Fodselsnummer="27011599163">
+        <Melding StartDato="2020-01-01" SluttDato="2020-01-05" Id="M18" Konklusjon="1">
+            <Melder Kode="1"/>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-01-05" Id="U9"/>
+        </Melding>
+    </Individ>
+    <!-- Kontroller for Plan -->
+    <Individ Saksbehandler="07 Pia Plankontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-02-15" Id="I26" Journalnummer="Plan K 2a" Fodselsnummer="01021099283">
+        <Plan StartDato="2020-01-10" Id="P10" Plantype="1" SluttDato="2020-01-15"/>
+    </Individ>
+    <!-- Kontroller for Tiltak -->
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I37" Journalnummer="Tiltak K 5" Fodselsnummer="12021099293">
+        <Tiltak StartDato="2020-01-10" Id="T18" SluttDato="2020-01-28">
+            <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
+            <Kategori Kode="4.1"/>
+        </Tiltak>
+    </Individ>
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I38" Journalnummer="Tiltak K 6" Fodselsnummer="03030388177">
+        <Tiltak StartDato="2020-01-10" Id="T19" SluttDato="2020-01-28">
+            <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
+            <Kategori Kode="4.2"/>
+        </Tiltak>
+    </Individ>
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I41" Journalnummer="Tiltak K 9" Fodselsnummer="15021388154">
+        <Tiltak StartDato="2020-01-10" Id="T22" SluttDato="2020-06-28">
+            <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
+            <Kategori Kode="1.1"/>
+        </Tiltak>
+        <Tiltak StartDato="2020-02-10" Id="T23" SluttDato="2020-07-28">
+            <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
+            <Kategori Kode="1.1"/>
+        </Tiltak>
+        <Tiltak StartDato="2020-03-10" Id="T24" SluttDato="2020-09-28">
+            <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
+            <Kategori Kode="1.1"/>
+        </Tiltak>
+    </Individ>
+    <!-- kontroller for Lovhjemmel -->
+    <Individ Saksbehandler="09 Lovise Lovhjemmelkontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I42" Journalnummer="Lovhjemmel K 2" Fodselsnummer="16021499122">
+        <Tiltak StartDato="2020-01-10" Id="T25" SluttDato="2020-01-28">
+            <Lovhjemmel Kapittel="4" Paragraf="12" Lov="1" Ledd="2"/>
+            <Kategori Kode="1.1"/>
+            <Opphevelse Kode="4">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+        <Tiltak StartDato="2020-02-10" Id="T26" SluttDato="2020-02-28">
+            <Lovhjemmel Kapittel="4" Paragraf="8" Lov="1" Ledd="2"/>
+            <Kategori Kode="1.1"/>
+            <Opphevelse Kode="4">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+        <Tiltak StartDato="2020-03-10" Id="T27" SluttDato="2020-03-28">
+            <Lovhjemmel Kapittel="4" Paragraf="8" Lov="1" Ledd="3"/>
+            <Kategori Kode="1.1"/>
+            <Opphevelse Kode="4">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+    </Individ>
+</Barnevern>

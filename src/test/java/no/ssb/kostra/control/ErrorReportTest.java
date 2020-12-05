@@ -13,7 +13,7 @@ public class ErrorReportTest {
 
     @Before
     public void beforeTest() {
-        args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900", "-i", "src/test/resources/15F_V2019_R040200_OK.xml"});
+        args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
         er = new ErrorReport(args);
     }
 

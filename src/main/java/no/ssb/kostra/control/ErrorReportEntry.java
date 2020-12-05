@@ -31,7 +31,7 @@ public class ErrorReportEntry {
 	}
 
 	public String getSaksbehandler() {
-		return saksbehandler;
+		return saksbehandler.trim();
 	}
 
 	public void setSaksbehandler(String saksbehandler) {
@@ -39,7 +39,7 @@ public class ErrorReportEntry {
 	}
 
 	public String getJournalnummer() {
-		return journalnummer;
+		return journalnummer.trim();
 	}
 
 	public void setJournalnummer(String journalnummer) {
@@ -47,7 +47,7 @@ public class ErrorReportEntry {
 	}
 
 	public String getIndividId() {
-		return individId;
+		return individId.trim();
 	}
 
 	public void setIndividId(String individId) {
@@ -55,7 +55,7 @@ public class ErrorReportEntry {
 	}
 
 	public String getRefNr() {
-		return refNr;
+		return refNr.trim();
 	}
 
 	public void setRefNr(String refNr) {

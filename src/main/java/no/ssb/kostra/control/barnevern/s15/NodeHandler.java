@@ -2,6 +2,7 @@ package no.ssb.kostra.control.barnevern.s15;
 
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -41,6 +42,10 @@ public abstract class NodeHandler {
     protected static boolean empty(final String s) {
         // Null-safe, short-circuit evaluation.
         return s == null || s.trim().isEmpty();
+    }
+
+    protected static String datePresentionFormat(){
+        return "dd-MM-yyyy";
     }
 
     /**
@@ -161,24 +166,6 @@ public abstract class NodeHandler {
     }
 
     /**
-     * Sjekker om boolean er true. Returnérer true hvis den er sann, ellers
-     * false samt at ErrorReportEntry legges til i ErrorReport
-     *
-     * @param er   ErrorReport
-     * @param ere  ErrorReportEntry
-     * @param bool boolean
-     * @return boolean
-     */
-    public boolean controlBoolean(ErrorReport er, ErrorReportEntry ere, boolean bool) {
-        if (bool) {
-            return true;
-        } else {
-            er.addEntry(ere);
-            return false;
-        }
-    }
-
-    /**
      * Oppretter en DateTime fra en tekst som inneholder dato og tekst med
      * datoformat
      *
@@ -210,7 +197,7 @@ public abstract class NodeHandler {
      * @see #controlExistsAndHasLength(ErrorReport, ErrorReportEntry, String)
      */
     public boolean controlPresisering(ErrorReport er, ErrorReportEntry ere, String kode, List<String> kodeliste, String presisering) {
-        if (erKodeIKodeliste(kode, kodeliste)) {
+        if (Comparator.isCodeInCodelist(kode, kodeliste)) {
             return controlExistsAndHasLength(er, ere, presisering);
         }
 
@@ -227,5 +214,23 @@ public abstract class NodeHandler {
      */
     public boolean erKodeIKodeliste(String kode, List<String> kodeliste) {
         return kodeliste.stream().anyMatch(item -> item.equalsIgnoreCase(kode));
+    }
+
+    /**
+     * Sjekker om organisajonsnummer er gyldig. Returnérer true hvis gyldig, ellers
+     * false
+     *
+     * @param er    ErrorReport
+     * @param ere   ErrorReportEntry
+     * @param orgnr String
+     * @return boolean
+     */
+    public boolean controlOrgnr(ErrorReport er, ErrorReportEntry ere, String orgnr) {
+        if (!Comparator.isValidOrgnr(orgnr)) {
+            er.addEntry(ere);
+            return false;
+        }
+
+        return true;
     }
 }

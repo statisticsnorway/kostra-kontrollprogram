@@ -5,14 +5,13 @@ import no.ssb.kostra.controlprogram.Arguments;
 import java.util.*;
 
 public class ErrorReport {
-    private final String VERSION = "2020.11";
     private final List<ErrorReportEntry> entries = new ArrayList<>();
     private final Map<String, Long> mapEntries = new TreeMap<>();
     private final Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<>();
     private final Date startTime = Calendar.getInstance().getTime();
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
-    private Arguments args;
+    private final Arguments args;
     private String executiveOfficerHeader = "";
     private String journalNumberHeader = "";
 
@@ -77,7 +76,7 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         String lf = Constants.lineSeparator;
-
+        String VERSION = "2020.12";
         report
                 .append("<html>")
                 .append("<head>").append(lf)

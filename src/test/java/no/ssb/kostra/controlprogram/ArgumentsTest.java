@@ -5,21 +5,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ArgumentsTest {
+    InputStream sysInBackup;
     private Arguments args;
     private String inputFileContent;
-    InputStream sysInBackup;
 
     @Before
     public void beforeTest() {
@@ -44,7 +38,7 @@ public class ArgumentsTest {
             args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
 
             String result = String.join("\n", args.getInputContentAsStringList());
-            assertTrue(result.length() == inputFileContent.length());
+            assertEquals(result.length(), inputFileContent.length());
             assertTrue(result.equalsIgnoreCase(inputFileContent));
 
         } catch (Exception e) {
@@ -54,7 +48,7 @@ public class ArgumentsTest {
 
     @Test
     public void testArguments() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F_V2019_R040200_OK.xml"});
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
 
         assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
         assertTrue(args.getAargang().equalsIgnoreCase("9999"));
@@ -69,27 +63,21 @@ public class ArgumentsTest {
 
     @Test
     public void testMissingArguments() {
-        Exception e1 = assertThrows(IllegalArgumentException.class, () -> {
-            args = new Arguments(new String[]{"-y", "9999", "-r", "000000"});
-        });
+        Exception e1 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-y", "9999", "-r", "000000"}));
 
         String expectedMessage1 = "parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A";
         String actualMessage1 = e1.getMessage();
 
         assertTrue(actualMessage1.contains(expectedMessage1));
 
-        Exception e2 = assertThrows(IllegalArgumentException.class, () -> {
-            args = new Arguments(new String[]{"-s", "Test", "-r", "000000"});
-        });
+        Exception e2 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-s", "Test", "-r", "000000"}));
 
         String expectedMessage2 = "parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020";
         String actualMessage2 = e2.getMessage();
 
         assertTrue(actualMessage2.contains(expectedMessage2));
 
-        Exception e3 = assertThrows(IllegalArgumentException.class, () -> {
-            args = new Arguments(new String[]{"-s", "Test", "-y", "9999"});
-        });
+        Exception e3 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-s", "Test", "-y", "9999"}));
 
         String expectedMessage3 = "parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100";
         String actualMessage3 = e3.getMessage();

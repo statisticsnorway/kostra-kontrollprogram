@@ -20,7 +20,7 @@ public class ControlHeltallTest {
     @Before
     public void beforeTest() {
         fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F_V2019_R040200_OK.xml"});
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
         er = new ErrorReport(args);
         ere = new ErrorReportEntry(" ", " ", " ", " "
                 , "Kontrol Recordlengde", "Feil: feil antall posisjoner", Constants.CRITICAL_ERROR);

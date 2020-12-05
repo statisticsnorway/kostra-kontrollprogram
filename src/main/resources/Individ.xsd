@@ -110,26 +110,45 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 		</xs:sequence>
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
+				<!-- Kode 4 utgår for 2021-data, delt i 20, 21, 22 og 23-->
+				<!-- Kode 13 utgår for 2021-data -->
+				<!-- Kode 16 utgår for 2021-data, delt i 25 og 26-->
+				<!-- Kode 27 ny for 2021-data-->
 				<xs:documentation>Kode for vedtaksgrunnlag:
+Koder om foreldrene:
 1 = Foreldres somatiske sykdom
 2 = Foreldres psykiske problem/ lidelse
 3 = Foreldres rusmisbruk
 4 = Foreldres manglende foreldreferdigheter
+20 = Foreldres manglende beskyttelse av barnet
+21 = Foreldres manglende stimulering og regulering av barnet
+22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
+23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
+24 = Konflikt mellom foreldre som ikke bor sammen
 5 = Foreldres kriminalitet
+
+Koder mellom foreldre og barnet:
 6 = Høy grad av konflikt hjemme
 7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
-8 = Barnet utsatt for vanskjøtsel
-9 = Barnet utsatt for fysisk mishandling
-10 = Barnet utsatt for psykisk mishandling
+
+Koder om barnet:
+8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
+9 = Barnet utsatt for fysisk vold
+10 = Barnet utsatt for psykisk vold
 11 = Barnet utsatt for seksuelle overgrep
 12 = Barnet mangler omsorgsperson
 13 = Barnet har nedsatt funksjonsevne
 14 = Barnets psykiske problem/lidelse
 15 = Barnets rusmisbruk
 16 = Barnets atferd/ kriminalitet
-17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner)
-18 = Andre forhold ved foreldre/ familien (krever presisering)
-19 = Andre forhold ved barnet og barnets situasjon (krever presisering)</xs:documentation>
+17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner) 
+25 = Barnets atferd
+26 = Barnets kriminelle handlinger
+27 = Barnet utsatt for menneskehandel
+
+Koder om annet:
+18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)
+19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -154,6 +173,14 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 					<xs:enumeration value="17"/>
 					<xs:enumeration value="18"/>
 					<xs:enumeration value="19"/>
+					<xs:enumeration value="20"/>
+					<xs:enumeration value="21"/>
+					<xs:enumeration value="22"/>
+					<xs:enumeration value="23"/>
+					<xs:enumeration value="24"/>
+					<xs:enumeration value="25"/>
+					<xs:enumeration value="26"/>
+					<xs:enumeration value="27"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
@@ -334,7 +361,7 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 20 = Utekontakt/ fritidsklubb
 21 = Frivillige organisasjoner/ idrettslag
 22 = Andre offentlige instanser (krever presisering)
-23 = Andre (krever presisering)</xs:documentation>
+23 = Anonym</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:list>
@@ -377,56 +404,78 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 		</xs:sequence>
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
+				<!-- Kode 4 utgår for 2021-data, delt i 20, 21, 22 og 23-->
+				<!-- Kode 13 utgår for 2021-data -->
+				<!-- Kode 16 utgår for 2021-data, delt i 25 og 26-->
+				<!-- Kode 27 ny for 2021-data-->
 				<xs:documentation>Kode for saksinnhold:
+Koder om foreldrene:
 1 = Foreldres somatiske sykdom
 2 = Foreldres psykiske problem/ lidelse
 3 = Foreldres rusmisbruk
 4 = Foreldres manglende foreldreferdigheter
+20 = Foreldres manglende beskyttelse av barnet
+21 = Foreldres manglende stimulering og regulering av barnet
+22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
+23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
+24 = Konflikt mellom foreldre som ikke bor sammen
 5 = Foreldres kriminalitet
+
+Koder mellom foreldre og barnet:
 6 = Høy grad av konflikt hjemme
 7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
+
+Koder om barnet:
 8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
-9 = Barnet utsatt for fysisk mishandling
-10 = Barnet utsatt for psykisk mishandling
+9 = Barnet utsatt for fysisk vold
+10 = Barnet utsatt for psykisk vold
 11 = Barnet utsatt for seksuelle overgrep
 12 = Barnet mangler omsorgsperson
 13 = Barnet har nedsatt funksjonsevne
 14 = Barnets psykiske problem/lidelse
 15 = Barnets rusmisbruk
 16 = Barnets atferd/ kriminalitet
-17 = Barnets relasjonsvansker (mistanke om tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner) 
-18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-17 passer.)
-19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-17 passer.)
-</xs:documentation>
+17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner) 
+25 = Barnets atferd
+26 = Barnets kriminelle handlinger
+27 = Barnet utsatt for menneskehandel
+
+Koder om annet:
+18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)
+19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
-				<xs:list>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:minLength value="1"/>
-							<xs:maxLength value="2"/>
-							<xs:enumeration value="1"/>
-							<xs:enumeration value="2"/>
-							<xs:enumeration value="3"/>
-							<xs:enumeration value="4"/>
-							<xs:enumeration value="5"/>
-							<xs:enumeration value="6"/>
-							<xs:enumeration value="7"/>
-							<xs:enumeration value="8"/>
-							<xs:enumeration value="9"/>
-							<xs:enumeration value="10"/>
-							<xs:enumeration value="11"/>
-							<xs:enumeration value="12"/>
-							<xs:enumeration value="13"/>
-							<xs:enumeration value="14"/>
-							<xs:enumeration value="15"/>
-							<xs:enumeration value="16"/>
-							<xs:enumeration value="17"/>
-							<xs:enumeration value="18"/>
-							<xs:enumeration value="19"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:list>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="2"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+					<xs:enumeration value="6"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="8"/>
+					<xs:enumeration value="9"/>
+					<xs:enumeration value="10"/>
+					<xs:enumeration value="11"/>
+					<xs:enumeration value="12"/>
+					<xs:enumeration value="13"/>
+					<xs:enumeration value="14"/>
+					<xs:enumeration value="15"/>
+					<xs:enumeration value="16"/>
+					<xs:enumeration value="17"/>
+					<xs:enumeration value="18"/>
+					<xs:enumeration value="19"/>
+					<xs:enumeration value="20"/>
+					<xs:enumeration value="21"/>
+					<xs:enumeration value="22"/>
+					<xs:enumeration value="23"/>
+					<xs:enumeration value="24"/>
+					<xs:enumeration value="25"/>
+					<xs:enumeration value="26"/>
+					<xs:enumeration value="27"/>
+				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
@@ -479,7 +528,8 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 2.2 = Fosterhjem utenfor familie og nære nettverk
 2.3 = Statlige familiehjem (gjelder fosterhjem som staten har ansvar for)  
 2.4 = Fosterhjem etter § 4-27
-2.5 = Beredskapshjem
+2.5 = Beredskapshjem utenom familie og nære nettverk
+2.6 = Midlertidig hjem i familie og nære nettverk
 2.99 = Andre tiltak (krever presisering)
 3.1 = MST
 3.2 = PMTO

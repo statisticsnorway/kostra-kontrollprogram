@@ -5,25 +5,22 @@ import no.ssb.kostra.controlprogram.Arguments;
 import java.util.*;
 
 public class ErrorReport {
-    private final String VERSION;
     private final List<ErrorReportEntry> entries = new ArrayList<>();
     private final Map<String, Long> mapEntries = new TreeMap<>();
     private final Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<>();
     private final Date startTime = Calendar.getInstance().getTime();
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
-    private Arguments args;
+    private final Arguments args;
     private String executiveOfficerHeader = "";
     private String journalNumberHeader = "";
 
 
     public ErrorReport() {
-        this.VERSION = args.getAargang() + ".09";
         this.args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900"});
     }
 
     public ErrorReport(Arguments args) {
-        this.VERSION = args.getAargang() + ".09";
         this.args = args;
         this.executiveOfficerHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Saksbehandler " : "";
         this.journalNumberHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Journalnummer " : "";
@@ -79,11 +76,15 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         String lf = Constants.lineSeparator;
-
+        String VERSION = "2020.12";
         report
                 .append("<html>")
                 .append("<head>").append(lf)
                 .append("<title>Kontrollrapport</title>").append(lf)
+                .append("<style>").append(lf)
+                .append("ul.itemlist li.item { line-height: 5pt; }").append(lf)
+                .append("ul.summarylist li.summary { line-height: normal; }").append(lf)
+                .append("</style>").append(lf)
                 .append("</head>").append(lf)
                 .append("<body>").append(lf)
                 .append("<hr/>").append(lf)
@@ -119,10 +120,10 @@ public class ErrorReport {
                 String htmlcolor = "black";
                 report.append("<h3>").append(executiveOfficerHeader).append(" ").append(saksbehandler).append("</h3>").append(lf);
 
-                report.append("   <ul>").append(lf);
+                report.append("   <ul class='itemlist'>").append(lf);
                 for (String journalnummer : saksbehandlerMap.keySet()) {
                     Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
-                    report.append("      <li style='font-size:12pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
+                    report.append("      <li class='item' style='font-size:12pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
                             .append("      <ul>").append(lf);
 
                     for (String refNr : journalnummerMap.keySet()) {
@@ -155,9 +156,9 @@ public class ErrorReport {
                 htmlcolor = (kritiskeFeil > 0) ? "red  " : "black";
 
                 report.append("   <h3 style='color: ").append(htmlcolor).append("'>Oppsummering ").append(saksbehandler).append("</h3>").append(lf)
-                        .append("   <ul>")
-                        .append("    <li style='font-size:12pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
-                        .append("    <li style='font-size:12pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
+                        .append("   <ul class='summarylist'>")
+                        .append("    <li class='summary' style='font-size:12pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
+                        .append("    <li class='summary' style='font-size:12pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
                 report.append("   </ul>").append(lf);
             }
 

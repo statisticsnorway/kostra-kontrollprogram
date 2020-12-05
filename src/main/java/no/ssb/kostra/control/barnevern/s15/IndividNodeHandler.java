@@ -3,19 +3,18 @@ package no.ssb.kostra.control.barnevern.s15;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.DatoFnr;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 public class IndividNodeHandler extends NodeHandler {
@@ -42,7 +41,8 @@ public class IndividNodeHandler extends NodeHandler {
      */
     public void setIndividAlder(LocalDate fodselsDato, LocalDate telleDato) {
         if (fodselsDato != null && telleDato != null) {
-            this.individAlder = ChronoUnit.YEARS.between(fodselsDato, telleDato);
+            Period p = Period.between(fodselsDato, telleDato);
+            this.individAlder = p.getYears();
         }
     }
 
@@ -99,10 +99,10 @@ public class IndividNodeHandler extends NodeHandler {
             controlValidateByXSD(
                     er,
                     new ErrorReportEntry(
-                            "Kontrollprogram ",
-                            journalnummer,
-                            individId,
-                            refNr,
+                            " ",
+                            " ",
+                            " ",
+                            " ",
                             "Individ Kontroll 01: Validering av individ",
                             "Definisjon av Individ er feil i forhold til filspesifikasjonen",
                             Constants.CRITICAL_ERROR), individ.getNode()
@@ -113,13 +113,17 @@ public class IndividNodeHandler extends NodeHandler {
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
             LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
+            if (fodselsDato.isAfter(telleDato)) {
+                fodselsDato = fodselsDato.minusYears(100L);
+            }
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
 
-            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
-            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
-            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) : "uoppgitt";
+            String telleDatoString = telleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()));
+            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
+            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
+            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
 
             individId = (individ.queryString("@Id") != null && individ.queryString("@Id").length() > 0) ? individ.queryString("@Id") : "Uoppgitt";
 
@@ -156,7 +160,7 @@ public class IndividNodeHandler extends NodeHandler {
                             refNr,
                             "Individ Kontroll 02d: Avslutta 31 12 medfører at sluttdato skal være satt",
                             "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er "
-                                    + individSluttDatoString + " ",
+                                    + individSluttDatoString + ". Kode for avsluttet er '" + avslutta3112 + "'.",
                             Constants.CRITICAL_ERROR), avslutta3112,
                     individSluttDato, telleDato);
 
@@ -242,7 +246,7 @@ public class IndividNodeHandler extends NodeHandler {
                             saksbehandler, journalnummer, individId, refNr,
                             "Individ Kontroll 11: Fødselsnummer", " ",
                             Constants.NORMAL_ERROR), fodselsnummer,
-                    "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer for individ med journalnummer" + journalnummer + ".");
+                    "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.");
 
             // Kontroller for Melding
             List<StructuredNode> meldingList = individ.queryNodeList("Melding");
@@ -255,11 +259,11 @@ public class IndividNodeHandler extends NodeHandler {
                 LocalDate meldingSluttDato = assignDateFromString(
                         melding.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
-                String meldingStartDatoString = (meldingStartDato != null) 
-                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                String meldingStartDatoString = (meldingStartDato != null)
+                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
-                String meldingSluttDatoString = (meldingSluttDato != null) 
-                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                String meldingSluttDatoString = (meldingSluttDato != null)
+                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
                 String henlagt = "1";
                 String meldingKonklusjon = melding.queryString("@Konklusjon");
@@ -361,8 +365,11 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Melding ("
                                         + meldingId
                                         + "). Konkludert melding mangler melder(e).",
-                                Constants.CRITICAL_ERROR), melding, "Melder",
-                        "exceptionMelding");
+                                Constants.CRITICAL_ERROR), melding,
+                        "Melder",
+                        "Melding ("
+                                + meldingId
+                                + "). Konkludert melding mangler melder(e).");
 
                 controlKonkludertMeldingUnderNoder(
                         er,
@@ -376,18 +383,20 @@ public class IndividNodeHandler extends NodeHandler {
                                         + meldingId
                                         + "). Konkludert melding mangler saksinnhold.",
                                 Constants.CRITICAL_ERROR), melding,
-                        "Saksinnhold", "exceptionMelding");
+                        "Saksinnhold",
+                        "Melding ("
+                                + meldingId
+                                + "). Konkludert melding mangler saksinnhold.");
 
                 List<StructuredNode> melderList = melding
                         .queryNodeList("Melder");
 
                 // Kontroller for Melder
-                if (meldingSluttDato.isAfter(forrigeTelleDato)) {
+                if (meldingSluttDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
                     if (melderList != null) {
                         for (StructuredNode melder : melderList) {
                             // 22 = Andre offentlige instanser
-                            // 23 = Andre
-                            List<String> koder = List.of("22", "23");
+                            List<String> koder = List.of("22");
                             String melderKode = (melder.queryString("@Kode") != null && melder
                                     .queryString("@Kode").length() > 0) ? melder
                                     .queryString("@Kode") : "";
@@ -400,7 +409,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             journalnummer,
                                             individId,
                                             refNr,
-                                            "Melder Kontroll 2: Kontroll av kode og presisering",
+                                            "Melder Kontroll 2: Kontroll av kode " + melderKodeString + " og presisering",
                                             "Melder med kode ("
                                                     + melderKodeString
                                                     + ") mangler presisering",
@@ -429,7 +438,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             journalnummer,
                                             individId,
                                             refNr,
-                                            "Saksinnhold Kontroll 2: Kontroll av kode og presisering",
+                                            "Saksinnhold Kontroll 2: Kontroll av kode " + saksinnholdKodeString + " og presisering",
                                             "Saksinnhold med kode ("
                                                     + saksinnholdKodeString
                                                     + ") mangler presisering",
@@ -452,11 +461,11 @@ public class IndividNodeHandler extends NodeHandler {
                     LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
                             Constants.datoFormatLangt);
-                    String undersokelseStartDatoString = (undersokelseStartDato != null) 
-                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                    String undersokelseStartDatoString = (undersokelseStartDato != null)
+                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                             : "uoppgitt";
-                    String undersokelseSluttDatoString = (undersokelseSluttDato != null) 
-                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort)) 
+                    String undersokelseSluttDatoString = (undersokelseSluttDato != null)
+                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                             : "uoppgitt";
                     String undersokelseKonklusjon = defaultString(undersokelse.queryString("@Konklusjon"), "");
                     String undersokelsePresisering = defaultString(undersokelse.queryString("Presisering"), "");
@@ -490,7 +499,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             + "). Undersøkelsens sluttdato ("
                                             + undersokelseSluttDatoString
                                             + ") er ikke i rapporteringsåret ("
-                                            + forrigeTelleDatoString + ")",
+                                            + avgiverVersjon + ")",
                                     Constants.CRITICAL_ERROR),
                             forrigeTelleDato, undersokelseSluttDato);
 
@@ -518,11 +527,11 @@ public class IndividNodeHandler extends NodeHandler {
                                     journalnummer,
                                     individId,
                                     refNr,
-                                    "Undersøkelse Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på",
+                                    "Undersøkelse Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på undersøkelsen",
                                     "Undersøkelse ("
                                             + undersokelseId
                                             + "). Individet er avsluttet hos barnevernet og dets undersøkelser skal dermed være avsluttet. Sluttdato er "
-                                            + undersokelseStartDatoString + "",
+                                            + undersokelseSluttDatoString + "",
                                     Constants.CRITICAL_ERROR), avslutta3112,
                             undersokelseSluttDato, telleDato);
 
@@ -578,6 +587,28 @@ public class IndividNodeHandler extends NodeHandler {
                             undersokelse.queryString("@SluttDato"),
                             undersokelseKonklusjon);
 
+                    List<StructuredNode> vedtaksgrunnlagList = undersokelse
+                            .queryNodeList("Vedtaksgrunnlag");
+                    // 1 = Barneverntjenesten fatter vedtak om tiltak
+                    // 2 = Begjæring om tiltak for fylkesnemnda
+                    List<String> koderKonklusjon = List.of("1", "2");
+                    controlFeltMedKoderSkalHaUndernoder(
+                            er,
+                            new ErrorReportEntry(
+                                    saksbehandler,
+                                    journalnummer,
+                                    individId,
+                                    refNr,
+                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
+                                    "Undersøkelse ("
+                                            + undersokelseId
+                                            + "). Undersøkelse konkludert med kode "
+                                            + undersokelseKonklusjon
+                                            + " skal ha vedtaksgrunnlag",
+                                    Constants.CRITICAL_ERROR),
+                            undersokelseKonklusjon, koderKonklusjon,
+                            vedtaksgrunnlagList);
+
                     controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
                             er,
                             new ErrorReportEntry(
@@ -594,29 +625,8 @@ public class IndividNodeHandler extends NodeHandler {
                                     Constants.NORMAL_ERROR), avgiverVersjon,
                             undersokelseStartDato, undersokelseSluttDato);
 
-                    List<StructuredNode> vedtaksgrunnlagList = undersokelse
-                            .queryNodeList("Vedtaksgrunnlag");
-
-                    // 1 = Barneverntjenesten fatter vedtak om tiltak
-                    // 2 = Begjæring om tiltak for fylkesnemnda
-                    List<String> koderKonklusjon = List.of("1", "2");
-                    controlFeltMedKoderSkalHaUndernoder(
-                            er,
-                            new ErrorReportEntry(
-                                    saksbehandler,
-                                    journalnummer,
-                                    individId,
-                                    refNr,
-                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
-                                    "Undersøkelse konkludert med kode "
-                                            + undersokelseKonklusjon
-                                            + " skal ha vedtaksgrunnlag",
-                                    Constants.CRITICAL_ERROR),
-                            undersokelseKonklusjon, koderKonklusjon,
-                            vedtaksgrunnlagList);
-
                     // Kontroller for Vedtaksgrunnlag
-                    if (meldingSluttDato.isAfter(forrigeTelleDato)) {
+                    if (meldingSluttDato != null && forrigeTelleDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
                         for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
                             // 18 = Andre forhold ved foreldre/familien
                             // 19 = Andre forhold ved barnets situasjon
@@ -631,7 +641,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             journalnummer,
                                             individId,
                                             refNr,
-                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode og presisering",
+                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode " + vedtaksgrunnlagKode + " og presisering",
                                             "Vedtaksgrunnlag med kode "
                                                     + vedtaksgrunnlagKode
                                                     + " mangler presisering",
@@ -656,10 +666,10 @@ public class IndividNodeHandler extends NodeHandler {
                         plan.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
                 String planStartDatoString = (planStartDato != null)
-                        ? planStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        ? planStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
                 String planSluttDatoString = (planSluttDato != null)
-                        ? planSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        ? planSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
 
                 controlDatoEtterDato(
@@ -682,7 +692,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Plan (" + planId + "). Planens sluttdato ("
                                         + planSluttDatoString
                                         + ") er ikke i rapporteringsåret ("
-                                        + forrigeTelleDatoString + ")",
+                                        + avgiverVersjon + ")",
                                 Constants.CRITICAL_ERROR), forrigeTelleDato,
                         planSluttDato);
 
@@ -742,10 +752,10 @@ public class IndividNodeHandler extends NodeHandler {
                         tiltak.queryString("@SluttDato"),
                         Constants.datoFormatLangt);
                 String tiltakStartDatoString = (tiltakStartDato != null)
-                        ? tiltakStartDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        ? tiltakStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
                 String tiltakSluttDatoString = (tiltakSluttDato != null)
-                        ? tiltakSluttDato.format(DateTimeFormatter.ofPattern(Constants.datoFormatKort))
+                        ? tiltakSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
                 String tiltakKategoriKode = defaultString(tiltak.queryString("Kategori/@Kode"), "");
                 List<String> kodelisteKategoriKode = List.of("1.99", "2.99", "3.7",
@@ -771,7 +781,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Tiltak (" + tiltakId + "). Sluttdato ("
                                         + tiltakSluttDatoString
                                         + ") er ikke i rapporteringsåret ("
-                                        + forrigeTelleDatoString + ")",
+                                        + avgiverVersjon + ")",
                                 Constants.CRITICAL_ERROR), forrigeTelleDato,
                         tiltakSluttDato);
 
@@ -822,20 +832,6 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR), individStartDato,
                         tiltakStartDato);
 
-                controlAlderOverAldersgrenseSkalHaUndernoder(
-                        er,
-                        new ErrorReportEntry(
-                                saksbehandler,
-                                journalnummer,
-                                individId,
-                                refNr,
-                                "Tiltak Kontroll 3: Individ over 18 år skal ha tiltak",
-                                "Tiltak ("
-                                        + tiltakId
-                                        + "). Individ som er 18 år eller eldre skal ha tiltak",
-                                Constants.NORMAL_ERROR),
-                        this.getIndividAlder(), 18, tiltakList);
-
                 controlTiltakOmsorgstiltakPresisering(
                         er,
                         new ErrorReportEntry(
@@ -843,7 +839,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 journalnummer,
                                 individId,
                                 refNr,
-                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
+                                "Tiltak Kontroll 4: Omsorgstiltak (" + tiltakId + ") med sluttdato krever årsak til opphevelse",
                                 "Tiltak (" + tiltakId
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
@@ -875,7 +871,8 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Tiltak Kontroll 6: Barn over 11 år og i SFO",
                                 "Tiltak ("
                                         + tiltakId
-                                        + "). Barnet er over 11 år og i SFO",
+                                        + "). Barnet er over 11 år og i SFO. Barnets alder er "
+                                        + this.getIndividAlder() + " år",
                                 Constants.NORMAL_ERROR), tiltakKategoriKode,
                         individAlder);
 
@@ -927,7 +924,7 @@ public class IndividNodeHandler extends NodeHandler {
                                         journalnummer,
                                         individId,
                                         refNr,
-                                        "Lovhjemmel Kontroll 2: omsorgstiltak med sluttdato krever årsak til opphevelse",
+                                        "Lovhjemmel Kontroll 2: omsorgstiltak (" + tiltakId + ") med sluttdato krever årsak til opphevelse",
                                         "Tiltak ("
                                                 + tiltakId
                                                 + "). Opphevelse av omsorgstiltak mangler presisering",
@@ -976,7 +973,7 @@ public class IndividNodeHandler extends NodeHandler {
                 }
             }
 
-            List<String> kodelistePlasseringsTiltak = List.of("1.1", "1.2", "1.99", "2.1", "2.2", "2.3", "2.4", "2.5", "2.99", "8.2");
+            List<String> kodelistePlasseringsTiltak = List.of("1.1", "1.2", "1.99", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.99", "8.2");
 
             controlFlerePlasseringstiltakISammePeriode(
                     er,
@@ -994,8 +991,8 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             e.printStackTrace();
             er.addEntry(new ErrorReportEntry("Kontrollprogram", journalnummer,
-                    individId, refNr, "Individ K1: Feil for individet", e
-                    .getMessage(), Constants.CRITICAL_ERROR));
+                    individId, refNr, "Individ K1: Feil for individet",
+                    Arrays.stream(e.getStackTrace()).collect(Collectors.toList()).toString(), Constants.CRITICAL_ERROR));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1306,11 +1303,15 @@ public class IndividNodeHandler extends NodeHandler {
                     Constants.datoFormatLangt);
             List<StructuredNode> list = melding.queryNodeList(underNode);
 
-            if (forrigeTelleDato.getYear() < sluttDato.getYear() && erKodeIKodeliste(konklusjon, kodelisteKonklusjon) && list.isEmpty()) {
+            if (forrigeTelleDato.getYear() < sluttDato.getYear()
+                    && !empty(konklusjon)
+                    && erKodeIKodeliste(konklusjon, kodelisteKonklusjon)
+                    && list.isEmpty()
+            ) {
                 er.addEntry(ere);
             }
 
-        } catch (XPathExpressionException e) {
+        } catch (XPathExpressionException | NullPointerException e) {
             ere.setErrorText(exceptionMelding);
             er.addEntry(ere);
         }
@@ -1354,14 +1355,25 @@ public class IndividNodeHandler extends NodeHandler {
             boolean bool = false;
 
             for (StructuredNode lovhjemmel : lovhjemmelList) {
-                String kapittel = lovhjemmel.queryString("Kapittel");
-                String paragraf = lovhjemmel.queryString("Paragraf");
-                String ledd = lovhjemmel.queryString("Ledd");
-                String opphevelse = tiltak.queryString("Opphevelse/Presisering");
+                String kapittel = lovhjemmel.queryString("@Kapittel");
+                String paragraf = lovhjemmel.queryString("@Paragraf");
+                String ledd = lovhjemmel.queryString("@Ledd");
 
-                if (kapittel.equals("4") && (paragraf.equals("12"))
-                        || (paragraf.equals("8") && (ledd.equals("2") || ledd.equals("3")))) {
-                    if (opphevelse != null && opphevelse.length() > 0) {
+                if (Comparator.isCodeInCodelist(kapittel, List.of("4"))
+                        &&
+                        (
+                                Comparator.isCodeInCodelist(paragraf, List.of("12"))
+                                        ||
+                                        (
+                                                Comparator.isCodeInCodelist(paragraf, List.of("8"))
+                                                        &&
+                                                        Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
+                                        )
+                        )
+                ) {
+                    String opphevelse = tiltak.queryString("Opphevelse/Presisering");
+
+                    if (opphevelse == null || opphevelse.length() == 0) {
                         bool = true;
                     }
                 }
@@ -1395,9 +1407,19 @@ public class IndividNodeHandler extends NodeHandler {
             String tiltakOpphevelseKode, List<String> kodelisteOpphevelseKode,
             String opphevelse) {
         try {
-            if ("4".equalsIgnoreCase(kapittel)
-                    && List.of("8", "12").contains(paragraf)
-                    && List.of("2", "3").contains(ledd)) {
+            if (Comparator.isCodeInCodelist(kapittel, List.of("4"))
+                    &&
+                    (
+                            Comparator.isCodeInCodelist(paragraf, List.of("12"))
+                                    ||
+                                    (
+                                            Comparator.isCodeInCodelist(paragraf, List.of("8"))
+                                                    &&
+                                                    Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
+                                    )
+                    )
+            ) {
+
                 if (SluttDato != null && empty(opphevelse)) {
                     for (String kode : kodelisteOpphevelseKode) {
                         if (tiltakOpphevelseKode.equalsIgnoreCase(kode)) {
@@ -1465,69 +1487,77 @@ public class IndividNodeHandler extends NodeHandler {
             }
 
             if (plasseringstiltakList.size() > 1) {
+                List<String> feilmeldinger = new ArrayList<>();
 
-                for (int i = 1; i < plasseringstiltakList.size(); i++) {
-                    StructuredNode first = plasseringstiltakList.get(i - 1);
-                    String firstId;
-                    StructuredNode second = plasseringstiltakList.get(i);
-                    String secondId;
+                for (int i = 0; i < plasseringstiltakList.size(); i++) {
+                    for (int j = 0; j < plasseringstiltakList.size(); j++) {
+                        if (i != j) {
+                            StructuredNode first = plasseringstiltakList.get(i);
+                            String firstId;
+                            StructuredNode second = plasseringstiltakList.get(j);
+                            String secondId;
 
-                    try {
-                        firstId = first.queryString("@Id");
-                        secondId = second.queryString("@Id");
+                            try {
+                                firstId = first.queryString("@Id");
+                                secondId = second.queryString("@Id");
 
-                        LocalDate firstStartLocalDate = first.assignDateFromString(
+                                LocalDate firstStartLocalDate = first.assignDateFromString(
                                         first.queryString("@StartDato"),
                                         Constants.datoFormatLangt);
 
-                        LocalDate firstSluttLocalDate = first
-                                .assignDateFromString(
-                                        first.queryString("@SluttDato"),
-                                        Constants.datoFormatLangt);
+                                LocalDate firstSluttLocalDate = first
+                                        .assignDateFromString(
+                                                first.queryString("@SluttDato"),
+                                                Constants.datoFormatLangt);
 
-                        LocalDate secondStartLocalDate = second
-                                .assignDateFromString(
-                                        second.queryString("@StartDato"),
-                                        Constants.datoFormatLangt);
+                                LocalDate secondStartLocalDate = second
+                                        .assignDateFromString(
+                                                second.queryString("@StartDato"),
+                                                Constants.datoFormatLangt);
 
-                        if (firstStartLocalDate != null
-                                && firstSluttLocalDate != null
-                                && secondStartLocalDate != null
-                                && firstStartLocalDate
-                                .isBefore(firstSluttLocalDate
-                                        .minusMonths(antallMaaneder))
-                                // periode for first må være mer enn 3 mnd for å
-                                // at det skal kunne bli 3 mnd med overlapp
-                                && secondStartLocalDate
-                                .isAfter(firstStartLocalDate)
-                                // andres startdato skal etter førstes startdato
-                                && secondStartLocalDate
-                                .isBefore(firstSluttLocalDate
-                                        .minusMonths(antallMaaneder))
-                            // OG tre måneder før førstes sluttdato -> medfører 3
-                            // måneder eller mer overlapp
-                        ) {
-                            String feilmelding = "Plasseringstiltak "
-                                    + firstId
-                                    + " med sluttdato "
-                                    + firstSluttLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                                    + " er mer enn 3 måneder etter "
-                                    + secondId
-                                    + " med startdato "
-                                    + secondStartLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                                    + ". Dette gir en overlapp på mer enn 3 måneder.";
-                            ere.setErrorText(feilmelding);
-                            er.addEntry(ere);
-                            return;
+                                if (firstStartLocalDate != null
+                                        && firstSluttLocalDate != null
+                                        && secondStartLocalDate != null
+                                        && firstStartLocalDate
+                                        .isBefore(firstSluttLocalDate
+                                                .minusMonths(antallMaaneder))
+                                        // periode for first må være mer enn 3 mnd for å
+                                        // at det skal kunne bli 3 mnd med overlapp
+                                        && secondStartLocalDate
+                                        .isAfter(firstStartLocalDate)
+                                        // andres startdato skal etter førstes startdato
+                                        && secondStartLocalDate
+                                        .isBefore(firstSluttLocalDate
+                                                .minusMonths(antallMaaneder))
+                                    // OG tre måneder før førstes sluttdato -> medfører 3
+                                    // måneder eller mer overlapp
+                                ) {
+                                    String feilmelding = "Plasseringstiltak "
+                                            + firstId
+                                            + " med sluttdato "
+                                            + firstSluttLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                                            + " er mer enn 3 måneder etter "
+                                            + secondId
+                                            + " med startdato "
+                                            + secondStartLocalDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                                            + ". Dette gir en overlapp på mer enn 3 måneder.";
+                                    feilmeldinger.add(feilmelding);
+                                }
+
+                            } catch (XPathExpressionException e) {
+                                ere.setErrorText(exceptionMelding);
+                                er.addEntry(ere);
+                                return;
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
                         }
-
-                    } catch (XPathExpressionException e) {
-                        ere.setErrorText(exceptionMelding);
-                        er.addEntry(ere);
-                        return;
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
                     }
+                }
+
+                if (0 < feilmeldinger.size()) {
+                    ere.setErrorText(String.join("<br/>\n", feilmeldinger));
+                    er.addEntry(ere);
                 }
             }
         }
@@ -1547,11 +1577,21 @@ public class IndividNodeHandler extends NodeHandler {
             ErrorReport er, ErrorReportEntry ere, String kapittel, String paragraf, String ledd, long alder) {
         try {
             if (alder > 18
-                    && (kapittel.equalsIgnoreCase("4")
-                    && (paragraf.equalsIgnoreCase("12")) || (paragraf
-                    .equalsIgnoreCase("8") && (ledd
-                    .equalsIgnoreCase("2") || ledd
-                    .equalsIgnoreCase("3"))))) {
+                    &&
+                    (
+                            Comparator.isCodeInCodelist(kapittel, List.of("4"))
+                                    &&
+                                    (
+                                            Comparator.isCodeInCodelist(paragraf, List.of("12"))
+                                                    ||
+                                                    (
+                                                            Comparator.isCodeInCodelist(paragraf, List.of("8"))
+                                                                    &&
+                                                                    Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
+                                                    )
+                                    )
+                    )
+            ) {
                 er.addEntry(ere);
             }
 

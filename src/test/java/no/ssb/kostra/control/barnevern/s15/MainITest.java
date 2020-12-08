@@ -62,6 +62,13 @@ public class MainITest {
     }
 
     @Test
+    public void testWarning12() {
+        controlFile("/testfiler/15F/Testfil_12_ADVARSEL_2020_15F_for_3035_Visma.xml"
+                , new String[]{"-s", "15F", "-y", "2020", "-r", "303500", "-n", "Test av advarselskontroller, Visma :-|"}
+                , Constants.NORMAL_ERROR);
+    }
+
+    @Test
     public void testOK21() {
         controlFile("/testfiler/15F/Testfil_21_OK_2020_15F_for_3401.xml"
                 , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av data OK, kommune :-D"}

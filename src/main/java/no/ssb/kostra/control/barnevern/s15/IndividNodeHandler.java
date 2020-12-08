@@ -113,14 +113,13 @@ public class IndividNodeHandler extends NodeHandler {
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
             LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
-            if (fodselsDato.isAfter(telleDato)) {
+            if (fodselsDato != null && fodselsDato.isAfter(telleDato)) {
                 fodselsDato = fodselsDato.minusYears(100L);
             }
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
 
-            String telleDatoString = telleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()));
             String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
             String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
             String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
@@ -461,9 +460,7 @@ public class IndividNodeHandler extends NodeHandler {
                     LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
                             Constants.datoFormatLangt);
-                    String undersokelseStartDatoString = (undersokelseStartDato != null)
-                            ? undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
-                            : "uoppgitt";
+                    String undersokelseStartDatoString = undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()));
                     String undersokelseSluttDatoString = (undersokelseSluttDato != null)
                             ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                             : "uoppgitt";
@@ -844,7 +841,7 @@ public class IndividNodeHandler extends NodeHandler {
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
                                         + ") krever årsak til opphevelse",
-                                Constants.CRITICAL_ERROR), tiltak);
+                                Constants.NORMAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
                         er,
@@ -1351,30 +1348,34 @@ public class IndividNodeHandler extends NodeHandler {
         try {
             List<StructuredNode> lovhjemmelList = tiltak.queryNodeList("JmfrLovhjemmel");
             lovhjemmelList.add(tiltak.queryNode("Lovhjemmel"));
+            LocalDate tiltakSluttDato = assignDateFromString(
+                    tiltak.queryString("@SluttDato"),
+                    Constants.datoFormatLangt);
 
             boolean bool = false;
+            if (tiltakSluttDato != null) {
+                for (StructuredNode lovhjemmel : lovhjemmelList) {
+                    String kapittel = lovhjemmel.queryString("@Kapittel");
+                    String paragraf = lovhjemmel.queryString("@Paragraf");
+                    String ledd = lovhjemmel.queryString("@Ledd");
 
-            for (StructuredNode lovhjemmel : lovhjemmelList) {
-                String kapittel = lovhjemmel.queryString("@Kapittel");
-                String paragraf = lovhjemmel.queryString("@Paragraf");
-                String ledd = lovhjemmel.queryString("@Ledd");
+                    if (Comparator.isCodeInCodelist(kapittel, List.of("4"))
+                            &&
+                            (
+                                    Comparator.isCodeInCodelist(paragraf, List.of("12"))
+                                            ||
+                                            (
+                                                    Comparator.isCodeInCodelist(paragraf, List.of("8"))
+                                                            &&
+                                                            Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
+                                            )
+                            )
+                    ) {
+                        String opphevelse = tiltak.queryString("Opphevelse/Presisering");
 
-                if (Comparator.isCodeInCodelist(kapittel, List.of("4"))
-                        &&
-                        (
-                                Comparator.isCodeInCodelist(paragraf, List.of("12"))
-                                        ||
-                                        (
-                                                Comparator.isCodeInCodelist(paragraf, List.of("8"))
-                                                        &&
-                                                        Comparator.isCodeInCodelist(ledd, List.of("2", "3"))
-                                        )
-                        )
-                ) {
-                    String opphevelse = tiltak.queryString("Opphevelse/Presisering");
-
-                    if (opphevelse == null || opphevelse.length() == 0) {
-                        bool = true;
+                        if (opphevelse == null || opphevelse.length() == 0) {
+                            bool = true;
+                        }
                     }
                 }
             }

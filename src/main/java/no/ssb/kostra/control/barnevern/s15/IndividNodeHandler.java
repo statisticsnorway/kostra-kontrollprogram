@@ -25,6 +25,7 @@ public class IndividNodeHandler extends NodeHandler {
 
     public IndividNodeHandler(ErrorReport er, Arguments args) {
         super(er, args);
+        er.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Feilmelding"));
     }
 
     public static void reset() {

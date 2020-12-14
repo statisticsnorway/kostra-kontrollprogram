@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
+        er.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Feilmelding"));
         List<String> inputFileContent = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
@@ -185,7 +186,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 09 Sivilstand"
-                                    , "Korrigér sivilstand. Fant '" + r.getFieldAsTrimmedString("EKTSTAT") + "', "
+                                    , "Korrigér sivilstand. Fant '" + r.getFieldAsString("EKTSTAT") + "', "
                                     + "forventet én av '" + r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
                                     + "Mottakerens sivilstand/sivilstatus ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                                     , Constants.CRITICAL_ERROR
@@ -203,7 +204,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
-                                    , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsTrimmedString("BU18") + "', "
+                                    , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsString("BU18") + "', "
                                     + "forventet én av " + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
                                     + "Det er ikke krysset av for om deltakeren har barn under 18 år, "
                                     + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
@@ -285,7 +286,7 @@ public class Main {
                                     , r.getFieldAsString("PERSON_FODSELSNR")
                                     , " "
                                     , "Kontroll 14 Viktigste kilde til livsopphold. Gyldige verdier"
-                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Fant '" + r.getFieldAsTrimmedString("VKLO") + ", forventet én av '"
+                                    , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Fant '" + r.getFieldAsString("VKLO") + "', forventet én av '"
                                     + r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'."
                                     , Constants.CRITICAL_ERROR
                             )
@@ -719,15 +720,15 @@ public class Main {
                     {
                         Integer bidrag = r.getFieldAsIntegerDefaultEquals0("BIDRAG");
                         Integer bidragMaanederSum = List.of(
-                                "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MAR",
-                                "BIDRAG_APR", "BIDRAG_MAI", "BIDRAG_JUN",
-                                "BIDRAG_JUL", "BIDRAG_AUG", "BIDRAG_SEP",
+                                "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MARS",
+                                "BIDRAG_APRIL", "BIDRAG_MAI", "BIDRAG_JUNI",
+                                "BIDRAG_JULI", "BIDRAG_AUG", "BIDRAG_SEPT",
                                 "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
                                 .stream()
                                 .map(r::getFieldAsIntegerDefaultEquals0)
                                 .reduce(0, Integer::sum);
 
-                        if (0 < bidrag && !bidrag.equals(bidragMaanederSum)) {
+                        if (0 < bidrag && bidrag.intValue() != bidragMaanederSum.intValue()) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")
@@ -745,15 +746,15 @@ public class Main {
                     {
                         Integer laan = r.getFieldAsIntegerDefaultEquals0("LAAN");
                         Integer laanMaanederSum = List.of(
-                                "LAAN_JAN", "LAAN_FEB", "LAAN_MAR",
-                                "LAAN_APR", "LAAN_MAI", "LAAN_JUN",
-                                "LAAN_JUL", "LAAN_AUG", "LAAN_SEP",
+                                "LAAN_JAN", "LAAN_FEB", "LAAN_MARS",
+                                "LAAN_APRIL", "LAAN_MAI", "LAAN_JUNI",
+                                "LAAN_JULI", "LAAN_AUG", "LAAN_SEPT",
                                 "LAAN_OKT", "LAAN_NOV", "LAAN_DES")
                                 .stream()
                                 .map(r::getFieldAsIntegerDefaultEquals0)
                                 .reduce(0, Integer::sum);
 
-                        if (0 < laan && !laan.equals(laanMaanederSum)) {
+                        if (0 < laan && laan.intValue() != laanMaanederSum.intValue()) {
                             er.addEntry(
                                     new ErrorReportEntry(
                                             r.getFieldAsString("SAKSBEHANDLER")

@@ -1,5 +1,6 @@
 package no.ssb.kostra.control;
 
+import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.*;
@@ -9,11 +10,12 @@ public class ErrorReport {
     private final Map<String, Long> mapEntries = new TreeMap<>();
     private final Map<String, Map<String, Map<String, List<String>>>> rapportMap = new TreeMap<>();
     private final Date startTime = Calendar.getInstance().getTime();
+    private final Arguments args;
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
-    private final Arguments args;
-    private String executiveOfficerHeader = "";
-    private String journalNumberHeader = "";
+    private final String executiveOfficerHeader = "";
+    private final String journalNumberHeader = "";
+    private List<String> reportHeaders = List.of("", "", "", "");
 
 
     public ErrorReport() {
@@ -22,8 +24,6 @@ public class ErrorReport {
 
     public ErrorReport(Arguments args) {
         this.args = args;
-        this.executiveOfficerHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Saksbehandler " : "";
-        this.journalNumberHeader = this.args.getSkjema().equalsIgnoreCase("15F") ? "Journalnummer " : "";
     }
 
 
@@ -76,7 +76,8 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         String lf = Constants.lineSeparator;
-        String VERSION = "2020.12";
+        String VERSION = "2020.12.2";
+
         report
                 .append("<html>")
                 .append("<head>").append(lf)
@@ -93,10 +94,11 @@ public class ErrorReport {
                 .append("<h4>Kontroller startet: ").append(startTime.toString()).append("</h4>").append(lf)
                 .append("<h4>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</h4>").append(lf)
                 .append("<h4>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</h4>").append(lf)
-                .append("<h4>Antall sjekker utført: ").append(this.count).append("</h4>").append(lf).append(lf);
+                .append("<h4>Antall sjekker utført: ").append(this.count).append("</h4>").append(lf).append(lf)
+                .append("<div>errorType:").append(errorType).append("</div>").append(lf);
 
         if (!mapEntries.isEmpty()) {
-            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf).append("<hr/>").append(lf).append(lf);
+            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
             for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
                 CharSequence s = "***";
@@ -109,58 +111,39 @@ public class ErrorReport {
                 }
             }
 
-            report
-                    .append("<h4>Opplisting av feil og advarsler pr. ").append(executiveOfficerHeader).append(", ").append(journalNumberHeader).append(", kontrollnr. og kontrolltekst):</h4>").append(lf)
-                    .append("<hr/>").append(lf);
+            report.append(lf).append("<h3>Opplisting av feil og advarsler</h3>").append(lf);
+            report.append("<table>").append(lf);
+
+            if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())){
+                report.append("<tr>");
+                reportHeaders.forEach(s -> report.append(String.format("<td>%s</td>", s)));
+                report.append("</tr>").append(lf);
+            }
 
             for (String saksbehandler : rapportMap.keySet()) {
-                int kritiskeFeil = 0;
-                int normaleFeil = 0;
                 Map<String, Map<String, List<String>>> saksbehandlerMap = rapportMap.get(saksbehandler);
-                String htmlcolor = "black";
-                report.append("<h3>").append(executiveOfficerHeader).append(" ").append(saksbehandler).append("</h3>").append(lf);
 
-                report.append("   <ul class='itemlist'>").append(lf);
                 for (String journalnummer : saksbehandlerMap.keySet()) {
                     Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
-                    report.append("      <li class='item' style='font-size:12pt'>").append(journalNumberHeader).append(" ").append(journalnummer).append(lf)
-                            .append("      <ul>").append(lf);
 
                     for (String refNr : journalnummerMap.keySet()) {
                         List<String> entrieStringsList = journalnummerMap.get(refNr);
                         String kontrollnummer = entrieStringsList.get(0);
                         String kontrolltekst = entrieStringsList.get(1);
                         int errorType = Integer.parseInt(entrieStringsList.get(2));
-                        if (errorType == Constants.CRITICAL_ERROR) {
-                            kritiskeFeil++;
-                            htmlcolor = "red  ";
-                        } else if (errorType == Constants.NORMAL_ERROR) {
-                            htmlcolor = "black";
-                            normaleFeil++;
-                        }
+                        String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : "black";
 
-                        report.append("         <li style='font-size:12pt; color: ").append(htmlcolor).append("'><pre>").append(kontrollnummer).append("</pre>").append(lf)
-                                .append("         <ul><li style='font-size:12pt; color: ").append(htmlcolor).append("'><pre>").append(kontrolltekst).append("</pre></li></ul></li>").append(lf);
-
+                        report
+                                .append("<tr style='font-size:12pt; vertical-align: top; color: ").append(htmlcolor).append("'>")
+                                .append("<td>").append(Utils.replaceSpaceWithNoBreakingSpace(saksbehandler)).append("</td>")
+                                .append("<td><pre>").append(journalnummer).append("</pre></td>")
+                                .append("<td>").append(kontrollnummer).append("</td>")
+                                .append("<td>").append(kontrolltekst).append("</td>")
+                                .append("</tr>").append(lf);
                     }
-
-                    report
-                            .append("      </ul>").append(lf)
-                            .append("</li>");
-
-
                 }
-
-                report.append("      </ul>").append(lf);
-
-                htmlcolor = (kritiskeFeil > 0) ? "red  " : "black";
-
-                report.append("   <h3 style='color: ").append(htmlcolor).append("'>Oppsummering ").append(saksbehandler).append("</h3>").append(lf)
-                        .append("   <ul class='summarylist'>")
-                        .append("    <li class='summary' style='font-size:12pt; color: ").append(htmlcolor).append("'>Antall feil som hindrer innsending ").append(kritiskeFeil).append("</li>").append(lf)
-                        .append("    <li class='summary' style='font-size:12pt'>Antall advarsler som kan sendes inn ").append(normaleFeil).append("</li>").append(lf);
-                report.append("   </ul>").append(lf);
             }
+            report.append("</table>").append(lf);
 
         } else {
             if (count == 0) {
@@ -170,9 +153,6 @@ public class ErrorReport {
                 report.append("Ingen feil funnet!").append(lf);
             }
         }
-
-        report.append(lf).append("<div>errorType:").append(errorType).append(lf).append("<hr/></div>").append(lf).append(lf);
-        report.append("</body></html>").append(lf);
 
         return report.toString();
     }
@@ -187,5 +167,9 @@ public class ErrorReport {
 
     public int size() {
         return entries.size();
+    }
+
+    public void setReportHeaders(List<String> stringList){
+        this.reportHeaders = stringList;
     }
 }

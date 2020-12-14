@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
+        er.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Feilmelding"));
         List<String> inputFileContent = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile

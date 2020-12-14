@@ -51,7 +51,7 @@ public class ControlFilbeskrivelse {
                                             , " "
                                             , "Kontroll 02 Filbeskrivelse, feltdefinisjonlengde"
                                             , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                            + "sin feltdefinisjonlengde skal være større enn 0, men fant '" + length + "'.<br/>\n"
+                                            + "sin feltdefinisjonlengde skal være større enn 0, men fant '" + length + "'."
                                             , Constants.CRITICAL_ERROR
                                     )
                             );
@@ -71,7 +71,7 @@ public class ControlFilbeskrivelse {
                                                     , " "
                                                     , "Kontroll 02 Filbeskrivelse, feil kode i forhold til kodeliste"
                                                     , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                    + "sin kode '" + stringValue + "' fins ikke i " + codeList + ".<br/>\n"
+                                                    + "sin kode '" + stringValue + "' fins ikke i " + codeList + "."
                                                     , Constants.CRITICAL_ERROR
                                             )
                                     );
@@ -89,7 +89,7 @@ public class ControlFilbeskrivelse {
                                                         , " "
                                                         , "Kontroll 02 Filbeskrivelse, feil i heltall-felt"
                                                         , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                        + "er et tallfelt, men inneholder '" + stringValue + "'.<br/>\n"
+                                                        + "er et tallfelt, men inneholder '" + stringValue + "'."
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
@@ -114,7 +114,7 @@ public class ControlFilbeskrivelse {
                                                         , " "
                                                         , "Kontroll 02 Filbeskrivelse, feil i dato-felt"
                                                         , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                        + "er et datofelt med datomønster ('" + datePattern.toUpperCase() + "'), men inneholder '" + stringValue+ "'.<br/>\n"
+                                                        + "er et datofelt med datomønster ('" + datePattern.toUpperCase() + "'), men inneholder '" + stringValue+ "'."
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
@@ -134,7 +134,7 @@ public class ControlFilbeskrivelse {
                                                 , " "
                                                 , "Kontroll 02 Filbeskrivelse, mangler obligatorisk verdi"
                                                 , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                + "er obligatorisk, men mangler verdi.<br/>\n"
+                                                + "er obligatorisk, men mangler verdi."
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );

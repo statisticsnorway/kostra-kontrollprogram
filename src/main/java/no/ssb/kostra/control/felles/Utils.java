@@ -12,8 +12,7 @@ import java.util.stream.Stream;
 
 public class Utils {
     public static String createLinenumber(int l, Record r){
-        return "Linje " + Format.sprintf("%0" + l + "d", r.getLine()) + " : <pre>" + r.getRecord() + "</pre>";
-
+        return "Linje " + Format.sprintf("%0" + l + "d", r.getLine()) + " : " + r.getRecord().trim();
     }
 
     public static List<Record> getValidRecords(List<String> list1, List<FieldDefinition> fieldDefinitions) {
@@ -75,5 +74,9 @@ public class Utils {
                 // rightPad / legger til mellomrom på slutten av tekstene slik at alle blir (width) tegn lange
                 .map(c -> String.format("%1$-" + width + "s", c))
                 .collect(Collectors.toList());
+    }
+
+    public static String replaceSpaceWithNoBreakingSpace(String s){
+        return s.replace(" ", "&nbsp;");
     }
 }

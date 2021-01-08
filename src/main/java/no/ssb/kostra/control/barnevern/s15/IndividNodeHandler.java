@@ -41,7 +41,7 @@ public class IndividNodeHandler extends NodeHandler {
      * @param telleDato   - 31. des i rapporteringsåret
      */
     public void setIndividAlder(LocalDate fodselsDato, LocalDate telleDato) {
-        if (fodselsDato != null && telleDato != null) {
+        if (fodselsDato != null && telleDato != null && fodselsDato.isBefore(telleDato)) {
             Period p = Period.between(fodselsDato, telleDato);
             this.individAlder = p.getYears();
         }

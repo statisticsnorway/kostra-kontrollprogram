@@ -129,6 +129,8 @@ public class FieldDefinitions {
                         54, 57,
                         // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
                         List.of(
+                                new Code("0000", "Uoppgitt"),
+                                new Code("    ", "Blank"),
                                 new Code("0301", "Oslo"),
                                 new Code("1101", "Eigersund"),
                                 new Code("1103", "Stavanger"),

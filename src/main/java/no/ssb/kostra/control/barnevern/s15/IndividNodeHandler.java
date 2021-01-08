@@ -114,9 +114,6 @@ public class IndividNodeHandler extends NodeHandler {
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
             LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
-            if (fodselsDato != null && fodselsDato.isAfter(telleDato)) {
-                fodselsDato = fodselsDato.minusYears(100L);
-            }
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);

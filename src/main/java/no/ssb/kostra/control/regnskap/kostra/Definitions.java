@@ -109,6 +109,10 @@ public class Definitions {
 
 
             case "0I":
+                if ("030100".equals(region)) {
+                    result.addAll(osloFunksjoner);
+                    result.addAll(fylkeskommunaleFunksjoner);
+                }
                 result.addAll(kommunaleFunkjoner);
                 result.addAll(finansielleSbdrFunksjoner);
                 break;

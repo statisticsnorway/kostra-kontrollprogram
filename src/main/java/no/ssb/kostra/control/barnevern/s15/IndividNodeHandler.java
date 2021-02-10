@@ -6,6 +6,7 @@ import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.DatoFnr;
+import no.ssb.kostra.utils.Format;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
@@ -113,7 +114,7 @@ public class IndividNodeHandler extends NodeHandler {
             LocalDate telleDato = assignDateFromString(tempVersjon,
                     Constants.datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
-            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(fodselsnummer.substring(0, 6), Constants.datoFormatKort) : null;
+            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(dnr2fnr(fodselsnummer.substring(0, 6)), Constants.datoFormatKort) : null;
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
@@ -834,7 +835,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 journalnummer,
                                 individId,
                                 refNr,
-                                "Tiltak Kontroll 4: Omsorgstiltak (" + tiltakId + ") med sluttdato krever årsak til opphevelse",
+                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
                                 "Tiltak (" + tiltakId
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
@@ -1650,5 +1651,17 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             er.addEntry(ere);
         }
+    }
+
+    private String dnr2fnr(String dnr) {
+        int day = Format.parseInt(dnr.substring(0, 2));
+
+        /* Hvis man bruker D-nummer legger man til 4 på første siffer. */
+        /* Når dag er større enn 31 benyttes D-nummer, trekk fra 40 og få gyldig dag  */
+        if (day > 31) {
+            day = day - 40;
+        }
+
+        return String.format("%02d" , day).concat(dnr.substring(2, 6));
     }
 }

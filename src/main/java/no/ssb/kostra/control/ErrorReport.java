@@ -16,6 +16,7 @@ public class ErrorReport {
     private final String executiveOfficerHeader = "";
     private final String journalNumberHeader = "";
     private List<String> reportHeaders = List.of("", "", "", "");
+    private List<StatsReportEntry> stats = new ArrayList<>();
 
 
     public ErrorReport() {
@@ -75,8 +76,8 @@ public class ErrorReport {
     public String generateReport() {
 
         StringBuilder report = new StringBuilder();
-        String lf = Constants.lineSeparator;
-        String VERSION = "2021.2.1";
+        final String lf = Constants.lineSeparator;
+        final String VERSION = "2021.2.2";
 
         report
                 .append("<html>")
@@ -90,12 +91,12 @@ public class ErrorReport {
                 .append("<body>").append(lf)
                 .append("<hr/>").append(lf)
                 .append("<h2>Kontrollrapport for ").append(this.args.getRegion()).append(" ").append(args.getNavn()).append("</h2>").append(lf)
-                .append("<hr/>").append(lf).append(lf).append("<h4>Kontrollprogramversjon: ").append(VERSION).append("</h4>").append(lf)
-                .append("<h4>Kontroller startet: ").append(startTime.toString()).append("</h4>").append(lf)
-                .append("<h4>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</h4>").append(lf)
-                .append("<h4>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</h4>").append(lf)
-                .append("<h4>Antall sjekker utført: ").append(this.count).append("</h4>").append(lf).append(lf)
-                .append("<div>errorType:").append(errorType).append("</div>").append(lf);
+                .append("<hr/>").append(lf).append("<span>Kontrollprogramversjon: ").append(VERSION).append("</span>").append(lf)
+                .append("<span>Kontroller startet: ").append(startTime.toString()).append("</span>").append(lf)
+                .append("<span>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</span>").append(lf)
+                .append("<span>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</span>").append(lf)
+                .append("<span>Antall sjekker utført: ").append(this.count).append("</span>").append(lf).append(lf)
+                .append("<span>errorType:").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
             report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
@@ -105,14 +106,14 @@ public class ErrorReport {
                 String val = entry.getKey();
 
                 if (val.contains(s)) {
-                    report.append(String.format("<div style='color: red  '>%s har funnet %d feil som hindrer innsending</div>", entry.getKey(), entry.getValue())).append(lf);
+                    report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
                 } else {
-                    report.append(String.format("<div style='color: black'>%s har funnet %d advarsler</div>", entry.getKey(), entry.getValue())).append(lf);
+                    report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
                 }
             }
 
-            report.append(lf).append("<h3>Opplisting av feil og advarsler</h3>").append(lf);
-            report.append("<table>").append(lf);
+            report.append("<h3>Opplisting av feil og advarsler</h3>");
+            report.append("<table>");
 
             if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())){
                 report.append("<tr>");
@@ -139,11 +140,11 @@ public class ErrorReport {
                                 .append("<td><pre>").append(journalnummer).append("</pre></td>")
                                 .append("<td>").append(kontrollnummer).append("</td>")
                                 .append("<td>").append(kontrolltekst).append("</td>")
-                                .append("</tr>").append(lf);
+                                .append("</tr>");
                     }
                 }
             }
-            report.append("</table>").append(lf);
+            report.append("</table>").append("<br />");
 
         } else {
             if (count == 0) {
@@ -152,6 +153,11 @@ public class ErrorReport {
             } else {
                 report.append("Ingen feil funnet!").append(lf);
             }
+        }
+
+        if (errorType != Constants.CRITICAL_ERROR && 0 < stats.size()){
+            report.append("<h3>Statistikkrapport</h3>");
+            stats.forEach(s -> report.append(s.toString()));
         }
 
         return report.toString();
@@ -171,5 +177,9 @@ public class ErrorReport {
 
     public void setReportHeaders(List<String> stringList){
         this.reportHeaders = stringList;
+    }
+
+    public void addStats(StatsReportEntry entry){
+        this.stats.add(entry);
     }
 }

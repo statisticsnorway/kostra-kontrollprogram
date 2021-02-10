@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Barnevern>
     <Avgiver Organisasjonsnummer="944117784" Versjon="2020" Kommunenummer="3401" Kommunenavn="SSB-TESTFIL FOR BARNEVERN"/>
-    <Individ Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
+    <Individ Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="55010588161" Journalnummer="J1">
         <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
             <Melder Kode="1"/>
             <Melder Kode="2"/>

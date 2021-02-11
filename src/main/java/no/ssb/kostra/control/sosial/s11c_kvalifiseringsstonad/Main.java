@@ -4,6 +4,7 @@ import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.utils.Between;
 import no.ssb.kostra.utils.Toolkit;
 
 import java.util.Collections;
@@ -46,8 +47,10 @@ public class Main {
                 .map(r -> {
                     try {
                         r.setFieldAsInteger("ALDER", Toolkit.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR")));
+                        r.setFieldAsInteger("FNR_OK", 1);
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);
+                        r.setFieldAsInteger("FNR_OK", 0);
                     }
 
                     return r;
@@ -620,6 +623,102 @@ public class Main {
                         }
                     }
                 });
+
+        {
+            if (er.getErrorType() < Constants.CRITICAL_ERROR) {
+
+                Integer stonadSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0("KVP_STONAD")).reduce(0, Integer::sum);
+
+                er.addStats(new StatsReportEntry(
+                        "Sum"
+                        , List.of(
+                        new Code("STONAD", "Stønad")
+                )
+                        , List.of(
+                        new StatsEntry("STONAD", stonadSum.toString())
+                )
+                ));
+
+                List<Integer> gyldigeRecordsAlder = records.stream().filter(r -> r.getFieldAsInteger("FNR_OK") == 1 && r.getFieldAsInteger("ALDER") != -1).map(r -> r.getFieldAsInteger("ALDER")).collect(Collectors.toList());
+                er.addStats(new StatsReportEntry(
+                        "Kvalifiseringsdeltakere"
+                        , List.of(
+                        new Code("I_ALT", "I alt")
+                        , new Code("0_19", "19 år eller yngre")
+                        , new Code("20_24", "20 - 24 år")
+                        , new Code("25_29", "25 - 29 år")
+                        , new Code("30_39", "30 - 39 år")
+                        , new Code("40_49", "40 - 49 år")
+                        , new Code("50_66", "50 - 66 år")
+                        , new Code("67_999", "67 år eller eldre")
+                        , new Code("UGYLDIG_FNR", "Alder ikke mulig å beregne")
+                )
+                        , List.of(
+                        new StatsEntry("I_ALT", String.valueOf(records.size()))
+                        , new StatsEntry("0_19", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 0, 19)).count()))
+                        , new StatsEntry("20_24", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 20, 24)).count()))
+                        , new StatsEntry("25_29", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 25, 29)).count()))
+                        , new StatsEntry("30_39", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 30, 39)).count()))
+                        , new StatsEntry("40_49", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 40, 49)).count()))
+                        , new StatsEntry("50_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 45, 66)).count()))
+                        , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 67, 999)).count()))
+                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger("FNR_OK") == 0).count()))
+                )
+                ));
+
+                List<Long> gyldigeRecordsStonadstid = records.stream()
+                        .map(r -> List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12")
+                                .stream()
+                                .filter(m -> 0 < r.getFieldAsIntegerDefaultEquals0(m))
+                                .count()
+                        )
+                        .collect(Collectors.toList());
+                er.addStats(new StatsReportEntry(
+                        "Stønadsvarighet"
+                        , List.of(
+                        new Code("1", "1 måned")
+                        , new Code("2_3", "2 - 3 måneder")
+                        , new Code("4_6", "4 - 6 måneder")
+                        , new Code("7_9", "7 - 9 måneder")
+                        , new Code("10_11", "10 - 11 måneder")
+                        , new Code("12", "12 måneder")
+                        , new Code("UOPPGITT", "Uoppgitt")
+                )
+                        , List.of(
+                        new StatsEntry("1", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 1).count()))
+                        , new StatsEntry("2_3", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 2, 3)).count()))
+                        , new StatsEntry("4_6", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 4, 6)).count()))
+                        , new StatsEntry("7_9", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 7, 9)).count()))
+                        , new StatsEntry("10_11", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 10, 11)).count()))
+                        , new StatsEntry("12", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 12, 12)).count()))
+                        , new StatsEntry("UOPPGITT", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 0).count()))
+                )
+                ));
+
+                List<Integer> gyldigeRecordsStonad = records.stream()
+                        .map(r -> r.getFieldAsIntegerDefaultEquals0("KVP_STONAD"))
+                        .collect(Collectors.toList());
+                er.addStats(new StatsReportEntry(
+                        "Stønad"
+                        , List.of(
+                        new Code("1_7", " - 7999 kr")
+                        , new Code("8_49", "8000 - 49999 kr")
+                        , new Code("50_99", "50000 - 99999 kr")
+                        , new Code("100_149", "100000 - 149999 kr")
+                        , new Code("150_9999", "150000 kr og over")
+                        , new Code("0", "Uoppgitt")
+                )
+                        , List.of(
+                        new StatsEntry("1_7", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 1, 7999)).count()))
+                        , new StatsEntry("8_49", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 8000, 49999)).count()))
+                        , new StatsEntry("50_99", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 50000, 99999)).count()))
+                        , new StatsEntry("100_149", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 100000, 149999)).count()))
+                        , new StatsEntry("150_9999", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> 150000 <= i).count()))
+                        , new StatsEntry("0", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> i == 0).count()))
+                )
+                ));
+            }
+        }
 
 
         return er;

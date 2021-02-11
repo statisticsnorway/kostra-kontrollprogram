@@ -107,7 +107,6 @@ public class Definitions {
                 result.addAll(finansielleFunksjoner);
                 break;
 
-
             case "0I":
                 if ("030100".equals(region)) {
                     result.addAll(osloFunksjoner);
@@ -125,17 +124,16 @@ public class Definitions {
             // Kapitler
             case "0B":
             case "0D":
+                result.addAll(basisKapitler);
+                break;
+
+            case "0J":
+            case "0L":
             case "0N":
             case "0Q":
                 result.addAll(basisKapitler);
                 result.addAll(regionaleKapitler);
                 break;
-
-            case "0J":
-            case "0L":
-                result.addAll(basisKapitler);
-                break;
-
         }
 
         return Utils.rpadList(result.stream().sorted().collect(Collectors.toList()), 4);

@@ -84,7 +84,7 @@ public class Definitions {
         );
 
         List<String> regionaleKapitler = List.of(
-                "17", "46"
+                "17", "28", "46"
         );
 
         List<String> result = new ArrayList<>();

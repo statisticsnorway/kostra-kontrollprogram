@@ -73,24 +73,22 @@ public class Main {
                             , Collections.singletonList(args.getRegion().substring(0, 4))
                     );
 
-                    if (r.getFieldAsString("KOMMUNE_NR").equalsIgnoreCase("0301")) {
-                        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                                r
-                                , er
-                                , new ErrorReportEntry(
-                                        r.getFieldAsString("SAKSBEHANDLER")
-                                        , r.getFieldAsString("PERSON_JOURNALNR")
-                                        , r.getFieldAsString("PERSON_FODSELSNR")
-                                        , " "
-                                        , "Kontroll 03 Bydelsnummer"
-                                        , "Korrigér bydel. Fant '" + r.getFieldAsTrimmedString("BYDELSNR") + "', "
-                                        + "forventet én av '" + Definitions.getBydelerAsList() + "'."
-                                        , Constants.CRITICAL_ERROR
-                                )
-                                , "BYDELSNR"
-                                , Definitions.getBydelerAsList()
-                        );
-                    }
+                    ControlFelt1InneholderKodeFraKodeliste.doControl(
+                            r
+                            , er
+                            , new ErrorReportEntry(
+                                    r.getFieldAsString("SAKSBEHANDLER")
+                                    , r.getFieldAsString("PERSON_JOURNALNR")
+                                    , r.getFieldAsString("PERSON_FODSELSNR")
+                                    , " "
+                                    , "Kontroll 03 Bydelsnummer"
+                                    , "Korrigér bydel. Fant '" + r.getFieldAsTrimmedString("BYDELSNR") + "', "
+                                    + "forventet én av '" + Definitions.getBydelerAsList(args.getRegion().substring(0, 4)) + "'."
+                                    , Constants.CRITICAL_ERROR
+                            )
+                            , "BYDELSNR"
+                            , Definitions.getBydelerAsList(args.getRegion().substring(0, 4))
+                    );
 
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
                             r

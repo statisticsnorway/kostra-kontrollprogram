@@ -99,7 +99,7 @@ public class MainOkITest {
         }
 
         assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
 

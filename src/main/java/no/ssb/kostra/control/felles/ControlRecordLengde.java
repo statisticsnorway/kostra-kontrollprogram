@@ -24,6 +24,19 @@ public class ControlRecordLengde {
 
         er.incrementCount();
 
+        if (s.isEmpty()) {
+            er.addEntry(new ErrorReportEntry("1. Filbeskrivelse"
+                    , "", " ", " "
+                    , "Kontroll 01 Recordlengde"
+                    , "Korrigér filen slik at alle record er på " + length +
+                    " tegn, mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift. <br/>"
+                    + "Denne feilen hindrer de andre kontrollene i å bli kjørt<br/>"
+                    + "\nFilen inneholder ingen records."
+                    , Constants.CRITICAL_ERROR
+            ));
+            return true;
+        }
+
         if (!recordLengdeFeil.isEmpty()) {
             er.addEntry(new ErrorReportEntry("1. Filbeskrivelse"
                     , "", " ", " "

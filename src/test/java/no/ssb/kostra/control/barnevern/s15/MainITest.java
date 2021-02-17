@@ -27,6 +27,20 @@ public class MainITest {
     }
 
     @Test
+    public void testFail00Blank() {
+        controlFile("/testfiler/15F/Testfil_00_Blank.txt"
+                , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av blank testfil :-("}
+                , Constants.CRITICAL_ERROR);
+    }
+
+    @Test
+    public void testFail00Junk() {
+        controlFile("/testfiler/15F/Testfil_00_Junk.dat"
+                , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av binær testfil :-("}
+                , Constants.CRITICAL_ERROR);
+    }
+
+    @Test
     public void testFail01() {
         controlFile("/testfiler/15F/Testfil_01_FEIL_2020_15F_ugyldig_xml.xml"
                 , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av ugyldig testfil :-("}

@@ -985,13 +985,21 @@ public class IndividNodeHandler extends NodeHandler {
                     "Uhåndterlig feil i forbindelse med tiltak");
 
         } catch (NullPointerException e) {
-            e.printStackTrace();
             er.addEntry(new ErrorReportEntry("Kontrollprogram", journalnummer,
                     individId, refNr, "Individ K1: Feil for individet",
                     Arrays.stream(e.getStackTrace()).collect(Collectors.toList()).toString(), Constants.CRITICAL_ERROR));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            er.addEntry(
+                    new ErrorReportEntry(
+                            " ",
+                            " ",
+                            " ",
+                            " ",
+                            "Kontrollprogrammet",
+                            "Klarer ikke å lese fil. Får feilmeldingen: " + e.getMessage(),
+                            Constants.CRITICAL_ERROR)
+            );
 
         }
     }
@@ -1483,7 +1491,16 @@ public class IndividNodeHandler extends NodeHandler {
                     }
                 }
             } catch (XPathExpressionException e) {
-                e.printStackTrace();
+                er.addEntry(
+                        new ErrorReportEntry(
+                                " ",
+                                " ",
+                                " ",
+                                " ",
+                                "Kontrollprogrammet",
+                                "Klarer ikke å lese fil. Får feilmeldingen: " + e.getMessage(),
+                                Constants.CRITICAL_ERROR)
+                );
             }
 
             if (plasseringstiltakList.size() > 1) {
@@ -1549,7 +1566,16 @@ public class IndividNodeHandler extends NodeHandler {
                                 er.addEntry(ere);
                                 return;
                             } catch (NullPointerException e) {
-                                e.printStackTrace();
+                                er.addEntry(
+                                        new ErrorReportEntry(
+                                                " ",
+                                                " ",
+                                                " ",
+                                                " ",
+                                                "Kontrollprogrammet",
+                                                "Klarer ikke å lese fil. Får feilmeldingen: " + e.getMessage(),
+                                                Constants.CRITICAL_ERROR)
+                                );
                             }
                         }
                     }

@@ -104,7 +104,16 @@ public class AvgiverNodeHandler extends NodeHandler {
 					Constants.CRITICAL_ERROR), node.queryString("@Kommunenavn").trim());
 
 		} catch (XPathExpressionException e) {
-			e.printStackTrace();
+			er.addEntry(
+					new ErrorReportEntry(
+							" ",
+							" ",
+							" ",
+							" ",
+							"Kontrollprogrammet",
+							"Klarer ikke å lese fil. Feil i Avgiver. Får feilmeldingen: " + e.getMessage(),
+							Constants.CRITICAL_ERROR)
+			);
 		}
 	}
 }

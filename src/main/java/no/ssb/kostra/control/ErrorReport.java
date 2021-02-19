@@ -77,7 +77,7 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         final String lf = Constants.lineSeparator;
-        final String VERSION = "2021.2.2";
+        final String VERSION = "2021.2.3";
 
         report
                 .append("<html>")

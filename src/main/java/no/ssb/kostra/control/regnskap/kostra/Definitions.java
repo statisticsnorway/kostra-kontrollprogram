@@ -1,15 +1,23 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
-import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.felles.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
+
 public class Definitions {
+    private static List<String> osloKommuner = List.of(
+            "030100",
+            "030101", "030102", "030103", "030104", "030105",
+            "030106", "030107", "030108", "030109", "030110",
+            "030111", "030112", "030113", "030114", "030115",
+            "030199"
+    );
+
     public static Map<String, String> getKontoklasseAsMap(String skjema) {
         switch (skjema) {
             case "0A":
@@ -93,7 +101,7 @@ public class Definitions {
             // Funksjoner
             case "0A":
             case "0M":
-                if ("030100".equals(region)) {
+                if (isCodeInCodelist(region, osloKommuner)) {
                     result.addAll(osloFunksjoner);
                     result.addAll(fylkeskommunaleFunksjoner);
                 }
@@ -108,7 +116,7 @@ public class Definitions {
                 break;
 
             case "0I":
-                if ("030100".equals(region)) {
+                if (isCodeInCodelist(region, osloKommuner)) {
                     result.addAll(osloFunksjoner);
                     result.addAll(fylkeskommunaleFunksjoner);
                 }
@@ -140,14 +148,6 @@ public class Definitions {
     }
 
     public static List<String> getArtSektorAsList(String skjema, String region) {
-        List<String> osloKommuner = List.of(
-                "030100",
-                "030101", "030102", "030103", "030104", "030105",
-                "030106", "030107", "030108", "030109", "030110",
-                "030111", "030112", "030113", "030114", "030115",
-                "030199"
-        );
-
         // Arter
         List<String> basisArter = List.of(
                 "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
@@ -181,23 +181,23 @@ public class Definitions {
 
         List<String> result = new ArrayList<>();
 
-        if (Arrays.asList("0A", "0C", "0I", "0K", "0M", "0P").contains(skjema)) {
+        if (isCodeInCodelist(skjema, List.of("0A", "0C", "0I", "0K", "0M", "0P"))) {
             result.addAll(basisArter);
 
-            if (Arrays.asList("0A", "0C", "0M", "0P").contains(skjema)) {
+            if (isCodeInCodelist(skjema, List.of("0A", "0C", "0M", "0P"))) {
                 result.addAll(kommunaleArter);
             }
 
-            if (Arrays.asList("0A", "0C", "0I", "0K").contains(skjema)) {
+            if (isCodeInCodelist(skjema, List.of("0A", "0C", "0I", "0K"))) {
                 result.addAll(konserninterneArter);
             }
 
-            if (osloKommuner.contains(region)) {
+            if (isCodeInCodelist(region, osloKommuner)) {
                 result.addAll(osloArter);
             }
         }
 
-        if (Arrays.asList("0B", "0D", "0J", "0L", "0N", "0Q").contains(skjema)) {
+        if (isCodeInCodelist(skjema, List.of("0B", "0D", "0J", "0L", "0N", "0Q"))) {
             result.addAll(basisSektorer);
         }
 
@@ -230,14 +230,14 @@ public class Definitions {
             case "1":
             case "3":
                 return alle.stream()
-                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigDrift))
+                        .filter(code -> !isCodeInCodelist(code, ugyldigDrift))
                         .sorted()
                         .collect(Collectors.toList());
             // Investering
             case "0":
             case "4":
                 return alle.stream()
-                        .filter(code -> !Comparator.isCodeInCodelist(code, ugyldigInvestering))
+                        .filter(code -> !isCodeInCodelist(code, ugyldigInvestering))
                         .sorted()
                         .collect(Collectors.toList());
 
@@ -245,8 +245,6 @@ public class Definitions {
                 return List.of();
         }
     }
-
-
 }
 
 

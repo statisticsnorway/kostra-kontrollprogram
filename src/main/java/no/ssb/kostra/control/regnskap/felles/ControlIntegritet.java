@@ -4,15 +4,14 @@ import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
 import no.ssb.kostra.control.Record;
-import no.ssb.kostra.control.felles.ControlHeltall;
-import no.ssb.kostra.control.felles.ControlIntegritetFelt1InneholderKode;
-import no.ssb.kostra.control.felles.ControlIntegritetFelt1InneholderKodeFraKodeliste;
-import no.ssb.kostra.control.felles.Utils;
+import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
 
 public class ControlIntegritet {
     public static void doControl(List<Record> regnskap, ErrorReport er, int l, Arguments args
@@ -28,12 +27,12 @@ public class ControlIntegritet {
             ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Foretaksnummer", "foretaksnr", Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(",")).collect(Collectors.toList()), Constants.CRITICAL_ERROR);
             ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Kontoklasse", "kontoklasse", kontoklasseList, Constants.CRITICAL_ERROR);
 
-            if (bevilgningRegnskapList.contains(args.getSkjema())) {
+            if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
                 ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Funksjon", "funksjon_kapittel", funksjonkapittelList, Constants.CRITICAL_ERROR);
                 ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Art", "art_sektor", artsektorList, Constants.CRITICAL_ERROR);
             }
 
-            if (balanseRegnskapList.contains(args.getSkjema())) {
+            if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
                 ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Kapittel", "funksjon_kapittel", funksjonkapittelList, Constants.CRITICAL_ERROR);
                 ControlIntegritetFelt1InneholderKodeFraKodeliste.doControl(p, er, l, "Sektor", "art_sektor", artsektorList, Constants.CRITICAL_ERROR);
             }
@@ -44,6 +43,17 @@ public class ControlIntegritet {
                     , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, p), " ", " "
                             , "Kontroll beløp."
                             , "Korrigér feil beløp (" + p.getFieldAsString("belop") + ")"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , "belop"
+            );
+
+            ControlUlovligTegnITallfelt.doControl(
+                    p
+                    , er
+                    , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, p), " ", " "
+                            , "Kontroll beløp, ugyldig tegn i tallfelt"
+                            , "Fant tegn for tabulator i tallfeltet. Mellomrom skal brukes for blanke tegn. Korrigér feil beløp (" + p.getFieldAsString("belop") + ")"
                             , Constants.CRITICAL_ERROR
                     )
                     , "belop"

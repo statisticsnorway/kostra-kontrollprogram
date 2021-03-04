@@ -19,17 +19,7 @@ public class Utils {
         return list1.stream()
                 // fjernet blanke linjer
                 .filter(l -> l.trim().length() != 0)
-                // fjerner record som inneholder Z, z eller ~, brukes ifm. med kvartal
-                .filter(l -> !Comparator.isCodeInCodelist(l, List.of("Z", "z", "~")))
                 .map(p -> new Record(p, fieldDefinitions))
-                // fjerner record der beløpet er 0, brukes ifm. med alle regnskap
-                .filter(p -> {
-                    try {
-                        return p.getFieldAsInteger("belop") != 0;
-                    } catch (NullPointerException e) {
-                        return true;
-                    }
-                })
                 .collect(Collectors.toList());
     }
 

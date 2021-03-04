@@ -10,6 +10,7 @@ import no.ssb.kostra.utils.Between;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Main {
     public static ErrorReport doControls(Arguments args) {
@@ -25,7 +26,7 @@ public class Main {
         }
 
         List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap = Utils.getValidRecords(list1, fieldDefinitions);
+        List<Record> regnskap1 = Utils.getValidRecords(list1, fieldDefinitions);
         List<String> bevilgningRegnskapList = List.of("0A", "0C", "0I", "0K", "0M", "0P");
         List<String> regionaleBevilgningRegnskapList = List.of("0A", "0C", "0M", "0P");
         List<String> balanseRegnskapList = List.of("0B", "0D", "0J", "0L", "0N", "0Q");
@@ -37,19 +38,30 @@ public class Main {
         List<String> svalbard = List.of("211100");
         String kombinasjonskontroller = "4. Kombinasjonskontroller";
         String summeringskontroller = "5. Summeringskontroller";
-        Integer n = regnskap.size();
+        Integer n = regnskap1.size();
         int l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
-        ControlFilbeskrivelse.doControl(regnskap, er);
+        ControlFilbeskrivelse.doControl(regnskap1, er);
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, l, args, bevilgningRegnskapList, balanseRegnskapList
+        ControlIntegritet.doControl(regnskap1, er, l, args, bevilgningRegnskapList, balanseRegnskapList
                 , Definitions.getKontoklasseAsList(args.getSkjema())
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion())
                 , Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion())
         );
 
+        // Fjerner posteringer der beløp = 0
+        List<Record> regnskap = regnskap1.stream()
+                // fjerner record der beløpet er 0, brukes ifm. med alle regnskap
+                .filter(p -> {
+                    try {
+                        return p.getFieldAsInteger("belop") != 0;
+                    } catch (NullPointerException e) {
+                        return true;
+                    }
+                })
+                .collect(Collectors.toList());
 
         // Kombinasjonskontroller, per record
         regnskap.forEach(p -> {

@@ -28,26 +28,38 @@ public class Main {
         List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
         List<String> bevilgningRegnskapList = List.of("0F");
         List<String> balanseRegnskapList = List.of("0G");
-        List<Record> regnskap = list1.stream()
+        List<Record> regnskap1 = list1.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
         String saksbehandler = "Filuttrekk";
-        Integer n = regnskap.size();
+        Integer n = regnskap1.size();
         int l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
-        ControlFilbeskrivelse.doControl(regnskap, er);
+        ControlFilbeskrivelse.doControl(regnskap1, er);
 
         if (er.getErrorType() == Constants.CRITICAL_ERROR) {
             return er;
         }
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, l, args, bevilgningRegnskapList, balanseRegnskapList
+        ControlIntegritet.doControl(regnskap1, er, l, args, bevilgningRegnskapList, balanseRegnskapList
                 , Definitions.getKontoklasseAsList(args.getSkjema())
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion())
                 , Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion())
         );
+
+        // Fjerner posteringer der beløp = 0
+        List<Record> regnskap = regnskap1.stream()
+                // fjerner record der beløpet er 0, brukes ifm. med alle regnskap
+                .filter(p -> {
+                    try {
+                        return p.getFieldAsInteger("belop") != 0;
+                    } catch (NullPointerException e) {
+                        return true;
+                    }
+                })
+                .collect(Collectors.toList());
 
         // Kombinasjonskontroller, per record
         regnskap.forEach(p -> {

@@ -3,7 +3,7 @@ package no.ssb.kostra.controlprogram;
 import no.ssb.kostra.control.Constants;
 import no.ssb.kostra.control.ErrorReport;
 import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.felles.Comparator;
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +17,7 @@ public class CLI {
         try {
             Arguments arguments = new Arguments(args);
 
-            if (Comparator.isCodeInCodelist(
+            if (isCodeInCodelist(
                     arguments.getSkjema()
                     , List.of("0AK1", "0AK2", "0AK3", "0AK4",
                             "0BK1", "0BK2", "0BK3", "0BK4",
@@ -25,38 +25,38 @@ public class CLI {
                             "0DK1", "0DK2", "0DK3", "0DK4"))) {
                 er = no.ssb.kostra.control.regnskap.kvartal.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(
+            } else if (isCodeInCodelist(
                     arguments.getSkjema()
                     , List.of("0A", "0B", "0C", "0D",
                             "0I", "0J", "0K", "0L",
                             "0M", "0N", "0P", "0Q"))) {
                 er = no.ssb.kostra.control.regnskap.kostra.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("0F", "0G"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("0F", "0G"))) {
                 er = no.ssb.kostra.control.regnskap.kirkekostra.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("0X", "0Y"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("0X", "0Y"))) {
                 er = no.ssb.kostra.control.regnskap.helseforetak.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("11F"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("11F"))) {
                 er = no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("11CF"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("11CF"))) {
                 er = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("15F"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("15F"))) {
                 er = no.ssb.kostra.control.barnevern.s15.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("52AF"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("52AF"))) {
                 er = no.ssb.kostra.control.famvern.s52a.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("52BF"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("52BF"))) {
                 er = no.ssb.kostra.control.famvern.s52b.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("53F"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("53F"))) {
                 er = no.ssb.kostra.control.famvern.s53.Main.doControls(arguments);
 
-            } else if (Comparator.isCodeInCodelist(arguments.getSkjema(), List.of("55F"))) {
+            } else if (isCodeInCodelist(arguments.getSkjema(), List.of("55F"))) {
                 er = no.ssb.kostra.control.famvern.s55.Main.doControls(arguments);
 
             } else {

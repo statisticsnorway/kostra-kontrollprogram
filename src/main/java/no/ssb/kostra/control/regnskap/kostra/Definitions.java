@@ -183,13 +183,10 @@ public class Definitions {
 
         if (isCodeInCodelist(skjema, List.of("0A", "0C", "0I", "0K", "0M", "0P"))) {
             result.addAll(basisArter);
+            result.addAll(konserninterneArter);
 
             if (isCodeInCodelist(skjema, List.of("0A", "0C", "0M", "0P"))) {
                 result.addAll(kommunaleArter);
-            }
-
-            if (isCodeInCodelist(skjema, List.of("0A", "0C", "0I", "0K"))) {
-                result.addAll(konserninterneArter);
             }
 
             if (isCodeInCodelist(region, osloKommuner)) {

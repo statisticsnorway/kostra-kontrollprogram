@@ -27,7 +27,8 @@ public class ControlDubletter {
             er.addEntry(
                     new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
                             , "Kontroll Dubletter"
-                            , "Dubletter (lik " + String.join(" * ", fieldList) + ") summeres sammen. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", fieldList) + ")."
+                            + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
                             , Constants.NORMAL_ERROR
                     ));
         }

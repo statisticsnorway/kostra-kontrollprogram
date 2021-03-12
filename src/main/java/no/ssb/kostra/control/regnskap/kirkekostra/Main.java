@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
+
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
@@ -63,7 +65,7 @@ public class Main {
 
         // Kombinasjonskontroller, per record
         regnskap.forEach(p -> {
-            if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+            if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
                 String investeringKontoklasse = Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I");
                 List<String> investeringArtList = Definitions.getSpesifikkeArter(investeringKontoklasse);
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -99,7 +101,11 @@ public class Main {
 
 
         // Dublett kontroll
-        ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"));
+        if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+            ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "funksjon", "art"));
+        } else if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)){
+            ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "kapittel", "sektor"));
+        }
 
 
         // SUMMERINGSKONTROLLER
@@ -107,7 +113,7 @@ public class Main {
         //Kontroll Summeringskontroller bevilgningsregnskap
         //D = Driftsregnskap (kontoklasse 3)
         //I = Investeringsregnskap (kontoklasse 4)
-        if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+        if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
             int sumInvesteringsUtgifter = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
                             && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 10, 590))
@@ -196,7 +202,7 @@ public class Main {
 
         //Kontroll Summeringskontroller balanseregnskap
         //B = Driftsregnskap (kontoklasse 5)
-        if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
+        if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
             // 1) Balanse må ha føring på aktiva, dvs. være høyere enn 0
             int sumAktiva = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))

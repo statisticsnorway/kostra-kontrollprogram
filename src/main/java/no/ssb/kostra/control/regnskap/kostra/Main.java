@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
+
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
@@ -201,7 +203,11 @@ public class Main {
         });
 
         // Dublett kontroll
-        ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"));
+        if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+            ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "funksjon", "art"));
+        } else if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)){
+            ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "kapittel", "sektor"));
+        }
 
 
         // SUMMERINGSKONTROLLER

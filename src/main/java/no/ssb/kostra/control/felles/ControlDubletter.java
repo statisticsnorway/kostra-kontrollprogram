@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ControlDubletter {
-    public static boolean doControl(List<Record> recordList, ErrorReport er, List<String> fieldList) {
+    public static boolean doControl(List<Record> recordList, ErrorReport er, List<String> fieldList, List<String> titleList) {
         // Dublett kontroll
         List<String> dubletter = recordList.stream()
                 .map(p -> fieldList.stream().map(p::getFieldAsTrimmedString).collect(Collectors.joining(" * ")))
@@ -27,7 +27,7 @@ public class ControlDubletter {
             er.addEntry(
                     new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
                             , "Kontroll Dubletter"
-                            , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", fieldList) + ")."
+                            , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", titleList) + ")."
                             + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
                             , Constants.NORMAL_ERROR
                     ));

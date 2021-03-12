@@ -14,8 +14,7 @@ public class ControlIntegritetFelt1InneholderKodeFraKodeliste {
                 , er
                 , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
                         , "Kontroll " + title
-                        , "Korrigér " + title.toLowerCase() + ". Fant '" + r.getFieldAsString(field) + "', forventet én av : "
-                        + expectedList.stream().map(s -> "'".concat(s).concat("'")).collect(Collectors.joining(", "))
+                        , "Korrigér " + title.toLowerCase() + " i linjenummer " + l +  ". Fant ugyldig kode '" + r.getFieldAsTrimmedString(field) + "' for " +  title.toLowerCase() + "."
                         , errorType
                 )
                 , field

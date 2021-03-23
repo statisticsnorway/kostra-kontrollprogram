@@ -53,10 +53,10 @@ public class Main {
 
         // Dublett kontroll
         if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-            ControlDubletter.doControl(regnskap, er, List.of("foretaksnr", "funksjon_kapittel", "art_sektor"));
+            ControlDubletter.doControl(regnskap, er, List.of("foretaksnr", "funksjon_kapittel", "art_sektor"), List.of("foretaksnr", "funksjon", "kontokode"));
 
         } else if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
-            ControlDubletter.doControl(regnskap, er, List.of("art_sektor"));
+            ControlDubletter.doControl(regnskap, er, List.of("art_sektor"), List.of("sektor"));
         }
 
         // Kombinasjonskontroller
@@ -83,7 +83,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kontokode 320"
-                                , "Ugyldig funksjon. Kontokode 320  – ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus funksjon (" + String.join(", ", Definitions.getKontokode320Funksjoner()) + ")"
+                                , "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus. Korriger funksjon."
                                 , Constants.NORMAL_ERROR
                         )
                         , "art_sektor"
@@ -99,7 +99,7 @@ public class Main {
                         , er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp"
-                                , "Kun positive beløp (" + p.getFieldAsTrimmedString("belop") + ") er gyldig"
+                                , "Kun positive beløp er gyldig. Fant ugyldig beløp (" + p.getFieldAsTrimmedString("belop") + ")"
                                 , Constants.NORMAL_ERROR
                         )
                         , "art_sektor"

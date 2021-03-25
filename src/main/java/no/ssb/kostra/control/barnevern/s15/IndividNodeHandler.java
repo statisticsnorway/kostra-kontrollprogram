@@ -839,7 +839,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Tiltak (" + tiltakId
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
-                                        + ") krever årsak til opphevelse",
+                                        + ") krever kode for opphevelse",
                                 Constants.NORMAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
@@ -1378,9 +1378,7 @@ public class IndividNodeHandler extends NodeHandler {
                                             )
                             )
                     ) {
-                        String opphevelse = tiltak.queryString("Opphevelse/Presisering");
-
-                        if (opphevelse == null || opphevelse.length() == 0) {
+                        if (tiltak.queryNode("Opphevelse") == null) {
                             bool = true;
                         }
                     }

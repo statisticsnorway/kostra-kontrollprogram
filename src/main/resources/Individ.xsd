@@ -584,6 +584,7 @@ Koder om annet:
 					<xs:enumeration value="2.3"/>
 					<xs:enumeration value="2.4"/>
 					<xs:enumeration value="2.5"/>
+					<xs:enumeration value="2.6"/>
 					<xs:enumeration value="2.99"/>
 					<xs:enumeration value="3.1"/>
 					<xs:enumeration value="3.2"/>

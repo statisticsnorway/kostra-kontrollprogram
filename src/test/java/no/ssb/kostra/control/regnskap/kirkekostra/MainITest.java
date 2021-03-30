@@ -95,5 +95,45 @@ public class MainITest {
         assertEquals(Constants.NO_ERROR, er.getErrorType());
     }
 
+
+    @Test
+    public void testDoControl0GFail() {
+        //@formatter:off
+        inputFileContent =
+            //00000000111111111122222222223333333333444444444
+            //23456789012345678901234567890123456789012345678
+            "0G2020 341600976987942         5*** 000    -6263\n" +
+            "0G2020 341600976987942         510  320    10176\n" +
+            "0G2020 341600976987942         513  200        1\n" +
+            "0G2020 341600976987942         513  640      293\n" +
+            "0G2020 341600976987942         521  550       96\n" +
+            "0G2020 341600976987942         524  080       13\n" +
+            "0G2020 341600976987942         527  080     6080\n" +
+            "0G2020 341600976987942         532  080    -2196\n" +
+            "0G2020 341600976987942         532  640     -188\n" +
+            "0G2020 341600976987942         532  890     -300\n" +
+            "0G2020 341600976987942         535  000      -56\n" +
+            "0G2020 341600976987942         551  080     -189\n" +
+            "0G2020 341600976987942         553  080      -40\n" +
+            "0G2020 341600976987942         555  080     -662\n" +
+            "0G2020 341600976987942         556  080    -6841\n" +
+            "";
+
+        //@formatter:on
+
+        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        System.setIn(in);
+
+        args = new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "341600", "-u", "976987942"});
+
+        er = Main.doControls(args);
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
 }
 

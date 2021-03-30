@@ -132,18 +132,18 @@ public class Main {
         if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
             // 1) Balanse må ha føring på eiendelskontiene , dvs. være høyere enn 0
             int sumEiendeler = regnskap.stream()
-                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 100, 195))
+                    .filter(p -> Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 100, 195))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
             // 2) Balanse må ha føring på egenkapitalskontoer og/eller gjeldskontoer, dvs. være mindre enn 0
             int sumEgenkapital = regnskap.stream()
-                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 200, 209))
+                    .filter(p -> Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 200, 209))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
             int sumGjeld = regnskap.stream()
-                    .filter(p -> Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 210, 299))
+                    .filter(p -> Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 210, 299))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 

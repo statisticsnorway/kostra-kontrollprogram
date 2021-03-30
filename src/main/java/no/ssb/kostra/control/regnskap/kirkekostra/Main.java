@@ -6,7 +6,6 @@ import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.control.regnskap.felles.ControlIntegritet;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.Between;
-import no.ssb.kostra.utils.Format;
 
 import java.util.List;
 import java.util.Objects;
@@ -103,7 +102,7 @@ public class Main {
         // Dublett kontroll
         if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
             ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "funksjon", "art"));
-        } else if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)){
+        } else if (isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
             ControlDubletter.doControl(regnskap, er, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "kapittel", "sektor"));
         }
 
@@ -116,14 +115,14 @@ public class Main {
         if (isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
             int sumInvesteringsUtgifter = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 10, 590))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
 
             int sumInvesteringsInntekter = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 600, 990))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -143,7 +142,7 @@ public class Main {
             // 2) Driftsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
             int sumDriftsUtgifter = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 10, 590))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -159,7 +158,7 @@ public class Main {
             // 3) Driftsregnskapet må ha inntektsføringer, dvs. være mindre enn 0
             int sumDriftsInntekter = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("art_sektor"), 600, 990))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -206,7 +205,7 @@ public class Main {
             // 1) Balanse må ha føring på aktiva, dvs. være høyere enn 0
             int sumAktiva = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("funksjon_kapittel"), 10, 27))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 10, 27))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -222,7 +221,7 @@ public class Main {
             // 2) Balanse må ha føring på passiva, dvs. være mindre enn 0
             int sumPassiva = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("B"))
-                            && Between.betweenInclusive(p.getFieldAsInteger("funksjon_kapittel"), 31, 5990))
+                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 31, 5990))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 

@@ -1,11 +1,11 @@
 package no.ssb.kostra.control.barnevern.s15;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.utils.DatoFnr;
+import no.ssb.kostra.utils.Fnr;
 import no.ssb.kostra.utils.Format;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -23,6 +23,8 @@ public class IndividNodeHandler extends NodeHandler {
     private static Map<String, List<String>> mapDublettFodselsnummer = new TreeMap<>();
     private LocalDate forrigeTelleDato;
     private long individAlder = -1;
+    private final String datoFormatLangt = "yyyy-MM-dd";
+    private final String datoFormatKort = "ddMMyy";
 
     public IndividNodeHandler(ErrorReport er, Arguments args) {
         super(er, args);
@@ -111,12 +113,11 @@ public class IndividNodeHandler extends NodeHandler {
                             .getOwnerDocument(), "Individ.xsd");
 
             String tempVersjon = avgiverVersjon + "-12-31";
-            LocalDate telleDato = assignDateFromString(tempVersjon,
-                    Constants.datoFormatLangt);
+            LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
-            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(dnr2fnr(fodselsnummer.substring(0, 6)), Constants.datoFormatKort) : null;
-            LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), Constants.datoFormatLangt);
-            LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), Constants.datoFormatLangt);
+            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(dnr2fnr(fodselsnummer.substring(0, 6)), datoFormatKort) : null;
+            LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), datoFormatLangt);
+            LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), datoFormatLangt);
             setIndividAlder(fodselsDato, telleDato);
 
             String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
@@ -253,10 +254,10 @@ public class IndividNodeHandler extends NodeHandler {
                 String meldingId = defaultString(melding.queryString("@Id"), "uoppgitt");
                 LocalDate meldingStartDato = assignDateFromString(
                         melding.queryString("@StartDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 LocalDate meldingSluttDato = assignDateFromString(
                         melding.queryString("@SluttDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 String meldingStartDatoString = (meldingStartDato != null)
                         ? meldingStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
@@ -283,7 +284,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR),
                         meldingStartDato,
                         assignDateFromString(melding.queryString("@SluttDato"),
-                                Constants.datoFormatLangt));
+                                datoFormatLangt));
 
                 // kjøres kun hvis ikke er henlagt
                 if (!meldingKonklusjonString.equalsIgnoreCase(henlagt)) {
@@ -453,12 +454,12 @@ public class IndividNodeHandler extends NodeHandler {
                     String undersokelseId = defaultString(undersokelse.queryString("@Id"), "uoppgitt");
                     LocalDate undersokelseStartDato = assignDateFromString(
                             undersokelse.queryString("@StartDato"),
-                            Constants.datoFormatLangt);
+                            datoFormatLangt);
                     assert undersokelseStartDato != null;
 
                     LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
-                            Constants.datoFormatLangt);
+                            datoFormatLangt);
                     String undersokelseStartDatoString = undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()));
                     String undersokelseSluttDatoString = (undersokelseSluttDato != null)
                             ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
@@ -657,10 +658,10 @@ public class IndividNodeHandler extends NodeHandler {
 
                 LocalDate planStartDato = assignDateFromString(
                         plan.queryString("@StartDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 LocalDate planSluttDato = assignDateFromString(
                         plan.queryString("@SluttDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 String planStartDatoString = (planStartDato != null)
                         ? planStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
@@ -680,7 +681,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR),
                         planStartDato,
                         assignDateFromString(plan.queryString("@SluttDato"),
-                                Constants.datoFormatLangt));
+                                datoFormatLangt));
 
                 controlDatoEtterDato(er, new ErrorReportEntry(saksbehandler,
                                 journalnummer, individId, refNr,
@@ -743,10 +744,10 @@ public class IndividNodeHandler extends NodeHandler {
                 String tiltakId = defaultString(tiltak.queryString("@Id"), "uoppgitt");
                 LocalDate tiltakStartDato = assignDateFromString(
                         tiltak.queryString("@StartDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 LocalDate tiltakSluttDato = assignDateFromString(
                         tiltak.queryString("@SluttDato"),
-                        Constants.datoFormatLangt);
+                        datoFormatLangt);
                 String tiltakStartDatoString = (tiltakStartDato != null)
                         ? tiltakStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
                         : "uoppgitt";
@@ -1036,7 +1037,7 @@ public class IndividNodeHandler extends NodeHandler {
                                                 String errorTextFodselsnummer, String errorTextDUFnummer,
                                                 String errorTextMangler) {
         if (fodselsnummer != null) {
-            if (!((DatoFnr.validNorwId(fodselsnummer) == 1)
+            if (!((Fnr.validNorwId(fodselsnummer) == 1)
                     || fodselsnummer.endsWith("00100")
                     || fodselsnummer.endsWith("00200")
                     || fodselsnummer.endsWith("55555")
@@ -1072,7 +1073,7 @@ public class IndividNodeHandler extends NodeHandler {
     public void controlFodselsnummer(ErrorReport er,
                                      ErrorReportEntry ere, String fodselsnummer,
                                      String errorTextFodselsnummer) {
-        if (empty(fodselsnummer) || (!(DatoFnr.validNorwId(fodselsnummer) == 1) || fodselsnummer.endsWith("55555"))) {
+        if (empty(fodselsnummer) || (!(Fnr.validNorwId(fodselsnummer) == 1) || fodselsnummer.endsWith("55555"))) {
             ere.setErrorText(errorTextFodselsnummer);
             er.addEntry(ere);
         }
@@ -1304,7 +1305,7 @@ public class IndividNodeHandler extends NodeHandler {
             // Sluttdato for Melding
             LocalDate sluttDato = assignDateFromString(
                     melding.queryString("@SluttDato"),
-                    Constants.datoFormatLangt);
+                    datoFormatLangt);
             List<StructuredNode> list = melding.queryNodeList(underNode);
 
             if (forrigeTelleDato.getYear() < sluttDato.getYear()
@@ -1336,7 +1337,7 @@ public class IndividNodeHandler extends NodeHandler {
             LocalDate startDato, LocalDate sluttDato) {
         String fristDatoString = versjon + "-07-01";
         LocalDate frist = assignDateFromString(fristDatoString,
-                Constants.datoFormatLangt);
+                datoFormatLangt);
 
         if (startDato.isBefore(frist) && sluttDato == null) {
             er.addEntry(ere);
@@ -1357,7 +1358,7 @@ public class IndividNodeHandler extends NodeHandler {
             lovhjemmelList.add(tiltak.queryNode("Lovhjemmel"));
             LocalDate tiltakSluttDato = assignDateFromString(
                     tiltak.queryString("@SluttDato"),
-                    Constants.datoFormatLangt);
+                    datoFormatLangt);
 
             boolean bool = false;
             if (tiltakSluttDato != null) {
@@ -1518,17 +1519,17 @@ public class IndividNodeHandler extends NodeHandler {
 
                                 LocalDate firstStartLocalDate = first.assignDateFromString(
                                         first.queryString("@StartDato"),
-                                        Constants.datoFormatLangt);
+                                        datoFormatLangt);
 
                                 LocalDate firstSluttLocalDate = first
                                         .assignDateFromString(
                                                 first.queryString("@SluttDato"),
-                                                Constants.datoFormatLangt);
+                                                datoFormatLangt);
 
                                 LocalDate secondStartLocalDate = second
                                         .assignDateFromString(
                                                 second.queryString("@StartDato"),
-                                                Constants.datoFormatLangt);
+                                                datoFormatLangt);
 
                                 if (firstStartLocalDate != null
                                         && firstSluttLocalDate != null

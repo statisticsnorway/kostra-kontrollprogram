@@ -1,8 +1,7 @@
-package no.ssb.kostra.felles;
+package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.*;
-import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodeliste;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.*;
 import org.junit.Before;
 import org.junit.Test;
 

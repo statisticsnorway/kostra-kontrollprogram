@@ -1,6 +1,6 @@
 package no.ssb.kostra.control.famvern.s55;
 
-import no.ssb.kostra.control.FieldDefinition;
+import no.ssb.kostra.felles.FieldDefinition;
 
 import java.util.List;
 

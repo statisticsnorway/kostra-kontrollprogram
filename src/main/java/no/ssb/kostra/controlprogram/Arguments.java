@@ -100,6 +100,10 @@ public class Arguments {
         return aargang;
     }
 
+    public int getAargangAsInteger() {
+        return Integer.valueOf(aargang);
+    }
+
     public String getKvartal() {
         return kvartal;
     }

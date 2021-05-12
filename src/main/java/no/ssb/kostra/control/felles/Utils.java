@@ -1,8 +1,8 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.Code;
-import no.ssb.kostra.control.FieldDefinition;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.Code;
+import no.ssb.kostra.felles.FieldDefinition;
+import no.ssb.kostra.felles.Record;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.utils.Format;
 

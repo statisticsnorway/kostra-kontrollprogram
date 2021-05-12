@@ -1,11 +1,10 @@
 package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.utils.Between;
-import no.ssb.kostra.utils.Toolkit;
+import no.ssb.kostra.felles.*;
+import no.ssb.kostra.utils.Fnr;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,9 +30,7 @@ public class Main {
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
-        final String lf = Constants.lineSeparator;
         Integer n = records.size();
-        int l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
@@ -46,7 +43,7 @@ public class Main {
                 // utled ALDER
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Toolkit.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR")));
+                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), args.getAargangAsInteger()));
                         r.setFieldAsInteger("FNR_OK", 1);
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);
@@ -653,13 +650,13 @@ public class Main {
                 )
                         , List.of(
                         new StatsEntry("I_ALT", String.valueOf(records.size()))
-                        , new StatsEntry("0_19", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 0, 19)).count()))
-                        , new StatsEntry("20_24", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 20, 24)).count()))
-                        , new StatsEntry("25_29", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 25, 29)).count()))
-                        , new StatsEntry("30_39", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 30, 39)).count()))
-                        , new StatsEntry("40_49", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 40, 49)).count()))
-                        , new StatsEntry("50_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 45, 66)).count()))
-                        , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Between.betweenInclusive(i, 67, 999)).count()))
+                        , new StatsEntry("0_19", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 0, 19)).count()))
+                        , new StatsEntry("20_24", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 20, 24)).count()))
+                        , new StatsEntry("25_29", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 25, 29)).count()))
+                        , new StatsEntry("30_39", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 30, 39)).count()))
+                        , new StatsEntry("40_49", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 40, 49)).count()))
+                        , new StatsEntry("50_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 45, 66)).count()))
+                        , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 67, 999)).count()))
                         , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger("FNR_OK") == 0).count()))
                 )
                 ));
@@ -684,11 +681,11 @@ public class Main {
                 )
                         , List.of(
                         new StatsEntry("1", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 1).count()))
-                        , new StatsEntry("2_3", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 2, 3)).count()))
-                        , new StatsEntry("4_6", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 4, 6)).count()))
-                        , new StatsEntry("7_9", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 7, 9)).count()))
-                        , new StatsEntry("10_11", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 10, 11)).count()))
-                        , new StatsEntry("12", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Between.betweenInclusive(i.intValue(), 12, 12)).count()))
+                        , new StatsEntry("2_3", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 2, 3)).count()))
+                        , new StatsEntry("4_6", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 4, 6)).count()))
+                        , new StatsEntry("7_9", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 7, 9)).count()))
+                        , new StatsEntry("10_11", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 10, 11)).count()))
+                        , new StatsEntry("12", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 12, 12)).count()))
                         , new StatsEntry("UOPPGITT", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 0).count()))
                 )
                 ));
@@ -707,10 +704,10 @@ public class Main {
                         , new Code("0", "Uoppgitt")
                 )
                         , List.of(
-                        new StatsEntry("1_7", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 1, 7999)).count()))
-                        , new StatsEntry("8_49", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 8000, 49999)).count()))
-                        , new StatsEntry("50_99", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 50000, 99999)).count()))
-                        , new StatsEntry("100_149", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Between.betweenInclusive(i, 100000, 149999)).count()))
+                        new StatsEntry("1_7", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 1, 7999)).count()))
+                        , new StatsEntry("8_49", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 8000, 49999)).count()))
+                        , new StatsEntry("50_99", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 50000, 99999)).count()))
+                        , new StatsEntry("100_149", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 100000, 149999)).count()))
                         , new StatsEntry("150_9999", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> 150000 <= i).count()))
                         , new StatsEntry("0", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> i == 0).count()))
                 )

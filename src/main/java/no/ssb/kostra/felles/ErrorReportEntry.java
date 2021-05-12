@@ -1,4 +1,4 @@
-package no.ssb.kostra.control;
+package no.ssb.kostra.felles;
 
 public class ErrorReportEntry {
 	String saksbehandler = "";

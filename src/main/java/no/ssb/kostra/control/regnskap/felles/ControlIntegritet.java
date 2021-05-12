@@ -1,9 +1,9 @@
 package no.ssb.kostra.control.regnskap.felles;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.controlprogram.Arguments;
 

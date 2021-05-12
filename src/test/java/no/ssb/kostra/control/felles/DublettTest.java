@@ -1,6 +1,9 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 import org.junit.Test;
 
 import java.util.ArrayList;

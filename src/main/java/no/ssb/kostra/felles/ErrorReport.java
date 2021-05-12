@@ -1,4 +1,4 @@
-package no.ssb.kostra.control;
+package no.ssb.kostra.felles;
 
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.controlprogram.Arguments;
@@ -76,7 +76,7 @@ public class ErrorReport {
     public String generateReport() {
 
         StringBuilder report = new StringBuilder();
-        final String lf = Constants.lineSeparator;
+        final String lf = System.getProperty("line.separator");
         final String VERSION = "2021.4.1";
 
         report

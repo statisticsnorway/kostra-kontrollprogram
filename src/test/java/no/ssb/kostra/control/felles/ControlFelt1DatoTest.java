@@ -1,4 +1,4 @@
-package no.ssb.kostra.felles;
+package no.ssb.kostra.control.felles;
 
 public class ControlFelt1DatoTest {
     // TODO

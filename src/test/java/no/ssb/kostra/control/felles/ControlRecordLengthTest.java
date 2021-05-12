@@ -1,10 +1,9 @@
-package no.ssb.kostra.felles;
+package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.FieldDefinition;
-import no.ssb.kostra.control.felles.ControlRecordLengde;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.FieldDefinition;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;

@@ -1,16 +1,16 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
-import no.ssb.kostra.utils.Toolkit;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.utils.Fnr;
 
 public class ControlAlderFraFodselsnummer {
-    public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String fieldSSN1, String operator, int age1) {
+    public static Record doControl(Record p, ErrorReport er, ErrorReportEntry ere, String fieldSSN1, String operator, int age1, int reportYear) {
         boolean hasErrors;
 
         try {
-            int age = Toolkit.getAlderFromFnr(p.getFieldAsString(fieldSSN1));
+            int age = Fnr.getAlderFromFnr(p.getFieldAsString(fieldSSN1), reportYear);
             hasErrors = !Comparator.compareIntegerOperatorInteger(age, operator, age1);
 
         } catch (Exception e) {

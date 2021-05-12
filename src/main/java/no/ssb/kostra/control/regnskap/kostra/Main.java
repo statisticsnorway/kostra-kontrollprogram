@@ -1,11 +1,10 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.control.regnskap.felles.ControlIntegritet;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.utils.Between;
+import no.ssb.kostra.felles.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -221,7 +220,7 @@ public class Main {
                 // 1) Investeringsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
                 int sumInvesteringsUtgifter = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
@@ -239,7 +238,7 @@ public class Main {
                 // 2) Investeringsregnskapet må ha inntekter, dvs. være mindre enn 0
                 int sumInvesteringsInntekter = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
@@ -257,7 +256,7 @@ public class Main {
                 // 3) Sum investering = Sum investeringsutgifter + Sum investeringsinntekter.. Differanser opptil +30' godtas, og skal ikke utlistes.
                 int sumInvestering = sumInvesteringsUtgifter + sumInvesteringsInntekter;
 
-                if (!Between.betweenInclusive(sumInvestering, -30, 30)) {
+                if (!Comparator.between(sumInvestering, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Investeringsregnskapet", " ", " "
                             , "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet"
@@ -271,7 +270,7 @@ public class Main {
                 // 4) Driftsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
                 int sumDriftsUtgifter = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 10, 590))
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
@@ -289,7 +288,7 @@ public class Main {
                 // 5) Driftsregnskapet må ha inntektsføringer, dvs. være mindre enn 0
                 int sumDriftsInntekter = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 600, 990))
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
@@ -307,7 +306,7 @@ public class Main {
                 // 6) Sum drift = Sum driftsutgifter + Sum driftsinntekter.. Differanser opptil +30' godtas, og skal ikke utlistes.
                 int sumDrift = sumDriftsUtgifter + sumDriftsInntekter;
 
-                if (!Between.betweenInclusive(sumDrift, -30, 30)) {
+                if (!Comparator.between(sumDrift, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Driftsregnskapet", " ", " "
                             , "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet"
@@ -326,7 +325,7 @@ public class Main {
             // 1) Balanse må ha føring på aktiva, dvs. være høyere enn 0
             int sumAktiva = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
-                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 10, 28))
+                            && Comparator.between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 10, 28))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -342,7 +341,7 @@ public class Main {
             // 2) Balanse må ha føring på passiva, dvs. være mindre enn 0
             int sumPassiva = regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("B"))
-                            && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 31, 5990))
+                            && Comparator.between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 31, 5990))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
@@ -358,7 +357,7 @@ public class Main {
             // 3) Aktiva skal være lik passiva. Differanser opptil ±10' godtas, og skal ikke utlistes.
             int sumBalanse = sumAktiva + sumPassiva;
 
-            if (!Between.betweenInclusive(sumBalanse, -10, 10)) {
+            if (!Comparator.between(sumBalanse, -10, 10)) {
                 er.addEntry(new ErrorReportEntry(
                         summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, differanse"
@@ -452,7 +451,7 @@ public class Main {
 
                 int differanse = driftsoverforinger + investeringsoverforinger;
 
-                if (!Between.betweenInclusive(differanse, -30, 30)) {
+                if (!Comparator.between(differanse, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Overføringer", " ", " "
                             , "Kontroll Overføring mellom drifts- og investeringsregnskap"
@@ -499,7 +498,7 @@ public class Main {
 
                 int avskrivninger = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 100, 799)
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 100, 799)
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("590"))
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
@@ -515,7 +514,7 @@ public class Main {
 
                 int differanse = motpostAvskrivninger + avskrivninger;
 
-                if (!Between.betweenInclusive(differanse, -30, 30)) {
+                if (!Comparator.between(differanse, -30, 30)) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Avskrivninger", " ", " "
                             , "Kontroll Avskrivninger, differanse"
@@ -526,7 +525,7 @@ public class Main {
 
                 int avskrivningerAndreFunksjoner = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))
-                                && Between.betweenInclusive(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 800, 899)
+                                && Comparator.between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 800, 899)
                                 && p.getFieldAsString("art_sektor").equalsIgnoreCase("590")
                         )
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
@@ -574,7 +573,7 @@ public class Main {
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
-                if (!(Between.betweenInclusive(funksjon290Investering, -30, 30))) {
+                if (!(Comparator.between(funksjon290Investering, -30, 30))) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Funksjon 290", " ", " "
                             , "Kontroll Funksjon 290, investeringsregnskapet"
@@ -590,7 +589,7 @@ public class Main {
                         .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                         .reduce(0, Integer::sum);
 
-                if (!(Between.betweenInclusive(funksjon290Drift, -30, 30))) {
+                if (!(Comparator.between(funksjon290Drift, -30, 30))) {
                     er.addEntry(new ErrorReportEntry(
                             summeringskontroller, "Funksjon 290", " ", " "
                             , "Kontroll Funksjon 290, driftsregnskapet"
@@ -612,7 +611,7 @@ public class Main {
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
-            if (!(Between.betweenInclusive(funksjon465Investering, -30, 30))) {
+            if (!(Comparator.between(funksjon465Investering, -30, 30))) {
                 er.addEntry(new ErrorReportEntry(
                         summeringskontroller, "Funksjon 465", " ", " "
                         , "Kontroll Funksjon 465, investeringsregnskapet"
@@ -629,7 +628,7 @@ public class Main {
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
-            if (!(Between.betweenInclusive(funksjon465Drift, -30, 30))) {
+            if (!(Comparator.between(funksjon465Drift, -30, 30))) {
                 er.addEntry(new ErrorReportEntry(
                         summeringskontroller, "Funksjon 465", " ", " "
                         , "Kontroll Funksjon 465, driftsregnskapet"
@@ -659,7 +658,7 @@ public class Main {
 
             int differanse = sumMemoriaKonti + sumMotkontoMemoriaKonti;
 
-            if (!(Between.betweenInclusive(differanse, -10, 10))) {
+            if (!(Comparator.between(differanse, -10, 10))) {
                 er.addEntry(new ErrorReportEntry(
                         summeringskontroller, "Balanseregnskap", " ", " "
                         , "Kontroll Memoriakonti"

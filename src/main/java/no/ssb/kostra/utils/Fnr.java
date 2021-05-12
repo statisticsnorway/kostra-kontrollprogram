@@ -1,6 +1,8 @@
 package no.ssb.kostra.utils;
 
-public final class DatoFnr {
+import no.ssb.kostra.felles.Constants;
+
+public final class Fnr {
     static final int[] ANT_DAGER = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     static int day, month, year;
 
@@ -73,6 +75,66 @@ public final class DatoFnr {
 
         if ((k1 != s[10]) || (k2 != s[11])) return (0);
         return (1);
+    }
+
+    public static int getAlderFromFnr(String fnr, int rappAar) throws Exception {
+
+        int alder;
+
+        boolean fnrIsValid = validNorwId(fnr) == 1;
+
+        if (fnrIsValid)
+            alder = getAlderFromValidFnr(fnr, rappAar);
+        else
+            alder = getAlderFromInvalidFnr(fnr, rappAar);
+
+        return alder;
+    }
+
+    private static int getAlderFromInvalidFnr(String fnr, int rappAar) throws Exception {
+
+        int fodselsAar, alder;
+
+        boolean dateIsValid = validDateDDMMYY(fnr.substring(0, 6)) == 1;
+
+        if (dateIsValid) {
+            int fAar = Integer.parseInt(fnr.substring(4, 6));
+
+            if (fAar < rappAar)
+                fodselsAar = Integer.parseInt("20" + fnr.substring(4, 6));
+            else
+                fodselsAar = Integer.parseInt("19" + fnr.substring(4, 6));
+
+        } else {
+            throw new Exception("Ugyldig datodel i fødselsnummer.");
+        }
+
+        alder = rappAar - fodselsAar;
+
+        return alder;
+    }
+
+    private static int getAlderFromValidFnr(String fnr, int rappAar) throws Exception {
+        int alder, fodselsAar;
+        int individNr = Integer.parseInt(fnr.substring(6, 9));
+        int fAar = Integer.parseInt(fnr.substring(4, 6));
+
+        if (individNr >= 500 && individNr <= 999 && fAar < 40) {
+            fodselsAar = Integer.parseInt("20" + fnr.substring(4, 6));
+
+        } else if (individNr >= 0 && individNr <= 499) {
+            fodselsAar = Integer.parseInt("19" + fnr.substring(4, 6));
+
+        } else if (individNr >= 900 && individNr <= 999 && fAar > 39) {
+            fodselsAar = Integer.parseInt("19" + fnr.substring(4, 6));
+
+        } else {
+            return getAlderFromInvalidFnr(fnr, rappAar);
+        }
+
+        alder = rappAar - fodselsAar;
+
+        return alder;
     }
 }
 

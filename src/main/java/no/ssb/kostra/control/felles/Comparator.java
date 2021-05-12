@@ -4,7 +4,6 @@ import no.ssb.kostra.utils.Format;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -61,5 +60,9 @@ public class Comparator {
 
         int k1 = (rest == 0) ? 0 : 11 - rest;
         return (k1 == s.get(8));
+    }
+
+    public static boolean between(int i, int minValueInclusive, int maxValueInclusive) {
+        return (minValueInclusive <= i && i <= maxValueInclusive);
     }
 }

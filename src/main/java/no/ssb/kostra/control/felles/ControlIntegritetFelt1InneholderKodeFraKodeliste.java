@@ -1,11 +1,10 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ControlIntegritetFelt1InneholderKodeFraKodeliste {
     public static void doControl(Record r, ErrorReport er, int l, String title, String field, List<String> expectedList, int errorType) {

@@ -1,6 +1,6 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.*;
+import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Format;
 
 import java.time.LocalDate;

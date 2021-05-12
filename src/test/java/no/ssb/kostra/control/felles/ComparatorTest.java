@@ -1,66 +1,79 @@
 package no.ssb.kostra.control.felles;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class ComparatorTest {
     @Test
     public void testGreaterThan() {
-        assertTrue(Comparator.compareIntegerOperatorInteger(1, "<", 2));
-        assertFalse(Comparator.compareIntegerOperatorInteger(2, "<", 2));
-        assertFalse(Comparator.compareIntegerOperatorInteger(3, "<", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(1, "<", 2));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(2, "<", 2));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(3, "<", 2));
     }
 
     @Test
     public void testGreaterOrEqualThan() {
-        assertFalse(Comparator.compareIntegerOperatorInteger(2, "<=", 1));
-        assertTrue(Comparator.compareIntegerOperatorInteger(2, "<=", 2));
-        assertTrue(Comparator.compareIntegerOperatorInteger(2, "<=", 3));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(2, "<=", 1));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(2, "<=", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(2, "<=", 3));
     }
 
     @Test
     public void testLessThan() {
-        assertTrue(Comparator.compareIntegerOperatorInteger(2, ">", 1));
-        assertFalse(Comparator.compareIntegerOperatorInteger(2, ">", 2));
-        assertFalse(Comparator.compareIntegerOperatorInteger(2, ">", 3));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(2, ">", 1));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(2, ">", 2));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(2, ">", 3));
     }
 
     @Test
     public void testLessOrEqualThan() {
-        assertFalse(Comparator.compareIntegerOperatorInteger(1, ">=", 2));
-        assertTrue(Comparator.compareIntegerOperatorInteger(2, ">=", 2));
-        assertTrue(Comparator.compareIntegerOperatorInteger(3, ">=", 2));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(1, ">=", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(2, ">=", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(3, ">=", 2));
     }
 
     @Test
     public void testEqualTo() {
-        assertFalse(Comparator.compareIntegerOperatorInteger(1, "==", 2));
-        assertTrue(Comparator.compareIntegerOperatorInteger(2, "==", 2));
+        Assert.assertFalse("1 == 2 -> false", Comparator.compareIntegerOperatorInteger(1, "==", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(2, "==", 2));
     }
 
     @Test
     public void testNotEqualTo() {
-        assertTrue(Comparator.compareIntegerOperatorInteger(1, "!=", 2));
-        assertFalse(Comparator.compareIntegerOperatorInteger(2, "!=", 2));
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(1, "!=", 2));
+        Assert.assertFalse(Comparator.compareIntegerOperatorInteger(2, "!=", 2));
+    }
+
+    @Test
+    public void testAIsNull() {
+        Assert.assertTrue(Comparator.compareIntegerOperatorInteger(null, "==", 0));
     }
 
     @Test
     public void isCodeInCodelist() {
-        assertTrue(Comparator.isCodeInCodelist("code1", List.of("code1", "code2")));
-        assertFalse(Comparator.isCodeInCodelist("notInCodelist", List.of("code1", "code2")));
+        Assert.assertTrue(Comparator.isCodeInCodelist("code1", List.of("code1", "code2")));
+        Assert.assertFalse(Comparator.isCodeInCodelist("notInCodelist", List.of("code1", "code2")));
     }
 
     @Test
     public void isValidOrgnr() {
-        assertTrue(Comparator.isValidOrgnr("944117784"));
-        assertTrue(Comparator.isValidOrgnr("999999999"));
+        Assert.assertTrue(Comparator.isValidOrgnr("944117784"));
+        Assert.assertTrue(Comparator.isValidOrgnr("999999999"));
 
-        assertFalse(Comparator.isValidOrgnr("000000000"));
-        assertFalse(Comparator.isValidOrgnr("123456789"));
+        Assert.assertFalse(Comparator.isValidOrgnr("000000000"));
+        Assert.assertFalse(Comparator.isValidOrgnr("123456789"));
+    }
+
+    @Test
+    public void testBetweenInclusive() {
+        Assert.assertTrue(Comparator.between(1, 1, 3));
+        Assert.assertTrue(Comparator.between(2, 1, 3));
+        Assert.assertTrue(Comparator.between(3, 1, 3));
+
+        Assert.assertFalse(Comparator.between(0, 1, 3));
+        Assert.assertFalse(Comparator.between(4, 1, 3));
     }
 }

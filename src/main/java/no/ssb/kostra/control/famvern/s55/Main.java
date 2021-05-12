@@ -1,12 +1,12 @@
 package no.ssb.kostra.control.famvern.s55;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.ControlAlleFeltIListeHarLikSum;
 import no.ssb.kostra.control.felles.ControlFelt1LikSumAvListe;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Format;
 
 import java.util.List;

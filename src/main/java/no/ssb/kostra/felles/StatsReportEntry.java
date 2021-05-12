@@ -1,4 +1,4 @@
-package no.ssb.kostra.control;
+package no.ssb.kostra.felles;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class StatsReportEntry {
 
     @Override
     public String toString(){
-        String lf = Constants.lineSeparator;
+        final String lf = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder();
 
         sb.append("<table style='border: 1px solid black'>").append(lf);

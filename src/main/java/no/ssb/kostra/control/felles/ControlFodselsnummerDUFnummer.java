@@ -1,9 +1,9 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
-import no.ssb.kostra.utils.DatoFnr;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.utils.Fnr;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ public class ControlFodselsnummerDUFnummer {
         List<Character> numbers = dufNr.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
         boolean hasErrors = false;
 
-        if (DatoFnr.validNorwId(fNr) != 1) {
+        if (Fnr.validNorwId(fNr) != 1) {
             try {
                 Integer sum = IntStream.range(0, Math.min(numbers.size(), weights.size()))
                         .mapToObj(i -> Integer.parseInt(String.valueOf(numbers.get(i))) * weights.get(i))

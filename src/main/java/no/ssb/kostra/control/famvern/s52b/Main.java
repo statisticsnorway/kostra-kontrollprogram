@@ -1,9 +1,9 @@
 package no.ssb.kostra.control.famvern.s52b;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.*;
 
 import java.util.List;
 import java.util.Map;

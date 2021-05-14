@@ -119,8 +119,7 @@ public class Main {
         records.forEach(r -> {
             // Kontroll 7 Henvendelsesdato
             ControlFelt1Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -130,12 +129,12 @@ public class Main {
                             , "Dette er ikke oppgitt dato (" + r.getFieldAsString("HENV_DATO_A") + ") for når primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "HENV_DATO_A"
+                    , r.getFieldAsString("HENV_DATO_A")
+                    , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -148,13 +147,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "KONTAKT_TIDL_A"
+                    , r.getFieldAsString("KONTAKT_TIDL_A")
                     , r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -167,13 +165,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "HENV_GRUNN_A"
+                    , r.getFieldAsString("HENV_GRUNN_A")
                     , r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -191,8 +188,7 @@ public class Main {
             );
 
             ControlHeltall.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -202,12 +198,11 @@ public class Main {
                             , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Fant '" + r.getFieldAsString("PRIMK_FODT_A") + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_FODT_A"
+                    , r.getFieldAsIntegerDefaultEquals0("PRIMK_FODT_A")
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -220,13 +215,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_SIVILS_A"
+                    , r.getFieldAsString("PRIMK_SIVILS_A")
                     , r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -238,15 +232,14 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_SIVILS_A"
+                    , r.getFieldAsString("PRIMK_SIVILS_A")
                     , List.of("3", "4")
-                    , "FORMELL_SIVILS_A"
+                    , r.getFieldAsString("FORMELL_SIVILS_A")
                     , r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -259,13 +252,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_SAMBO_A"
+                    , r.getFieldAsString("PRIMK_SAMBO_A")
                     , r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -278,13 +270,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_ARBSIT_A"
+                    , r.getFieldAsString("PRIMK_ARBSIT_A")
                     , r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -296,15 +287,14 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_VSRELASJ_A"
+                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
                     , List.of("1")
-                    , "PART_LENGDE_A"
+                    , r.getFieldAsString("PART_LENGDE_A")
                     , r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -316,15 +306,14 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_VSRELASJ_A"
+                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
                     , List.of("2")
-                    , "EKSPART_LENGDE_A"
+                    , r.getFieldAsString("EKSPART_LENGDE_A")
                     , r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -336,16 +325,15 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_VSRELASJ_A"
+                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
                     , List.of("2")
-                    , "EKSPART_VARIGH_A"
+                    , r.getFieldAsString("EKSPART_VARIGH_A")
                     , r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
 
             ControlFelt1Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -357,12 +345,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "FORSTE_SAMT_A"
+                    , r.getFieldAsString("FORSTE_SAMT_A")
+                    , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
             );
 
             ControlFelt1DatoSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -373,8 +361,10 @@ public class Main {
                             + "er før dato for primærklientens henvendelse (" + r.getFieldAsString("HENV_DATO_A") + ") til familievernkontoret."
                             , Constants.NORMAL_ERROR
                     )
-                    , "HENV_DATO_A"
-                    , "FORSTE_SAMT_A"
+                    , r.getFieldAsString("HENV_DATO_A")
+                    , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
+                    , r.getFieldAsString("FORSTE_SAMT_A")
+                    , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
             );
 
             {
@@ -407,8 +397,7 @@ public class Main {
             }
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -421,7 +410,7 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "HOVEDF_BEHAND_A"
+                    , r.getFieldAsString("HOVEDF_BEHAND_A")
                     , r.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
@@ -436,7 +425,6 @@ public class Main {
                     List.of("Andre", "DELT_ANDR_A")
             ).forEach(fieldPair ->
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            r,
                             er,
                             new ErrorReportEntry(
                                     createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
@@ -448,7 +436,7 @@ public class Main {
                                     + "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.<br/>\n"
                                     , Constants.NORMAL_ERROR
                             ),
-                            fieldPair.get(1),
+                            r.getFieldAsString(fieldPair.get(1)),
                             r.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
                     )
             );
@@ -495,7 +483,6 @@ public class Main {
 
                 fieldPairs.forEach(fieldPair ->
                         ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                                r,
                                 er,
                                 new ErrorReportEntry(
                                         createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
@@ -507,9 +494,9 @@ public class Main {
                                         + "men det er ikke oppgitt hvor mange behandlingssamtaler (" + r.getFieldAsString(fieldPair.get(2)) + ") de ulike personene har deltatt i gjennom av året."
                                         , Constants.NORMAL_ERROR
                                 ),
-                                fieldPair.get(1),
+                                r.getFieldAsString(fieldPair.get(1)),
                                 r.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.getValue().equalsIgnoreCase("Ja")).map(Code::getCode).collect(Collectors.toList()),
-                                fieldPair.get(2),
+                                r.getFieldAsIntegerDefaultEquals0(fieldPair.get(2)),
                                 ">",
                                 0
                         )
@@ -635,8 +622,7 @@ public class Main {
             }
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -649,13 +635,12 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "STATUS_ARETSSL_A"
+                    , r.getFieldAsString("STATUS_ARETSSL_A")
                     , r.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -667,15 +652,14 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "STATUS_ARETSSL_A"
+                    , r.getFieldAsString("STATUS_ARETSSL_A")
                     , List.of("1", "2")
-                    , "HOVEDTEMA_A"
+                    , r.getFieldAsString("HOVEDTEMA_A")
                     , r.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -686,14 +670,13 @@ public class Main {
                             + "men ikke fylt ut dato (" + r.getFieldAsString("DATO_AVSL_A") + ") for avslutning av saken."
                             , Constants.NORMAL_ERROR
                     )
-                    , "STATUS_ARETSSL_A"
+                    , r.getFieldAsString("STATUS_ARETSSL_A")
                     , List.of("1", "2")
-                    , "DATO_AVSL_A"
+                    , r.getFieldAsLocalDate("DATO_AVSL_A")
             );
 
             ControlFelt1DatoSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -704,13 +687,14 @@ public class Main {
                             + "kommer før dato for første behandlingssamtale (" + r.getFieldAsString("FORSTE_SAMT_A") + ")."
                             , Constants.NORMAL_ERROR
                     )
-                    , "FORSTE_SAMT_A"
-                    , "DATO_AVSL_A"
+                    , r.getFieldAsString("FORSTE_SAMT_A")
+                    , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
+                    , r.getFieldAsString("DATO_AVSL_A")
+                    , r.getFieldDefinitionByName("DATO_AVSL_A").getDatePattern()
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -723,7 +707,7 @@ public class Main {
                             + "Feltet er obligatorisk."
                             , Constants.NORMAL_ERROR
                     )
-                    , "BEKYMR_MELD_A"
+                    , r.getFieldAsString("BEKYMR_MELD_A")
                     , r.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
         });

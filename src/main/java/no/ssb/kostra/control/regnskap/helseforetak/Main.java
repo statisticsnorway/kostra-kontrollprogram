@@ -63,47 +63,44 @@ public class Main {
             if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
                 // Kontroll Funksjon 400
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Funksjon 400"
                                 , "Ugyldig funksjon. Funksjonen '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
                                 , Constants.NORMAL_ERROR
                         )
-                        , "funksjon_kapittel"
+                        , p.getFieldAsString("funksjon_kapittel")
                         , List.of("400 ")
-                        , "orgnr"
+                        , p.getFieldAsString("orgnr")
                         , Definitions.getFunksjon400Orgnr()
                 );
 
                 // Kontroll Kontokode 320
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Kontokode 320"
                                 , "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus. Korriger funksjon."
                                 , Constants.NORMAL_ERROR
                         )
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , List.of("320")
-                        , "funksjon_kapittel"
+                        , p.getFieldAsString("funksjon_kapittel")
                         , Definitions.getKontokode320Funksjoner());
             }
 
             if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
                 // Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
                                 , "Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp"
                                 , "Kun positive beløp er gyldig. Fant ugyldig beløp (" + p.getFieldAsTrimmedString("belop") + ")"
                                 , Constants.NORMAL_ERROR
                         )
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , Definitions.getKontokodePositiveTall()
-                        , "belop"
+                        , p.getFieldAsIntegerDefaultEquals0("belop")
                         , ">"
                         , 0);
             }

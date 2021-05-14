@@ -152,8 +152,7 @@ public class Main {
                                 .concat(") kontoret har brukt for å gjennomføre tiltakene. Sjekk om det er glemt å rapportere. ");
 
                         ControlFelt1BoolskSaaFelt2Boolsk.doControl(
-                                r
-                                , er
+                                er
                                 , new ErrorReportEntry(
                                         createFylkeNr(r.getFieldAsString("FYLKE_NR"))
                                         , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
@@ -163,10 +162,10 @@ public class Main {
                                         , timerErrorText
                                         , Constants.NORMAL_ERROR
                                 )
-                                , tiltakField
+                                , r.getFieldAsInteger(tiltakField)
                                 , ">"
                                 , 0
-                                , timerField
+                                , r.getFieldAsInteger(timerField)
                                 , ">"
                                 , 0
                         );

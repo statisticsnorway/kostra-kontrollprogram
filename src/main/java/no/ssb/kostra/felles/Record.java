@@ -69,27 +69,30 @@ public class Record {
         this.valuesByName.put(field, String.valueOf(i));
     }
 
-
     public FieldDefinition getFieldDefinitionByName(String name) {
         return this.fieldDefinitionByName.get(name);
     }
 
     public LocalDate getFieldAsLocalDate(String field) {
-        FieldDefinition definition = getFieldDefinitionByName(field);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(definition.getDatePattern());
-        return LocalDate.from(formatter.parse(getFieldAsString(field)));
+        try {
+            FieldDefinition definition = getFieldDefinitionByName(field);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(definition.getDatePattern());
+            return LocalDate.from(formatter.parse(getFieldAsString(field)));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<FieldDefinition> getFieldDefinitions() {
         return fieldDefinitions;
     }
 
-    public List<String> getNames(){
+    public List<String> getNames() {
         return new ArrayList<>(this.valuesByName.keySet());
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.valuesByName.toString();
     }
 

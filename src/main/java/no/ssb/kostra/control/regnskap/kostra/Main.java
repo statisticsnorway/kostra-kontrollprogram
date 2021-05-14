@@ -72,8 +72,7 @@ public class Main {
                     // driftsregnskapet
                     List<String> gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og funksjon"
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
@@ -81,13 +80,12 @@ public class Main {
                                     + "), eller overfør posteringen til investeringsregnskapet."
                                     , Constants.CRITICAL_ERROR
                             )
-                            , "funksjon_kapittel"
+                            , p.getFieldAsString("funksjon_kapittel")
                             , gyldigeDriftFunksjoner);
 
                     List<String> gyldigeDriftArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
@@ -95,22 +93,21 @@ public class Main {
                                     + "), eller overfør posteringen til investeringsregnskapet."
                                     , Constants.CRITICAL_ERROR
                             )
-                            , "art_sektor"
+                            , p.getFieldAsString("art_sektor")
                             , gyldigeDriftArter);
 
                     if (Arrays.asList("0A", "0M").contains(args.getSkjema())) {
                         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                                p
-                                , er
+                                er
                                 , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                         , "Kontroll Kombinasjon i driftsregnskapet kontoklasse, funksjon og art"
                                         , "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. "
                                         + "I driftsregnskapet, kontoklasse " + p.getFieldAsString("kontoklasse") + ", er artene 874 og 875 kun tillat brukt i kombinasjon med funksjon 800"
                                         , Constants.CRITICAL_ERROR
                                 )
-                                , "art_sektor"
+                                , p.getFieldAsString("art_sektor")
                                 , List.of("874", "875")
-                                , "funksjon_kapittel"
+                                , p.getFieldAsString("funksjon_kapittel")
                                 , List.of("800 "));
                     }
 
@@ -118,8 +115,7 @@ public class Main {
                     // investeringsregnskapet
                     List<String> gyldigeInvesteringFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og funksjon"
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i investeringsregnskapet, én av ("
@@ -128,15 +124,14 @@ public class Main {
                                     + "I driftsregnskapet skal mva-kompensasjon (art 729) føres på funksjonen hvor utgiften oppstod."
                                     , Constants.CRITICAL_ERROR
                             )
-                            , "funksjon_kapittel"
+                            , p.getFieldAsString("funksjon_kapittel")
                             , gyldigeInvesteringFunksjoner
                             , "kontoklasse"
                             , List.of(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I")));
 
                     List<String> gyldigeInvesteringArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
@@ -144,14 +139,13 @@ public class Main {
                                     + "), eller overfør posteringen til driftsregnskapet."
                                     , Constants.CRITICAL_ERROR
                             )
-                            , "art_sektor"
+                            , p.getFieldAsString("art_sektor")
                             , gyldigeInvesteringArter);
 
 
                     if (p.getFieldAsString("kontoklasse").equalsIgnoreCase(Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
                         ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                                p
-                                , er
+                                er
                                 , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                         , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse, funksjon og art"
                                         , "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. "
@@ -160,9 +154,9 @@ public class Main {
                                         + "benyttes til felles finansiering av investeringer i bygninger, anlegg og andre varige driftsmidler."
                                         , Constants.CRITICAL_ERROR
                                 )
-                                , "art_sektor"
+                                , p.getFieldAsString("art_sektor")
                                 , List.of("729")
-                                , "funksjon_kapittel"
+                                , p.getFieldAsString("funksjon_kapittel")
                                 , List.of("841 "));
                     }
                 }
@@ -170,31 +164,29 @@ public class Main {
                 // Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899.
                 // Kontrollen må kjøres 2 ganger ettersom den ikke støtter gjensidighet
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon funksjon og art"
                                 , "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
                                 + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , List.of("589", "980", "989")
-                        , "funksjon_kapittel"
+                        , p.getFieldAsString("funksjon_kapittel")
                         , List.of("899 "));
 
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(kombinasjonskontroller, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon funksjon og art"
                                 , "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
                                 + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "funksjon_kapittel"
+                        , p.getFieldAsString("funksjon_kapittel")
                         , List.of("899 ")
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , List.of("589", "980", "989"));
 
             }

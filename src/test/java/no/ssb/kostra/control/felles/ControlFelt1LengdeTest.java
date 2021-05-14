@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ControlFelt1DatoTest {
+public class ControlFelt1LengdeTest {
     private ErrorReport er;
     private ErrorReportEntry ere;
 
@@ -18,27 +18,17 @@ public class ControlFelt1DatoTest {
         Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
         er = new ErrorReport(args);
         ere = new ErrorReportEntry(" ", " ", " ", " "
-                , "TEST av Dato etter dato", "Feil: fant ikke dato etter dato", Constants.CRITICAL_ERROR);
+                , "TEST av blankt innhold", "Feil: fant ikke noe innhold", Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testOK1() {
-        assertFalse(ControlFelt1Dato.doControl(er, ere, "20200101", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK2() {
-        assertTrue(ControlFelt1Dato.doControl(er, ere, "00000000", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK3() {
-        assertTrue(ControlFelt1Dato.doControl(er, ere, "        ", "yyyyMMdd"));
+        assertFalse(ControlFelt1Lengde.doControl(er, ere, "har innhold"));
     }
 
     @Test
     public void testFail1() {
-        assertTrue(ControlFelt1Dato.doControl(er, ere, "20200232", "yyyyMMdd"));
+        assertTrue(ControlFelt1Lengde.doControl(er, ere, ""));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 }

@@ -52,8 +52,7 @@ public class Main {
 
         records.forEach(r -> {
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -64,13 +63,12 @@ public class Main {
                             + "forventet '" + args.getRegion().substring(0, 4) + "'."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "KOMMUNE_NR"
+                    , r.getFieldAsString("KOMMUNE_NR")
                     , Collections.singletonList(args.getRegion().substring(0, 4))
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -81,13 +79,12 @@ public class Main {
                             + "forventet én av '" + Definitions.getBydelerAsList(args.getRegion().substring(0, 4)) + "'."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "BYDELSNR"
+                    , r.getFieldAsString("BYDELSNR")
                     , Definitions.getBydelerAsList(args.getRegion().substring(0, 4))
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -98,13 +95,12 @@ public class Main {
                             + "forventet '" + args.getAargang().substring(0, 2) + "'."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VERSION"
+                    , r.getFieldAsString("VERSION")
                     , Collections.singletonList(args.getAargang().substring(0, 2))
             );
 
             ControlFodselsnummer.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -116,7 +112,7 @@ public class Main {
                             + "skal feltet inneholde deltakeren fødselsnummer/d-nummer (11 siffer)."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PERSON_FODSELSNR"
+                    , r.getFieldAsString("PERSON_FODSELSNR")
             );
 
             ControlFelt1Boolsk.doControl(
@@ -154,8 +150,7 @@ public class Main {
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -167,13 +162,12 @@ public class Main {
                             + "Mottakerens kjønn er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "KJONN"
+                    , r.getFieldAsString("KJONN")
                     , r.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -185,13 +179,12 @@ public class Main {
                             + "Mottakerens sivilstand/sivilstatus ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "EKTSTAT"
+                    , r.getFieldAsString("EKTSTAT")
                     , r.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -205,13 +198,12 @@ public class Main {
 
                             , Constants.CRITICAL_ERROR
                     )
-                    , "BU18"
+                    , r.getFieldAsString("BU18")
                     , r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -223,16 +215,15 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "BU18"
+                    , r.getFieldAsString("BU18")
                     , List.of("1")
-                    , "ANTBU18"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTBU18")
                     , ">"
                     , 0
             );
 
             ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -245,10 +236,10 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "ANTBU18"
+                    , r.getFieldAsInteger("ANTBU18")
                     , ">"
                     , 0
-                    , "BU18"
+                    , r.getFieldAsString("BU18")
                     , List.of("1")
 
             );
@@ -272,8 +263,7 @@ public class Main {
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -284,13 +274,12 @@ public class Main {
                             + r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , r.getFieldDefinitionByName("VKLO").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -305,15 +294,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("1")
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , List.of("01", "02")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -328,15 +316,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("2")
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , List.of("03", "05", "06", "09", "10")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -351,15 +338,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("4")
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , List.of("03")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -374,15 +360,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("6")
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , List.of("09")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -397,15 +382,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("8")
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , List.of("10")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -420,15 +404,14 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VKLO"
+                    , r.getFieldAsString("VKLO")
                     , List.of("3")
-                    , "TRYGDESIT"
+                    , r.getFieldAsString("TRYGDESIT")
                     , r.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -438,9 +421,9 @@ public class Main {
                             , "Mottakeren (" + r.getFieldAsInteger("ALDER") + " år) er 60 år eller yngre og mottar alderspensjon."
                             , Constants.NORMAL_ERROR
                     )
-                    , "TRYGDESIT"
+                    , r.getFieldAsString("TRYGDESIT")
                     , List.of("07")
-                    , "ALDER"
+                    , r.getFieldAsIntegerDefaultEquals0("ALDER")
                     , ">"
                     , 60
             );
@@ -479,8 +462,7 @@ public class Main {
 
 
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        r
-                        , er
+                        er
                         , new ErrorReportEntry(
                                 r.getFieldAsString("SAKSBEHANDLER")
                                 , r.getFieldAsString("PERSON_JOURNALNR")
@@ -490,9 +472,9 @@ public class Main {
                                 , "Mottakeren mottar trygd (" + t + "), men det er ikke oppgitt 'Ikke arbeidssøker' på arbeidssituasjon (" + a + ")."
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "TRYGDESIT"
+                        , r.getFieldAsString("TRYGDESIT")
                         , List.of("04", "07")
-                        , "ARBSIT"
+                        , r.getFieldAsString("ARBSIT")
                         , r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).filter(c -> c.equalsIgnoreCase("04")).collect(Collectors.toList())
                 );
             }
@@ -515,8 +497,7 @@ public class Main {
             }
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -528,7 +509,7 @@ public class Main {
                             + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "ARBSIT"
+                    , r.getFieldAsString("ARBSIT")
                     , r.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
@@ -661,8 +642,7 @@ public class Main {
             }
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -673,13 +653,12 @@ public class Main {
                             + "Utfylt verdi er '" + r.getFieldAsString("GITT_OKONOMIRAD") + "'. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "GITT_OKONOMIRAD"
+                    , r.getFieldAsString("GITT_OKONOMIRAD")
                     , r.getFieldDefinitionByName("GITT_OKONOMIRAD").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -690,13 +669,12 @@ public class Main {
                             + "Utfylt verdi er '" + r.getFieldAsString("FAAT_INDIVIDUELL_PLAN") + "'. Feltet er obligatorisk."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "FAAT_INDIVIDUELL_PLAN"
+                    , r.getFieldAsString("FAAT_INDIVIDUELL_PLAN")
                     , r.getFieldDefinitionByName("FAAT_INDIVIDUELL_PLAN").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -707,7 +685,7 @@ public class Main {
                             + "Utfylt verdi er '" + r.getFieldAsString("BOSIT") + "'. Feltet er obligatorisk."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "BOSIT"
+                    , r.getFieldAsString("BOSIT")
                     , r.getFieldDefinitionByName("BOSIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
@@ -764,8 +742,7 @@ public class Main {
             }
 
             ControlFodselsnummerDUFnummer.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -776,13 +753,12 @@ public class Main {
                             + "Oppgi ett 12-sifret DUF- nummer."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PERSON_FODSELSNR"
-                    , "PERSON_DUF"
+                    , r.getFieldAsString("PERSON_FODSELSNR")
+                    , r.getFieldAsString("PERSON_DUF")
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -793,13 +769,12 @@ public class Main {
                             + "Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VILKARSOSLOV"
+                    , r.getFieldAsString("VILKARSOSLOV")
                     , r.getFieldDefinitionByName("VILKARSOSLOV").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -810,13 +785,12 @@ public class Main {
                             + "Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VILKARSAMEKT"
+                    , r.getFieldAsString("VILKARSAMEKT")
                     , r.getFieldDefinitionByName("VILKARSAMEKT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -827,14 +801,13 @@ public class Main {
                             + "så skal utbetalingsvedtakets dato (" + r.getFieldAsString("UTBETDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VILKARSOSLOV"
+                    , r.getFieldAsString("VILKARSOSLOV")
                     , List.of("1")
-                    , "UTBETDATO"
+                    , r.getFieldAsLocalDate("UTBETDATO")
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -845,9 +818,9 @@ public class Main {
                             + "så skal utbetalingsvedtakets til og med dato (" + r.getFieldAsString("UTBETTOMDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                             , Constants.CRITICAL_ERROR
                     )
-                    , "VILKARSOSLOV"
+                    , r.getFieldAsString("VILKARSOSLOV")
                     , List.of("1")
-                    , "UTBETTOMDATO"
+                    , r.getFieldAsLocalDate("UTBETTOMDATO")
             );
 
             {

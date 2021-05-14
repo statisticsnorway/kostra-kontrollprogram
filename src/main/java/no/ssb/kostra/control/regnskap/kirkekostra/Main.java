@@ -67,32 +67,30 @@ public class Main {
                 String investeringKontoklasse = Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I");
                 List<String> investeringArtList = Definitions.getSpesifikkeArter(investeringKontoklasse);
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i investeringsregnskapet"
                                 , "Korrigér art (" + p.getFieldAsTrimmedString("art_sektor") + ") til gyldig art i investeringsregnskapet (én av " + investeringArtList + "), eller overfør posteringen til driftsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , investeringArtList
-                        , "kontoklasse"
+                        , p.getFieldAsString("kontoklasse")
                         , List.of(investeringKontoklasse));
 
                 String driftKontoklasse = Definitions.getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D");
                 List<String> driftArtList = Definitions.getSpesifikkeArter(driftKontoklasse);
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        p
-                        , er
+                        er
                         , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                 , "Kontroll Kombinasjon kontoklasse og art i driftsregnskapet"
                                 , "Korrigér art (" + p.getFieldAsTrimmedString("art_sektor") + ") til gyldig art i driftsregnskapet (én av " + driftArtList + "), eller overfør posteringen til investeringsregnskapet"
 //                                , "Korrigér til art som er gyldig i driftsregnskapet, eller overfør posteringen til investeringsregnskapet"
                                 , Constants.CRITICAL_ERROR
                         )
-                        , "art_sektor"
+                        , p.getFieldAsString("art_sektor")
                         , driftArtList
-                        , "kontoklasse"
+                        , p.getFieldAsString("kontoklasse")
                         , List.of(driftKontoklasse));
             }
         });
@@ -387,14 +385,13 @@ public class Main {
             regnskap.stream()
                     .filter(p -> p.getFieldAsTrimmedString("funksjon_kapittel").equalsIgnoreCase("089"))
                     .forEach(p -> ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Funksjon 089"
                                     , "Korrigér i fila slik at art (" + p.getFieldAsString("art_sektor") + ") er gyldig mot funksjon 089. Gyldige arter er: " + funksjon089Arter
                                     , Constants.NORMAL_ERROR
                             )
-                            , "art_sektor"
+                            , p.getFieldAsString("art_sektor")
                             , funksjon089Arter)
                     );
         }

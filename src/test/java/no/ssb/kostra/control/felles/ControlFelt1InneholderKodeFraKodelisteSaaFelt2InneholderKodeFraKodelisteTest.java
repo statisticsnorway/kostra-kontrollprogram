@@ -1,73 +1,46 @@
 package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodelisteTest {
-    private Arguments args;
     private ErrorReport er;
     private ErrorReportEntry ere;
-    private List<FieldDefinition> fieldDefinitions;
-    private String inputFileContent;
-    private Record r;
-    InputStream sysInBackup;
-
 
     @Before
     public void beforeTest() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
+        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
         er = new ErrorReport(args);
         ere = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av Kode i kodeliste", "Feil: fant ikke kode i kodeliste", Constants.CRITICAL_ERROR);
-        fieldDefinitions = List.of(
-                new FieldDefinition(1, "felt1", "String", "", 1, 2, new ArrayList<>(), "", false),
-                new FieldDefinition(2, "felt2", "String", "", 3, 4, new ArrayList<>(), "", false),
-                new FieldDefinition(3, "heltall", "Integer", "", 5, 10, new ArrayList<>(), "", false)
-        );
-        inputFileContent = "F1F2 12345";
-        r = new Record("F1F2 12345", fieldDefinitions);
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-
     }
 
     @Test
     public void testOK1() {
-        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("F1","C2"), "felt2", List.of("F2"));
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
-
+        assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 NOT in list"), "Code2 NOT in list", List.of("Code2 in list")));
     }
 
     @Test
     public void testOK2() {
-        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("NOT IN LIST"), "felt2", List.of("F2"));
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 NOT in list"), "Code2 in list", List.of("Code2 in list")));
+    }
 
+    @Test
+    public void testOK3() {
+        assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 in list"), "Code2 in list", List.of("Code2 in list")));
     }
 
     @Test
     public void testFail1() {
-        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("F1"), "felt2", List.of("FAIL"));
+        assertTrue(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 in list"), "Code2 NOT in list", List.of("Code2 in list")));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
-
-    }
-
-    @Test
-    public void testFail2() {
-        ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(r, er, ere, "felt1", List.of("NOT IN LIST"), "felt2", List.of("FAIL"));
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
-
     }
 }

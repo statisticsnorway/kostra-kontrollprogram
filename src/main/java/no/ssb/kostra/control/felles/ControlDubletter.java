@@ -23,16 +23,12 @@ public class ControlDubletter {
                 .sorted()
                 .collect(Collectors.toList());
 
-        if (!dubletter.isEmpty()) {
-            er.addEntry(
-                    new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
-                            , "Kontroll Dubletter"
-                            , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", titleList) + ")."
-                            + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
-                            , Constants.NORMAL_ERROR
-                    ));
-        }
-
-        return false;
+        return !dubletter.isEmpty() && er.addEntry(
+                new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
+                        , "Kontroll Dubletter"
+                        , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", titleList) + ")."
+                        + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
+                        , Constants.NORMAL_ERROR
+                ));
     }
 }

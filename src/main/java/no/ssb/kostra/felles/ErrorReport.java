@@ -32,7 +32,7 @@ public class ErrorReport {
         count++;
     }
 
-    public void addEntry(ErrorReportEntry entry) {
+    public boolean addEntry(ErrorReportEntry entry) {
         // Avklare status
         if (this.errorType < entry.getErrorType()) {
             this.errorType = entry.getErrorType();
@@ -70,7 +70,7 @@ public class ErrorReport {
         journalnummerMap.put(entry.getKontrollNr(), entriesList);
         saksbehandlerMap.put(entry.getJournalnummer(), journalnummerMap);
         rapportMap.put(entry.getSaksbehandler(), saksbehandlerMap);
-        entries.add(entry);
+        return entries.add(entry);
     }
 
     public String generateReport() {

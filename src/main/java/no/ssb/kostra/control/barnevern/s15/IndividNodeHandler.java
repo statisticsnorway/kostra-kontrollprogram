@@ -1037,7 +1037,7 @@ public class IndividNodeHandler extends NodeHandler {
                                                 String errorTextFodselsnummer, String errorTextDUFnummer,
                                                 String errorTextMangler) {
         if (fodselsnummer != null) {
-            if (!((Fnr.validNorwId(fodselsnummer) == 1)
+            if (!((Fnr.isValidNorwId(fodselsnummer))
                     || fodselsnummer.endsWith("00100")
                     || fodselsnummer.endsWith("00200")
                     || fodselsnummer.endsWith("55555")
@@ -1073,7 +1073,7 @@ public class IndividNodeHandler extends NodeHandler {
     public void controlFodselsnummer(ErrorReport er,
                                      ErrorReportEntry ere, String fodselsnummer,
                                      String errorTextFodselsnummer) {
-        if (empty(fodselsnummer) || (!(Fnr.validNorwId(fodselsnummer) == 1) || fodselsnummer.endsWith("55555"))) {
+        if (empty(fodselsnummer) || (!(Fnr.isValidNorwId(fodselsnummer)) || fodselsnummer.endsWith("55555"))) {
             ere.setErrorText(errorTextFodselsnummer);
             er.addEntry(ere);
         }

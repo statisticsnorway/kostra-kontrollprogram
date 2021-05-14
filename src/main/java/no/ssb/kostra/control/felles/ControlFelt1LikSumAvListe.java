@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ControlFelt1LikSumAvListe {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<List<String>> fieldLists) {
-        fieldLists.forEach(fieldList -> {
+    public static boolean doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<List<String>> fieldLists) {
+        return fieldLists.stream()
+                .map(fieldList -> {
                     String sumField = fieldList.get(0);
                     Integer sum = r.getFieldAsIntegerDefaultEquals0(sumField);
                     List<String> aggregateFields = fieldList.subList(1, fieldList.size());
@@ -39,24 +40,13 @@ public class ControlFelt1LikSumAvListe {
                         );
 
                         er.addEntry(e);
+                        return true;
                     }
-                }
-        );
 
-        return r;
+                    return false;
+                })
+                .reduce(false, (result, item) -> result || item);
     }
-
-    /*
-    *                         , new ErrorReportEntry(
-                                "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 14 Kontroll av totalsummer for meklinger"
-                                , "Totalene summerer seg ikke som de skal."
-                                , Constants.NORMAL_ERROR
-                        )
-    * */
 
     public static List<List<String>> createFieldList(String measure, List<String> c1, List<String> c2) {
         List<List<String>> fieldLists = c1.stream()

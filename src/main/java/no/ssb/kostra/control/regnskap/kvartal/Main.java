@@ -56,8 +56,7 @@ public class Main {
                     // driftsregnskapet
                     List<String> gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og funksjon"
                                     , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
@@ -65,13 +64,12 @@ public class Main {
                                     + "), eller overfør posteringen til investeringsregnskapet."
                                     , Constants.NORMAL_ERROR
                             )
-                            , "funksjon_kapittel"
+                            , p.getFieldAsString("funksjon_kapittel")
                             , gyldigeDriftFunksjoner);
 
                     List<String> gyldigeDriftArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
@@ -79,14 +77,13 @@ public class Main {
                                     + "), eller overfør posteringen til investeringsregnskapet."
                                     , Constants.NORMAL_ERROR
                             )
-                            , "art_sektor"
+                            , p.getFieldAsString("art_sektor")
                             , gyldigeDriftArter);
 
                 } else if (Comparator.isCodeInCodelist(p.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
                     List<String> gyldigeInvesteringArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            p
-                            , er
+                            er
                             , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og art"
                                     , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
@@ -94,7 +91,7 @@ public class Main {
                                     + "), eller overfør posteringen til driftsregnskapet."
                                     , Constants.NORMAL_ERROR
                             )
-                            , "art_sektor"
+                            , p.getFieldAsString("art_sektor")
                             , gyldigeInvesteringArter);
                 }
             }

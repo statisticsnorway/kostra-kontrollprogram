@@ -2,6 +2,8 @@ package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.utils.Format;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,5 +66,23 @@ public class Comparator {
 
     public static boolean between(int i, int minValueInclusive, int maxValueInclusive) {
         return (minValueInclusive <= i && i <= maxValueInclusive);
+    }
+
+    public static boolean isValidDate(String date, String datePattern) {
+        String blankZeroDate = "0".repeat(datePattern.length());
+        String blankSpaceDate = " ".repeat(datePattern.length());
+
+        if (date.equalsIgnoreCase(blankZeroDate) || date.equalsIgnoreCase(blankSpaceDate)) {
+            return false;
+        }
+
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(datePattern);
+            LocalDate.parse(date, dtf);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }

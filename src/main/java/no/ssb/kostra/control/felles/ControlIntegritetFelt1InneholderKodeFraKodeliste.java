@@ -7,16 +7,16 @@ import no.ssb.kostra.felles.Record;
 import java.util.List;
 
 public class ControlIntegritetFelt1InneholderKodeFraKodeliste {
-    public static void doControl(Record r, ErrorReport er, int l, String title, String field, List<String> expectedList, int errorType) {
-        ControlFelt1InneholderKodeFraKodeliste.doControl(
-                r
-                , er
-                , new ErrorReportEntry("3. Integritetskontroller", Utils.createLinenumber(l, r), " ", " "
+    public static boolean doControl(ErrorReport er, int l, String title, String fieldvalue, List<String> expectedList, int errorType) {
+        // TODO sjekk journalnummer / recordinnhold
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry("3. Integritetskontroller", " ", " ", " "
                         , "Kontroll " + title
-                        , "Korrigér " + title.toLowerCase() + " i linjenummer " + l +  ". Fant ugyldig kode '" + r.getFieldAsTrimmedString(field) + "' for " +  title.toLowerCase() + "."
+                        , "Korrigér " + title.toLowerCase() + " i linjenummer " + l +  ". Fant ugyldig kode '" + fieldvalue.trim() + "' for " +  title.toLowerCase() + "."
                         , errorType
                 )
-                , field
+                , fieldvalue
                 , expectedList
         );
     }

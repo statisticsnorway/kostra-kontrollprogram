@@ -25,60 +25,16 @@ public class ControlFelt1BoolskSaaFelt2BoolskTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, ">", 0, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, ">=", 0, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "<=", 12345, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK4() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "==", 12345, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK5() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, ">=", 12345, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK6() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "<", 99999, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK7() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "<=", 99999, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK8() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "!=", 99999, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK9() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "!=", null, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK10() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "<", 0, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK11() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, "==", 0, 12345, ">", 0));
-    }
-
-    @Test
-    public void testOK12() {
         assertFalse(ControlFelt1BoolskSaaFelt2Boolsk.doControl(er, ere, 12345, ">", 99999, 12345, ">", 0));
     }
 

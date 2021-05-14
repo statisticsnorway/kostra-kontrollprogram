@@ -2,20 +2,15 @@ package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class ControlFelt1LikSumAvListeTest {
-    InputStream sysInBackup;
     private ErrorReport er;
     private ErrorReportEntry ere;
     private Record r1;
@@ -40,18 +35,8 @@ public class ControlFelt1LikSumAvListeTest {
                 new FieldDefinition(10, "heltall_S_2", "Integer", "", 19, 20, new ArrayList<>(), "", false),
                 new FieldDefinition(11, "heltall_S_S", "Integer", "", 21, 22, new ArrayList<>(), "", false)
         );
-        String inputFileContent = "F1F2 1 2 3 2 4 6 3 6 9";
         r1 = new Record("F1F2 1 2 3 2 4 6 3 6 9", fieldDefinitions);
         r2 = new Record("F1F2 1 2 3 2 4 6 3 619", fieldDefinitions);
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-    }
-
-
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
     }
 
     @Test
@@ -59,10 +44,7 @@ public class ControlFelt1LikSumAvListeTest {
         List<List<String>> expected = List.of(
                 List.of("heltall_S_S", "heltall_S_1", "heltall_S_2"),
                 List.of("heltall_1_S", "heltall_1_1", "heltall_1_2"),
-                List.of("heltall_2_S", "heltall_2_1", "heltall_2_2"),
-                List.of("heltall_S_S", "heltall_1_S", "heltall_2_S"),
-                List.of("heltall_S_1", "heltall_1_1", "heltall_2_1"),
-                List.of("heltall_S_2", "heltall_1_2", "heltall_2_2"));
+                List.of("heltall_2_S", "heltall_2_1", "heltall_2_2"));
         List<List<String>> matrix = ControlFelt1LikSumAvListe.createFieldList("heltall", List.of("S", "1", "2"), List.of("S", "1", "2"));
 
         assertEquals(expected, matrix);
@@ -73,10 +55,7 @@ public class ControlFelt1LikSumAvListeTest {
         List<List<String>> expected = List.of(
                 List.of("S_S", "S_1", "S_2"),
                 List.of("1_S", "1_1", "1_2"),
-                List.of("2_S", "2_1", "2_2"),
-                List.of("S_S", "1_S", "2_S"),
-                List.of("S_1", "1_1", "2_1"),
-                List.of("S_2", "1_2", "2_2"));
+                List.of("2_S", "2_1", "2_2"));
         List<List<String>> matrix = ControlFelt1LikSumAvListe.createFieldList(List.of("S", "1", "2"), List.of("S", "1", "2"));
 
         assertEquals(expected, matrix);

@@ -183,8 +183,7 @@ public class Main {
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -194,15 +193,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt i løpet av rapporteringsåret."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTMOTERTOT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTMOTERTOT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -212,15 +210,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTMOTERTOT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTMOTERTOT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -230,15 +227,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen i løpet av året. (For og etterarbeid skal ikke regnes med)."
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMERTOT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMERTOT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -248,15 +244,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen siden opprettelsen "
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMERTOT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMERTOT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -266,15 +261,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange som har deltatt i gruppen i løpet av året. Terapeuter holdes utenom."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTDELT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTDELT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -284,15 +278,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange som har deltatt i gruppen siden opprettelsen. Terapeuter holdes utenom"
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTDELT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTDELT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -302,7 +295,7 @@ public class Main {
                             , "Det er ikke oppgitt hvor mange hovedterapeut eller andre ansatte som har deltatt i gruppen."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTTER_GRUPPEB_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTTER_GRUPPEB_B")
                     , ">"
                     , 0
 

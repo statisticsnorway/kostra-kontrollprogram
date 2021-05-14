@@ -24,15 +24,7 @@ public class ControlFelt1DatoTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1Dato.doControl(er, ere, "20200101", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK2() {
         assertTrue(ControlFelt1Dato.doControl(er, ere, "00000000", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK3() {
         assertTrue(ControlFelt1Dato.doControl(er, ere, "        ", "yyyyMMdd"));
     }
 

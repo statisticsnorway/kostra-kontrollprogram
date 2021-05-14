@@ -522,8 +522,7 @@ public class Main {
             }
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -533,14 +532,13 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange behandlingssamtaler det er gjennomført i saken i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTSAMT_IARET_A"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTSAMT_IARET_A")
                     , ">"
                     , 0
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -550,14 +548,13 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange behandlingssamtaler det er gjennomført siden saken ble opprettet. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTSAMT_OPPR_A"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTSAMT_OPPR_A")
                     , ">"
                     , 0
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -569,14 +566,13 @@ public class Main {
                             + "(for og etterarbeid skal ikke regnes med). Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMER_IARET_A"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMER_IARET_A")
                     , ">"
                     , 0
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
                             , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
@@ -587,7 +583,7 @@ public class Main {
                             + "(for og etterarbeid skal ikke regnes med). Feltet er obligatorisk å fylle ut"
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMER_OPPR_A"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMER_OPPR_A")
                     , ">"
                     , 0
             );

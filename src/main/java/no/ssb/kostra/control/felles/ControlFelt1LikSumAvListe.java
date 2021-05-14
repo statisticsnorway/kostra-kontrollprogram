@@ -49,42 +49,22 @@ public class ControlFelt1LikSumAvListe {
     }
 
     public static List<List<String>> createFieldList(String measure, List<String> c1, List<String> c2) {
-        List<List<String>> fieldLists = c1.stream()
+        return c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", measure, c1Item, c2Item))
                         .collect(Collectors.toList())
 
                 )
                 .collect(Collectors.toList());
-
-        fieldLists.addAll(c2.stream()
-                .map(c2Item -> c1.stream()
-                        .map(c1Item -> String.join("_", measure, c1Item, c2Item))
-                        .collect(Collectors.toList())
-
-                )
-                .collect(Collectors.toList())
-        );
-        return fieldLists;
     }
 
     public static List<List<String>> createFieldList(List<String> c1, List<String> c2) {
-        List<List<String>> fieldLists = c1.stream()
+        return c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", c1Item, c2Item))
                         .collect(Collectors.toList())
 
                 )
                 .collect(Collectors.toList());
-
-        fieldLists.addAll(c2.stream()
-                .map(c2Item -> c1.stream()
-                        .map(c1Item -> String.join("_", c1Item, c2Item))
-                        .collect(Collectors.toList())
-
-                )
-                .collect(Collectors.toList())
-        );
-        return fieldLists;
     }
 }

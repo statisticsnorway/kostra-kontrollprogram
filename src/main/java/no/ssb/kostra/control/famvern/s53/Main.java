@@ -124,8 +124,7 @@ public class Main {
                                 .concat(", tiltak.");
 
                         ControlFelt1Boolsk.doControl(
-                                r
-                                , er
+                                er
                                 , new ErrorReportEntry(
                                         createFylkeNr(r.getFieldAsString("FYLKE_NR"))
                                         , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
@@ -135,7 +134,7 @@ public class Main {
                                         , tiltakErrorText
                                         , Constants.NORMAL_ERROR
                                 )
-                                , tiltakField
+                                , r.getFieldAsIntegerDefaultEquals0(tiltakField)
                                 , ">"
                                 , 0
                         );

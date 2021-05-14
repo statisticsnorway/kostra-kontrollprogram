@@ -27,21 +27,13 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2DatoTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("NOT IN LIST"), null));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("NOT IN LIST"), LocalDate.of(2020, 1, 1)));
-    }
-
-    @Test
-    public void testOK3() {
-        assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("code1","code2"), LocalDate.of(2020, 1, 1)));
+        assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("code1", "code2"), LocalDate.of(2020, 1, 1)));
     }
 
     @Test
     public void testFail1() {
-        assertTrue(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("code1","code2"), null));
+        assertTrue(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(er, ere, "code1", List.of("code1", "code2"), null));
         assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
     }
 

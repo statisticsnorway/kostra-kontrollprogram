@@ -28,60 +28,16 @@ public class ControlFelt1BoolskSaaFelt2InneholderKodeFraKodelisteTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, ">", 0, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, ">=", 0, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "<=", 12345, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK4() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "==", 12345, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK5() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, ">=", 12345, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK6() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "<", 99999, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK7() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "<=", 99999, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK8() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "!=", 99999, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK9() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "!=", null, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK10() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "<", 0, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK11() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "==", 0, "code1", List.of("code1", "code2")));
-    }
-
-    @Test
-    public void testOK12() {
         assertFalse(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, ">", 99999, "code1", List.of("code1", "code2")));
     }
 
@@ -90,6 +46,4 @@ public class ControlFelt1BoolskSaaFelt2InneholderKodeFraKodelisteTest {
         assertTrue(ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, 12345, "==", 12345, "codeNotInCodelist", List.of("code1", "code2")));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
-
-
 }

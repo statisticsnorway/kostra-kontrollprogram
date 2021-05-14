@@ -24,25 +24,9 @@ public class ControlFelt1DatoSaaFelt2DatoTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1DatoSaaFelt2Dato.doControl(er, ere, "20200101", "yyyyMMdd", "20200202", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1DatoSaaFelt2Dato.doControl(er, ere, "20200101", "yyyyMMdd", "00000000", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFelt1DatoSaaFelt2Dato.doControl(er, ere, "20200101", "yyyyMMdd", "        ", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK4() {
         assertFalse(ControlFelt1DatoSaaFelt2Dato.doControl(er, ere, "00000000", "yyyyMMdd", "20200101", "yyyyMMdd"));
-    }
-
-    @Test
-    public void testOK5() {
         assertFalse(ControlFelt1DatoSaaFelt2Dato.doControl(er, ere, "        ", "yyyyMMdd", "20200101", "yyyyMMdd"));
     }
 

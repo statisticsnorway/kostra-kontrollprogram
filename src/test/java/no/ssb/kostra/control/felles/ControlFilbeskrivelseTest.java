@@ -8,18 +8,15 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ControlFilbeskrivelseTest {
-    private Arguments args;
     private ErrorReport er;
-    private ErrorReportEntry ere;
-    private List<FieldDefinition> fieldDefinitions;
     private Record r;
 
     @Before
     public void beforeTest() {
-        args = new Arguments(new String[]{"-s", "0T", "-y", "2020", "-r", "030100"});
+        Arguments args = new Arguments(new String[]{"-s", "0T", "-y", "2020", "-r", "030100"});
         er = new ErrorReport(args);
     }
 
@@ -28,19 +25,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "OK   ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -48,21 +35,11 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, -1, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
-
 
 
     @Test
@@ -70,19 +47,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "OK   ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -91,18 +58,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
 
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -110,19 +68,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "OKstr";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -130,18 +78,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -150,19 +89,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "ABCDE";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -170,19 +99,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -190,18 +109,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -210,19 +120,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "ABCDE";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -230,18 +130,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -250,18 +141,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -270,19 +152,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "    1";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -290,19 +162,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -310,18 +172,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -330,19 +183,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "    1";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -350,18 +193,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "     ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -370,18 +204,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -391,19 +216,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -411,18 +226,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20202020";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -431,18 +237,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "        ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -451,18 +248,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -471,41 +259,20 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!   ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
-
-    //////////////////////////////////////////////
 
     @Test
     public void testOptionalDateOk1() {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -513,18 +280,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20202020";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -533,19 +291,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "        ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
     @Test
@@ -553,18 +301,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "20200101";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -573,20 +312,9 @@ public class ControlFilbeskrivelseTest {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
-
-        //                000000000111111111122222222223333333333
-        //                123456789012345678901234567890123456789
         String record1 = "FAIL!   ";
         r = new Record(record1, fieldDefinitions);
-
-        ControlFilbeskrivelse.doControl(List.of(r), er);
-
-        if (Constants.DEBUG){
-            System.out.print(er.generateReport());
-        }
-
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
-
-
 }

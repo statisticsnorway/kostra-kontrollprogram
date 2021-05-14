@@ -116,8 +116,7 @@ public class Main {
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -127,14 +126,13 @@ public class Main {
                             , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er under 18 år."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ALDER"
+                    , r.getFieldAsInteger("ALDER")
                     , ">="
                     , 18
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -144,7 +142,7 @@ public class Main {
                             , "Deltakeren (" + r.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ALDER"
+                    , r.getFieldAsInteger("ALDER")
                     , "<"
                     , 96
             );
@@ -246,8 +244,7 @@ public class Main {
 
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             r.getFieldAsString("SAKSBEHANDLER")
                             , r.getFieldAsString("PERSON_JOURNALNR")
@@ -257,7 +254,7 @@ public class Main {
                             , "Antall barn (" + r.getFieldAsInteger("ANTBU18") + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTBU18"
+                    , r.getFieldAsInteger("ANTBU18")
                     , "<="
                     , 10
             );

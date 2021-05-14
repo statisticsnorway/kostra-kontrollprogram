@@ -26,30 +26,10 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2BoolskTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "felt1", List.of("NOT IN LIST"), 1, "<", 0));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "felt1", List.of("NOT IN LIST"), 0, "<", 1));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "felt1", List.of("NOT IN LIST"), 0, "==", 1));
-    }
-
-    @Test
-    public void testOK4() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "F1", List.of("F1"), 0, "<", 1));
-    }
-
-    @Test
-    public void testOK5() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "F1", List.of("F1"), 1, ">", 0));
-    }
-
-    @Test
-    public void testOK6() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(er, ere, "F1", List.of("F1"), 1, "==", 1));
     }
 

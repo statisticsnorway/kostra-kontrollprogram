@@ -26,15 +26,7 @@ public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKode
     @Test
     public void testOK1() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 NOT in list"), "Code2 NOT in list", List.of("Code2 in list")));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 NOT in list"), "Code2 in list", List.of("Code2 in list")));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(er, ere, "Code1 in list", List.of("Code1 in list"), "Code2 in list", List.of("Code2 in list")));
     }
 

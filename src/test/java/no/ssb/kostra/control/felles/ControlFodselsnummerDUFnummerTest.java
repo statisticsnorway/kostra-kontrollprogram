@@ -22,15 +22,7 @@ public class ControlFodselsnummerDUFnummerTest {
     @Test
     public void testOK1() {
         assertFalse(ControlFodselsnummerDUFnummer.doControl(er, ere, "01010150589", ""));
-    }
-
-    @Test
-    public void testOK2() {
         assertFalse(ControlFodselsnummerDUFnummer.doControl(er, ere, "41010150572", ""));
-    }
-
-    @Test
-    public void testOK3() {
         assertFalse(ControlFodselsnummerDUFnummer.doControl(er, ere, "01010150590", "201212345603"));
     }
 

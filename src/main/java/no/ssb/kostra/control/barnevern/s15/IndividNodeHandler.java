@@ -24,7 +24,6 @@ public class IndividNodeHandler extends NodeHandler {
     private LocalDate forrigeTelleDato;
     private long individAlder = -1;
     private final String datoFormatLangt = "yyyy-MM-dd";
-    private final String datoFormatKort = "ddMMyy";
 
     public IndividNodeHandler(ErrorReport er, Arguments args) {
         super(er, args);
@@ -115,6 +114,7 @@ public class IndividNodeHandler extends NodeHandler {
             String tempVersjon = avgiverVersjon + "-12-31";
             LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
+            String datoFormatKort = "ddMMyy";
             LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(dnr2fnr(fodselsnummer.substring(0, 6)), datoFormatKort) : null;
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), datoFormatLangt);

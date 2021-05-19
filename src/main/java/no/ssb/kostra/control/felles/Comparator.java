@@ -85,4 +85,13 @@ public class Comparator {
 
         return true;
     }
+
+    public static String defaultString(String s, String defaultString) {
+        return (!isEmpty(s)) ? s : defaultString;
+    }
+
+    public static boolean isEmpty(final String s) {
+        // Null-safe, short-circuit evaluation.
+        return s == null || s.trim().isEmpty();
+    }
 }

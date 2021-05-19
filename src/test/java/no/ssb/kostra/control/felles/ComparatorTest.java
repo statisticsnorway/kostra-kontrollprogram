@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ComparatorTest {
@@ -107,5 +106,18 @@ public class ComparatorTest {
     @Test
     public void isValidDateBlankSpaceDateTest() {
         assertFalse(isValidDate("         ", "dd-MM-yyyy"));
+    }
+
+    @Test
+    public void isEmptyTest() {
+        assertFalse(isEmpty("true"));
+        assertTrue(isEmpty(""));
+        assertTrue(isEmpty(null));
+    }
+
+    @Test
+    public void defaultStringTest() {
+        assertEquals("string", defaultString("string", "defaultString"));
+        assertEquals("defaultString", defaultString(null, "defaultString"));
     }
 }

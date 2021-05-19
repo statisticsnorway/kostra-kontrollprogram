@@ -19,7 +19,6 @@ public class ControlFelt1BoolskSaaFelt2BoolskTest {
         er = new ErrorReport(args);
         ere = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av Boolsk så boolsk", "Feil: fant ikke Boolsk så boolsk", Constants.CRITICAL_ERROR);
-
     }
 
     @Test

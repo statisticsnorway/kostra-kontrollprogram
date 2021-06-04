@@ -40,11 +40,18 @@ public class Comparator {
         return ok;
     }
 
-    public static boolean isCodeInCodelist(String code, List<String> codeList){
+    public static boolean isCodeInCodelist(final String code, final List<String> codeList){
         return codeList.stream().anyMatch(item -> item.equalsIgnoreCase(code));
     }
 
-    public static boolean isValidOrgnr(String orgnr) {
+    public static List<String> removeCodesFromCodelist(final List<String> codeList, final List<String> codesToRemoveList){
+        return codeList.stream()
+                .filter(code -> !isCodeInCodelist(code, codesToRemoveList))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public static boolean isValidOrgnr(final String orgnr) {
         final int LENGTH = 9;
         if (orgnr.length() != LENGTH) return false;
         if (orgnr.substring(0,1).equalsIgnoreCase("0")) return false;
@@ -68,7 +75,11 @@ public class Comparator {
         return (minValueInclusive <= i && i <= maxValueInclusive);
     }
 
-    public static boolean isValidDate(String date, String datePattern) {
+    public static boolean outsideOf(int i, int minValueInclusive, int maxValueInclusive) {
+        return (i < minValueInclusive || maxValueInclusive < i);
+    }
+
+    public static boolean isValidDate(final String date, final String datePattern) {
         String blankZeroDate = "0".repeat(datePattern.length());
         String blankSpaceDate = " ".repeat(datePattern.length());
 

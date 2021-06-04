@@ -98,7 +98,7 @@ public class Main {
                                     , Constants.CRITICAL_ERROR
                             )
                             , r.getFieldAsString("VERSION")
-                            , Collections.singletonList(args.getAargang().substring(0, 2))
+                            , Collections.singletonList(args.getAargang().substring(2, 4))
                     );
 
                     ControlFodselsnummer.doControl(

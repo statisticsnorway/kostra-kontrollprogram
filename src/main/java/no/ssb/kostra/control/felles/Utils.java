@@ -69,4 +69,18 @@ public class Utils {
     public static String replaceSpaceWithNoBreakingSpace(String s){
         return s.replace(" ", "&nbsp;");
     }
+
+    public static List<Record> removeBelopEquals0(List<Record> regnskap1) {
+        // Fjerner posteringer der beløp = 0
+        return regnskap1.stream()
+                // fjerner record der beløpet er 0, brukes ifm. med alle regnskap
+                .filter(p -> {
+                    try {
+                        return p.getFieldAsInteger("belop") != 0;
+                    } catch (NullPointerException e) {
+                        return true;
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 }

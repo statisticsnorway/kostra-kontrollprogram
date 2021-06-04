@@ -66,6 +66,12 @@ public class ComparatorTest {
     }
 
     @Test
+    public void removeCodesFromCodelistTest() {
+        assertEquals(List.of("code1", "code2", "code3"), removeCodesFromCodelist(List.of("code1", "code2", "code3"), List.of("notInCodelist")));
+        assertEquals(List.of("code1", "code3"), removeCodesFromCodelist(List.of("code1", "code2", "code3"), List.of("code2")));
+    }
+
+    @Test
     public void IsValidOrgnrTest() {
         assertTrue(isValidOrgnr("944117784"));
         assertTrue(isValidOrgnr("999999999"));
@@ -82,6 +88,16 @@ public class ComparatorTest {
 
         assertFalse(between(0, 1, 3));
         assertFalse(between(4, 1, 3));
+    }
+
+    @Test
+    public void outsideOfTest() {
+        assertFalse(outsideOf(1, 1, 3));
+        assertFalse(outsideOf(2, 1, 3));
+        assertFalse(outsideOf(3, 1, 3));
+
+        assertTrue(outsideOf(0, 1, 3));
+        assertTrue(outsideOf(4, 1, 3));
     }
 
     @Test

@@ -2,7 +2,7 @@ package no.ssb.kostra.control.regnskap.helseforetak;
 
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
-import no.ssb.kostra.control.regnskap.felles.ControlIntegritet;
+import no.ssb.kostra.control.felles.ControlIntegritet;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Format;
@@ -42,7 +42,7 @@ public class Main {
         }
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, l, args, bevilgningRegnskapList, balanseRegnskapList
+        ControlIntegritet.doControl(regnskap, er, args, bevilgningRegnskapList, balanseRegnskapList
                 , List.of(" ")
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema())
                 , Definitions.getArtSektorAsList(args.getSkjema())

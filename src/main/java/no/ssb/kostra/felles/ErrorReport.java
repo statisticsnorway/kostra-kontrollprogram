@@ -13,6 +13,7 @@ public class ErrorReport {
     private final Arguments args;
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
+    private boolean showSummary = false;
     private final String executiveOfficerHeader = "";
     private final String journalNumberHeader = "";
     private List<String> reportHeaders = List.of("", "", "", "");
@@ -26,7 +27,6 @@ public class ErrorReport {
     public ErrorReport(Arguments args) {
         this.args = args;
     }
-
 
     public void incrementCount() {
         count++;
@@ -77,7 +77,7 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         final String lf = System.getProperty("line.separator");
-        final String VERSION = "2021.4.1";
+        final String VERSION = "2021.6.1";
 
         report
                 .append("<html>")
@@ -99,16 +99,18 @@ public class ErrorReport {
                 .append("<span>errorType:").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
-            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
+            if (showSummary) {
+                report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
-            for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
-                CharSequence s = "***";
-                String val = entry.getKey();
+                for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
+                    CharSequence s = "***";
+                    String val = entry.getKey();
 
-                if (val.contains(s)) {
-                    report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
-                } else {
-                    report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
+                    if (val.contains(s)) {
+                        report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
+                    } else {
+                        report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
+                    }
                 }
             }
 
@@ -134,10 +136,14 @@ public class ErrorReport {
                         int errorType = Integer.parseInt(entrieStringsList.get(2));
                         String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : "black";
 
+                        if (!args.isRunAsExternalProcess()){
+                            report.append(lf);
+                        }
+
                         report
                                 .append("<tr style='font-size:12pt; vertical-align: top; color: ").append(htmlcolor).append("'>")
                                 .append("<td>").append(Utils.replaceSpaceWithNoBreakingSpace(saksbehandler)).append("</td>")
-                                .append("<td><pre>").append(journalnummer).append("</pre></td>")
+                                .append("<td>").append(journalnummer).append("</td>")
                                 .append("<td>").append(kontrollnummer).append("</td>")
                                 .append("<td>").append(kontrolltekst).append("</td>")
                                 .append("</tr>");
@@ -181,5 +187,9 @@ public class ErrorReport {
 
     public void addStats(StatsReportEntry entry){
         this.stats.add(entry);
+    }
+
+    public Arguments getArgs() {
+        return args;
     }
 }

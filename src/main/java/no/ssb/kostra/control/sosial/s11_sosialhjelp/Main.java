@@ -92,11 +92,11 @@ public class Main {
                             , " "
                             , "Kontroll 04 Oppgaveår"
                             , "Korrigér årgang. Fant '" + r.getFieldAsTrimmedString("VERSION").substring(0, 2) + "', "
-                            + "forventet '" + args.getAargang().substring(0, 2) + "'."
+                            + "forventet '" + args.getAargang().substring(2, 4) + "'."
                             , Constants.CRITICAL_ERROR
                     )
                     , r.getFieldAsString("VERSION")
-                    , Collections.singletonList(args.getAargang().substring(0, 2))
+                    , Collections.singletonList(args.getAargang().substring(2, 4))
             );
 
             ControlFodselsnummer.doControl(

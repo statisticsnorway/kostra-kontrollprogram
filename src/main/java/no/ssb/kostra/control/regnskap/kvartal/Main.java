@@ -2,7 +2,7 @@ package no.ssb.kostra.control.regnskap.kvartal;
 
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
-import no.ssb.kostra.control.regnskap.felles.ControlIntegritet;
+import no.ssb.kostra.control.felles.ControlIntegritet;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 
@@ -43,7 +43,7 @@ public class Main {
         int l = String.valueOf(n).length();
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, l, args, bevilgningRegnskapList, balanseRegnskapList
+        ControlIntegritet.doControl(regnskap, er, args, bevilgningRegnskapList, balanseRegnskapList
                 , Definitions.getKontoklasseAsList(args.getSkjema())
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion())
                 , Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion())

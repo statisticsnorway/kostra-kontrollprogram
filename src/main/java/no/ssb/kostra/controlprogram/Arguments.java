@@ -11,6 +11,7 @@ public class Arguments {
     private String navn = "Uoppgitt";
     private String orgnr = "         ";
     private String foretaknr = "         ";
+    private boolean isRunAsExternalProcess = false;
 
     private List<String> inputFileContent = new ArrayList<>();
     private List<String> outputFileContent = new ArrayList<>();
@@ -23,7 +24,8 @@ public class Arguments {
                 new GetOptDesc('r', "region", true),
                 new GetOptDesc('n', "name", true),
                 new GetOptDesc('u', "unit-orgnr", true),
-                new GetOptDesc('c', "company-orgnr", true)
+                new GetOptDesc('c', "company-orgnr", true),
+                new GetOptDesc('e', "external-process", true)
         };
 
         GetOpt parser = new GetOpt(options);
@@ -65,6 +67,9 @@ public class Arguments {
                     break;
                 case 'c':
                     foretaknr = (String) optionsFound.get(key);
+                    break;
+                case 'e':
+                    isRunAsExternalProcess = (boolean) optionsFound.get(key);
                     break;
                 case '?':
 //                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
@@ -156,6 +161,10 @@ public class Arguments {
         return outputFileContent;
     }
 
+    public boolean isRunAsExternalProcess() {
+        return isRunAsExternalProcess;
+    }
+
     @Override
     public String toString() {
         return "Arguments{" +
@@ -168,6 +177,7 @@ public class Arguments {
                 ", foretaknr='" + foretaknr + '\'' +
                 ", inputFileContent=" + inputFileContent +
                 ", outputFileContent=" + outputFileContent +
+                ", externalProcess=" + isRunAsExternalProcess +
                 '}';
     }
 }

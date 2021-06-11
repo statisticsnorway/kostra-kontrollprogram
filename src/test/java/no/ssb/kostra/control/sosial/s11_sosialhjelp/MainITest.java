@@ -1,105 +1,142 @@
 package no.ssb.kostra.control.sosial.s11_sosialhjelp;
 
-import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.FieldDefinition;
 import no.ssb.kostra.controlprogram.Arguments;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.utils.TestRecordInputAndResult;
+import no.ssb.kostra.utils.TestRecordListInputAndResult;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-@Ignore
 public class MainITest {
-    InputStream sysInBackup;
-    private Arguments args;
-    private ErrorReport er;
-    private String inputFileContent;
-    private List<FieldDefinition> fieldDefinitions;
-
-
-    @Before
-    public void beforeTest() {
-        inputFileContent =
-                //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222223333333333333333333333333
-                //00000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122222
-                //23456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "4204200A040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "10992004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42041004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186200000000000            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186231071489429            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186204111644859            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186219096631556            93101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186219096631556            19101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186219096631556            13901512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102222                                                    \n" +
-                "42042004040000186219096631556            13100512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102222                                                    \n" +
-                "42042004040000186219096631556            13201512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186219096631556            13122512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102422                                                    \n" +
-                "42042004040000186219096631556            13101012040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102522                                                    \n" +
-                "42042004040000186219096631556            13101112040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101212040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101412040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101612040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101812040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186219096631556            13200300040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    \n" +
-                "42042004040000186231126123305            13200303040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102222                                                    \n" +
-                "42042004040000186219096631556            13200305050102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101304080102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102422                                                    \n" +
-                "42042004040000186219096631556            13101311090102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102422                                                    \n" +
-                "42042004040000186219096631556            13101512000102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102422                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011990073964       0073964                                                                                                                                                                 11per0000102522                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120000000                                                                                                                                                                               11per0000102522                                                    \n" +
-                "42042004040000186219096631556            1310151204                091011120000000       0000000                                                                                                                                                                 11per0000102522                                                    \n" +
-                "42042004040000186219096631556            13101512040000000000000000000000000009000       0009000                                                                                                                                                                 11per0000102522                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120900000       0900000                                                                                                                                                                 11per0001020122                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120000044       0000044                                                                                                                                                                 11per0000102222                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 32per0000102522                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 13per0001020122                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0001020922                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0003964                                                                                                                                                                 11per0001020122                                                    \n" +
-                "42042090404000018621909663155            0131015120401020304050607080910111200739640056000073964                                                                                                                                                                 1per00010201220                                                    \n" +
-                "42042004040000186200000000000            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102322                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102362                                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per000010231601051731121716                                      \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102312000000311218      06                                \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102312010217000000  17                                    \n" +
-                "42042004040000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per000010231201021731121917                                      \n";
-
-
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-
-        fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-
-        args = new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"});
+    static Stream<TestRecordInputAndResult> control03KommunenummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "KOMMUNE_NR", "4204"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "KOMMUNE_NR", "3400"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
+        );
     }
 
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
+    static Stream<TestRecordInputAndResult> control03BydelsnummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
+        );
     }
 
-    @Test
-    public void testDoControl() {
-        er = Main.doControls(args);
+    static Stream<TestRecordInputAndResult> control04OppgaveAarProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "VERSION", "20"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "VERSION", "19"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
+        );
+    }
 
-        if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
-        }
+    static Stream<TestRecordInputAndResult> control05FodselsnummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), FieldDefinitions.getFieldDefinitions()), true, Constants.NORMAL_ERROR)
+        );
+    }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    static Stream<TestRecordListInputAndResult> control05AFodselsnummerDubletterProvider() {
+        return Stream.of(
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"})
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                )
+                        , true, Constants.CRITICAL_ERROR)
+
+                , new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"})
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), FieldDefinitions.getFieldDefinitions())
+                )
+                        , false, Constants.NO_ERROR)
+
+
+        );
+    }
+
+    static Stream<TestRecordListInputAndResult> control05BJournalnummerDubletterProvider() {
+        return Stream.of(
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"})
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                )
+                        , true, Constants.CRITICAL_ERROR)
+
+                , new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"})
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), FieldDefinitions.getFieldDefinitions())
+                )
+                        , false, Constants.NO_ERROR)
+
+
+        );
+    }
+
+
+    @AfterEach
+    public void resetStaticRecordCounter() {
+        Record.resetLineCount();
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control03KommunenummerProvider")
+    public void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control03BydelsnummerProvider")
+    public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control04OppgaveAarProvider")
+    public void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05FodselsnummerProvider")
+    public void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05AFodselsnummerDubletterProvider")
+    public void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05BJournalnummerDubletterProvider")
+    public void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), Main.control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
     }
 
 

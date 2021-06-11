@@ -17,7 +17,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@Ignore
 public class MainOkITest {
     InputStream sysInBackup;
     private Arguments args;

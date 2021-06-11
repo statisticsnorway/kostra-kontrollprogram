@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
+
 public class Record {
     private static int lineCount;
     private final int line;
@@ -32,6 +34,31 @@ public class Record {
         } catch (StringIndexOutOfBoundsException e) {
             this.valuesByName = new HashMap<>();
         }
+    }
+
+    public Record(final Map<String, String> valuesByName, final List<FieldDefinition> definitionList) {
+        this.line = ++lineCount;
+        this.fieldDefinitions = definitionList;
+        this.fieldDefinitionByName = definitionList.stream()
+                .collect(Collectors.toMap(FieldDefinition::getName, FieldDefinition::getFieldDefinition));
+        this.valuesByName = valuesByName;
+        this.record = definitionList.stream()
+                .map(fieldDefinition -> {
+                    int width = fieldDefinition.getTo() - fieldDefinition.getFrom() + 1;
+
+                    if (isCodeInCodelist(fieldDefinition.getDataType(), List.of("Integer"))){
+                        return String.format("%1$" + width + "s", valuesByName.getOrDefault(fieldDefinition.getName(), ""));
+
+                    } else {
+                        return String.format("%1$-" + width + "s", valuesByName.getOrDefault(fieldDefinition.getName(), ""));
+
+                    }
+                })
+                .collect(Collectors.joining(""));
+    }
+
+    public static void resetLineCount(){
+        lineCount = 0;
     }
 
     public int getLine() {

@@ -10,10 +10,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+
+import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
 public class MainITest {
     static Stream<TestRecordInputAndResult> control03KommunenummerProvider() {
@@ -26,7 +27,9 @@ public class MainITest {
     static Stream<TestRecordInputAndResult> control03BydelsnummerProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "030101"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "01"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "030100"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -93,7 +96,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03KommunenummerProvider")
     public void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.isResult(), control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }
@@ -102,7 +105,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03BydelsnummerProvider")
     public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.isResult(), control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }
@@ -110,7 +113,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control04OppgaveAarProvider")
     public void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.isResult(), control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }
@@ -118,7 +121,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05FodselsnummerProvider")
     public void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.isResult(), control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }
@@ -126,7 +129,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05AFodselsnummerDubletterProvider")
     public void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        Assertions.assertEquals(inputAndResult.isResult(), control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }
@@ -134,7 +137,7 @@ public class MainITest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05BJournalnummerDubletterProvider")
     public void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), Main.control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        Assertions.assertEquals(inputAndResult.isResult(), control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
     }

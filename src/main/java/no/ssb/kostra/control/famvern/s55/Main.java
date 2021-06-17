@@ -47,9 +47,12 @@ public class Main {
 
         List<String> clTSSSTF = List.of("TOT", "SEP", "SAM", "SAK", "TILB", "FLY");
         List<String> clTBE = List.of("TOT", "BEGGE", "EN");
+        List<String> clO = List.of("OPPM");
+        List<String> clT = List.of("TOT");
         List<String> clT12 = List.of("TOT", "1", "2");
         List<String> clT123 = List.of("TOT", "1", "2", "3");
         List<String> clT1234 = List.of("TOT", "1", "2", "3", "4");
+        List<String> clT12345 = List.of("TOT", "1", "2", "3", "4", "5");
 
         records.forEach(r -> {
             // Kontroll 03: Fylkesnummer
@@ -199,10 +202,7 @@ public class Main {
             // Kontroll 10 Avsluttede meklinger hvor barn har deltatt
             {
                 String measure = "BARNDELT";
-                List<List<String>> fieldLists = List.of(
-                        clTSSSTF.stream()
-                                .map(item -> measure.concat("_").concat(item).concat("_TOT"))
-                                .collect(Collectors.toList()));
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT);
 
                 ControlFelt1LikSumAvListe.doControl(
                         r
@@ -318,6 +318,27 @@ public class Main {
                                 , " "
                                 , "Kontroll 15 Kontroll av totalsummer for skriftlige avtaler"
                                 , "Totalene summerer seg ikke som de skal."
+                                , Constants.NORMAL_ERROR
+                        )
+                        , fieldLists
+                );
+            }
+
+            // Kontroll 16 Avsluttede meklinger uten oppmøte
+            {
+                String measure = "UTEN";
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clO, clT12345);
+
+                ControlFelt1LikSumAvListe.doControl(
+                        r
+                        , er
+                        , new ErrorReportEntry(
+                                "FILUTTREKK"
+                                , createLinenumber(l, r.getLine())
+                                , String.valueOf(r.getLine())
+                                , " "
+                                , "Kontroll 16 Avsluttede meklinger uten oppmøte"
+                                , "Tallene summerer seg ikke som de skal."
                                 , Constants.NORMAL_ERROR
                         )
                         , fieldLists

@@ -186,8 +186,14 @@ public class FieldDefinitions {
                 new FieldDefinition(1115, "BEKYMR_FLY_TOT", "Integer", "textBox", 933, 938, List.of(), "", false),
                 new FieldDefinition(1116, "BEKYMR_TOT_1", "Integer", "textBox", 939, 944, List.of(), "", false),
                 new FieldDefinition(1117, "BEKYMR_TOT_2", "Integer", "textBox", 945, 950, List.of(), "", false),
-                new FieldDefinition(1118, "BEKYMR_TOT_TOT", "Integer", "", 951, 956, List.of(), "", true)
-        );
+                new FieldDefinition(1118, "BEKYMR_TOT_TOT", "Integer", "", 951, 956, List.of(), "", true),
+                new FieldDefinition(121, "UTEN_OPPM_1", "Integer", "textBox", 957, 961, List.of(), "", false),
+                new FieldDefinition(122, "UTEN_OPPM_2", "Integer", "textBox", 962, 966, List.of(), "", false),
+                new FieldDefinition(123, "UTEN_OPPM_3", "Integer", "textBox", 967, 971, List.of(), "", false),
+                new FieldDefinition(124, "UTEN_OPPM_4", "Integer", "textBox", 972, 975, List.of(), "", false),
+                new FieldDefinition(125, "UTEN_OPPM_5", "Integer", "textBox", 976, 980, List.of(), "", false),
+                new FieldDefinition(126, "UTEN_OPPM_TOT", "Integer", "textBox", 981, 986, List.of(), "", true)
+                );
     }
 
     public static Integer getFieldLength() {

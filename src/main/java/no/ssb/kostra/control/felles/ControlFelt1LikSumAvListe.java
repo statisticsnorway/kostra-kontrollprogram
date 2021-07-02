@@ -58,9 +58,9 @@ public class ControlFelt1LikSumAvListe {
                 .collect(Collectors.toList());
     }
 
-    public static List<List<String>> createFieldList(String measure, List<String> c1) {
+    public static List<List<String>> createFieldList(String measure, List<String> c1, String c2) {
         return List.of(c1.stream()
-                .map(c1Item -> String.join("_", measure, c1Item))
+                .map(c1Item -> String.join("_", measure, c1Item, c2))
                 .collect(Collectors.toList()));
     }
 

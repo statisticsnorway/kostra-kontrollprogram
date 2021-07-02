@@ -202,7 +202,7 @@ public class Main {
             // Kontroll 10 Avsluttede meklinger hvor barn har deltatt
             {
                 String measure = "BARNDELT";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT);
+                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, "TOT");
 
                 ControlFelt1LikSumAvListe.doControl(
                         r

@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
-public class MainITest {
+public class MainITest11Sosial {
     static Stream<TestRecordInputAndResult> control03KommunenummerProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2020", "-r", "420400"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "KOMMUNE_NR", "4204"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),

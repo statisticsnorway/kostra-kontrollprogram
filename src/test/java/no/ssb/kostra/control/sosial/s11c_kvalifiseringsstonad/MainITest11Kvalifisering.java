@@ -17,8 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@Ignore
-public class MainITest {
+public class MainITest11Kvalifisering {
     InputStream sysInBackup;
     private Arguments args;
     private ErrorReport er;

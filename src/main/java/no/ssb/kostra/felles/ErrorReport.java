@@ -77,7 +77,7 @@ public class ErrorReport {
 
         StringBuilder report = new StringBuilder();
         final String lf = System.getProperty("line.separator");
-        final String VERSION = "2021.6.1";
+        final String VERSION = "2021.7.1";
 
         report
                 .append("<html>")

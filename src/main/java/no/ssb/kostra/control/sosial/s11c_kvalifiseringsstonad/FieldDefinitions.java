@@ -795,7 +795,7 @@ public class FieldDefinitions {
                         "checkBox",
                         122, 123,
                         List.of(
-                                new Code("12", "Økonomisk sosialhjelp uten slik avklaring")),
+                                new Code("16", "Økonomisk sosialhjelp uten slik avklaring")),
                         "",
                         false),
                 new FieldDefinition(269, "AVSL_ANNET",

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class MainITest {
+public class MainITestKirkeKostra {
     private final static Arguments args0F = new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"});
     private final static Arguments args0G = new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"});
 

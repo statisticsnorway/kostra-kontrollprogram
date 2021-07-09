@@ -1,90 +1,726 @@
 package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
 
-import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.FieldDefinition;
+import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.FieldDefinition;
+import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.utils.TestRecordInputAndResult;
+import no.ssb.kostra.utils.TestRecordListInputAndResult;
+import no.ssb.kostra.utils.TestStringInputAndResult;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
+import static no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.*;
 
 public class MainITest11Kvalifisering {
-    InputStream sysInBackup;
-    private Arguments args;
-    private ErrorReport er;
-    private String inputFileContent;
-    private List<FieldDefinition> fieldDefinitions;
+    private static final Arguments arguments = new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "420400"});
+    private static final Arguments argumOslo = new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030100"});
+    private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
 
-
-    @Before
-    public void beforeTest() {
-        //                  00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111111111111111111111111111111111111111111111111111111111
-        //                  00000000011111111112222222222333333333344444444445555555555666666666677777777778888888888999999999900000000001111111111222222222233333333334444444444555555555566666666
-        //                  12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
-        inputFileContent = "420420040400001862190966315561510131121610011712011810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "4204200A0400001862190966315561510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "030120040400001862190966315561510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420410040400001862190966315561510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966     1510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862310714894291510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862041116448591510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315569510131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561910131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561530131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561510031121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561520131121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561511031121610011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "4204200404000018621909663155615101      10011712071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "4204200404000018621909663155615101311209      12071810101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "4204200404000018621909663155615101311209010110      10101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "420420040400001862190966315561510131120901011012071030101012000100080010203040506070809101112001200010000000000000000000000000000000000000000000000000000000101117Per99\n" +
-                           "42042004040000186219096631556151013112090101101207101    01200014008001020304050607080910111200120001000000000000000000000000000000000000000000000000000000000Knasken00\n" +
-                           "4204200404000018621909663155615101311209010110120710101013     1400800102030405060708091011120012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011104002000000102030405060708091011120012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134009000000102030405060708091011120012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002010000102030405060708091011120012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011220012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120000000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120000000100000000000000000000000000000000000000000000000000000002100Knasken\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000000000000000000000000000012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120890120100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120000235300000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120012000100000000000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120012000331122001000000000000000000000000000000000000000000000000Knasken001\n" +
-                           "4204200404000018621909663155615101311209010110120710101011134002000000102030405060708091011120012000331121800000000000000000000000000000000000000000000000000Knasken001\n";
-
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-
-        fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-
-        args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400"});
+    static Stream<TestStringInputAndResult> control01RecordLengdeProvider() {
+        return Stream.of(
+                new TestStringInputAndResult(arguments, "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", false, Constants.NO_ERROR),
+                new TestStringInputAndResult(arguments, "123456789", true, Constants.CRITICAL_ERROR)
+        );
     }
 
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
+    static Stream<TestRecordInputAndResult> control03KommunenummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "KOMMUNE_NR", "4204"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "KOMMUNE_NR", "3400"), definitions), true, Constants.CRITICAL_ERROR)
+        );
     }
 
-    @Test
-    public void testDoControl() {
-        er = Main.doControls(args);
+    static Stream<TestRecordInputAndResult> control03BydelsnummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030101"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "01"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030100"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
 
-        if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
-        }
+    static Stream<TestRecordInputAndResult> control04OppgaveAarProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "VERSION", "21"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "VERSION", "19"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    static Stream<TestRecordInputAndResult> control05FodselsnummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions), true, Constants.NORMAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordListInputAndResult> control05AFodselsnummerDubletterProvider() {
+        return Stream.of(
+                new TestRecordListInputAndResult(
+                        arguments
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), definitions)
+                )
+                        , false
+                        , Constants.NO_ERROR
+                )
+
+
+                , new TestRecordListInputAndResult(
+                        arguments
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), definitions)
+                )
+                        , true
+                        , Constants.CRITICAL_ERROR
+                )
+
+                , new TestRecordListInputAndResult(
+                        arguments
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
+                )
+                        , false
+                        , Constants.NO_ERROR
+                )
+        );
+    }
+
+    static Stream<TestRecordListInputAndResult> control05BJournalnummerDubletterProvider() {
+        return Stream.of(
+                new TestRecordListInputAndResult(arguments
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), definitions)
+                )
+                        , true
+                        , Constants.CRITICAL_ERROR
+                )
+
+                , new TestRecordListInputAndResult(arguments
+                        , List.of(
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
+                )
+                        , false
+                        , Constants.NO_ERROR
+                )
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control06AlderUnder18AarProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "19"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "18"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "17"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control07AlderEr68AarEllerOverProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67"), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control08KjonnProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KJONN", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KJONN", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KJONN", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control09SivilstandProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "EKTSTAT", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "EKTSTAT", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "EKTSTAT", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control10Bu18Provider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BU18", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control11Bu18AntBu18Provider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BU18", "1", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2", "ANTBU18", "0"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "1", "ANTBU18", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control12AntBu18Bu18Provider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BU18", "1", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2", "ANTBU18", "0"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2", "ANTBU18", "1"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control13AntBu18Provider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "10"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "11"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control14RegDatoProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control15VedtakDatoProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VEDTAK_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control16BegyntDatoProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BEGYNT_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control19KvalifiseringsprogramIAnnenKommuneProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control20KvalifiseringsprogramIAnnenKommuneKommunenummerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "0101"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "    "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "2", "KOMMNR_KVP_KOMM", "    "), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control20AFraKvalifiseringsprogramIAnnenBydelIOsloProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KOMMUNE_NR", "1103", "KVP_OSLO", " "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KOMMUNE_NR", "0301", "KVP_OSLO", "0"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KOMMUNE_NR", "0301", "KVP_OSLO", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KOMMUNE_NR", "0301", "KVP_OSLO", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KOMMUNE_NR", "0301", "KVP_OSLO", " "), definitions), true, Constants.NORMAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control21YtelserProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "YTELSE_SOSHJELP", " ", "YTELSE_TYPE_SOSHJ", " "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "YTELSE_SOSHJELP", "1", "YTELSE_TYPE_SOSHJ", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "YTELSE_SOSHJELP", "1", "YTELSE_TYPE_SOSHJ", "3"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "YTELSE_SOSHJELP", "1", "YTELSE_TYPE_SOSHJ", "1"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "YTELSE_SOSHJELP", "1", "YTELSE_TYPE_SOSHJ", " "), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control26MottattStotteProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_MED_ASTONAD", " "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_MED_ASTONAD", "0"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control27MottattOkonomiskSosialhjelpProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", " ", "KVP_MED_KOMMBOS", " ", "KVP_MED_HUSBANK", " ", "KVP_MED_SOSHJ_ENGANG", " ", "KVP_MED_SOSHJ_PGM", " ", "KVP_MED_SOSHJ_SUP", " "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "1", "KVP_MED_KOMMBOS", " ", "KVP_MED_HUSBANK", " ", "KVP_MED_SOSHJ_ENGANG", " ", "KVP_MED_SOSHJ_PGM", " ", "KVP_MED_SOSHJ_SUP", " "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "1", "KVP_MED_KOMMBOS", "4", "KVP_MED_HUSBANK", " ", "KVP_MED_SOSHJ_ENGANG", " ", "KVP_MED_SOSHJ_PGM", " ", "KVP_MED_SOSHJ_SUP", " "), definitions), false, Constants.NO_ERROR),
+
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "2", "KVP_MED_KOMMBOS", " ", "KVP_MED_HUSBANK", " ", "KVP_MED_SOSHJ_ENGANG", " ", "KVP_MED_SOSHJ_PGM", " ", "KVP_MED_SOSHJ_SUP", " "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_MED_ASTONAD", "2", "KVP_MED_KOMMBOS", "4", "KVP_MED_HUSBANK", " ", "KVP_MED_SOSHJ_ENGANG", " ", "KVP_MED_SOSHJ_PGM", " ", "KVP_MED_SOSHJ_SUP", " "), definitions), true, Constants.CRITICAL_ERROR)
+
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control28MaanederMedKvalifiseringsstonadProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "123456"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      "), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control29KvalifiseringssumManglerProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "      "), definitions), true, Constants.NORMAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control30HarVarighetMenManglerKvalifiseringssumProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "KVP_STONAD", "      "), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control31HarKvalifiseringssumMenManglerVarighetProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "123456"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control32KvalifiseringssumOverMaksimumProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "235000"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "235001"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control33KvalifiseringssumUnderMinimumProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "  8000"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "  7999"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control36StatusForDeltakelseIKvalifiseringsprogramProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", " "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "2"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "4"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "6"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "X"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control37DatoForAvsluttetProgramProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1", "AVSL_DATO", "      "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "2", "AVSL_DATO", "      "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "4", "AVSL_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "010120"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "6", "AVSL_DATO", "      "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "4", "AVSL_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "4", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control38FullforteAvsluttedeProgramSituasjonProvider() {
+        Map<String, String> mapOk1 = new HashMap<>();
+        mapOk1.put("SAKSBEHANDLER"    , "Sara Sak");
+        mapOk1.put("PERSON_JOURNALNR" , "123");
+        mapOk1.put("PERSON_FODSELSNR" , "19096632188");
+        mapOk1.put("STATUS"           , "1");
+
+        mapOk1.put("AVSL_ORDINAERTARB", "");
+        mapOk1.put("AVSL_ARBLONNSTILS", "");
+        mapOk1.put("AVSL_ARBMARK", "");
+        mapOk1.put("AVSL_SKOLE", "");
+        mapOk1.put("AVSL_UFORE", "");
+        mapOk1.put("AVSL_AAP", "");
+        mapOk1.put("AVSL_OK_AVKLAR", "");
+        mapOk1.put("AVSL_UTEN_OK_AVKLAR", "");
+        mapOk1.put("AVSL_ANNET", "");
+        mapOk1.put("AVSL_UKJENT", "");
+
+        Map<String, String> mapOk2 = new HashMap<>();
+        mapOk2.put("SAKSBEHANDLER"    , "Sara Sak");
+        mapOk2.put("PERSON_JOURNALNR" , "123");
+        mapOk2.put("PERSON_FODSELSNR" , "19096632188");
+        mapOk2.put("STATUS"           , "3");
+
+        mapOk2.put("AVSL_ORDINAERTARB", "01");
+        mapOk2.put("AVSL_ARBLONNSTILS", "");
+        mapOk2.put("AVSL_ARBMARK", "");
+        mapOk2.put("AVSL_SKOLE", "");
+        mapOk2.put("AVSL_UFORE", "");
+        mapOk2.put("AVSL_AAP", "");
+        mapOk2.put("AVSL_OK_AVKLAR", "");
+        mapOk2.put("AVSL_UTEN_OK_AVKLAR", "");
+        mapOk2.put("AVSL_ANNET", "");
+        mapOk2.put("AVSL_UKJENT", "");
+
+        Map<String, String> mapFail = new HashMap<>();
+        mapFail.put("SAKSBEHANDLER"    , "Sara Sak");
+        mapFail.put("PERSON_JOURNALNR" , "123");
+        mapFail.put("PERSON_FODSELSNR" , "19096632188");
+        mapFail.put("STATUS"           , "3");
+
+        mapFail.put("AVSL_ORDINAERTARB", "");
+        mapFail.put("AVSL_ARBLONNSTILS", "");
+        mapFail.put("AVSL_ARBMARK", "");
+        mapFail.put("AVSL_SKOLE", "");
+        mapFail.put("AVSL_UFORE", "");
+        mapFail.put("AVSL_AAP", "");
+        mapFail.put("AVSL_OK_AVKLAR", "");
+        mapFail.put("AVSL_UTEN_OK_AVKLAR", "");
+        mapFail.put("AVSL_ANNET", "");
+        mapFail.put("AVSL_UKJENT", "");
+
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(mapOk1, definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(mapOk2, definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(mapFail, definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    static Stream<TestRecordInputAndResult> control39FullforteAvsluttedeProgramInntektkildeProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1", "AVSL_VIKTIGSTE_INNTEKT", "  "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_VIKTIGSTE_INNTEKT", "01"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_VIKTIGSTE_INNTEKT", "  "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_VIKTIGSTE_INNTEKT", "XX"), definitions), true, Constants.CRITICAL_ERROR)
+        );
+    }
+
+    @AfterEach
+    public void resetStaticRecordCounter() {
+        Record.resetLineCount();
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control01RecordLengdeProvider")
+    public void control01RecordLengdeTest(TestStringInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), ControlRecordLengde.doControl(List.of(inputAndResult.getString()), inputAndResult.getErrorReport(), FieldDefinitions.getFieldLength()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control03KommunenummerProvider")
+    public void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control03BydelsnummerProvider")
+    public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control04OppgaveAarProvider")
+    public void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05FodselsnummerProvider")
+    public void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05AFodselsnummerDubletterProvider")
+    public void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control05BJournalnummerDubletterProvider")
+    public void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control06AlderUnder18AarProvider")
+    public void control06AlderUnder18AarTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control06AlderUnder18Aar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control07AlderEr68AarEllerOverProvider")
+    public void control07AlderEr68AarEllerOverTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control07AlderEr68AarEllerOver(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control08KjonnProvider")
+    public void control08KjonnTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control08Kjonn(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control09SivilstandProvider")
+    public void control09SivilstandTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control09Sivilstand(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control10Bu18Provider")
+    public void control10Bu18Test(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control10Bu18(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control11Bu18AntBu18Provider")
+    public void control11Bu18AntBu18Test(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control11Bu18AntBu18(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control12AntBu18Bu18Provider")
+    public void control12AntBu18Bu18Test(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control12AntBu18Bu18(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control13AntBu18Provider")
+    public void control13AntBu18Test(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control13AntBu18(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control14RegDatoProvider")
+    public void control14RegDatoTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control14RegDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control15VedtakDatoProvider")
+    public void control15VedtakDatoTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control15VedtakDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control16BegyntDatoProvider")
+    public void control16BegyntDatoTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control16BegyntDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control19KvalifiseringsprogramIAnnenKommuneProvider")
+    public void control19KvalifiseringsprogramIAnnenKommuneTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control19KvalifiseringsprogramIAnnenKommune(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control20KvalifiseringsprogramIAnnenKommuneKommunenummerProvider")
+    public void control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control20KvalifiseringsprogramIAnnenKommuneKommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control20AFraKvalifiseringsprogramIAnnenBydelIOsloProvider")
+    public void control20AFraKvalifiseringsprogramIAnnenBydelIOsloTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control20AFraKvalifiseringsprogramIAnnenBydelIOslo(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control21YtelserProvider")
+    public void control21YtelserTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control21Ytelser(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control26MottattStotteProvider")
+    public void control26MottattStotteTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control26MottattStotte(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control27MottattOkonomiskSosialhjelpProvider")
+    public void control27MottattOkonomiskSosialhjelpTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control27MottattOkonomiskSosialhjelp(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control28MaanederMedKvalifiseringsstonadProvider")
+    public void control28MaanederMedKvalifiseringsstonadTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control28MaanederMedKvalifiseringsstonad(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control29KvalifiseringssumManglerProvider")
+    public void control29KvalifiseringssumManglerTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control29KvalifiseringssumMangler(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control30HarVarighetMenManglerKvalifiseringssumProvider")
+    public void control30HarVarighetMenManglerKvalifiseringssumTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control30HarVarighetMenManglerKvalifiseringssum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control31HarKvalifiseringssumMenManglerVarighetProvider")
+    public void control31HarKvalifiseringssumMenManglerVarighetTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control31HarKvalifiseringssumMenManglerVarighet(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control32KvalifiseringssumOverMaksimumProvider")
+    public void control32KvalifiseringssumOverMaksimumTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control32KvalifiseringssumOverMaksimum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control33KvalifiseringssumUnderMinimumProvider")
+    public void control33KvalifiseringssumUnderMinimumTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control33KvalifiseringssumUnderMinimum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control36StatusForDeltakelseIKvalifiseringsprogramProvider")
+    public void control36StatusForDeltakelseIKvalifiseringsprogramTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control36StatusForDeltakelseIKvalifiseringsprogram(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control37DatoForAvsluttetProgramProvider")
+    public void control37DatoForAvsluttetProgramTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control37DatoForAvsluttetProgram(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control38FullforteAvsluttedeProgramSituasjonProvider")
+    public void control38FullforteAvsluttedeProgramSituasjonTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control38FullforteAvsluttedeProgramSituasjon(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control39FullforteAvsluttedeProgramInntektkildeProvider")
+    public void control39FullforteAvsluttedeProgramInntektkildeTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control39FullforteAvsluttedeProgramInntektkilde(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
     }
 }

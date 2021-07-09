@@ -80,7 +80,8 @@ public class Main {
             control33KvalifiseringssumUnderMinimum(errorReport, record);
             control36StatusForDeltakelseIKvalifiseringsprogram(errorReport, record);
             control37DatoForAvsluttetProgram(errorReport, record);
-            control38FullforteAvsluttedeProgram(errorReport, record);
+            control38FullforteAvsluttedeProgramSituasjon(errorReport, record);
+            control39FullforteAvsluttedeProgramInntektkilde(errorReport, record);
         });
         // Kontroller ferdig
         // Lager statistikkrapport
@@ -265,8 +266,8 @@ public class Main {
                         , record.getFieldAsString("PERSON_FODSELSNR")
                         , " "
                         , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                        , "Antall barn ('" + record.getFieldAsTrimmedString("ANTBU18") + "') under 18 år i husholdningen er 10 eller flere, er dette riktig?"
-                        , Constants.NORMAL_ERROR
+                        , "Antall barn (" + record.getFieldAsTrimmedString("ANTBU18") + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                        , Constants.CRITICAL_ERROR
                 )
                 , record.getFieldAsInteger("ANTBU18")
                 , "<="
@@ -435,6 +436,8 @@ public class Main {
     }
 
     public static boolean control27MottattOkonomiskSosialhjelp(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         // Kontroll 27 sjekker at flere felt skal være utfylt hvis KVP_MED_ASTONAD = 1 (Ja)
         // Disse feltene sjekkes hver for seg med en ferdig control.
         // Derfor gjentas kontroll 27 for hver av dem
@@ -492,6 +495,8 @@ public class Main {
 
     // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
     public static boolean control28MaanederMedKvalifiseringsstonad(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
         boolean harVarighet = fields.stream()
                 .anyMatch(field -> record.getFieldDefinitionByName(field)
@@ -521,6 +526,8 @@ public class Main {
     }
 
     public static boolean control29KvalifiseringssumMangler(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         Integer stonad = record.getFieldAsInteger("KVP_STONAD");
         boolean stonadOK = (stonad != null);
 
@@ -544,6 +551,8 @@ public class Main {
     }
 
     public static boolean control30HarVarighetMenManglerKvalifiseringssum(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         Integer stonad = record.getFieldAsInteger("KVP_STONAD");
         boolean stonadOK = (stonad != null);
         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
@@ -577,6 +586,8 @@ public class Main {
     }
 
     public static boolean control31HarKvalifiseringssumMenManglerVarighet(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         Integer stonad = record.getFieldAsInteger("KVP_STONAD");
         boolean stonadOK = (stonad != null);
         List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
@@ -610,9 +621,11 @@ public class Main {
     }
 
     public static boolean control32KvalifiseringssumOverMaksimum(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         Integer stonad = record.getFieldAsInteger("KVP_STONAD");
         boolean stonadOK = (stonad != null);
-        int stonadSumMax = 240000;
+        int stonadSumMax = 235000;
 
         if (stonadOK && stonadSumMax < stonad) {
             errorReport.addEntry(
@@ -634,6 +647,8 @@ public class Main {
     }
 
     public static boolean control33KvalifiseringssumUnderMinimum(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
         Integer stonad = record.getFieldAsInteger("KVP_STONAD");
         boolean stonadOK = (stonad != null);
         int stonadSumMin = 8000;
@@ -700,7 +715,7 @@ public class Main {
         );
     }
 
-    public static boolean control38FullforteAvsluttedeProgram(ErrorReport errorReport, Record record) {
+    public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
         if (record.getFieldAsString("STATUS").equalsIgnoreCase("3")) {
@@ -728,5 +743,28 @@ public class Main {
         }
 
         return false;
+    }
+
+    public static boolean control39FullforteAvsluttedeProgramInntektkilde(ErrorReport errorReport, Record record) {
+        errorReport.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                errorReport
+                , new ErrorReportEntry(
+                        record.getFieldAsString("SAKSBEHANDLER")
+                        , record.getFieldAsString("PERSON_JOURNALNR")
+                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        , " "
+                        , "Kontroll 39 Fullførte/avsluttede program – til hvilken inntektskilde gikk deltakeren? Gyldige verdier."
+                        , "Feltet 'Hva var deltakerens <b>viktigste</b> inntektskilde umiddelbart etter avslutningen? "
+                        + "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting) "
+                        + "under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
+                        , Constants.CRITICAL_ERROR
+                )
+                , record.getFieldAsString("STATUS")
+                , List.of("3")
+                , record.getFieldAsString("AVSL_VIKTIGSTE_INNTEKT")
+                , record.getFieldDefinitionByName("AVSL_VIKTIGSTE_INNTEKT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
     }
 }

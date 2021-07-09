@@ -1,41 +1,34 @@
 package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
 
+import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.FieldDefinition;
-import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@Ignore
 public class MainITestBlankFile {
     InputStream sysInBackup;
     private Arguments args;
-    private ErrorReport er;
-    private String inputFileContent;
-    private List<FieldDefinition> fieldDefinitions;
 
 
     @Before
     public void beforeTest() {
         // Mocking a blank file
-        inputFileContent = "";
+        String inputFileContent = "";
 
         sysInBackup = System.in; // backup System.in to restore it later
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
         System.setIn(in);
 
-        fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        FieldDefinitions.getFieldDefinitions();
 
         args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400"});
     }
@@ -47,7 +40,7 @@ public class MainITestBlankFile {
 
     @Test
     public void testDoControl() {
-        er = Main.doControls(args);
+        ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {
             System.out.print(er.generateReport());

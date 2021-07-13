@@ -29,6 +29,7 @@ public class ControlFodselsnummerDUFnummerTest {
     @Test
     public void testFail1() {
         assertTrue(ControlFodselsnummerDUFnummer.doControl(er, ere, "01011299999", "201234567890"));
+        assertTrue(ControlFodselsnummerDUFnummer.doControl(er, ere, "01011299999", "            "));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 

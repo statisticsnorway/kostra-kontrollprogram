@@ -6,6 +6,12 @@ import no.ssb.kostra.utils.Fnr;
 
 public class ControlFodselsnummerDUFnummer {
     public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String fnr, String duf) {
-        return (!Fnr.isValidNorwId(fnr) && !Fnr.isValidDUFnr(duf) && er.addEntry(ere));
+        if (!Fnr.isValidNorwId(fnr) && !Fnr.isValidDUFnr(duf)){
+            er.addEntry(ere);
+
+            return true;
+        }
+
+        return false;
     }
 }

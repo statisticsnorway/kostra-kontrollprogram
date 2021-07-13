@@ -27,6 +27,7 @@ public final class Fnr {
         int[] s = new int[12];
 
         if (fnr.length() != 11) return false;
+        if (fnr.trim().length() == 0) return false;
 
         for (int i = 1; i <= 11; i++) s[i] = Format.parseInt(fnr.substring(i - 1, i));
 
@@ -71,6 +72,7 @@ public final class Fnr {
 
     public static boolean isValidDUFnr(String dufnr) {
         if (dufnr.length() != 12) return false;
+        if (dufnr.trim().length() == 0) return false;
 
         List<Integer> weights = List.of(4, 6, 3, 2, 4, 6, 3, 2, 7, 5);
         String dufNr = dufnr.replace(' ', '0');

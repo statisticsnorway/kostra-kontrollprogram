@@ -22,12 +22,14 @@ public class FnrTest {
         assertFalse(isValidNorwId("01011200200"));
         assertFalse(isValidNorwId("01011255555"));
         assertFalse(isValidNorwId("01011299999"));
+        assertFalse(isValidNorwId("           "));
     }
 
     @Test
     public void isValidDUFnrTest() {
         assertTrue(isValidDUFnr("201212345603"));
         assertFalse(isValidDUFnr("201234567890"));
+        assertFalse(isValidDUFnr("            "));
         assertFalse(isValidDUFnr("12345678901"));
     }
 

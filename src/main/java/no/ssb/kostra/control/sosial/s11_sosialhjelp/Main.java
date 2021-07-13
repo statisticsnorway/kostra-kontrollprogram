@@ -532,7 +532,7 @@ public class Main {
                 , record.getFieldAsString("TRYGDESIT")
                 , List.of("04", "07")
                 , record.getFieldAsString("ARBSIT")
-                , record.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).filter(c -> c.equalsIgnoreCase("04")).collect(Collectors.toList())
+                , record.getFieldDefinitionByName("ARBSIT").getCodeList().stream().map(Code::getCode).filter(c -> Comparator.isCodeInCodelist(c, List.of("02", "04", "07"))).collect(Collectors.toList())
         );
     }
 
@@ -1033,17 +1033,21 @@ public class Main {
                 "VILKARARBEID", "VILKARKURS", "VILKARUTD",
                 "VILKARJOBBLOG", "VILKARJOBBTILB", "VILKARSAMT",
                 "VILKAROKRETT", "VILKARLIVSH", "VILKARHELSE",
-                "VILKARANNET", "VILKARDIGPLAN");
-        boolean isAnyFilledIn = fields.stream()
-                .anyMatch(field -> record.getFieldDefinitionByName(field)
-                        .getCodeList()
-                        .stream()
-                        .map(Code::getCode)
-                        .collect(Collectors.toList())
-                        .contains(record.getFieldAsString(field))
+                "VILKARANNET", "VILKARDIGPLAN"
+        );
+
+        boolean isNoneFilledIn = fields.stream()
+                .noneMatch(field -> Comparator.isCodeInCodelist(
+                        record.getFieldAsTrimmedString(field),
+                        record.getFieldDefinitionByName(field)
+                                .getCodeList()
+                                .stream()
+                                .map(Code::getCode)
+                                .collect(Collectors.toList())
+                        )
                 );
 
-        if (vilkar.equalsIgnoreCase("1") && !isAnyFilledIn) {
+        if (vilkar.equalsIgnoreCase("1") && isNoneFilledIn) {
             errorReport.addEntry(
                     new ErrorReportEntry(
                             record.getFieldAsString("SAKSBEHANDLER")
@@ -1056,6 +1060,8 @@ public class Main {
                             , Constants.CRITICAL_ERROR
                     )
             );
+
+            return true;
         }
 
         return false;

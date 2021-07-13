@@ -72,7 +72,7 @@ public class ComparatorTest {
     }
 
     @Test
-    public void IsValidOrgnrTest() {
+    public void isValidOrgnrTest() {
         assertTrue(isValidOrgnr("944117784"));
         assertTrue(isValidOrgnr("999999999"));
 

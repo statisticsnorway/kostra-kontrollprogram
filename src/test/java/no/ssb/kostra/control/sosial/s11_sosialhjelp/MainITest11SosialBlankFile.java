@@ -1,11 +1,13 @@
-package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad;
+package no.ssb.kostra.control.sosial.s11_sosialhjelp;
 
+import no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.FieldDefinitions;
+import no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -19,7 +21,7 @@ public class MainITestBlankFile {
     private Arguments args;
 
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         // Mocking a blank file
         String inputFileContent = "";
@@ -33,7 +35,7 @@ public class MainITestBlankFile {
         args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400"});
     }
 
-    @After
+    @AfterEach
     public void afterTest() {
         System.setIn(sysInBackup);
     }

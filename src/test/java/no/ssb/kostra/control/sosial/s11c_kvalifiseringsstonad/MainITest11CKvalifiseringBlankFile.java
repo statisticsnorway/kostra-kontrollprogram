@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MainITest11KvalifiseringBlankFile {
+public class MainITest11CKvalifiseringBlankFile {
     InputStream sysInBackup;
     private Arguments args;
 

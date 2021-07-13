@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 import static no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.*;
 
-public class MainITest11Kvalifisering {
+public class MainITest11CKvalifisering {
     private static final Arguments arguments = new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "420400"});
     private static final Arguments argumOslo = new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030100"});
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();

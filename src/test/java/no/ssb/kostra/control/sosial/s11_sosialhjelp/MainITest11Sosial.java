@@ -5,6 +5,7 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.FieldDefinition;
 import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.utils.TestArgumentsInputAndResult;
 import no.ssb.kostra.utils.TestRecordInputAndResult;
 import no.ssb.kostra.utils.TestRecordListInputAndResult;
 import no.ssb.kostra.utils.TestStringInputAndResult;
@@ -24,6 +25,19 @@ import static no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.*;
 public class MainITest11Sosial {
     private static final Arguments arguments = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
+
+//    static Stream<TestArgumentsInputAndResult> doControlProvider() {
+//        Arguments arg1 = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
+//        arg1.setInputFileContent(List.of("42042100000000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    "));
+//
+//        Arguments arg2 = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
+//        arg2.setInputFileContent(List.of("1234567890"));
+//
+//        return Stream.of(
+//                new TestArgumentsInputAndResult(arg1, true, Constants.NO_ERROR),
+//                new TestArgumentsInputAndResult(arg2, false, Constants.CRITICAL_ERROR)
+//        );
+//    }
 
     static Stream<TestStringInputAndResult> control01RecordLengdeProvider() {
         return Stream.of(
@@ -130,9 +144,9 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control07AlderEr68AarEllerOverProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69"), FieldDefinitions.getFieldDefinitions()), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68"), FieldDefinitions.getFieldDefinitions()), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67"), definitions), false, Constants.NO_ERROR)
         );
     }
 
@@ -154,9 +168,6 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control10ForsorgerpliktForBarnUnder18AarProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BU18", "1"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "0"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BU18", "1"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "2"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BU18", "0"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
@@ -181,8 +192,8 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control13MangeBarnIHusholdningenProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "10"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", "9"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "10"), definitions), true, Constants.NORMAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "11"), definitions), true, Constants.NORMAL_ERROR)
         );
     }
@@ -190,7 +201,8 @@ public class MainITest11Sosial {
     static Stream<TestRecordInputAndResult> control14ViktigsteKildeTilLivsoppholdGyldigeVerdierProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VKLO", "1"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "X"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "X"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", " "), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -245,9 +257,9 @@ public class MainITest11Sosial {
     static Stream<TestRecordInputAndResult> control22TilknytningTilTrygdesystemetOgAlderProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "TRYGDESIT", "XX", "ALDER", "XX"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "61"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "60"), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "59"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "63"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "62"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "TRYGDESIT", "07", "ALDER", "61"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -303,7 +315,7 @@ public class MainITest11Sosial {
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "123456", "LAAN", "123456"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "000000", "LAAN", "123456"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "123456", "LAAN", "000000"), definitions), false, Constants.NO_ERROR),
-//                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "000000", "LAAN", "000000"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "000000", "LAAN", "000000"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "      ", "LAAN", "      "), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
@@ -313,7 +325,10 @@ public class MainITest11Sosial {
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "123456", "LAAN", "123456"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "123456", "LAAN", "      "), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "      ", "LAAN", "123456"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "      ", "LAAN", "      "), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "      ", "LAAN", "      "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "000000", "LAAN", "000000"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "      ", "LAAN", "000000"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "BIDRAG", "000000", "LAAN", "      "), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -336,8 +351,8 @@ public class MainITest11Sosial {
     static Stream<TestRecordInputAndResult> control31StonadssumPaaMinEllerMindreProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "123456", "LAAN", "000000"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "    51", "LAAN", "000000"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "    50", "LAAN", "000000"), definitions), true, Constants.NORMAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   201", "LAAN", "000000"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   200", "LAAN", "000000"), definitions), true, Constants.NORMAL_ERROR)
         );
     }
 
@@ -367,17 +382,17 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control36BidragFordeltPaaMmaanederProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "000000", "BIDRAG_JAN", "000000"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   100", "BIDRAG_JAN", "   100"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   100", "BIDRAG_JAN", "  2000"), definitions), true, Constants.NORMAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "000000", "BIDRAG_JAN", "000000", "BIDRAG_FEB", "000000"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   200", "BIDRAG_JAN", "   100", "BIDRAG_FEB", "   100"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BIDRAG", "   100", "BIDRAG_JAN", "  2000", "BIDRAG_FEB", "  2000"), definitions), true, Constants.NORMAL_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control37LaanFordeltPaaMmaanederProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "000000", "LAAN_JAN", "000000"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "   100", "LAAN_JAN", "   100"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "   100", "LAAN_JAN", "  2000"), definitions), true, Constants.NORMAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "000000", "LAAN_JAN", "000000", "LAAN_FEB", "000000"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "   200", "LAAN_JAN", "   100", "LAAN_FEB", "   100"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "LAAN", "   100", "LAAN_JAN", "  2000", "LAAN_FEB", "  2000"), definitions), true, Constants.NORMAL_ERROR)
         );
     }
 
@@ -440,6 +455,15 @@ public class MainITest11Sosial {
     public void resetStaticRecordCounter() {
         Record.resetLineCount();
     }
+
+//    @ParameterizedTest(name = "#{index} - Run test with {0}")
+//    @MethodSource("doControlProvider")
+//    public void doControlTest(TestArgumentsInputAndResult inputAndResult) {
+//        doControls(inputAndResult.getArguments());
+//        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+//
+//        System.out.println(inputAndResult.getErrorReport().generateReport());
+//    }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control01RecordLengdeProvider")

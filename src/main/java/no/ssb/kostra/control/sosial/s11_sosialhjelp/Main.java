@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
+
 public class Main {
     public static ErrorReport doControls(Arguments arguments) {
         ErrorReport errorReport = new ErrorReport(arguments);
@@ -50,7 +51,7 @@ public class Main {
             control04OppgaveAar(errorReport, record);
             control05Fodselsnummer(errorReport, record);
             control06AlderUnder18Aar(errorReport, record);
-            control07AlderEr96AarEllerOver(errorReport, record);
+            control07AlderEr68AarEllerOver(errorReport, record);
             control08Kjonn(errorReport, record);
             control09Sivilstand(errorReport, record);
             control10ForsorgerpliktForBarnUnder18Aar(errorReport, record);
@@ -85,6 +86,7 @@ public class Main {
             control40ForsteVilkarIAaretSambo(errorReport, record);
             control41DatoForUtbetalingsvedtak(errorReport, record);
             control42TilOgMedDatoForUtbetalingsvedtak(errorReport, record);
+            control43Vilkaar(errorReport, record);
         });
 
         control05AFodselsnummerDubletter(errorReport, records);
@@ -280,7 +282,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 )
                 , record.getFieldAsInteger("ANTBU18")
-                , "<="
+                , "<"
                 , 10
         );
     }
@@ -480,7 +482,7 @@ public class Main {
                 , List.of("07")
                 , record.getFieldAsIntegerDefaultEquals0("ALDER")
                 , ">"
-                , 60
+                , 62
         );
     }
 
@@ -526,7 +528,7 @@ public class Main {
                         , record.getFieldAsString("PERSON_FODSELSNR")
                         , " "
                         , "Kontroll 24 Tilknytning til trygdesystemet og arbeidssituasjon. Uføretrygd/alderspensjon og ikke arbeidssøker."
-                        , "Mottakeren mottar trygd (" + t + "), men det er ikke oppgitt 'Ikke arbeidssøker' på arbeidssituasjon (" + a + ")."
+                        , "Mottakeren mottar trygd (" + t + "), men det er oppgitt ugyldig kode (" + a + ") på arbeidssituasjon."
                         , Constants.NORMAL_ERROR
                 )
                 , record.getFieldAsString("TRYGDESIT")
@@ -539,6 +541,12 @@ public class Main {
     public static boolean control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspenger(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
+        List<Code> trygdeSituasjon = record.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString("TRYGDESIT"))).collect(Collectors.toList());
+        Code t = (!trygdeSituasjon.isEmpty()) ? trygdeSituasjon.get(0) : new Code("Uoppgitt", "Uoppgitt");
+
+        List<Code> arbeidSituasjon = record.getFieldDefinitionByName("ARBSIT").getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString("ARBSIT"))).collect(Collectors.toList());
+        Code a = (!arbeidSituasjon.isEmpty()) ? arbeidSituasjon.get(0) : new Code("Uoppgitt", "Uoppgitt");
+
         if (record.getFieldAsString("VKLO").equalsIgnoreCase("3")
                 && record.getFieldAsString("TRYGDESIT").equalsIgnoreCase("11")
                 && record.getFieldAsString("ARBSIT").equalsIgnoreCase("08")
@@ -550,7 +558,8 @@ public class Main {
                             , record.getFieldAsString("PERSON_FODSELSNR")
                             , " "
                             , "Kontroll 24B Tilknytning til trygdesystemet og arbeidssituasjon. Arbeidsavklaringspenger."
-                            , "Mottakeren mottar trygden arbeidsavklaringspenger, men det er oppgitt 'Arbeidsløs, ikke registrert' på arbeidssituasjon"
+                            , "Mottakeren mottar trygd (" + t + "), men det er oppgitt ugyldig kode (" + a + ") på arbeidssituasjon."
+
                             , Constants.CRITICAL_ERROR
                     )
             );
@@ -623,9 +632,9 @@ public class Main {
         errorReport.incrementCount();
 
         Integer bidrag = record.getFieldAsInteger("BIDRAG");
-        boolean bidragOK = bidrag != null;
+        boolean bidragOK = bidrag != null && 0 < bidrag;
         Integer laan = record.getFieldAsInteger("LAAN");
-        boolean laanOK = laan != null;
+        boolean laanOK = laan != null && 0 < laan;
         boolean stonadOK = bidragOK || laanOK;
 
         if (!stonadOK) {
@@ -662,9 +671,9 @@ public class Main {
                 );
 
         Integer bidrag = record.getFieldAsInteger("BIDRAG");
-        boolean bidragOK = bidrag != null;
+        boolean bidragOK = bidrag != null && 0 < bidrag;
         Integer laan = record.getFieldAsInteger("LAAN");
-        boolean laanOK = laan != null;
+        boolean laanOK = laan != null && 0 < laan;
         boolean stonadOK = bidragOK || laanOK;
 
         if (harVarighet) {
@@ -776,7 +785,7 @@ public class Main {
         Integer laan = record.getFieldAsIntegerDefaultEquals0("LAAN");
         int stonad = bidrag + laan;
         boolean stonadOK = (bidrag != 0) || (laan != 0);
-        int stonadSumMin = 50;
+        int stonadSumMin = 200;
 
         if (stonadOK && stonad <= stonadSumMin) {
             errorReport.addEntry(

@@ -14,7 +14,6 @@ public class Arguments {
     private boolean isRunAsExternalProcess = false;
 
     private List<String> inputFileContent = new ArrayList<>();
-    private List<String> outputFileContent = new ArrayList<>();
 
     public Arguments(String[] argv){
         GetOptDesc[] options = {
@@ -157,10 +156,6 @@ public class Arguments {
         this.inputFileContent = inputFileContent;
     }
 
-    public List<String> getOutputFileContent() {
-        return outputFileContent;
-    }
-
     public boolean isRunAsExternalProcess() {
         return isRunAsExternalProcess;
     }
@@ -176,7 +171,6 @@ public class Arguments {
                 ", orgnr='" + orgnr + '\'' +
                 ", foretaknr='" + foretaknr + '\'' +
                 ", inputFileContent=" + inputFileContent +
-                ", outputFileContent=" + outputFileContent +
                 ", externalProcess=" + isRunAsExternalProcess +
                 '}';
     }

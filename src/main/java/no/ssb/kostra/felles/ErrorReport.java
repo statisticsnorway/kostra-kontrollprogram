@@ -79,6 +79,10 @@ public class ErrorReport {
         final String lf = System.getProperty("line.separator");
         final String VERSION = "2021.7.2";
 
+        if (count == 0) {
+            this.errorType = Constants.CRITICAL_ERROR;
+        }
+
         report
                 .append("<html>")
                 .append("<head>").append(lf)

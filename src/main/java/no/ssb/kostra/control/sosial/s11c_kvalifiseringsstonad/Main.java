@@ -47,8 +47,10 @@ public class Main {
         ControlFilbeskrivelse.doControl(records, errorReport);
 
 
-        control05AFodselsnummerDubletter(errorReport, records);
-        control05BJournalnummerDubletter(errorReport, records);
+        if (!errorReport.getArgs().getRegion().substring(0, 4).equalsIgnoreCase("0301")) {
+            control05AFodselsnummerDubletter(errorReport, records);
+            control05BJournalnummerDubletter(errorReport, records);
+        }
 
         records.forEach(record -> {
             control03Kommunenummer(errorReport, record);

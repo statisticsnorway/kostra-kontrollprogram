@@ -1,10 +1,11 @@
 package no.ssb.kostra.control.barnevern.s15;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@Ignore
 public class MainITest {
     InputStream sysInBackup;
 

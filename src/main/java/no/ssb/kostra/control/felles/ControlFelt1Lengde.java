@@ -1,16 +1,10 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 
 public class ControlFelt1Lengde {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1) {
-        if (r.getFieldAsTrimmedString(field1).isEmpty()) {
-            ere.setRefNr(String.valueOf(r.getLine()));
-            er.addEntry(ere);
-        }
-
-        return r;
+    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String trimmedFieldValue1) {
+        return (trimmedFieldValue1.isEmpty() && er.addEntry(ere));
     }
 }

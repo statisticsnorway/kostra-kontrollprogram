@@ -1,15 +1,16 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ControlFelt1LikSumAvListe {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<List<String>> fieldLists) {
-        fieldLists.forEach(fieldList -> {
+    public static boolean doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<List<String>> fieldLists) {
+        return fieldLists.stream()
+                .map(fieldList -> {
                     String sumField = fieldList.get(0);
                     Integer sum = r.getFieldAsIntegerDefaultEquals0(sumField);
                     List<String> aggregateFields = fieldList.subList(1, fieldList.size());
@@ -39,62 +40,37 @@ public class ControlFelt1LikSumAvListe {
                         );
 
                         er.addEntry(e);
+                        return true;
                     }
-                }
-        );
 
-        return r;
+                    return false;
+                })
+                .reduce(false, (result, item) -> result || item);
     }
 
-    /*
-    *                         , new ErrorReportEntry(
-                                "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 14 Kontroll av totalsummer for meklinger"
-                                , "Totalene summerer seg ikke som de skal."
-                                , Constants.NORMAL_ERROR
-                        )
-    * */
-
     public static List<List<String>> createFieldList(String measure, List<String> c1, List<String> c2) {
-        List<List<String>> fieldLists = c1.stream()
+        return c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", measure, c1Item, c2Item))
                         .collect(Collectors.toList())
 
                 )
                 .collect(Collectors.toList());
+    }
 
-        fieldLists.addAll(c2.stream()
-                .map(c2Item -> c1.stream()
-                        .map(c1Item -> String.join("_", measure, c1Item, c2Item))
-                        .collect(Collectors.toList())
-
-                )
-                .collect(Collectors.toList())
-        );
-        return fieldLists;
+    public static List<List<String>> createFieldList(String measure, List<String> c1, String c2) {
+        return List.of(c1.stream()
+                .map(c1Item -> String.join("_", measure, c1Item, c2))
+                .collect(Collectors.toList()));
     }
 
     public static List<List<String>> createFieldList(List<String> c1, List<String> c2) {
-        List<List<String>> fieldLists = c1.stream()
+        return c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", c1Item, c2Item))
                         .collect(Collectors.toList())
 
                 )
                 .collect(Collectors.toList());
-
-        fieldLists.addAll(c2.stream()
-                .map(c2Item -> c1.stream()
-                        .map(c1Item -> String.join("_", c1Item, c2Item))
-                        .collect(Collectors.toList())
-
-                )
-                .collect(Collectors.toList())
-        );
-        return fieldLists;
     }
 }

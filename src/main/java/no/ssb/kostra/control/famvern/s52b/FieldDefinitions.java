@@ -1,7 +1,7 @@
 package no.ssb.kostra.control.famvern.s52b;
 
-import no.ssb.kostra.control.Code;
-import no.ssb.kostra.control.FieldDefinition;
+import no.ssb.kostra.felles.Code;
+import no.ssb.kostra.felles.FieldDefinition;
 
 import java.util.List;
 

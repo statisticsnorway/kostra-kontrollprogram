@@ -1,14 +1,14 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ControlAlleFeltIListeHarLikSum {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<String> fieldList) {
+    public static boolean doControl(Record r, ErrorReport er, ErrorReportEntry ere, List<String> fieldList) {
         int sum = r.getFieldAsIntegerDefaultEquals0(fieldList.get(0));
         boolean allSumsEqual = fieldList.stream()
                 .map(r::getFieldAsIntegerDefaultEquals0)
@@ -36,9 +36,10 @@ public class ControlAlleFeltIListeHarLikSum {
             );
 
             er.addEntry(e);
+            return true;
         }
 
-        return r;
+        return false;
     }
 
 }

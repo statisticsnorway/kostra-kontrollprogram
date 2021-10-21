@@ -1,12 +1,12 @@
 package no.ssb.kostra.control.famvern.s53;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.ControlFelt1Boolsk;
 import no.ssb.kostra.control.felles.ControlFelt1BoolskSaaFelt2Boolsk;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +38,6 @@ public class Main {
                 .map(p -> new Record(p, fieldDefinitions))
                 .collect(Collectors.toList());
         Integer n = records.size();
-        Integer l = String.valueOf(n).length();
-        final String lf = Constants.lineSeparator;
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
@@ -126,8 +124,7 @@ public class Main {
                                 .concat(", tiltak.");
 
                         ControlFelt1Boolsk.doControl(
-                                r
-                                , er
+                                er
                                 , new ErrorReportEntry(
                                         createFylkeNr(r.getFieldAsString("FYLKE_NR"))
                                         , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
@@ -137,7 +134,7 @@ public class Main {
                                         , tiltakErrorText
                                         , Constants.NORMAL_ERROR
                                 )
-                                , tiltakField
+                                , r.getFieldAsIntegerDefaultEquals0(tiltakField)
                                 , ">"
                                 , 0
                         );
@@ -154,8 +151,7 @@ public class Main {
                                 .concat(") kontoret har brukt for å gjennomføre tiltakene. Sjekk om det er glemt å rapportere. ");
 
                         ControlFelt1BoolskSaaFelt2Boolsk.doControl(
-                                r
-                                , er
+                                er
                                 , new ErrorReportEntry(
                                         createFylkeNr(r.getFieldAsString("FYLKE_NR"))
                                         , createKontorNr(r.getFieldAsString("KONTORNR"), String.valueOf(r.getLine()))
@@ -165,10 +161,10 @@ public class Main {
                                         , timerErrorText
                                         , Constants.NORMAL_ERROR
                                 )
-                                , tiltakField
+                                , r.getFieldAsInteger(tiltakField)
                                 , ">"
                                 , 0
-                                , timerField
+                                , r.getFieldAsInteger(timerField)
                                 , ">"
                                 , 0
                         );

@@ -12,7 +12,7 @@ public class Definitions {
                         "11", "12", "13", "14", "15"
                 );
             default:
-                return List.of("00");
+                return List.of("  ");
         }
     }
 }

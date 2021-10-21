@@ -1,8 +1,8 @@
 package no.ssb.kostra.controlprogram;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
 
 import java.io.PrintStream;

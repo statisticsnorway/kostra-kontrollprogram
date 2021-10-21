@@ -224,9 +224,13 @@ public class Main {
         return Utils.rpadList(List.of("800", "840", "850", "860"), 4);
     }
 
-    public static List<String> getArterUgyldigDrift() {
+    public static List<String> getArterUgyldigDrift(String skjema, String orgnr) {
         // Kun gyldig i investering og skal fjernes fra drift
-        return List.of("280", "512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
+        if (isCodeInCodelist(skjema, List.of("0I", "0K", "0M", "0P")) && isCodeInCodelist(orgnr, List.of("817920632", "921234554", "958935420", "964338531"))){
+            return List.of("280", "512", "521", "522", "529", "670", "910", "911", "912",        "922", "929", "970");
+        } else {
+            return List.of("280", "512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
+        }
     }
 
     public static List<String> getArterUgyldigInvestering() {
@@ -293,14 +297,7 @@ public class Main {
             );
 
             // 25
-            controlKombinasjonKontoklasseArt(errorReport,
-                    regnskap,
-                    getBevilgningRegnskapList(),
-                    getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
-                    removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), getArterUgyldigDrift()),
-                    "Korrigér art (%s) til gyldig art i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
-                    Constants.CRITICAL_ERROR
-            );
+            kontroll25(errorReport, regnskap);
 
             // 30
             controlKombinasjonKontoklasseArt(errorReport,
@@ -1080,6 +1077,39 @@ public class Main {
         }
 
         return false;
+    }
+
+
+    public static boolean kontroll20(ErrorReport errorReport, List<Record> regnskap){
+        errorReport.incrementCount();
+        List<String> gyldigeFunksjoner = getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion());
+        List<String> funksjonerUgyldigDrift = getFunksjonerUgyldigDrift();
+        List<String> funksjonerKontroll = Utils.rpadList(removeCodesFromCodelist(gyldigeFunksjoner, funksjonerUgyldigDrift), 4);
+
+        return controlKombinasjonKontoklasseFunksjon(errorReport,
+                regnskap,
+                getBevilgningRegnskapList(),
+                getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
+                funksjonerKontroll,
+                "Korrigér funksjon (%s) til gyldig funksjon i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
+                Constants.CRITICAL_ERROR
+        );
+    }
+
+    public static boolean kontroll25(ErrorReport errorReport, List<Record> regnskap) {
+        errorReport.incrementCount();
+        List<String> arterGyldig = getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion());
+        List<String> arterUgyldigDrift = getArterUgyldigDrift(errorReport.getArgs().getSkjema(), errorReport.getArgs().getOrgnr());
+        List<String> arterKontroll = removeCodesFromCodelist(arterGyldig, arterUgyldigDrift);
+
+        return controlKombinasjonKontoklasseArt(errorReport,
+                regnskap,
+                getBevilgningRegnskapList(),
+                getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
+                arterKontroll,
+                "Korrigér art (%s) til gyldig art i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
+                Constants.CRITICAL_ERROR
+        );
     }
 
 }

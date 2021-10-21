@@ -26,19 +26,6 @@ public class MainITest11Sosial {
     private static final Arguments arguments = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
 
-//    static Stream<TestArgumentsInputAndResult> doControlProvider() {
-//        Arguments arg1 = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
-//        arg1.setInputFileContent(List.of("42042100000000186219096631556            13101512040102030405060708091011120073964       0073964                                                                                                                                                                 11per0000102122                                                    "));
-//
-//        Arguments arg2 = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
-//        arg2.setInputFileContent(List.of("1234567890"));
-//
-//        return Stream.of(
-//                new TestArgumentsInputAndResult(arg1, true, Constants.NO_ERROR),
-//                new TestArgumentsInputAndResult(arg2, false, Constants.CRITICAL_ERROR)
-//        );
-//    }
-
     static Stream<TestStringInputAndResult> control01RecordLengdeProvider() {
         return Stream.of(
                 new TestStringInputAndResult(arguments, "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234", false, Constants.NO_ERROR),
@@ -55,7 +42,7 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control03BydelsnummerProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "  "), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "030101"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "01"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "030100"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
@@ -456,85 +443,87 @@ public class MainITest11Sosial {
         Record.resetLineCount();
     }
 
-//    @ParameterizedTest(name = "#{index} - Run test with {0}")
-//    @MethodSource("doControlProvider")
-//    public void doControlTest(TestArgumentsInputAndResult inputAndResult) {
-//        doControls(inputAndResult.getArguments());
-//        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-//
-//        System.out.println(inputAndResult.getErrorReport().generateReport());
-//    }
-
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control01RecordLengdeProvider")
     public void control01RecordLengdeTest(TestStringInputAndResult inputAndResult) {
         // public static boolean doControl(List<String> s, ErrorReport er, int length)
-        Assertions.assertEquals(inputAndResult.isResult(), ControlRecordLengde.doControl(List.of(inputAndResult.getString()), inputAndResult.getErrorReport(), FieldDefinitions.getFieldLength()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = ControlRecordLengde.doControl(List.of(inputAndResult.getString()), inputAndResult.getErrorReport(), FieldDefinitions.getFieldLength());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03KommunenummerProvider")
     public void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03BydelsnummerProvider")
     public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-
+        boolean result = control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control04OppgaveAarProvider")
     public void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05FodselsnummerProvider")
     public void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        String fnr = inputAndResult.getRecord().getFieldAsString("PERSON_FODSELSNR");
+        System.out.println(fnr);
+        boolean result = control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05AFodselsnummerDubletterProvider")
     public void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05BJournalnummerDubletterProvider")
     public void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control06AlderUnder18AarProvider")
     public void control06AlderUnder18AarTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control06AlderUnder18Aar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
+        boolean result = control06AlderUnder18Aar(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")

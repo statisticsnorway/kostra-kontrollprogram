@@ -370,22 +370,23 @@ public class IndividNodeHandler extends NodeHandler {
                                 + meldingId
                                 + "). Konkludert melding mangler melder(e).");
 
-                controlKonkludertMeldingUnderNoder(
-                        er,
-                        new ErrorReportEntry(
-                                saksbehandler,
-                                journalnummer,
-                                individId,
-                                refNr,
-                                "Melding Kontroll 5: Kontroll av konkludert melding, saksinnhold",
-                                "Melding ("
-                                        + meldingId
-                                        + "). Konkludert melding mangler saksinnhold.",
-                                Constants.CRITICAL_ERROR), melding,
-                        "Saksinnhold",
-                        "Melding ("
-                                + meldingId
-                                + "). Konkludert melding mangler saksinnhold.");
+// Kommentert ut pga. utfordringer i fagsystem
+//                controlKonkludertMeldingUnderNoder(
+//                        er,
+//                        new ErrorReportEntry(
+//                                saksbehandler,
+//                                journalnummer,
+//                                individId,
+//                                refNr,
+//                                "Melding Kontroll 5: Kontroll av konkludert melding, saksinnhold",
+//                                "Melding ("
+//                                        + meldingId
+//                                        + "). Konkludert melding mangler saksinnhold.",
+//                                Constants.CRITICAL_ERROR), melding,
+//                        "Saksinnhold",
+//                        "Melding ("
+//                                + meldingId
+//                                + "). Konkludert melding mangler saksinnhold.");
 
                 List<StructuredNode> melderList = melding
                         .queryNodeList("Melder");
@@ -589,22 +590,23 @@ public class IndividNodeHandler extends NodeHandler {
                     // 1 = Barneverntjenesten fatter vedtak om tiltak
                     // 2 = Begjæring om tiltak for fylkesnemnda
                     List<String> koderKonklusjon = List.of("1", "2");
-                    controlFeltMedKoderSkalHaUndernoder(
-                            er,
-                            new ErrorReportEntry(
-                                    saksbehandler,
-                                    journalnummer,
-                                    individId,
-                                    refNr,
-                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
-                                    "Undersøkelse ("
-                                            + undersokelseId
-                                            + "). Undersøkelse konkludert med kode "
-                                            + undersokelseKonklusjon
-                                            + " skal ha vedtaksgrunnlag",
-                                    Constants.CRITICAL_ERROR),
-                            undersokelseKonklusjon, koderKonklusjon,
-                            vedtaksgrunnlagList);
+// Kommentert ut pga. utfordringer i fagsystem
+//                    controlFeltMedKoderSkalHaUndernoder(
+//                            er,
+//                            new ErrorReportEntry(
+//                                    saksbehandler,
+//                                    journalnummer,
+//                                    individId,
+//                                    refNr,
+//                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
+//                                    "Undersøkelse ("
+//                                            + undersokelseId
+//                                            + "). Undersøkelse konkludert med kode "
+//                                            + undersokelseKonklusjon
+//                                            + " skal ha vedtaksgrunnlag",
+//                                    Constants.CRITICAL_ERROR),
+//                            undersokelseKonklusjon, koderKonklusjon,
+//                            vedtaksgrunnlagList);
 
                     controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
                             er,
@@ -623,31 +625,32 @@ public class IndividNodeHandler extends NodeHandler {
                             undersokelseStartDato, undersokelseSluttDato);
 
                     // Kontroller for Vedtaksgrunnlag
-                    if (meldingSluttDato != null && forrigeTelleDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
-                        for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
-                            // 18 = Andre forhold ved foreldre/familien
-                            // 19 = Andre forhold ved barnets situasjon
-                            List<String> kodelisteVedtaksgrunnlag = List.of("18", "19");
-                            String vedtaksgrunnlagKode = defaultString(vedtaksgrunnlag.queryString("@Kode"), "");
-                            String vedtaksgrunnlagPresisering = defaultString(vedtaksgrunnlag.queryString("Presisering"), "");
-
-                            controlPresisering(
-                                    er,
-                                    new ErrorReportEntry(
-                                            saksbehandler,
-                                            journalnummer,
-                                            individId,
-                                            refNr,
-                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode " + vedtaksgrunnlagKode + " og presisering",
-                                            "Vedtaksgrunnlag med kode "
-                                                    + vedtaksgrunnlagKode
-                                                    + " mangler presisering",
-                                            Constants.CRITICAL_ERROR),
-                                    vedtaksgrunnlagKode,
-                                    kodelisteVedtaksgrunnlag,
-                                    vedtaksgrunnlagPresisering);
-                        }
-                    }
+// Kommentert ut pga. utfordringer i fagsystem
+//                    if (meldingSluttDato != null && forrigeTelleDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
+//                        for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
+//                            // 18 = Andre forhold ved foreldre/familien
+//                            // 19 = Andre forhold ved barnets situasjon
+//                            List<String> kodelisteVedtaksgrunnlag = List.of("18", "19");
+//                            String vedtaksgrunnlagKode = defaultString(vedtaksgrunnlag.queryString("@Kode"), "");
+//                            String vedtaksgrunnlagPresisering = defaultString(vedtaksgrunnlag.queryString("Presisering"), "");
+//
+//                            controlPresisering(
+//                                    er,
+//                                    new ErrorReportEntry(
+//                                            saksbehandler,
+//                                            journalnummer,
+//                                            individId,
+//                                            refNr,
+//                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode " + vedtaksgrunnlagKode + " og presisering",
+//                                            "Vedtaksgrunnlag med kode "
+//                                                    + vedtaksgrunnlagKode
+//                                                    + " mangler presisering",
+//                                            Constants.CRITICAL_ERROR),
+//                                    vedtaksgrunnlagKode,
+//                                    kodelisteVedtaksgrunnlag,
+//                                    vedtaksgrunnlagPresisering);
+//                        }
+//                    }
                 }
             }
 
@@ -829,19 +832,20 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR), individStartDato,
                         tiltakStartDato);
 
-                controlTiltakOmsorgstiltakPresisering(
-                        er,
-                        new ErrorReportEntry(
-                                saksbehandler,
-                                journalnummer,
-                                individId,
-                                refNr,
-                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
-                                "Tiltak (" + tiltakId
-                                        + "). Omsorgstiltak med sluttdato ("
-                                        + tiltakSluttDatoString
-                                        + ") krever kode for opphevelse",
-                                Constants.CRITICAL_ERROR), tiltak);
+// Kommentert ut pga. utfordringer i fagsystem
+//                controlTiltakOmsorgstiltakPresisering(
+//                        er,
+//                        new ErrorReportEntry(
+//                                saksbehandler,
+//                                journalnummer,
+//                                individId,
+//                                refNr,
+//                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
+//                                "Tiltak (" + tiltakId
+//                                        + "). Omsorgstiltak med sluttdato ("
+//                                        + tiltakSluttDatoString
+//                                        + ") krever kode for opphevelse",
+//                                Constants.CRITICAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
                         er,

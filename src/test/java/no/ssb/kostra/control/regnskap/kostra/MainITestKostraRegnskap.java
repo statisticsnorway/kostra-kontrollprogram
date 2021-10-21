@@ -1,6 +1,5 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
-import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
@@ -17,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static no.ssb.kostra.control.felles.Comparator.*;
 
 public class MainITestKostraRegnskap {
     private static final Arguments arguments0A = new Arguments(new String[]{"-s", "0A", "-y", "2021", "-r", "420400"});
@@ -39,7 +38,7 @@ public class MainITestKostraRegnskap {
 
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
 
-    static Stream<TestStringListInputAndResult> getArterUgyldigDriftProvider(){
+    static Stream<TestStringListInputAndResult> getArterUgyldigDriftProvider() {
         return Stream.of(
                 new TestStringListInputAndResult(List.of("0A", "         "), true),
                 new TestStringListInputAndResult(List.of("0I", "999999999"), true),
@@ -98,5 +97,4 @@ public class MainITestKostraRegnskap {
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
     }
-
 }

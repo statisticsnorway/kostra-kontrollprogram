@@ -76,12 +76,14 @@ public class ErrorReport {
     public String generateReport() {
 
         StringBuilder report = new StringBuilder();
+
         final String lf = System.getProperty("line.separator");
         final String VERSION = "2021.10.1";
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;
         }
+
 
         report
                 .append("<html>")

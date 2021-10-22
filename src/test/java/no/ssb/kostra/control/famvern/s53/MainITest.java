@@ -17,7 +17,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@Ignore
 public class MainITest {
     InputStream sysInBackup;
     private List<FieldDefinition> fieldDefinitions;

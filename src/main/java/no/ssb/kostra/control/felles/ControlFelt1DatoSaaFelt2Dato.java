@@ -1,55 +1,27 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static no.ssb.kostra.control.felles.Comparator.isValidDate;
+
 public class ControlFelt1DatoSaaFelt2Dato {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1, String field2) {
-        boolean hasErrors = false;
-        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern(r.getFieldDefinitionByName(field1).getDatePattern());
-        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern(r.getFieldDefinitionByName(field2).getDatePattern());
+    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String date1, String datePattern1, String date2, String datePattern2) {
+        if (isValidDate(date1, datePattern1) && isValidDate(date2, datePattern2)) {
+            DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern(datePattern1);
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern(datePattern2);
 
-        if (isValidDate(r, field1) && isValidDate(r, field2)) {
-            try {
-                LocalDate date1 = LocalDate.parse(r.getFieldAsString(field1), dtf1);
-                LocalDate date2 = LocalDate.parse(r.getFieldAsString(field2), dtf2);
+            LocalDate localdate1 = LocalDate.parse(date1, dtf1);
+            LocalDate localdate2 = LocalDate.parse(date2, dtf2);
 
-                if (date1.isAfter(date2)) {
-                    hasErrors = true;
-                }
-            } catch (Exception e) {
-                hasErrors = true;
-            }
-
-            if (hasErrors) {
-                ere.setRefNr(String.valueOf(r.getLine()));
-                er.addEntry(ere);
+            if (localdate1.isAfter(localdate2)) {
+                return er.addEntry(ere);
             }
         }
 
-        return r;
-    }
-
-    public static boolean isValidDate(Record r, String field) {
-        String blankZeroDate = "0".repeat(r.getFieldDefinitionByName(field).getDatePattern().length());
-        String blankSpaceDate = " ".repeat(r.getFieldDefinitionByName(field).getDatePattern().length());
-
-        if (r.getFieldAsString(field).equalsIgnoreCase(blankZeroDate)
-                || r.getFieldAsString(field).equalsIgnoreCase(blankSpaceDate)) {
-            return false;
-        }
-
-        try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(r.getFieldDefinitionByName(field).getDatePattern());
-            LocalDate.parse(r.getFieldAsString(field), dtf);
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 }

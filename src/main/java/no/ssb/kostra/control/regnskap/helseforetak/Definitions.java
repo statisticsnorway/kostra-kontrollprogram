@@ -1,7 +1,6 @@
 package no.ssb.kostra.control.regnskap.helseforetak;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Definitions {
@@ -107,11 +106,7 @@ public class Definitions {
 
     public static List<String> getFunksjon400Orgnr() {
         return List.of(
-                "991324968", "983658725", "983658776",
-                "883658752", "911912759", "913454405",
-                "914637651", "814630722", "987601787",
-                "916879067", "818711832", "918177833",
-                "918695079", "922307814"
+                "991324968", "983658725", "983658776", "883658752", "911912759", "914637651", "814630722", "987601787", "916879067", "818711832", "918177833", "918695079", "922307814"
         );
     }
 

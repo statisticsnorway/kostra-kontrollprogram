@@ -1,18 +1,12 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 
 public class ControlFelt1BoolskSaaFelt2Boolsk {
-    public static Record doControl(Record r, ErrorReport er, ErrorReportEntry ere, String field1, String operator1, Integer value1, String field2, String operator2, Integer value2) {
-        if (Comparator.compareIntegerOperatorInteger(r.getFieldAsInteger(field1), operator1, value1)) {
-            if (!Comparator.compareIntegerOperatorInteger(r.getFieldAsInteger(field2), operator2, value2)) {
-                ere.setRefNr(String.valueOf(r.getLine()));
-                er.addEntry(ere);
-            }
-        }
-
-        return r;
+    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, Integer fieldvalue1, String operator1, Integer checkvalue1, Integer fieldvalue2, String operator2, Integer checkvalue2) {
+        return (Comparator.compareIntegerOperatorInteger(fieldvalue1, operator1, checkvalue1)
+                && !Comparator.compareIntegerOperatorInteger(fieldvalue2, operator2, checkvalue2)
+                && er.addEntry(ere));
     }
 }

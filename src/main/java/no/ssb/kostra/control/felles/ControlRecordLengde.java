@@ -1,16 +1,11 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
-import no.ssb.kostra.control.regnskap.FieldDefinitions;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ControlRecordLengde {
     public static boolean doControl(List<String> s, ErrorReport er, int length) {

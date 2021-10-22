@@ -1,6 +1,9 @@
 package no.ssb.kostra.control;
 
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import org.junit.Before;
 import org.junit.Test;
 

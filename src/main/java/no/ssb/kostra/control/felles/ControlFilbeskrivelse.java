@@ -1,19 +1,21 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.*;
+import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Format;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ControlFilbeskrivelse {
     private static String createLinenumber(Integer l, int line) {
         return "Linjenummer " + Format.sprintf("%0" + l + "d", line);
     }
 
-    public static void doControl(List<Record> records, ErrorReport er) {
+    public static boolean doControl(List<Record> records, ErrorReport er) {
+        AtomicBoolean hasErrors = new AtomicBoolean(false);
         er.incrementCount();
         int n = records.size();
         Integer l = String.valueOf(n).length();
@@ -55,6 +57,7 @@ public class ControlFilbeskrivelse {
                                             , Constants.CRITICAL_ERROR
                                     )
                             );
+                            hasErrors.set(true);
                         }
 
                         // sjekker at vi har en verdi
@@ -75,6 +78,7 @@ public class ControlFilbeskrivelse {
                                                     , Constants.CRITICAL_ERROR
                                             )
                                     );
+                                    hasErrors.set(true);
                                 }
                             }
 
@@ -93,6 +97,7 @@ public class ControlFilbeskrivelse {
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
+                                        hasErrors.set(true);
                                     }
 
                                     break;
@@ -118,6 +123,7 @@ public class ControlFilbeskrivelse {
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
+                                        hasErrors.set(true);
                                     }
                                     break;
                             }
@@ -138,9 +144,12 @@ public class ControlFilbeskrivelse {
                                                 , Constants.CRITICAL_ERROR
                                         )
                                 );
+                                hasErrors.set(true);
                             }
                         }
                     });
         }
+
+        return hasErrors.get();
     }
 }

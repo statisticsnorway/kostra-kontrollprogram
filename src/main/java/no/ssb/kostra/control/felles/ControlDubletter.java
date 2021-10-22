@@ -1,9 +1,9 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.control.Constants;
-import no.ssb.kostra.control.ErrorReport;
-import no.ssb.kostra.control.ErrorReportEntry;
-import no.ssb.kostra.control.Record;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 
 import java.util.List;
 import java.util.Map;
@@ -23,16 +23,12 @@ public class ControlDubletter {
                 .sorted()
                 .collect(Collectors.toList());
 
-        if (!dubletter.isEmpty()) {
-            er.addEntry(
-                    new ErrorReportEntry("9. Dublettkontroller", "Dubletter", " ", " "
-                            , "Kontroll Dubletter"
-                            , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", titleList) + ")."
-                            + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
-                            , Constants.NORMAL_ERROR
-                    ));
-        }
-
-        return false;
+        return !dubletter.isEmpty() && er.addEntry(
+                new ErrorReportEntry("4. Dublettkontroller", "Kontroll Dubletter", " ", " "
+                        , "Det er oppgitt flere beløp på samme kombinasjon av (" + String.join(" * ", titleList) + ")."
+                        + " Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. Dersom dette er feil må recordene korrigeres før innsending til SSB."
+                        , ""
+                        , Constants.NORMAL_ERROR
+                ));
     }
 }

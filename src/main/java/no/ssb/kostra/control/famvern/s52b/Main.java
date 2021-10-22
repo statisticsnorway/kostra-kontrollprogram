@@ -1,9 +1,9 @@
 package no.ssb.kostra.control.famvern.s52b;
 
-import no.ssb.kostra.control.*;
 import no.ssb.kostra.control.famvern.Definitions;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.*;
 
 import java.util.List;
 import java.util.Map;
@@ -118,8 +118,7 @@ public class Main {
 
         records.forEach(r -> {
             ControlFelt1Lengde.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -129,12 +128,11 @@ public class Main {
                             , "Det er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner."
                             , Constants.NORMAL_ERROR
                     )
-                    , "GRUPPE_NAVN_B"
+                    , r.getFieldAsTrimmedString("GRUPPE_NAVN_B")
             );
 
             ControlFelt1Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -145,12 +143,12 @@ public class Main {
                             + "Fant '" + r.getFieldAsString("DATO_GRSTART_B") + "'."
                             , Constants.NORMAL_ERROR
                     )
-                    , "DATO_GRSTART_B"
+                    , r.getFieldAsString("DATO_GRSTART_B")
+                    , r.getFieldDefinitionByName("DATO_GRSTART_B").getDatePattern()
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -163,13 +161,12 @@ public class Main {
 
                             , Constants.NORMAL_ERROR
                     )
-                    , "STRUKTUR_GR_B"
+                    , r.getFieldAsString("STRUKTUR_GR_B")
                     , r.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -181,13 +178,12 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "HOVEDI_GR_B"
+                    , r.getFieldAsString("HOVEDI_GR_B")
                     , r.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -197,15 +193,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt i løpet av rapporteringsåret."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTMOTERTOT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTMOTERTOT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -215,15 +210,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt siden gruppen ble opprettet."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTMOTERTOT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTMOTERTOT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -233,15 +227,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen i løpet av året. (For og etterarbeid skal ikke regnes med)."
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMERTOT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMERTOT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -251,15 +244,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange timer som er anvendt for gruppen siden opprettelsen "
                             , Constants.NORMAL_ERROR
                     )
-                    , "TIMERTOT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("TIMERTOT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -269,15 +261,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange som har deltatt i gruppen i løpet av året. Terapeuter holdes utenom."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTDELT_IARET_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTDELT_IARET_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -287,15 +278,14 @@ public class Main {
                             , "Det er ikke fylt ut hvor mange som har deltatt i gruppen siden opprettelsen. Terapeuter holdes utenom"
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTDELT_OPPR_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTDELT_OPPR_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1Boolsk.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -305,15 +295,14 @@ public class Main {
                             , "Det er ikke oppgitt hvor mange hovedterapeut eller andre ansatte som har deltatt i gruppen."
                             , Constants.NORMAL_ERROR
                     )
-                    , "ANTTER_GRUPPEB_B"
+                    , r.getFieldAsIntegerDefaultEquals0("ANTTER_GRUPPEB_B")
                     , ">"
                     , 0
 
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -325,13 +314,12 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "TOLK_B"
+                    , r.getFieldAsString("TOLK_B")
                     , r.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -343,13 +331,12 @@ public class Main {
                             + "forventet én av: " + r.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
                             , Constants.NORMAL_ERROR
                     )
-                    , "STATUS_ARETSSL_B"
+                    , r.getFieldAsString("STATUS_ARETSSL_B")
                     , r.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -360,14 +347,13 @@ public class Main {
                             + "men ikke fylt ut dato (" + r.getFieldAsString("DATO_GRAVSLUTN_B") + ") for avslutning av saken."
                             , Constants.NORMAL_ERROR
                     )
-                    , "STATUS_ARETSSL_B"
+                    , r.getFieldAsString("STATUS_ARETSSL_B")
                     , List.of("2")
-                    , "DATO_GRAVSLUTN_B"
+                    , r.getFieldAsLocalDate("DATO_GRAVSLUTN_B")
             );
 
             ControlFelt1DatoSaaFelt2Dato.doControl(
-                    r
-                    , er
+                    er
                     , new ErrorReportEntry(
                             createKontorNr(r.getFieldAsString("KONTOR_NR_B"))
                             , createJournalNr(r.getFieldAsString("GRUPPE_NR_B"), r.getFieldAsString("GRUPPE_NAVN_B"), String.valueOf(r.getLine()))
@@ -378,8 +364,10 @@ public class Main {
                             + "kommer før dato for gruppebehandlingens start (" + r.getFieldAsString("DATO_GRSTART_B") + ")."
                             , Constants.NORMAL_ERROR
                     )
-                    , "DATO_GRSTART_B"
-                    , "DATO_GRAVSLUTN_B"
+                    , r.getFieldAsString("DATO_GRSTART_B")
+                    , r.getFieldDefinitionByName("DATO_GRSTART_B").getDatePattern()
+                    , r.getFieldAsString("DATO_GRAVSLUTN_B")
+                    , r.getFieldDefinitionByName("DATO_GRAVSLUTN_B").getDatePattern()
             );
         });
 

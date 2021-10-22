@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@Ignore
 public class MainITest {
     InputStream sysInBackup;
 

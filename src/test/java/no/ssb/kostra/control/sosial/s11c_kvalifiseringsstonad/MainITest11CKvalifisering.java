@@ -43,6 +43,7 @@ public class MainITest11CKvalifisering {
     static Stream<TestRecordInputAndResult> control03BydelsnummerProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "  "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "04"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030101"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "01"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(new Arguments(new String[]{"-s", "11CF", "-y", "2021", "-r", "030100"}), new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "BYDELSNR", "00"), definitions), true, Constants.CRITICAL_ERROR)
@@ -440,9 +441,12 @@ public class MainITest11CKvalifisering {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03BydelsnummerProvider")
     public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-
+        boolean result = control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")

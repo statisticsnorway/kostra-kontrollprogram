@@ -315,7 +315,7 @@ public class Main {
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
                     removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("520", "920")),
-                    "Kun advarsel, hindrer ikke innsending: (%s) errorReport ugyldig art i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
+                    "Kun advarsel, hindrer ikke innsending: (%s) er ugyldig art i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
                     Constants.NORMAL_ERROR
             );
 
@@ -366,20 +366,20 @@ public class Main {
                     regnskap,
                     List.of("729"),
                     List.of("841 "),
-                    "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 errorReport kun gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
+                    "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
                     Constants.CRITICAL_ERROR
             );
         }
 
-        // Artene 589, 980 og 989 errorReport kun tillat brukt i kombinasjon med funksjon 899.
+        // Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899.
         // Kontrollen må kjøres 2 ganger ettersom den ikke støtter gjensidighet
         // 65
         controlKombinasjonFunksjonArt(errorReport,
                 regnskap,
                 List.of("899 "),
                 List.of("589", "980", "989"),
-                "Artene 589, 980 og 989 errorReport kun tillat brukt i kombinasjon med funksjon 899. "
-                        + "Og motsatt, funksjon 899 errorReport kun tillat brukt i kombinasjon med artene 589, 980 og 989",
+                "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
+                        + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989",
                 Constants.CRITICAL_ERROR
         );
 
@@ -388,26 +388,26 @@ public class Main {
                 regnskap,
                 List.of("589", "980", "989"),
                 List.of("899 "),
-                "Artene 589, 980 og 989 errorReport kun tillat brukt i kombinasjon med funksjon 899. "
-                        + "Og motsatt, funksjon 899 errorReport kun tillat brukt i kombinasjon med artene 589, 980 og 989",
+                "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. "
+                        + "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989",
                 Constants.CRITICAL_ERROR
         );
 
         // 70
         controlKombinasjonArtFunksjon(errorReport,
                 regnskap,
-                List.of("870", "874", ", 875"),
-                List.of("800 "),
-                "Artene 870, 874, 875  errorReport kun tillat brukt i kombinasjon med funksjon 800.",
+                List.of("530"),
+                List.of("880 "),
+                "Art 530 er kun tillat brukt i kombinasjon med funksjon 880.",
                 Constants.CRITICAL_ERROR
         );
 
         // 75
         controlKombinasjonArtFunksjon(errorReport,
                 regnskap,
-                List.of("530"),
-                List.of("880 "),
-                "Art 530  errorReport kun tillat brukt i kombinasjon med funksjon 880.",
+                List.of("870", "874", "875", "877"),
+                List.of("800 "),
+                "Artene 870, 874, 875, 877 er kun tillat brukt i kombinasjon med funksjon 800.",
                 Constants.CRITICAL_ERROR
         );
 
@@ -416,7 +416,7 @@ public class Main {
                 regnskap,
                 List.of("800"),
                 List.of("840 "),
-                "Art 800 errorReport kun tillat brukt i kombinasjon med funksjon 840.",
+                "Art 800 er kun tillat brukt i kombinasjon med funksjon 840.",
                 Constants.CRITICAL_ERROR
         );
 

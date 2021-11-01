@@ -31,7 +31,7 @@ public class FieldDefinitions {
                         7, 8,
                         List.of(),
                         "",
-                        true),
+                        false),
                 new FieldDefinition(4,
                         "DISTRIKTSNR",
                         "String",

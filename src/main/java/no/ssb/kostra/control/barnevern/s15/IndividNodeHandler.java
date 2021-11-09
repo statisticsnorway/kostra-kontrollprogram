@@ -370,23 +370,22 @@ public class IndividNodeHandler extends NodeHandler {
                                 + meldingId
                                 + "). Konkludert melding mangler melder(e).");
 
-// Kommentert ut pga. utfordringer i fagsystem
-//                controlKonkludertMeldingUnderNoder(
-//                        er,
-//                        new ErrorReportEntry(
-//                                saksbehandler,
-//                                journalnummer,
-//                                individId,
-//                                refNr,
-//                                "Melding Kontroll 5: Kontroll av konkludert melding, saksinnhold",
-//                                "Melding ("
-//                                        + meldingId
-//                                        + "). Konkludert melding mangler saksinnhold.",
-//                                Constants.CRITICAL_ERROR), melding,
-//                        "Saksinnhold",
-//                        "Melding ("
-//                                + meldingId
-//                                + "). Konkludert melding mangler saksinnhold.");
+                controlKonkludertMeldingUnderNoder(
+                        er,
+                        new ErrorReportEntry(
+                                saksbehandler,
+                                journalnummer,
+                                individId,
+                                refNr,
+                                "Melding Kontroll 5: Kontroll av konkludert melding, saksinnhold",
+                                "Melding ("
+                                        + meldingId
+                                        + "). Konkludert melding mangler saksinnhold.",
+                                Constants.CRITICAL_ERROR), melding,
+                        "Saksinnhold",
+                        "Melding ("
+                                + meldingId
+                                + "). Konkludert melding mangler saksinnhold.");
 
                 List<StructuredNode> melderList = melding
                         .queryNodeList("Melder");
@@ -590,23 +589,23 @@ public class IndividNodeHandler extends NodeHandler {
                     // 1 = Barneverntjenesten fatter vedtak om tiltak
                     // 2 = Begjæring om tiltak for fylkesnemnda
                     List<String> koderKonklusjon = List.of("1", "2");
-// Kommentert ut pga. utfordringer i fagsystem
-//                    controlFeltMedKoderSkalHaUndernoder(
-//                            er,
-//                            new ErrorReportEntry(
-//                                    saksbehandler,
-//                                    journalnummer,
-//                                    individId,
-//                                    refNr,
-//                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
-//                                    "Undersøkelse ("
-//                                            + undersokelseId
-//                                            + "). Undersøkelse konkludert med kode "
-//                                            + undersokelseKonklusjon
-//                                            + " skal ha vedtaksgrunnlag",
-//                                    Constants.CRITICAL_ERROR),
-//                            undersokelseKonklusjon, koderKonklusjon,
-//                            vedtaksgrunnlagList);
+
+                    controlFeltMedKoderSkalHaUndernoder(
+                            er,
+                            new ErrorReportEntry(
+                                    saksbehandler,
+                                    journalnummer,
+                                    individId,
+                                    refNr,
+                                    "Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag",
+                                    "Undersøkelse ("
+                                            + undersokelseId
+                                            + "). Undersøkelse konkludert med kode "
+                                            + undersokelseKonklusjon
+                                            + " skal ha vedtaksgrunnlag",
+                                    Constants.CRITICAL_ERROR),
+                            undersokelseKonklusjon, koderKonklusjon,
+                            vedtaksgrunnlagList);
 
                     controlUndersokelseStartetTidligereEnn1JuliUtenKonklusjon(
                             er,
@@ -625,32 +624,32 @@ public class IndividNodeHandler extends NodeHandler {
                             undersokelseStartDato, undersokelseSluttDato);
 
                     // Kontroller for Vedtaksgrunnlag
-// Kommentert ut pga. utfordringer i fagsystem
-//                    if (meldingSluttDato != null && forrigeTelleDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
-//                        for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
-//                            // 18 = Andre forhold ved foreldre/familien
-//                            // 19 = Andre forhold ved barnets situasjon
-//                            List<String> kodelisteVedtaksgrunnlag = List.of("18", "19");
-//                            String vedtaksgrunnlagKode = defaultString(vedtaksgrunnlag.queryString("@Kode"), "");
-//                            String vedtaksgrunnlagPresisering = defaultString(vedtaksgrunnlag.queryString("Presisering"), "");
-//
-//                            controlPresisering(
-//                                    er,
-//                                    new ErrorReportEntry(
-//                                            saksbehandler,
-//                                            journalnummer,
-//                                            individId,
-//                                            refNr,
-//                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode " + vedtaksgrunnlagKode + " og presisering",
-//                                            "Vedtaksgrunnlag med kode "
-//                                                    + vedtaksgrunnlagKode
-//                                                    + " mangler presisering",
-//                                            Constants.CRITICAL_ERROR),
-//                                    vedtaksgrunnlagKode,
-//                                    kodelisteVedtaksgrunnlag,
-//                                    vedtaksgrunnlagPresisering);
-//                        }
-//                    }
+
+                    if (meldingSluttDato != null && forrigeTelleDato != null && meldingSluttDato.isAfter(forrigeTelleDato)) {
+                        for (StructuredNode vedtaksgrunnlag : vedtaksgrunnlagList) {
+                            // 18 = Andre forhold ved foreldre/familien
+                            // 19 = Andre forhold ved barnets situasjon
+                            List<String> kodelisteVedtaksgrunnlag = List.of("18", "19");
+                            String vedtaksgrunnlagKode = defaultString(vedtaksgrunnlag.queryString("@Kode"), "");
+                            String vedtaksgrunnlagPresisering = defaultString(vedtaksgrunnlag.queryString("Presisering"), "");
+
+                            controlPresisering(
+                                    er,
+                                    new ErrorReportEntry(
+                                            saksbehandler,
+                                            journalnummer,
+                                            individId,
+                                            refNr,
+                                            "Vedtaksgrunnlag Kontroll 2: Kontroll av kode " + vedtaksgrunnlagKode + " og presisering",
+                                            "Vedtaksgrunnlag med kode "
+                                                    + vedtaksgrunnlagKode
+                                                    + " mangler presisering",
+                                            Constants.CRITICAL_ERROR),
+                                    vedtaksgrunnlagKode,
+                                    kodelisteVedtaksgrunnlag,
+                                    vedtaksgrunnlagPresisering);
+                        }
+                    }
                 }
             }
 
@@ -1208,7 +1207,7 @@ public class IndividNodeHandler extends NodeHandler {
      * @param alder - int
      */
     public void controlAlder(ErrorReport er, ErrorReportEntry ere, long alder) {
-        if (23L < alder) {
+        if (25L < alder) {
             er.addEntry(ere);
         }
 

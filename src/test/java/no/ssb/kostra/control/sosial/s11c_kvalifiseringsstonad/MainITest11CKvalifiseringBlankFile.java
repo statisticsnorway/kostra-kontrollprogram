@@ -49,4 +49,16 @@ public class MainITest11CKvalifiseringBlankFile {
         assertNotNull("Has content ErrorReport", er);
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
-}
+
+    @Test
+    public void testDoControlWithNoFile() {
+        args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400", "-a", "0"});
+        ErrorReport er = Main.doControls(args);
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.NO_ERROR, er.getErrorType());
+    }}

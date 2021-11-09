@@ -120,7 +120,7 @@ public class ErrorReport {
                 }
             }
 
-            report.append("<h3>Opplisting av feil og advarsler</h3>");
+            report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>");
             report.append("<table>");
 
             if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())){
@@ -140,7 +140,7 @@ public class ErrorReport {
                         String kontrollnummer = entrieStringsList.get(0);
                         String kontrolltekst = entrieStringsList.get(1);
                         int errorType = Integer.parseInt(entrieStringsList.get(2));
-                        String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : "black";
+                        String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : (errorType == Constants.NORMAL_ERROR) ? "black" : "green";
 
                         if (!args.isRunAsExternalProcess()){
                             report.append(lf);

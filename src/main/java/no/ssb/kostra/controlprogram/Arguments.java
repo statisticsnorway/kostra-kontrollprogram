@@ -11,6 +11,7 @@ public class Arguments {
     private String navn = "Uoppgitt";
     private String orgnr = "         ";
     private String foretaknr = "         ";
+    private boolean harVedlegg = true;
     private boolean isRunAsExternalProcess = false;
 
     private List<String> inputFileContent = new ArrayList<>();
@@ -24,6 +25,7 @@ public class Arguments {
                 new GetOptDesc('n', "name", true),
                 new GetOptDesc('u', "unit-orgnr", true),
                 new GetOptDesc('c', "company-orgnr", true),
+                new GetOptDesc('a', "attachment", true),
                 new GetOptDesc('e', "external-process", true)
         };
 
@@ -66,6 +68,12 @@ public class Arguments {
                     break;
                 case 'c':
                     foretaknr = (String) optionsFound.get(key);
+                    break;
+                case 'a':
+                    String vedlegg = (String) optionsFound.get(key);
+                    if (vedlegg.equalsIgnoreCase("0"))
+                        harVedlegg = false;
+
                     break;
                 case 'e':
                     isRunAsExternalProcess = (boolean) optionsFound.get(key);
@@ -154,6 +162,10 @@ public class Arguments {
 
     public void setInputFileContent(List<String> inputFileContent) {
         this.inputFileContent = inputFileContent;
+    }
+
+    public boolean harVedlegg() {
+        return harVedlegg;
     }
 
     public boolean isRunAsExternalProcess() {

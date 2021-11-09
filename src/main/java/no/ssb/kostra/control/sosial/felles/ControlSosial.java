@@ -5,13 +5,37 @@ import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodeliste;
 import no.ssb.kostra.control.felles.ControlFodselsnummer;
 import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.felles.*;
+import no.ssb.kostra.utils.Format;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ControlSosial {
+    public static LocalDate assignDateFromString(String date, String format) {
+        if (date != null && format != null
+                && date.length() == format.length()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            return LocalDate.parse(date, formatter);
+        }
+        return null;
+    }
+
+    public static String dnr2fnr(String dnr) {
+        int day = Format.parseInt(dnr.substring(0, 2));
+
+        /* Hvis man bruker D-nummer legger man til 4 på første siffer. */
+        /* Når dag er større enn 31 benyttes D-nummer, trekk fra 40 og få gyldig dag  */
+        if (day > 31) {
+            day = day - 40;
+        }
+
+        return String.format("%02d" , day).concat(dnr.substring(2, 6));
+    }
+
     public static boolean control03Kommunenummer(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 

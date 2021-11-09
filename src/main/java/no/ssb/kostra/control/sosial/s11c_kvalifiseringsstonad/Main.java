@@ -5,6 +5,8 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Fnr;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,8 +17,26 @@ import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 public class Main {
     public static ErrorReport doControls(Arguments args) {
         ErrorReport errorReport = new ErrorReport(args);
-        errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Feilmelding"));
+        errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Melding"));
         List<String> inputFileContent = args.getInputContentAsStringList();
+
+        // sjekker om man krysset av i skjemaet om at vedlegg skal mangle
+        // i så fall så er innsendingen ok
+        if (!args.harVedlegg()) {
+            errorReport.incrementCount();
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            ""
+                            , ""
+                            , ""
+                            , " "
+                            , "Kontroll 0 Skal levere filuttrekk"
+                            , "Det er krysset av i skjemaet at det ikke finnes deltakere og blank fil er levert."
+                            , Constants.NO_ERROR
+                    )
+            );
+            return errorReport;
+        }
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
@@ -32,8 +52,22 @@ public class Main {
                 // utled ALDER
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), args.getAargangAsInteger()));
-                        r.setFieldAsInteger("FNR_OK", 1);
+                        String datoFormatKort = "ddMMyy";
+                        String datoFormatLangt = "yyyy-MM-dd";
+                        LocalDate fodselsDato = (r.getFieldAsString("PERSON_FODSELSNR") != null) ? assignDateFromString(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR").substring(0, 6)), datoFormatKort) : null;
+                        String tempVersjon = args.getAargang() + "-12-31";
+                        LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
+
+                        if (fodselsDato != null && telleDato != null && fodselsDato.isBefore(telleDato)) {
+                            Period p = Period.between(fodselsDato, telleDato);
+                            r.setFieldAsInteger("ALDER", p.getYears());
+                            r.setFieldAsInteger("FNR_OK", 1);
+
+                        } else {
+                            r.setFieldAsInteger("ALDER", -1);
+                            r.setFieldAsInteger("FNR_OK", 0);
+                        }
+
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);
                         r.setFieldAsInteger("FNR_OK", 0);
@@ -332,7 +366,7 @@ public class Main {
                 , record.getFieldAsString("BEGYNT_DATO")
                 , record.getFieldDefinitionByName("BEGYNT_DATO").getDatePattern()
         );
-   }
+    }
 
     public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();

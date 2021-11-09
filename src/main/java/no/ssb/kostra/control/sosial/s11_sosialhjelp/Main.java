@@ -5,6 +5,8 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Fnr;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +33,22 @@ public class Main {
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), arguments.getAargangAsInteger()));
-                        r.setFieldAsInteger("FNR_OK", 1);
+                        String datoFormatKort = "ddMMyy";
+                        String datoFormatLangt = "yyyy-MM-dd";
+                        LocalDate fodselsDato = (r.getFieldAsString("PERSON_FODSELSNR") != null) ? assignDateFromString(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR").substring(0, 6)), datoFormatKort) : null;
+                        String tempVersjon = arguments.getAargang() + "-12-31";
+                        LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
+
+                        if (fodselsDato != null && telleDato != null && fodselsDato.isBefore(telleDato)) {
+                            Period p = Period.between(fodselsDato, telleDato);
+                            r.setFieldAsInteger("ALDER", p.getYears());
+                            r.setFieldAsInteger("FNR_OK", 1);
+
+                        } else {
+                            r.setFieldAsInteger("ALDER", -1);
+                            r.setFieldAsInteger("FNR_OK", 0);
+                        }
+
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);
                         r.setFieldAsInteger("FNR_OK", 0);

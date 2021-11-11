@@ -182,6 +182,7 @@ public class Arguments {
                 ", navn='" + navn + '\'' +
                 ", orgnr='" + orgnr + '\'' +
                 ", foretaknr='" + foretaknr + '\'' +
+                ", harVedlegg='" + harVedlegg + '\'' +
                 ", inputFileContent=" + inputFileContent +
                 ", externalProcess=" + isRunAsExternalProcess +
                 '}';

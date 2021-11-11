@@ -22,7 +22,7 @@ public class IndividNodeHandler extends NodeHandler {
     private static Map<String, List<String>> mapDublettJournalnummer = new TreeMap<>();
     private static Map<String, List<String>> mapDublettFodselsnummer = new TreeMap<>();
     private LocalDate forrigeTelleDato;
-    private long individAlder = -1;
+    private int individAlder = -1;
     private final String datoFormatLangt = "yyyy-MM-dd";
 
     public IndividNodeHandler(ErrorReport er, Arguments args) {
@@ -36,23 +36,18 @@ public class IndividNodeHandler extends NodeHandler {
     }
 
     /**
-     * Setter individets alder ved å finne forskjellen i antall år fra
-     * fødselsdato til telledato
+     * Setter individets alder
      *
-     * @param fodselsDato - Fødselsdato på individet
-     * @param telleDato   - 31. des i rapporteringsåret
+     * @param alder
      */
-    public void setIndividAlder(LocalDate fodselsDato, LocalDate telleDato) {
-        if (fodselsDato != null && telleDato != null && fodselsDato.isBefore(telleDato)) {
-            Period p = Period.between(fodselsDato, telleDato);
-            this.individAlder = p.getYears();
-        }
+    public void setIndividAlder(int alder) {
+            this.individAlder = alder;
     }
 
     /**
-     * @return long Individets alder
+     * @return int Individets alder
      */
-    public long getIndividAlder() {
+    public int getIndividAlder() {
         return this.individAlder;
     }
 
@@ -114,11 +109,10 @@ public class IndividNodeHandler extends NodeHandler {
             String tempVersjon = avgiverVersjon + "-12-31";
             LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
             forrigeTelleDato = telleDato.minusYears(1);
-            String datoFormatKort = "ddMMyy";
-            LocalDate fodselsDato = (fodselsnummer != null) ? assignDateFromString(dnr2fnr(fodselsnummer.substring(0, 6)), datoFormatKort) : null;
+            int alder = (fodselsnummer != null) ? Fnr.getAlderFromFnr(fodselsnummer.substring(0, 6), args.getAargang()) : -2;
             LocalDate individStartDato = assignDateFromString(individ.queryString("@StartDato"), datoFormatLangt);
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), datoFormatLangt);
-            setIndividAlder(fodselsDato, telleDato);
+            setIndividAlder(alder);
 
             String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
             String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
@@ -210,7 +204,7 @@ public class IndividNodeHandler extends NodeHandler {
 
             controlAlder(er, new ErrorReportEntry(saksbehandler, journalnummer,
                     individId, refNr,
-                    "Individ Kontroll 07: Klient over 23 år avsluttes",
+                    "Individ Kontroll 07: Klient over 25 år avsluttes",
                     "Individet er " + this.getIndividAlder()
                             + " år og skal avsluttes som klient",
                     Constants.CRITICAL_ERROR), this.getIndividAlder());

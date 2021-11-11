@@ -35,6 +35,6 @@ public class FnrTest {
 
     @Test
     public void getAlderFromFnrTest() {
-        assertEquals(20, getAlderFromFnr("01010150589", 2021));
+        assertEquals(20, getAlderFromFnr("01010150589", "2021"));
     }
 }

@@ -5,8 +5,6 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Fnr;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,14 +13,14 @@ import java.util.stream.Collectors;
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
 public class Main {
-    public static ErrorReport doControls(Arguments args) {
-        ErrorReport errorReport = new ErrorReport(args);
+    public static ErrorReport doControls(Arguments arguments) {
+        ErrorReport errorReport = new ErrorReport(arguments);
         errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Melding"));
-        List<String> inputFileContent = args.getInputContentAsStringList();
+        List<String> inputFileContent = arguments.getInputContentAsStringList();
 
         // sjekker om man krysset av i skjemaet om at vedlegg skal mangle
         // i så fall så er innsendingen ok
-        if (!args.harVedlegg()) {
+        if (!arguments.harVedlegg()) {
             errorReport.incrementCount();
             errorReport.addEntry(
                     new ErrorReportEntry(
@@ -49,24 +47,11 @@ public class Main {
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
-                // utled ALDER
+                // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
                 .map(r -> {
                     try {
-                        String datoFormatKort = "ddMMyy";
-                        String datoFormatLangt = "yyyy-MM-dd";
-                        LocalDate fodselsDato = (r.getFieldAsString("PERSON_FODSELSNR") != null) ? assignDateFromString(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR").substring(0, 6)), datoFormatKort) : null;
-                        String tempVersjon = args.getAargang() + "-12-31";
-                        LocalDate telleDato = assignDateFromString(tempVersjon, datoFormatLangt);
-
-                        if (fodselsDato != null && telleDato != null && fodselsDato.isBefore(telleDato)) {
-                            Period p = Period.between(fodselsDato, telleDato);
-                            r.setFieldAsInteger("ALDER", p.getYears());
-                            r.setFieldAsInteger("FNR_OK", 1);
-
-                        } else {
-                            r.setFieldAsInteger("ALDER", -1);
-                            r.setFieldAsInteger("FNR_OK", 0);
-                        }
+                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), arguments.getAargang()));
+                        r.setFieldAsInteger("FNR_OK", 1);
 
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);

@@ -50,24 +50,16 @@ public final class Fnr {
         return (k1 == s[10]) && (k2 == s[11]);
     }
 
-    public static int getAlderFromFnr(String fnr, int rappAar) {
-        final int fAar = Integer.parseInt(fnr.substring(4, 6));
-        final int y20xx = Integer.parseInt("20" + fnr.substring(4, 6));
-        final int y19xx = Integer.parseInt("19" + fnr.substring(4, 6));
+    public static int getAlderFromFnr(String fnrDDMMYYSSGKK, String rappAarYYYY) {
+        if (isValidDate(fnrDDMMYYSSGKK.substring(0, 6), "ddMMyy")) {
+            final int fodselsAar = Integer.parseInt(fnrDDMMYYSSGKK.substring(4, 6));
+            final int aargang = Integer.parseInt(rappAarYYYY.substring(2, 4));
+            final int alder = (aargang < fodselsAar) ? aargang + 100 - fodselsAar : aargang - fodselsAar;
 
-        if (isValidNorwId(fnr)) {
-            int individNr = Integer.parseInt(fnr.substring(6, 9));
-            int fodselsAar = (between(individNr, 500, 900) && fAar < 40) ? y20xx : y19xx;
-            return rappAar - fodselsAar;
-
-        } else {
-            if (isValidDate(fnr.substring(0, 6), "ddMMyy")) {
-                int fodselsAar = (fAar < rappAar) ? y20xx : y19xx;
-                return rappAar - fodselsAar;
-            }
-
-            return -1;
+            return (alder == 99) ? -1 : alder;
         }
+
+        return -1;
     }
 
     public static boolean isValidDUFnr(String dufnr) {

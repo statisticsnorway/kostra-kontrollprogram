@@ -183,7 +183,7 @@ public class Main {
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
-                    , "PRIMK_KJONN_A"
+                    , r.getFieldAsString("PRIMK_KJONN_A")
                     , r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
             );
 

@@ -61,6 +61,16 @@ public class MainITestKostraRegnskap {
         );
     }
 
+    static Stream<TestRecordListInputAndResult> control60Provider() {
+        return Stream.of(
+                new TestRecordListInputAndResult(arguments0A, List.of(new Record(Map.of("skjema", "0A", "kontoklasse", "0", "funksjon_kapittel", "100 ", "art_sektor", "729"), definitions)), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(arguments0A, List.of(new Record(Map.of("skjema", "0A", "kontoklasse", "0", "funksjon_kapittel", "841 ", "art_sektor", "729"), definitions)), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(arguments0A, List.of(new Record(Map.of("skjema", "0A", "kontoklasse", "0", "funksjon_kapittel", "841 ", "art_sektor", "010"), definitions)), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(arguments0A, List.of(new Record(Map.of("skjema", "0A", "kontoklasse", "1", "funksjon_kapittel", "100 ", "art_sektor", "729"), definitions)), false, Constants.NO_ERROR)
+        );
+    }
+
+
     @AfterEach
     public void resetStaticRecordCounter() {
         Record.resetLineCount();
@@ -91,6 +101,17 @@ public class MainITestKostraRegnskap {
     @MethodSource("control20Provider")
     public void control20TestControl(TestRecordListInputAndResult inputAndResult) {
         boolean result = Main.kontroll20(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control60Provider")
+    public void control60TestControl(TestRecordListInputAndResult inputAndResult) {
+        boolean result = Main.kontroll60(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
         Assertions.assertEquals(inputAndResult.isResult(), result);

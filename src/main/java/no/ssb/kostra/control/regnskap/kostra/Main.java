@@ -362,13 +362,7 @@ public class Main {
             );
 
             // 60
-            controlKombinasjonArtFunksjon(errorReport,
-                    regnskap,
-                    List.of("729"),
-                    List.of("841 "),
-                    "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
-                    Constants.CRITICAL_ERROR
-            );
+            kontroll60(errorReport, regnskap);
         }
 
         // Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899.
@@ -1078,7 +1072,17 @@ public class Main {
 
         return false;
     }
-
+/*
+*             // 20
+            controlKombinasjonKontoklasseFunksjon(errorReport,
+                    regnskap,
+                    getBevilgningRegnskapList(),
+                    getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
+                    Utils.rpadList(removeCodesFromCodelist(getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), getFunksjonerUgyldigDrift()), 4),
+                    "Korrigér funksjon (%s) til gyldig funksjon i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
+                    Constants.CRITICAL_ERROR
+            );
+* */
 
     public static boolean kontroll20(ErrorReport errorReport, List<Record> regnskap){
         errorReport.incrementCount();
@@ -1112,4 +1116,17 @@ public class Main {
         );
     }
 
+    public static boolean kontroll60(ErrorReport errorReport, List<Record> regnskap) {
+        errorReport.incrementCount();
+        String kontoklasse = getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I");
+        List<Record> investeringsRegnskap = regnskap.stream().filter(r -> r.getFieldAsTrimmedString("kontoklasse").equalsIgnoreCase(kontoklasse)).collect(Collectors.toList());
+        // 60
+        return controlKombinasjonArtFunksjon(errorReport,
+                investeringsRegnskap,
+                List.of("729"),
+                List.of("841 "),
+                "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
+                Constants.CRITICAL_ERROR
+        );
+    }
 }

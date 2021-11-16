@@ -113,6 +113,7 @@ public class ControlSosial {
                         , Constants.NORMAL_ERROR
                 )
                 , record.getFieldAsString("PERSON_FODSELSNR")
+                , record.getFieldAsInteger("FNR_OK")
         );
     }
 

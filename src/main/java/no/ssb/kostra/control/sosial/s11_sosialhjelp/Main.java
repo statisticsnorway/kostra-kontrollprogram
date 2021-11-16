@@ -5,8 +5,6 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Fnr;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 

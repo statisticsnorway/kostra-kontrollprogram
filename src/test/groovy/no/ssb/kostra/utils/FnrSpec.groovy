@@ -5,7 +5,6 @@ import spock.lang.Specification
 import static no.ssb.kostra.utils.Fnr.*
 
 class FnrSpec extends Specification {
-
     def "should validate date and format"() {
         expect:
         isValidDate(date, format) == result.toBoolean()

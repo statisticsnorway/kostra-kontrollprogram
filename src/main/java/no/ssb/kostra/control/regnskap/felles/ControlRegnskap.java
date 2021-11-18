@@ -48,7 +48,7 @@ public class ControlRegnskap {
         if (isCodeInCodelist(arguments.getSkjema(), regnskapList)) {
             return regnskap.stream()
                     .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse)
-                            && between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 10, 28))
+                            && between(p.getFieldAsIntegerDefaultEquals0("funksjon_kapittel"), 10, 29))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
         }
@@ -72,7 +72,10 @@ public class ControlRegnskap {
     public static boolean controlKombinasjonKontoklasseArt(ErrorReport er, List<Record> regnskap, List<String> regnskapList, String kontoklasse, List<String> artList, String formattedControlText, int errorType) {
         if (isCodeInCodelist(er.getArgs().getSkjema(), regnskapList)) {
             List<String> investeringsRecordsArter = regnskap.stream()
-                    .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse))
+                    .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse)
+                            && isCodeInCodelist(record.getFieldAsString("art_sektor"), artList)
+                    )
+// TODO må få med linjenummer fra fil, kun ikke bruke arrayen sin index pga. filtrering
                     .map(record -> record.getFieldAsString("art_sektor"))
                     .collect(Collectors.toList());
 
@@ -127,7 +130,7 @@ public class ControlRegnskap {
     }
 
     public static boolean controlKombinasjonArtFunksjon(ErrorReport er, List<Record> regnskap, List<String> artList, List<String> funksjonList, String formattedControlText, int errorType) {
-        List<String> investeringsRecordsArter = regnskap.stream()
+        List<String> records = regnskap.stream()
                 .filter(record -> isCodeInCodelist(record.getFieldAsString("art_sektor"), artList))
                 .map(record -> record.getFieldAsString("funksjon_kapittel"))
                 .collect(Collectors.toList());
@@ -136,7 +139,7 @@ public class ControlRegnskap {
                 "5. Kombinasjonskontroller",
                 "Kombinasjon art og funksjon",
                 formattedControlText,
-                investeringsRecordsArter,
+                records,
                 funksjonList,
                 errorType
         );

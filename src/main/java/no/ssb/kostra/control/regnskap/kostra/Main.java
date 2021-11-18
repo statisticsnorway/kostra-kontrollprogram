@@ -287,14 +287,15 @@ public class Main {
         // Kombinasjonskontroller
         if (!isEmpty(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))) {
             // 20
-            controlKombinasjonKontoklasseFunksjon(errorReport,
-                    regnskap,
-                    getBevilgningRegnskapList(),
-                    getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
-                    Utils.rpadList(removeCodesFromCodelist(getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), getFunksjonerUgyldigDrift()), 4),
-                    "Korrigér funksjon (%s) til gyldig funksjon i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
-                    Constants.CRITICAL_ERROR
-            );
+            kontroll20(errorReport, regnskap);
+//            controlKombinasjonKontoklasseFunksjon(errorReport,
+//                    regnskap,
+//                    getBevilgningRegnskapList(),
+//                    getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
+//                    Utils.rpadList(removeCodesFromCodelist(getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), getFunksjonerUgyldigDrift()), 4),
+//                    "Korrigér funksjon (%s) til gyldig funksjon i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
+//                    Constants.CRITICAL_ERROR
+//            );
 
             // 25
             kontroll25(errorReport, regnskap);
@@ -306,7 +307,7 @@ public class Main {
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
                     removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("285", "660")),
                     "Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om posteringen hører til i investeringsregnskapet.",
-                    Constants.NORMAL_ERROR
+                    Constants.NO_ERROR
             );
 
             // 35
@@ -315,8 +316,8 @@ public class Main {
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
                     removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("520", "920")),
-                    "Kun advarsel, hindrer ikke innsending: (%s) er ugyldig art i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
-                    Constants.NORMAL_ERROR
+                    "Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk art i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
+                    Constants.NO_ERROR
             );
 
         }
@@ -336,9 +337,9 @@ public class Main {
                     regnskap,
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"),
-                    Utils.rpadList(removeCodesFromCodelist(getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("100", "110", "121", "170", "171", "400", "410", "421", "470", "471")), 4),
+                    Utils.rpadList(removeCodesFromCodelist(getFunksjonKapittelAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")), 4),
                     "Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon eller om posteringen hører til i driftsregnskapet.",
-                    Constants.NORMAL_ERROR
+                    Constants.NO_ERROR
             );
 
             // 50
@@ -356,9 +357,9 @@ public class Main {
                     regnskap,
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"),
-                    removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion()), List.of("620", "650", "900")),
+                    List.of("620", "650", "900"),
                     "Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk art i investeringsregnskapet. Vennligst vurder å postere på annen art eller om posteringen hører til i driftsregnskapet. ",
-                    Constants.NORMAL_ERROR
+                    Constants.NO_ERROR
             );
 
             // 60
@@ -399,7 +400,7 @@ public class Main {
         // 75
         controlKombinasjonArtFunksjon(errorReport,
                 regnskap,
-                List.of("870", "874", "875", "877"),
+                List.of("870", "874", "875"),
                 List.of("800 "),
                 "Artene 870, 874, 875, 877 er kun tillat brukt i kombinasjon med funksjon 800.",
                 Constants.CRITICAL_ERROR
@@ -848,12 +849,15 @@ public class Main {
         Arguments arguments = errorReport.getArgs();
         int sumAvskrivninger = getAvskrivninger(regnskap, arguments);
 
+        // For 0I og 0K: Til informasjon / NO_ERROR, For alle andre: hard kontroll / CRITICAL_ERROR
+        int errorType = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K"))) ? Constants.NO_ERROR : Constants.CRITICAL_ERROR;
+
         if (sumAvskrivninger == 0) {
             errorReport.addEntry(new ErrorReportEntry(
                     "6. Summeringskontroller", "Kontroll Avskrivninger", " ", " "
                     , "Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590."
                     , ""
-                    , Constants.NORMAL_ERROR
+                    , errorType
             ));
 
             return true;
@@ -1064,7 +1068,7 @@ public class Main {
                     , "Korrigér i fila slik at differansen (" + differanse + ") mellom "
                     + "memoriakontiene (" + sumMemoriaKonti + ") og "
                     + "motkonto for memoriakontiene (" + sumMotkontoMemoriaKonti + ") går i 0. (margin på +/- 10')"
-                    , Constants.CRITICAL_ERROR
+                    , Constants.NO_ERROR
             ));
 
             return true;
@@ -1101,6 +1105,8 @@ public class Main {
     }
 
     public static boolean kontroll25(ErrorReport errorReport, List<Record> regnskap) {
+// TODO Modifikasjon av kontroll 25: for lånefondene, skjema 0I, 0K, 0M og 0P, organisasjonsnumrene 817920632 (Trøndelag), 921234554 (Drammen), 958935420 (Oslo) og 964338531 (Bergen) så er art 921 gyldig både drift og investering.
+        
         errorReport.incrementCount();
         List<String> arterGyldig = getArtSektorAsList(errorReport.getArgs().getSkjema(), errorReport.getArgs().getRegion());
         List<String> arterUgyldigDrift = getArterUgyldigDrift(errorReport.getArgs().getSkjema(), errorReport.getArgs().getOrgnr());

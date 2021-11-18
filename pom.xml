@@ -10,7 +10,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.13.2</junit.version>
         <spock.version>2.0-groovy-3.0</spock.version>
+        <jacoco.version>0.8.7</jacoco.version>
+        <checkstyle.version>8.45.1</checkstyle.version>
     </properties>
+
     <repositories>
         <repository>
             <id>central</id>
@@ -27,6 +30,7 @@
             <url>https://nexus.ssb.no/content/groups/public</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>
@@ -182,4 +186,71 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>coverage</id>
+            <properties>
+                <sonar.coverage.jacoco.xmlReportPaths>
+                    target/site/jacoco/jacoco.xml
+                </sonar.coverage.jacoco.xmlReportPaths>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>3.1.2</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.puppycrawl.tools</groupId>
+                                    <artifactId>checkstyle</artifactId>
+                                    <version>${checkstyle.version}</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>ssb-bip</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>artifact-registry</id>
+                    <url>
+                        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-snapshots
+                    </url>
+                </snapshotRepository>
+                <repository>
+                    <id>artifact-registry</id>
+                    <url>
+                        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases
+                    </url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>

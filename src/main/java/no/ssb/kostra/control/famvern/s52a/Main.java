@@ -33,9 +33,9 @@ public class Main {
         }
 
         List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<Record> records = inputFileContent.stream()
+        List<Record> records = Utils.addLineNumbering(inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, er);
@@ -46,326 +46,27 @@ public class Main {
 
 
         records.forEach(r -> {
-            // Kontroll 3: Regionsnummer
-            if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
-                er.addEntry(
-                        new ErrorReportEntry(
-                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 03 Regionsnummer"
-                                , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
-                                + "Fant '" + r.getFieldAsString("REGION_NR_A") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
-                                , Constants.NORMAL_ERROR
-                        )
-                );
-            }
-
-            // Kontroll 4: Kontornummer
-            if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_A"))) {
-                er.addEntry(
-                        new ErrorReportEntry(
-                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 04 Kontornummer"
-                                , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
-                                + "Fant '" + r.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
-                                , Constants.NORMAL_ERROR
-                        )
-                );
-            }
-
-            // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
-            if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_A"), r.getFieldAsString("KONTOR_NR_A"))) {
-                er.addEntry(
-                        new ErrorReportEntry(
-                                createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                                , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                                , String.valueOf(r.getLine())
-                                , " "
-                                , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
-                                , "Regionsnummer (" + r.getFieldAsString("REGION_NR_A") + ") og "
-                                + "kontornummer (" + r.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
-                                , Constants.NORMAL_ERROR
-                        )
-                );
-            }
+            kontroll03Regionsnummer(er, r);
+            kontroll04Kontornummer(er, r);
+            kontroll05RegionsnummerKontornummer(er, r);
         });
 
-        // Kontroll 6 Dublett på journalnummer
-        List<String> dubletter = records.stream()
-                .map(r -> "Kontornummer ".concat(r.getFieldAsString("KONTOR_NR_A")).concat(" - Journalnummer ").concat(r.getFieldAsString("JOURNAL_NR_A")))
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet()
-                .stream()
-                .filter(p -> p.getValue() > 1)
-                .map(Map.Entry::getKey)
-                .sorted()
-                .collect(Collectors.toList());
-
-        if (!dubletter.isEmpty()) {
-            er.addEntry(
-                    new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
-                            , "Kontroll 06 Dubletter"
-                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på kontornummer - journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
-                            , Constants.NORMAL_ERROR
-                    ));
-        }
-
+        kontroll06Dubletter(er, records);
 
         records.forEach(r -> {
-            // Kontroll 7 Henvendelsesdato
-            ControlFelt1Dato.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 07 Henvendelsesdato"
-                            , "Dette er ikke oppgitt dato (" + r.getFieldAsString("HENV_DATO_A") + ") for når primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("HENV_DATO_A")
-                    , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
-            );
+            kontroll07Henvendelsesdato(er, r);
+            kontroll09KontaktTidligere(er, r);
+            kontroll11HenvendelsesBegrunnelse(er, r);
+            kontroll13Kjonn(er, r);
+            kontroll14Fodselsaar(er, r);
+            kontroll15Samlivsstatus(er, r);
+            kontroll16FormellSivilstand(er, r);
+            kontroll17Bosituasjon(er, r);
+            kontroll18Arbeidsosituasjon(er, r);
+            kontroll19AVarighetSamtalepartner(er, r);
+            kontroll19B1VarighetSidenBrudd(er, r);
+            kontroll19B2VarighetEkspartner(er, r);
 
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere"
-                            , "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. "
-                            + "Fant '" + r.getFieldAsString("KONTAKT_TIDL_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("KONTAKT_TIDL_A")
-                    , r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt."
-                            , "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format."
-                            + "Fant '" + r.getFieldAsString("HENV_GRUNN_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("HENV_GRUNN_A")
-                    , r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 13 Primærklientens kjønn"
-                            , "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. "
-                            + "Fant '" + r.getFieldAsString("PRIMK_KJONN_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_KJONN_A")
-                    , r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlHeltall.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 14 Primærklientens fødselsår"
-                            , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Fant '" + r.getFieldAsString("PRIMK_FODT_A") + "'. Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsIntegerDefaultEquals0("PRIMK_FODT_A")
-            );
-
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 15 Primærklientens samlivsstatus"
-                            , "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. "
-                            + "Fant '" + r.getFieldAsString("PRIMK_SIVILS_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_SIVILS_A")
-                    , r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 16 Utdypende om primærklientens formelle sivilstand"
-                            , "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens korrekt sivilstand"
-                            + "Fant '" + r.getFieldAsString("FORMELL_SIVILS_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_SIVILS_A")
-                    , List.of("3", "4")
-                    , r.getFieldAsString("FORMELL_SIVILS_A")
-                    , r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 17 Primærklientens bosituasjon ved opprettelsen"
-                            , "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. "
-                            + "Fant '" + r.getFieldAsString("PRIMK_SAMBO_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_SAMBO_A")
-                    , r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv"
-                            , "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. "
-                            + "Fant '" + r.getFieldAsString("PRIMK_ARBSIT_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_ARBSIT_A")
-                    , r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"
-                            , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
-                            + "Fant '" + r.getFieldAsString("PART_LENGDE_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
-                    , List.of("1")
-                    , r.getFieldAsString("PART_LENGDE_A")
-                    , r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 19B1 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
-                            , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
-                            + "Fant '" + r.getFieldAsString("EKSPART_LENGDE_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
-                    , List.of("2")
-                    , r.getFieldAsString("EKSPART_LENGDE_A")
-                    , r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-            ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
-                            , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
-                            + "Fant '" + r.getFieldAsString("EKSPART_VARIGH_A") + "', "
-                            + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("PRIMK_VSRELASJ_A")
-                    , List.of("2")
-                    , r.getFieldAsString("EKSPART_VARIGH_A")
-                    , r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
-
-
-            ControlFelt1Dato.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 20 Dato for første behandlingssamtale"
-                            , "Det er ikke oppgitt dato for første behandlingssamtale eller feltet har ugyldig format. "
-                            + "Fant '" + r.getFieldAsString("FORSTE_SAMT_A") + "'. "
-                            + "Feltet er obligatorisk å fylle ut."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("FORSTE_SAMT_A")
-                    , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
-            );
-
-            ControlFelt1DatoSaaFelt2Dato.doControl(
-                    er
-                    , new ErrorReportEntry(
-                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
-                            , String.valueOf(r.getLine())
-                            , " "
-                            , "Kontroll 21 Første behandlingssamtale er før henvendelsesdato"
-                            , "Dato for første behandlingssamtale (" + r.getFieldAsString("FORSTE_SAMT_A") + ") "
-                            + "er før dato for primærklientens henvendelse (" + r.getFieldAsString("HENV_DATO_A") + ") til familievernkontoret."
-                            , Constants.NORMAL_ERROR
-                    )
-                    , r.getFieldAsString("HENV_DATO_A")
-                    , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
-                    , r.getFieldAsString("FORSTE_SAMT_A")
-                    , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
-            );
 
             {
                 if (List.of(
@@ -709,5 +410,427 @@ public class Main {
         });
 
         return er;
+    }
+
+    public static boolean kontroll03Regionsnummer(ErrorReport er, Record r) {
+        // Kontroll 3: Regionsnummer
+        er.incrementCount();
+
+        if (!Definitions.isRegionValid(r.getFieldAsString("REGION_NR_A"))) {
+            er.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 03 Regionsnummer"
+                            , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
+                            + "Fant '" + r.getFieldAsString("REGION_NR_A") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
+                            , Constants.NORMAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean kontroll04Kontornummer(ErrorReport er, Record r) {
+        // Kontroll 4: Kontornummer
+        er.incrementCount();
+
+        if (!Definitions.isKontorValid(r.getFieldAsString("KONTOR_NR_A"))) {
+            er.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 04 Kontornummer"
+                            , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
+                            + "Fant '" + r.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
+                            , Constants.NORMAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean kontroll05RegionsnummerKontornummer(ErrorReport er, Record r) {
+        // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
+        er.incrementCount();
+
+        if (!Definitions.isRegionAndKontorValid(r.getFieldAsString("REGION_NR_A"), r.getFieldAsString("KONTOR_NR_A"))) {
+            er.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                            , String.valueOf(r.getLine())
+                            , " "
+                            , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
+                            , "Regionsnummer (" + r.getFieldAsString("REGION_NR_A") + ") og "
+                            + "kontornummer (" + r.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
+                            , Constants.NORMAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean kontroll06Dubletter(ErrorReport er, List<Record> records) {
+        // Kontroll 6 Dublett på journalnummer
+        er.incrementCount();
+
+        List<String> dubletter = records.stream()
+                .map(r -> "Kontornummer ".concat(r.getFieldAsString("KONTOR_NR_A")).concat(" - Journalnummer ").concat(r.getFieldAsString("JOURNAL_NR_A")))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(p -> p.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .sorted()
+                .collect(Collectors.toList());
+
+        if (!dubletter.isEmpty()) {
+            er.addEntry(
+                    new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
+                            , "Kontroll 06 Dubletter"
+                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på kontornummer - journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                            , Constants.NORMAL_ERROR
+                    ));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean kontroll07Henvendelsesdato(ErrorReport er, Record r) {
+        // Kontroll 7 Henvendelsesdato
+        er.incrementCount();
+
+        return ControlFelt1Dato.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 07 Henvendelsesdato"
+                        , "Dette er ikke oppgitt dato (" + r.getFieldAsString("HENV_DATO_A") + ") for når primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("HENV_DATO_A")
+                , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
+        );
+    }
+
+    public static boolean kontroll09KontaktTidligere(ErrorReport er, Record r) {
+        // Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere"
+                        , "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. "
+                        + "Fant '" + r.getFieldAsString("KONTAKT_TIDL_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("KONTAKT_TIDL_A")
+                , r.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+
+
+    }
+
+    public static boolean kontroll11HenvendelsesBegrunnelse(ErrorReport er, Record r) {
+        // Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt."
+                        , "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format."
+                        + "Fant '" + r.getFieldAsString("HENV_GRUNN_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("HENV_GRUNN_A")
+                , r.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll13Kjonn(ErrorReport er, Record r) {
+        // Kontroll 13 Primærklientens kjønn
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 13 Primærklientens kjønn"
+                        , "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. "
+                        + "Fant '" + r.getFieldAsString("PRIMK_KJONN_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_KJONN_A")
+                , r.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll14Fodselsaar(ErrorReport er, Record r) {
+        // Kontroll 14 Primærklientens fødselsår
+        er.incrementCount();
+
+        return ControlHeltall.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 14 Primærklientens fødselsår"
+                        , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Fant '" + r.getFieldAsString("PRIMK_FODT_A") + "'. Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsInteger("PRIMK_FODT_A")
+        );
+    }
+
+    public static boolean kontroll15Samlivsstatus(ErrorReport er, Record r) {
+        // Kontroll 15 Primærklientens samlivsstatus
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 15 Primærklientens samlivsstatus"
+                        , "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. "
+                        + "Fant '" + r.getFieldAsString("PRIMK_SIVILS_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_SIVILS_A")
+                , r.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+
+    public static boolean kontroll16FormellSivilstand(ErrorReport er, Record r) {
+        // Kontroll 16 Utdypende om primærklientens formelle sivilstand
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 16 Utdypende om primærklientens formelle sivilstand"
+                        , "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens korrekt sivilstand"
+                        + "Fant '" + r.getFieldAsString("FORMELL_SIVILS_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_SIVILS_A")
+                , List.of("3", "4")
+                , r.getFieldAsString("FORMELL_SIVILS_A")
+                , r.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll17Bosituasjon(ErrorReport er, Record r) {
+        // Kontroll 17 Primærklientens bosituasjon ved opprettelsen
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 17 Primærklientens bosituasjon ved opprettelsen"
+                        , "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. "
+                        + "Fant '" + r.getFieldAsString("PRIMK_SAMBO_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_SAMBO_A")
+                , r.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll18Arbeidsosituasjon(ErrorReport er, Record r) {
+        // Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv"
+                        , "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. "
+                        + "Fant '" + r.getFieldAsString("PRIMK_ARBSIT_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_ARBSIT_A")
+                , r.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll19AVarighetSamtalepartner(ErrorReport er, Record r) {
+        // Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"
+                        , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                        + "Fant '" + r.getFieldAsString("PART_LENGDE_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_VSRELASJ_A")
+                , List.of("1")
+                , r.getFieldAsString("PART_LENGDE_A")
+                , r.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll19B1VarighetSidenBrudd(ErrorReport er, Record r) {
+        // Kontroll 19B1 Tid siden brudd for primærklient og viktigste samtalepartner, ekspartnere, lengde
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 19B1 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
+                        , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                        + "Fant '" + r.getFieldAsString("EKSPART_LENGDE_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_VSRELASJ_A")
+                , List.of("2")
+                , r.getFieldAsString("EKSPART_LENGDE_A")
+                , r.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+
+    public static boolean kontroll19B2VarighetEkspartner(ErrorReport er, Record r) {
+        // Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet
+        er.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
+                        , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
+                        + "Fant '" + r.getFieldAsString("EKSPART_VARIGH_A") + "', "
+                        + "forventet én av: " + r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("PRIMK_VSRELASJ_A")
+                , List.of("2")
+                , r.getFieldAsString("EKSPART_VARIGH_A")
+                , r.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+        );
+    }
+
+    public static boolean kontroll20DatoForsteBehandlingssamtale(ErrorReport er, Record r) {
+        // Kontroll 20 Dato for første behandlingssamtale
+        er.incrementCount();
+
+        return ControlFelt1Dato.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 20 Dato for første behandlingssamtale"
+                        , "Det er ikke oppgitt dato for første behandlingssamtale eller feltet har ugyldig format. "
+                        + "Fant '" + r.getFieldAsString("FORSTE_SAMT_A") + "'. "
+                        + "Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("FORSTE_SAMT_A")
+                , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
+        );
+    }
+
+    public static boolean kontroll21DatoForsteBehandlingssamtaleEtterHenvendelse(ErrorReport er, Record r) {
+        // Kontroll 21 Første behandlingssamtale er før henvendelsesdato
+        er.incrementCount();
+
+        return ControlFelt1DatoSaaFelt2Dato.doControl(
+                er
+                , new ErrorReportEntry(
+                        createKontorNr(r.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(r.getFieldAsString("JOURNAL_NR_A"), String.valueOf(r.getLine()))
+                        , String.valueOf(r.getLine())
+                        , " "
+                        , "Kontroll 21 Første behandlingssamtale er før henvendelsesdato"
+                        , "Dato for første behandlingssamtale (" + r.getFieldAsString("FORSTE_SAMT_A") + ") "
+                        + "er før dato for primærklientens henvendelse (" + r.getFieldAsString("HENV_DATO_A") + ") til familievernkontoret."
+                        , Constants.NORMAL_ERROR
+                )
+                , r.getFieldAsString("HENV_DATO_A")
+                , r.getFieldDefinitionByName("HENV_DATO_A").getDatePattern()
+                , r.getFieldAsString("FORSTE_SAMT_A")
+                , r.getFieldDefinitionByName("FORSTE_SAMT_A").getDatePattern()
+        );
     }
 }

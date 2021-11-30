@@ -1,5 +1,13 @@
 package no.ssb.kostra.felles;
 
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.controlprogram.Arguments;
 
@@ -78,7 +86,7 @@ public class ErrorReport {
         StringBuilder report = new StringBuilder();
 
         final String lf = System.getProperty("line.separator");
-        final String VERSION = "2021.11.4";
+        final String VERSION = getProjectVersion();
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;
@@ -197,5 +205,16 @@ public class ErrorReport {
 
     public Arguments getArgs() {
         return args;
+    }
+
+    private String getProjectVersion(){
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+
+            return model.getVersion();
+        } catch (Exception e){
+            return "Ukjent version";
+        }
     }
 }

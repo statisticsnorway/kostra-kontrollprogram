@@ -35,7 +35,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll03Regionsnummer(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -55,7 +57,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll04Kontornummer(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -75,7 +79,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll05RegionsnummerKontornummer(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -103,7 +109,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll06Dubletter(errorReport, records)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -124,7 +132,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll07Henvendelsesdato(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -145,7 +155,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll09KontaktTidligere(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -168,7 +180,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll11HenvendelsesBegrunnelse(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -191,7 +205,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll13Kjonn(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -213,7 +229,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll14Fodselsaar(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -234,7 +252,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll15Samlivsstatus(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -257,7 +277,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll16FormellSivilstand(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -284,7 +306,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll17Bosituasjon(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -309,7 +333,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll18Arbeidsosituasjon(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -336,7 +362,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll19AVarighetSamtalepartner(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -364,7 +392,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll19B1VarighetSidenBrudd(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -392,7 +422,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll19B2VarighetEkspartner(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -420,7 +452,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll20DatoForsteBehandlingssamtale(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel
@@ -442,7 +476,9 @@ class Famvern52aSpec extends Specification {
         def testResult = Main.kontroll21DatoForsteBehandlingssamtaleEtterHenvendelse(errorReport, record)
 
         then:
-        System.out.println(errorReport.generateReport())
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
         verifyAll {
             testResult == hasError
             errorReport.getErrorType() == errorlevel

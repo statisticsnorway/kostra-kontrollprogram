@@ -189,61 +189,73 @@ public class ControlSosial {
     public static boolean control06AlderUnder18Aar(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
-        return ControlFelt1Boolsk.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
-                        , " "
-                        , "Kontroll 06 Alder under 18 år"
-                        , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er under 18 år."
-                        , Constants.CRITICAL_ERROR
-                )
-                , record.getFieldAsInteger("ALDER")
-                , ">="
-                , 18
-        );
+        if (record.getFieldAsInteger("FNR_OK") == 1) {
+            return ControlFelt1Boolsk.doControl(
+                    errorReport
+                    , new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 06 Alder under 18 år"
+                            , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er under 18 år."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , record.getFieldAsInteger("ALDER")
+                    , ">="
+                    , 18
+            );
+        }
+
+        return false;
     }
 
     public static boolean control07AlderEr96AarEllerOver(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
-        return ControlFelt1Boolsk.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
-                        , " "
-                        , "Kontroll 07 Alder er 96 år eller over"
-                        , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
-                        , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsInteger("ALDER")
-                , "<"
-                , 96
-        );
+        if (record.getFieldAsInteger("FNR_OK") == 1) {
+            return ControlFelt1Boolsk.doControl(
+                    errorReport
+                    , new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 07 Alder er 96 år eller over"
+                            , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , record.getFieldAsInteger("ALDER")
+                    , "<"
+                    , 96
+            );
+        }
+
+        return false;
     }
 
     public static boolean control07AlderEr68AarEllerOver(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
-        return ControlFelt1Boolsk.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
-                        , " "
-                        , "Kontroll 07 Alder er 68 år eller over"
-                        , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er 68 år eller eldre."
-                        , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsInteger("ALDER")
-                , "<"
-                , 68
-        );
+        if (record.getFieldAsInteger("FNR_OK") == 1) {
+            return ControlFelt1Boolsk.doControl(
+                    errorReport
+                    , new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 07 Alder er 68 år eller over"
+                            , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er 68 år eller eldre."
+                            , Constants.NORMAL_ERROR
+                    )
+                    , record.getFieldAsInteger("ALDER")
+                    , "<"
+                    , 68
+            );
+        }
+
+        return false;
     }
 
     public static boolean control08Kjonn(ErrorReport errorReport, Record record) {

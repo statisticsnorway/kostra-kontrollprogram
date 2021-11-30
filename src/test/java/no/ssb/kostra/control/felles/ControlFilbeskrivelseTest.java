@@ -26,7 +26,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
         String record1 = "OK   ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -36,7 +36,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, -1, new ArrayList<>(), "", false)
         );
         String record1 = "FAIL!";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -48,7 +48,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
         String record1 = "OK   ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -59,7 +59,7 @@ public class ControlFilbeskrivelseTest {
         );
 
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -69,7 +69,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
         String record1 = "OKstr";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -79,7 +79,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -90,7 +90,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         String record1 = "ABCDE";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -100,7 +100,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -110,7 +110,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         String record1 = "FAIL!";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -121,7 +121,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         String record1 = "ABCDE";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -131,7 +131,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         String record1 = "FAIL!";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -142,7 +142,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -153,7 +153,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         String record1 = "    1";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -163,7 +163,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -173,7 +173,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         String record1 = "FAIL!";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -184,7 +184,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         String record1 = "    1";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -194,7 +194,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         String record1 = "     ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -205,7 +205,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         String record1 = "FAIL!";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -217,7 +217,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         String record1 = "20200101";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -227,7 +227,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         String record1 = "20202020";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -238,7 +238,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         String record1 = "        ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -249,7 +249,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "", true)
         );
         String record1 = "20200101";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -260,7 +260,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         String record1 = "FAIL!   ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -271,7 +271,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         String record1 = "20200101";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -281,7 +281,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         String record1 = "20202020";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -292,7 +292,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         String record1 = "        ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
     }
 
@@ -302,7 +302,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "", false)
         );
         String record1 = "20200101";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
@@ -313,7 +313,7 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         String record1 = "FAIL!   ";
-        r = new Record(record1, fieldDefinitions);
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
         assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }

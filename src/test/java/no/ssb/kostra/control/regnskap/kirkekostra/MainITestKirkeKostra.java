@@ -52,20 +52,20 @@ public class MainITestKirkeKostra {
         );
     }
 
-    @ParameterizedTest(name = "#{index} - Run test with {0}")
-    @MethodSource("controlKombinasjonKontoklasseArtInvesteringsregnskapInputs")
-    public void controlKombinasjonKontoklasseArtInvesteringsregnskapTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlRegnskap.controlKombinasjonKontoklasseArt(inputAndResult.getErrorReport(),
-                inputAndResult.getRecordList(),
-                Main.getBevilgningRegnskapList(),
-                Main.getKontoklasseAsMap(inputAndResult.getErrorReport().getArgs().getSkjema()).get("I"),
-                removeCodesFromCodelist(Main.getArtSektorAsList(inputAndResult.getErrorReport().getArgs().getSkjema()), Main.getArterUgyldigInvestering()),
-                "Korrigér art (%s) til gyldig art i investeringsregnskapet, eller overfør posteringen til driftsregnskapet",
-                Constants.CRITICAL_ERROR
-        ));
-        assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-        System.out.println(inputAndResult.getErrorReport().generateReport());
-    }
+//    @ParameterizedTest(name = "#{index} - Run test with {0}")
+//    @MethodSource("controlKombinasjonKontoklasseArtInvesteringsregnskapInputs")
+//    public void controlKombinasjonKontoklasseArtInvesteringsregnskapTest(TestRecordListInputAndResult inputAndResult) {
+//        assertEquals(inputAndResult.isResult(), ControlRegnskap.controlKombinasjonKontoklasseArt(inputAndResult.getErrorReport(),
+//                inputAndResult.getRecordList(),
+//                Main.getBevilgningRegnskapList(),
+//                Main.getKontoklasseAsMap(inputAndResult.getErrorReport().getArgs().getSkjema()).get("I"),
+//                removeCodesFromCodelist(Main.getArtSektorAsList(inputAndResult.getErrorReport().getArgs().getSkjema()), Main.getArterUgyldigInvestering()),
+//                "Korrigér art (%s) til gyldig art i investeringsregnskapet, eller overfør posteringen til driftsregnskapet",
+//                Constants.CRITICAL_ERROR
+//        ));
+//        assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+//        System.out.println(inputAndResult.getErrorReport().generateReport());
+//    }
 
     @Test
     public void testDoControl0F() {

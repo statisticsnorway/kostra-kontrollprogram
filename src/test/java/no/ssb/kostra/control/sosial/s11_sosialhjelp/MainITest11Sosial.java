@@ -5,7 +5,6 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.FieldDefinition;
 import no.ssb.kostra.felles.Record;
-import no.ssb.kostra.utils.TestArgumentsInputAndResult;
 import no.ssb.kostra.utils.TestRecordInputAndResult;
 import no.ssb.kostra.utils.TestRecordListInputAndResult;
 import no.ssb.kostra.utils.TestStringInputAndResult;
@@ -124,17 +123,19 @@ public class MainITest11Sosial {
 
     static Stream<TestRecordInputAndResult> control06AlderUnder18AarProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "19"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "18"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "17"), FieldDefinitions.getFieldDefinitions()), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1", "ALDER", "19"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1", "ALDER", "18"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1", "ALDER", "17"), FieldDefinitions.getFieldDefinitions()), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "0", "ALDER", "17"), FieldDefinitions.getFieldDefinitions()), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control07AlderEr68AarEllerOverProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69"), definitions), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68"), definitions), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67"), definitions), false, Constants.NO_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "0", "ALDER", "69"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1", "ALDER", "69"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1", "ALDER", "68"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1", "ALDER", "67"), definitions), false, Constants.NO_ERROR)
         );
     }
 

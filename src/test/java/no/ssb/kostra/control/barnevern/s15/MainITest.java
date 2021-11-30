@@ -1,11 +1,10 @@
 package no.ssb.kostra.control.barnevern.s15;
 
+import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.controlprogram.Arguments;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -97,7 +96,7 @@ public class MainITest {
                 , Constants.NO_ERROR);
     }
 
-    private void controlFile(String classpathToFile, String[] cliArgs, int expectedError){
+    private void controlFile(String classpathToFile, String[] cliArgs, int expectedError) {
         InputStream inputStream = null;
         String inputFileContent;
 

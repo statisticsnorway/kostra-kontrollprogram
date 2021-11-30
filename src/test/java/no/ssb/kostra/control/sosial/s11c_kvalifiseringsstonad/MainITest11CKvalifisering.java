@@ -124,17 +124,17 @@ public class MainITest11CKvalifisering {
 
     static Stream<TestRecordInputAndResult> control06AlderUnder18AarProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "19"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "18"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "17"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "19", "FNR_OK", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "18", "FNR_OK", "1"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "17", "FNR_OK", "1"), definitions), true, Constants.NORMAL_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control07AlderEr68AarEllerOverProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69"), definitions), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68"), definitions), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67"), definitions), false, Constants.NO_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ALDER", "69", "FNR_OK", "1"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "68", "FNR_OK", "1"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ALDER", "67", "FNR_OK", "1"), definitions), false, Constants.NO_ERROR)
         );
     }
 

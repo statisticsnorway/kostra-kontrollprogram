@@ -31,7 +31,7 @@ public class Main {
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), arguments.getAargang()));
+                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")), arguments.getAargang()));
                         r.setFieldAsInteger("FNR_OK", 1);
 
                     } catch (Exception e) {
@@ -52,7 +52,7 @@ public class Main {
             control04OppgaveAar(errorReport, record);
             control05Fodselsnummer(errorReport, record);
             control06AlderUnder18Aar(errorReport, record);
-            control07AlderEr68AarEllerOver(errorReport, record);
+            //control07AlderEr68AarEllerOver(errorReport, record);
             control08Kjonn(errorReport, record);
             control09Sivilstand(errorReport, record);
             control10ForsorgerpliktForBarnUnder18Aar(errorReport, record);

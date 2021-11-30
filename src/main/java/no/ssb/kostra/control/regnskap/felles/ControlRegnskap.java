@@ -71,19 +71,18 @@ public class ControlRegnskap {
     // Kombinasjonskontroller, per record
     public static boolean controlKombinasjonKontoklasseArt(ErrorReport er, List<Record> regnskap, List<String> regnskapList, String kontoklasse, List<String> artList, String formattedControlText, int errorType) {
         if (isCodeInCodelist(er.getArgs().getSkjema(), regnskapList)) {
-            List<String> investeringsRecordsArter = regnskap.stream()
+            List<Record> filteredRegnskap = regnskap.stream()
                     .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse)
                             && isCodeInCodelist(record.getFieldAsString("art_sektor"), artList)
                     )
-// TODO må få med linjenummer fra fil, kun ikke bruke arrayen sin index pga. filtrering
-                    .map(record -> record.getFieldAsString("art_sektor"))
                     .collect(Collectors.toList());
 
             return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(er,
                     "5. Kombinasjonskontroller",
                     "Kombinasjon kontoklasse og art",
                     formattedControlText,
-                    investeringsRecordsArter,
+                    "art_sektor",
+                    filteredRegnskap,
                     artList,
                     errorType
             );
@@ -92,58 +91,23 @@ public class ControlRegnskap {
         return false;
     }
 
-    // Kombinasjonskontroller, per record
-    public static boolean controlKombinasjonKontoklasseFunksjon(ErrorReport er, List<Record> regnskap, List<String> regnskapList, String kontoklasse, List<String> funksjonList, String formattedControlText, int errorType) {
-        if (isCodeInCodelist(er.getArgs().getSkjema(), regnskapList)) {
-            List<String> investeringsRecordsArter = regnskap.stream()
-                    .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse))
-                    .map(record -> record.getFieldAsString("funksjon_kapittel"))
-                    .collect(Collectors.toList());
-
-            return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(er,
-                    "5. Kombinasjonskontroller",
-                    "Kombinasjon kontoklasse og funksjon",
-                    formattedControlText,
-                    investeringsRecordsArter,
-                    funksjonList,
-                    errorType
-            );
-        }
-
-        return false;
-    }
-
     public static boolean controlKombinasjonFunksjonArt(ErrorReport er, List<Record> regnskap, List<String> funksjonList, List<String> artList, String formattedControlText, int errorType) {
-        List<String> records = regnskap.stream()
-                .filter(record -> isCodeInCodelist(record.getFieldAsString("funksjon_kapittel"), funksjonList))
-                .map(record -> record.getFieldAsString("art_sektor"))
+        List<Record> filteredRegnskap = regnskap.stream()
+                .filter(record -> isCodeInCodelist(record.getFieldAsString("funksjon_kapittel"), funksjonList)
+                        && isCodeInCodelist(record.getFieldAsString("art_sektor"), artList)
+                )
                 .collect(Collectors.toList());
 
         return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(er,
                 "5. Kombinasjonskontroller",
                 "Kombinasjon funksjon og art",
                 formattedControlText,
-                records,
+                "art_sektor",
+                filteredRegnskap,
                 artList,
                 errorType
         );
     }
 
-    public static boolean controlKombinasjonArtFunksjon(ErrorReport er, List<Record> regnskap, List<String> artList, List<String> funksjonList, String formattedControlText, int errorType) {
-        List<String> records = regnskap.stream()
-                .filter(record -> isCodeInCodelist(record.getFieldAsString("art_sektor"), artList))
-                .map(record -> record.getFieldAsString("funksjon_kapittel"))
-                .collect(Collectors.toList());
-
-        return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(er,
-                "5. Kombinasjonskontroller",
-                "Kombinasjon art og funksjon",
-                formattedControlText,
-                records,
-                funksjonList,
-                errorType
-        );
-    }
-
-
 }
+

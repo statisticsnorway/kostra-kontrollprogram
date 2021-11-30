@@ -50,7 +50,7 @@ public class Main {
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(r.getFieldAsString("PERSON_FODSELSNR"), arguments.getAargang()));
+                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")), arguments.getAargang()));
                         r.setFieldAsInteger("FNR_OK", 1);
 
                     } catch (Exception e) {

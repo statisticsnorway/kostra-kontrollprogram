@@ -74,13 +74,9 @@
                             </descriptors>
                             <archive>
                                 <manifest>
-                                    <mainClass>
-                                        no.ssb.kostra.controlprogram.CLI
-                                    </mainClass>
-                                    <addDefaultImplementationEntries>true
-                                    </addDefaultImplementationEntries>
-                                    <addDefaultSpecificationEntries>true
-                                    </addDefaultSpecificationEntries>
+                                    <mainClass>no.ssb.kostra.controlprogram.CLI</mainClass>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 </manifest>
                             </archive>
                         </configuration>

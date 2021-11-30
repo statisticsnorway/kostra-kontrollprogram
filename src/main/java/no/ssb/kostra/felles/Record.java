@@ -13,7 +13,7 @@ public class Record {
     private final String record;
     private final List<FieldDefinition> fieldDefinitions;
     private final Map<String, FieldDefinition> fieldDefinitionByName;
-    private Map<String, String> valuesByName;
+    private Map<String, String> valuesByName = new HashMap<>();
 
     public Record(final String record, final List<FieldDefinition> definitionList) {
         this.line = ++lineCount;
@@ -25,23 +25,25 @@ public class Record {
                 .collect(Collectors.toMap(FieldDefinition::getName, FieldDefinition::getFieldDefinition));
 
         try {
-            this.valuesByName = fieldDefinitionByNumber.entrySet().stream()
+            Map<String, String> immutableValuesByName = fieldDefinitionByNumber.entrySet().stream()
                     .distinct()
                     .collect(Collectors.toMap(
                             e -> e.getValue().getName(),
                             e -> this.record.substring(e.getValue().getFrom() - 1, e.getValue().getTo())));
+
+            immutableValuesByName.forEach((key, value) -> this.valuesByName.put(key, value));
 
         } catch (StringIndexOutOfBoundsException e) {
             this.valuesByName = new HashMap<>();
         }
     }
 
-    public Record(final Map<String, String> valuesByName, final List<FieldDefinition> definitionList) {
+    public Record(Map<String, String> immutableValuesByName, final List<FieldDefinition> definitionList) {
         this.line = ++lineCount;
         this.fieldDefinitions = definitionList;
         this.fieldDefinitionByName = definitionList.stream()
                 .collect(Collectors.toMap(FieldDefinition::getName, FieldDefinition::getFieldDefinition));
-        this.valuesByName = valuesByName;
+        immutableValuesByName.forEach((key, value) -> this.valuesByName.put(key, value));
         this.record = definitionList.stream()
                 .map(fieldDefinition -> {
                     int width = fieldDefinition.getTo() - fieldDefinition.getFrom() + 1;
@@ -57,7 +59,7 @@ public class Record {
                 .collect(Collectors.joining(""));
     }
 
-    public static void resetLineCount(){
+     public static void resetLineCount(){
         lineCount = 0;
     }
 

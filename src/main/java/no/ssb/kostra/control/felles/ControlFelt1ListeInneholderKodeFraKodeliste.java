@@ -2,6 +2,7 @@ package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.Record;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,11 +12,12 @@ import java.util.Map;
 import static no.ssb.kostra.control.felles.Comparator.between;
 
 public class ControlFelt1ListeInneholderKodeFraKodeliste {
-    public static boolean doControl(ErrorReport errorReport, String controlCategoriTitle, String controlTitle, String formattedControlText, List<String> codes, List<String> codeList, int errorType) {
+    public static boolean doControl(ErrorReport errorReport, String controlCategoriTitle, String controlTitle, String formattedControlText, String fieldName, List<Record> records, List<String> codeList, int errorType) {
         Map<String, List<Integer>> result = new HashMap<>();
 
-        for (int i = 0; i < codes.size(); i++) {
-            String code = codes.get(i);
+        for (int i = 0; i < records.size(); i++) {
+            Record record = records.get(i);
+            String code = record.getFieldAsString(fieldName);
 
             if (!Comparator.isCodeInCodelist(code, codeList)) {
                 if (!result.containsKey(code)) {
@@ -23,7 +25,7 @@ public class ControlFelt1ListeInneholderKodeFraKodeliste {
                 }
 
                 List<Integer> temp = result.get(code);
-                temp.add((i + 1));
+                temp.add(record.getFieldAsInteger("linjenummer"));
                 result.put(code, temp);
             }
         }

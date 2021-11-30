@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,7 +42,7 @@ public class Comparator {
     }
 
     public static boolean isCodeInCodelist(final String code, final List<String> codeList){
-        return codeList.stream().anyMatch(item -> item.equalsIgnoreCase(code));
+        return codeList.stream().anyMatch(item -> compareString1EqualsString2(item, code));
     }
 
     public static List<String> removeCodesFromCodelist(final List<String> codeList, final List<String> codesToRemoveList){
@@ -104,5 +105,9 @@ public class Comparator {
     public static boolean isEmpty(final String s) {
         // Null-safe, short-circuit evaluation.
         return s == null || s.trim().isEmpty();
+    }
+
+    public static boolean compareString1EqualsString2(String string1, String string2){
+        return Objects.equals(string1, string2);
     }
 }

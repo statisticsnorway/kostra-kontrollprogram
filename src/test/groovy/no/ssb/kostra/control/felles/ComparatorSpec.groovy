@@ -8,7 +8,7 @@ class ComparatorSpec extends Specification {
 
     def "should compare two Integers using an Operator, #int1 #operator #int2 -> #result "() {
         expect:
-        compareIntegerOperatorInteger(int1, operator, int2) == result.toBoolean()
+        compareIntegerOperatorInteger(int1, operator, int2) == result
 
         where:
         int1 | operator | int2 || result
@@ -33,7 +33,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate that code is in codelist, #code in #codelist -> #result"() {
         expect:
-        isCodeInCodelist(code, codelist) == result.toBoolean()
+        isCodeInCodelist(code, codelist) == result
 
         where:
         code            | codelist                  || result
@@ -43,17 +43,20 @@ class ComparatorSpec extends Specification {
 
     def "should validate that code is removed from codelist, remove #removelist from #codelist -> #resultlist -> #result"() {
         expect:
-        removeCodesFromCodelist(codelist, removelist) == resultlist
+        verifyAll {
+            removeCodesFromCodelist(codelist, removelist) == resultlist
+            (removeCodesFromCodelist(codelist, removelist) == resultlist) == result
+        }
 
         where:
         codelist                           | removelist               || resultlist                         | result
         List.of("code1", "code2", "code3") | List.of("code2")         || List.of("code1", "code3")          | true
-        List.of("code1", "code2", "code3") | List.of("notInCodelist") || List.of("code1", "code2", "code3") | false
+        List.of("code1", "code2", "code3") | List.of("notInCodelist") || List.of("code1", "code2", "code3") | true
     }
 
     def "should validate orgnr, #orgnr -> #result"() {
         expect:
-        isValidOrgnr(orgnr) == result.toBoolean()
+        isValidOrgnr(orgnr) == result
 
         where:
         orgnr       || result
@@ -65,7 +68,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate that integer is between lower and upper threshold, #lower <= #int1 <= #upper -> #result"() {
         expect:
-        between(int1, lower, upper) == result.toBoolean()
+        between(int1, lower, upper) == result
 
         where:
         int1 | lower | upper || result
@@ -79,7 +82,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate that integer is outside lower or upper threshold, #int1 < #lower || #upper < #int1 -> #result"() {
         expect:
-        outsideOf(int1, lower, upper) == result.toBoolean()
+        outsideOf(int1, lower, upper) == result
 
         where:
         int1 | lower | upper || result
@@ -93,7 +96,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate that date is valid, #date using #format -> #result"() {
         expect:
-        isValidDate(date, format) == result.toBoolean()
+        isValidDate(date, format) == result
 
         where:
         date         | format       || result
@@ -106,7 +109,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate emptiness, #param -> #result"() {
         expect:
-        isEmpty(param) == result.toBoolean()
+        isEmpty(param) == result
 
         where:
         param  || result
@@ -124,8 +127,20 @@ class ComparatorSpec extends Specification {
         "string" | "defaultString" || "string"
         null     | "defaultString" || "defaultString"
     }
+
+    def "should compare two string for equal content, string1 = '#string1' / string2 = '#string2'"() {
+        expect:
+        compareString1EqualsString2(string1, string2) == result
+
+        where:
+        string1  | string2  || result
+        "string" | "string" || true
+        "not"    | "equal"  || false
+        "string" | ""       || false
+        "string" | " "      || false
+        "string" | null     || false
+
+    }
+
 }
-/*
-
- */
-
+// compareString1EqualsString2

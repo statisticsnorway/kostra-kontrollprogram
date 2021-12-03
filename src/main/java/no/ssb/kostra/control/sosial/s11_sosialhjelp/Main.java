@@ -51,7 +51,7 @@ public class Main {
             control03Bydelsnummer(errorReport, record);
             control04OppgaveAar(errorReport, record);
             control05Fodselsnummer(errorReport, record);
-            control06AlderUnder18Aar(errorReport, record);
+            //control06AlderUnder18Aar(errorReport, record);
             //control07AlderEr68AarEllerOver(errorReport, record);
             control08Kjonn(errorReport, record);
             control09Sivilstand(errorReport, record);

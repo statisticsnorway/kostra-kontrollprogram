@@ -1141,12 +1141,15 @@ public class Main {
 
                 // For 0I og 0K: Til informasjon / NO_ERROR, For alle andre: hard kontroll / CRITICAL_ERROR
                 int errorType = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K"))) ? Constants.NO_ERROR : Constants.CRITICAL_ERROR;
+                String errorText = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K")))
+                        ? "Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590."
+                        : "Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590.";
 
 
                 if (sumAvskrivninger == 0) {
                     errorReport.addEntry(new ErrorReportEntry(
                             "6. Summeringskontroller", "Kontroll Avskrivninger", " ", " "
-                            , "Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590."
+                            , errorText
                             , ""
                             , errorType
                     ));
@@ -1387,7 +1390,7 @@ public class Main {
     public static boolean controlMemoriaKonti(ErrorReport errorReport, List<Record> regnskap) {
         errorReport.incrementCount();
 
-        // 185) Funksjon D.465 for sum artene 010-590 + funksjon D.465 for sum artene 600-990 = < 30 og > - 30. Differanser opptil +-30' godtas, og skal ikke utlistes.
+        // 190)
         Arguments arguments = errorReport.getArgs();
         if (isCodeInCodelist(arguments.getSkjema(), getBalanseRegnskapList())) {
             int sumMemoriaKonti = regnskap.stream()
@@ -1408,10 +1411,10 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         "6. Summeringskontroller", "Balanseregnskap", " ", " "
                         , "Kontroll Memoriakonti"
-                        , "Korrigér i fila slik at differansen (" + differanse + ") mellom "
+                        , "Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at differansen (" + differanse + ") mellom "
                         + "memoriakontiene (" + sumMemoriaKonti + ") og "
                         + "motkonto for memoriakontiene (" + sumMotkontoMemoriaKonti + ") går i 0. (margin på +/- 10')"
-                        , Constants.NORMAL_ERROR
+                        , Constants.NO_ERROR
                 ));
 
                 return true;

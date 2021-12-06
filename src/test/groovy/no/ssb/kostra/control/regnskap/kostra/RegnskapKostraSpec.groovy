@@ -120,15 +120,17 @@ class RegnskapKostraSpec extends Specification {
         "030101" | "958935420" | "0K"   | "3"         | "010" || false          | Constants.NO_ERROR
         "030101" | "958935420" | "0K"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
         "030101" | "958935420" | "0K"   | "3"         | "921" || false          | Constants.NO_ERROR
-        "420400" | "999999999" | "0M"   | "3"         | "010" || false          | Constants.NO_ERROR
-        "420400" | "999999999" | "0M"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
-        "420400" | "999999999" | "0M"   | "3"         | "921" || true           | Constants.CRITICAL_ERROR
+
+        "420400" | "         " | "0M"   | "3"         | "010" || false          | Constants.NO_ERROR
+        "420400" | "         " | "0M"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
+        "420400" | "         " | "0M"   | "3"         | "921" || true           | Constants.CRITICAL_ERROR
         "030101" | "958935420" | "0M"   | "3"         | "010" || false          | Constants.NO_ERROR
         "030101" | "958935420" | "0M"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
         "030101" | "958935420" | "0M"   | "3"         | "921" || false          | Constants.NO_ERROR
-        "420400" | "999999999" | "0P"   | "3"         | "010" || false          | Constants.NO_ERROR
-        "420400" | "999999999" | "0P"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
-        "420400" | "999999999" | "0P"   | "3"         | "921" || true           | Constants.CRITICAL_ERROR
+
+        "420400" | "         " | "0P"   | "3"         | "010" || false          | Constants.NO_ERROR
+        "420400" | "         " | "0P"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
+        "420400" | "         " | "0P"   | "3"         | "921" || true           | Constants.CRITICAL_ERROR
         "030101" | "958935420" | "0P"   | "3"         | "010" || false          | Constants.NO_ERROR
         "030101" | "958935420" | "0P"   | "3"         | "280" || true           | Constants.CRITICAL_ERROR
         "030101" | "958935420" | "0P"   | "3"         | "921" || false          | Constants.NO_ERROR
@@ -1476,16 +1478,16 @@ class RegnskapKostraSpec extends Specification {
         where:
         skjema | list                                                                                                                                                                      || expectedResult | errorlevel
         "0B"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0B"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0B"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
         "0D"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0D"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0D"   | List.of(Map.of("kontoklasse", "2", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "2", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
         "0J"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0J"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0J"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
         "0L"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0L"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0L"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
         "0N"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0N"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0N"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
         "0Q"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1"))    || false          | Constants.NO_ERROR
-        "0Q"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NORMAL_ERROR
+        "0Q"   | List.of(Map.of("kontoklasse", "5", "kapittel", "9100", "sektor", "000", "belop", "1"), Map.of("kontoklasse", "5", "kapittel", "9999", "sektor", "990", "belop", "-1000")) || true           | Constants.NO_ERROR
     }
 }

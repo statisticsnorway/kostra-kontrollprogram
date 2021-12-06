@@ -1,16 +1,11 @@
 package no.ssb.kostra.felles;
 
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.controlprogram.Arguments;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 
+import java.io.FileReader;
 import java.util.*;
 
 public class ErrorReport {
@@ -21,9 +16,6 @@ public class ErrorReport {
     private final Arguments args;
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
-    private boolean showSummary = false;
-    private final String executiveOfficerHeader = "";
-    private final String journalNumberHeader = "";
     private List<String> reportHeaders = List.of("", "", "", "");
     private List<StatsReportEntry> stats = new ArrayList<>();
 
@@ -113,6 +105,7 @@ public class ErrorReport {
                 .append("<span>errorType:").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
+            boolean showSummary = false;
             if (showSummary) {
                 report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
@@ -131,7 +124,7 @@ public class ErrorReport {
             report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>");
             report.append("<table>");
 
-            if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())){
+            if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())) {
                 report.append("<tr>");
                 reportHeaders.forEach(s -> report.append(String.format("<td>%s</td>", s)));
                 report.append("</tr>").append(lf);
@@ -150,7 +143,7 @@ public class ErrorReport {
                         int errorType = Integer.parseInt(entrieStringsList.get(2));
                         String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : (errorType == Constants.NORMAL_ERROR) ? "black" : "green";
 
-                        if (!args.isRunAsExternalProcess()){
+                        if (!args.isRunAsExternalProcess()) {
                             report.append(lf);
                         }
 
@@ -175,7 +168,7 @@ public class ErrorReport {
             }
         }
 
-        if (errorType != Constants.CRITICAL_ERROR && 0 < stats.size()){
+        if (errorType != Constants.CRITICAL_ERROR && 0 < stats.size()) {
             report.append("<h3>Statistikkrapport</h3>");
             stats.forEach(s -> report.append(s.toString()));
         }
@@ -195,11 +188,11 @@ public class ErrorReport {
         return entries.size();
     }
 
-    public void setReportHeaders(List<String> stringList){
+    public void setReportHeaders(List<String> stringList) {
         this.reportHeaders = stringList;
     }
 
-    public void addStats(StatsReportEntry entry){
+    public void addStats(StatsReportEntry entry) {
         this.stats.add(entry);
     }
 
@@ -207,13 +200,13 @@ public class ErrorReport {
         return args;
     }
 
-    private String getProjectVersion(){
+    private String getProjectVersion() {
         try {
             MavenXpp3Reader reader = new MavenXpp3Reader();
             Model model = reader.read(new FileReader("pom.xml"));
 
             return model.getVersion();
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Ukjent version";
         }
     }

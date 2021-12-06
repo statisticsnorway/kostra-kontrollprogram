@@ -35,6 +35,13 @@ public class Main {
             "964338531"  // Bergen
     );
 
+    private static final List<String> kommunenummerSpesial = List.of(
+            "030100", // Oslo
+            "300500", // Drammen
+            "460100", // Bergen
+            "500000"  // Trøndelag
+    );
+
     public static List<String> getBevilgningRegnskapList() {
         return List.of("0A", "0C", "0I", "0K", "0M", "0P");
     }
@@ -238,9 +245,11 @@ public class Main {
         return Utils.rpadList(List.of("800", "840", "850", "860"), 4);
     }
 
-    public static List<String> getArterUgyldigDrift(String skjema, String orgnr) {
+    public static List<String> getArterUgyldigDrift(String skjema, String orgnr, String region) {
         // Kun gyldig i investering og skal fjernes fra drift
-        if (isCodeInCodelist(skjema, List.of("0I", "0K", "0M", "0P")) && isCodeInCodelist(orgnr, orgnrSpesial)) {
+        if ((isCodeInCodelist(skjema, List.of("0I", "0K")) && isCodeInCodelist(orgnr, orgnrSpesial))
+                || (isCodeInCodelist(skjema, List.of("0M", "0P")) && isCodeInCodelist(region, kommunenummerSpesial))
+        ) {
             return List.of("280", "512", "521", "522", "529", "670", "910", "911", "912", "922", "929", "970");
         } else {
             return List.of("280", "512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970");
@@ -436,7 +445,7 @@ public class Main {
             if (isCodeInCodelist(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())) {
                 List<Record> errors = regnskap.stream()
                         .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))
-                                && isCodeInCodelist(record.getFieldAsString("art_sektor"), getArterUgyldigDrift(errorReport.getArgs().getSkjema(), errorReport.getArgs().getOrgnr()))
+                                && isCodeInCodelist(record.getFieldAsString("art_sektor"), getArterUgyldigDrift(errorReport.getArgs().getSkjema(), errorReport.getArgs().getOrgnr(), errorReport.getArgs().getRegion()))
                         )
                         .collect(Collectors.toList());
 

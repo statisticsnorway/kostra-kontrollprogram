@@ -527,7 +527,9 @@ public class Main {
                         .collect(Collectors.toList())
                         .contains(record.getFieldAsString(field)));
 
-        if (!harVarighet) {
+        boolean harPermisjon = record.getFieldAsString("STATUS").equalsIgnoreCase("2");
+
+        if (!harVarighet && !harPermisjon ) {
             errorReport.addEntry(
                     new ErrorReportEntry(
                             record.getFieldAsString("SAKSBEHANDLER")

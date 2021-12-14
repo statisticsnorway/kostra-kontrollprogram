@@ -27,7 +27,7 @@ public class Main {
         }
 
         List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap = Utils.getValidRecords(list1, fieldDefinitions);
+        List<Record> regnskap = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
         List<String> bevilgningRegnskapList = List.of("0X");
         List<String> balanseRegnskapList = List.of("0Y");
         String saksbehandler = "Filuttrekk";

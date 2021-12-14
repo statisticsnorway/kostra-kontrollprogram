@@ -34,7 +34,9 @@ public class Main {
         }
 
         List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap = Utils.getValidRecords(list1, fieldDefinitions);
+        List<Record> regnskap = Utils.addLineNumbering(
+                Utils.getValidRecords(list1, fieldDefinitions)
+        );
         List<String> bevilgningRegnskapList = List.of("0A", "0C");
         List<String> balanseRegnskapList = List.of("0B", "0D");
 

@@ -38,10 +38,10 @@ public class IndividNodeHandler extends NodeHandler {
     /**
      * Setter individets alder
      *
-     * @param alder
+     * @param alder Age
      */
     public void setIndividAlder(int alder) {
-            this.individAlder = alder;
+        this.individAlder = alder;
     }
 
     /**
@@ -1684,6 +1684,6 @@ public class IndividNodeHandler extends NodeHandler {
             day = day - 40;
         }
 
-        return String.format("%02d" , day).concat(dnr.substring(2, 6));
+        return String.format("%02d", day).concat(dnr.substring(2, 6));
     }
 }

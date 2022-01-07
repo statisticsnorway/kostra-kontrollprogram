@@ -69,9 +69,8 @@ public class MainITest11CKvalifisering {
                 new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), definitions)
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), definitions)
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), definitions)
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133"), definitions)
                 )
                         , false
                         , Constants.NO_ERROR
@@ -81,9 +80,8 @@ public class MainITest11CKvalifisering {
                 , new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions)
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), definitions)
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188"), definitions)
                 )
                         , true
                         , Constants.CRITICAL_ERROR
@@ -93,6 +91,7 @@ public class MainITest11CKvalifisering {
                         arguments
                         , List.of(
                         new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
                 )
                         , false
                         , Constants.NO_ERROR

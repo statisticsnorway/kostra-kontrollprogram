@@ -32,7 +32,7 @@ public class Main {
                 .map(r -> {
                     try {
                         r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")), arguments.getAargang()));
-                        r.setFieldAsInteger("FNR_OK", 1);
+                        r.setFieldAsInteger("FNR_OK", (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")))) ? 1: 0);
 
                     } catch (Exception e) {
                         r.setFieldAsInteger("ALDER", -1);

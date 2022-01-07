@@ -97,7 +97,7 @@ class Famvern52aSpec extends Specification {
 
     def "K06, Kontrollere at journalnummeret er unikt for hver record for det enkelte kontor. #kontornummerJournalnummerList -> #hasError -> #errorlevel"() {
         given:
-       def records = kontornummerJournalnummerList.stream()
+        List<Record> records = kontornummerJournalnummerList.stream()
                 .map(m -> {
                     String kontor = m.get("kontor");
                     String journalnummer = m.get("journalnummer");

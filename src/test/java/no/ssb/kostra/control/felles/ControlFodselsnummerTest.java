@@ -23,21 +23,19 @@ public class ControlFodselsnummerTest {
 
     @Test
     public void testOK1() {
-        assertFalse(ControlFodselsnummer.doControl(er, ere, "08011688153", 1));
-        assertFalse(ControlFodselsnummer.doControl(er, ere, "41010150572", 1));
-        assertFalse(ControlFodselsnummer.doControl(er, ere, "18011688153", 0));
-        assertFalse(ControlFodselsnummer.doControl(er, ere, "11010150572", 0));
+        assertFalse(ControlFodselsnummer.doControl(er, ere, "08011688153"));
+        assertFalse(ControlFodselsnummer.doControl(er, ere, "41010150572"));
     }
 
     @Test
     public void testFail1() {
-        assertTrue(ControlFodselsnummer.doControl(er, ere, "01010150590", 1));
+        assertTrue(ControlFodselsnummer.doControl(er, ere, "01010150590"));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
     @Test
     public void testFail2() {
-        assertTrue(ControlFodselsnummer.doControl(er, ere, "010101     ", 1));
+        assertTrue(ControlFodselsnummer.doControl(er, ere, "010101     "));
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 }

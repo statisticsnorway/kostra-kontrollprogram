@@ -139,9 +139,9 @@ public class Main {
         }
 
         List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap1 = list1.stream()
-                .map(p -> new Record(p, fieldDefinitions))
-                .collect(Collectors.toList());
+        List<Record> regnskap1 = Utils.addLineNumbering(
+                Utils.getValidRecords(list1, fieldDefinitions)
+        );
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(regnskap1, errorReport);

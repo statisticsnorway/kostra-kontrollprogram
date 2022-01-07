@@ -68,21 +68,18 @@ public class MainITest11Sosial {
                 new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), FieldDefinitions.getFieldDefinitions())
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "0"), FieldDefinitions.getFieldDefinitions())
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133"), FieldDefinitions.getFieldDefinitions())
                 )
                         , false
                         , Constants.NO_ERROR
                 )
 
-
                 , new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
-                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "FNR_OK", "1"), FieldDefinitions.getFieldDefinitions())
+                        new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188"), FieldDefinitions.getFieldDefinitions())
                 )
                         , true
                         , Constants.CRITICAL_ERROR
@@ -92,6 +89,7 @@ public class MainITest11Sosial {
                         arguments
                         , List.of(
                         new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), FieldDefinitions.getFieldDefinitions())
+                        , new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), FieldDefinitions.getFieldDefinitions())
                 )
                         , false
                         , Constants.NO_ERROR
@@ -436,10 +434,8 @@ public class MainITest11Sosial {
     }
 
 
+// TODO
 
-
-// TODO     
-    
     @AfterEach
     public void resetStaticRecordCounter() {
         Record.resetLineCount();

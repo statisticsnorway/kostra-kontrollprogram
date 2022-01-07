@@ -5,6 +5,7 @@ import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodeliste;
 import no.ssb.kostra.control.felles.ControlFodselsnummer;
 import no.ssb.kostra.control.sosial.Definitions;
 import no.ssb.kostra.felles.*;
+import no.ssb.kostra.utils.Fnr;
 import no.ssb.kostra.utils.Format;
 
 import java.time.LocalDate;
@@ -113,7 +114,6 @@ public class ControlSosial {
                         , Constants.NORMAL_ERROR
                 )
                 , record.getFieldAsString("PERSON_FODSELSNR")
-                , record.getFieldAsInteger("FNR_OK")
         );
     }
 
@@ -121,7 +121,7 @@ public class ControlSosial {
         errorReport.incrementCount();
 
         Map<String, List<Record>> dubletter = recordList.stream()
-                .filter(record -> record.getFieldAsTrimmedString("FNR_OK").equalsIgnoreCase("1"))
+                .filter(record -> Fnr.isValidNorwId(record.getFieldAsString("PERSON_FODSELSNR")))
                 .collect(Collectors.groupingBy(record -> record.getFieldAsTrimmedString("PERSON_FODSELSNR"), Collectors.toList()))
                 .entrySet()
                 .stream()

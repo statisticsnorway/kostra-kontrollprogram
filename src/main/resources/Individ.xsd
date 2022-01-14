@@ -421,6 +421,7 @@ Koder om foreldrene:
 22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
 23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
 24 = Konflikt mellom foreldre som ikke bor sammen
+28 = Foreldres manglende oppfølging av barnets behov for helsetjenester
 5 = Foreldres kriminalitet
 
 Koder mellom foreldre og barnet:
@@ -477,6 +478,7 @@ Koder om annet:
 					<xs:enumeration value="25"/>
 					<xs:enumeration value="26"/>
 					<xs:enumeration value="27"/>
+					<xs:enumeration value="28"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>

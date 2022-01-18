@@ -538,7 +538,7 @@ public class Main {
                             , " "
                             , "Kontroll 28 Måneder med kvalifiseringsstønad. Gyldige koder."
                             , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad (" + record.getFieldAsString("KVP_STONAD") + ") i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
-                            , Constants.CRITICAL_ERROR
+                            , Constants.NORMAL_ERROR
                     )
             );
 

@@ -270,8 +270,8 @@ public class MainITest11CKvalifisering {
     static Stream<TestRecordInputAndResult> control28MaanederMedKvalifiseringsstonadProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "01", "KVP_STONAD", "123456", "STATUS", "1"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "123456", "STATUS", "1"), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      ", "STATUS", "1"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "123456", "STATUS", "1"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      ", "STATUS", "1"), definitions), true, Constants.NORMAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STMND_1", "  ", "KVP_STONAD", "      ", "STATUS", "2"), definitions), false, Constants.NO_ERROR)
         );
     }

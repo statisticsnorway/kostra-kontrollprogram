@@ -356,7 +356,7 @@ public class Main {
                 , record.getFieldAsString("VKLO")
                 , List.of("2")
                 , record.getFieldAsString("ARBSIT")
-                , List.of("03", "05", "06", "09", "10")
+                , List.of("03", "05", "06")
         );
     }
 
@@ -460,7 +460,7 @@ public class Main {
                 , record.getFieldAsString("VKLO")
                 , List.of("3")
                 , record.getFieldAsString("TRYGDESIT")
-                , record.getFieldDefinitionByName("TRYGDESIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , List.of("01", "02", "04", "05", "06", "07", "09", "10", "11")
         );
     }
 
@@ -946,7 +946,7 @@ public class Main {
                         , "Kontroll 38 DUF-nummer"
                         , "Det er ikke oppgitt fødselsnummer/d-nummer på sosialhjelpsmottakeren eller fødselsnummeret/d-nummeret inneholder feil. "
                         + "Oppgi ett 12-sifret DUF- nummer."
-                        , Constants.NORMAL_ERROR
+                        , Constants.CRITICAL_ERROR
                 )
                 , record.getFieldAsString("PERSON_FODSELSNR")
                 , record.getFieldAsString("PERSON_DUF")

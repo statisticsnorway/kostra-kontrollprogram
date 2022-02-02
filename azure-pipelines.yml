@@ -64,7 +64,7 @@ jobs:
 
       - task: SonarCloudPrepare@1
         inputs:
-          SonarCloud: 'bipSonarCloud-Kostra'
+          SonarCloud: 'bipSonarCloud-Barnevernsregisteret'
           organization: 'statisticsnorway'
           scannerMode: 'Other'
 

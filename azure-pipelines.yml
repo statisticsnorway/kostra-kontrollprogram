@@ -62,6 +62,12 @@ jobs:
             maven
           path: $(MAVEN_CACHE_FOLDER)
 
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: 'bipSonarCloud-Kostra'
+          organization: 'statisticsnorway'
+          scannerMode: 'Other'
+
       - task: Maven@3
         displayName: Maven verify
         inputs:
@@ -79,6 +85,10 @@ jobs:
           checkStyleRunAnalysis: true
           pmdRunAnalysis: true
           sonarQubeRunAnalysis: false
+
+      - task: SonarCloudPublish@1
+        inputs:
+          pollingTimeoutSec: '300'
 
       # Download file with json-key to GCR as a later task needs to
       # authenticate in a different way than using service connection

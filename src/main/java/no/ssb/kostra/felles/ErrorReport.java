@@ -15,6 +15,7 @@ public class ErrorReport {
     private int errorType = Constants.NO_ERROR;
     private List<String> reportHeaders = List.of("", "", "", "");
     private List<StatsReportEntry> stats = new ArrayList<>();
+    private final String VERSION = "2022.02.3-SNAPSHOT";
 
 
     public ErrorReport() {
@@ -75,7 +76,6 @@ public class ErrorReport {
         StringBuilder report = new StringBuilder();
 
         final String lf = System.getProperty("line.separator");
-        final String VERSION = "2022.02.2";
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;

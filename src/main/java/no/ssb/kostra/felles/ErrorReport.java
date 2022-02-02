@@ -15,7 +15,7 @@ public class ErrorReport {
     private int errorType = Constants.NO_ERROR;
     private List<String> reportHeaders = List.of("", "", "", "");
     private List<StatsReportEntry> stats = new ArrayList<>();
-    private final String VERSION = "2022.02.3-SNAPSHOT";
+    private final String VERSION = "2022.02.4-SNAPSHOT";
 
 
     public ErrorReport() {

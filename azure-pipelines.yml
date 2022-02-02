@@ -84,7 +84,7 @@ jobs:
           isJacocoCoverageReportXML: true
           checkStyleRunAnalysis: true
           pmdRunAnalysis: true
-          sonarQubeRunAnalysis: false
+          sonarQubeRunAnalysis: true
 
       - task: SonarCloudPublish@1
         inputs:

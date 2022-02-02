@@ -237,6 +237,7 @@ public class MainITest11Sosial {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VKLO", "X", "TRYGDESIT", "XX"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "3", "TRYGDESIT", "01"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "3", "TRYGDESIT", "12"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "3", "TRYGDESIT", "XX"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
@@ -386,8 +387,13 @@ public class MainITest11Sosial {
     static Stream<TestRecordInputAndResult> control38DUFNummerProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "PERSON_DUF", "            "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "PERSON_DUF", "201212345603"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "           ", "PERSON_DUF", "201212345603"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "           ", "PERSON_DUF", "            "), definitions), true, Constants.NORMAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "190966     ", "PERSON_DUF", "201212345603"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "190966     ", "PERSON_DUF", "            "), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "190966     ", "PERSON_DUF", "2012 234560 "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "           ", "PERSON_DUF", "2012 234560 "), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "           ", "PERSON_DUF", "            "), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 

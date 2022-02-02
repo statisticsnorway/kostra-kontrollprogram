@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,6 +27,7 @@ public final class Fnr {
     public static boolean isValidNorwId(String fnr) {
         int[] s = new int[12];
 
+        if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
         if (fnr.length() != 11) return false;
         if (fnr.trim().length() == 0) return false;
 
@@ -63,12 +65,27 @@ public final class Fnr {
     }
 
     public static boolean isValidDUFnr(String dufnr) {
-        if (dufnr.length() != 12) return false;
-        if (dufnr.trim().length() == 0) return false;
+//        @JvmStatic
+//        fun validateDUF(duf: String): Boolean =
+//                Pattern.compile("^\\d{12}$").matcher(duf).matches()
+//                        &&
+//                        duf.asSequence()
+//                                .take(10)
+//                                .map { it.toString().toInt() }
+//                    .zip(sequenceOf(4, 6, 3, 2, 4, 6, 3, 2, 7, 5)) { digit, weight -> digit * weight }
+//                    .sum()
+//                .mod(11)
+//                .let { it.toString().padStart(2, '0') } == duf.substring(10)
+
+
+
+        if (!Pattern.compile("^\\d{12}$").matcher(dufnr).matches()) return false;
+//        if (dufnr.length() != 12) return false;
+//        if (dufnr.trim().length() == 0) return false;
 
         List<Integer> weights = List.of(4, 6, 3, 2, 4, 6, 3, 2, 7, 5);
-        String dufNr = dufnr.replace(' ', '0');
-        List<Character> numbers = dufNr.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
+//        String dufNr = dufnr.replace(' ', '0');
+        List<Character> numbers = dufnr.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
 
         try {
             Integer sum = IntStream.range(0, Math.min(numbers.size(), weights.size()))
@@ -76,7 +93,7 @@ public final class Fnr {
                     .reduce(0, Integer::sum);
             int remainder = sum % 11;
             String kontrollTall = (remainder < 10 ? "0" : "") + remainder;
-            return dufNr.substring(10).equalsIgnoreCase(kontrollTall);
+            return dufnr.substring(10).equalsIgnoreCase(kontrollTall);
         } catch (Exception e) {
             return false;
         }

@@ -2,10 +2,7 @@ package no.ssb.kostra.felles;
 
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.controlprogram.Arguments;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 
-import java.io.FileReader;
 import java.util.*;
 
 public class ErrorReport {
@@ -78,7 +75,7 @@ public class ErrorReport {
         StringBuilder report = new StringBuilder();
 
         final String lf = System.getProperty("line.separator");
-        final String VERSION = getProjectVersion();
+        final String VERSION = "2022.02.1";
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;
@@ -105,7 +102,7 @@ public class ErrorReport {
                 .append("<span>errorType:").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
-            boolean showSummary = false;
+            boolean showSummary = true;
             if (showSummary) {
                 report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
@@ -143,7 +140,7 @@ public class ErrorReport {
                         int errorType = Integer.parseInt(entrieStringsList.get(2));
                         String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : (errorType == Constants.NORMAL_ERROR) ? "black" : "green";
 
-                        if (!args.isRunAsExternalProcess()) {
+                        if (args.isRunAsExternalProcess()) {
                             report.append(lf);
                         }
 
@@ -198,16 +195,5 @@ public class ErrorReport {
 
     public Arguments getArgs() {
         return args;
-    }
-
-    private String getProjectVersion() {
-        try {
-            MavenXpp3Reader reader = new MavenXpp3Reader();
-            Model model = reader.read(new FileReader("pom.xml"));
-
-            return model.getVersion();
-        } catch (Exception e) {
-            return "Ukjent version";
-        }
     }
 }

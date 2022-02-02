@@ -99,12 +99,14 @@ class ComparatorSpec extends Specification {
         isValidDate(date, format) == result
 
         where:
-        date         | format       || result
-        "01-01-2000" | "dd-MM-yyyy" || true
-        "29-02-1900" | "dd-MM-yyyy" || true
-        "42-01-2000" | "dd-MM-yyyy" || false
-        "0000000000" | "dd-MM-yyyy" || false
-        "          " | "dd-MM-yyyy" || false
+        date                          | format       || result
+        "01-01-2000"                  | "dd-MM-yyyy" || true
+        "29-02-1900"                  | "dd-MM-yyyy" || true
+        "190966"                      | "ddMMyy"     || true
+        "19096699999".substring(0, 6) | "ddMMyy"     || true
+        "42-01-2000"                  | "dd-MM-yyyy" || false
+        "0000000000"                  | "dd-MM-yyyy" || false
+        "          "                  | "dd-MM-yyyy" || false
     }
 
     def "should validate emptiness, #param -> #result"() {

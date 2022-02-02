@@ -12,6 +12,11 @@
         <spock.version>2.0-groovy-3.0</spock.version>
         <jacoco.version>0.8.7</jacoco.version>
         <checkstyle.version>8.45.1</checkstyle.version>
+        <sonar.version>3.9.0.2155</sonar.version>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>statisticsnorway</sonar.organization>
+        <sonar.projectKey>statisticsnorway_kostra-kontrollprogram</sonar.projectKey>
+
     </properties>
 
     <repositories>
@@ -217,6 +222,11 @@
                     </plugins>
                 </pluginManagement>
                 <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar.version}</version>
+                    </plugin>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>

@@ -14,8 +14,7 @@ public class ErrorReport {
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
     private List<String> reportHeaders = List.of("", "", "", "");
-    private List<StatsReportEntry> stats = new ArrayList<>();
-    private final String VERSION = "2022.02.4-SNAPSHOT";
+    private final List<StatsReportEntry> stats = new ArrayList<>();
 
 
     public ErrorReport() {
@@ -72,6 +71,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
+        final String VERSION = "2022.02.5";
 
         StringBuilder report = new StringBuilder();
 
@@ -102,21 +102,19 @@ public class ErrorReport {
                 .append("<span>errorType:").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
-            boolean showSummary = true;
-            if (showSummary) {
-                report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
+            report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
-                for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
-                    CharSequence s = "***";
-                    String val = entry.getKey();
+            for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
+                CharSequence s = "***";
+                String val = entry.getKey();
 
-                    if (val.contains(s)) {
-                        report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
-                    } else {
-                        report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
-                    }
+                if (val.contains(s)) {
+                    report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
+                } else {
+                    report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
                 }
             }
+
 
             report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>");
             report.append("<table>");

@@ -258,7 +258,7 @@ public class Main {
 
     public static List<String> getArterUgyldigInvestering() {
         // Kun gyldig i drift og skal fjernes fra investering
-        return List.of("070", "080", "110", "114", "240", "509", "540", "570", "590", "600", "629", "630", "640", "800", "870", "874", "875", "877", "909", "990");
+        return List.of("070", "080", "110", "114", "240", "509", "570", "590", "600", "629", "630", "640", "800", "870", "874", "875", "877", "909", "990");
     }
 
 

@@ -21,16 +21,7 @@ public class MainITest11CKvalifiseringBlankFile {
 
     @BeforeEach
     public void beforeTest() {
-        // Mocking a blank file
-        String inputFileContent = "";
-
         sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-
-        FieldDefinitions.getFieldDefinitions();
-
-        args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400"});
     }
 
     @AfterEach
@@ -40,6 +31,12 @@ public class MainITest11CKvalifiseringBlankFile {
 
     @Test
     public void testDoControl() {
+        // Mocking a blank file
+        String inputFileContent = "File with invalid content";
+        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        System.setIn(in);
+
+        args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400"});
         ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {
@@ -52,6 +49,11 @@ public class MainITest11CKvalifiseringBlankFile {
 
     @Test
     public void testDoControlWithNoFile() {
+        // Mocking a blank file
+        String inputFileContent = "";
+        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        System.setIn(in);
+
         args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400", "-a", "0"});
         ErrorReport er = Main.doControls(args);
 
@@ -61,4 +63,23 @@ public class MainITest11CKvalifiseringBlankFile {
 
         assertNotNull("Has content ErrorReport", er);
         assertEquals(Constants.NO_ERROR, er.getErrorType());
-    }}
+    }
+
+    @Test
+    public void testDoControlWithInvalidFile() {
+        // Mocking a blank file
+        String inputFileContent = "File with invalid content";
+        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        System.setIn(in);
+
+        args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400", "-a", "0"});
+        ErrorReport er = Main.doControls(args);
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
+}

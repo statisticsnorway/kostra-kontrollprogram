@@ -20,21 +20,37 @@ public class Main {
 
         // sjekker om man krysset av i skjemaet om at vedlegg skal mangle
         // i så fall så er innsendingen ok
-        if (!arguments.harVedlegg()) {
-            errorReport.incrementCount();
-            errorReport.addEntry(
-                    new ErrorReportEntry(
-                            ""
-                            , ""
-                            , ""
-                            , " "
-                            , "Kontroll 0 Skal levere filuttrekk"
-                            , "Det er krysset av i skjemaet at det ikke finnes deltakere og blank fil er levert."
-                            , Constants.NO_ERROR
-                    )
-            );
-            return errorReport;
-        }
+//        if (!arguments.harVedlegg()) {
+//            errorReport.incrementCount();
+//            if (inputFileContent.isEmpty()){
+//                errorReport.addEntry(
+//                        new ErrorReportEntry(
+//                                ""
+//                                , ""
+//                                , ""
+//                                , " "
+//                                , "Kontroll 0 Skal levere filuttrekk"
+//                                , "Det er krysset av i skjemaet at det ikke finnes deltakere og blank fil er levert."
+//                                , Constants.NO_ERROR
+//                        )
+//                );
+//
+//            } else {
+//                errorReport.addEntry(
+//                        new ErrorReportEntry(
+//                                ""
+//                                , ""
+//                                , ""
+//                                , " "
+//                                , "Kontroll 0 Skal levere filuttrekk"
+//                                , "Det er krysset av i skjemaet at det ikke finnes deltakere, men filen som er levert har innhold."
+//                                , Constants.CRITICAL_ERROR
+//                        )
+//                );
+//            }
+//
+//            return errorReport;
+//        }
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde

@@ -34,8 +34,19 @@ public class ControlRecordLengthTest {
 
     @Test
     public void testNoDataFail() {
-        assertTrue(ControlRecordLengde.doControl(List.of(), er, 1));
+        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        er = new ErrorReport(args);
+
+        assertTrue(ControlRecordLengde.doControl(List.of(""), er, 1));
         assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
-        assertTrue(er.generateReport().contains("Filen inneholder ingen records."));
+    }
+
+    @Test
+    public void testNoDataOK() {
+        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        er = new ErrorReport(args);
+
+        assertFalse(ControlRecordLengde.doControl(List.of(), er, 1));
+        assertEquals(er.getErrorType(), Constants.NO_ERROR);
     }
 }

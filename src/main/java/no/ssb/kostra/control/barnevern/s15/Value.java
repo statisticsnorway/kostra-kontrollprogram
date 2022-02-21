@@ -1,7 +1,5 @@
 package no.ssb.kostra.control.barnevern.s15;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.regex.Pattern;
 
 /**
@@ -19,43 +17,13 @@ public class Value {
 		return data == null;
 	}
 
-	/**
-	 * Determines if the wrapped value is an empty string.
-	 */
-	public boolean isEmptyString() {
-		return data == null || "".equals(data);
-	}
-
-	/**
-	 * Determines if the wrapped value is NOT null.
-	 */
-	public boolean isFilled() {
-		return !isEmptyString();
-	}
-
-	/**
-	 * Returns a {@link Value} which will be empty its value equals one of the
-	 * given ignored values.
-	 */
-	public Value ignore(String... ignoredValues) {
-		if (isEmptyString()) {
-			return this;
-		}
-		for (String val : ignoredValues) {
-			if (data.equals(val)) {
-				return Value.of(null);
-			}
-		}
-		return this;
-	}
-
 	private static final Pattern NUMBER = Pattern.compile("\\d+(\\.\\d+)?");
 
 	/**
 	 * Checks if the current value is numeric (integer or double).
 	 */
 	public boolean isNumeric() {
-		return data != null && data instanceof Number
+		return data instanceof Number
 				|| NUMBER.matcher(asString("")).matches();
 	}
 
@@ -71,42 +39,6 @@ public class Value {
 	 */
 	public Object get(Object defaultValue) {
 		return data == null ? defaultValue : data;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <T> T coerce(Class<?> targetClazz, T defaultValue) {
-		if (data == null) {
-			return null;
-		}
-		if (targetClazz.isAssignableFrom(data.getClass())) {
-			return (T) data;
-		}
-		if (String.class.equals(targetClazz)) {
-			return (T) getString();
-		}
-		if (Integer.class.equals(targetClazz) || int.class.equals(targetClazz)) {
-			return (T) getInteger();
-		}
-		if (Long.class.equals(targetClazz) || long.class.equals(targetClazz)) {
-			return (T) getLong();
-		}
-		if (Boolean.class.equals(targetClazz)
-				|| boolean.class.equals(targetClazz)) {
-			return (T) (Boolean) Boolean.parseBoolean(String.valueOf(data));
-		}
-		if (BigDecimal.class.equals(targetClazz)) {
-			return (T) getBigDecimal(null);
-		}
-		if (targetClazz.isEnum()) {
-			try {
-				return (T) Enum
-						.valueOf((Class<Enum>) targetClazz, asString(""));
-			} catch (Exception e) {
-				return (T) Enum.valueOf((Class<Enum>) targetClazz, asString("")
-						.toUpperCase());
-			}
-		}
-		throw new IllegalArgumentException("Cannot convert to: " + targetClazz);
 	}
 
 	/**
@@ -144,28 +76,6 @@ public class Value {
 		return isNull() ? defaultValue : asString();
 	}
 
-	/**
-	 * Returns the value as boolean variable, or the default value if the given
-	 * one was null,
-	 */
-	public boolean asBoolean(boolean defaultValue) {
-		if (isNull()) {
-			return defaultValue;
-		}
-		if (data instanceof Boolean) {
-			return (Boolean) data;
-		}
-		return Boolean.parseBoolean(String.valueOf(data));
-	}
-
-	/**
-	 * Returns the value as boolean variable. If no value was given,
-	 * <code>false</code> is returned.
-	 */
-	public boolean asBoolean() {
-		return asBoolean(false);
-	}
-
 	public int asInt(int defaultValue) {
 		try {
 			if (isNull()) {
@@ -194,23 +104,6 @@ public class Value {
 		}
 	}
 
-	public long asLong(long defaultValue) {
-		try {
-			if (isNull()) {
-				return defaultValue;
-			}
-			if (data instanceof Long) {
-				return (Long) data;
-			}
-			if (data instanceof Integer) {
-				return (Integer) data;
-			}
-			return Long.parseLong(String.valueOf(data));
-		} catch (NumberFormatException e) {
-			return defaultValue;
-		}
-	}
-
 	public Long getLong() {
 		try {
 			if (isNull()) {
@@ -222,50 +115,6 @@ public class Value {
 			return Long.parseLong(String.valueOf(data));
 		} catch (NumberFormatException e) {
 			return null;
-		}
-	}
-
-	public double asDouble(double defaultValue) {
-		try {
-			if (isNull()) {
-				return defaultValue;
-			}
-			if (data instanceof Double) {
-				return (Double) data;
-			}
-			if (data instanceof Long) {
-				return (Long) data;
-			}
-			if (data instanceof Integer) {
-				return (Integer) data;
-			}
-			return Double.parseDouble(String.valueOf(data));
-		} catch (NumberFormatException e) {
-			return defaultValue;
-		}
-	}
-
-	public BigDecimal getBigDecimal(BigDecimal defaultValue) {
-		try {
-			if (isNull()) {
-				return defaultValue;
-			}
-			if (data instanceof Double) {
-				return BigDecimal.valueOf((Double) data);
-			}
-			if (data instanceof Long) {
-				return BigDecimal.valueOf((Long) data);
-			}
-			if (data instanceof Integer) {
-				return BigDecimal.valueOf((Integer) data);
-			}
-			if (data instanceof Long) {
-				return BigDecimal.valueOf((Long) data);
-			}
-			return new BigDecimal(asString("").replace(",", "."),
-					MathContext.UNLIMITED);
-		} catch (NumberFormatException e) {
-			return defaultValue;
 		}
 	}
 
@@ -281,21 +130,6 @@ public class Value {
 	@Override
 	public String toString() {
 		return asString();
-	}
-
-	@SuppressWarnings("unchecked")
-	public <E extends Enum<E>> E asEnum(Class<E> clazz) {
-		if (data == null) {
-			return null;
-		}
-		if (clazz.isAssignableFrom(data.getClass())) {
-			return (E) data;
-		}
-		try {
-			return Enum.valueOf(clazz, String.valueOf(data));
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	/**
@@ -319,30 +153,6 @@ public class Value {
 				return value;
 			}
 			return value.substring(0, length);
-		}
-	}
-
-	/**
-	 * Type and null safe implementation of the "right" function for strings. If
-	 * the given value is positive, it will return substring(strlen - length,
-	 * strlen). Otherwise it will cut the n right characters.
-	 */
-	public String right(int length) {
-		String value = asString();
-		if (value == null) {
-			return null;
-		}
-		if (length < 0) {
-			length = length * -1;
-			if (value.length() < length) {
-				return value;
-			}
-			return value.substring(0, value.length() - length);
-		} else {
-			if (value.length() < length) {
-				return value;
-			}
-			return value.substring(value.length() - length);
 		}
 	}
 

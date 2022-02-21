@@ -10,7 +10,6 @@ import no.ssb.kostra.utils.Format;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -23,7 +22,7 @@ public class IndividNodeHandler extends NodeHandler {
     private static Map<String, List<String>> mapDublettFodselsnummer = new TreeMap<>();
     private LocalDate forrigeTelleDato;
     private int individAlder = -1;
-    private final String datoFormatLangt = "yyyy-MM-dd";
+    private static final String datoFormatLangt = "yyyy-MM-dd";
 
     public IndividNodeHandler(ErrorReport er, Arguments args) {
         super(er, args);
@@ -80,10 +79,12 @@ public class IndividNodeHandler extends NodeHandler {
 
             // Oslo sender inn på alle bydeler, et individ skal ha muligheten
             // til å være registret i flere bydeler
+            String attrBydelsnummer = "@Bydelsnummer";
+            
             if (args.getRegion().startsWith("0301")) {
-                bydelsnummer = (individ.queryString("@Bydelsnummer") != null && individ
-                        .queryString("@Bydelsnummer").length() > 0) ? individ
-                        .queryString("@Bydelsnummer") : "99";
+                bydelsnummer = (individ.queryString(attrBydelsnummer) != null && individ
+                        .queryString(attrBydelsnummer).length() > 0) ? individ
+                        .queryString(attrBydelsnummer) : "99";
 
                 // Bruker fodselnummerString til å dekke den unike kombinasjonen
                 // av fodselsnummer og bydelsnummer
@@ -114,9 +115,9 @@ public class IndividNodeHandler extends NodeHandler {
             LocalDate individSluttDato = assignDateFromString(individ.queryString("@SluttDato"), datoFormatLangt);
             setIndividAlder(alder);
 
-            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
-            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
-            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat())) : "uoppgitt";
+            String individStartDatoString = (individStartDato != null) ? individStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat)) : "uoppgitt";
+            String individSluttDatoString = (individSluttDato != null) ? individSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat)) : "uoppgitt";
+            String forrigeTelleDatoString = (forrigeTelleDato != null) ? forrigeTelleDato.format(DateTimeFormatter.ofPattern(datePresentionFormat)) : "uoppgitt";
 
             individId = (individ.queryString("@Id") != null && individ.queryString("@Id").length() > 0) ? individ.queryString("@Id") : "Uoppgitt";
 
@@ -224,7 +225,7 @@ public class IndividNodeHandler extends NodeHandler {
                                 "Individ Kontroll 09: Bydelsnummer",
                                 "Filen mangler bydelsnummer.",
                                 Constants.CRITICAL_ERROR),
-                        individ.queryString("@Bydelsnummer"));
+                        individ.queryString(attrBydelsnummer));
                 controlExists(er, new ErrorReportEntry(saksbehandler,
                                 journalnummer, individId, refNr,
                                 "Individ Kontroll 10: Bydelsnavn",
@@ -253,10 +254,10 @@ public class IndividNodeHandler extends NodeHandler {
                         melding.queryString("@SluttDato"),
                         datoFormatLangt);
                 String meldingStartDatoString = (meldingStartDato != null)
-                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? meldingStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
                 String meldingSluttDatoString = (meldingSluttDato != null)
-                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? meldingSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
                 String henlagt = "1";
                 String meldingKonklusjon = melding.queryString("@Konklusjon");
@@ -454,9 +455,9 @@ public class IndividNodeHandler extends NodeHandler {
                     LocalDate undersokelseSluttDato = assignDateFromString(
                             undersokelse.queryString("@SluttDato"),
                             datoFormatLangt);
-                    String undersokelseStartDatoString = undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()));
+                    String undersokelseStartDatoString = undersokelseStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat));
                     String undersokelseSluttDatoString = (undersokelseSluttDato != null)
-                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                            ? undersokelseSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                             : "uoppgitt";
                     String undersokelseKonklusjon = defaultString(undersokelse.queryString("@Konklusjon"), "");
                     String undersokelsePresisering = defaultString(undersokelse.queryString("Presisering"), "");
@@ -659,10 +660,10 @@ public class IndividNodeHandler extends NodeHandler {
                         plan.queryString("@SluttDato"),
                         datoFormatLangt);
                 String planStartDatoString = (planStartDato != null)
-                        ? planStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? planStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
                 String planSluttDatoString = (planSluttDato != null)
-                        ? planSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? planSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
 
                 controlDatoEtterDato(
@@ -745,10 +746,10 @@ public class IndividNodeHandler extends NodeHandler {
                         tiltak.queryString("@SluttDato"),
                         datoFormatLangt);
                 String tiltakStartDatoString = (tiltakStartDato != null)
-                        ? tiltakStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? tiltakStartDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
                 String tiltakSluttDatoString = (tiltakSluttDato != null)
-                        ? tiltakSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat()))
+                        ? tiltakSluttDato.format(DateTimeFormatter.ofPattern(datePresentionFormat))
                         : "uoppgitt";
                 String tiltakKategoriKode = defaultString(tiltak.queryString("Kategori/@Kode"), "");
                 List<String> kodelisteKategoriKode = List.of("1.99", "2.99", "3.7",

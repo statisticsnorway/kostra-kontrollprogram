@@ -17,7 +17,7 @@ class SAX2DOMHandler {
 	private Node currentNode;
 	private NodeHandler nodeHandler;
 
-	public SAX2DOMHandler(NodeHandler handler, String uri, String name,
+	public SAX2DOMHandler(NodeHandler handler, String name,
                           Attributes attributes) throws ParserConfigurationException {
 		this.nodeHandler = handler;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -46,7 +46,7 @@ class SAX2DOMHandler {
 			if (attrName == null || "".equals(attrName)) {
 				attrName = attributes.getQName(i);
 			}
-			if (attrName != null || !"".equals(attrName)) {
+			if (attrName != null) {
 				element.setAttribute(attrName, attributes.getValue(i));
 			}
 		}
@@ -63,7 +63,7 @@ class SAX2DOMHandler {
 		return root;
 	}
 
-	public void startElement(String uri, String name, Attributes attributes) {
+	public void startElement(String name, Attributes attributes) {
 		createElement(name, attributes);
 	}
 

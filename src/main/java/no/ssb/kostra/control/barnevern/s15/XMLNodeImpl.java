@@ -17,7 +17,7 @@ import java.util.List;
 public class XMLNodeImpl implements StructuredNode {
 
     private static final XPathFactory XPATH = XPathFactory.newInstance();
-    private static final String datoFormatLangt = "yyyy-MM-dd";
+    private static final String DATO_FORMAT_LANGT = "yyyy-MM-dd";
     private Node node;
 
     public XMLNodeImpl(Node root) {
@@ -43,7 +43,7 @@ public class XMLNodeImpl implements StructuredNode {
             throws XPathExpressionException {
         NodeList result = (NodeList) XPATH.newXPath().compile(path)
                 .evaluate(node, XPathConstants.NODESET);
-        List<StructuredNode> resultList = new ArrayList<StructuredNode>(
+        List<StructuredNode> resultList = new ArrayList<>(
                 result.getLength());
         for (int i = 0; i < result.getLength(); i++) {
             resultList.add(new XMLNodeImpl(result.item(i)));
@@ -97,9 +97,9 @@ public class XMLNodeImpl implements StructuredNode {
 
         try {
             LocalDate startDato = this.assignDateFromString(
-                    queryString("@StartDato"), datoFormatLangt);
+                    queryString("@StartDato"), DATO_FORMAT_LANGT);
             LocalDate otherStartDato = other.assignDateFromString(
-                    other.queryString("@StartDato"), datoFormatLangt);
+                    other.queryString("@StartDato"), DATO_FORMAT_LANGT);
 
             if (startDato.isBefore(otherStartDato)) {
                 result = -1;

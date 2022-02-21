@@ -23,9 +23,7 @@ public class ComparatorNodeByStartDato implements Comparator<StructuredNode> {
                     return 0;
                 }
             }
-        } catch (XPathExpressionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (XPathExpressionException ignored) {
         }
 
         return 0;

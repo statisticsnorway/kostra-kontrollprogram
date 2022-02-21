@@ -14,6 +14,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public abstract class NodeHandler {
      * @param er   ErrorReport
      * @param args Arguments
      */
-    public NodeHandler(ErrorReport er, Arguments args) {
+    protected NodeHandler(ErrorReport er, Arguments args) {
         this.er = er;
         this.args = args;
     }
@@ -44,9 +45,7 @@ public abstract class NodeHandler {
         return s == null || s.trim().isEmpty();
     }
 
-    protected static String datePresentionFormat(){
-        return "dd-MM-yyyy";
-    }
+    protected static String datePresentionFormat = "dd-MM-yyyy";
 
     /**
      * Abstract metode som arves og implementeres mot den XML-noden som skal
@@ -69,12 +68,13 @@ public abstract class NodeHandler {
             // create a SchemaFactory capable of understanding WXS schemas
             SchemaFactory factory = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 
             // load a WXS schema, represented by a Schema instance
             InputStream iStream = this.getClass().getClassLoader()
                     .getResourceAsStream(xsd);
             if (iStream == null) {
-                throw new RuntimeException("Kunne ikke finne fil " + xsd);
+                throw new FileNotFoundException("Kunne ikke finne fil " + xsd);
             }
 
             Source schemaFile = new StreamSource(iStream);

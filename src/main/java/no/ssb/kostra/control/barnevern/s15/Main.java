@@ -6,6 +6,10 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.controlprogram.Arguments;
 
 public final class Main {
+    private Main() {
+        throw new IllegalStateException("Static processing class");
+    }
+
     public static ErrorReport doControls(Arguments args) {
         ErrorReport er = new ErrorReport(args);
         String regionNumber = args.getRegion();
@@ -21,8 +25,6 @@ public final class Main {
             r.parse(args.getInputContentAsInputStream());
 
         } catch (Exception e) {
-            e.printStackTrace();
-            // throw new UnreadableDataException();
             er.addEntry(
                     new ErrorReportEntry(
                             " ",

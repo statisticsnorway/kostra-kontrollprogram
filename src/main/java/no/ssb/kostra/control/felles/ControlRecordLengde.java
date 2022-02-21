@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ControlRecordLengde {
     public static boolean doControl(List<String> s, ErrorReport er, int length) {
+        er.incrementCount();
+
         List<String> recordLengdeFeil = new ArrayList<>();
 
         for (int i = 0; i < s.size(); i++) {
@@ -16,8 +18,6 @@ public class ControlRecordLengde {
                 recordLengdeFeil.add(String.valueOf(i+1));
             }
         }
-
-        er.incrementCount();
 
         if (er.getArgs().harVedlegg()) {
             if (s.isEmpty()) {
@@ -47,7 +47,7 @@ public class ControlRecordLengde {
             }
 
         } else {
-            if (s.isEmpty()){
+            if (s.isEmpty() || (s.size() == 1 && s.get(0).trim().isBlank())) {
                 er.addEntry(
                         new ErrorReportEntry(
                                 ""
@@ -70,7 +70,11 @@ public class ControlRecordLengde {
                                 , ""
                                 , " "
                                 , "Kontroll 0 Skal levere filuttrekk"
-                                , "Det er krysset av i skjemaet at det ikke finnes deltakere, men filen som er levert har innhold."
+                                , "Det er krysset av i skjemaet at det ikke finnes deltakere, men filen som er levert har annet innhold enn ett mellomrom."
+                                + " Kryptert fil uten innhold kan lastes ned fra https://www.ssb.no/innrapportering/kostra-innrapportering<br/>"
+                                + " -> Kontrollprogram og programmer til fagsystem for kommuner og leverandører<br/>"
+                                + " -> Kvalifiseringsstønad<br/>"
+                                + " -> Tom, kryptert fil (for dem som ikke har noen mottakere av kvalifiseringsstønad i 2021)<br/>"
                                 , Constants.CRITICAL_ERROR
                         )
                 );

@@ -15,6 +15,7 @@ import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 public class Main {
     public static ErrorReport doControls(Arguments arguments) {
         ErrorReport errorReport = new ErrorReport(arguments);
+        errorReport.incrementCount();
         errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Melding"));
         List<String> inputFileContent = arguments.getInputContentAsStringList();
 

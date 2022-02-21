@@ -9,7 +9,6 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 public class ControlRecordLengthTest {
     private ErrorReport er;
@@ -22,23 +21,44 @@ public class ControlRecordLengthTest {
 
     @Test
     public void testOK() {
-        assertFalse(ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 2));
+        boolean result = ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 2);
+        System.out.println(er.generateReport());
+
+        assertFalse(result);
     }
 
     @Test
     public void testIncorrectLengthFail() {
-        assertTrue(ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 1));
+        boolean result = ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 1);
+        System.out.println(er.generateReport());
+
+        assertTrue(result);
         assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
         assertTrue(er.generateReport().contains("Gjelder for linjene"));
     }
 
     @Test
-    public void testNoDataFail() {
+    public void testNoDataInvalidFileFail() {
         Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
         er = new ErrorReport(args);
 
-        assertTrue(ControlRecordLengde.doControl(List.of(""), er, 1));
+        boolean result = ControlRecordLengde.doControl(List.of("Invalid file"), er, 1);
+        System.out.println(er.generateReport());
+
+        assertTrue(result);
         assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
+    }
+
+    @Test
+    public void testNoDataOnlySpacesOK() {
+        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        er = new ErrorReport(args);
+
+        boolean result = ControlRecordLengde.doControl(List.of(" "), er, 1);
+        System.out.println(er.generateReport());
+
+        assertFalse(result);
+        assertEquals(er.getErrorType(), Constants.NO_ERROR);
     }
 
     @Test
@@ -46,7 +66,10 @@ public class ControlRecordLengthTest {
         Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
         er = new ErrorReport(args);
 
-        assertFalse(ControlRecordLengde.doControl(List.of(), er, 1));
+        boolean result = ControlRecordLengde.doControl(List.of(), er, 1);
+        System.out.println(er.generateReport());
+
+        assertFalse(result);
         assertEquals(er.getErrorType(), Constants.NO_ERROR);
     }
 }

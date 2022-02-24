@@ -1126,6 +1126,9 @@ class RegnskapKostraSpec extends Specification {
         "420400" | "0M"   | "3"         | "840 "   | "800" | "0"   || true           | Constants.CRITICAL_ERROR
         "420400" | "0P"   | "3"         | "840 "   | "800" | "-1"  || false          | Constants.NO_ERROR
         "420400" | "0P"   | "3"         | "840 "   | "800" | "0"   || true           | Constants.CRITICAL_ERROR
+        // unntak for gitte kommuner
+        "501400" | "0A"   | "1"         | "840 "   | "800" | "0"   || false          | Constants.NO_ERROR
+        "501400" | "0M"   | "3"         | "840 "   | "800" | "0"   || false          | Constants.NO_ERROR
     }
 
     def "Skal validere Kontroll 140 Overforing mellom drifts- og investeringsregnskap, region #region / skjema #skjema / list #list -> #expectedResult / #errorlevel"() {

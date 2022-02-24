@@ -1024,7 +1024,11 @@ public class Main {
         // 135) Rammetilskudd skal føres på funksjon 840. Ingen andre funksjoner skal være gyldig i kombinasjon med art 800.
         Arguments arguments = errorReport.getArgs();
         if (isCodeInCodelist(arguments.getSkjema(), getRegionaleBevilgningRegnskapList())) {
-            if (!isCodeInCodelist(arguments.getRegion(), osloBydeler) && !isCodeInCodelist(arguments.getRegion(), svalbard)) {
+            if (!isCodeInCodelist(arguments.getRegion(), osloBydeler)
+                    && !isCodeInCodelist(arguments.getRegion(), svalbard)
+                    // eget unntakstilfelle fra s212
+                    && !isCodeInCodelist(arguments.getRegion(), List.of("501400"))
+            ) {
 
                 int sumRammetilskudd = regnskap.stream()
                         .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(arguments.getSkjema()).get("D"))

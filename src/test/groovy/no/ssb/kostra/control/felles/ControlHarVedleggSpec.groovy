@@ -36,6 +36,7 @@ class ControlHarVedleggSpec extends Specification {
         where:
         hasAttachment | content              || expectedResult | errorLevel
         true          | List.of("123456789") || false          | NO_ERROR
+        false         | List.of("", "")      || false          | NO_ERROR
         false         | List.of(" ", " ")    || false          | NO_ERROR
         false         | List.of("  ", "  ")  || false          | NO_ERROR
         false         | List.of(" ")         || false          | NO_ERROR

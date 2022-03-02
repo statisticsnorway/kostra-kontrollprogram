@@ -50,5 +50,6 @@ public class MainITest11SosialBlankFile {
 
         assertNotNull("Has content ErrorReport", er);
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+//        er.re
     }
 }

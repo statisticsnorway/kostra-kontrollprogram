@@ -29,7 +29,7 @@ public class Main {
         List<Record> records = inputFileContent.stream()
                 .map(p -> new Record(p, fieldDefinitions))
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
-                .map(r -> {
+                .peek(r -> {
                     try {
                         r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")), arguments.getAargang()));
                         r.setFieldAsInteger("FNR_OK", (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")))) ? 1: 0);
@@ -39,7 +39,6 @@ public class Main {
                         r.setFieldAsInteger("FNR_OK", 0);
                     }
 
-                    return r;
                 })
                 .collect(Collectors.toList());
 
@@ -98,7 +97,7 @@ public class Main {
             if (errorReport.getErrorType() < Constants.CRITICAL_ERROR) {
                 Integer bidragSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0("BIDRAG")).reduce(0, Integer::sum);
                 Integer laanSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0("LAAN")).reduce(0, Integer::sum);
-                Integer stonadSum = bidragSum + laanSum;
+                int stonadSum = bidragSum + laanSum;
 
                 errorReport.addStats(new StatsReportEntry(
                         "Sum"
@@ -108,7 +107,7 @@ public class Main {
                         , new Code("LAAN", "Lån")
                 )
                         , List.of(
-                        new StatsEntry("STONAD", stonadSum.toString())
+                        new StatsEntry("STONAD", Integer.toString(stonadSum))
                         , new StatsEntry("BIDRAG", bidragSum.toString())
                         , new StatsEntry("LAAN", laanSum.toString())
                 )

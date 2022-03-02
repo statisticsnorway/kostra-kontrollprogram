@@ -27,7 +27,7 @@ public final class Constants {
     // Feil antall eller type argumenter ved start av programmet.
     public static final int PARAMETER_ERROR = 254;
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     // Constants for different data types
     public static final String STRING_TYPE = "String";

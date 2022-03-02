@@ -1,35 +1,69 @@
 package no.ssb.kostra.control.controlprogram
 
-import no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main
+
 import no.ssb.kostra.controlprogram.Arguments
-import no.ssb.kostra.felles.ErrorReport
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.nio.charset.StandardCharsets
 
-import static no.ssb.kostra.felles.Constants.DEBUG
-import static no.ssb.kostra.felles.Constants.NO_ERROR
-
-class ArgumentsSpec  extends Specification {
-    def "testDoControlWithByteOrderMark"() {
+class ArgumentsSpec extends Specification {
+    @Unroll
+    def "test behaviour of attachment"() {
         given:
-        // Mocking a blank file
-        String inputFileContent = " "
-        ByteArrayInputStream is = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1))
+        ByteArrayInputStream is = new ByteArrayInputStream(attachment.getBytes(StandardCharsets.ISO_8859_1))
         System.setIn(is)
 
-        Arguments args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400", "-a", "0"})
-
         when:
-        ErrorReport er = Main.doControls(args)
+        Arguments args = new Arguments(new String[]{"-s", "test", "-y", "0000", "-r", "0000", "-a", hasAttachment})
+        args.getInputContentAsStringList()
 
-        if (DEBUG) {
-            System.out.print(er.generateReport())
-        }
 
         then:
         noExceptionThrown()
-        er.generateReport().contains("ikke finnes deltakere")
-        er.getErrorType() == NO_ERROR
+        args.harVedlegg() == hasExpectedAttachment
+        args.hasInputContent() == hasExpectedInputContent
+        args.getInputContentAsStringList().size() == noOfRecords
+
+        where:
+        hasAttachment | attachment  || noOfRecords | hasExpectedAttachment | hasExpectedInputContent
+        "1"           | "123456789" || 1           | true                  | true
+        "1"           | " "         || 0           | true                  | false
+        "0"           | "123456789" || 1           | false                 | true
+        "0"           | ""          || 0           | false                 | false
+        "0"           | " "         || 0           | false                 | false
+        "0"           | "  "        || 0           | false                 | false
+    }
+
+    @Unroll
+    def "test all-args ctor"() {
+        when:
+        Arguments args = new Arguments(
+                "test",
+                "0000",
+                " ",
+                "000000",
+                "UOPPGITT",
+                "         ",
+                "         ",
+                hasAttachment,
+                false,
+                attachment
+        )
+
+        then:
+        noExceptionThrown()
+        args.harVedlegg() == hasExpectedAttachment
+        args.hasInputContent() == hasExpectedInputContent
+        args.getInputContentAsStringList().size() == noOfRecords
+
+        where:
+        hasAttachment | attachment           || noOfRecords | hasExpectedAttachment | hasExpectedInputContent
+        true          | List.of("123456789") || 1           | true                  | true
+        true          | List.of(" ")         || 0           | true                  | false
+        false         | List.of("123456789") || 1           | false                 | true
+        false         | List.of("")          || 0           | false                 | false
+        false         | List.of(" ")         || 0           | false                 | false
+        false         | List.of("  ")        || 0           | false                 | false
     }
 }

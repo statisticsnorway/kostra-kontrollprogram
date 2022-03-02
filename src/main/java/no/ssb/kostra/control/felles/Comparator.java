@@ -11,13 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Comparator {
-    public static boolean compareIntegerOperatorInteger(Integer a, String op, Integer b) {
-        boolean ok = true;
-        if (a == null){
-            a = 0;
-        }
+    private Comparator(){}
 
-        if (!op.isEmpty() && b != null) {
+    public static boolean compareIntegerOperatorInteger(Integer a, String op, Integer b) {
+        boolean ok = false;
+
+        if (a != null && op != null && !op.isEmpty() && b != null) {
             if (op.equalsIgnoreCase("<")) {
                 ok = (a < b);
 
@@ -34,7 +33,7 @@ public class Comparator {
                 ok = (a.intValue() == b.intValue());
 
             } else if (op.equalsIgnoreCase("!=")) {
-                ok = !(a.intValue() == b.intValue());
+                ok = (a.intValue() != b.intValue());
             }
         }
 

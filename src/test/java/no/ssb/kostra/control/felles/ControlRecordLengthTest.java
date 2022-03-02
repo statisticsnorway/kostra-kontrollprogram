@@ -60,16 +60,4 @@ public class ControlRecordLengthTest {
         assertFalse(result);
         assertEquals(er.getErrorType(), Constants.NO_ERROR);
     }
-
-    @Test
-    public void testNoDataOK() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
-        er = new ErrorReport(args);
-
-        boolean result = ControlRecordLengde.doControl(List.of(), er, 1);
-        System.out.println(er.generateReport());
-
-        assertFalse(result);
-        assertEquals(er.getErrorType(), Constants.NO_ERROR);
-    }
 }

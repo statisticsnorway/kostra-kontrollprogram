@@ -52,7 +52,7 @@ public class ComparatorTest {
 
     @Test
     public void compareIntegerOperatorIntegerAIsNullTest() {
-        assertTrue(compareIntegerOperatorInteger(null, "==", 0));
+        assertFalse(compareIntegerOperatorInteger(null, "==", 0));
     }
 
     @Test

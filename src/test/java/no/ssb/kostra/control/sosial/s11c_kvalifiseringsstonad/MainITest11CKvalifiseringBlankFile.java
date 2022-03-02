@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -67,13 +66,14 @@ public class MainITest11CKvalifiseringBlankFile {
     }
 
     @Test
-    public void testDoControlWithByteOrderMark() {
+    public void testDoControlWithBlankFile() {
         // Mocking a blank file
         String inputFileContent = " ";
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
         System.setIn(in);
 
         args = new Arguments(new String[]{"-s", "11CF", "-y", "2020", "-r", "420400", "-a", "0"});
+        args.getInputContentAsStringList();
         ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {

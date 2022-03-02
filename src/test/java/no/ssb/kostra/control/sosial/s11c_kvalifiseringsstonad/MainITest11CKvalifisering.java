@@ -343,7 +343,10 @@ public class MainITest11CKvalifisering {
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "3", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "4", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "5", "AVSL_DATO", "000020"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", " ", "AVSL_DATO", "000020"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", " ", "AVSL_DATO", "010120"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 

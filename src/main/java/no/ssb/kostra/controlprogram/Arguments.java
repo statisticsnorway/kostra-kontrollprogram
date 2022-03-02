@@ -1,6 +1,9 @@
 package no.ssb.kostra.controlprogram;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Arguments {
@@ -14,9 +17,30 @@ public class Arguments {
     private boolean harVedlegg = true;
     private boolean isRunAsExternalProcess = false;
 
-    private List<String> inputFileContent = new ArrayList<>();
+    private List<String> inputFileContent = null;
 
-    public Arguments(String[] argv){
+    public Arguments() {
+    }
+
+    public Arguments(String skjema, String aargang, String kvartal, String region, String navn, String orgnr, String foretaknr, boolean harVedlegg, boolean isRunAsExternalProcess, List<String> inputFileContent) {
+        this.setSkjema(skjema);
+        this.aargang = aargang;
+        this.kvartal = kvartal;
+        this.region = region;
+        this.navn = navn;
+        this.orgnr = orgnr;
+        this.foretaknr = foretaknr;
+        this.harVedlegg = harVedlegg;
+        this.isRunAsExternalProcess = isRunAsExternalProcess;
+        this.inputFileContent = new ArrayList<>();
+        for (String line : inputFileContent) {
+            if (line != null && line.trim().length() != 0) {
+                this.inputFileContent.add(line);
+            }
+        }
+    }
+
+    public Arguments(String[] argv) {
         GetOptDesc[] options = {
                 new GetOptDesc('s', "schema", true),
                 new GetOptDesc('y', "year", true),
@@ -30,26 +54,14 @@ public class Arguments {
         };
 
         GetOpt parser = new GetOpt(options);
+        @SuppressWarnings("rawtypes")
         Map optionsFound = parser.parseArguments(argv);
-        Iterator it = optionsFound.keySet().iterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
+        for (Object o : optionsFound.keySet()) {
+            String key = (String) o;
             char c = key.charAt(0);
             switch (c) {
                 case 's':
                     skjema = (String) optionsFound.get(key);
-
-                    // Kvartalsregnskap fra fylkene kommer inn med typeRegnskap=0AK*
-                    // (for 0C-regnskap) eller typeRegnskap=0BK* (for 0D-regnskap).
-                    // (P.g.a. lazy programming på Hubbus.)
-                    // Retter dette her.
-                    if (skjema.length() == 4 && Arrays.asList("K1", "K2", "K3", "K4").contains(skjema.substring(2))) {
-                        if (skjema.substring(0, 1).equalsIgnoreCase("0A")) {
-                            skjema = "0C" + skjema.substring(2);
-                        } else if (skjema.substring(0, 1).equalsIgnoreCase("0B")) {
-                            skjema = "0D" + skjema.substring(2);
-                        }
-                    }
                     break;
                 case 'y':
                     aargang = (String) optionsFound.get(key);
@@ -87,15 +99,15 @@ public class Arguments {
             }
         }
 
-        if (skjema == null || skjema.trim().length() == 0){
+        if (skjema == null || skjema.trim().length() == 0) {
             throw new IllegalArgumentException("parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A");
         }
 
-        if (aargang == null || aargang.trim().length() == 0){
+        if (aargang == null || aargang.trim().length() == 0) {
             throw new IllegalArgumentException("parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020");
         }
 
-        if (region == null || region.trim().length() == 0){
+        if (region == null || region.trim().length() == 0) {
             throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100");
         }
     }
@@ -110,10 +122,6 @@ public class Arguments {
 
     public String getAargang() {
         return aargang;
-    }
-
-    public int getAargangAsInteger() {
-        return Integer.valueOf(aargang);
     }
 
     public String getKvartal() {
@@ -137,7 +145,9 @@ public class Arguments {
     }
 
     public List<String> getInputContentAsStringList() {
-        if (inputFileContent.isEmpty()){
+        if (this.inputFileContent == null) {
+            this.inputFileContent = new ArrayList<>();
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
                 String line;
 
@@ -161,7 +171,19 @@ public class Arguments {
     }
 
     public void setInputFileContent(List<String> inputFileContent) {
-        this.inputFileContent = inputFileContent;
+        if (this.inputFileContent == null) {
+            this.inputFileContent = new ArrayList<>();
+        }
+
+        for (String line : inputFileContent) {
+            if (line != null && line.trim().length() != 0) {
+                this.inputFileContent.add(line);
+            }
+        }
+    }
+
+    public boolean hasInputContent() {
+        return this.inputFileContent == null || 0 < this.inputFileContent.size();
     }
 
     public boolean harVedlegg() {

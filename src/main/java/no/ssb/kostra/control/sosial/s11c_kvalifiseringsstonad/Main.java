@@ -13,51 +13,21 @@ import java.util.stream.Collectors;
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
 public class Main {
+    private Main(){}
+
     public static ErrorReport doControls(Arguments arguments) {
         ErrorReport errorReport = new ErrorReport(arguments);
         errorReport.incrementCount();
         errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Melding"));
         List<String> inputFileContent = arguments.getInputContentAsStringList();
 
-        // sjekker om man krysset av i skjemaet om at vedlegg skal mangle
-        // i så fall så er innsendingen ok
-//        if (!arguments.harVedlegg()) {
-//            errorReport.incrementCount();
-//            if (inputFileContent.isEmpty()){
-//                errorReport.addEntry(
-//                        new ErrorReportEntry(
-//                                ""
-//                                , ""
-//                                , ""
-//                                , " "
-//                                , "Kontroll 0 Skal levere filuttrekk"
-//                                , "Det er krysset av i skjemaet at det ikke finnes deltakere og blank fil er levert."
-//                                , Constants.NO_ERROR
-//                        )
-//                );
-//
-//            } else {
-//                errorReport.addEntry(
-//                        new ErrorReportEntry(
-//                                ""
-//                                , ""
-//                                , ""
-//                                , " "
-//                                , "Kontroll 0 Skal levere filuttrekk"
-//                                , "Det er krysset av i skjemaet at det ikke finnes deltakere, men filen som er levert har innhold."
-//                                , Constants.CRITICAL_ERROR
-//                        )
-//                );
-//            }
-//
-//            return errorReport;
-//        }
+        // Sjekker om man skal ha vedlegg
+        if (ControlHarVedlegg.doControl(errorReport)) {
+            return errorReport;
+        }
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, errorReport, FieldDefinitions.getFieldLength());
-
-        if (hasErrors) {
+        if (ControlRecordLengde.doControl(inputFileContent, errorReport, FieldDefinitions.getFieldLength())) {
             return errorReport;
         }
 
@@ -736,6 +706,15 @@ public class Main {
     public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, Record record) {
         errorReport.incrementCount();
 
+        String status = record.getFieldAsString("STATUS");
+        List<String> codes = record.getFieldDefinitionByName("STATUS")
+                .getCodeList()
+                .stream()
+                .filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5")))
+                .map(Code::getCode)
+                .collect(Collectors.toList());
+
+        if (Comparator.isCodeInCodelist(status, codes)){
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                 errorReport
                 , new ErrorReportEntry(
@@ -753,6 +732,26 @@ public class Main {
                 , record.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::getCode).collect(Collectors.toList())
                 , record.getFieldAsLocalDate("AVSL_DATO")
         );
+
+        } else {
+            return ControlFelt1InneholderKodeFraKodeliste.doControl(
+                    errorReport
+                    , new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
+                            , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + record.getFieldAsString("AVSL_DATO") + "), skal være blankt dersom det er krysset av for svaralternativ "
+                            + record.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> !Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                            + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , record.getFieldAsString("AVSL_DATO")
+                    , List.of("      ")
+            );
+
+        }
     }
 
     public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, Record record) {

@@ -28,20 +28,21 @@ class ComparatorSpec extends Specification {
         2    | "=="     | 2    || true
         1    | "!="     | 2    || true
         2    | "!="     | 2    || false
-        null | "=="     | 0    || true
+        null | "=="     | 0    || false
+        null | null     | 0    || false
     }
 
-    def "should validate that code is in codelist, #code in #codelist -> #result"() {
+    def "should validate that code is in code list, #code in #codelist -> #result"() {
         expect:
         isCodeInCodelist(code, codelist) == result
 
         where:
         code            | codelist                  || result
         "code1"         | List.of("code1", "code2") || true
-        "notInCodelist" | List.of("code1", "code2") || false
+        "notInCodeList" | List.of("code1", "code2") || false
     }
 
-    def "should validate that code is removed from codelist, remove #removelist from #codelist -> #resultlist -> #result"() {
+    def "should validate that code is removed from code list, remove #removelist from #codelist -> #resultlist -> #result"() {
         expect:
         verifyAll {
             removeCodesFromCodelist(codelist, removelist) == resultlist
@@ -51,10 +52,10 @@ class ComparatorSpec extends Specification {
         where:
         codelist                           | removelist               || resultlist                         | result
         List.of("code1", "code2", "code3") | List.of("code2")         || List.of("code1", "code3")          | true
-        List.of("code1", "code2", "code3") | List.of("notInCodelist") || List.of("code1", "code2", "code3") | true
+        List.of("code1", "code2", "code3") | List.of("notInCodeList") || List.of("code1", "code2", "code3") | true
     }
 
-    def "should validate orgnr, #orgnr -> #result"() {
+    def "should validate business id, #orgnr -> #result"() {
         expect:
         isValidOrgnr(orgnr) == result
 

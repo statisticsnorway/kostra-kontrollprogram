@@ -266,6 +266,17 @@ public class ControlFilbeskrivelseTest {
     }
 
     @Test
+    public void testOptionalDateFailInvalidDate() {
+        List<FieldDefinition> fieldDefinitions = List.of(
+                new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
+        );
+        String record1 = "20200000";
+        r = Utils.addLineNumbering(new Record(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
+
+    @Test
     public void testOptionalDateOk1() {
         List<FieldDefinition> fieldDefinitions = List.of(
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)

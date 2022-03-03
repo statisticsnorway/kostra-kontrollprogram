@@ -71,7 +71,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final String VERSION = "2022.03.1";
+        final String VERSION = "2022.03.2-SNAPSHOT";
 
         StringBuilder report = new StringBuilder();
 

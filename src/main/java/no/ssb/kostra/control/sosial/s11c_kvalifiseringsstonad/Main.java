@@ -13,13 +13,27 @@ import java.util.stream.Collectors;
 import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 
 public class Main {
-    private Main(){}
+    // Konstanter
+    private static final String ALDER = "ALDER";
+    private static final String FNR = "PERSON_FODSELSNR";
+    private static final String FNR_OK = "FNR_OK";
+    private static final String KVP_STONAD = "KVP_STONAD";
+    private static final List<String> STMND = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
+    private static final String SAKSBEHANDLER = "SAKSBEHANDLER";
+    private static final String JOURNALNR = "PERSON_JOURNALNR";
+    private static final String ANTBU18 = "ANTBU18";
+    private static final String STATUS = "STATUS";
+
+
+    private Main() {
+    }
 
     public static ErrorReport doControls(Arguments arguments) {
         ErrorReport errorReport = new ErrorReport(arguments);
         errorReport.incrementCount();
         errorReport.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Melding"));
         List<String> inputFileContent = arguments.getInputContentAsStringList();
+
 
         // Sjekker om man skal ha vedlegg
         if (ControlHarVedlegg.doControl(errorReport)) {
@@ -37,12 +51,12 @@ public class Main {
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
                 .map(r -> {
                     try {
-                        r.setFieldAsInteger("ALDER", Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString("PERSON_FODSELSNR")), arguments.getAargang()));
-                        r.setFieldAsInteger("FNR_OK", 1);
+                        r.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString(FNR)), arguments.getAargang()));
+                        r.setFieldAsInteger(FNR_OK, 1);
 
                     } catch (Exception e) {
-                        r.setFieldAsInteger("ALDER", -1);
-                        r.setFieldAsInteger("FNR_OK", 0);
+                        r.setFieldAsInteger(ALDER, -1);
+                        r.setFieldAsInteger(FNR_OK, 0);
                     }
 
                     return r;
@@ -58,45 +72,45 @@ public class Main {
             control05BJournalnummerDubletter(errorReport, records);
         }
 
-        records.forEach(record -> {
-            control03Kommunenummer(errorReport, record);
-            control03Bydelsnummer(errorReport, record);
-            control04OppgaveAar(errorReport, record);
-            control05Fodselsnummer(errorReport, record);
-            control06AlderUnder18Aar(errorReport, record);
-            control07AlderEr68AarEllerOver(errorReport, record);
-            control08Kjonn(errorReport, record);
-            control09Sivilstand(errorReport, record);
-            control10Bu18(errorReport, record);
-            control11Bu18AntBu18(errorReport, record);
-            control12AntBu18Bu18(errorReport, record);
-            control13AntBu18(errorReport, record);
-            control14RegDato(errorReport, record);
-            control15VedtakDato(errorReport, record);
-            control16BegyntDato(errorReport, record);
-            control19KvalifiseringsprogramIAnnenKommune(errorReport, record);
-            control20KvalifiseringsprogramIAnnenKommuneKommunenummer(errorReport, record);
-            control20AFraKvalifiseringsprogramIAnnenBydelIOslo(errorReport, record);
-            control21Ytelser(errorReport, record);
-            control26MottattStotte(errorReport, record);
-            control27MottattOkonomiskSosialhjelp(errorReport, record);
-            control28MaanederMedKvalifiseringsstonad(errorReport, record);
-            control29KvalifiseringssumMangler(errorReport, record);
-            control30HarVarighetMenManglerKvalifiseringssum(errorReport, record);
-            control31HarKvalifiseringssumMenManglerVarighet(errorReport, record);
-            control32KvalifiseringssumOverMaksimum(errorReport, record);
-            control33KvalifiseringssumUnderMinimum(errorReport, record);
-            control36StatusForDeltakelseIKvalifiseringsprogram(errorReport, record);
-            control37DatoForAvsluttetProgram(errorReport, record);
-            control38FullforteAvsluttedeProgramSituasjon(errorReport, record);
-            control39FullforteAvsluttedeProgramInntektkilde(errorReport, record);
+        records.forEach(r -> {
+            control03Kommunenummer(errorReport, r);
+            control03Bydelsnummer(errorReport, r);
+            control04OppgaveAar(errorReport, r);
+            control05Fodselsnummer(errorReport, r);
+            control06AlderUnder18Aar(errorReport, r);
+            control07AlderEr68AarEllerOver(errorReport, r);
+            control08Kjonn(errorReport, r);
+            control09Sivilstand(errorReport, r);
+            control10Bu18(errorReport, r);
+            control11Bu18AntBu18(errorReport, r);
+            control12AntBu18Bu18(errorReport, r);
+            control13AntBu18(errorReport, r);
+            control14RegDato(errorReport, r);
+            control15VedtakDato(errorReport, r);
+            control16BegyntDato(errorReport, r);
+            control19KvalifiseringsprogramIAnnenKommune(errorReport, r);
+            control20KvalifiseringsprogramIAnnenKommuneKommunenummer(errorReport, r);
+            control20AFraKvalifiseringsprogramIAnnenBydelIOslo(errorReport, r);
+            control21Ytelser(errorReport, r);
+            control26MottattStotte(errorReport, r);
+            control27MottattOkonomiskSosialhjelp(errorReport, r);
+            control28MaanederMedKvalifiseringsstonad(errorReport, r);
+            control29KvalifiseringssumMangler(errorReport, r);
+            control30HarVarighetMenManglerKvalifiseringssum(errorReport, r);
+            control31HarKvalifiseringssumMenManglerVarighet(errorReport, r);
+            control32KvalifiseringssumOverMaksimum(errorReport, r);
+            control33KvalifiseringssumUnderMinimum(errorReport, r);
+            control36StatusForDeltakelseIKvalifiseringsprogram(errorReport, r);
+            control37DatoForAvsluttetProgram(errorReport, r);
+            control38FullforteAvsluttedeProgramSituasjon(errorReport, r);
+            control39FullforteAvsluttedeProgramInntektkilde(errorReport, r);
         });
         // Kontroller ferdig
         // Lager statistikkrapport
         {
             if (errorReport.getErrorType() < Constants.CRITICAL_ERROR) {
 
-                Integer stonadSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0("KVP_STONAD")).reduce(0, Integer::sum);
+                Integer stonadSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0(KVP_STONAD)).reduce(0, Integer::sum);
 
                 errorReport.addStats(new StatsReportEntry(
                         "Sum"
@@ -108,7 +122,7 @@ public class Main {
                 )
                 ));
 
-                List<Integer> gyldigeRecordsAlder = records.stream().filter(r -> r.getFieldAsInteger("FNR_OK") == 1 && r.getFieldAsInteger("ALDER") != -1).map(r -> r.getFieldAsInteger("ALDER")).collect(Collectors.toList());
+                List<Integer> gyldigeRecordsAlder = records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) == 1 && r.getFieldAsInteger(ALDER) != -1).map(r -> r.getFieldAsInteger(ALDER)).collect(Collectors.toList());
                 errorReport.addStats(new StatsReportEntry(
                         "Kvalifiseringsdeltakere"
                         , List.of(
@@ -131,12 +145,12 @@ public class Main {
                         , new StatsEntry("40_49", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 40, 49)).count()))
                         , new StatsEntry("50_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 45, 66)).count()))
                         , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 67, 999)).count()))
-                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger("FNR_OK") == 0).count()))
+                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) == 0).count()))
                 )
                 ));
 
                 List<Long> gyldigeRecordsStonadstid = records.stream()
-                        .map(r -> List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12")
+                        .map(r -> STMND
                                 .stream()
                                 .filter(m -> 0 < r.getFieldAsIntegerDefaultEquals0(m))
                                 .count()
@@ -165,7 +179,7 @@ public class Main {
                 ));
 
                 List<Integer> gyldigeRecordsStonad = records.stream()
-                        .map(r -> r.getFieldAsIntegerDefaultEquals0("KVP_STONAD"))
+                        .map(r -> r.getFieldAsIntegerDefaultEquals0(KVP_STONAD))
                         .collect(Collectors.toList());
                 errorReport.addStats(new StatsReportEntry(
                         "Stønad"
@@ -192,258 +206,274 @@ public class Main {
         return errorReport;
     }
 
-    public static boolean control10Bu18(ErrorReport errorReport, Record record) {
+    public static boolean control10Bu18(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
-                        , "Korrigér forsørgerplikt. Fant '" + record.getFieldAsTrimmedString("BU18") + "', "
-                        + "forventet én av " + record.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                        , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsTrimmedString("BU18") + "', "
+                        + "forventet én av " + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
                         + "Det er ikke krysset av for om deltakeren har barn under 18 år, "
                         + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("BU18")
-                , record.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString("BU18")
+                , r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control11Bu18AntBu18(ErrorReport errorReport, Record record) {
+    public static boolean control11Bu18AntBu18(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
                         , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
-                        + "men det er ikke oppgitt hvor mange barn '(" + record.getFieldAsInteger("ANTBU18") + ")' som bor i husholdningen. "
+                        + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsInteger(ANTBU18) + ")' som bor i husholdningen. "
                         + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("BU18")
+                , r.getFieldAsString("BU18")
                 , List.of("1")
-                , record.getFieldAsInteger("ANTBU18")
+                , r.getFieldAsInteger(ANTBU18)
                 , ">"
                 , 0
         );
     }
 
-    public static boolean control12AntBu18Bu18(ErrorReport errorReport, Record record) {
+    public static boolean control12AntBu18Bu18(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 12 Det bor barn under 18 år i husholdningen."
-                        , "Det er oppgitt " + record.getFieldAsInteger("ANTBU18") + " barn under 18 år som bor i husholdningen som "
+                        , "Det er oppgitt " + r.getFieldAsInteger(ANTBU18) + " barn under 18 år som bor i husholdningen som "
                         + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
                         + "oppgitt at det bor barn i husholdningen. "
                         + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsInteger("ANTBU18")
+                , r.getFieldAsInteger(ANTBU18)
                 , ">"
                 , 0
-                , record.getFieldAsString("BU18")
+                , r.getFieldAsString("BU18")
                 , List.of("1")
         );
     }
 
-    public static boolean control13AntBu18(ErrorReport errorReport, Record record) {
+    public static boolean control13AntBu18(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1Boolsk.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                        , "Antall barn (" + record.getFieldAsTrimmedString("ANTBU18") + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                        , "Antall barn (" + r.getFieldAsTrimmedString(ANTBU18) + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsInteger("ANTBU18")
+                , r.getFieldAsInteger(ANTBU18)
                 , "<="
                 , 10
         );
     }
 
-    public static boolean control14RegDato(ErrorReport errorReport, Record record) {
+    public static boolean control14RegDato(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String REG_DATO = "REG_DATO";
 
         return ControlFelt1Dato.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 14 Dato for registrert søknad ved NAV-kontoret."
-                        , "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString("REG_DATO") + "). Feltet er obligatorisk å fylle ut."
+                        , "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString(REG_DATO) + "). Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("REG_DATO")
-                , record.getFieldDefinitionByName("REG_DATO").getDatePattern()
+                , r.getFieldAsString(REG_DATO)
+                , r.getFieldDefinitionByName(REG_DATO).getDatePattern()
         );
     }
 
-    public static boolean control15VedtakDato(ErrorReport errorReport, Record record) {
+    public static boolean control15VedtakDato(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String VEDTAK_DATO = "VEDTAK_DATO";
 
         return ControlFelt1Dato.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 15 Dato for fattet vedtak om program (søknad innvilget)"
-                        , "Feltet for 'Hvilken dato det ble fattet vedtak om program (søknad innvilget)' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString("VEDTAK_DATO") + "). Feltet er obligatorisk å fylle ut."
+                        , "Feltet for 'Hvilken dato det ble fattet vedtak om program (søknad innvilget)' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString(VEDTAK_DATO) + "). Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("VEDTAK_DATO")
-                , record.getFieldDefinitionByName("VEDTAK_DATO").getDatePattern()
+                , r.getFieldAsString(VEDTAK_DATO)
+                , r.getFieldDefinitionByName(VEDTAK_DATO).getDatePattern()
         );
     }
 
-    public static boolean control16BegyntDato(ErrorReport errorReport, Record record) {
+    public static boolean control16BegyntDato(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String BEGYNT_DATO = "BEGYNT_DATO";
 
         return ControlFelt1Dato.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 16 Dato for når deltakeren begynte i program (iverksettelse)."
-                        , "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString("BEGYNT_DATO") + "). Feltet er obligatorisk å fylle ut."
+                        , "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' mangler utfylling eller har ugyldig dato (" + r.getFieldAsString(BEGYNT_DATO) + "). Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("BEGYNT_DATO")
-                , record.getFieldDefinitionByName("BEGYNT_DATO").getDatePattern()
+                , r.getFieldAsString(BEGYNT_DATO)
+                , r.getFieldDefinitionByName(BEGYNT_DATO).getDatePattern()
         );
     }
 
-    public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, Record record) {
+    public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String KVP_KOMM = "KVP_KOMM";
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 19 Kvalifiseringsprogram i annen kommune"
-                        , "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke fylt ut, eller feil kode er benyttet (" + record.getFieldAsString("KVP_KOMM") + "). Feltet er obligatorisk å fylle ut."
+                        , "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke fylt ut, eller feil kode er benyttet (" + r.getFieldAsString(KVP_KOMM) + "). Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("KVP_KOMM")
-                , record.getFieldDefinitionByName("KVP_KOMM").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(KVP_KOMM)
+                , r.getFieldDefinitionByName(KVP_KOMM).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control20KvalifiseringsprogramIAnnenKommuneKommunenummer(ErrorReport errorReport, Record record) {
+    public static boolean control20KvalifiseringsprogramIAnnenKommuneKommunenummer(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String KOMMNR_KVP_KOMM = "KOMMNR_KVP_KOMM";
+        final String KVP_KOMM = "KVP_KOMM";
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 20 Kvalifiseringsprogram i annen kommune. Kommunenummer."
-                        , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune ('" + record.getFieldAsString("KOMMNR_KVP_KOMM") + "'), men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
+                        , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune ('" + r.getFieldAsString(KOMMNR_KVP_KOMM) + "'), men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("KVP_KOMM")
+                , r.getFieldAsString(KVP_KOMM)
                 , List.of("1")
-                , record.getFieldAsString("KOMMNR_KVP_KOMM")
-                , record.getFieldDefinitionByName("KOMMNR_KVP_KOMM").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(KOMMNR_KVP_KOMM)
+                , r.getFieldDefinitionByName(KOMMNR_KVP_KOMM).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control20AFraKvalifiseringsprogramIAnnenBydelIOslo(ErrorReport errorReport, Record record) {
+    public static boolean control20AFraKvalifiseringsprogramIAnnenBydelIOslo(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 20a Fra kvalifiseringsprogram i annen bydel i Oslo."
                         , "Manglende/ugyldig utfylling for om deltakeren kommer fra kvalifiseringsprogram i annen bydel (). Feltet er obligatorisk å fylle ut for Oslo."
                         , Constants.NORMAL_ERROR
                 )
-                , record.getFieldAsString("KOMMUNE_NR")
+                , r.getFieldAsString("KOMMUNE_NR")
                 , List.of("0301")
-                , record.getFieldAsString("KVP_OSLO")
-                , record.getFieldDefinitionByName("KVP_OSLO").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString("KVP_OSLO")
+                , r.getFieldDefinitionByName("KVP_OSLO").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control21Ytelser(ErrorReport errorReport, Record record) {
+    public static boolean control21Ytelser(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String YTELSE_SOSHJELP = "YTELSE_SOSHJELP";
+        final String YTELSE_TYPE_SOSHJ = "YTELSE_TYPE_SOSHJ";
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 21 Ytelser de to siste månedene før registrert søknad ved NAV-kontoret"
                         , "Feltet for 'Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?' inneholder ugyldige verdier."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("YTELSE_SOSHJELP")
+                , r.getFieldAsString(YTELSE_SOSHJELP)
                 , List.of("1")
-                , record.getFieldAsString("YTELSE_TYPE_SOSHJ")
-                , record.getFieldDefinitionByName("YTELSE_TYPE_SOSHJ").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(YTELSE_TYPE_SOSHJ)
+                , r.getFieldDefinitionByName(YTELSE_TYPE_SOSHJ).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control26MottattStotte(ErrorReport errorReport, Record record) {
+    public static boolean control26MottattStotte(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
+
+        final String KVP_MED_ASTONAD = "KVP_MED_ASTONAD";
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 26 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + errorReport.getArgs().getAargang()
                         , "Feltet for 'Har deltakeren i " + errorReport.getArgs().getAargang() + " i løpet av perioden med kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, "
-                        + "kommunal bostøtte eller Husbankens bostøtte?', er ikke utfylt eller feil kode (" + record.getFieldAsString("KVP_MED_ASTONAD") + ") er benyttet. Feltet er obligatorisk å fylle ut."
-                        + record.getFieldDefinitionByName("KVP_MED_ASTONAD").getCodeList().stream().collect(Collectors.toMap(Code::getCode, Code::getValue))
+                        + "kommunal bostøtte eller Husbankens bostøtte?', er ikke utfylt eller feil kode (" + r.getFieldAsString(KVP_MED_ASTONAD) + ") er benyttet. Feltet er obligatorisk å fylle ut."
+                        + r.getFieldDefinitionByName(KVP_MED_ASTONAD).getCodeList().stream().collect(Collectors.toMap(Code::getCode, Code::getValue))
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("KVP_MED_ASTONAD")
-                , record.getFieldDefinitionByName("KVP_MED_ASTONAD").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(KVP_MED_ASTONAD)
+                , r.getFieldDefinitionByName(KVP_MED_ASTONAD).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control27MottattOkonomiskSosialhjelp(ErrorReport errorReport, Record record) {
+    public static boolean control27MottattOkonomiskSosialhjelp(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         // Kontroll 27 sjekker at flere felt skal være utfylt hvis KVP_MED_ASTONAD = 1 (Ja)
@@ -453,18 +483,18 @@ public class Main {
         List<String> fields = List.of("KVP_MED_KOMMBOS", "KVP_MED_HUSBANK", "KVP_MED_SOSHJ_ENGANG", "KVP_MED_SOSHJ_PGM", "KVP_MED_SOSHJ_SUP");
 
         Map<String, String> values = fields.stream()
-                .collect(Collectors.toMap(s -> s, record::getFieldAsString));
+                .collect(Collectors.toMap(s -> s, r::getFieldAsString));
 
-        if (Objects.equals(record.getFieldAsString("KVP_MED_ASTONAD"), "1")) {
+        if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "1")) {
             boolean isNoneFilledIn = fields.stream()
-                    .noneMatch(field -> record.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(record.getFieldAsString(field)));
+                    .noneMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
 
             if (isNoneFilledIn) {
                 errorReport.addEntry(
                         new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
+                                r.getFieldAsString(SAKSBEHANDLER)
+                                , r.getFieldAsString(JOURNALNR)
+                                , r.getFieldAsString(FNR)
                                 , " "
                                 , "Kontroll 27 Mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + errorReport.getArgs().getAargang() + ". Svaralternativer."
                                 , "Svaralternativer for feltet \"Har deltakeren i " + errorReport.getArgs().getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
@@ -476,16 +506,16 @@ public class Main {
                 hasErrors = true;
             }
 
-        } else if (Objects.equals(record.getFieldAsString("KVP_MED_ASTONAD"), "2")) {
+        } else if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "2")) {
             boolean isAllBlank = fields.stream()
-                    .allMatch(field -> Comparator.isCodeInCodelist(record.getFieldAsString(field), List.of(" ", "0")));
+                    .allMatch(field -> Comparator.isCodeInCodelist(r.getFieldAsString(field), List.of(" ", "0")));
 
             if (!isAllBlank) {
                 errorReport.addEntry(
                         new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
+                                r.getFieldAsString(SAKSBEHANDLER)
+                                , r.getFieldAsString(JOURNALNR)
+                                , r.getFieldAsString(FNR)
                                 , " "
                                 , "Kontroll 27 Ikke mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte i tillegg til kvalifiseringsstønad i løpet av " + errorReport.getArgs().getAargang() + ". Svaralternativer."
                                 , "Svaralternativer for feltet \"Har deltakeren i " + errorReport.getArgs().getAargang() + " i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, "
@@ -502,29 +532,28 @@ public class Main {
     }
 
     // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
-    public static boolean control28MaanederMedKvalifiseringsstonad(ErrorReport errorReport, Record record) {
+    public static boolean control28MaanederMedKvalifiseringsstonad(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
-        boolean harVarighet = fields.stream()
-                .anyMatch(field -> record.getFieldDefinitionByName(field)
+        boolean harVarighet = STMND.stream()
+                .anyMatch(field -> r.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
                         .map(Code::getCode)
                         .collect(Collectors.toList())
-                        .contains(record.getFieldAsString(field)));
+                        .contains(r.getFieldAsString(field)));
 
-        boolean harPermisjon = record.getFieldAsString("STATUS").equalsIgnoreCase("2");
+        boolean harPermisjon = r.getFieldAsString(STATUS).equalsIgnoreCase("2");
 
-        if (!harVarighet && !harPermisjon ) {
+        if (!harVarighet && !harPermisjon) {
             errorReport.addEntry(
                     new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
                             , " "
                             , "Kontroll 28 Måneder med kvalifiseringsstønad. Gyldige koder."
-                            , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad (" + record.getFieldAsString("KVP_STONAD") + ") i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt kvalifiseringsstønad (" + r.getFieldAsString(KVP_STONAD) + ") i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
             );
@@ -535,21 +564,21 @@ public class Main {
         return false;
     }
 
-    public static boolean control29KvalifiseringssumMangler(ErrorReport errorReport, Record record) {
+    public static boolean control29KvalifiseringssumMangler(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        Integer stonad = record.getFieldAsInteger("KVP_STONAD");
+        Integer stonad = r.getFieldAsInteger(KVP_STONAD);
         boolean stonadOK = (stonad != null);
 
         if (!stonadOK) {
             errorReport.addEntry(
                     new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
                             , " "
                             , "Kontroll 29 Kvalifiseringssum mangler eller har ugyldige tegn."
-                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + record.getFieldAsString("KVP_STONAD") + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + r.getFieldAsString(KVP_STONAD) + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
             );
@@ -560,92 +589,87 @@ public class Main {
         return false;
     }
 
-    public static boolean control30HarVarighetMenManglerKvalifiseringssum(ErrorReport errorReport, Record record) {
+    public static boolean control30HarVarighetMenManglerKvalifiseringssum(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        Integer stonad = record.getFieldAsInteger("KVP_STONAD");
+        Integer stonad = r.getFieldAsInteger(KVP_STONAD);
         boolean stonadOK = (stonad != null);
-        List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
-        boolean harVarighet = fields.stream()
-                .anyMatch(field -> record.getFieldDefinitionByName(field)
+        boolean harVarighet = STMND.stream()
+                .anyMatch(field -> r.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
                         .map(Code::getCode)
                         .collect(Collectors.toList())
-                        .contains(record.getFieldAsString(field)));
+                        .contains(r.getFieldAsString(field)));
 
-        if (harVarighet) {
-            if (!stonadOK) {
-                errorReport.addEntry(
-                        new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 30 Har varighet, men mangler kvalifiseringssum."
-                                , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + record.getFieldAsString("KVP_STONAD") + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
-                                , Constants.NORMAL_ERROR
-                        )
-                );
+        if (harVarighet && !stonadOK) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 30 Har varighet, men mangler kvalifiseringssum."
+                            , "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad (" + r.getFieldAsString(KVP_STONAD) + ") i løpet av året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                            , Constants.NORMAL_ERROR
+                    )
+            );
 
-                return true;
-            }
+            return true;
+
         }
 
         return false;
     }
 
-    public static boolean control31HarKvalifiseringssumMenManglerVarighet(ErrorReport errorReport, Record record) {
+    public static boolean control31HarKvalifiseringssumMenManglerVarighet(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        Integer stonad = record.getFieldAsInteger("KVP_STONAD");
+        Integer stonad = r.getFieldAsInteger(KVP_STONAD);
         boolean stonadOK = (stonad != null);
-        List<String> fields = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
-        boolean harVarighet = fields.stream()
-                .anyMatch(field -> record.getFieldDefinitionByName(field)
+        boolean harVarighet = STMND.stream()
+                .anyMatch(field -> r.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
                         .map(Code::getCode)
                         .collect(Collectors.toList())
-                        .contains(record.getFieldAsString(field)));
+                        .contains(r.getFieldAsString(field)));
 
-        if (stonadOK && 0 < stonad) {
-            if (!harVarighet) {
-                errorReport.addEntry(
-                        new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 31 Har kvalifiseringssum, men mangler varighet."
-                                , "Deltakeren har fått kvalifiseringsstønad (" + record.getFieldAsString("KVP_STONAD") + ") i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er obligatorisk å fylle ut."
-                                , Constants.NORMAL_ERROR
-                        )
-                );
+        if (stonadOK && 0 < stonad && !harVarighet) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 31 Har kvalifiseringssum, men mangler varighet."
+                            , "Deltakeren har fått kvalifiseringsstønad (" + r.getFieldAsString(KVP_STONAD) + ") i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er obligatorisk å fylle ut."
+                            , Constants.NORMAL_ERROR
+                    )
+            );
 
-                return true;
-            }
+            return true;
         }
 
         return false;
     }
 
-    public static boolean control32KvalifiseringssumOverMaksimum(ErrorReport errorReport, Record record) {
+    public static boolean control32KvalifiseringssumOverMaksimum(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        Integer stonad = record.getFieldAsInteger("KVP_STONAD");
+        Integer stonad = r.getFieldAsInteger(KVP_STONAD);
         boolean stonadOK = (stonad != null);
         int stonadSumMax = 235000;
 
         if (stonadOK && stonadSumMax < stonad) {
             errorReport.addEntry(
                     new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
                             , " "
                             , "Kontroll 32 Kvalifiseringssum på kr " + stonadSumMax + ",- eller mer."
-                            , "Kvalifiseringsstønaden (" + record.getFieldAsString("KVP_STONAD") + ") som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
+                            , "Kvalifiseringsstønaden (" + r.getFieldAsString(KVP_STONAD) + ") som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
                             , Constants.NORMAL_ERROR
                     )
             );
@@ -656,22 +680,22 @@ public class Main {
         return false;
     }
 
-    public static boolean control33KvalifiseringssumUnderMinimum(ErrorReport errorReport, Record record) {
+    public static boolean control33KvalifiseringssumUnderMinimum(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        Integer stonad = record.getFieldAsInteger("KVP_STONAD");
+        Integer stonad = r.getFieldAsInteger(KVP_STONAD);
         boolean stonadOK = (stonad != null);
         int stonadSumMin = 8000;
 
         if (stonadOK && stonad < stonadSumMin) {
             errorReport.addEntry(
                     new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
                             , " "
                             , "Kontroll 33 Kvalifiseringsstønad på kr " + stonadSumMin + ",- eller lavere."
-                            , "Kvalifiseringsstønaden (" + record.getFieldAsString("KVP_STONAD") + ") som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
+                            , "Kvalifiseringsstønaden (" + r.getFieldAsString(KVP_STONAD) + ") som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
                             , Constants.NORMAL_ERROR
                     )
             );
@@ -682,92 +706,92 @@ public class Main {
         return false;
     }
 
-    public static boolean control36StatusForDeltakelseIKvalifiseringsprogram(ErrorReport errorReport, Record record) {
+    public static boolean control36StatusForDeltakelseIKvalifiseringsprogram(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 36 Status for deltakelse i kvalifiseringsprogram per 31.12." + errorReport.getArgs().getAargang() + ". Gyldige verdier."
-                        , "Korrigér status. Fant '" + record.getFieldAsTrimmedString("STATUS") + "', forventet én av '"
-                        + record.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                        , "Korrigér status. Fant '" + r.getFieldAsTrimmedString(STATUS) + "', forventet én av '"
+                        + r.getFieldDefinitionByName(STATUS).getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("STATUS")
-                , record.getFieldDefinitionByName("STATUS").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(STATUS)
+                , r.getFieldDefinitionByName(STATUS).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
-    public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, Record record) {
+    public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
-
-        String status = record.getFieldAsString("STATUS");
-        List<String> codes = record.getFieldDefinitionByName("STATUS")
+        final String AVSL_DATO = "AVSL_DATO";
+        String status = r.getFieldAsString(STATUS);
+        List<String> codes = r.getFieldDefinitionByName(STATUS)
                 .getCodeList()
                 .stream()
                 .filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5")))
                 .map(Code::getCode)
                 .collect(Collectors.toList());
 
-        if (Comparator.isCodeInCodelist(status, codes)){
-        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
-                        , " "
-                        , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
-                        , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + record.getFieldAsString("AVSL_DATO") + "), må fylles ut dersom det er krysset av for svaralternativ "
-                        + record.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
-                        + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
-                        , Constants.CRITICAL_ERROR
-                )
-                , record.getFieldAsString("STATUS")
-                , record.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::getCode).collect(Collectors.toList())
-                , record.getFieldAsLocalDate("AVSL_DATO")
-        );
+        if (Comparator.isCodeInCodelist(status, codes)) {
+            return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
+                    errorReport
+                    , new ErrorReportEntry(
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
+                            , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + r.getFieldAsString(AVSL_DATO) + "), må fylles ut dersom det er krysset av for svaralternativ "
+                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                            + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
+                            , Constants.CRITICAL_ERROR
+                    )
+                    , r.getFieldAsString(STATUS)
+                    , r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::getCode).collect(Collectors.toList())
+                    , r.getFieldAsLocalDate(AVSL_DATO)
+            );
 
         } else {
             return ControlFelt1InneholderKodeFraKodeliste.doControl(
                     errorReport
                     , new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(JOURNALNR)
+                            , r.getFieldAsString(FNR)
                             , " "
                             , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
-                            , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + record.getFieldAsString("AVSL_DATO") + "), skal være blankt dersom det er krysset av for svaralternativ "
-                            + record.getFieldDefinitionByName("STATUS").getCodeList().stream().filter(c -> !Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                            , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + r.getFieldAsString(AVSL_DATO) + "), skal være blankt dersom det er krysset av for svaralternativ "
+                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> !Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
                             + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
                             , Constants.CRITICAL_ERROR
                     )
-                    , record.getFieldAsString("AVSL_DATO")
+                    , r.getFieldAsString(AVSL_DATO)
                     , List.of("      ")
             );
 
         }
     }
 
-    public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, Record record) {
+    public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        if (record.getFieldAsString("STATUS").equalsIgnoreCase("3")) {
+        if (r.getFieldAsString(STATUS).equalsIgnoreCase("3")) {
             List<String> fields = List.of("AVSL_ORDINAERTARB", "AVSL_ARBLONNSTILS", "AVSL_ARBMARK", "AVSL_SKOLE", "AVSL_UFORE", "AVSL_AAP", "AVSL_OK_AVKLAR", "AVSL_UTEN_OK_AVKLAR", "AVSL_ANNET", "AVSL_UKJENT");
             boolean isNoneFilledIn = fields.stream()
-                    .noneMatch(field -> record.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(record.getFieldAsString(field)));
+                    .noneMatch(field -> r.getFieldDefinitionByName(field).getCodeList().stream().map(Code::getCode).collect(Collectors.toList()).contains(r.getFieldAsString(field)));
 
             if (isNoneFilledIn) {
                 errorReport.addEntry(
                         new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
+                                r.getFieldAsString(SAKSBEHANDLER)
+                                , r.getFieldAsString(JOURNALNR)
+                                , r.getFieldAsString(FNR)
                                 , " "
                                 , "Kontroll 38 Fullførte/avsluttede program – til hvilken situasjon gikk deltakeren? Gyldige verdier."
                                 , "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – hva var deltakerens situasjon umiddelbart etter avslutningen'? "
@@ -784,15 +808,15 @@ public class Main {
         return false;
     }
 
-    public static boolean control39FullforteAvsluttedeProgramInntektkilde(ErrorReport errorReport, Record record) {
+    public static boolean control39FullforteAvsluttedeProgramInntektkilde(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
                 , new ErrorReportEntry(
-                        record.getFieldAsString("SAKSBEHANDLER")
-                        , record.getFieldAsString("PERSON_JOURNALNR")
-                        , record.getFieldAsString("PERSON_FODSELSNR")
+                        r.getFieldAsString(SAKSBEHANDLER)
+                        , r.getFieldAsString(JOURNALNR)
+                        , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 39 Fullførte/avsluttede program – til hvilken inntektskilde gikk deltakeren? Gyldige verdier."
                         , "Feltet 'Hva var deltakerens <b>viktigste</b> inntektskilde umiddelbart etter avslutningen? "
@@ -800,10 +824,10 @@ public class Main {
                         + "under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
                         , Constants.CRITICAL_ERROR
                 )
-                , record.getFieldAsString("STATUS")
+                , r.getFieldAsString(STATUS)
                 , List.of("3")
-                , record.getFieldAsString("AVSL_VIKTIGSTE_INNTEKT")
-                , record.getFieldDefinitionByName("AVSL_VIKTIGSTE_INNTEKT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString("AVSL_VIKTIGSTE_INNTEKT")
+                , r.getFieldDefinitionByName("AVSL_VIKTIGSTE_INNTEKT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 }

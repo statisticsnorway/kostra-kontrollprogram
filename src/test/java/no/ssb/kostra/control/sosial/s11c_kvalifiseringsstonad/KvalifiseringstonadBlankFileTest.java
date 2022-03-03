@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MainITest11CKvalifiseringBlankFile {
+class KvalifiseringstonadBlankFileTest {
     InputStream sysInBackup;
     private Arguments args;
 
@@ -30,7 +30,7 @@ public class MainITest11CKvalifiseringBlankFile {
     }
 
     @Test
-    public void testDoControl() {
+    void testDoControl() {
         // Mocking a blank file
         String inputFileContent = "File with invalid content";
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
@@ -48,7 +48,7 @@ public class MainITest11CKvalifiseringBlankFile {
     }
 
     @Test
-    public void testDoControlWithNoFile() {
+    void testDoControlWithNoFile() {
         // Mocking a blank file
         String inputFileContent = "";
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
@@ -66,7 +66,7 @@ public class MainITest11CKvalifiseringBlankFile {
     }
 
     @Test
-    public void testDoControlWithBlankFile() {
+    void testDoControlWithBlankFile() {
         // Mocking a blank file
         String inputFileContent = " ";
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
@@ -85,7 +85,7 @@ public class MainITest11CKvalifiseringBlankFile {
     }
 
     @Test
-    public void testDoControlWithInvalidFile() {
+    void testDoControlWithInvalidFile() {
         // Mocking a blank file
         String inputFileContent = "File with invalid content";
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));

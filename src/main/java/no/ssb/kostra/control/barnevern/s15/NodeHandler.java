@@ -69,6 +69,8 @@ public abstract class NodeHandler {
             SchemaFactory factory = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
             // load a WXS schema, represented by a Schema instance
             InputStream iStream = this.getClass().getClassLoader()

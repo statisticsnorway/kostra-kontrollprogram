@@ -21,8 +21,8 @@ import java.util.*;
  */
 public class XMLReader extends DefaultHandler {
 
-    private Map<String, NodeHandler> handlers = new TreeMap<>();
-    private List<SAX2DOMHandler> activeHandlers = new ArrayList<>();
+    private final Map<String, NodeHandler> handlers = new TreeMap<>();
+    private final List<SAX2DOMHandler> activeHandlers = new ArrayList<>();
     private String region;
 
     /**
@@ -98,9 +98,7 @@ public class XMLReader extends DefaultHandler {
     public void parse(InputStream stream) throws ParserConfigurationException,
             SAXException, IOException {
         try (stream) {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            org.xml.sax.XMLReader reader = saxParser.getXMLReader();
+            org.xml.sax.XMLReader reader = createXMLReader();
             reader.setEntityResolver((publicId, systemId) -> {
                 URL url = new URL(systemId);
                 // Check if file is local
@@ -129,9 +127,7 @@ public class XMLReader extends DefaultHandler {
     public void parse(String xmlAsString) throws ParserConfigurationException,
             SAXException {
         try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            org.xml.sax.XMLReader reader = saxParser.getXMLReader();
+            org.xml.sax.XMLReader reader = createXMLReader();
             reader.setEntityResolver((publicId, systemId) -> {
                 if (!xmlAsString.isEmpty()) {
                     return new InputSource(new StringReader(xmlAsString));
@@ -146,6 +142,16 @@ public class XMLReader extends DefaultHandler {
              * cancel a process.
              */
         }
+    }
+
+    private org.xml.sax.XMLReader createXMLReader() throws ParserConfigurationException, SAXException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+
+        SAXParser saxParser = factory.newSAXParser();
+        return saxParser.getXMLReader();
     }
 
     public String getRegion() {

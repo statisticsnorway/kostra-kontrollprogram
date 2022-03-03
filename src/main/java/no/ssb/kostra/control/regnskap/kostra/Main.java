@@ -18,6 +18,8 @@ public class Main {
     private static final String FUNKSJON_KAPITTEL = "funksjon_kapittel";
     private static final String ART_SEKTOR = "art_sektor";
     private static final String BELOP = "belop";
+    private static final String KOMBINASJON_I_DRIFT_K_A = "Kombinasjon i driftsregnskapet, kontoklasse og art";
+    private static final String KOMBINASJON_F_A = "Kombinasjon funksjon og art";
     private static final String KOMBINASJONSKONTROLLER = "5. Kombinasjonskontroller";
     private static final String SUMMERINGSKONTROLLER = "6. Summeringskontroller";
     private static final String GJELDER_FOR_LINJENUMMER = "Gjelder for linjenummer %d.";
@@ -460,9 +462,9 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(record -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i driftsregnskapet, kontoklasse og art", " ", " "
-                        , String.format("Korrigér art (%s) til gyldig art i driftsregnskapet, eller overfør posteringen til investeringsregnskapet", record.getFieldAsString(ART_SEKTOR))
-                        , String.format(GJELDER_FOR_LINJENUMMER, record.getFieldAsInteger(LINJENUMMER))
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
+                        , String.format("Korrigér art (%s) til gyldig art i driftsregnskapet, eller overfør posteringen til investeringsregnskapet", r.getFieldAsString(ART_SEKTOR))
+                        , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.CRITICAL_ERROR)));
 
                 return true;
@@ -484,7 +486,7 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i driftsregnskapet, kontoklasse og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
                         , String.format("Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om posteringen hører til i investeringsregnskapet.", r.getFieldAsString(ART_SEKTOR))
                         , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.NO_ERROR)));
@@ -508,7 +510,7 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i driftsregnskapet, kontoklasse og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
                         , String.format("Kun advarsel, hindrer ikke innsending: (%s) regnes å være ulogisk art i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.", r.getFieldAsString(ART_SEKTOR))
                         , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.NO_ERROR)));
@@ -660,9 +662,9 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(record -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon funksjon og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
                         , "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989."
-                        , String.format(GJELDER_FOR_LINJENUMMER, record.getFieldAsInteger(LINJENUMMER))
+                        , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.CRITICAL_ERROR)));
 
                 return true;
@@ -688,9 +690,9 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(record -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon funksjon og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
                         , "Art 530 er kun tillat brukt i kombinasjon med funksjon 880."
-                        , String.format(GJELDER_FOR_LINJENUMMER, record.getFieldAsInteger(LINJENUMMER))
+                        , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.CRITICAL_ERROR)));
 
                 return true;
@@ -715,9 +717,9 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(record -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon funksjon og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
                         , "Artene 870, 874 og 875 er kun tillat brukt i kombinasjon med funksjon 800."
-                        , String.format(GJELDER_FOR_LINJENUMMER, record.getFieldAsInteger(LINJENUMMER))
+                        , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.CRITICAL_ERROR)));
 
                 return true;
@@ -742,9 +744,9 @@ public class Main {
                     .collect(Collectors.toList());
 
             if (!errors.isEmpty()) {
-                errors.forEach(record -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon funksjon og art", " ", " "
+                errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
                         , "Art 800 er kun tillat brukt i kombinasjon med funksjon 840."
-                        , String.format(GJELDER_FOR_LINJENUMMER, record.getFieldAsInteger(LINJENUMMER))
+                        , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                         , Constants.CRITICAL_ERROR)));
 
                 return true;

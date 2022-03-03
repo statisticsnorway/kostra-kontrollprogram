@@ -648,15 +648,15 @@ public class Main {
 
         if (isCodeInCodelist(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())) {
             List<Record> errors = regnskap.stream()
-                    .filter(record ->
+                    .filter(r ->
                             (
-                                    isCodeInCodelist(record.getFieldAsString(FUNKSJON_KAPITTEL), List.of("899 "))
-                                            && !isCodeInCodelist(record.getFieldAsString(ART_SEKTOR), List.of("589", "980", "989"))
+                                    isCodeInCodelist(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("899 "))
+                                            && !isCodeInCodelist(r.getFieldAsString(ART_SEKTOR), List.of("589", "980", "989"))
                             )
                                     ||
                                     (
-                                            !isCodeInCodelist(record.getFieldAsString(FUNKSJON_KAPITTEL), List.of("899 "))
-                                                    && isCodeInCodelist(record.getFieldAsString(ART_SEKTOR), List.of("589", "980", "989"))
+                                            !isCodeInCodelist(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("899 "))
+                                                    && isCodeInCodelist(r.getFieldAsString(ART_SEKTOR), List.of("589", "980", "989"))
                                     )
                     )
                     .collect(Collectors.toList());
@@ -680,11 +680,11 @@ public class Main {
 
         if (isCodeInCodelist(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())) {
             List<Record> errors = regnskap.stream()
-                    .filter(record ->
+                    .filter(r ->
                             (
-                                    isCodeInCodelist(record.getFieldAsString(ART_SEKTOR), List.of("530"))
+                                    isCodeInCodelist(r.getFieldAsString(ART_SEKTOR), List.of("530"))
                                             &&
-                                            !isCodeInCodelist(record.getFieldAsString(FUNKSJON_KAPITTEL), List.of("880 "))
+                                            !isCodeInCodelist(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("880 "))
                             )
                     )
                     .collect(Collectors.toList());
@@ -707,11 +707,11 @@ public class Main {
 
         if (isCodeInCodelist(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())) {
             List<Record> errors = regnskap.stream()
-                    .filter(record ->
+                    .filter(r ->
                             (
-                                    isCodeInCodelist(record.getFieldAsString(ART_SEKTOR), List.of("870", "874", "875"))
+                                    isCodeInCodelist(r.getFieldAsString(ART_SEKTOR), List.of("870", "874", "875"))
                                             &&
-                                            !isCodeInCodelist(record.getFieldAsString(FUNKSJON_KAPITTEL), List.of("800 "))
+                                            !isCodeInCodelist(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("800 "))
                             )
                     )
                     .collect(Collectors.toList());
@@ -734,11 +734,11 @@ public class Main {
 
         if (isCodeInCodelist(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())) {
             List<Record> errors = regnskap.stream()
-                    .filter(record ->
+                    .filter(r ->
                             (
-                                    isCodeInCodelist(record.getFieldAsString(ART_SEKTOR), List.of("800"))
+                                    isCodeInCodelist(r.getFieldAsString(ART_SEKTOR), List.of("800"))
                                             &&
-                                            !isCodeInCodelist(record.getFieldAsString(FUNKSJON_KAPITTEL), List.of("840 "))
+                                            !isCodeInCodelist(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("840 "))
                             )
                     )
                     .collect(Collectors.toList());
@@ -770,7 +770,7 @@ public class Main {
             if (0 >= sumInvesteringsUtgifter) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller investeringsregnskapet, utgiftsposteringer i investeringsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
+                        , String.format("Korrigér slik at fila inneholder utgiftsposteringene (%d) i investeringsregnskapet", sumInvesteringsUtgifter)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -790,18 +790,16 @@ public class Main {
         int sumInvesteringsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
 
         if (isCodeInCodelist(arguments.getSkjema(), getRegionaleBevilgningRegnskapList())
-                && !isCodeInCodelist(arguments.getRegion(), osloBydeler)) {
+                && !isCodeInCodelist(arguments.getRegion(), osloBydeler)
+                && (0 <= sumInvesteringsInntekter)) {
+            errorReport.addEntry(new ErrorReportEntry(
+                    SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller investeringsregnskap, inntektsposteringene i investeringsregnskapet", " ", " "
+                    , String.format("Korrigér slik at fila inneholder inntektsposteringene (%d) i investeringsregnskapet", sumInvesteringsInntekter)
+                    , ""
+                    , Constants.CRITICAL_ERROR
+            ));
 
-            if (!(sumInvesteringsInntekter < 0)) {
-                errorReport.addEntry(new ErrorReportEntry(
-                        SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller investeringsregnskap, inntektsposteringene i investeringsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder inntektsposteringene (" + sumInvesteringsInntekter + ") i investeringsregnskapet"
-                        , ""
-                        , Constants.CRITICAL_ERROR
-                ));
-
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -821,9 +819,7 @@ public class Main {
                 && outsideOf(sumDifferanse, -30, 30)) {
             errorReport.addEntry(new ErrorReportEntry(
                     SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet", " ", " "
-                    , "Korrigér differansen (" + sumDifferanse + ") mellom "
-                    + "inntekter (" + sumInvesteringsInntekter + ") og "
-                    + "utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
+                    , String.format("Korrigér differansen (%d) mellom inntekter (%d) og utgifter (%d) i investeringsregnskapet", sumDifferanse, sumInvesteringsInntekter, sumInvesteringsUtgifter)
                     , ""
                     , Constants.CRITICAL_ERROR
             ));
@@ -847,7 +843,7 @@ public class Main {
             if (sumDriftsUtgifter <= 0) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer i driftsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumDriftsUtgifter + ") i driftsregnskapet"
+                        , String.format("Korrigér slik at fila inneholder utgiftsposteringene (%d) i driftsregnskapet", sumDriftsUtgifter)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -867,10 +863,10 @@ public class Main {
                 && !isCodeInCodelist(arguments.getRegion(), osloBydeler)) {
             int sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
 
-            if (!(sumDriftsInntekter < 0)) {
+            if (0 <= sumDriftsInntekter) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer i driftsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder inntektsposteringene (" + sumDriftsInntekter + ") i driftsregnskapet"
+                        , String.format("Korrigér slik at fila inneholder inntektsposteringene (%d) i driftsregnskapet", sumDriftsInntekter)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -896,7 +892,7 @@ public class Main {
             if (outsideOf(sumDifferanse, -30, 30)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet", " ", " "
-                        , "Korrigér differansen (" + sumDifferanse + ") mellom inntekter (" + sumDriftsInntekter + ") og utgifter (" + sumDriftsUtgifter + ") i driftsregnskapet"
+                        , String.format("Korrigér differansen (%d) mellom inntekter (%d) og utgifter (%d) i driftsregnskapet", sumDifferanse, sumDriftsInntekter, sumDriftsUtgifter)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -920,7 +916,7 @@ public class Main {
             if (sumAktiva <= 0) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Summeringskontroller balanseregnskap, registrering av aktiva (Eiendeler)", " ", " "
-                        , "Korrigér slik at fila inneholder registrering av aktiva/eiendeler (" + sumAktiva + ") i balanse."
+                        , String.format("Korrigér slik at fila inneholder registrering av aktiva/eiendeler (%d) i balanse.", sumAktiva)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -945,7 +941,7 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, BALANSEREGNSKAP, " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, registrering av passiva (Gjeld og egenkapital)"
-                        , "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital (" + sumPassiva + ") i balanse."
+                        , String.format("Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital (%d) i balanse.", sumPassiva)
                         , Constants.CRITICAL_ERROR
                 ));
 
@@ -971,9 +967,7 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, BALANSEREGNSKAP, " ", " "
                         , "Kontroll Summeringskontroller balanseregnskap, differanse"
-                        , "Korrigér differansen (" + sumDifferanse + ") mellom "
-                        + "aktiva (" + sumAktiva + ") og "
-                        + "passiva (" + sumPassiva + ") i fila (Differanser opptil ±10' godtas)"
+                        , String.format("Korrigér differansen (%d) mellom aktiva (%d) og passiva (%d) i fila (Differanser opptil ±10' godtas)", sumDifferanse, sumAktiva, sumPassiva)
                         , Constants.CRITICAL_ERROR
                 ));
 
@@ -1002,7 +996,7 @@ public class Main {
             if (0 <= sumSkatteInntekter) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Skatteinntekter", " ", " "
-                        , "Korrigér slik at fila inneholder skatteinntekter (" + sumSkatteInntekter + ")."
+                        , String.format("Korrigér slik at fila inneholder skatteinntekter (%d).", sumSkatteInntekter)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1036,7 +1030,7 @@ public class Main {
             if (0 <= sumRammetilskudd) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Rammetilskudd", " ", " "
-                        , "Korrigér slik at fila inneholder rammetilskudd (" + sumRammetilskudd + ")"
+                        , String.format("Korrigér slik at fila inneholder rammetilskudd (%d)", sumRammetilskudd)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1072,9 +1066,7 @@ public class Main {
             if (outsideOf(sumDifferanse, -30, 30)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Overføring mellom drifts- og investeringsregnskap", " ", " "
-                        , "Korrigér i fila slik at differansen (" + sumDifferanse
-                        + ") i overføringer mellom drifts- (" + sumDriftsOverforinger
-                        + ") og investeringsregnskapet (" + sumInvesteringsOverforinger + ") stemmer overens."
+                        , String.format("Korrigér i fila slik at differansen (%d) i overføringer mellom drifts- (%d) og investeringsregnskapet (%d) stemmer overens.", sumDifferanse, sumDriftsOverforinger, sumInvesteringsOverforinger)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1110,8 +1102,8 @@ public class Main {
                 // For 0I og 0K: Til informasjon / NO_ERROR, For alle andre: hard kontroll / CRITICAL_ERROR
                 int errorType = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K"))) ? Constants.NO_ERROR : Constants.CRITICAL_ERROR;
                 String errorText = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K")))
-                        ? "Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at den inneholder motpost avskrivninger (" + sumMotpostAvskrivninger + "), føres på funksjon 860 og art 990."
-                        : "Korrigér i fila slik at den inneholder motpost avskrivninger (" + sumMotpostAvskrivninger + "), føres på funksjon 860 og art 990.";
+                        ? String.format("Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at den inneholder motpost avskrivninger (%d), føres på funksjon 860 og art 990.", sumMotpostAvskrivninger)
+                        : String.format("Korrigér i fila slik at den inneholder motpost avskrivninger (%d), føres på funksjon 860 og art 990.", sumMotpostAvskrivninger);
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Avskrivninger, motpost avskrivninger", " ", " "
                         , errorText
@@ -1148,8 +1140,8 @@ public class Main {
             // For 0I og 0K: Til informasjon / NO_ERROR, For alle andre: hard kontroll / CRITICAL_ERROR
             int errorType = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K"))) ? Constants.NO_ERROR : Constants.CRITICAL_ERROR;
             String errorText = (isCodeInCodelist(arguments.getSkjema(), List.of("0I", "0K")))
-                    ? "Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590."
-                    : "Korrigér i fila slik at den inneholder avskrivninger (" + sumAvskrivninger + "), føres på tjenestefunksjon og art 590.";
+                    ? String.format("Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at den inneholder avskrivninger (%d), føres på tjenestefunksjon og art 590.", sumAvskrivninger)
+                    : String.format("Korrigér i fila slik at den inneholder avskrivninger (%d), føres på tjenestefunksjon og art 590.", sumAvskrivninger);
 
 
             if (sumAvskrivninger == 0) {
@@ -1183,7 +1175,7 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Avskrivninger", " ", " "
                         , "Kontroll Avskrivninger, differanse"
-                        , "Korrigér i fila slik at avskrivninger (" + sumAvskrivninger + ") stemmer overens med motpost avskrivninger (" + sumMotpostAvskrivninger + ") (margin på +/- 30')"
+                        , String.format("Korrigér i fila slik at avskrivninger (%d) stemmer overens med motpost avskrivninger (%d) (margin på +/- 30')", sumAvskrivninger, sumMotpostAvskrivninger)
                         , Constants.CRITICAL_ERROR
                 ));
 
@@ -1221,7 +1213,7 @@ public class Main {
             if (sumAvskrivningerAndreFunksjoner != 0) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Avskrivninger, avskrivninger ført på andre funksjoner", " ", " "
-                        , "Korrigér i fila slik at avskrivningene føres på tjenestefunksjon og ikke på funksjonene (" + avskrivningerAndreFunksjoner + ")"
+                        , String.format("Korrigér i fila slik at avskrivningene føres på tjenestefunksjon og ikke på funksjonene (%s)", avskrivningerAndreFunksjoner.toString())
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1259,7 +1251,7 @@ public class Main {
             if (sumMotpostAvskrivningerAndreFunksjoner != 0) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Avskrivninger, motpost avskrivninger ført på andre funksjoner", " ", " "
-                        , "Korrigér i fila slik at motpost avskrivninger kun er ført på funksjon 860, art 990 og ikke på funksjonene (" + motpostAvskrivningerAndreFunksjoner + ")"
+                        , String.format("Korrigér i fila slik at motpost avskrivninger kun er ført på funksjon 860, art 990 og ikke på funksjonene (%s)", motpostAvskrivningerAndreFunksjoner.toString())
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1287,7 +1279,7 @@ public class Main {
             if (outsideOf(funksjon290Investering, -30, 30)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Funksjon 290, investeringsregnskapet", " ", " "
-                        , "Korrigér i fila slik at differanse (" + funksjon290Investering + ") på funksjon 290 interkommunale samarbeid går i 0 i investeringsregnskapet . (margin på +/- 30')"
+                        , String.format("Korrigér i fila slik at differanse (%d) på funksjon 290 interkommunale samarbeid går i 0 i investeringsregnskapet . (margin på +/- 30')", funksjon290Investering)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1315,7 +1307,7 @@ public class Main {
             if (outsideOf(funksjon290Drift, -30, 30)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Funksjon 290, driftsregnskapet", " ", " "
-                        , "Korrigér i fila slik at differanse (" + funksjon290Drift + ") på funksjon 290 interkommunale samarbeid (§27-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')"
+                        , String.format("Korrigér i fila slik at differanse (%d) på funksjon 290 interkommunale samarbeid (§27-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')", funksjon290Drift)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1345,7 +1337,7 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Funksjon 465", " ", " "
                         , "Kontroll Funksjon 465, investeringsregnskapet"
-                        , "Korrigér i fila slik at differanse (" + funksjon465Investering + ") på funksjon 465 Interfylkeskommunale samarbeid går i 0 i investeringsregnskapet . (margin på +/- 30')"
+                        , String.format("Korrigér i fila slik at differanse (%d) på funksjon 465 Interfylkeskommunale samarbeid går i 0 i investeringsregnskapet . (margin på +/- 30')", funksjon465Investering)
                         , Constants.CRITICAL_ERROR
                 ));
 
@@ -1373,7 +1365,7 @@ public class Main {
             if (outsideOf(funksjon465Drift, -30, 30)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, "Kontroll Funksjon 465, driftsregnskapet", " ", " "
-                        , "Korrigér i fila slik at differanse (" + funksjon465Drift + ") på funksjon 465 Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')"
+                        , String.format("Korrigér i fila slik at differanse (%d) på funksjon 465 Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i driftsregnskapet . (margin på +/- 30')", funksjon465Drift)
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
@@ -1409,9 +1401,7 @@ public class Main {
                 errorReport.addEntry(new ErrorReportEntry(
                         SUMMERINGSKONTROLLER, BALANSEREGNSKAP, " ", " "
                         , "Kontroll Memoriakonti"
-                        , "Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at differansen (" + differanse + ") mellom "
-                        + "memoriakontiene (" + sumMemoriaKonti + ") og "
-                        + "motkonto for memoriakontiene (" + sumMotkontoMemoriaKonti + ") går i 0. (margin på +/- 10')"
+                        , String.format("Kun advarsel, hindrer ikke innsending. Korrigér i fila slik at differansen (%d) mellom memoriakontiene (%d) og motkonto for memoriakontiene (%d) går i 0. (margin på +/- 10')", differanse, sumMemoriaKonti, sumMotkontoMemoriaKonti)
                         , Constants.NO_ERROR
                 ));
 

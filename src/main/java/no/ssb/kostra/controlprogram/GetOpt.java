@@ -99,7 +99,7 @@ import java.util.ArrayList;
  */
 public class GetOpt {
     /** The List of File Names found after args */
-    protected List fileNameArguments;
+    protected List<String> fileNameArguments;
     /** The set of characters to look for */
     protected final GetOptDesc[] options;
     /** Where we are in the options */
@@ -113,10 +113,6 @@ public class GetOpt {
 
     /** Retrieve the current option argument; UNIX variant spelling. */
     public String optarg() {
-        return optarg;
-    }
-    /** Retrieve the current option argument; Java variant spelling. */
-    public String optArg() {
         return optarg;
     }
 
@@ -168,7 +164,7 @@ public class GetOpt {
     }
 
     /** Array used to convert a char to a String */
-    private static char[] strConvArray = { 0 };
+    private static final char[] strConvArray = { 0 };
 
     /**
      * Modern way of using GetOpt: call this once and get all options.
@@ -179,9 +175,9 @@ public class GetOpt {
      * from the option that was matched) and whose value is a String
      * containing the value, or null for a non-option argument.
      */
-    public Map parseArguments(String[] argv) {
-        Map optionsAndValues = new HashMap();
-        fileNameArguments = new ArrayList();
+    public Map<String, String> parseArguments(String[] argv) {
+        Map<String, String> optionsAndValues = new HashMap<>();
+        fileNameArguments = new ArrayList<>();
         for (int i = 0; i < argv.length; i++) {
             char c = getopt(argv);
             if (c != DONE) {
@@ -198,7 +194,7 @@ public class GetOpt {
     }
 
     /** Get the list of filename-like arguments after options */
-    public List getFilenameList() {
+    public List<String> getFilenameList() {
         if (fileNameArguments == null) {
             throw new IllegalArgumentException(
                     "Illegal call to getFilenameList() before parseOptions()");
@@ -209,7 +205,7 @@ public class GetOpt {
     /** The true heart of getopt, whether used old way or new way:
      * returns one argument; call repeatedly until it returns DONE.
      */
-    public char getopt(String argv[]) {
+    public char getopt(String[] argv) {
         if (optind >= (argv.length)-1) {
             done = true;
         }
@@ -227,22 +223,22 @@ public class GetOpt {
         String thisArg = argv[optind++];
         if (thisArg.startsWith("-")) {
             optarg = null;
-            for (int i=0; i<options.length; i++) {
-                if ( options[i].argLetter == thisArg.charAt(1) ||
-                        (options[i].argName != null &&
-                                options[i].argName == thisArg.substring(1))) { // found it
+            for (GetOptDesc option : options) {
+                if (option.argLetter == thisArg.charAt(1) ||
+                        (option.argName != null &&
+                                option.argName.equals(thisArg.substring(1)))) { // found it
                     // If it needs an option argument, get it.
-                    if (options[i].takesArgument) {
+                    if (option.takesArgument) {
                         if (optind < argv.length) {
                             optarg = argv[optind];
                             ++optind;
                         } else {
                             throw new IllegalArgumentException(
-                                    "Option " + options[i].argLetter +
+                                    "Option " + option.argLetter +
                                             " needs value but found end of arg list");
                         }
                     }
-                    return options[i].argLetter;
+                    return option.argLetter;
                 }
             }
             // Began with "-" but not matched, so must be error.

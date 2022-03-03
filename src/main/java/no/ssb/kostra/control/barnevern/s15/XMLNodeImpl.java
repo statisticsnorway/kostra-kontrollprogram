@@ -18,7 +18,7 @@ public class XMLNodeImpl implements StructuredNode {
 
     private static final XPathFactory XPATH = XPathFactory.newInstance();
     private static final String DATO_FORMAT_LANGT = "yyyy-MM-dd";
-    private Node node;
+    private final Node node;
 
     public XMLNodeImpl(Node root) {
         node = root;
@@ -107,8 +107,8 @@ public class XMLNodeImpl implements StructuredNode {
             } else if (otherStartDato.isBefore(startDato)) {
                 result = 1;
             }
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
+        } catch (XPathExpressionException ignored) {
+            // Ignore exception
         }
 
         return result;

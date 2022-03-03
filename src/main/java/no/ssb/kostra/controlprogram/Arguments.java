@@ -158,8 +158,8 @@ public class Arguments {
                     }
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignored) {
+                // Ignore exception
             }
         }
 

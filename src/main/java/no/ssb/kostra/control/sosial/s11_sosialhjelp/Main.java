@@ -28,9 +28,16 @@ public class Main {
     private static final String VKLO = "VKLO";
     private static final String TRYGDESIT = "TRYGDESIT";
     private static final String ARBSIT = "ARBSIT";
+    private static final String GITT_OKONOMIRAD = "GITT_OKONOMIRAD";
+    private static final String FAAT_INDIVIDUELL_PLAN = "FAAT_INDIVIDUELL_PLAN";
+    private static final String BOSIT = "BOSIT";
+    private static final String VILKARSOSLOV = "VILKARSOSLOV";
+
+    private static final String VKLO_ERRORTEXT = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er %s. Arbeidssituasjonen er '%s', forventet én av '%s'. Feltet er obligatorisk å fylle ut.";
 
 
-    private Main(){}
+    private Main() {
+    }
 
     public static ErrorReport doControls(Arguments arguments) {
         ErrorReport errorReport = new ErrorReport(arguments);
@@ -52,7 +59,7 @@ public class Main {
                 .map(r -> {
                     try {
                         r.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)), arguments.getAargang()));
-                        r.setFieldAsInteger(FNR_OK, (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)))) ? 1: 0);
+                        r.setFieldAsInteger(FNR_OK, (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)))) ? 1 : 0);
 
                     } catch (Exception e) {
                         r.setFieldAsInteger(ALDER, -1);
@@ -224,11 +231,9 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 10 Forsørgerplikt for barn under 18 år i husholdningen. Gyldige verdier"
-                        , "Korrigér forsørgerplikt. Fant '" + r.getFieldAsString("BU18") + "', "
-                        + "forventet én av " + r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
-                        + "Det er ikke krysset av for om deltakeren har barn under 18 år, "
-                        + "som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut."
-
+                        , String.format("Korrigér forsørgerplikt. Fant '%s', forventet én av %s'. "
+                                + "Det er ikke krysset av for om deltakeren har barn under 18 år, som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen ved siste kontakt. Feltet er obligatorisk å fylle ut.",
+                        r.getFieldAsString("BU18"), r.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::toString).collect(Collectors.toList()))
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString("BU18")
@@ -247,9 +252,8 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
-                        , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
-                        + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsIntegerDefaultEquals0(ANTBU18) + ")' som bor i husholdningen. "
-                        + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
+                        , String.format("Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke oppgitt hvor mange barn '(%d)' som bor i husholdningen. "
+                        + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen.", r.getFieldAsIntegerDefaultEquals0(ANTBU18))
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString("BU18")
@@ -271,10 +275,8 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 12 Det bor barn under 18 år i husholdningen."
-                        , "Det er oppgitt " + r.getFieldAsInteger(ANTBU18) + " barn under 18 år som bor i husholdningen som "
-                        + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
-                        + "oppgitt at det bor barn i husholdningen. "
-                        + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
+                        , String.format("Det er oppgitt %d barn under 18 år som bor i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke oppgitt at det bor barn i husholdningen. "
+                        + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen.", r.getFieldAsInteger(ANTBU18))
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsInteger(ANTBU18)
@@ -297,7 +299,7 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 13 Mange barn under 18 år i husholdningen."
-                        , "Antall barn (" + r.getFieldAsInteger(ANTBU18) + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                        , String.format("Antall barn (%d) under 18 år i husholdningen er 10 eller flere, er dette riktig?", r.getFieldAsInteger(ANTBU18))
                         , Constants.NORMAL_ERROR
                 )
                 , r.getFieldAsInteger(ANTBU18)
@@ -317,8 +319,8 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 14 Viktigste kilde til livsopphold. Gyldige verdier"
-                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Fant '" + r.getFieldAsString(VKLO) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'."
+                        , String.format("Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret skal oppgis. Fant '%s', forventet én av '%s'.",
+                        r.getFieldAsString(VKLO), r.getFieldDefinitionByName(VKLO).getCodeList().stream().map(Code::toString).collect(Collectors.toList()))
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString(VKLO)
@@ -352,8 +354,15 @@ public class Main {
         );
     }
 
-    public static boolean control16ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    private static boolean templateViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r, String titleTemplate, List<String> vkloCodeList, List<String> arbsitCodeList) {
         errorReport.incrementCount();
+        String vklo = r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), vkloCodeList)).map(Code::getValue).collect(Collectors.joining(""));
+        String arbsit = r.getFieldAsTrimmedString(ARBSIT);
+        String arbsitList = r.getFieldDefinitionByName(ARBSIT).getCodeList().stream()
+                .filter(c -> Comparator.isCodeInCodelist(c.getCode(), arbsitCodeList))
+                .map(Code::toString)
+                .collect(Collectors.toList())
+                .toString();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
@@ -362,97 +371,54 @@ public class Main {
                         , r.getFieldAsString(PERSON_JOURNALNR)
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
-                        , "Kontroll 16 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("2"))).map(Code::getValue).collect(Collectors.joining("")) + "."
-                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("2"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
-                        + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("03", "05", "06", "09", "10"))).map(Code::toString).collect(Collectors.toList())
-                        + "'. Feltet er obligatorisk å fylle ut."
+                        , String.format(titleTemplate, vklo)
+                        , String.format(VKLO_ERRORTEXT, vklo, arbsit, arbsitList)
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString(VKLO)
-                , List.of("2")
+                , vkloCodeList
                 , r.getFieldAsString(ARBSIT)
-                , List.of("03", "05", "06")
+                , arbsitCodeList
+        );
+    }
+
+    public static boolean control16ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+        return templateViktigsteKildeTilLivsopphold(
+                errorReport,
+                r,
+                "Kontroll 16 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. %s.",
+                List.of("2"),
+                List.of("03", "05", "06")
         );
     }
 
     public static boolean control17ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
-        errorReport.incrementCount();
-
-        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        r.getFieldAsString(SAKSBEHANDLER)
-                        , r.getFieldAsString(PERSON_JOURNALNR)
-                        , r.getFieldAsString(PERSON_FODSELSNR)
-                        , " "
-                        , "Kontroll 17 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("4"))).map(Code::getValue).collect(Collectors.joining("")) + "."
-                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("4"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
-                        + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("03"))).map(Code::toString).collect(Collectors.toList())
-                        + "'. Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , r.getFieldAsString(VKLO)
-                , List.of("4")
-                , r.getFieldAsString(ARBSIT)
-                , List.of("03")
+        return templateViktigsteKildeTilLivsopphold(
+                errorReport,
+                r,
+                "Kontroll 17 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. %s.",
+                List.of("4"),
+                List.of("03")
         );
     }
 
     public static boolean control18ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
-        errorReport.incrementCount();
-
-        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        r.getFieldAsString(SAKSBEHANDLER)
-                        , r.getFieldAsString(PERSON_JOURNALNR)
-                        , r.getFieldAsString(PERSON_FODSELSNR)
-                        , " "
-                        , "Kontroll 18 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("6"))).map(Code::getValue).collect(Collectors.joining("")) + "."
-                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("6"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
-                        + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("09"))).map(Code::toString).collect(Collectors.toList())
-                        + "'. Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , r.getFieldAsString(VKLO)
-                , List.of("6")
-                , r.getFieldAsString(ARBSIT)
-                , List.of("09")
+        return templateViktigsteKildeTilLivsopphold(
+                errorReport,
+                r,
+                "Kontroll 18 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. %s.",
+                List.of("6"),
+                List.of("09")
         );
     }
 
     public static boolean control19ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
-        errorReport.incrementCount();
-
-        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        r.getFieldAsString(SAKSBEHANDLER)
-                        , r.getFieldAsString(PERSON_JOURNALNR)
-                        , r.getFieldAsString(PERSON_FODSELSNR)
-                        , " "
-                        , "Kontroll 19 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("8"))).map(Code::getValue).collect(Collectors.joining("")) + "."
-                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("8"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
-                        + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("10"))).map(Code::toString).collect(Collectors.toList())
-                        + "'. Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , r.getFieldAsString(VKLO)
-                , List.of("8")
-                , r.getFieldAsString(ARBSIT)
-                , List.of("10")
+        return templateViktigsteKildeTilLivsopphold(
+                errorReport,
+                r,
+                "Kontroll 19 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. %s.",
+                List.of("8"),
+                List.of("10")
         );
     }
 
@@ -837,11 +803,11 @@ public class Main {
                         , " "
                         , "Kontroll 32 Økonomiskrådgivning. Gyldige koder."
                         , "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med utbetaling av økonomisk sosialhjelp. "
-                        + "Utfylt verdi er '" + r.getFieldAsString("GITT_OKONOMIRAD") + "'. Feltet er obligatorisk å fylle ut."
+                        + "Utfylt verdi er '" + r.getFieldAsString(GITT_OKONOMIRAD) + "'. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("GITT_OKONOMIRAD")
-                , r.getFieldDefinitionByName("GITT_OKONOMIRAD").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(GITT_OKONOMIRAD)
+                , r.getFieldDefinitionByName(GITT_OKONOMIRAD).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
@@ -857,11 +823,11 @@ public class Main {
                         , " "
                         , "Kontroll 33 Utarbeidelse av individuell plan"
                         , "Det er ikke krysset av for om mottakeren har fått utarbeidet individuell plan. "
-                        + "Utfylt verdi er '" + r.getFieldAsString("FAAT_INDIVIDUELL_PLAN") + "'. Feltet er obligatorisk."
+                        + "Utfylt verdi er '" + r.getFieldAsString(FAAT_INDIVIDUELL_PLAN) + "'. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("FAAT_INDIVIDUELL_PLAN")
-                , r.getFieldDefinitionByName("FAAT_INDIVIDUELL_PLAN").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(FAAT_INDIVIDUELL_PLAN)
+                , r.getFieldDefinitionByName(FAAT_INDIVIDUELL_PLAN).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
@@ -877,11 +843,11 @@ public class Main {
                         , " "
                         , "Kontroll 35 Boligsituasjon"
                         , "Det er ikke krysset av for mottakerens boligsituasjon. "
-                        + "Utfylt verdi er '" + r.getFieldAsString("BOSIT") + "'. Feltet er obligatorisk."
+                        + "Utfylt verdi er '" + r.getFieldAsString(BOSIT) + "'. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("BOSIT")
-                , r.getFieldDefinitionByName("BOSIT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(BOSIT)
+                , r.getFieldDefinitionByName(BOSIT).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
@@ -891,10 +857,10 @@ public class Main {
 
         Integer bidrag = r.getFieldAsIntegerDefaultEquals0(BIDRAG);
         Integer bidragMaanederSum = Stream.of(
-                "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MARS",
-                "BIDRAG_APRIL", "BIDRAG_MAI", "BIDRAG_JUNI",
-                "BIDRAG_JULI", "BIDRAG_AUG", "BIDRAG_SEPT",
-                "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
+                        "BIDRAG_JAN", "BIDRAG_FEB", "BIDRAG_MARS",
+                        "BIDRAG_APRIL", "BIDRAG_MAI", "BIDRAG_JUNI",
+                        "BIDRAG_JULI", "BIDRAG_AUG", "BIDRAG_SEPT",
+                        "BIDRAG_OKT", "BIDRAG_NOV", "BIDRAG_DES")
                 .map(r::getFieldAsIntegerDefaultEquals0)
                 .reduce(0, Integer::sum);
 
@@ -922,10 +888,10 @@ public class Main {
 
         Integer laan = r.getFieldAsIntegerDefaultEquals0(LAAN);
         Integer laanMaanederSum = Stream.of(
-                "LAAN_JAN", "LAAN_FEB", "LAAN_MARS",
-                "LAAN_APRIL", "LAAN_MAI", "LAAN_JUNI",
-                "LAAN_JULI", "LAAN_AUG", "LAAN_SEPT",
-                "LAAN_OKT", "LAAN_NOV", "LAAN_DES")
+                        "LAAN_JAN", "LAAN_FEB", "LAAN_MARS",
+                        "LAAN_APRIL", "LAAN_MAI", "LAAN_JUNI",
+                        "LAAN_JULI", "LAAN_AUG", "LAAN_SEPT",
+                        "LAAN_OKT", "LAAN_NOV", "LAAN_DES")
                 .map(r::getFieldAsIntegerDefaultEquals0)
                 .reduce(0, Integer::sum);
 
@@ -983,8 +949,8 @@ public class Main {
                         + "Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("VILKARSOSLOV")
-                , r.getFieldDefinitionByName("VILKARSOSLOV").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , r.getFieldAsString(VILKARSOSLOV)
+                , r.getFieldDefinitionByName(VILKARSOSLOV).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
         );
     }
 
@@ -1023,7 +989,7 @@ public class Main {
                         + "så skal utbetalingsvedtakets dato (" + r.getFieldAsString("UTBETDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("VILKARSOSLOV")
+                , r.getFieldAsString(VILKARSOSLOV)
                 , List.of("1")
                 , r.getFieldAsLocalDate("UTBETDATO")
         );
@@ -1044,7 +1010,7 @@ public class Main {
                         + "så skal utbetalingsvedtakets til og med dato (" + r.getFieldAsString("UTBETTOMDATO") + ") (DDMMÅÅ) oppgis. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsString("VILKARSOSLOV")
+                , r.getFieldAsString(VILKARSOSLOV)
                 , List.of("1")
                 , r.getFieldAsLocalDate("UTBETTOMDATO")
         );
@@ -1053,7 +1019,7 @@ public class Main {
     public static boolean control43Vilkaar(ErrorReport errorReport, Record r) {
         errorReport.incrementCount();
 
-        String vilkar = r.getFieldAsString("VILKARSOSLOV");
+        String vilkar = r.getFieldAsString(VILKARSOSLOV);
         List<String> fields = List.of(
                 "VILKARARBEID", "VILKARKURS", "VILKARUTD",
                 "VILKARJOBBLOG", "VILKARJOBBTILB", "VILKARSAMT",
@@ -1063,12 +1029,12 @@ public class Main {
 
         boolean isNoneFilledIn = fields.stream()
                 .noneMatch(field -> Comparator.isCodeInCodelist(
-                        r.getFieldAsTrimmedString(field),
-                        r.getFieldDefinitionByName(field)
-                                .getCodeList()
-                                .stream()
-                                .map(Code::getCode)
-                                .collect(Collectors.toList())
+                                r.getFieldAsTrimmedString(field),
+                                r.getFieldDefinitionByName(field)
+                                        .getCodeList()
+                                        .stream()
+                                        .map(Code::getCode)
+                                        .collect(Collectors.toList())
                         )
                 );
 

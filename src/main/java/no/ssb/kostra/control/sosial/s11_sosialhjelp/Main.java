@@ -661,23 +661,21 @@ public class Main {
         boolean laanOK = laan != null && 0 < laan;
         boolean stonadOK = bidragOK || laanOK;
 
-        if (harVarighet) {
-            if (!stonadOK) {
-                errorReport.addEntry(
-                        new ErrorReportEntry(
-                                r.getFieldAsString(SAKSBEHANDLER)
-                                , r.getFieldAsString(PERSON_JOURNALNR)
-                                , r.getFieldAsString(PERSON_FODSELSNR)
-                                , " "
-                                , "Kontroll 28 Har varighet, men mangler stønadssum"
-                                , "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
-                                + "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
-                                , Constants.CRITICAL_ERROR
-                        )
-                );
+        if (harVarighet && !stonadOK) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(PERSON_JOURNALNR)
+                            , r.getFieldAsString(PERSON_FODSELSNR)
+                            , " "
+                            , "Kontroll 28 Har varighet, men mangler stønadssum"
+                            , "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
+                            + "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                            , Constants.CRITICAL_ERROR
+                    )
+            );
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -711,23 +709,21 @@ public class Main {
             stonad += laan;
         }
 
-        if (stonadOK && 0 < stonad) {
-            if (!harVarighet) {
-                errorReport.addEntry(
-                        new ErrorReportEntry(
-                                r.getFieldAsString(SAKSBEHANDLER)
-                                , r.getFieldAsString(PERSON_JOURNALNR)
-                                , r.getFieldAsString(PERSON_FODSELSNR)
-                                , " "
-                                , "Kontroll 29 Har stønadssum men mangler varighet"
-                                , "Mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
-                                + "men mangler utfylling for hvilke måneder i løpet av året mottakeren har mottatt økonomisk stønad."
-                                , Constants.CRITICAL_ERROR
-                        )
-                );
+        if (stonadOK && 0 < stonad && !harVarighet) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            r.getFieldAsString(SAKSBEHANDLER)
+                            , r.getFieldAsString(PERSON_JOURNALNR)
+                            , r.getFieldAsString(PERSON_FODSELSNR)
+                            , " "
+                            , "Kontroll 29 Har stønadssum men mangler varighet"
+                            , "Mottakeren har fått i økonomisk sosialhjelp (bidrag " + bidrag + " eller lån " + laan + ") i løpet av året, "
+                            + "men mangler utfylling for hvilke måneder i løpet av året mottakeren har mottatt økonomisk stønad."
+                            , Constants.CRITICAL_ERROR
+                    )
+            );
 
-                return true;
-            }
+            return true;
         }
 
         return false;

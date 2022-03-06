@@ -4,8 +4,11 @@ import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ControlRecordLengde {
     public static boolean doControl(List<String> s, ErrorReport er, int length) {
@@ -14,7 +17,7 @@ public class ControlRecordLengde {
         List<String> recordLengdeFeil = new ArrayList<>();
 
         for (int i = 0; i < s.size(); i++) {
-            if (s.get(i).length() != length) {
+            if (s.get(i).length() != length || Pattern.matches("\\t", s.get(i))) {
                 recordLengdeFeil.add(String.valueOf(i + 1));
             }
         }

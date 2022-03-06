@@ -60,4 +60,16 @@ public class ControlRecordLengthTest {
         assertFalse(result);
         assertEquals(er.getErrorType(), Constants.NO_ERROR);
     }
+
+    @Test
+    public void testInvalidCharsFail() {
+        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        er = new ErrorReport(args);
+
+        boolean result = ControlRecordLengde.doControl(List.of("\t"), er, 1);
+        System.out.println(er.generateReport());
+
+        assertTrue(result);
+        assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
+    }
 }

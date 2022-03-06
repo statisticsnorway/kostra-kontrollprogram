@@ -21,7 +21,7 @@ import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 import static no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.*;
 
 
-public class MainITest11Sosial {
+class SosialTest {
     private static final Arguments arguments = new Arguments(new String[]{"-s", "11F", "-y", "2021", "-r", "420400"});
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
 
@@ -449,7 +449,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control01RecordLengdeProvider")
-    public void control01RecordLengdeTest(TestStringInputAndResult inputAndResult) {
+    void control01RecordLengdeTest(TestStringInputAndResult inputAndResult) {
         // public static boolean doControl(List<String> s, ErrorReport er, int length)
         boolean result = ControlRecordLengde.doControl(List.of(inputAndResult.getString()), inputAndResult.getErrorReport(), FieldDefinitions.getFieldLength());
         System.out.println(inputAndResult.getErrorReport().generateReport());
@@ -460,7 +460,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03KommunenummerProvider")
-    public void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
+    void control03KommunenummerTest(TestRecordInputAndResult inputAndResult) {
         boolean result = control03Kommunenummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -470,7 +470,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control03BydelsnummerProvider")
-    public void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
+    void control03BydelsnummerTest(TestRecordInputAndResult inputAndResult) {
         boolean result = control03Bydelsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -480,7 +480,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control04OppgaveAarProvider")
-    public void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
+    void control04OppgaveAarTest(TestRecordInputAndResult inputAndResult) {
         boolean result = control04OppgaveAar(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -490,7 +490,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05FodselsnummerProvider")
-    public void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
+    void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
         String fnr = inputAndResult.getRecord().getFieldAsString("PERSON_FODSELSNR");
         System.out.println(fnr);
         boolean result = control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
@@ -502,7 +502,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05AFodselsnummerDubletterProvider")
-    public void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+    void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
         boolean result = control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -512,7 +512,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05BJournalnummerDubletterProvider")
-    public void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
+    void control05BJournalnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
         boolean result = control05BJournalnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -522,7 +522,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control06AlderUnder18AarProvider")
-    public void control06AlderUnder18AarTest(TestRecordInputAndResult inputAndResult) {
+    void control06AlderUnder18AarTest(TestRecordInputAndResult inputAndResult) {
         boolean result = control06AlderUnder18Aar(inputAndResult.getErrorReport(), inputAndResult.getRecord());
         System.out.println(inputAndResult.getErrorReport().generateReport());
 
@@ -532,7 +532,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control07AlderEr68AarEllerOverProvider")
-    public void control07AlderEr68AarEllerOverTest(TestRecordInputAndResult inputAndResult) {
+    void control07AlderEr68AarEllerOverTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control07AlderEr68AarEllerOver(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -541,7 +541,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control08KjonnProvider")
-    public void control08KjonnTest(TestRecordInputAndResult inputAndResult) {
+    void control08KjonnTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control08Kjonn(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -550,7 +550,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control09SivilstandProvider")
-    public void control09SivilstandTest(TestRecordInputAndResult inputAndResult) {
+    void control09SivilstandTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control09Sivilstand(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -559,7 +559,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control10ForsorgerpliktForBarnUnder18AarProvider")
-    public void control10ForsorgerpliktForBarnUnder18AarTest(TestRecordInputAndResult inputAndResult) {
+    void control10ForsorgerpliktForBarnUnder18AarTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control10ForsorgerpliktForBarnUnder18Aar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -568,7 +568,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control11AntallBarnIHusholdningenManglerProvider")
-    public void control11AntallBarnIHusholdningenManglerTest(TestRecordInputAndResult inputAndResult) {
+    void control11AntallBarnIHusholdningenManglerTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control11AntallBarnIHusholdningenMangler(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -577,7 +577,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control12AntallBarnIHusholdningenProvider")
-    public void control12AntallBarnIHusholdningenTest(TestRecordInputAndResult inputAndResult) {
+    void control12AntallBarnIHusholdningenTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control12AntallBarnIHusholdningen(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -586,7 +586,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control13MangeBarnIHusholdningenProvider")
-    public void control13MangeBarnIHusholdningenTest(TestRecordInputAndResult inputAndResult) {
+    void control13MangeBarnIHusholdningenTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control13MangeBarnIHusholdningen(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -595,7 +595,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control14ViktigsteKildeTilLivsoppholdGyldigeVerdierProvider")
-    public void control14ViktigsteKildeTilLivsoppholdGyldigeVerdierTest(TestRecordInputAndResult inputAndResult) {
+    void control14ViktigsteKildeTilLivsoppholdGyldigeVerdierTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control14ViktigsteKildeTilLivsoppholdGyldigeVerdier(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -604,7 +604,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control15ViktigsteKildeTilLivsoppholdProvider")
-    public void control15ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control15ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control15ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -613,7 +613,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control16ViktigsteKildeTilLivsoppholdProvider")
-    public void control16ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control16ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control16ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -622,7 +622,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control17ViktigsteKildeTilLivsoppholdProvider")
-    public void control17ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control17ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control17ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -631,7 +631,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control18ViktigsteKildeTilLivsoppholdProvider")
-    public void control18ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control18ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control18ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -640,7 +640,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control19ViktigsteKildeTilLivsoppholdProvider")
-    public void control19ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control19ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control19ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -649,7 +649,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control20ViktigsteKildeTilLivsoppholdProvider")
-    public void control20ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+    void control20ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control20ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -658,7 +658,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control22TilknytningTilTrygdesystemetOgAlderProvider")
-    public void control22TilknytningTilTrygdesystemetOgAlderTest(TestRecordInputAndResult inputAndResult) {
+    void control22TilknytningTilTrygdesystemetOgAlderTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control22TilknytningTilTrygdesystemetOgAlder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -667,7 +667,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control23TilknytningTilTrygdesystemetOgBarnProvider")
-    public void control23TilknytningTilTrygdesystemetOgBarnTest(TestRecordInputAndResult inputAndResult) {
+    void control23TilknytningTilTrygdesystemetOgBarnTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control23TilknytningTilTrygdesystemetOgBarn(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -676,7 +676,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control24TilknytningTilTrygdesystemetOgArbeidssituasjonProvider")
-    public void control24TilknytningTilTrygdesystemetOgArbeidssituasjonTest(TestRecordInputAndResult inputAndResult) {
+    void control24TilknytningTilTrygdesystemetOgArbeidssituasjonTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control24TilknytningTilTrygdesystemetOgArbeidssituasjon(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -685,7 +685,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspengerProvider")
-    public void control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspengerTest(TestRecordInputAndResult inputAndResult) {
+    void control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspengerTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspenger(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -694,7 +694,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control25ArbeidssituasjonGyldigeKoderProvider")
-    public void control25ArbeidssituasjonGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
+    void control25ArbeidssituasjonGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control25ArbeidssituasjonGyldigeKoder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -703,7 +703,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control26StonadsmaanederGyldigeKoderProvider")
-    public void control26StonadsmaanederGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
+    void control26StonadsmaanederGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control26StonadsmaanederGyldigeKoder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -712,7 +712,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control27StonadssumManglerEllerHarUgyldigeTegnProvider")
-    public void control27StonadssumManglerEllerHarUgyldigeTegnTest(TestRecordInputAndResult inputAndResult) {
+    void control27StonadssumManglerEllerHarUgyldigeTegnTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control27StonadssumManglerEllerHarUgyldigeTegn(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -721,7 +721,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control28HarVarighetMenManglerStonadssumProvider")
-    public void control28HarVarighetMenManglerStonadssumTest(TestRecordInputAndResult inputAndResult) {
+    void control28HarVarighetMenManglerStonadssumTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control28HarVarighetMenManglerStonadssum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -730,7 +730,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control29HarStonadssumMenManglerVarighetProvider")
-    public void control29HarStonadssumMenManglerVarighetTest(TestRecordInputAndResult inputAndResult) {
+    void control29HarStonadssumMenManglerVarighetTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control29HarStonadssumMenManglerVarighet(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -739,7 +739,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control30StonadssumPaaMaxEllerMerProvider")
-    public void control30StonadssumPaaMaxEllerMerTest(TestRecordInputAndResult inputAndResult) {
+    void control30StonadssumPaaMaxEllerMerTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control30StonadssumPaaMaxEllerMer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -748,7 +748,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control31StonadssumPaaMinEllerMindreProvider")
-    public void control31StonadssumPaaMinEllerMindreTest(TestRecordInputAndResult inputAndResult) {
+    void control31StonadssumPaaMinEllerMindreTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control31StonadssumPaaMinEllerMindre(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -757,7 +757,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control32OkonomiskraadgivningGyldigeKoderProvider")
-    public void control32OkonomiskraadgivningGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
+    void control32OkonomiskraadgivningGyldigeKoderTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control32OkonomiskraadgivningGyldigeKoder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -766,7 +766,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control33UtarbeidelseAvIndividuellPlanProvider")
-    public void control33UtarbeidelseAvIndividuellPlanTest(TestRecordInputAndResult inputAndResult) {
+    void control33UtarbeidelseAvIndividuellPlanTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control33UtarbeidelseAvIndividuellPlan(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -775,7 +775,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control35BoligsituasjonProvider")
-    public void control35BoligsituasjonTest(TestRecordInputAndResult inputAndResult) {
+    void control35BoligsituasjonTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control35Boligsituasjon(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -784,7 +784,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control36BidragFordeltPaaMmaanederProvider")
-    public void control36BidragFordeltPaaMmaanederTest(TestRecordInputAndResult inputAndResult) {
+    void control36BidragFordeltPaaMmaanederTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control36BidragFordeltPaaMmaaneder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -793,7 +793,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control37LaanFordeltPaaMmaanederProvider")
-    public void control37LaanFordeltPaaMmaanederTest(TestRecordInputAndResult inputAndResult) {
+    void control37LaanFordeltPaaMmaanederTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control37LaanFordeltPaaMmaaneder(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -802,7 +802,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control38DUFNummerProvider")
-    public void control38DUFNummerTest(TestRecordInputAndResult inputAndResult) {
+    void control38DUFNummerTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control38DUFNummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -811,7 +811,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control39ForsteVilkarIAaretProvider")
-    public void control39ForsteVilkarIAaretTest(TestRecordInputAndResult inputAndResult) {
+    void control39ForsteVilkarIAaretTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control39ForsteVilkarIAaret(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -820,7 +820,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control40ForsteVilkarIAaretSamboProvider")
-    public void control40ForsteVilkarIAaretSamboTest(TestRecordInputAndResult inputAndResult) {
+    void control40ForsteVilkarIAaretSamboTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control40ForsteVilkarIAaretSambo(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -829,7 +829,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control41DatoForUtbetalingsvedtakProvider")
-    public void control41DatoForUtbetalingsvedtakTest(TestRecordInputAndResult inputAndResult) {
+    void control41DatoForUtbetalingsvedtakTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control41DatoForUtbetalingsvedtak(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -838,7 +838,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control42TilOgMedDatoForUtbetalingsvedtakProvider")
-    public void control42TilOgMedDatoForUtbetalingsvedtakTest(TestRecordInputAndResult inputAndResult) {
+    void control42TilOgMedDatoForUtbetalingsvedtakTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control42TilOgMedDatoForUtbetalingsvedtak(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
@@ -847,7 +847,7 @@ public class MainITest11Sosial {
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control43VilkaarProvider")
-    public void control43VilkaarTest(TestRecordInputAndResult inputAndResult) {
+    void control43VilkaarTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control43Vilkaar(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 

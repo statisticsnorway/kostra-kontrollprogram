@@ -6,6 +6,7 @@ import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,13 +14,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-public class MainITest11SosialBlankFile {
+class SosialBlankFileTest {
     InputStream sysInBackup;
     private Arguments args;
-
 
     @BeforeEach
     public void beforeTest() {
@@ -41,15 +38,14 @@ public class MainITest11SosialBlankFile {
     }
 
     @Test
-    public void testDoControl() {
+    void testDoControl() {
         ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
-//        er.re
+        Assertions.assertNotNull(er, "Has content ErrorReport");
+        Assertions.assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 }

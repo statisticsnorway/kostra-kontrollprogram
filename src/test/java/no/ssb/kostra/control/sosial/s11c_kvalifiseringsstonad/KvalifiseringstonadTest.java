@@ -179,6 +179,7 @@ class KvalifiseringstonadTest {
 
     static Stream<TestRecordInputAndResult> control13AntBu18Provider() {
         return Stream.of(
+                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", " "), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "10"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "11"), definitions), true, Constants.CRITICAL_ERROR)
@@ -219,7 +220,9 @@ class KvalifiseringstonadTest {
 
     static Stream<TestRecordInputAndResult> control20KvalifiseringsprogramIAnnenKommuneKommunenummerProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", " ", "KOMMNR_KVP_KOMM", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(argumOslo, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_KOMM", "2", "KOMMNR_KVP_KOMM", "    "), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "0101"), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "1", "KOMMNR_KVP_KOMM", "    "), definitions), true, Constants.CRITICAL_ERROR),
                 new TestRecordInputAndResult(arguments, new Record(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "KVP_KOMM", "2", "KOMMNR_KVP_KOMM", "    "), definitions), false, Constants.NO_ERROR)

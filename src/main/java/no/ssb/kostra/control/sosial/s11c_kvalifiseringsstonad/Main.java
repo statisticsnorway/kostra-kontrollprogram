@@ -240,13 +240,13 @@ public class Main {
                         , " "
                         , "Kontroll 11 Det bor barn under 18 år i husholdningen. Mangler antall barn."
                         , "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller ektefelle/samboer har forsørgerplikt for, "
-                        + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsInteger(ANTBU18) + ")' som bor i husholdningen. "
+                        + "men det er ikke oppgitt hvor mange barn '(" + r.getFieldAsIntegerDefaultEquals0(ANTBU18) + ")' som bor i husholdningen. "
                         + "Feltet er obligatorisk å fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString("BU18")
                 , List.of("1")
-                , r.getFieldAsInteger(ANTBU18)
+                , r.getFieldAsIntegerDefaultEquals0(ANTBU18)
                 , ">"
                 , 0
         );
@@ -263,13 +263,13 @@ public class Main {
                         , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 12 Det bor barn under 18 år i husholdningen."
-                        , "Det er oppgitt " + r.getFieldAsInteger(ANTBU18) + " barn under 18 år som bor i husholdningen som "
+                        , "Det er oppgitt " + r.getFieldAsIntegerDefaultEquals0(ANTBU18) + " barn under 18 år som bor i husholdningen som "
                         + "mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke "
                         + "oppgitt at det bor barn i husholdningen. "
                         + "Feltet er obligatorisk å fylle ut når det er oppgitt antall barn under 18 år som bor i husholdningen."
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsInteger(ANTBU18)
+                , r.getFieldAsIntegerDefaultEquals0(ANTBU18)
                 , ">"
                 , 0
                 , r.getFieldAsString("BU18")
@@ -288,10 +288,10 @@ public class Main {
                         , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                        , "Antall barn (" + r.getFieldAsTrimmedString(ANTBU18) + ") under 18 år i husholdningen er 10 eller flere, er dette riktig?"
+                        , "Antall barn (" + r.getFieldAsTrimmedString(ANTBU18) + ") under 18 år i husholdningen er 11 eller flere, er dette riktig?"
                         , Constants.CRITICAL_ERROR
                 )
-                , r.getFieldAsInteger(ANTBU18)
+                , r.getFieldAsIntegerDefaultEquals0(ANTBU18)
                 , "<="
                 , 10
         );
@@ -386,6 +386,21 @@ public class Main {
 
         final String KOMMNR_KVP_KOMM = "KOMMNR_KVP_KOMM";
         final String KVP_KOMM = "KVP_KOMM";
+        final String kvp_komm = r.getFieldAsString(KVP_KOMM);
+        final String kommnr_kvp_komm = r.getFieldAsString(KOMMNR_KVP_KOMM);
+
+        final Code kvpKommCode = r.getFieldDefinitionByName(KVP_KOMM)
+                .getCodeList()
+                .stream()
+                .filter(item -> kvp_komm.equalsIgnoreCase(item.getCode()))
+                .findFirst()
+                .orElse(new Code(" ", "Uoppgitt"));
+
+        final List<String> kommnrKvpKommCodes = r.getFieldDefinitionByName(KOMMNR_KVP_KOMM)
+                .getCodeList()
+                .stream()
+                .map(Code::getCode)
+                .collect(Collectors.toList());
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                 errorReport
@@ -395,13 +410,14 @@ public class Main {
                         , r.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 20 Kvalifiseringsprogram i annen kommune. Kommunenummer."
-                        , "Deltakeren kommer fra kvalifiseringsprogram i annen kommune ('" + r.getFieldAsString(KOMMNR_KVP_KOMM) + "'), men kommunenummer mangler eller er ugyldig. Feltet er obligatorisk å fylle ut."
+                        , String.format("Det er svart '%s' på om deltakeren kommer fra kvalifiseringsprogram i annen kommune "
+                                + ", men kommunenummer ('%s') mangler eller er ugyldig. Feltet er obligatorisk å fylle ut.", kvpKommCode, kommnr_kvp_komm)
                         , Constants.CRITICAL_ERROR
                 )
                 , r.getFieldAsString(KVP_KOMM)
                 , List.of("1")
                 , r.getFieldAsString(KOMMNR_KVP_KOMM)
-                , r.getFieldDefinitionByName(KOMMNR_KVP_KOMM).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                , kommnrKvpKommCodes
         );
     }
 

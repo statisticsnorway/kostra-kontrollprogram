@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.ssb.kostra.kontrollprogram</groupId>
     <artifactId>kontrollprogram</artifactId>
-    <version>2022.03.3</version>
+    <version>2022.03.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <java.version>17</java.version>

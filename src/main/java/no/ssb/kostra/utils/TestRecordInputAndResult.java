@@ -2,16 +2,16 @@ package no.ssb.kostra.utils;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.felles.KostraRecord;
 
 public class TestRecordInputAndResult {
     private final Arguments arguments;
-    private final Record record;
+    private final KostraRecord record;
     private final boolean result;
     private final ErrorReport errorReport;
     private final int expectedErrorType;
 
-    public TestRecordInputAndResult(Arguments arguments, Record record, boolean result, int expectedErrorType) {
+    public TestRecordInputAndResult(Arguments arguments, KostraRecord record, boolean result, int expectedErrorType) {
         this.arguments = arguments;
         this.errorReport = new ErrorReport(arguments);
         this.record = record;
@@ -19,7 +19,7 @@ public class TestRecordInputAndResult {
         this.expectedErrorType = expectedErrorType;
     }
 
-    public Record getRecord() {
+    public KostraRecord getRecord() {
         return record;
     }
 

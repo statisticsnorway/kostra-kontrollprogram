@@ -29,52 +29,48 @@ public class XMLNodeImpl implements StructuredNode {
         return node;
     }
 
-    public StructuredNode queryNode(String path)
-            throws XPathExpressionException {
-        Node result = (Node) XPATH.newXPath().compile(path)
+    public StructuredNode queryNode(final String path) throws XPathExpressionException {
+        var result = (Node) XPATH.newXPath().compile(path)
                 .evaluate(node, XPathConstants.NODE);
-        if (result == null) {
-            return null;
-        }
-        return new XMLNodeImpl(result);
+
+        return result == null
+                ? null
+                : new XMLNodeImpl(result);
     }
 
-    public List<StructuredNode> queryNodeList(String path)
-            throws XPathExpressionException {
-        NodeList result = (NodeList) XPATH.newXPath().compile(path)
+    public List<StructuredNode> queryNodeList(final String path) throws XPathExpressionException {
+        var result = (NodeList) XPATH.newXPath().compile(path)
                 .evaluate(node, XPathConstants.NODESET);
-        List<StructuredNode> resultList = new ArrayList<>(
-                result.getLength());
-        for (int i = 0; i < result.getLength(); i++) {
+
+        var resultList = new ArrayList<StructuredNode>(result.getLength());
+        for (var i = 0; i < result.getLength(); i++) {
             resultList.add(new XMLNodeImpl(result.item(i)));
         }
         return resultList;
     }
 
-    public StructuredNode[] queryNodes(String path)
-            throws XPathExpressionException {
-        List<StructuredNode> nodes = queryNodeList(path);
-        return nodes.toArray(new StructuredNode[nodes.size()]);
+    public StructuredNode[] queryNodes(final String path) throws XPathExpressionException {
+        final var nodes = queryNodeList(path);
+        return nodes.toArray(new StructuredNode[nodes.size()]); // TODO: Suspicious
     }
 
-    public String queryString(String path) throws XPathExpressionException {
-        Object result = XPATH.newXPath().compile(path)
-                .evaluate(node, XPathConstants.NODE);
+    public String queryString(final String path) throws XPathExpressionException {
+        final var result = XPATH.newXPath().compile(path).evaluate(node, XPathConstants.NODE);
+
         if (result == null) {
             return null;
         }
         if (result instanceof Node) {
-            String s = ((Node) result).getTextContent();
-            if (s != null) {
-                return s.trim();
-            }
-            return s;
+            final var s = ((Node) result).getTextContent();
+            return s != null
+                    ? s.trim()
+                    : null;
         }
         return result.toString().trim();
     }
 
-    public boolean isEmpty(String path) throws XPathExpressionException {
-        String result = queryString(path);
+    public boolean isEmpty(final String path) throws XPathExpressionException {
+        final var result = queryString(path);
         return result == null || "".equals(result);
     }
 
@@ -87,30 +83,28 @@ public class XMLNodeImpl implements StructuredNode {
         return getNodeName();
     }
 
-    public Value queryValue(String path) throws XPathExpressionException {
+    public Value queryValue(final String path) throws XPathExpressionException {
         return Value.of(queryString(path));
     }
 
     @Override
-    public int compareTo(StructuredNode other) {
-        int result = 0;
+    public int compareTo(final StructuredNode other) {
+        var result = 0;
 
         try {
-            LocalDate startDato = this.assignDateFromString(
+            var startDato = this.assignDateFromString(
                     queryString("@StartDato"), DATO_FORMAT_LANGT);
-            LocalDate otherStartDato = other.assignDateFromString(
+            var otherStartDato = other.assignDateFromString(
                     other.queryString("@StartDato"), DATO_FORMAT_LANGT);
 
             if (startDato.isBefore(otherStartDato)) {
                 result = -1;
-
             } else if (otherStartDato.isBefore(startDato)) {
                 result = 1;
             }
         } catch (XPathExpressionException ignored) {
             // Ignore exception
         }
-
         return result;
     }
 
@@ -122,10 +116,11 @@ public class XMLNodeImpl implements StructuredNode {
      * @param format String
      * @return LocalDate
      */
-    public LocalDate assignDateFromString(String date, String format) {
-        if (date != null && format != null
+    public LocalDate assignDateFromString(final String date, final String format) {
+        if (date != null
+                && format != null
                 && date.length() == format.length()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            final var formatter = DateTimeFormatter.ofPattern(format);
             return LocalDate.parse(date, formatter);
         }
         return null;

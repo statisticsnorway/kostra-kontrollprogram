@@ -3,7 +3,7 @@ package no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.felles.FieldDefinition
-import no.ssb.kostra.felles.Record
+import no.ssb.kostra.felles.KostraRecord
 import spock.lang.Specification
 
 import static no.ssb.kostra.felles.Constants.CRITICAL_ERROR
@@ -31,7 +31,7 @@ class KvalifiseringstonadSpec extends Specification {
                 List.of("000021")
         )
         ErrorReport errorReport = new ErrorReport(arguments)
-        Record rec = new Record(Map.of(
+        KostraRecord rec = new KostraRecord(Map.of(
                 "SAKSBEHANDLER", "Sara Sak",
                 "PERSON_JOURNALNR", "123",
                 "PERSON_FODSELSNR", "19096632188",

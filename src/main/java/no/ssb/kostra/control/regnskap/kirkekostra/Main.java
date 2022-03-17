@@ -16,10 +16,11 @@ import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Main {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definitions
-    public static Map<String, String> getKontoklasseAsMap(String skjema) {
+    public static Map<String, String> getKontoklasseAsMap(final String skjema) {
         switch (skjema) {
             case "0F":
                 return Map.of("D", "3", "I", "4");
@@ -32,19 +33,22 @@ public class Main {
         }
     }
 
-    public static List<String> getKontoklasseAsList(String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream().map(String::trim).sorted().collect(Collectors.toList());
+    public static List<String> getKontoklasseAsList(final String skjema) {
+        return getKontoklasseAsMap(skjema).values().stream()
+                .map(String::trim)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
-    public static List<String> getFunksjonKapittelAsList(String skjema) {
+    public static List<String> getFunksjonKapittelAsList(final String skjema) {
         // Funksjoner
-        List<String> funksjoner = List.of(
+        final var funksjoner = List.of(
                 "041", "042", "043", "044", "045",
                 "089"
         );
 
         // Kapitler
-        List<String> kapitler = List.of(
+        final var kapitler = List.of(
                 "10", "11", "12", "13", "18",
                 "21", "22", "24", "27",
                 "31", "32",
@@ -53,7 +57,7 @@ public class Main {
                 "9100", "9200", "9999"
         );
 
-        List<String> result = new ArrayList<>();
+        final var result = new ArrayList<String>();
 
         switch (skjema) {
             // Funksjoner
@@ -73,9 +77,9 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getArtSektorAsList(String skjema) {
+    public static List<String> getArtSektorAsList(final String skjema) {
         // Arter
-        List<String> arter = List.of(
+        final var arter = List.of(
                 "010", "020", "030", "040", "050", "060", "080", "090", "095", "099",
                 "100", "110", "120", "130", "140", "150", "155", "160", "165", "170", "180", "185", "190", "195",
                 "200", "210", "220", "230", "240", "250", "260", "265", "270", "280", "285",
@@ -89,11 +93,11 @@ public class Main {
         );
 
         // Sektorer
-        List<String> sektorer = List.of(
+        final var sektorer = List.of(
                 "   "
         );
 
-        List<String> result = new ArrayList<>();
+        final var result = new ArrayList<String>();
 
         if (Objects.equals("0F", skjema)) {
             result.addAll(arter);
@@ -103,7 +107,9 @@ public class Main {
             result.addAll(sektorer);
         }
 
-        return result.stream().sorted().collect(Collectors.toList());
+        return result.stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public static List<String> getArterUgyldigDrift() {
@@ -126,20 +132,20 @@ public class Main {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controls
-    public static ErrorReport doControls(Arguments args) {
-        ErrorReport errorReport = new ErrorReport(args);
-        List<String> list1 = args.getInputContentAsStringList();
+    public static ErrorReport doControls(final Arguments args) {
+        final var errorReport = new ErrorReport(args);
+        final var list1 = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(list1, errorReport, FieldDefinitions.getFieldLength());
+        final var hasErrors = ControlRecordLengde.doControl(list1, errorReport, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
             return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap1 = Utils.addLineNumbering(
+        final var fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
+        final var regnskap1 = Utils.addLineNumbering(
                 Utils.getValidRecords(list1, fieldDefinitions)
         );
 
@@ -160,12 +166,12 @@ public class Main {
         controlForetaksnummer(errorReport, regnskap1);
         controlKontoklasse(errorReport, regnskap1, getKontoklasseAsList(args.getSkjema()));
 
-        if (isCodeInCodelist(args.getSkjema(), getBevilgningRegnskapList())) {
+        if (isCodeInCodeList(args.getSkjema(), getBevilgningRegnskapList())) {
             controlFunksjon(errorReport, regnskap1, getFunksjonKapittelAsList(args.getSkjema()));
             controlArt(errorReport, regnskap1, getArtSektorAsList(args.getSkjema()));
         }
 
-        if (isCodeInCodelist(args.getSkjema(), getBalanseRegnskapList())) {
+        if (isCodeInCodeList(args.getSkjema(), getBalanseRegnskapList())) {
             controlKapittel(errorReport, regnskap1, getFunksjonKapittelAsList(args.getSkjema()));
             controlSektor(errorReport, regnskap1, getBalanseRegnskapList());
         }
@@ -174,18 +180,18 @@ public class Main {
         controlUgyldigeBelop(errorReport, regnskap1);
 
         // Fjerner posteringer der beløp = 0
-        List<Record> regnskap = Utils.removeBelopEquals0(regnskap1);
+        final var regnskap = Utils.removeBelopEquals0(regnskap1);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Dublett-, kombinasjon-, summerings-,  kontroller
-        if (isCodeInCodelist(args.getSkjema(), getBevilgningRegnskapList())) {
+        if (isCodeInCodeList(args.getSkjema(), getBevilgningRegnskapList())) {
             ControlDubletter.doControl(regnskap, errorReport, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "funksjon", "art"));
 
             controlKombinasjonKontoklasseArt(errorReport,
                     regnskap,
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"),
-                    removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema()), getArterUgyldigInvestering()),
+                    removeCodesFromCodeList(getArtSektorAsList(errorReport.getArgs().getSkjema()), getArterUgyldigInvestering()),
                     "Korrigér art (%s) til gyldig art i investeringsregnskapet, eller overfør posteringen til driftsregnskapet",
                     Constants.CRITICAL_ERROR
             );
@@ -194,7 +200,7 @@ public class Main {
                     regnskap,
                     getBevilgningRegnskapList(),
                     getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"),
-                    removeCodesFromCodelist(getArtSektorAsList(errorReport.getArgs().getSkjema()), getArterUgyldigDrift()),
+                    removeCodesFromCodeList(getArtSektorAsList(errorReport.getArgs().getSkjema()), getArterUgyldigDrift()),
                     "Korrigér art (%s) til gyldig art i driftsregnskapet, eller overfør posteringen til investeringsregnskapet",
                     Constants.CRITICAL_ERROR
             );
@@ -208,7 +214,7 @@ public class Main {
             controlOverforinger(errorReport, regnskap);
             controlAvskrivninger(errorReport, regnskap);
 
-            List<String> funksjon089Arter = getArtSektorAsList(errorReport.getArgs().getSkjema())
+            final var funksjon089Arter = getArtSektorAsList(errorReport.getArgs().getSkjema())
                     .stream()
                     .mapToInt(Integer::valueOf)
                     .filter(i -> between(i, 500, 580)
@@ -227,7 +233,7 @@ public class Main {
             );
         }
 
-        if (isCodeInCodelist(args.getSkjema(), getBalanseRegnskapList())) {
+        if (isCodeInCodeList(args.getSkjema(), getBalanseRegnskapList())) {
             ControlDubletter.doControl(regnskap, errorReport, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "kapittel", "sektor"));
             controlSumAktiva(errorReport, regnskap);
             controlSumPassiva(errorReport, regnskap);
@@ -237,25 +243,27 @@ public class Main {
         return errorReport;
     }
 
+    public static boolean controlSektor(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap, final List<String> balanseRegnskapList) {
 
-    public static boolean controlSektor(ErrorReport er, List<Record> regnskap, List<String> balanseRegnskapList) {
-        if (isCodeInCodelist(er.getArgs().getSkjema(), balanseRegnskapList)) {
-            return ControlFelt1ListeBlank.doControl(er,
+        if (isCodeInCodeList(errorReport.getArgs().getSkjema(), balanseRegnskapList)) {
+            return ControlFelt1ListeBlank.doControl(errorReport,
                     "3. Feltkontroller",
                     "Sektor",
                     regnskap.stream().map(record -> record.getFieldAsTrimmedString("art_sektor")).collect(Collectors.toList()),
                     Constants.CRITICAL_ERROR);
         }
-
         return false;
     }
 
-    public static boolean controlSumInvesteringsDifferanse(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumInvesteringsDifferanse(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap) {
+
         // 95) Sum investering = Sum investeringsutgifter + Sum investeringsinntekter.. Differanser opptil +30' godtas, og skal ikke utlistes.
-        Arguments arguments = errorReport.getArgs();
-        int sumInvesteringsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
-        int sumInvesteringsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
-        int sumDifferanse = sumInvesteringsUtgifter + sumInvesteringsInntekter;
+        final var arguments = errorReport.getArgs();
+        final var sumInvesteringsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
+        final var sumInvesteringsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
+        final var sumDifferanse = sumInvesteringsUtgifter + sumInvesteringsInntekter;
 
         if (outsideOf(sumDifferanse, -30, 30)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -264,19 +272,18 @@ public class Main {
                     , ""
                     , Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlSumDriftsUtgifter(ErrorReport errorReport, List<Record> regnskap) {
-        // 100) Driftsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
-        Arguments arguments = errorReport.getArgs();
-        int sumDriftsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
+    public static boolean controlSumDriftsUtgifter(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
 
-        if (isCodeInCodelist(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
+        // 100) Driftsregnskapet må ha utgiftsføringer, dvs. være høyere enn 0
+        final var arguments = errorReport.getArgs();
+        final var sumDriftsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
+
+        if (isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
             if (!(0 < sumDriftsUtgifter)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer i driftsregnskapet", " ", " "
@@ -287,16 +294,15 @@ public class Main {
                 return true;
             }
         }
-
         return false;
     }
 
-    public static boolean controlSumDriftsInntekter(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumDriftsInntekter(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // 105) Driftsregnskapet må ha inntektsføringer, dvs. være mindre enn 0
-        Arguments arguments = errorReport.getArgs();
-        int sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
+        final var arguments = errorReport.getArgs();
+        final var sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
 
-        if (isCodeInCodelist(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
+        if (isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
             if (!(sumDriftsInntekter < 0)) {
                 errorReport.addEntry(new ErrorReportEntry(
                         "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer i driftsregnskapet", " ", " "
@@ -304,20 +310,18 @@ public class Main {
                         , ""
                         , Constants.CRITICAL_ERROR
                 ));
-
                 return true;
             }
         }
-
         return false;
     }
 
-    public static boolean controlSumDriftsDifferanse(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumDriftsDifferanse(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // 110) Sum drift = Sum driftsutgifter + Sum driftsinntekter.. Differanser opptil +30' godtas, og skal ikke utlistes.
-        Arguments arguments = errorReport.getArgs();
-        int sumDriftsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
-        int sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
-        int sumDifferanse = sumDriftsUtgifter + sumDriftsInntekter;
+        final var arguments = errorReport.getArgs();
+        final var sumDriftsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
+        final var sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
+        final var sumDifferanse = sumDriftsUtgifter + sumDriftsInntekter;
 
         if (outsideOf(sumDifferanse, -30, 30)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -326,17 +330,15 @@ public class Main {
                     , ""
                     , Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlSumAktiva(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumAktiva(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // 115) Balanse må ha føring på aktiva, dvs. være høyere enn 0
-        Arguments arguments = errorReport.getArgs();
-        int sumAktiva = getSumAktiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
+        final var arguments = errorReport.getArgs();
+        final var sumAktiva = getSumAktiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
 
         if (!(0 < sumAktiva)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -345,17 +347,15 @@ public class Main {
                     , ""
                     , Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlSumPassiva(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumPassiva(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // 120) Balanse må ha føring på passiva, dvs. være mindre enn 0
-        Arguments arguments = errorReport.getArgs();
-        int sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
+        final var arguments = errorReport.getArgs();
+        final var sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
 
         if (!(sumPassiva < 0)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -364,19 +364,17 @@ public class Main {
                     , "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital (" + sumPassiva + ") i balanse."
                     , Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlSumBalanseDifferanse(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumBalanseDifferanse(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // 125) Aktiva skal være lik passiva. Differanser opptil ±10' godtas, og skal ikke utlistes.
-        Arguments arguments = errorReport.getArgs();
-        int sumAktiva = getSumAktiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
-        int sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
-        int sumDifferanse = sumAktiva + sumPassiva;
+        final var arguments = errorReport.getArgs();
+        final var sumAktiva = getSumAktiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
+        final var sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
+        final var sumDifferanse = sumAktiva + sumPassiva;
 
         if (outsideOf(sumDifferanse, -10, 10)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -387,29 +385,28 @@ public class Main {
                     + "passiva (" + sumPassiva + ") i fila (Differanser opptil ±10' godtas)"
                     , Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
-
     }
 
-    public static boolean controlSumInterneOverforinger(ErrorReport errorReport, List<Record> regnskap) {
+    public static boolean controlSumInterneOverforinger(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap) {
+
         // Kontroll Interne overføringer
         //D = Driftsregnskap (kontoklasse 3)
         //I = Investeringsregnskap (kontoklasse 4)
-        int sumInternKjop = regnskap.stream()
+        final var sumInternKjop = regnskap.stream()
                 .filter(p -> Objects.equals("380", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumInternSalg = regnskap.stream()
+        final var sumInternSalg = regnskap.stream()
                 .filter(p -> Objects.equals("780", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumInternKjopOgSalg = sumInternKjop + sumInternSalg;
+        final var sumInternKjopOgSalg = sumInternKjop + sumInternSalg;
 
         if (Comparator.outsideOf(sumInternKjopOgSalg, -30, 30)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -421,25 +418,25 @@ public class Main {
                     "",
                     Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlSumKalkulatoriskeUtgifterInntekter(ErrorReport errorReport, List<Record> regnskap) {
-        int sumKalkulatoriskeUtgifter = regnskap.stream()
+    public static boolean controlSumKalkulatoriskeUtgifterInntekter(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap) {
+
+        final var sumKalkulatoriskeUtgifter = regnskap.stream()
                 .filter(p -> Objects.equals("390", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumKalkulatoriskeInntekter = regnskap.stream()
+        final var sumKalkulatoriskeInntekter = regnskap.stream()
                 .filter(p -> Objects.equals("790", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumKalkulatoriske = sumKalkulatoriskeUtgifter + sumKalkulatoriskeInntekter;
+        final var sumKalkulatoriske = sumKalkulatoriskeUtgifter + sumKalkulatoriskeInntekter;
 
         if (Comparator.outsideOf(sumKalkulatoriske, -30, 30)) {
             errorReport.addEntry(new ErrorReportEntry(
@@ -451,28 +448,28 @@ public class Main {
                     "",
                     Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlInterneOverforinger(ErrorReport er, List<Record> regnskap) {
-        int sumOverforinger = regnskap.stream()
+    public static boolean controlInterneOverforinger(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap) {
+
+        final var sumOverforinger = regnskap.stream()
                 .filter(p -> Objects.equals("465", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumInnsamledeMidler = regnskap.stream()
+        final var sumInnsamledeMidler = regnskap.stream()
                 .filter(p -> Objects.equals("865", p.getFieldAsString("art_sektor")))
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumMidler = sumOverforinger + sumInnsamledeMidler;
+        final var sumMidler = sumOverforinger + sumInnsamledeMidler;
 
         if (Comparator.outsideOf(sumMidler, -30, 30)) {
-            er.addEntry(new ErrorReportEntry(
+            errorReport.addEntry(new ErrorReportEntry(
                     "6. Summeringskontroller",
                     "Kontroll Interne overføringer, midler",
                     " ",
@@ -481,35 +478,35 @@ public class Main {
                     "",
                     Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlOverforinger(ErrorReport er, List<Record> regnskap) {
+    public static boolean controlOverforinger(
+            final ErrorReport errorReport, final List<KostraRecord> regnskap) {
+
         // Kontroll Overføring mellom drifts- og investeringsregnskap
         //D = Driftsregnskap (kontoklasse 3)
         //I = Investeringsregnskap (kontoklasse 4)
-        int sumDriftsoverforinger = regnskap.stream()
+        final var sumDriftsoverforinger = regnskap.stream()
                 .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
                         && p.getFieldAsString("art_sektor").equalsIgnoreCase("570")
                 )
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumInvesteringsoverforinger = regnskap.stream()
+        final var sumInvesteringsoverforinger = regnskap.stream()
                 .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(p.getFieldAsString("skjema")).get("I"))
                         && p.getFieldAsString("art_sektor").equalsIgnoreCase("970")
                 )
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumDifferanse = sumDriftsoverforinger + sumInvesteringsoverforinger;
+        final var sumDifferanse = sumDriftsoverforinger + sumInvesteringsoverforinger;
 
         if (Comparator.outsideOf(sumDifferanse, -30, 30)) {
-            er.addEntry(new ErrorReportEntry(
+            errorReport.addEntry(new ErrorReportEntry(
                     "6. Summeringskontroller",
                     "Kontroll Overføring mellom drifts- og investeringsregnskap",
                     " ",
@@ -518,36 +515,34 @@ public class Main {
                     "",
                     Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 
-    public static boolean controlAvskrivninger(ErrorReport er, List<Record> regnskap) {
+    public static boolean controlAvskrivninger(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         // Kontroll Avskrivninger
         //D = Driftsregnskap (kontoklasse 1 / 3)
         //I = Investeringsregnskap (kontoklasse 0 / 4)
         // 1) Art 590 for sum funksjoner D.041-D.089 + art 990 for sum funksjoner D.041-D.089 = < 30 og > - 30. Differanser opptil +30' godtas, og skal ikke utlistes.
-        int sumAvskrivninger590 = regnskap.stream()
+        final var sumAvskrivninger590 = regnskap.stream()
                 .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
                         && Objects.equals("590", p.getFieldAsString("art_sektor"))
                 )
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumMotpostAvskrivninger990 = regnskap.stream()
+        final var sumMotpostAvskrivninger990 = regnskap.stream()
                 .filter(p -> p.getFieldAsString("kontoklasse").equalsIgnoreCase(getKontoklasseAsMap(p.getFieldAsString("skjema")).get("D"))
                         && Objects.equals("990", p.getFieldAsString("art_sektor"))
                 )
                 .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                 .reduce(0, Integer::sum);
 
-        int sumAvskrivninger = sumAvskrivninger590 + sumMotpostAvskrivninger990;
+        final var sumAvskrivninger = sumAvskrivninger590 + sumMotpostAvskrivninger990;
 
         if (Comparator.outsideOf(sumAvskrivninger, -30, 30)) {
-            er.addEntry(new ErrorReportEntry(
+            errorReport.addEntry(new ErrorReportEntry(
                     "6. Summeringskontroller",
                     "Kontroll Avskrivninger, art 590, art 990",
                     " ",
@@ -556,10 +551,8 @@ public class Main {
                     "",
                     Constants.CRITICAL_ERROR
             ));
-
             return true;
         }
-
         return false;
     }
 }

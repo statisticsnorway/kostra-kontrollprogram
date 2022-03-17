@@ -12,71 +12,71 @@ import no.ssb.kostra.utils.Format;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Main {
-    private static String createLinenumber(Integer l, int line) {
+    private static String createLinenumber(final Integer l, final int line) {
         return "Linje " + Format.sprintf("%0" + l + "d", line);
     }
 
-    public static ErrorReport doControls(Arguments args) {
-        ErrorReport er = new ErrorReport(args);
-        List<String> inputFileContent = args.getInputContentAsStringList();
+    public static ErrorReport doControls(final Arguments args) {
+        final var errorReport = new ErrorReport(args);
+        final var inputFileContent = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(inputFileContent, er, FieldDefinitions.getFieldLength());
+        final var hasErrors = ControlRecordLengde.doControl(inputFileContent, errorReport, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
-            return er;
+            return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<Record> records = inputFileContent.stream()
-                .map(p -> new Record(p, fieldDefinitions))
+        final var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        final var records = inputFileContent.stream()
+                .map(p -> new KostraRecord(p, fieldDefinitions))
                 .collect(Collectors.toList());
-        String saksbehandler = "Filuttrekk";
-        Integer n = records.size();
-        Integer l = String.valueOf(n).length();
 
+        // String saksbehandler = "Filuttrekk"; // TODO
+        final var n = records.size();
+        final var l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
-        ControlFilbeskrivelse.doControl(records, er);
+        ControlFilbeskrivelse.doControl(records, errorReport);
 
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
+        if (errorReport.getErrorType() == Constants.CRITICAL_ERROR) {
+            return errorReport;
         }
 
-        List<String> clTSSSTF = List.of("TOT", "SEP", "SAM", "SAK", "TILB", "FLY");
-        List<String> clTBE = List.of("TOT", "BEGGE", "EN");
-        List<String> clO = List.of("OPPM");
-        List<String> clT = List.of("TOT");
-        List<String> clT12 = List.of("TOT", "1", "2");
-        List<String> clT123 = List.of("TOT", "1", "2", "3");
-        List<String> clT1234 = List.of("TOT", "1", "2", "3", "4");
-        List<String> clT12345 = List.of("TOT", "1", "2", "3", "4", "5");
+        final var clTSSSTF = List.of("TOT", "SEP", "SAM", "SAK", "TILB", "FLY");
+        final var clTBE = List.of("TOT", "BEGGE", "EN");
+        final var clO = List.of("OPPM");
+        // List<String> clT = List.of("TOT"); // TODO
+        final var clT12 = List.of("TOT", "1", "2");
+        final var clT123 = List.of("TOT", "1", "2", "3");
+        final var clT1234 = List.of("TOT", "1", "2", "3", "4");
+        final var clT12345 = List.of("TOT", "1", "2", "3", "4", "5");
 
-        records.forEach(r -> {
+        records.forEach(currentRecord -> {
             // Kontroll 03: Fylkesnummer
-            if (!Definitions.isFylkeValid(r.getFieldAsString("FYLKE_NR"))) {
-                er.addEntry(
+            if (!Definitions.isFylkeValid(currentRecord.getFieldAsString("FYLKE_NR"))) {
+                errorReport.addEntry(
                         new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 03 fylkesnummer"
                                 , "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. "
-                                + "Fant '" + r.getFieldAsString("FYLKE_NR") + "', forventet én av : " + Definitions.getFylkeAsList() + ". "
+                                + "Fant '" + currentRecord.getFieldAsString("FYLKE_NR") + "', forventet én av : " + Definitions.getFylkeAsList() + ". "
                                 + "Feltet er obligatorisk og må fylles ut."
                                 , Constants.NORMAL_ERROR
                         )
-
                 );
             }
 
             // Kontroll 05 Avsluttede meklinger etter tidsbruk
             {
-                String measure = "MEKLING";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123)
+                final var measure = "MEKLING";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123)
                         // Listen med feltnavn i filbeskrivelsen er inkonsistent.
                         // Mekker litt på de genererte feltnavnene slik at de passer med filbeskrivelsen.
                         .stream()
@@ -88,14 +88,13 @@ public class Main {
                         )
                         .collect(Collectors.toList());
 
-
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 05 Avsluttede meklinger etter tidsbruk"
                                 , "Tallene summerer seg ikke som de skal."
@@ -107,7 +106,7 @@ public class Main {
 
             // Kontroll 06 Avsluttede meklinger etter deltakere
             {
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(clTSSSTF, clTBE)
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(clTSSSTF, clTBE)
                         // Listen med feltnavn i filbeskrivelsen er inkonsistent.
                         // Mekker litt på de genererte feltnavnene slik at de passer med filbeskrivelsen.
                         .stream()
@@ -122,12 +121,12 @@ public class Main {
                         .collect(Collectors.toList());
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 06 Avsluttede meklinger etter deltakere"
                                 , "Tallene summerer seg ikke som de skal."
@@ -139,16 +138,16 @@ public class Main {
 
             // Kontroll 07 Avsluttede meklinger etter ventetid
             {
-                String measure = "VENTETID";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT1234);
+                final var measure = "VENTETID";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT1234);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 07 Avsluttede meklinger etter ventetid"
                                 , "Tallene summerer seg ikke som de skal."
@@ -160,15 +159,15 @@ public class Main {
 
             // Kontroll 08 Avsluttede meklinger, ikke overholdt tidsfrist
             {
-                List<List<String>> fieldLists = List.of(List.of("FORHOLD_TOT", "FORHOLD_MEKLER", "FORHOLD_KLIENT"));
+                final var fieldLists = List.of(List.of("FORHOLD_TOT", "FORHOLD_MEKLER", "FORHOLD_KLIENT"));
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 08 Avsluttede meklinger, ikke overholdt tidsfrist"
                                 , "Tallene summerer seg ikke som de skal."
@@ -180,16 +179,16 @@ public class Main {
 
             // Kontroll 09 Avsluttede meklinger etter varighet
             {
-                String measure = "VARIGHET";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
+                final var measure = "VARIGHET";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 09 Avsluttede meklinger etter varighet"
                                 , "Tallene summerer seg ikke som de skal."
@@ -201,16 +200,16 @@ public class Main {
 
             // Kontroll 10 Avsluttede meklinger hvor barn har deltatt
             {
-                String measure = "BARNDELT";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, "TOT");
+                final var measure = "BARNDELT";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, "TOT");
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 10 Avsluttede meklinger hvor barn har deltatt"
                                 , "Tallene summerer seg ikke som de skal."
@@ -222,16 +221,16 @@ public class Main {
 
             // Kontroll 11 Resultat av avsluttede meklinger
             {
-                String measure = "RESULT";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
+                final var measure = "RESULT";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 11 Resultat av avsluttede meklinger"
                                 , "Tallene summerer seg ikke som de skal."
@@ -243,16 +242,16 @@ public class Main {
 
             // Kontroll 12 Antall avsluttede meklinger, skriftlig avtale etter resultat
             {
-                String measure = "AVTALE";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
+                final var measure = "AVTALE";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT123);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 12 Antall avsluttede meklinger, skriftlig avtale etter resultat"
                                 , "Tallene summerer seg ikke som de skal."
@@ -264,16 +263,16 @@ public class Main {
 
             // Kontroll 13 Avsluttede meklinger og bekymringsmeldinger
             {
-                String measure = "BEKYMR";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT12);
+                final var measure = "BEKYMR";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, clT12);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 13 Avsluttede meklinger og bekymringsmeldinger"
                                 , "Tallene summerer seg ikke som de skal."
@@ -285,15 +284,15 @@ public class Main {
 
             // Kontroll 14 Kontroll av totalsummer for meklinger
             {
-                List<String> fieldLists = List.of("MEKLING_TOT_ALLE", "ENBEGGE_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
+                final var fieldLists = List.of("MEKLING_TOT_ALLE", "ENBEGGE_TOT", "VENTETID_TOT_TOT", "VARIGHET_TOT_TOT", "RESULT_TOT_TOT", "BEKYMR_TOT_TOT");
 
                 ControlAlleFeltIListeHarLikSum.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 14 Kontroll av totalsummer for meklinger"
                                 , "Totalene summerer seg ikke som de skal."
@@ -305,16 +304,15 @@ public class Main {
 
             // Kontroll 15 Kontroll av totalsummer for skriftlige avtaler
             {
-
-                List<String> fieldLists = List.of("RESULT_TOT_1", "AVTALE_TOT_TOT");
+                final var fieldLists = List.of("RESULT_TOT_1", "AVTALE_TOT_TOT");
 
                 ControlAlleFeltIListeHarLikSum.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 15 Kontroll av totalsummer for skriftlige avtaler"
                                 , "Totalene summerer seg ikke som de skal."
@@ -326,16 +324,16 @@ public class Main {
 
             // Kontroll 16 Avsluttede meklinger uten oppmøte
             {
-                String measure = "UTEN";
-                List<List<String>> fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clO, clT12345);
+                final var measure = "UTEN";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clO, clT12345);
 
                 ControlFelt1LikSumAvListe.doControl(
-                        r
-                        , er
+                        currentRecord
+                        , errorReport
                         , new ErrorReportEntry(
                                 "FILUTTREKK"
-                                , createLinenumber(l, r.getLine())
-                                , String.valueOf(r.getLine())
+                                , createLinenumber(l, currentRecord.getLine())
+                                , String.valueOf(currentRecord.getLine())
                                 , " "
                                 , "Kontroll 16 Avsluttede meklinger uten oppmøte"
                                 , "Tallene summerer seg ikke som de skal."
@@ -345,7 +343,6 @@ public class Main {
                 );
             }
         });
-
-        return er;
+        return errorReport;
     }
 }

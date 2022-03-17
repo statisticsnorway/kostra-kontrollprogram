@@ -1,42 +1,38 @@
 package no.ssb.kostra.control.barnevern.s15;
 
-import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.controlprogram.Arguments;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public abstract class NodeHandler {
-    protected ErrorReport er;
+    protected ErrorReport errorReport;
     protected Arguments args;
 
     /**
-     * @param er   ErrorReport
-     * @param args Arguments
+     * @param errorReport ErrorReport
+     * @param args        Arguments
      */
-    protected NodeHandler(ErrorReport er, Arguments args) {
-        this.er = er;
+    protected NodeHandler(ErrorReport errorReport, Arguments args) {
+        this.errorReport = errorReport;
         this.args = args;
     }
 
-
-    protected static String defaultString(String s, String defaultString) {
+    protected static String defaultString(final String s, final String defaultString) {
         return (!empty(s)) ? s : defaultString;
     }
 
@@ -58,92 +54,97 @@ public abstract class NodeHandler {
     /**
      * Validérer en grein i XML-en mot en tilsvarende XSD *
      *
-     * @param er       ErrorReport
-     * @param ere      ErrorReportEntry
-     * @param document XML-tre som skal kontrolleres
-     * @param xsd      XSD som XML-tre skal valideres mot
+     * @param errorReport      ErrorReport
+     * @param errorReportEntry ErrorReportEntry
+     * @param document         XML-tre som skal kontrolleres
+     * @param xsd              XSD som XML-tre skal valideres mot
      */
-    public void controlValidateByXSD(ErrorReport er, ErrorReportEntry ere, Document document, String xsd) {
+    public void controlValidateByXSD(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final Document document, final String xsd) {
+
         try {
             // create a SchemaFactory capable of understanding WXS schemas
-            SchemaFactory factory = SchemaFactory
+            final var factory = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
             factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
             // load a WXS schema, represented by a Schema instance
-            InputStream iStream = this.getClass().getClassLoader()
-                    .getResourceAsStream(xsd);
-            if (iStream == null) {
+            final var inputStream = this.getClass().getClassLoader().getResourceAsStream(xsd);
+            if (inputStream == null) {
                 throw new FileNotFoundException("Kunne ikke finne fil " + xsd);
             }
 
-            Source schemaFile = new StreamSource(iStream);
-            Schema schema = factory.newSchema(schemaFile);
+            final var schemaFile = new StreamSource(inputStream);
+            final var schema = factory.newSchema(schemaFile);
 
             // create a Validator instance, which can be used to
             // validate an
             // instance document
-            Validator validator = schema.newValidator();
+            final var validator = schema.newValidator();
 
             // validate the DOM tree
             validator.validate(new DOMSource(document));
 
         } catch (IOException e) {
-            ere.setErrorText(ere.getErrorText() + ". IOException: "
+            errorReportEntry.setErrorText(errorReportEntry.getErrorText()
+                    + ". IOException: "
                     + e.getMessage());
-            er.addEntry(ere);
-
+            errorReport.addEntry(errorReportEntry);
         } catch (SAXException e) {
             // instance document is invalid!
-            ere.setErrorText(ere.getErrorText() + ". SAXException: "
+            errorReportEntry.setErrorText(errorReportEntry.getErrorText()
+                    + ". SAXException: "
                     + e.getMessage());
-            er.addEntry(ere);
-
+            errorReport.addEntry(errorReportEntry);
         } catch (NullPointerException e) {
-            ere.setErrorText(ere.getErrorText() + ". NullPointerException: "
+            errorReportEntry.setErrorText(errorReportEntry.getErrorText()
+                    + ". NullPointerException: "
                     + e.getMessage());
-            er.addEntry(ere);
+            errorReport.addEntry(errorReportEntry);
         }
-
     }
 
     /**
      * Sjekker om to tekststrenger er like. Returnérer true hvis de er like,
      * ellers false samt at ErrorReportEntry legges til i ErrorReport
      *
-     * @param er   ErrorReport
-     * @param ere  ErrorReport
-     * @param val1 String
-     * @param val2 String
+     * @param errorReport      ErrorReport
+     * @param errorReportEntry ErrorReport
+     * @param val1             String
+     * @param val2             String
      */
-    public void controlEquals(ErrorReport er, ErrorReportEntry ere, String val1, String val2) {
+    public void controlEquals(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final String val1, final String val2) {
+
         try {
             if (!empty(val1) && !empty(val2) && !val2.equalsIgnoreCase(val1)) {
-                er.addEntry(ere);
+                errorReport.addEntry(errorReportEntry);
             }
-
         } catch (StringIndexOutOfBoundsException e) {
-            er.addEntry(ere);
+            errorReport.addEntry(errorReportEntry);
         }
-
     }
 
     /**
      * Sjekker om tekststreng eksisterer. Returnérer true hvis den fins, ellers
      * false samt at ErrorReportEntry legges til i ErrorReport
      *
-     * @param er   ErrorReport
-     * @param ere  ErrorReportEntry
-     * @param val1 String
+     * @param errorReport      ErrorReport
+     * @param errorReportEntry ErrorReportEntry
+     * @param val1             String
      * @return boolean
      */
-    public boolean controlExists(ErrorReport er, ErrorReportEntry ere, String val1) {
+    public boolean controlExists(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry, final String val1) {
+
         if (val1 != null) {
             return true;
         } else {
-            er.addEntry(ere);
+            errorReport.addEntry(errorReportEntry);
             return false;
         }
     }
@@ -153,16 +154,18 @@ public abstract class NodeHandler {
      * hvis den fins, ellers false samt at ErrorReportEntry legges til i
      * ErrorReport
      *
-     * @param er   ErrorReport
-     * @param ere  ErrorReportEntry
-     * @param val1 String
+     * @param errorReport      ErrorReport
+     * @param errorReportEntry ErrorReportEntry
+     * @param val1             String
      * @return boolean
      */
-    public boolean controlExistsAndHasLength(ErrorReport er, ErrorReportEntry ere, String val1) {
+    public boolean controlExistsAndHasLength(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry, final String val1) {
+
         if (val1 != null && val1.length() > 0) {
             return true;
         } else {
-            er.addEntry(ere);
+            errorReport.addEntry(errorReportEntry);
             return false;
         }
     }
@@ -175,11 +178,11 @@ public abstract class NodeHandler {
      * @param format String
      * @return LocalDate
      */
-    public LocalDate assignDateFromString(String date, String format) {
-        if (date != null && format != null
+    public LocalDate assignDateFromString(final String date, final String format) {
+        if (date != null
+                && format != null
                 && date.length() == format.length()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-            return LocalDate.parse(date, formatter);
+            return LocalDate.parse(date, DateTimeFormatter.ofPattern(format));
         }
         return null;
     }
@@ -189,18 +192,21 @@ public abstract class NodeHandler {
      * hvis ja så kjøres {@link #controlExistsAndHasLength} på presisering om
      * den fins og har innhold.
      *
-     * @param er          ErrorReport
-     * @param ere         ErrorReportEntry
-     * @param kode        String
-     * @param kodeliste   List<String>
-     * @param presisering String
+     * @param errorReport      ErrorReport
+     * @param errorReportEntry ErrorReportEntry
+     * @param kode             String
+     * @param kodeliste        List<String>
+     * @param presisering      String
      * @return boolean
-     * @see #erKodeIKodeliste(String, List<String>)
+     * @see #erKodeIKodeliste(String, List)
      * @see #controlExistsAndHasLength(ErrorReport, ErrorReportEntry, String)
      */
-    public boolean controlPresisering(ErrorReport er, ErrorReportEntry ere, String kode, List<String> kodeliste, String presisering) {
-        if (Comparator.isCodeInCodelist(kode, kodeliste)) {
-            return controlExistsAndHasLength(er, ere, presisering);
+    public boolean controlPresisering(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final String kode, final List<String> kodeliste, final String presisering) {
+
+        if (Comparator.isCodeInCodeList(kode, kodeliste)) {
+            return controlExistsAndHasLength(errorReport, errorReportEntry, presisering);
         }
 
         return true;
@@ -214,7 +220,7 @@ public abstract class NodeHandler {
      * @param kodeliste List<String>
      * @return boolean
      */
-    public boolean erKodeIKodeliste(String kode, List<String> kodeliste) {
+    public boolean erKodeIKodeliste(final String kode, final List<String> kodeliste) {
         return kodeliste.stream().anyMatch(item -> item.equalsIgnoreCase(kode));
     }
 
@@ -222,17 +228,18 @@ public abstract class NodeHandler {
      * Sjekker om organisajonsnummer er gyldig. Returnérer true hvis gyldig, ellers
      * false
      *
-     * @param er    ErrorReport
-     * @param ere   ErrorReportEntry
+     * @param errorReport    ErrorReport
+     * @param errorReportEntry   ErrorReportEntry
      * @param orgnr String
      * @return boolean
      */
-    public boolean controlOrgnr(ErrorReport er, ErrorReportEntry ere, String orgnr) {
+    public boolean controlOrgnr(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry, final String orgnr) {
+
         if (!Comparator.isValidOrgnr(orgnr)) {
-            er.addEntry(ere);
+            errorReport.addEntry(errorReportEntry);
             return false;
         }
-
         return true;
     }
 }

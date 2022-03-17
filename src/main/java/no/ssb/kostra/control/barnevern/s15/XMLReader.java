@@ -7,11 +7,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * This class is a combination of DOM and SAX parsing since import files like
@@ -28,14 +30,14 @@ public class XMLReader extends DefaultHandler {
     /**
      * Returns a XMLNode for the given w3c node.
      */
-    public static StructuredNode convert(Node node) {
+    public static StructuredNode convert(final Node node) {
         return new XMLNodeImpl(node);
     }
 
     @Override
-    public void characters(char[] ch, int start, int length) {
+    public void characters(final char[] ch, final int start, final int length) {
         // Delegate to active handlers...
-        String cData = new String(ch).substring(start, start + length);
+        final var cData = new String(ch).substring(start, start + length);
         for (SAX2DOMHandler handler : activeHandlers) {
             handler.text(cData);
         }
@@ -49,32 +51,34 @@ public class XMLReader extends DefaultHandler {
     }
 
     @Override
-    public void endElement(String uri, String localName, String name) {
+    public void endElement(final String uri, final String localName, final String name) {
         // Delegate to active handlers and deletes them if they are finished...
         activeHandlers.removeIf(handler -> handler.endElement(uri, name));
     }
 
     @Override
-    public void processingInstruction(String target, String data) {
+    public void processingInstruction(final String target, final String data) {
         // Delegate to active handlers...
-        for (SAX2DOMHandler handler : activeHandlers) {
+        for (var handler : activeHandlers) {
             handler.processingInstruction(target, data);
         }
     }
 
     @Override
-    public void startElement(String ignored, String localName, String name,
-                             Attributes attributes) throws SAXException {
+    public void startElement(
+            final String ignored, final String localName,
+            final String name, final Attributes attributes) throws SAXException {
+
         // Delegate to active handlers...
-        for (SAX2DOMHandler handler : activeHandlers) {
+        for (var handler : activeHandlers) {
             handler.startElement(name, attributes);
         }
+
         // Start a new handler is necessary
         try {
-            NodeHandler handler = handlers.get(name);
+            var handler = handlers.get(name);
             if (handler != null) {
-                activeHandlers.add(new SAX2DOMHandler(handler, name,
-                        attributes));
+                activeHandlers.add(new SAX2DOMHandler(handler, name, attributes));
             }
         } catch (ParserConfigurationException e) {
             throw new SAXException(e);
@@ -88,23 +92,25 @@ public class XMLReader extends DefaultHandler {
      * the processing a lot (especially xpath related tasks). Namespaces however
      * could be easily added by replacing String with QName here.
      */
-    public void addHandler(String name, NodeHandler handler) {
+    public void addHandler(final String name, final NodeHandler handler) {
         handlers.put(name, handler);
     }
 
     /**
      * Parses the given stream and using the given monitor
      */
-    public void parse(InputStream stream) throws ParserConfigurationException,
-            SAXException, IOException {
+    public void parse(final InputStream stream)
+            throws ParserConfigurationException, SAXException, IOException {
+
         try (stream) {
-            org.xml.sax.XMLReader reader = createXMLReader();
+            var reader = createXMLReader();
             reader.setEntityResolver((publicId, systemId) -> {
-                URL url = new URL(systemId);
+                var url = new URL(systemId);
+
                 // Check if file is local
                 if ("file".equals(url.getProtocol())) {
                     // Check if file exists
-                    File file = new File(url.getFile());
+                    var file = new File(url.getFile());
                     if (file.exists()) {
                         return new InputSource(new FileInputStream(file));
                     }
@@ -124,16 +130,14 @@ public class XMLReader extends DefaultHandler {
     /**
      * Parses the given stream and using the given monitor
      */
-    public void parse(String xmlAsString) throws ParserConfigurationException,
-            SAXException {
+    public void parse(final String xmlAsString)
+            throws ParserConfigurationException, SAXException {
+
         try {
-            org.xml.sax.XMLReader reader = createXMLReader();
-            reader.setEntityResolver((publicId, systemId) -> {
-                if (!xmlAsString.isEmpty()) {
-                    return new InputSource(new StringReader(xmlAsString));
-                }
-                return null;
-            });
+            final var reader = createXMLReader();
+            reader.setEntityResolver((publicId, systemId) -> !xmlAsString.isEmpty()
+                    ? new InputSource(new StringReader(xmlAsString))
+                    : null);
             reader.setContentHandler(this);
             reader.parse(new InputSource(new StringReader(xmlAsString)));
         } catch (UserInterruptException | IOException e) {
@@ -145,12 +149,13 @@ public class XMLReader extends DefaultHandler {
     }
 
     private org.xml.sax.XMLReader createXMLReader() throws ParserConfigurationException, SAXException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
+        final var factory = SAXParserFactory.newInstance();
+        // TODO: Investigate http
         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
         factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 
-        SAXParser saxParser = factory.newSAXParser();
+        final var saxParser = factory.newSAXParser();
         return saxParser.getXMLReader();
     }
 
@@ -158,12 +163,11 @@ public class XMLReader extends DefaultHandler {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(final String region) {
         this.region = region;
     }
 
     static class UserInterruptException extends RuntimeException {
-
         private static final long serialVersionUID = -7454219131982518216L;
     }
 }

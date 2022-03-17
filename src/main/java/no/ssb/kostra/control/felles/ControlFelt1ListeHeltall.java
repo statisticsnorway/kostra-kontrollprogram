@@ -8,11 +8,16 @@ import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.between;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlFelt1ListeHeltall {
-    public static boolean doControl(ErrorReport errorReport, String title, List<Integer> integers, int errorType) {
-        List<Integer> indices = new ArrayList<>();
 
-        for (int i = 0; i < integers.size(); i++) {
+    public static boolean doControl(
+            final ErrorReport errorReport, final String title,
+            final List<Integer> integers, final int errorType) {
+
+        final var indices = new ArrayList<Integer>();
+
+        for (var i = 0; i < integers.size(); i++) {
             if (integers.get(i) == null) {
                 indices.add((i + 1));
             }
@@ -23,21 +28,18 @@ public class ControlFelt1ListeHeltall {
             if (indices.size() == 1) {
                 errorText = "Gjelder for linje " + indices.get(0);
             } else if (between(indices.size(), 2, 50)) {
-                errorText = "Gjelder for linjene " + indices.toString();
+                errorText = "Gjelder for linjene " + indices;
             } else {
                 errorText = "Gjelder for flere enn 50 linjer";
             }
 
-            ErrorReportEntry errorReportEntry = new ErrorReportEntry("3. Feltkontroller", "Kontroll " + title, " ", " "
+            errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll " + title, " ", " "
                     , "Korrigér " + title.toLowerCase()
                     , errorText
-                    , errorType);
-            errorReport.addEntry(errorReportEntry);
-
+                    , errorType));
 
             return true;
         }
-
         return false;
     }
 }

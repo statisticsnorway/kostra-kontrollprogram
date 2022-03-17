@@ -46,12 +46,10 @@ public interface StructuredNode extends Comparable<StructuredNode> {
      */
     String getNodeName();
 
-
     /**
      * Returns the sorted value: -1, 0 ,1.
      */
     int compareTo(StructuredNode other);
 
     LocalDate assignDateFromString(String dato, String datoformat);
-
 }

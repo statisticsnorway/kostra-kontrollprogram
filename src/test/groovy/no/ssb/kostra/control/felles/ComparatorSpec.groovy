@@ -34,7 +34,7 @@ class ComparatorSpec extends Specification {
 
     def "should validate that code is in code list, #code in #codelist -> #result"() {
         expect:
-        isCodeInCodelist(code, codelist) == result
+        isCodeInCodeList(code, codelist) == result
 
         where:
         code            | codelist                  || result
@@ -45,8 +45,8 @@ class ComparatorSpec extends Specification {
     def "should validate that code is removed from code list, remove #removelist from #codelist -> #resultlist -> #result"() {
         expect:
         verifyAll {
-            removeCodesFromCodelist(codelist, removelist) == resultlist
-            (removeCodesFromCodelist(codelist, removelist) == resultlist) == result
+            removeCodesFromCodeList(codelist, removelist) == resultlist
+            (removeCodesFromCodeList(codelist, removelist) == resultlist) == result
         }
 
         where:

@@ -1,12 +1,12 @@
 package no.ssb.kostra.control.regnskap.kirkekostra;
 
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
-import no.ssb.kostra.control.regnskap.felles.ControlRegnskap;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.felles.KostraRecord;
 import no.ssb.kostra.utils.TestRecordListInputAndResult;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static no.ssb.kostra.control.felles.Comparator.removeCodesFromCodelist;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,12 +26,12 @@ public class MainITestKirkeKostra {
 
     static Stream<TestRecordListInputAndResult> controlSektorInputs() {
         return Stream.of(
-                new TestRecordListInputAndResult(args0G, List.of(new Record("0G2020 300500976989732         510  123      263", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(args0G, List.of(new Record("0G2020 300500976989732         510           263", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("                                    123         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(args0G, List.of(new KostraRecord("0G2020 300500976989732         510  123      263", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(args0G, List.of(new KostraRecord("0G2020 300500976989732         510           263", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("                                    123         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
@@ -46,9 +45,9 @@ public class MainITestKirkeKostra {
 
     static Stream<TestRecordListInputAndResult> controlKombinasjonKontoklasseArtInvesteringsregnskapInputs() {
         return Stream.of(
-                new TestRecordListInputAndResult(args0G, List.of(new Record("0G2020 300500976989732         510  123    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("0F2020 300500976989732         4041 110    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(args0F, List.of(new Record("0F2020 300500976989732         4041 990    -3000", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR)
+                new TestRecordListInputAndResult(args0G, List.of(new KostraRecord("0G2020 300500976989732         510  123    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 110    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 990    -3000", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -138,7 +137,7 @@ public class MainITestKirkeKostra {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
+        Assertions.assertNotNull(er, "Has content ErrorReport");
         assertEquals(Constants.NO_ERROR, er.getErrorType());
 
     }

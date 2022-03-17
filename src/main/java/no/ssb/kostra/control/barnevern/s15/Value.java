@@ -72,11 +72,11 @@ public class Value {
 	 * Returns the value as string, or the default value if the given one was
 	 * null.
 	 */
-	public String asString(String defaultValue) {
+	public String asString(final String defaultValue) {
 		return isNull() ? defaultValue : asString();
 	}
 
-	public int asInt(int defaultValue) {
+	public int asInt(final int defaultValue) {
 		try {
 			if (isNull()) {
 				return defaultValue;
@@ -121,7 +121,7 @@ public class Value {
 	/**
 	 * Creates a new wrapper for the given data.
 	 */
-	public static Value of(Object data) {
+	public static Value of(final Object data) {
 		Value val = new Value();
 		val.data = data;
 		return val;
@@ -138,7 +138,7 @@ public class Value {
 	 * and shorter strings gracefully.
 	 */
 	public String left(int length) {
-		String value = asString();
+		var value = asString();
 		if (value == null) {
 			return null;
 		}
@@ -159,8 +159,8 @@ public class Value {
 	/**
 	 * Type, range and null-safe implementation of the substring function.
 	 */
-	public String substring(int start, int length) {
-		String value = asString();
+	public String substring(final int start, final int length) {
+		var value = asString();
 		if (value == null) {
 			return null;
 		}
@@ -174,7 +174,7 @@ public class Value {
 	 * Type-safe method the get the length of the values' string representation.
 	 */
 	public int length() {
-		String value = asString();
+		var value = asString();
 		if (value == null) {
 			return 0;
 		}

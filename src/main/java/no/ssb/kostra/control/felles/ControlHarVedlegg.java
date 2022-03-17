@@ -1,22 +1,23 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlHarVedlegg {
+
     private ControlHarVedlegg() {
     }
 
-    public static boolean doControl(ErrorReport errorReport) {
+    public static boolean doControl(final ErrorReport errorReport) {
         errorReport.incrementCount();
 
         // sjekker om man krysset av i skjemaet om at vedlegg skal mangle
         // i så fall så er innsendingen ok
-        Arguments arguments = errorReport.getArgs();
+        final var arguments = errorReport.getArgs();
 
-        if (arguments.harVedlegg()){
+        if (arguments.harVedlegg()) {
             if (arguments.hasInputContent()) {
                 return false;
             } else {
@@ -34,7 +35,6 @@ public class ControlHarVedlegg {
 
                 return true;
             }
-
         } else {
             if (arguments.hasInputContent()) {
                 errorReport.addEntry(
@@ -67,11 +67,8 @@ public class ControlHarVedlegg {
                                 , Constants.NO_ERROR
                         )
                 );
-
                 return false;
             }
-
-
         }
     }
 }

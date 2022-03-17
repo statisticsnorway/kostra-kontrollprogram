@@ -55,7 +55,7 @@ public class Definitions {
         );
     }
 
-    public static List<String> getFieldAsList(int index){
+    public static List<String> getFieldAsList(final int index) {
         return getKontorFylkeRegionMappingAsList().stream()
                 .map(l -> l.get(index))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
@@ -65,40 +65,39 @@ public class Definitions {
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getKontorAsList(){
+    public static List<String> getKontorAsList() {
         return getFieldAsList(0);
     }
 
-    public static List<String> getFylkeAsList(){
+    public static List<String> getFylkeAsList() {
         return getFieldAsList(1);
     }
 
-    public static List<String> getRegionAsList(){
+    public static List<String> getRegionAsList() {
         return getFieldAsList(2);
     }
 
-    public static boolean isKontorValid(String kontor) {
+    public static boolean isKontorValid(final String kontor) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(0), kontor));
     }
 
-    public static boolean isFylkeValid(String fylke) {
+    public static boolean isFylkeValid(final String fylke) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(1), fylke));
     }
 
-    public static boolean isRegionValid(String region) {
+    public static boolean isRegionValid(final String region) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(r -> Objects.equals(r.get(2), region));
     }
 
-    public static boolean isRegionAndKontorValid(String region, String kontor) {
+    public static boolean isRegionAndKontorValid(final String region, final String kontor) {
         return getKontorFylkeRegionMappingAsList().stream().anyMatch(
                 r -> Objects.equals(r.get(0), kontor)
                         && Objects.equals(r.get(2), region));
     }
 
-    public static boolean isFylkeAndKontorValid(String fylke, String kontor) {
-        return getKontorFylkeRegionMappingAsList().stream().anyMatch(
-                r -> Objects.equals(r.get(0), kontor)
-                        && Objects.equals(r.get(1), fylke));
+    public static boolean isFylkeAndKontorValid(final String fylke, final String kontor) {
+        return getKontorFylkeRegionMappingAsList().stream()
+                .anyMatch(r -> Objects.equals(r.get(0), kontor) && Objects.equals(r.get(1), fylke));
     }
 
     public static Map<String, String> getFylkeNavnAsList() {

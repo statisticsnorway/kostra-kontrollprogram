@@ -6,9 +6,14 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 import java.util.List;
 
 public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk {
-    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String fieldvalue1, List<String> codeList1, Integer fieldvalue2, String operator2, Integer checkvalue2) {
-        return (Comparator.isCodeInCodelist(fieldvalue1, codeList1)
-                && !Comparator.compareIntegerOperatorInteger(fieldvalue2, operator2, checkvalue2)
-                && er.addEntry(ere));
+
+    public static boolean doControl(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final String fieldValue1, final List<String> codeList1,
+            final Integer fieldValue2, final String operator2, final Integer checkValue2) {
+
+        return Comparator.isCodeInCodeList(fieldValue1, codeList1)
+                && !Comparator.compareIntegerOperatorInteger(fieldValue2, operator2, checkValue2)
+                && errorReport.addEntry(errorReportEntry);
     }
 }

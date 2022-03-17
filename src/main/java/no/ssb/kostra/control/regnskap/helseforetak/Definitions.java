@@ -2,14 +2,15 @@ package no.ssb.kostra.control.regnskap.helseforetak;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Definitions {
-    public static List<String> getFunksjonKapittelAsList(String skjema) {
+    public static List<String> getFunksjonKapittelAsList(final String skjema) {
         switch (skjema) {
             case "0X":
                 // Funksjoner
-                return List.of("400", "460", "600", "606", "620", "630", "636", "637", "641", "642", "651", "681", "840")
-                        .stream()
+                return Stream.of("400", "460", "600", "606", "620", "630", "636", "637", "641", "642", "651", "681", "840")
                         // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                         .map(c -> String.format("%1$-4s", c))
                         .collect(Collectors.toList());
@@ -17,11 +18,10 @@ public class Definitions {
             case "0Y":
                 return List.of("    ");
         }
-
         return List.of();
     }
 
-    public static List<String> getArtSektorAsList(String skjema) {
+    public static List<String> getArtSektorAsList(final String skjema) {
         switch (skjema) {
             case "0X":
                 // Arter / kontokoder
@@ -97,10 +97,8 @@ public class Definitions {
                         "270", "271", "272", "274", "275", "276", "277", "278", "279",
                         "280", "281",
                         "290", "291", "292", "293", "294", "295", "296", "297", "298", "299"
-
                 );
         }
-
         return List.of();
     }
 
@@ -111,8 +109,7 @@ public class Definitions {
     }
 
     public static List<String> getKontokode320Funksjoner() {
-        return List.of("620", "630", "636", "637", "641", "642", "651", "681", "840")
-                .stream()
+        return Stream.of("620", "630", "636", "637", "641", "642", "651", "681", "840")
                 // rightPad / legger til mellomrom på slutten av kodene
                 .map(c -> String.format("%1$-4s", c))
                 .collect(Collectors.toList());

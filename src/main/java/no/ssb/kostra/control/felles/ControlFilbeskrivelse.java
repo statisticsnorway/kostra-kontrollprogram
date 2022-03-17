@@ -9,43 +9,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlFilbeskrivelse {
-    private static String createLinenumber(Integer l, int line) {
+
+    private static String createLinenumber(final Integer l, final int line) {
         return "Linjenummer " + Format.sprintf("%0" + l + "d", line);
     }
 
-    public static boolean doControl(List<Record> records, ErrorReport er) {
-        AtomicBoolean hasErrors = new AtomicBoolean(false);
-        er.incrementCount();
-        int n = records.size();
-        Integer l = String.valueOf(n).length();
+    public static boolean doControl(
+            final List<KostraRecord> records, final ErrorReport errorReport) {
 
+        final var hasErrors = new AtomicBoolean(false);
+        errorReport.incrementCount();
 
-        for (int i = 0; i < n; i++) {
-            int line = i+1;
-            Record r = records.get(i);
+        final var n = records.size();
+        final var l = String.valueOf(n).length();
 
-            r.getFieldDefinitions()
+        for (var i = 0; i < n; i++) {
+            final var line = i + 1;
+            final var record = records.get(i);
+
+            record.getFieldDefinitions()
                     .forEach(fieldDefinition -> {
-                        int from = fieldDefinition.getFrom();
-                        int to = fieldDefinition.getTo();
-                        int length = to - from + 1;
-                        boolean mandatory = fieldDefinition.isMandatory();
-                        String fieldName = fieldDefinition.getName();
-                        Integer fieldNumber = fieldDefinition.getNumber();
-                        String stringValue = r.getFieldAsString(fieldDefinition.getName());
-                        String trimmedStringValue = r.getFieldAsTrimmedString(fieldDefinition.getName());
-                        int trimmedStringLength = trimmedStringValue.length();
-                        Integer integerValue = r.getFieldAsInteger(fieldDefinition.getName());
-                        boolean hasIntegerValue = (integerValue != null);
-                        List<Code> codeList = new ArrayList<>(fieldDefinition.getCodeList());
-                        boolean hasCodeList = !codeList.isEmpty();
-                        String datePattern = r.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern();
-                        String dataType = fieldDefinition.getDataType();
+                        final var from = fieldDefinition.getFrom();
+                        final var to = fieldDefinition.getTo();
+                        final var length = to - from + 1;
+                        final var mandatory = fieldDefinition.isMandatory();
+                        final var fieldName = fieldDefinition.getName();
+                        final var fieldNumber = fieldDefinition.getNumber();
+                        final var stringValue = record.getFieldAsString(fieldDefinition.getName());
+                        final var trimmedStringValue = record.getFieldAsTrimmedString(fieldDefinition.getName());
+                        final var trimmedStringLength = trimmedStringValue.length();
+                        final var integerValue = record.getFieldAsInteger(fieldDefinition.getName());
+                        final var hasIntegerValue = (integerValue != null);
+                        final var codeList = new ArrayList<>(fieldDefinition.getCodeList());
+                        final var hasCodeList = !codeList.isEmpty();
+                        final var datePattern = record.getFieldDefinitionByName(fieldDefinition.getName()).getDatePattern();
+                        final var dataType = fieldDefinition.getDataType();
 
                         // sjekker at feltdefinisjonen har antall tegn større enn 0
                         if (length < 1) {
-                            er.addEntry(
+                            errorReport.addEntry(
                                     new ErrorReportEntry(
                                             "2. Filbeskrivelse"
                                             , createLinenumber(l, line)
@@ -64,28 +68,28 @@ public class ControlFilbeskrivelse {
                         if (trimmedStringLength != 0) {
                             // verdi fins
                             // kontrollerer mot eventuell kodeliste
-                            if (hasCodeList) {
-                                if (codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(stringValue))) {
-                                    er.addEntry(
-                                            new ErrorReportEntry(
-                                                    "2. Filbeskrivelse"
-                                                    , createLinenumber(l, line)
-                                                    , " "
-                                                    , " "
-                                                    , "Kontroll 02 Filbeskrivelse, feil kode i forhold til kodeliste"
-                                                    , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                    + "sin kode '" + stringValue + "' fins ikke i " + codeList + "."
-                                                    , Constants.CRITICAL_ERROR
-                                            )
-                                    );
-                                    hasErrors.set(true);
-                                }
+                            if (hasCodeList
+                                    && codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(stringValue))) {
+
+                                errorReport.addEntry(
+                                        new ErrorReportEntry(
+                                                "2. Filbeskrivelse"
+                                                , createLinenumber(l, line)
+                                                , " "
+                                                , " "
+                                                , "Kontroll 02 Filbeskrivelse, feil kode i forhold til kodeliste"
+                                                , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
+                                                + "sin kode '" + stringValue + "' fins ikke i " + codeList + "."
+                                                , Constants.CRITICAL_ERROR
+                                        )
+                                );
+                                hasErrors.set(true);
                             }
 
                             switch (dataType) {
                                 case "Integer":
                                     if (!hasIntegerValue) {
-                                        er.addEntry(
+                                        errorReport.addEntry(
                                                 new ErrorReportEntry(
                                                         "2. Filbeskrivelse"
                                                         , createLinenumber(l, line)
@@ -99,19 +103,18 @@ public class ControlFilbeskrivelse {
                                         );
                                         hasErrors.set(true);
                                     }
-
                                     break;
 
                                 case "Date":
-                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(datePattern);
-                                    String defaultDate = "0".repeat(datePattern.length());
+                                    final var dateTimeFormatter = DateTimeFormatter.ofPattern(datePattern);
+                                    final var defaultDate = "0".repeat(datePattern.length());
 
                                     try {
                                         if (!stringValue.equalsIgnoreCase(defaultDate)) {
-                                            LocalDate.parse(stringValue, dtf);
+                                            LocalDate.parse(stringValue, dateTimeFormatter);
                                         }
                                     } catch (Exception e) {
-                                        er.addEntry(
+                                        errorReport.addEntry(
                                                 new ErrorReportEntry(
                                                         "2. Filbeskrivelse"
                                                         , createLinenumber(l, line)
@@ -119,7 +122,7 @@ public class ControlFilbeskrivelse {
                                                         , " "
                                                         , "Kontroll 02 Filbeskrivelse, feil i dato-felt"
                                                         , "Korrigér felt " + fieldNumber + " / '" + fieldName + "', posisjon fra og med " + from + " til og med " + to + ", "
-                                                        + "er et datofelt med datomønster ('" + datePattern.toUpperCase() + "'), men inneholder '" + stringValue+ "'."
+                                                        + "er et datofelt med datomønster ('" + datePattern.toUpperCase() + "'), men inneholder '" + stringValue + "'."
                                                         , Constants.CRITICAL_ERROR
                                                 )
                                         );
@@ -127,12 +130,10 @@ public class ControlFilbeskrivelse {
                                     }
                                     break;
                             }
-
-
                         } else {
                             if (mandatory) {
                                 // verdien kan ikke være blank
-                                er.addEntry(
+                                errorReport.addEntry(
                                         new ErrorReportEntry(
                                                 "2. Filbeskrivelse"
                                                 , createLinenumber(l, line)
@@ -149,7 +150,6 @@ public class ControlFilbeskrivelse {
                         }
                     });
         }
-
         return hasErrors.get();
     }
 }

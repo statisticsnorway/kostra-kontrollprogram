@@ -8,13 +8,18 @@ import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.between;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlFelt1ListeUlovligTegnITallfelt {
-    public static boolean doControl(ErrorReport errorReport, String title, List<String> integersAsStrings, int errorType) {
-        List<Integer> indices = new ArrayList<>();
 
-        for (int i = 0; i < integersAsStrings.size(); i++) {
-            String fieldvalue = integersAsStrings.get(i);
-            if ((fieldvalue.split("\t").length != 1 || !fieldvalue.matches("^\\s*?-?\\d+$"))) {
+    public static boolean doControl(
+            final ErrorReport errorReport, final String title,
+            final List<String> integersAsStrings, final int errorType) {
+
+        final var indices = new ArrayList<Integer>();
+
+        for (var i = 0; i < integersAsStrings.size(); i++) {
+            final var fieldValue = integersAsStrings.get(i);
+            if ((fieldValue.split("\t").length != 1 || !fieldValue.matches("^\\s*?-?\\d+$"))) {
                 indices.add((i + 1));
             }
         }
@@ -24,21 +29,18 @@ public class ControlFelt1ListeUlovligTegnITallfelt {
             if (indices.size() == 1) {
                 errorText = "Gjelder for linje " + indices.get(0);
             } else if (between(indices.size(), 2, 50)) {
-                errorText = "Gjelder for linjene " + indices.toString();
+                errorText = "Gjelder for linjene " + indices;
             } else {
                 errorText = "Gjelder for flere enn 50 linjer";
             }
 
-            ErrorReportEntry errorReportEntry = new ErrorReportEntry("3. Feltkontroller", "Kontroll Ulovlig tegn i tallfelt, " + title, " ", " "
+            errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll Ulovlig tegn i tallfelt, " + title, " ", " "
                     , "Korrigér " + title.toLowerCase()
                     , errorText
-                    , errorType);
-            errorReport.addEntry(errorReportEntry);
-
+                    , errorType));
 
             return true;
         }
-
         return false;
     }
 }

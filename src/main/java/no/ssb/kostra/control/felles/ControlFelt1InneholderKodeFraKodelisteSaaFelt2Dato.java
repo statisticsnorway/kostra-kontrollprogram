@@ -7,9 +7,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato {
-    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String fieldvalue1, List<String> codeList1, LocalDate date2) {
-        return (Comparator.isCodeInCodelist(fieldvalue1, codeList1)
+
+    public static boolean doControl(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final String fieldValue1, final List<String> codeList1, final LocalDate date2) {
+
+        return Comparator.isCodeInCodeList(fieldValue1, codeList1)
                 && date2 == null
-                && er.addEntry(ere));
+                && errorReport.addEntry(errorReportEntry);
     }
 }

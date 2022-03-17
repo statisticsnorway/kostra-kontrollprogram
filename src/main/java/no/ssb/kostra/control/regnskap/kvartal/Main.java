@@ -8,97 +8,100 @@ import no.ssb.kostra.felles.*;
 
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Main {
-    public static ErrorReport doControls(Arguments args) {
+
+    public static ErrorReport doControls(final Arguments args) {
+
         // fjern kvartalsdelen av skjemanummeret da kvartalet også kommer som et eget argument
         args.setSkjema(args.getSkjema().substring(0, 2));
 
-        if (args.getRegion().endsWith("0000")){
-            if (args.getSkjema().equalsIgnoreCase("0A")){
+        if (args.getRegion().endsWith("0000")) {
+            if (args.getSkjema().equalsIgnoreCase("0A")) {
                 args.setSkjema("0C");
-            } else if (args.getSkjema().equalsIgnoreCase("0B")){
+            } else if (args.getSkjema().equalsIgnoreCase("0B")) {
                 args.setSkjema("0D");
             }
-
         }
 
-        ErrorReport er = new ErrorReport(args);
-        List<String> list1 = args.getInputContentAsStringList();
+        final var errorReport = new ErrorReport(args);
+        final var list1 = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(list1, er, FieldDefinitions.getFieldLength());
+        final var hasErrors = ControlRecordLengde.doControl(list1, errorReport, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
-            return er;
+            return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap = Utils.addLineNumbering(
-                Utils.getValidRecords(list1, fieldDefinitions)
-        );
-        List<String> bevilgningRegnskapList = List.of("0A", "0C");
-        List<String> balanseRegnskapList = List.of("0B", "0D");
+        final var fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
+        final var regnskap = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
+        final var bevilgningRegnskapList = List.of("0A", "0C");
+        final var balanseRegnskapList = List.of("0B", "0D");
 
-        String saksbehandler = "Filuttrekk";
-        Integer n = regnskap.size();
-        int l = String.valueOf(n).length();
+        final var saksbehandler = "Filuttrekk";
+        final var n = regnskap.size();
+        final var l = String.valueOf(n).length();
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, args, bevilgningRegnskapList, balanseRegnskapList
-                , Definitions.getKontoklasseAsList(args.getSkjema())
-                , Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion())
-                , Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion())
-        );
+        ControlIntegritet.doControl(
+                regnskap,
+                errorReport,
+                args,
+                bevilgningRegnskapList,
+                balanseRegnskapList,
+                Definitions.getKontoklasseAsList(args.getSkjema()),
+                Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()),
+                Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion()));
 
         // Kombinasjonskontroller, per record
-        regnskap.forEach(p -> {
-            if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-                if (Comparator.isCodeInCodelist(p.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
+        regnskap.forEach(currentRecord -> {
+            if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
+                if (Comparator.isCodeInCodeList(currentRecord.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("D"))) {
                     // driftsregnskapet
-                    List<String> gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
+                    final var gyldigeDriftFunksjoner = Definitions.getSpesifikkeFunksjoner(args.getSkjema(), args.getRegion(), currentRecord.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            errorReport,
+                            new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, currentRecord), " ", " "
                                     , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og funksjon"
-                                    , "Korrigér ugyldig funksjon (" + p.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
+                                    , "Korrigér ugyldig funksjon (" + currentRecord.getFieldAsTrimmedString("funksjon_kapittel") + ") til en gyldig funksjon i driftsregnskapet, én av ("
                                     + gyldigeDriftFunksjoner
                                     + "), eller overfør posteringen til investeringsregnskapet."
                                     , Constants.NORMAL_ERROR
-                            )
-                            , p.getFieldAsString("funksjon_kapittel")
-                            , gyldigeDriftFunksjoner);
+                            ),
+                            currentRecord.getFieldAsString("funksjon_kapittel"),
+                            gyldigeDriftFunksjoner);
 
-                    List<String> gyldigeDriftArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
+                    List<String> gyldigeDriftArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), currentRecord.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
-                                    , "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og art"
-                                    , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
-                                    + gyldigeDriftArter
-                                    + "), eller overfør posteringen til investeringsregnskapet."
-                                    , Constants.NORMAL_ERROR
-                            )
-                            , p.getFieldAsString("art_sektor")
-                            , gyldigeDriftArter);
+                            errorReport,
+                            new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, currentRecord), " ", " ",
+                                    "Kontroll Kombinasjon i driftsregnskapet, kontoklasse og art",
+                                    "Korrigér ugyldig art (" + currentRecord.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i driftsregnskapet, én av ("
+                                            + gyldigeDriftArter
+                                            + "), eller overfør posteringen til investeringsregnskapet.",
+                                    Constants.NORMAL_ERROR
+                            ),
+                            currentRecord.getFieldAsString("art_sektor"),
+                            gyldigeDriftArter);
 
-                } else if (Comparator.isCodeInCodelist(p.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
-                    List<String> gyldigeInvesteringArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), p.getFieldAsString("kontoklasse"));
+                } else if (Comparator.isCodeInCodeList(currentRecord.getFieldAsString("kontoklasse"), Definitions.getKontoklasseAsMap(args.getSkjema()).get("I"))) {
+                    final var gyldigeInvesteringArter = Definitions.getSpesifikkeArter(args.getSkjema(), args.getRegion(), currentRecord.getFieldAsString("kontoklasse"));
                     ControlFelt1InneholderKodeFraKodeliste.doControl(
-                            er
-                            , new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, p), " ", " "
+                            errorReport,
+                            new ErrorReportEntry(saksbehandler, Utils.createLinenumber(l, currentRecord), " ", " "
                                     , "Kontroll Kombinasjon i investeringsregnskapet, kontoklasse og art"
-                                    , "Korrigér ugyldig art (" + p.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
+                                    , "Korrigér ugyldig art (" + currentRecord.getFieldAsTrimmedString("art_sektor") + ") til en gyldig art i investeringsregnskapet, én av ("
                                     + gyldigeInvesteringArter
                                     + "), eller overfør posteringen til driftsregnskapet."
                                     , Constants.NORMAL_ERROR
-                            )
-                            , p.getFieldAsString("art_sektor")
-                            , gyldigeInvesteringArter);
+                            ),
+                            currentRecord.getFieldAsString("art_sektor"),
+                            gyldigeInvesteringArter);
                 }
             }
         });
-
-        return er;
+        return errorReport;
     }
 }

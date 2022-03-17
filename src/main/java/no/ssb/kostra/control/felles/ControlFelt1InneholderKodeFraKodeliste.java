@@ -5,8 +5,13 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlFelt1InneholderKodeFraKodeliste {
-    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String fieldvalue1, List<String> codeList1) {
-        return (!Comparator.isCodeInCodelist(fieldvalue1, codeList1) && er.addEntry(ere));
+    public static boolean doControl(
+            final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
+            final String fieldValue1, final List<String> codeList1) {
+
+        return !Comparator.isCodeInCodeList(fieldValue1, codeList1)
+                && errorReport.addEntry(errorReportEntry);
     }
 }

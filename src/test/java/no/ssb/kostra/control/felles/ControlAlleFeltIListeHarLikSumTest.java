@@ -32,16 +32,16 @@ public class ControlAlleFeltIListeHarLikSumTest {
 
     @Test
     public void testOK1() {
-        List<String> sumList = List.of("sum_1", "sum_2", "sum_3");
-        Record r1 = new Record("F1F2 1 1 1", fieldDefinitions);
+        var sumList = List.of("sum_1", "sum_2", "sum_3");
+        var r1 = new KostraRecord("F1F2 1 1 1", fieldDefinitions);
         ControlAlleFeltIListeHarLikSum.doControl(r1, er, ere, sumList);
         assertEquals(Constants.NO_ERROR, er.getErrorType());
     }
 
     @Test
     public void testFAIL1() {
-        List<String> sumList = List.of("sum_1", "sum_2", "sum_3");
-        Record r2 = new Record("F1F2 1 2 3", fieldDefinitions);
+        var sumList = List.of("sum_1", "sum_2", "sum_3");
+        var r2 = new KostraRecord("F1F2 1 2 3", fieldDefinitions);
         ControlAlleFeltIListeHarLikSum.doControl(r2, er, ere, sumList);
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }

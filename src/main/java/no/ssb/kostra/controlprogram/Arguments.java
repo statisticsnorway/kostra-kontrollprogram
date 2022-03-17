@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Arguments {
     private String skjema = " ";
     private String aargang = "    ";
@@ -22,7 +23,11 @@ public class Arguments {
     public Arguments() {
     }
 
-    public Arguments(String skjema, String aargang, String kvartal, String region, String navn, String orgnr, String foretaknr, boolean harVedlegg, boolean isRunAsExternalProcess, List<String> inputFileContent) {
+    public Arguments(
+            final String skjema, final String aargang, final String kvartal, final String region,
+            final String navn, final String orgnr, final String foretaknr, final boolean harVedlegg,
+            final boolean isRunAsExternalProcess, final List<String> inputFileContent) {
+
         this.setSkjema(skjema);
         this.aargang = aargang;
         this.kvartal = kvartal;
@@ -33,14 +38,14 @@ public class Arguments {
         this.harVedlegg = harVedlegg;
         this.isRunAsExternalProcess = isRunAsExternalProcess;
         this.inputFileContent = new ArrayList<>();
-        for (String line : inputFileContent) {
+        for (var line : inputFileContent) {
             if (line != null && line.trim().length() != 0) {
                 this.inputFileContent.add(line);
             }
         }
     }
 
-    public Arguments(String[] argv) {
+    public Arguments(final String[] argv) {
         GetOptDesc[] options = {
                 new GetOptDesc('s', "schema", true),
                 new GetOptDesc('y', "year", true),
@@ -53,12 +58,11 @@ public class Arguments {
                 new GetOptDesc('e', "external-process", true)
         };
 
-        GetOpt parser = new GetOpt(options);
-        @SuppressWarnings("rawtypes")
-        Map optionsFound = parser.parseArguments(argv);
-        for (Object o : optionsFound.keySet()) {
-            String key = (String) o;
-            char c = key.charAt(0);
+        final var parser = new GetOpt(options);
+        @SuppressWarnings("rawtypes") final Map optionsFound = parser.parseArguments(argv);
+        for (var o : optionsFound.keySet()) {
+            final var key = (String) o;
+            final var c = key.charAt(0);
             switch (c) {
                 case 's':
                     skjema = (String) optionsFound.get(key);
@@ -82,10 +86,9 @@ public class Arguments {
                     foretaknr = (String) optionsFound.get(key);
                     break;
                 case 'a':
-                    String vedlegg = (String) optionsFound.get(key);
+                    final var vedlegg = (String) optionsFound.get(key);
                     if (vedlegg.equalsIgnoreCase("0"))
                         harVedlegg = false;
-
                     break;
                 case 'e':
                     isRunAsExternalProcess = (boolean) optionsFound.get(key);
@@ -116,7 +119,7 @@ public class Arguments {
         return skjema;
     }
 
-    public void setSkjema(String skjema) {
+    public void setSkjema(final String skjema) {
         this.skjema = skjema;
     }
 
@@ -148,7 +151,7 @@ public class Arguments {
         if (this.inputFileContent == null) {
             this.inputFileContent = new ArrayList<>();
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            try (var reader = new BufferedReader(new InputStreamReader(System.in))) {
                 String line;
 
                 while ((line = reader.readLine()) != null) {
@@ -157,12 +160,10 @@ public class Arguments {
                         inputFileContent.add(line);
                     }
                 }
-
             } catch (IOException ignored) {
                 // Ignore exception
             }
         }
-
         return inputFileContent;
     }
 
@@ -170,12 +171,12 @@ public class Arguments {
         return System.in;
     }
 
-    public void setInputFileContent(List<String> inputFileContent) {
+    public void setInputFileContent(final List<String> inputFileContent) {
         if (this.inputFileContent == null) {
             this.inputFileContent = new ArrayList<>();
         }
 
-        for (String line : inputFileContent) {
+        for (var line : inputFileContent) {
             if (line != null && line.trim().length() != 0) {
                 this.inputFileContent.add(line);
             }

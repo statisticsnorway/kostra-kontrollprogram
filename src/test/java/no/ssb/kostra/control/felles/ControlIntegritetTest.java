@@ -3,7 +3,7 @@ package no.ssb.kostra.control.felles;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.felles.KostraRecord;
 import no.ssb.kostra.utils.TestRecordListInputAndResult;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,134 +16,134 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ControlIntegritetTest {
     static Stream<TestRecordListInputAndResult> inputSkjemaProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0G2000 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F                                              ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0G2000 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F                                              ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputAargangProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2000 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("  2020                                          ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2000 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("  2020                                          ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputKvartalProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("      9                                         ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F20009300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("      9                                         ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F20009300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputRegionProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("       300500                                   ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("       300500                                   ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputOrganisasjonsnummerProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030987654321         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("             976989732                          ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030987654321         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("             976989732                          ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputForetaksnummerProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                      999999999                 ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 3030309769897329876543213041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                      999999999                 ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 3030309769897329876543213041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputKontoklasseProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                               3                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9041 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                               3                ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputFunksjonProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9abc 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                041             ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9abc 650    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                041             ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputArtProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                    650         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                    650         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputKapittelProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         31234650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                1234            ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         31234650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                1234            ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputSektorProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                    123         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9041 abc    -8695", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                    123         ", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputBelopProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 303030976989732         9041 abc      abc", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                             123", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("                                               0", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                                ", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("************************************************", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 303030976989732         9041 abc      abc", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 123    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                             123", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("                                               0", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputDoControl0FProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputDoControl0GProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new Record("0G2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0G2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
         );
     }
 

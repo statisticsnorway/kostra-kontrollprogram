@@ -57,18 +57,18 @@ public class ComparatorTest {
 
     @Test
     public void isCodeInCodelistWithValidCodeTest() {
-        assertTrue(isCodeInCodelist("code1", List.of("code1", "code2")));
+        assertTrue(isCodeInCodeList("code1", List.of("code1", "code2")));
     }
 
     @Test
     public void isCodeInCodelistWithInvalidCodeTest() {
-        assertFalse(isCodeInCodelist("notInCodelist", List.of("code1", "code2")));
+        assertFalse(isCodeInCodeList("notInCodelist", List.of("code1", "code2")));
     }
 
     @Test
     public void removeCodesFromCodelistTest() {
-        assertEquals(List.of("code1", "code2", "code3"), removeCodesFromCodelist(List.of("code1", "code2", "code3"), List.of("notInCodelist")));
-        assertEquals(List.of("code1", "code3"), removeCodesFromCodelist(List.of("code1", "code2", "code3"), List.of("code2")));
+        assertEquals(List.of("code1", "code2", "code3"), removeCodesFromCodeList(List.of("code1", "code2", "code3"), List.of("notInCodelist")));
+        assertEquals(List.of("code1", "code3"), removeCodesFromCodeList(List.of("code1", "code2", "code3"), List.of("code2")));
     }
 
     @Test

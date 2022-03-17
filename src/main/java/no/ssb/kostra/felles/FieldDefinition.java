@@ -3,6 +3,7 @@ package no.ssb.kostra.felles;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class FieldDefinition {
     Integer number;
     String name;
@@ -90,7 +91,7 @@ public class FieldDefinition {
         return codeList;
     }
 
-    public void setCodeList(List<Code> codeList) {
+    public void setCodeList(final List<Code> codeList) {
         this.codeList = codeList;
     }
 

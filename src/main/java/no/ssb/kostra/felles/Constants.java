@@ -1,5 +1,6 @@
 package no.ssb.kostra.felles;
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class Constants {
     ////////////////////////////////////////////////////////////////////////////
     //

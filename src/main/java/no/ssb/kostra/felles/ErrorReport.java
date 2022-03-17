@@ -5,6 +5,7 @@ import no.ssb.kostra.controlprogram.Arguments;
 
 import java.util.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ErrorReport {
     private final List<ErrorReportEntry> entries = new ArrayList<>();
     private final Map<String, Long> mapEntries = new TreeMap<>();
@@ -21,7 +22,7 @@ public class ErrorReport {
         this.args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900"});
     }
 
-    public ErrorReport(Arguments args) {
+    public ErrorReport(final Arguments args) {
         this.args = args;
     }
 
@@ -29,58 +30,60 @@ public class ErrorReport {
         count++;
     }
 
-    public boolean addEntry(ErrorReportEntry entry) {
+    public boolean addEntry(final ErrorReportEntry errorReportEntry) {
         // Avklare status
-        if (this.errorType < entry.getErrorType()) {
-            this.errorType = entry.getErrorType();
+        if (this.errorType < errorReportEntry.getErrorType()) {
+            this.errorType = errorReportEntry.getErrorType();
         }
 
         // Hvis kontrollen hindrer innsending, legg til standardtekst slik dette vises også i oppsummeringen.
-        if (entry.getErrorType() == Constants.CRITICAL_ERROR) {
+        if (errorReportEntry.getErrorType() == Constants.CRITICAL_ERROR) {
             String CRITICAL_ERROR_SHORT_TEXT_MSG = " *** NB! Denne feilen hindrer innsending! ***";
-            entry.setKontrollNr(entry.getKontrollNr().concat(CRITICAL_ERROR_SHORT_TEXT_MSG));
+            errorReportEntry.setKontrollNr(errorReportEntry.getKontrollNr().concat(CRITICAL_ERROR_SHORT_TEXT_MSG));
         }
 
         // Legg til entry'en i en liste for oppsummering
-        long l = 0L;
-        if (mapEntries.containsKey(entry.getKontrollNr())) {
-            l = (mapEntries.get(entry.getKontrollNr()) != null) ? mapEntries.get(entry.getKontrollNr()) : 0L;
+        var l = 0L;
+        if (mapEntries.containsKey(errorReportEntry.getKontrollNr())) {
+            l = (mapEntries.get(errorReportEntry.getKontrollNr()) != null) ? mapEntries.get(errorReportEntry.getKontrollNr()) : 0L;
         }
 
         l++;
-        mapEntries.put(entry.getKontrollNr(), l);
+        mapEntries.put(errorReportEntry.getKontrollNr(), l);
 
         // Legg til en entry i hierarkiet
-        Map<String, Map<String, List<String>>> saksbehandlerMap = (rapportMap.containsKey(entry.getSaksbehandler())) ? rapportMap.get(entry
-                .getSaksbehandler()) : new TreeMap<>();
+        final var saksbehandlerMap =
+                rapportMap.containsKey(errorReportEntry.getSaksbehandler())
+                        ? rapportMap.get(errorReportEntry.getSaksbehandler())
+                        : new TreeMap<String, Map<String, List<String>>>();
 
-        Map<String, List<String>> journalnummerMap = saksbehandlerMap.containsKey(entry.getJournalnummer()) ? saksbehandlerMap.get(entry
-                .getJournalnummer()) : new TreeMap<>();
+        final var journalnummerMap = saksbehandlerMap.containsKey(errorReportEntry.getJournalnummer())
+                ? saksbehandlerMap.get(errorReportEntry.getJournalnummer())
+                : new TreeMap<String, List<String>>();
 
-        List<String> entriesList = (journalnummerMap.containsKey(entry.getKontrollNr())) ? journalnummerMap.get(entry.getKontrollNr())
-                : new ArrayList<>();
+        final var entriesList = (journalnummerMap.containsKey(errorReportEntry.getKontrollNr()))
+                ? journalnummerMap.get(errorReportEntry.getKontrollNr())
+                : new ArrayList<String>();
 
-        entriesList.add(entry.getKontrollNr());
-        entriesList.add(entry.getErrorText());
-        entriesList.add(Integer.toString(entry.getErrorType()));
+        entriesList.add(errorReportEntry.getKontrollNr());
+        entriesList.add(errorReportEntry.getErrorText());
+        entriesList.add(Integer.toString(errorReportEntry.getErrorType()));
 
-        journalnummerMap.put(entry.getKontrollNr(), entriesList);
-        saksbehandlerMap.put(entry.getJournalnummer(), journalnummerMap);
-        rapportMap.put(entry.getSaksbehandler(), saksbehandlerMap);
-        return entries.add(entry);
+        journalnummerMap.put(errorReportEntry.getKontrollNr(), entriesList);
+        saksbehandlerMap.put(errorReportEntry.getJournalnummer(), journalnummerMap);
+
+        rapportMap.put(errorReportEntry.getSaksbehandler(), saksbehandlerMap);
+        return entries.add(errorReportEntry);
     }
 
     public String generateReport() {
-        final String VERSION = "2022.03.3";
-
-        StringBuilder report = new StringBuilder();
-
-        final String lf = System.getProperty("line.separator");
+        final var VERSION = "2022.03.3";
+        final var report = new StringBuilder();
+        final var lf = System.getProperty("line.separator");
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;
         }
-
 
         report
                 .append("<html>")
@@ -95,7 +98,7 @@ public class ErrorReport {
                 .append("<hr/>").append(lf)
                 .append("<h2>Kontrollrapport for ").append(this.args.getRegion()).append(" ").append(args.getNavn()).append("</h2>").append(lf)
                 .append("<hr/>").append(lf).append("<span>Kontrollprogramversjon: ").append(VERSION).append("</span>").append(lf)
-                .append("<span>Kontroller startet: ").append(startTime.toString()).append("</span>").append(lf)
+                .append("<span>Kontroller startet: ").append(startTime).append("</span>").append(lf)
                 .append("<span>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</span>").append(lf)
                 .append("<span>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</span>").append(lf)
                 .append("<span>Antall sjekker utført: ").append(this.count).append("</span>").append(lf).append(lf)
@@ -105,8 +108,8 @@ public class ErrorReport {
             report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
 
             for (Map.Entry<String, Long> entry : mapEntries.entrySet()) {
-                CharSequence s = "***";
-                String val = entry.getKey();
+                final var s = "***";
+                final var val = entry.getKey();
 
                 if (val.contains(s)) {
                     report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
@@ -126,17 +129,21 @@ public class ErrorReport {
             }
 
             for (String saksbehandler : rapportMap.keySet()) {
-                Map<String, Map<String, List<String>>> saksbehandlerMap = rapportMap.get(saksbehandler);
+                final var saksbehandlerMap = rapportMap.get(saksbehandler);
 
-                for (String journalnummer : saksbehandlerMap.keySet()) {
-                    Map<String, List<String>> journalnummerMap = saksbehandlerMap.get(journalnummer);
+                for (var journalnummer : saksbehandlerMap.keySet()) {
+                    final var journalnummerMap = saksbehandlerMap.get(journalnummer);
 
-                    for (String refNr : journalnummerMap.keySet()) {
-                        List<String> entrieStringsList = journalnummerMap.get(refNr);
-                        String kontrollnummer = entrieStringsList.get(0);
-                        String kontrolltekst = entrieStringsList.get(1);
-                        int errorType = Integer.parseInt(entrieStringsList.get(2));
-                        String htmlcolor = (errorType == Constants.CRITICAL_ERROR) ? "red  " : (errorType == Constants.NORMAL_ERROR) ? "black" : "green";
+                    for (var refNr : journalnummerMap.keySet()) {
+                        final var entrieStringsList = journalnummerMap.get(refNr);
+                        final var kontrollnummer = entrieStringsList.get(0);
+                        final var kontrolltekst = entrieStringsList.get(1);
+                        final var errorType = Integer.parseInt(entrieStringsList.get(2));
+                        final var htmlcolor = errorType == Constants.CRITICAL_ERROR
+                                ? "red  "
+                                : errorType == Constants.NORMAL_ERROR
+                                ? "black"
+                                : "green";
 
                         if (args.isRunAsExternalProcess()) {
                             report.append(lf);
@@ -167,7 +174,6 @@ public class ErrorReport {
             report.append("<h3>Statistikkrapport</h3>");
             stats.forEach(s -> report.append(s.toString()));
         }
-
         return report.toString();
     }
 
@@ -183,11 +189,11 @@ public class ErrorReport {
         return entries.size();
     }
 
-    public void setReportHeaders(List<String> stringList) {
+    public void setReportHeaders(final List<String> stringList) {
         this.reportHeaders = stringList;
     }
 
-    public void addStats(StatsReportEntry entry) {
+    public void addStats(final StatsReportEntry entry) {
         this.stats.add(entry);
     }
 

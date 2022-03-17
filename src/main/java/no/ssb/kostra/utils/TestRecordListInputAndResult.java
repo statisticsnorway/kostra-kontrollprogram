@@ -3,18 +3,18 @@ package no.ssb.kostra.utils;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.Record;
+import no.ssb.kostra.felles.KostraRecord;
 
 import java.util.List;
 
 public class TestRecordListInputAndResult {
     private final Arguments arguments;
-    private final List<Record> recordList;
+    private final List<KostraRecord> recordList;
     private final boolean result;
     private final ErrorReport errorReport;
     private final int expectedErrorType;
 
-    public TestRecordListInputAndResult(Arguments arguments, List<Record> recordList, boolean result, int expectedErrorType) {
+    public TestRecordListInputAndResult(Arguments arguments, List<KostraRecord> recordList, boolean result, int expectedErrorType) {
         this.arguments = arguments;
         this.errorReport = new ErrorReport(arguments);
         this.recordList = recordList;
@@ -22,7 +22,7 @@ public class TestRecordListInputAndResult {
         this.expectedErrorType = expectedErrorType;
     }
 
-    public List<Record> getRecordList() {
+    public List<KostraRecord> getRecordList() {
         return recordList;
     }
 

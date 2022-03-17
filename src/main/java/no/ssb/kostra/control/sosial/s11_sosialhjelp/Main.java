@@ -52,11 +52,11 @@ public class Main {
             return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<Record> records = inputFileContent.stream()
-                .map(p -> new Record(p, fieldDefinitions))
+        var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        var records = inputFileContent.stream()
+                .map(p -> new KostraRecord(p, fieldDefinitions))
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
-                .map(r -> {
+                .peek(r -> {
                     try {
                         r.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)), arguments.getAargang()));
                         r.setFieldAsInteger(FNR_OK, (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)))) ? 1 : 0);
@@ -65,8 +65,6 @@ public class Main {
                         r.setFieldAsInteger(ALDER, -1);
                         r.setFieldAsInteger(FNR_OK, 0);
                     }
-
-                    return r;
                 })
                 .collect(Collectors.toList());
 
@@ -178,8 +176,7 @@ public class Main {
                         , new Code("7_9", "7 - 9 måneder")
                         , new Code("10_11", "10 - 11 måneder")
                         , new Code("12", "12 måneder")
-                        , new Code("UOPPGITT", UOPPGITT)
-                )
+                        , new Code("UOPPGITT", UOPPGITT))
                         , List.of(
                         new StatsEntry("1", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 1).count()))
                         , new StatsEntry("2_3", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 2, 3)).count()))
@@ -220,7 +217,7 @@ public class Main {
     }
 
 
-    public static boolean control10ForsorgerpliktForBarnUnder18Aar(ErrorReport errorReport, Record r) {
+    public static boolean control10ForsorgerpliktForBarnUnder18Aar(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -241,7 +238,7 @@ public class Main {
         );
     }
 
-    public static boolean control11AntallBarnIHusholdningenMangler(ErrorReport errorReport, Record r) {
+    public static boolean control11AntallBarnIHusholdningenMangler(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
@@ -264,7 +261,7 @@ public class Main {
         );
     }
 
-    public static boolean control12AntallBarnIHusholdningen(ErrorReport errorReport, Record r) {
+    public static boolean control12AntallBarnIHusholdningen(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -288,7 +285,7 @@ public class Main {
         );
     }
 
-    public static boolean control13MangeBarnIHusholdningen(ErrorReport errorReport, Record r) {
+    public static boolean control13MangeBarnIHusholdningen(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1Boolsk.doControl(
@@ -308,7 +305,7 @@ public class Main {
         );
     }
 
-    public static boolean control14ViktigsteKildeTilLivsoppholdGyldigeVerdier(ErrorReport errorReport, Record r) {
+    public static boolean control14ViktigsteKildeTilLivsoppholdGyldigeVerdier(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -328,7 +325,7 @@ public class Main {
         );
     }
 
-    public static boolean control15ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control15ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -339,11 +336,11 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 15 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + "."
                         , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
                         + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("01", "02"))).map(Code::toString).collect(Collectors.toList())
+                        + r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("01", "02"))).map(Code::toString).collect(Collectors.toList())
                         + "'. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
@@ -354,12 +351,12 @@ public class Main {
         );
     }
 
-    private static boolean templateViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r, String titleTemplate, List<String> vkloCodeList, List<String> arbsitCodeList) {
+    private static boolean templateViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r, String titleTemplate, List<String> vkloCodeList, List<String> arbsitCodeList) {
         errorReport.incrementCount();
-        String vklo = r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), vkloCodeList)).map(Code::getValue).collect(Collectors.joining(""));
+        String vklo = r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), vkloCodeList)).map(Code::getValue).collect(Collectors.joining(""));
         String arbsit = r.getFieldAsTrimmedString(ARBSIT);
         String arbsitList = r.getFieldDefinitionByName(ARBSIT).getCodeList().stream()
-                .filter(c -> Comparator.isCodeInCodelist(c.getCode(), arbsitCodeList))
+                .filter(c -> Comparator.isCodeInCodeList(c.getCode(), arbsitCodeList))
                 .map(Code::toString)
                 .collect(Collectors.toList())
                 .toString();
@@ -382,7 +379,7 @@ public class Main {
         );
     }
 
-    public static boolean control16ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control16ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         return templateViktigsteKildeTilLivsopphold(
                 errorReport,
                 r,
@@ -392,7 +389,7 @@ public class Main {
         );
     }
 
-    public static boolean control17ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control17ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         return templateViktigsteKildeTilLivsopphold(
                 errorReport,
                 r,
@@ -402,7 +399,7 @@ public class Main {
         );
     }
 
-    public static boolean control18ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control18ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         return templateViktigsteKildeTilLivsopphold(
                 errorReport,
                 r,
@@ -412,7 +409,7 @@ public class Main {
         );
     }
 
-    public static boolean control19ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control19ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         return templateViktigsteKildeTilLivsopphold(
                 errorReport,
                 r,
@@ -422,7 +419,7 @@ public class Main {
         );
     }
 
-    public static boolean control20ViktigsteKildeTilLivsopphold(ErrorReport errorReport, Record r) {
+    public static boolean control20ViktigsteKildeTilLivsopphold(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -433,9 +430,9 @@ public class Main {
                         , r.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 20 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + "."
                         , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + r.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
                         + "Arbeidssituasjonen er '" + r.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
                         + r.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().map(Code::toString).collect(Collectors.toList())
                         + "'. Feltet er obligatorisk å fylle ut."
@@ -449,7 +446,7 @@ public class Main {
     }
 
 
-    public static boolean control22TilknytningTilTrygdesystemetOgAlder(ErrorReport errorReport, Record r) {
+    public static boolean control22TilknytningTilTrygdesystemetOgAlder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
@@ -471,7 +468,7 @@ public class Main {
         );
     }
 
-    public static boolean control23TilknytningTilTrygdesystemetOgBarn(ErrorReport errorReport, Record r) {
+    public static boolean control23TilknytningTilTrygdesystemetOgBarn(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         if (r.getFieldAsString(TRYGDESIT).equalsIgnoreCase("05")
@@ -496,7 +493,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control24TilknytningTilTrygdesystemetOgArbeidssituasjon(ErrorReport errorReport, Record r) {
+    public static boolean control24TilknytningTilTrygdesystemetOgArbeidssituasjon(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         List<Code> trygdeSituasjon = r.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(r.getFieldAsString(TRYGDESIT))).collect(Collectors.toList());
@@ -519,11 +516,11 @@ public class Main {
                 , r.getFieldAsString(TRYGDESIT)
                 , List.of("04", "07")
                 , r.getFieldAsString(ARBSIT)
-                , r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::getCode).filter(c -> Comparator.isCodeInCodelist(c, List.of("02", "04", "07"))).collect(Collectors.toList())
+                , r.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::getCode).filter(c -> Comparator.isCodeInCodeList(c, List.of("02", "04", "07"))).collect(Collectors.toList())
         );
     }
 
-    public static boolean control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspenger(ErrorReport errorReport, Record r) {
+    public static boolean control24BTilknytningTilTrygdesystemetOgArbeidssituasjonArbeidsavklaringspenger(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         List<Code> trygdeSituasjon = r.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(r.getFieldAsString(TRYGDESIT))).collect(Collectors.toList());
@@ -555,7 +552,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control25ArbeidssituasjonGyldigeKoder(ErrorReport errorReport, Record r) {
+    public static boolean control25ArbeidssituasjonGyldigeKoder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -576,7 +573,7 @@ public class Main {
         );
     }
 
-    public static boolean control26StonadsmaanederGyldigeKoder(ErrorReport errorReport, Record r) {
+    public static boolean control26StonadsmaanederGyldigeKoder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         boolean harVarighet = STMND
@@ -613,7 +610,7 @@ public class Main {
     }
 
 
-    public static boolean control27StonadssumManglerEllerHarUgyldigeTegn(ErrorReport errorReport, Record r) {
+    public static boolean control27StonadssumManglerEllerHarUgyldigeTegn(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer bidrag = r.getFieldAsInteger(BIDRAG);
@@ -642,7 +639,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control28HarVarighetMenManglerStonadssum(ErrorReport errorReport, Record r) {
+    public static boolean control28HarVarighetMenManglerStonadssum(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         boolean harVarighet = STMND
@@ -682,7 +679,7 @@ public class Main {
     }
 
 
-    public static boolean control29HarStonadssumMenManglerVarighet(ErrorReport errorReport, Record r) {
+    public static boolean control29HarStonadssumMenManglerVarighet(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         boolean harVarighet = STMND.stream()
@@ -729,7 +726,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control30StonadssumPaaMaxEllerMer(ErrorReport errorReport, Record r) {
+    public static boolean control30StonadssumPaaMaxEllerMer(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer bidrag = r.getFieldAsIntegerDefaultEquals0(BIDRAG);
@@ -758,7 +755,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control31StonadssumPaaMinEllerMindre(ErrorReport errorReport, Record r) {
+    public static boolean control31StonadssumPaaMinEllerMindre(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer bidrag = r.getFieldAsIntegerDefaultEquals0(BIDRAG);
@@ -787,7 +784,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control32OkonomiskraadgivningGyldigeKoder(ErrorReport errorReport, Record r) {
+    public static boolean control32OkonomiskraadgivningGyldigeKoder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -807,7 +804,7 @@ public class Main {
         );
     }
 
-    public static boolean control33UtarbeidelseAvIndividuellPlan(ErrorReport errorReport, Record r) {
+    public static boolean control33UtarbeidelseAvIndividuellPlan(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -827,7 +824,7 @@ public class Main {
         );
     }
 
-    public static boolean control35Boligsituasjon(ErrorReport errorReport, Record r) {
+    public static boolean control35Boligsituasjon(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -848,7 +845,7 @@ public class Main {
     }
 
 
-    public static boolean control36BidragFordeltPaaMmaaneder(ErrorReport errorReport, Record r) {
+    public static boolean control36BidragFordeltPaaMmaaneder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer bidrag = r.getFieldAsIntegerDefaultEquals0(BIDRAG);
@@ -879,7 +876,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control37LaanFordeltPaaMmaaneder(ErrorReport errorReport, Record r) {
+    public static boolean control37LaanFordeltPaaMmaaneder(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer laan = r.getFieldAsIntegerDefaultEquals0(LAAN);
@@ -910,7 +907,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control38DUFNummer(ErrorReport errorReport, Record r) {
+    public static boolean control38DUFNummer(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFodselsnummerDUFnummer.doControl(
@@ -930,7 +927,7 @@ public class Main {
         );
     }
 
-    public static boolean control39ForsteVilkarIAaret(ErrorReport errorReport, Record r) {
+    public static boolean control39ForsteVilkarIAaret(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -950,7 +947,7 @@ public class Main {
         );
     }
 
-    public static boolean control40ForsteVilkarIAaretSambo(ErrorReport errorReport, Record r) {
+    public static boolean control40ForsteVilkarIAaretSambo(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -970,7 +967,7 @@ public class Main {
         );
     }
 
-    public static boolean control41DatoForUtbetalingsvedtak(ErrorReport errorReport, Record r) {
+    public static boolean control41DatoForUtbetalingsvedtak(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
@@ -991,7 +988,7 @@ public class Main {
         );
     }
 
-    public static boolean control42TilOgMedDatoForUtbetalingsvedtak(ErrorReport errorReport, Record r) {
+    public static boolean control42TilOgMedDatoForUtbetalingsvedtak(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
@@ -1012,7 +1009,7 @@ public class Main {
         );
     }
 
-    public static boolean control43Vilkaar(ErrorReport errorReport, Record r) {
+    public static boolean control43Vilkaar(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         String vilkar = r.getFieldAsString(VILKARSOSLOV);
@@ -1024,7 +1021,7 @@ public class Main {
         );
 
         boolean isNoneFilledIn = fields.stream()
-                .noneMatch(field -> Comparator.isCodeInCodelist(
+                .noneMatch(field -> Comparator.isCodeInCodeList(
                                 r.getFieldAsTrimmedString(field),
                                 r.getFieldDefinitionByName(field)
                                         .getCodeList()

@@ -4,7 +4,12 @@ import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
 public class ControlFelt1Lengde {
-    public static boolean doControl(ErrorReport er, ErrorReportEntry ere, String trimmedFieldValue1) {
-        return (trimmedFieldValue1.isEmpty() && er.addEntry(ere));
+
+    public static boolean doControl(
+            final ErrorReport errorReport,
+            final ErrorReportEntry errorReportEntry,
+            final String trimmedFieldValue1) {
+
+        return trimmedFieldValue1.isEmpty() && errorReport.addEntry(errorReportEntry);
     }
 }

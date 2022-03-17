@@ -29,20 +29,20 @@ public class ControlDubletterTest {
     }
 
     @Test
-    public void hasDuplicates(){
-        List<Record> recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:1,KeyB:2")
-                .map(p -> new Record(p, fieldDefinitions))
+    public void hasDuplicates() {
+        var recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:1,KeyB:2")
+                .map(p -> new KostraRecord(p, fieldDefinitions))
                 .collect(Collectors.toList());
 
-        boolean hasDuplicates = ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B"));
+        var hasDuplicates = ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B"));
         assertTrue(hasDuplicates);
         assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
     }
 
     @Test
-    public void hasNoDuplicates(){
-        List<Record> recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:2,KeyB:2")
-                .map(p -> new Record(p, fieldDefinitions))
+    public void hasNoDuplicates() {
+        var recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:2,KeyB:2")
+                .map(p -> new KostraRecord(p, fieldDefinitions))
                 .collect(Collectors.toList());
 
         assertFalse(ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B")));

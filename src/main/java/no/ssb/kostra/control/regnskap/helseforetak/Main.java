@@ -9,113 +9,110 @@ import no.ssb.kostra.utils.Format;
 
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Main {
-    private static String createLinenumber(Integer l, int line, String record) {
+    private static String createLinenumber(final Integer l, final int line, final String record) {
         return "Linje " + Format.sprintf("%0" + l + "d", line) + " : <pre>" + record + "</pre>";
     }
 
-    public static ErrorReport doControls(Arguments args) {
-        ErrorReport er = new ErrorReport(args);
-        List<String> list1 = args.getInputContentAsStringList();
+    public static ErrorReport doControls(final Arguments args) {
+        final var errorReport = new ErrorReport(args);
+        final var list1 = args.getInputContentAsStringList();
 
         // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
         // Kontroll Recordlengde
-        boolean hasErrors = ControlRecordLengde.doControl(list1, er, FieldDefinitions.getFieldLength());
+        final var hasErrors = ControlRecordLengde.doControl(list1, errorReport, FieldDefinitions.getFieldLength());
 
         if (hasErrors) {
-            return er;
+            return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        List<Record> regnskap = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
-        List<String> bevilgningRegnskapList = List.of("0X");
-        List<String> balanseRegnskapList = List.of("0Y");
-        String saksbehandler = "Filuttrekk";
-        Integer n = regnskap.size();
-        Integer l = String.valueOf(n).length();
+        final var fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
+        final var regnskap = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
+        final var bevilgningRegnskapList = List.of("0X");
+        final var balanseRegnskapList = List.of("0Y");
+        final var saksbehandler = "Filuttrekk";
+        final var n = regnskap.size();
+        final var l = String.valueOf(n).length();
 
         // filbeskrivelsesskontroller
-        ControlFilbeskrivelse.doControl(regnskap, er);
+        ControlFilbeskrivelse.doControl(regnskap, errorReport);
 
-        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-            return er;
+        if (errorReport.getErrorType() == Constants.CRITICAL_ERROR) {
+            return errorReport;
         }
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, er, args, bevilgningRegnskapList, balanseRegnskapList
+        ControlIntegritet.doControl(regnskap, errorReport, args, bevilgningRegnskapList, balanseRegnskapList
                 , List.of(" ")
                 , Definitions.getFunksjonKapittelAsList(args.getSkjema())
                 , Definitions.getArtSektorAsList(args.getSkjema())
         );
 
-
-
         // Dublett kontroll
-        if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-            ControlDubletter.doControl(regnskap, er, List.of("foretaksnr", "funksjon_kapittel", "art_sektor"), List.of("foretaksnr", "funksjon", "kontokode"));
-
-        } else if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
-            ControlDubletter.doControl(regnskap, er, List.of("art_sektor"), List.of("sektor"));
+        if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
+            ControlDubletter.doControl(regnskap, errorReport, List.of("foretaksnr", "funksjon_kapittel", "art_sektor"), List.of("foretaksnr", "funksjon", "kontokode"));
+        } else if (Comparator.isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
+            ControlDubletter.doControl(regnskap, errorReport, List.of("art_sektor"), List.of("sektor"));
         }
 
         // Kombinasjonskontroller
-        regnskap.forEach(p -> {
-            if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
+        regnskap.forEach(record -> {
+            if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
                 // Kontroll Funksjon 400
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        er
-                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                        errorReport
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, record.getLine(), record.getRecord()), " ", " "
                                 , "Kontroll Funksjon 400"
-                                , "Ugyldig funksjon. Funksjonen '" + p.getFieldAsTrimmedString("funksjon_kapittel") + "') kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
+                                , "Ugyldig funksjon. Funksjonen '" + record.getFieldAsTrimmedString("funksjon_kapittel") + "') kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
                                 , Constants.NORMAL_ERROR
                         )
-                        , p.getFieldAsString("funksjon_kapittel")
+                        , record.getFieldAsString("funksjon_kapittel")
                         , List.of("400 ")
-                        , p.getFieldAsString("orgnr")
+                        , record.getFieldAsString("orgnr")
                         , Definitions.getFunksjon400Orgnr()
                 );
 
                 // Kontroll Kontokode 320
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
-                        er
-                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                        errorReport
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, record.getLine(), record.getRecord()), " ", " "
                                 , "Kontroll Kontokode 320"
                                 , "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus. Korriger funksjon."
                                 , Constants.NORMAL_ERROR
                         )
-                        , p.getFieldAsString("art_sektor")
+                        , record.getFieldAsString("art_sektor")
                         , List.of("320")
-                        , p.getFieldAsString("funksjon_kapittel")
+                        , record.getFieldAsString("funksjon_kapittel")
                         , Definitions.getKontokode320Funksjoner());
             }
 
-            if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
+            if (Comparator.isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
                 // Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp
                 ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
-                        er
-                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, p.getLine(), p.getRecord()), " ", " "
+                        errorReport
+                        , new ErrorReportEntry(saksbehandler, createLinenumber(l, record.getLine(), record.getRecord()), " ", " "
                                 , "Kontroll Konti 190, 192, 194, 195 inneholder kun positive beløp"
-                                , "Kun positive beløp er gyldig. Fant ugyldig beløp (" + p.getFieldAsTrimmedString("belop") + ")"
+                                , "Kun positive beløp er gyldig. Fant ugyldig beløp (" + record.getFieldAsTrimmedString("belop") + ")"
                                 , Constants.NORMAL_ERROR
                         )
-                        , p.getFieldAsString("art_sektor")
+                        , record.getFieldAsString("art_sektor")
                         , Definitions.getKontokodePositiveTall()
-                        , p.getFieldAsIntegerDefaultEquals0("belop")
+                        , record.getFieldAsIntegerDefaultEquals0("belop")
                         , ">"
                         , 0);
             }
         });
 
-
         // Summeringskontroller
         // Kontroll Sum inntekter og kostnader = 0
-        if (Comparator.isCodeInCodelist(args.getSkjema(), bevilgningRegnskapList)) {
-            int differanse = regnskap.stream()
+        if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
+            final var differanse = regnskap.stream()
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
             if (!Comparator.between(differanse, -100, 100)) {
-                er.addEntry(new ErrorReportEntry(
+                errorReport.addEntry(new ErrorReportEntry(
                         " ", " ", " ", " "
                         , "Kontroll Sum inntekter og kostnader = 0"
                         , "Sjekk at sum art 300 til og med art 899 skal være 0, her (" + differanse + "). Differanse +/- 100' kroner godtas."
@@ -125,38 +122,36 @@ public class Main {
         }
 
         // Kontroll Eiendeler = egenkapital + gjeld
-        if (Comparator.isCodeInCodelist(args.getSkjema(), balanseRegnskapList)) {
+        if (Comparator.isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
             // 1) Balanse må ha føring på eiendelskontiene , dvs. være høyere enn 0
-            int sumEiendeler = regnskap.stream()
+            final var sumEiendeler = regnskap.stream()
                     .filter(p -> Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 100, 195))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
             // 2) Balanse må ha føring på egenkapitalskontoer og/eller gjeldskontoer, dvs. være mindre enn 0
-            int sumEgenkapital = regnskap.stream()
+            final var sumEgenkapital = regnskap.stream()
                     .filter(p -> Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 200, 209))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
-            int sumGjeld = regnskap.stream()
+            final var sumGjeld = regnskap.stream()
                     .filter(p -> Comparator.between(p.getFieldAsIntegerDefaultEquals0("art_sektor"), 210, 299))
                     .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
                     .reduce(0, Integer::sum);
 
             // 3) sumEiendeler skal være lik Egenkapital + Gjeld. Differanser opptil +50' godtas, og skal ikke utlistes.
-            int sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld);
+            final var sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld);
 
             if (!Comparator.between(sumBalanse, -50, 50)) {
-                er.addEntry(new ErrorReportEntry(
+                errorReport.addEntry(new ErrorReportEntry(
                         " ", " ", " ", " "
                         , "Kontroll Eiendeler = egenkapital + gjeld"
                         , "Balansen (" + sumBalanse + ") skal balansere ved at sum eiendeler (" + sumEiendeler + ")  = sum egenkapital (" + sumEgenkapital + ") + sum gjeld (" + sumGjeld + ") . Differanser +/- 50' kroner godtas"
                         , Constants.NORMAL_ERROR
                 ));
             }
-
         }
-
-        return er;
+        return errorReport;
     }
 }

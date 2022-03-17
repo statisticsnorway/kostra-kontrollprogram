@@ -2,23 +2,23 @@ package no.ssb.kostra.control.felles
 
 import no.ssb.kostra.control.regnskap.FieldDefinitions
 import no.ssb.kostra.felles.FieldDefinition
-import no.ssb.kostra.felles.Record
+import no.ssb.kostra.felles.KostraRecord
 import spock.lang.Specification
 
 class UtilsSpec extends Specification {
-    private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions();
+    private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions()
 
     def "should add linenumbering"() {
         given:
-        def recordList = new ArrayList<Record>()
+        def recordList = new ArrayList<KostraRecord>()
 
         Map recordMap = new HashMap<String, String>()
         recordMap.putAll(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon))
-        recordList.add(new Record(recordMap, definitions))
+        recordList.add(new KostraRecord(recordMap, definitions))
 
         when:
         def recordListWithLinenumbers = Utils.addLineNumbering(recordList)
-        def record = (Record) recordListWithLinenumbers.get(0)
+        def record = (KostraRecord) recordListWithLinenumbers.get(0)
         def testResult = record.getFieldAsInteger("linjenummer")
 
         then:

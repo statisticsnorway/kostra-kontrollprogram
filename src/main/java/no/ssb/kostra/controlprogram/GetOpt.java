@@ -5,87 +5,88 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-/** A class to implement UNIX-style (single-character) command line argument
+/**
+ * A class to implement UNIX-style (single-character) command line argument
  * parsing. Originally patterned after (but not using code from) the UNIX
  * getopt(3) program, this has been redesigned to be more Java-friendly.
  * As a result, there are two ways of using it.
  * <ol><li>Original model:
  * <pre>
- GetOpt go = new GetOpt("hno:");
- boolean numeric_option = false;
- String outFileName = "(standard output)";
- char c;
- while ((c = go.getopt(args)) != GetOpt.DONE) {
- switch(c) {
- case 'h':
- doHelp(0);
- break;
- case 'n':
- numeric_option = true;
- break;
- case 'o':
- outFileName = go.optarg();
- break;
- default:
- System.err.println("Unknown option character " + c);
- doHelp(1);
- }
- }
- System.out.print("Options: ");
- System.out.print("Numeric: " + numeric_option + ' ');
- System.out.print("Output: " + outFileName + "; ");
- System.out.print("Inputs: ");
- if (go.getOptInd() == args.length) {
- doFile("(standard input)");
- } else for (int i = go.getOptInd(); i < args.length; i++) {
- doFile(args[i]);
- }
+ * GetOpt go = new GetOpt("hno:");
+ * boolean numeric_option = false;
+ * String outFileName = "(standard output)";
+ * char c;
+ * while ((c = go.getopt(args)) != GetOpt.DONE) {
+ * switch(c) {
+ * case 'h':
+ * doHelp(0);
+ * break;
+ * case 'n':
+ * numeric_option = true;
+ * break;
+ * case 'o':
+ * outFileName = go.optarg();
+ * break;
+ * default:
+ * System.err.println("Unknown option character " + c);
+ * doHelp(1);
+ * }
+ * }
+ * System.out.print("Options: ");
+ * System.out.print("Numeric: " + numeric_option + ' ');
+ * System.out.print("Output: " + outFileName + "; ");
+ * System.out.print("Inputs: ");
+ * if (go.getOptInd() == args.length) {
+ * doFile("(standard input)");
+ * } else for (int i = go.getOptInd(); i < args.length; i++) {
+ * doFile(args[i]);
+ * }
  * </pre></li>
  * <li>Newer model, which allows long-named options:
  * <pre>
- boolean numeric_option = false;
- boolean errs = false;
- String outputFileName = null;
-
- GetOptDesc options[] = {
- new GetOptDesc('n', "numeric", false),
- new GetOptDesc('o', "output-file", true),
- };
- GetOpt parser = new GetOpt(options);
- Map optionsFound = parser.parseArguments(argv);
- Iterator it = optionsFound.keySet().iterator();
- while (it.hasNext()) {
- String key = (String)it.next();
- char c = key.charAt(0);
- switch (c) {
- case 'n':
- numeric_option = true;
- break;
- case 'o':
- outputFileName = (String)optionsFound.get(key);
- break;
- case '?':
- errs = true;
- break;
- default:
- throw new IllegalStateException(
- "Unexpected option character: " + c);
- }
- }
- if (errs) {
- System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
- }
- System.out.print("Options: ");
- System.out.print("Numeric: " + numeric_option + ' ');
- System.out.print("Output: " + outputFileName + "; ");
- System.out.print("Input files: ");
- List files = parser.getFilenameList();
- while (files.hasNext()) {
- System.out.print(files.next());
- System.out.print(' ');
- }
- System.out.println();
- }
+ * boolean numeric_option = false;
+ * boolean errs = false;
+ * String outputFileName = null;
+ *
+ * GetOptDesc options[] = {
+ * new GetOptDesc('n', "numeric", false),
+ * new GetOptDesc('o', "output-file", true),
+ * };
+ * GetOpt parser = new GetOpt(options);
+ * Map optionsFound = parser.parseArguments(argv);
+ * Iterator it = optionsFound.keySet().iterator();
+ * while (it.hasNext()) {
+ * String key = (String)it.next();
+ * char c = key.charAt(0);
+ * switch (c) {
+ * case 'n':
+ * numeric_option = true;
+ * break;
+ * case 'o':
+ * outputFileName = (String)optionsFound.get(key);
+ * break;
+ * case '?':
+ * errs = true;
+ * break;
+ * default:
+ * throw new IllegalStateException(
+ * "Unexpected option character: " + c);
+ * }
+ * }
+ * if (errs) {
+ * System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
+ * }
+ * System.out.print("Options: ");
+ * System.out.print("Numeric: " + numeric_option + ' ');
+ * System.out.print("Output: " + outputFileName + "; ");
+ * System.out.print("Input files: ");
+ * List files = parser.getFilenameList();
+ * while (files.hasNext()) {
+ * System.out.print(files.next());
+ * System.out.print(' ');
+ * }
+ * System.out.println();
+ * }
  * </pre></li>
  * </ol>
  * <p>
@@ -94,24 +95,39 @@ import java.util.ArrayList;
  * For another way of dealing with command lines, see the
  * <a href="http://jakarta.apache.org/commons/cli/">Jakarta Commons
  * Command Line Interface</a>.
+ *
  * @author Ian F. Darwin, http://www.darwinsys.com/
  * @version $Id: GetOpt.java,v 1.23 2004/06/01 02:51:36 ian Exp $
  */
 public class GetOpt {
-    /** The List of File Names found after args */
+    /**
+     * The List of File Names found after args
+     */
     protected List<String> fileNameArguments;
-    /** The set of characters to look for */
+    /**
+     * The set of characters to look for
+     */
     protected final GetOptDesc[] options;
-    /** Where we are in the options */
+    /**
+     * Where we are in the options
+     */
     protected int optind = 0;
-    /** Public constant for "no more options" */
+    /**
+     * Public constant for "no more options"
+     */
     public static final int DONE = 0;
-    /** Internal flag - whether we are done all the options */
+    /**
+     * Internal flag - whether we are done all the options
+     */
     protected boolean done = false;
-    /** The current option argument. */
+    /**
+     * The current option argument.
+     */
     protected String optarg;
 
-    /** Retrieve the current option argument; UNIX variant spelling. */
+    /**
+     * Retrieve the current option argument; UNIX variant spelling.
+     */
     public String optarg() {
         return optarg;
     }
@@ -126,28 +142,28 @@ public class GetOpt {
     /* Construct a GetOpt parser, storing the set of option characters.
      * This is a legacy constructor for backwards compatibility.
      */
-    public GetOpt(final String patt) {
-        if (patt == null) {
+    public GetOpt(final String pattern) {
+        if (pattern == null) {
             throw new IllegalArgumentException("Pattern may not be null");
         }
 
         // Pass One: just count the letters
-        int n = 0;
-        for (int i = 0; i<patt.length(); i++) {
-            if (patt.charAt(i) != ':')
+        var n = 0;
+        for (var i = 0; i < pattern.length(); i++) {
+            if (pattern.charAt(i) != ':')
                 ++n;
         }
         if (n == 0) {
             throw new IllegalArgumentException(
-                    "No option letters found in " + patt);
+                    "No option letters found in " + pattern);
         }
 
         // Pass Two: construct an array of GetOptDesc opjects.
         options = new GetOptDesc[n];
-        for (int i = 0, ix = 0; i<patt.length(); i++) {
-            final char c = patt.charAt(i);
-            boolean argTakesValue = false;
-            if (i < patt.length() - 1 && patt.charAt(i+1) == ':') {
+        for (int i = 0, ix = 0; i < pattern.length(); i++) {
+            final var c = pattern.charAt(i);
+            var argTakesValue = false;
+            if (i < pattern.length() - 1 && pattern.charAt(i + 1) == ':') {
                 argTakesValue = true;
                 ++i;
             }
@@ -156,30 +172,36 @@ public class GetOpt {
         }
     }
 
-    /** Reset this GetOpt parser */
+    /**
+     * Reset this GetOpt parser
+     */
     public void rewind() {
         fileNameArguments = null;
         done = false;
         optind = 0;
     }
 
-    /** Array used to convert a char to a String */
-    private static final char[] strConvArray = { 0 };
+    /**
+     * Array used to convert a char to a String
+     */
+    private static final char[] strConvArray = {0};
 
     /**
      * Modern way of using GetOpt: call this once and get all options.
      * <p>
      * This parses the options, returns a Map whose keys are the found options.
      * Normally followed by a call to getFilenameList().
+     *
      * @return a Map whose keys are Strings of length 1 (containing the char
      * from the option that was matched) and whose value is a String
      * containing the value, or null for a non-option argument.
      */
-    public Map<String, String> parseArguments(String[] argv) {
-        Map<String, String> optionsAndValues = new HashMap<>();
+    public Map<String, String> parseArguments(final String[] argv) {
+        final var optionsAndValues = new HashMap<String, String>();
         fileNameArguments = new ArrayList<>();
-        for (int i = 0; i < argv.length; i++) {
-            char c = getopt(argv);
+
+        for (var i = 0; i < argv.length; i++) {
+            var c = getopt(argv);
             if (c != DONE) {
                 strConvArray[0] = c;
                 optionsAndValues.put(new String(strConvArray), optarg);
@@ -193,7 +215,9 @@ public class GetOpt {
         return optionsAndValues;
     }
 
-    /** Get the list of filename-like arguments after options */
+    /**
+     * Get the list of filename-like arguments after options
+     */
     public List<String> getFilenameList() {
         if (fileNameArguments == null) {
             throw new IllegalArgumentException(
@@ -202,11 +226,12 @@ public class GetOpt {
         return fileNameArguments;
     }
 
-    /** The true heart of getopt, whether used old way or new way:
+    /**
+     * The true heart of getopt, whether used old way or new way:
      * returns one argument; call repeatedly until it returns DONE.
      */
-    public char getopt(String[] argv) {
-        if (optind >= (argv.length)-1) {
+    public char getopt(final String[] argv) {
+        if (optind >= (argv.length) - 1) {
             done = true;
         }
 
@@ -220,10 +245,10 @@ public class GetOpt {
 
         // Pick off the next command line argument, check if it starts "-".
         // If so look it up in the list.
-        String thisArg = argv[optind++];
+        final var thisArg = argv[optind++];
         if (thisArg.startsWith("-")) {
             optarg = null;
-            for (GetOptDesc option : options) {
+            for (var option : options) {
                 if (option.argLetter == thisArg.charAt(1) ||
                         (option.argName != null &&
                                 option.argName.equals(thisArg.substring(1)))) { // found it
@@ -250,9 +275,10 @@ public class GetOpt {
         }
     }
 
-    /** Return optind, the index into args of the last option we looked at */
+    /**
+     * Return optind, the index into args of the last option we looked at
+     */
     public int getOptInd() {
         return optind;
     }
-
 }

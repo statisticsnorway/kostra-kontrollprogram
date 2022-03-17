@@ -6,12 +6,12 @@ import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.Constants
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.felles.FieldDefinition
-import no.ssb.kostra.felles.Record
+import no.ssb.kostra.felles.KostraRecord
 import spock.lang.Specification
 
 import java.util.stream.Collectors
 
-import static no.ssb.kostra.control.felles.Comparator.isCodeInCodelist
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList
 
 class RegnskapKostraSpec extends Specification {
     private static final String yyyy = "2021"
@@ -22,7 +22,7 @@ class RegnskapKostraSpec extends Specification {
         def arter = Main.getArterUgyldigDrift(skjema, orgnr, region)
 
         expect:
-        isCodeInCodelist(art, arter) == result
+        isCodeInCodeList(art, arter) == result
 
         where:
         skjema | orgnr       | region   | art   || result
@@ -52,7 +52,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
 
         when:
         boolean testResult = Main.kontroll20(errorReport, records)
@@ -86,7 +86,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region, "-u", orgnr})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
 
         when:
         boolean testResult = Main.kontroll25(errorReport, records)
@@ -170,7 +170,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll30(errorReport, records)
@@ -210,7 +210,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll35(errorReport, records)
@@ -250,7 +250,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
 
         when:
         def testResult = Main.kontroll40(errorReport, records)
@@ -302,7 +302,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon), definitions)))
 
         when:
         def testResult = Main.kontroll45(errorReport, records)
@@ -348,7 +348,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll50(errorReport, records)
@@ -388,7 +388,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll55(errorReport, records)
@@ -434,7 +434,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll60(errorReport, records)
@@ -480,7 +480,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll65(errorReport, records)
@@ -544,7 +544,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll70(errorReport, records)
@@ -584,7 +584,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll75(errorReport, records)
@@ -660,7 +660,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "funksjon_kapittel", funksjon, "art_sektor", art), definitions)))
 
         when:
         def testResult = Main.kontroll80(errorReport, records)
@@ -700,7 +700,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumInvesteringsUtgifter(errorReport, records)
@@ -741,7 +741,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumInvesteringsInntekter(errorReport, records)
@@ -782,8 +782,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(item -> new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
                 .collect(Collectors.toList())
 
         def records = Utils.addLineNumbering(unnumberedRecords)
@@ -822,7 +822,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumDriftsUtgifter(errorReport, records)
@@ -863,7 +863,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumDriftsInntekter(errorReport, records)
@@ -904,8 +904,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(item -> new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
                 .collect(Collectors.toList())
 
         def records = Utils.addLineNumbering(unnumberedRecords)
@@ -943,7 +943,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", kapittel, "art_sektor", sektor, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", kapittel, "art_sektor", sektor, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumAktiva(errorReport, records)
@@ -983,7 +983,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", kapittel, "art_sektor", sektor, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", kapittel, "art_sektor", sektor, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSumPassiva(errorReport, records)
@@ -1023,8 +1023,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(item -> new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", item.get("kapittel"), "art_sektor", sektor, "belop", item.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", item.get("kapittel"), "art_sektor", sektor, "belop", item.get("belop")), definitions))
                 .collect(Collectors.toList())
         def records = Utils.addLineNumbering(unnumberedRecords)
 
@@ -1060,7 +1060,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlSkatteInntekter(errorReport, records)
@@ -1096,7 +1096,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlRammetilskudd(errorReport, records)
@@ -1135,8 +1135,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(l -> new Record(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
                 .collect(Collectors.toList())
         def records = Utils.addLineNumbering(unnumberedRecords)
 
@@ -1173,7 +1173,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlMotpostAvskrivninger(errorReport, records)
@@ -1208,7 +1208,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlAvskrivninger(errorReport, records)
@@ -1243,8 +1243,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(l -> new Record(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
                 .collect(Collectors.toList())
         def records = Utils.addLineNumbering(unnumberedRecords)
 
@@ -1281,7 +1281,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlAvskrivningerAndreFunksjoner(errorReport, records)
@@ -1316,7 +1316,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlAvskrivningerMotpostAndreFunksjoner(errorReport, records)
@@ -1351,7 +1351,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlFunksjon290Investering(errorReport, records)
@@ -1386,7 +1386,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlFunksjon290Drift(errorReport, records)
@@ -1420,7 +1420,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlFunksjon465Investering(errorReport, records)
@@ -1455,7 +1455,7 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> records = Utils.addLineNumbering(List.of(new Record(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", art, "belop", belop), definitions)))
 
         when:
         def testResult = Main.controlFunksjon465Drift(errorReport, records)
@@ -1491,8 +1491,8 @@ class RegnskapKostraSpec extends Specification {
         given:
         Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", "420400"})
         ErrorReport errorReport = new ErrorReport(args)
-        List<Record> unnumberedRecords = list.stream()
-                .map(l -> new Record(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("kapittel"), "art_sektor", l.get("sektor"), "belop", l.get("belop")), definitions))
+        List<KostraRecord> unnumberedRecords = list.stream()
+                .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("kapittel"), "art_sektor", l.get("sektor"), "belop", l.get("belop")), definitions))
                 .collect(Collectors.toList())
         def records = Utils.addLineNumbering(unnumberedRecords)
 

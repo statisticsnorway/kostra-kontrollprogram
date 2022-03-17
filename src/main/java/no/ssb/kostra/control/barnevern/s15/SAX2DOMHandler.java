@@ -1,9 +1,10 @@
 package no.ssb.kostra.control.barnevern.s15;
 
-import org.w3c.dom.*;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.Attributes;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -12,17 +13,19 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 class SAX2DOMHandler {
 
-	private Document document;
+	private final Document document;
 	private Node root;
 	private Node currentNode;
-	private NodeHandler nodeHandler;
+	private final NodeHandler nodeHandler;
 
-	public SAX2DOMHandler(NodeHandler handler, String name,
-                          Attributes attributes) throws ParserConfigurationException {
+	public SAX2DOMHandler(
+			NodeHandler handler,
+			String name,
+			Attributes attributes) throws ParserConfigurationException {
+
 		this.nodeHandler = handler;
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder loader = factory.newDocumentBuilder();
-		document = loader.newDocument();
+		document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+
 		createElement(name, attributes);
 	}
 
@@ -39,10 +42,11 @@ class SAX2DOMHandler {
 		return currentNode.equals(root);
 	}
 
-	private void createElement(String name, Attributes attributes) {
-		Element element = document.createElement(name);
-		for (int i = 0; i < attributes.getLength(); i++) {
-			String attrName = attributes.getLocalName(i);
+	private void createElement(final String name, final Attributes attributes) {
+		final var element = document.createElement(name);
+
+		for (var i = 0; i < attributes.getLength(); i++) {
+			var attrName = attributes.getLocalName(i);
 			if (attrName == null || "".equals(attrName)) {
 				attrName = attributes.getQName(i);
 			}
@@ -63,17 +67,16 @@ class SAX2DOMHandler {
 		return root;
 	}
 
-	public void startElement(String name, Attributes attributes) {
+	public void startElement(final String name, final Attributes attributes) {
 		createElement(name, attributes);
 	}
 
-	public void processingInstruction(String target, String data) {
-		ProcessingInstruction instruction = document
-				.createProcessingInstruction(target, data);
+	public void processingInstruction(final String target, final String data) {
+		final var instruction = document.createProcessingInstruction(target, data);
 		currentNode.appendChild(instruction);
 	}
 
-	public boolean endElement(String uri, String name) {
+	public boolean endElement(final String uri, final String name) {
 		if (!currentNode.getNodeName().equals(name)) {
 			throw new DOMException(DOMException.SYNTAX_ERR,
 					"Unexpected end-tag: " + name + " expected: "
@@ -82,7 +85,7 @@ class SAX2DOMHandler {
 		return nodeUp();
 	}
 
-	public void text(String data) {
+	public void text(final String data) {
 		currentNode.appendChild(document.createTextNode(data));
 	}
 

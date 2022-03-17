@@ -45,11 +45,11 @@ public class Main {
             return errorReport;
         }
 
-        List<FieldDefinition> fieldDefinitions = FieldDefinitions.getFieldDefinitions();
-        List<Record> records = inputFileContent.stream()
-                .map(p -> new Record(p, fieldDefinitions))
+        var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
+        var records = inputFileContent.stream()
+                .map(p -> new KostraRecord(p, fieldDefinitions))
                 // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
-                .map(r -> {
+                .peek(r -> {
                     try {
                         r.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString(FNR)), arguments.getAargang()));
                         r.setFieldAsInteger(FNR_OK, 1);
@@ -59,13 +59,11 @@ public class Main {
                         r.setFieldAsInteger(FNR_OK, 0);
                     }
 
-                    return r;
                 })
                 .collect(Collectors.toList());
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
-
 
         if (!errorReport.getArgs().getRegion().substring(0, 4).equalsIgnoreCase("0301")) {
             control05AFodselsnummerDubletter(errorReport, records);
@@ -206,7 +204,7 @@ public class Main {
         return errorReport;
     }
 
-    public static boolean control10Bu18(ErrorReport errorReport, Record r) {
+    public static boolean control10Bu18(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -228,7 +226,7 @@ public class Main {
         );
     }
 
-    public static boolean control11Bu18AntBu18(ErrorReport errorReport, Record r) {
+    public static boolean control11Bu18AntBu18(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk.doControl(
@@ -252,7 +250,7 @@ public class Main {
         );
     }
 
-    public static boolean control12AntBu18Bu18(ErrorReport errorReport, Record r) {
+    public static boolean control12AntBu18Bu18(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1BoolskSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -277,7 +275,7 @@ public class Main {
         );
     }
 
-    public static boolean control13AntBu18(ErrorReport errorReport, Record r) {
+    public static boolean control13AntBu18(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1Boolsk.doControl(
@@ -297,7 +295,7 @@ public class Main {
         );
     }
 
-    public static boolean control14RegDato(ErrorReport errorReport, Record r) {
+    public static boolean control14RegDato(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String REG_DATO = "REG_DATO";
@@ -318,7 +316,7 @@ public class Main {
         );
     }
 
-    public static boolean control15VedtakDato(ErrorReport errorReport, Record r) {
+    public static boolean control15VedtakDato(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String VEDTAK_DATO = "VEDTAK_DATO";
@@ -339,7 +337,7 @@ public class Main {
         );
     }
 
-    public static boolean control16BegyntDato(ErrorReport errorReport, Record r) {
+    public static boolean control16BegyntDato(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String BEGYNT_DATO = "BEGYNT_DATO";
@@ -360,7 +358,7 @@ public class Main {
         );
     }
 
-    public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, Record r) {
+    public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String KVP_KOMM = "KVP_KOMM";
@@ -381,7 +379,7 @@ public class Main {
         );
     }
 
-    public static boolean control20KvalifiseringsprogramIAnnenKommuneKommunenummer(ErrorReport errorReport, Record r) {
+    public static boolean control20KvalifiseringsprogramIAnnenKommuneKommunenummer(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String KOMMNR_KVP_KOMM = "KOMMNR_KVP_KOMM";
@@ -421,7 +419,7 @@ public class Main {
         );
     }
 
-    public static boolean control20AFraKvalifiseringsprogramIAnnenBydelIOslo(ErrorReport errorReport, Record r) {
+    public static boolean control20AFraKvalifiseringsprogramIAnnenBydelIOslo(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -442,7 +440,7 @@ public class Main {
         );
     }
 
-    public static boolean control21Ytelser(ErrorReport errorReport, Record r) {
+    public static boolean control21Ytelser(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String YTELSE_SOSHJELP = "YTELSE_SOSHJELP";
@@ -466,7 +464,7 @@ public class Main {
         );
     }
 
-    public static boolean control26MottattStotte(ErrorReport errorReport, Record r) {
+    public static boolean control26MottattStotte(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         final String KVP_MED_ASTONAD = "KVP_MED_ASTONAD";
@@ -489,7 +487,7 @@ public class Main {
         );
     }
 
-    public static boolean control27MottattOkonomiskSosialhjelp(ErrorReport errorReport, Record r) {
+    public static boolean control27MottattOkonomiskSosialhjelp(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         // Kontroll 27 sjekker at flere felt skal være utfylt hvis KVP_MED_ASTONAD = 1 (Ja)
@@ -524,7 +522,7 @@ public class Main {
 
         } else if (Objects.equals(r.getFieldAsString("KVP_MED_ASTONAD"), "2")) {
             boolean isAllBlank = fields.stream()
-                    .allMatch(field -> Comparator.isCodeInCodelist(r.getFieldAsString(field), List.of(" ", "0")));
+                    .allMatch(field -> Comparator.isCodeInCodeList(r.getFieldAsString(field), List.of(" ", "0")));
 
             if (!isAllBlank) {
                 errorReport.addEntry(
@@ -548,7 +546,7 @@ public class Main {
     }
 
     // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
-    public static boolean control28MaanederMedKvalifiseringsstonad(ErrorReport errorReport, Record r) {
+    public static boolean control28MaanederMedKvalifiseringsstonad(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         boolean harVarighet = STMND.stream()
@@ -580,7 +578,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control29KvalifiseringssumMangler(ErrorReport errorReport, Record r) {
+    public static boolean control29KvalifiseringssumMangler(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer stonad = r.getFieldAsInteger(KVP_STONAD);
@@ -605,7 +603,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control30HarVarighetMenManglerKvalifiseringssum(ErrorReport errorReport, Record r) {
+    public static boolean control30HarVarighetMenManglerKvalifiseringssum(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer stonad = r.getFieldAsInteger(KVP_STONAD);
@@ -638,7 +636,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control31HarKvalifiseringssumMenManglerVarighet(ErrorReport errorReport, Record r) {
+    public static boolean control31HarKvalifiseringssumMenManglerVarighet(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer stonad = r.getFieldAsInteger(KVP_STONAD);
@@ -670,7 +668,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control32KvalifiseringssumOverMaksimum(ErrorReport errorReport, Record r) {
+    public static boolean control32KvalifiseringssumOverMaksimum(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer stonad = r.getFieldAsInteger(KVP_STONAD);
@@ -696,7 +694,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control33KvalifiseringssumUnderMinimum(ErrorReport errorReport, Record r) {
+    public static boolean control33KvalifiseringssumUnderMinimum(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         Integer stonad = r.getFieldAsInteger(KVP_STONAD);
@@ -722,7 +720,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control36StatusForDeltakelseIKvalifiseringsprogram(ErrorReport errorReport, Record r) {
+    public static boolean control36StatusForDeltakelseIKvalifiseringsprogram(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodeliste.doControl(
@@ -743,18 +741,18 @@ public class Main {
         );
     }
 
-    public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, Record r) {
+    public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
         final String AVSL_DATO = "AVSL_DATO";
         String status = r.getFieldAsString(STATUS);
         List<String> codes = r.getFieldDefinitionByName(STATUS)
                 .getCodeList()
                 .stream()
-                .filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5")))
                 .map(Code::getCode)
+                .filter(code -> Comparator.isCodeInCodeList(code, List.of("3", "4", "5")))
                 .collect(Collectors.toList());
 
-        if (Comparator.isCodeInCodelist(status, codes)) {
+        if (Comparator.isCodeInCodeList(status, codes)) {
             return ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                     errorReport
                     , new ErrorReportEntry(
@@ -764,12 +762,15 @@ public class Main {
                             , " "
                             , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
                             , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + r.getFieldAsString(AVSL_DATO) + "), må fylles ut dersom det er krysset av for svaralternativ "
-                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
                             + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
                             , Constants.CRITICAL_ERROR
                     )
                     , r.getFieldAsString(STATUS)
-                    , r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::getCode).collect(Collectors.toList())
+                    , r.getFieldDefinitionByName(STATUS).getCodeList().stream()
+                            .map(Code::getCode)
+                            .filter(code -> Comparator.isCodeInCodeList(code, List.of("3", "4", "5")))
+                            .collect(Collectors.toList())
                     , r.getFieldAsLocalDate(AVSL_DATO)
             );
 
@@ -783,7 +784,7 @@ public class Main {
                             , " "
                             , "Kontroll 37 Dato for avsluttet program (gjelder fullførte, avsluttede etter avtale og varig avbrutte program, ikke for permisjoner) (DDMMÅÅ)."
                             , "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant (" + r.getFieldAsString(AVSL_DATO) + "), skal være blankt dersom det er krysset av for svaralternativ "
-                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> !Comparator.isCodeInCodelist(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
+                            + r.getFieldDefinitionByName(STATUS).getCodeList().stream().filter(c -> !Comparator.isCodeInCodeList(c.getCode(), List.of("3", "4", "5"))).map(Code::toString).collect(Collectors.toList())
                             + " under feltet for 'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12." + errorReport.getArgs().getAargang() + "'?"
                             , Constants.CRITICAL_ERROR
                     )
@@ -794,7 +795,7 @@ public class Main {
         }
     }
 
-    public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, Record r) {
+    public static boolean control38FullforteAvsluttedeProgramSituasjon(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         if (r.getFieldAsString(STATUS).equalsIgnoreCase("3")) {
@@ -824,7 +825,7 @@ public class Main {
         return false;
     }
 
-    public static boolean control39FullforteAvsluttedeProgramInntektkilde(ErrorReport errorReport, Record r) {
+    public static boolean control39FullforteAvsluttedeProgramInntektkilde(ErrorReport errorReport, KostraRecord r) {
         errorReport.incrementCount();
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(

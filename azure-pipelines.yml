@@ -20,12 +20,15 @@ variables:
   # Azure Pipelines
   - group: Hemmeligheter
   # Variables defined here
-  - name: fullSha
-    value: '$(Build.SourceVersion)'
   - name: MAVEN_CACHE_FOLDER
     value: $(Pipeline.Workspace)/.m2/repository
+  - name: ArtifactRevision
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags/') }}:
+      value: "$(Build.SourceBranchName)"
+    ${{ else }}:
+      value: "$(Build.SourceBranchName)-SNAPSHOT"
   - name: MAVEN_OPTS
-    value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+    value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram'
 
 resources:
   repositories:
@@ -35,7 +38,7 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
       # The version of the repo on GitHub. Change to needed version
-      ref: refs/tags/1.1.22
+      ref: refs/tags/1.1.29
       # Service connection in the barn project on Pipelines
       # with access to the template repository.
       endpoint: 'github-Barnevernsregisteret'
@@ -44,13 +47,13 @@ resources:
 # builds Docker image, pushes this to GCR and checks for any image vulnerabilities
 jobs:
   - job: buildTestDockerBuildDockerPush
-    displayName: 'Test/build app'
-
-    # Job condition: Run these jobs on any branch, but not on tags
-    condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    displayName: 'Test/build app and deploy artifact'
 
     # Steps in this Job
     steps:
+      - script: 'echo "Artifact revision: $(ArtifactRevision)"'
+        displayName: 'Print ArtifactRevision'
+
       - script: 'wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz'
         displayName: 'Downloading JDK 17'
 

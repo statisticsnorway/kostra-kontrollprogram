@@ -20,8 +20,8 @@ import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
 public abstract class NodeHandler {
-    protected ErrorReport errorReport;
-    protected Arguments args;
+    protected final ErrorReport errorReport;
+    protected final Arguments args;
 
     /**
      * @param errorReport ErrorReport
@@ -41,7 +41,7 @@ public abstract class NodeHandler {
         return s == null || s.trim().isEmpty();
     }
 
-    protected static String datePresentionFormat = "dd-MM-yyyy";
+    protected static final String datePresentionFormat = "dd-MM-yyyy";
 
     /**
      * Abstract metode som arves og implementeres mot den XML-noden som skal

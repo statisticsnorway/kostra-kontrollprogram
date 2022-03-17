@@ -5,15 +5,15 @@ import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class FieldDefinition {
-    Integer number;
-    String name;
-    String dataType;
+    final Integer number;
+    final String name;
+    final String dataType;
     String viewType;
-    Integer from;
-    Integer to;
+    final Integer from;
+    final Integer to;
     List<Code> codeList;
     String datePattern;
-    boolean mandatory;
+    final boolean mandatory;
 
     public FieldDefinition(
             int number,

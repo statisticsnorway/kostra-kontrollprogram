@@ -21,16 +21,11 @@ public class Main {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definitions
     public static Map<String, String> getKontoklasseAsMap(final String skjema) {
-        switch (skjema) {
-            case "0F":
-                return Map.of("D", "3", "I", "4");
-
-            case "0G":
-                return Map.of("B", "5");
-
-            default:
-                return Map.of("X", "9");
-        }
+        return switch (skjema) {
+            case "0F" -> Map.of("D", "3", "I", "4");
+            case "0G" -> Map.of("B", "5");
+            default -> Map.of("X", "9");
+        };
     }
 
     public static List<String> getKontoklasseAsList(final String skjema) {
@@ -61,13 +56,8 @@ public class Main {
 
         switch (skjema) {
             // Funksjoner
-            case "0F":
-                result.addAll(funksjoner);
-                break;
-
-            case "0G":
-                result.addAll(kapitler);
-                break;
+            case "0F" -> result.addAll(funksjoner);
+            case "0G" -> result.addAll(kapitler);
         }
 
         return result.stream()

@@ -17,9 +17,10 @@ public class ArgumentsTest {
 
     @Before
     public void beforeTest() {
-        inputFileContent = "0A20194040200                  1120 010    36328\n" +
-                "0A20194040200                  1121 010     4306\n" +
-                "0A20194040200                  1130 010      864";
+        inputFileContent = """
+                0A20194040200                  1120 010    36328
+                0A20194040200                  1121 010     4306
+                0A20194040200                  1130 010      864""";
 
         sysInBackup = System.in; // backup System.in to restore it later
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));

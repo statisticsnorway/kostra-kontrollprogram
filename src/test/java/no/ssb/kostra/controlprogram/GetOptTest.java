@@ -7,22 +7,22 @@ import junit.framework.*;
 
 public class GetOptTest extends TestCase {
 
-    private String goodArgChars = "o:h";
-    private String goodArgs[] = {
+    private final String goodArgChars = "o:h";
+    private final String[] goodArgs = {
             "-h", "-o", "outfile", "infile"
     };
-    private String goodLongArgs[] = {
+    private final String[] goodLongArgs = {
             "-help", "-output-file", "outfile", "infile"
     };
-    private char[] goodArgsExpectChars = {'h', 'o'};
+    private final char[] goodArgsExpectChars = {'h', 'o'};
 
-    private String badArgChars = "f1o";
-    private String badArgs[] = {
+    private final String badArgChars = "f1o";
+    private final String[] badArgs = {
             "-h", "-o", "outfile", "infile"
     };
-    private char[] badArgsExpectChars = {'?', 'o'};
+    private final char[] badArgsExpectChars = {'?', 'o'};
 
-    private GetOptDesc[] options = {
+    private final GetOptDesc[] options = {
             new GetOptDesc('o', "output-file", true),
             new GetOptDesc('h', "help", false),
     };
@@ -54,13 +54,13 @@ public class GetOptTest extends TestCase {
 
     public void testNewWayShort() {
         GetOpt go = new GetOpt(options);
-        Map map = go.parseArguments(goodArgs);
+        var map = go.parseArguments(goodArgs);
         newWayInner(go, map);
     }
 
     public void testNewWayLong() {
         GetOpt go = new GetOpt(options);
-        Map map = go.parseArguments(goodLongArgs);
+        var map = go.parseArguments(goodLongArgs);
         newWayInner(go, map);
     }
 
@@ -71,26 +71,16 @@ public class GetOptTest extends TestCase {
                     "Unexpected empty map");
         }
         int errs = 0;
-        Iterator it = map.keySet().iterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
+        for (var o : map.keySet()) {
+            String key = (String) o;
             char c = key.charAt(0);
             String val = (String) map.get(key);
             switch (c) {
-                case '?':
-                    errs++;
-                    break;
-                case 'o':
-                    assertEquals(val, "outfile");
-                    break;
-                case 'f':
-                case 'h':
-                case '1':
-                    assertEquals(val, null);
-                    break;
-                default:
-                    throw new IllegalArgumentException(
-                            "Unexpected c value " + c);
+                case '?' -> errs++;
+                case 'o' -> assertEquals(val, "outfile");
+                case 'f', 'h', '1' -> assertNull(val);
+                default -> throw new IllegalArgumentException(
+                        "Unexpected c value " + c);
             }
         }
         assertEquals(1, go.getFilenameList().size());
@@ -129,17 +119,15 @@ public class GetOptTest extends TestCase {
 
         System.out.println("** START NEW WAY ** " + argChars);
         GetOpt go2 = new GetOpt(argChars);
-        Map m = go2.parseArguments(args);
+        var m = go2.parseArguments(args);
         if (m.size() == 0)
             System.out.println("NO ARGS MATCHED");
-        Iterator it = m.keySet().iterator();
-        while (it.hasNext()) {
-            Object key = it.next();
-            char c = ((String) key).charAt(0);
+        for (var key : m.keySet()) {
+            char c = key.charAt(0);
             System.out.print("Found " + c);
             if (c == '?')
                 errs++;
-            String val = (String) m.get(key);
+            String val = m.get(key);
             if (val == null || val.equals(""))
                 System.out.print("; (no option)");
             else
@@ -147,9 +135,9 @@ public class GetOptTest extends TestCase {
             System.out.println();
         }
 
-        List filenames = go2.getFilenameList();
-        for (int i = 0; i < filenames.size(); i++) {
-            System.out.println("Filename-like arg " + filenames.get(i));
+        List<String> filenames = go2.getFilenameList();
+        for (var filename : filenames) {
+            System.out.println("Filename-like arg " + filename);
         }
 
         if (shouldFail) {

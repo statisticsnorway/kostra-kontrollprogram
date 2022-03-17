@@ -11,8 +11,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class KvalifiseringstonadBlankFileTest {
     InputStream sysInBackup;
@@ -43,7 +43,7 @@ class KvalifiseringstonadBlankFileTest {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
+        assertNotNull(er, "Has content ErrorReport");
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 
@@ -61,7 +61,7 @@ class KvalifiseringstonadBlankFileTest {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
+        assertNotNull(er, "Has content ErrorReport");
         assertEquals(Constants.NO_ERROR, er.getErrorType());
     }
 
@@ -80,7 +80,7 @@ class KvalifiseringstonadBlankFileTest {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
+        assertNotNull(er, "Has content ErrorReport");
         assertEquals(Constants.NO_ERROR, er.getErrorType());
     }
 
@@ -98,7 +98,7 @@ class KvalifiseringstonadBlankFileTest {
             System.out.print(er.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
+        assertNotNull(er, "Has content ErrorReport");
         assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
     }
 }

@@ -72,30 +72,16 @@ public class Main {
     }
 
     public static Map<String, String> getKontoklasseAsMap(final String skjema) {
-        switch (skjema) {
-            case "0A":
-            case "0C":
-                return Map.of("D", "1", "I", "0");
-
-            case "0B":
-            case "0D":
-                return Map.of("B", "2");
-
-            case "0I":
-            case "0K":
-            case "0M":
-            case "0P":
-                return Map.of("D", "3", "I", "4");
-
-            case "0J":
-            case "0L":
-            case "0N":
-            case "0Q":
-                return Map.of("B", "5");
-
-            default:
-                return Map.of("R", " ");
+        if ("0A".equals(skjema) || "0C".equals(skjema)) {
+            return Map.of("D", "1", "I", "0");
+        } else if ("0B".equals(skjema) || "0D".equals(skjema)) {
+            return Map.of("B", "2");
+        } else if ("0I".equals(skjema) || "0K".equals(skjema) || "0M".equals(skjema) || "0P".equals(skjema)) {
+            return Map.of("D", "3", "I", "4");
+        } else if ("0J".equals(skjema) || "0L".equals(skjema) || "0N".equals(skjema) || "0Q".equals(skjema)) {
+            return Map.of("B", "5");
         }
+        return Map.of("R", " ");
     }
 
     public static List<String> getKontoklasseAsList(final String skjema) {
@@ -152,52 +138,39 @@ public class Main {
 
         switch (skjema) {
             // Funksjoner
-            case "0A":
-            case "0M":
+            case "0A", "0M" -> {
                 if (isCodeInCodeList(region, osloKommuner)) {
                     result.addAll(osloFunksjoner);
                     result.addAll(fylkeskommunaleFunksjoner);
                 }
                 result.addAll(kommunaleFunksjoner);
                 result.addAll(kommuneFinansielleFunksjoner);
-                break;
-
-            case "0C":
-            case "0P":
+            }
+            case "0C", "0P" -> {
                 result.addAll(fylkeskommunaleFunksjoner);
                 result.addAll(fylkeFinansielleFunksjoner);
-                break;
-
-            case "0I":
+            }
+            case "0I" -> {
                 if (isCodeInCodeList(region, osloKommuner)) {
                     result.addAll(osloFunksjoner);
                     result.addAll(fylkeskommunaleFunksjoner);
                 }
                 result.addAll(kommunaleFunksjoner);
                 result.addAll(sbdrFinansielleFunksjoner);
-                break;
-
-            case "0K":
+            }
+            case "0K" -> {
                 result.addAll(fylkeskommunaleFunksjoner);
                 result.addAll(sbdrFinansielleFunksjoner);
-                break;
+            }
 
             // Kapitler
-            case "0B":
-            case "0D":
-            case "0N":
-            case "0Q":
-                result.addAll(basisKapitler);
-                break;
-
-            case "0J":
-            case "0L":
+            case "0B", "0D", "0N", "0Q" -> result.addAll(basisKapitler);
+            case "0J", "0L" -> {
                 result.addAll(basisKapitler);
                 result.addAll(sbdrKapitler);
-                break;
-
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         return Utils.rpadList(result.stream().sorted().collect(Collectors.toList()), 4);
     }
@@ -434,8 +407,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))
                             && isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), getFunksjonerUgyldigDrift())
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i driftsregnskapet, kontoklasse og funksjon.", " ", " "
@@ -456,8 +428,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), getArterUgyldigDrift(errorReport.getArgs().getSkjema(), errorReport.getArgs().getOrgnr(), errorReport.getArgs().getRegion()))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
@@ -478,8 +449,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), List.of("285", "660"))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
@@ -500,8 +470,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("D"))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), List.of("520", "920"))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_I_DRIFT_K_A, " ", " "
@@ -522,8 +491,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"))
                             && isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), getFunksjonerUgyldigInvestering())
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i investeringsregnskapet, kontoklasse og funksjon", " ", " "
@@ -544,8 +512,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"))
                             && isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 "))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i investeringsregnskapet, kontoklasse og funksjon", " ", " "
@@ -566,8 +533,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), getArterUgyldigInvestering())
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i investeringsregnskapet, kontoklasse og art", " ", " "
@@ -588,8 +554,7 @@ public class Main {
             final var errors = regnskap.stream()
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), List.of("620", "650", "900"))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i investeringsregnskapet, kontoklasse og art", " ", " "
@@ -611,8 +576,7 @@ public class Main {
                     .filter(r -> r.getFieldAsString(KONTOKLASSE).equalsIgnoreCase(getKontoklasseAsMap(errorReport.getArgs().getSkjema()).get("I"))
                             && !isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("841 "))
                             && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), List.of("729"))
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, "Kombinasjon i investeringsregnskapet, kontoklasse, funksjon og art", " ", " "
@@ -640,8 +604,7 @@ public class Main {
                                             !isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("899 "))
                                                     && isCodeInCodeList(r.getFieldAsString(ART_SEKTOR), List.of("589", "980", "989"))
                                     )
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
@@ -666,8 +629,7 @@ public class Main {
                                             &&
                                             !isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("880 "))
                             )
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
@@ -691,8 +653,7 @@ public class Main {
                                             &&
                                             !isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("800 "))
                             )
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
@@ -716,8 +677,7 @@ public class Main {
                                             &&
                                             !isCodeInCodeList(r.getFieldAsString(FUNKSJON_KAPITTEL), List.of("840 "))
                             )
-                    )
-                    .collect(Collectors.toList());
+                    ).toList();
 
             if (!errors.isEmpty()) {
                 errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry(KOMBINASJONSKONTROLLER, KOMBINASJON_F_A, " ", " "
@@ -1168,8 +1128,7 @@ public class Main {
                             && between(p.getFieldAsIntegerDefaultEquals0(FUNKSJON_KAPITTEL), 800, 899)
                             && p.getFieldAsString(ART_SEKTOR).equalsIgnoreCase("590")
                     )
-                    .map(p -> p.getFieldAsTrimmedString(FUNKSJON_KAPITTEL))
-                    .collect(Collectors.toList());
+                    .map(p -> p.getFieldAsTrimmedString(FUNKSJON_KAPITTEL)).toList();
 
             if (sumAvskrivningerAndreFunksjoner != 0) {
                 errorReport.addEntry(new ErrorReportEntry(
@@ -1207,7 +1166,7 @@ public class Main {
                             && p.getFieldAsString(ART_SEKTOR).equalsIgnoreCase("990")
                     )
                     .map(p -> p.getFieldAsTrimmedString(FUNKSJON_KAPITTEL))
-                    .collect(Collectors.toList());
+                    .toList();
 
             if (sumMotpostAvskrivningerAndreFunksjoner != 0) {
                 errorReport.addEntry(new ErrorReportEntry(

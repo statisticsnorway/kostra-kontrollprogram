@@ -1,15 +1,8 @@
 package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
-import static java.util.List.of;
-import static org.junit.Assert.*;
 
 public class ControlFelt1ListeInneholderKodeFraKodelisteTest {
     private final String controlCategoriTitle = "Kontrolkategori";

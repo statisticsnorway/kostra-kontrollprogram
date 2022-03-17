@@ -13,16 +13,11 @@ public class Definitions {
     public static Map<String, List<String>> getKontoklasseAsMap(final String skjema) {
         final var map = new HashMap<String, List<String>>();
         switch (skjema) {
-            case "0A":
-            case "0C":
+            case "0A", "0C" -> {
                 map.put("D", List.of("1"));
                 map.put("I", List.of("0"));
-                break;
-
-            case "0B":
-            case "0D":
-                map.put("B", List.of("2", "Z", "z", "~"));
-                break;
+            }
+            case "0B", "0D" -> map.put("B", List.of("2", "Z", "z", "~"));
         }
         return map;
     }
@@ -191,25 +186,19 @@ public class Definitions {
             final String kontoklasse, final List<String> alle,
             final List<String> ugyldigDrift, final List<String> ugyldigInvestering) {
 
-        switch (kontoklasse) {
+        return switch (kontoklasse) {
             // Drift
-            case "1":
-            case "3":
-                return alle.stream()
-                        .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigDrift))
-                        .sorted()
-                        .collect(Collectors.toList());
+            case "1", "3" -> alle.stream()
+                    .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigDrift))
+                    .sorted()
+                    .collect(Collectors.toList());
             // Investering
-            case "0":
-            case "4":
-                return alle.stream()
-                        .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigInvestering))
-                        .sorted()
-                        .collect(Collectors.toList());
-
-            default:
-                return List.of();
-        }
+            case "0", "4" -> alle.stream()
+                    .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigInvestering))
+                    .sorted()
+                    .collect(Collectors.toList());
+            default -> List.of();
+        };
     }
 }
 

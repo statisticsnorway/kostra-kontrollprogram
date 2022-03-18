@@ -23,29 +23,30 @@ public class ControlFelt1LikSumAvListe {
                             .map(record::getFieldAsIntegerDefaultEquals0)
                             .reduce(0, Integer::sum);
 
-                    if (!sum.equals(sumList)) {
-                        final var errorText = "Summen (" + sumField + ") med verdi (" + sum + ") er ulik summen (" + sumList + ") av følgende liste "
-                                + aggregateFields.stream()
-                                .map(f -> "("
-                                        .concat(f)
-                                        .concat(" = ")
-                                        .concat(record.getFieldAsIntegerDefaultEquals0(f).toString())
-                                        .concat(")")
-                                )
-                                .collect(Collectors.joining(", "));
-
-                        errorReport.addEntry(new ErrorReportEntry(
-                                errorReportEntry.getSaksbehandler()
-                                , errorReportEntry.getJournalnummer()
-                                , errorReportEntry.getIndividId()
-                                , String.valueOf(record.getLine())
-                                , errorReportEntry.getKontrollNr().concat(", ").concat(sumField)
-                                , errorText
-                                , errorReportEntry.getErrorType()
-                        ));
-                        return true;
+                    if (sum.equals(sumList)) {
+                        return false;
                     }
-                    return false;
+
+                    final var errorText = "Summen (" + sumField + ") med verdi (" + sum + ") er ulik summen (" + sumList + ") av følgende liste "
+                            + aggregateFields.stream()
+                            .map(f -> "("
+                                    .concat(f)
+                                    .concat(" = ")
+                                    .concat(record.getFieldAsIntegerDefaultEquals0(f).toString())
+                                    .concat(")")
+                            )
+                            .collect(Collectors.joining(", "));
+
+                    errorReport.addEntry(new ErrorReportEntry(
+                            errorReportEntry.getSaksbehandler()
+                            , errorReportEntry.getJournalnummer()
+                            , errorReportEntry.getIndividId()
+                            , String.valueOf(record.getLine())
+                            , errorReportEntry.getKontrollNr().concat(", ").concat(sumField)
+                            , errorText
+                            , errorReportEntry.getErrorType()
+                    ));
+                    return true;
                 })
                 .reduce(false, (result, item) -> result || item);
     }

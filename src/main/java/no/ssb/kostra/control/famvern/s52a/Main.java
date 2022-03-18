@@ -75,9 +75,7 @@ public class Main {
                                 "TEMA_FORBARN_A", "TEMA_FLERGEN_A", "TEMA_SAMBARN_A", "TEMA_SÆRBARN_A",
                                 "TEMA_KULTUR_A", "TEMA_TVANG_A", "TEMA_RUS_A", "TEMA_SYKD_A",
                                 "TEMA_VOLD_A", "TEMA_ALVH_A")
-                        .noneMatch(field -> currentRecord.getFieldDefinitionByName(field)
-                                .getCodeList()
-                                .stream()
+                        .noneMatch(field -> currentRecord.getFieldDefinitionByName(field).getCodeList().stream()
                                 .map(Code::getCode)
                                 .toList()
                                 .contains(currentRecord.getFieldAsString(field)))) {
@@ -406,22 +404,23 @@ public class Main {
         // Kontroll 3: Regionsnummer
         errorReport.incrementCount();
 
-        if (!Definitions.isRegionValid(record.getFieldAsString("REGION_NR_A"))) {
-            errorReport.addEntry(
-                    new ErrorReportEntry(
-                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
-                            , String.valueOf(record.getLine())
-                            , " "
-                            , "Kontroll 03 Regionsnummer"
-                            , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
-                            + "Fant '" + record.getFieldAsString("REGION_NR_A") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
-                            , Constants.NORMAL_ERROR
-                    )
-            );
-            return true;
+        if (Definitions.isRegionValid(record.getFieldAsString("REGION_NR_A"))) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(
+                new ErrorReportEntry(
+                        createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                        , String.valueOf(record.getLine())
+                        , " "
+                        , "Kontroll 03 Regionsnummer"
+                        , "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
+                        + "Fant '" + record.getFieldAsString("REGION_NR_A") + "', forventet én av : " + Definitions.getRegionAsList() + ". "
+                        , Constants.NORMAL_ERROR
+                )
+        );
+        return true;
     }
 
     public static boolean kontroll04Kontornummer(
@@ -430,22 +429,23 @@ public class Main {
         // Kontroll 4: Kontornummer
         errorReport.incrementCount();
 
-        if (!Definitions.isKontorValid(record.getFieldAsString("KONTOR_NR_A"))) {
-            errorReport.addEntry(
-                    new ErrorReportEntry(
-                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
-                            , String.valueOf(record.getLine())
-                            , " "
-                            , "Kontroll 04 Kontornummer"
-                            , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
-                            + "Fant '" + record.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
-                            , Constants.NORMAL_ERROR
-                    )
-            );
-            return true;
+        if (Definitions.isKontorValid(record.getFieldAsString("KONTOR_NR_A"))) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(
+                new ErrorReportEntry(
+                        createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                        , String.valueOf(record.getLine())
+                        , " "
+                        , "Kontroll 04 Kontornummer"
+                        , "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. "
+                        + "Fant '" + record.getFieldAsString("KONTOR_NR_A") + "', forventet én av : " + Definitions.getKontorAsList() + ". "
+                        , Constants.NORMAL_ERROR
+                )
+        );
+        return true;
     }
 
     public static boolean kontroll05RegionsnummerKontornummer(
@@ -454,22 +454,23 @@ public class Main {
         // Kontroll 5: Manglende samsvar mellom regions- og kontornummer.
         errorReport.incrementCount();
 
-        if (!Definitions.isRegionAndKontorValid(record.getFieldAsString("REGION_NR_A"), record.getFieldAsString("KONTOR_NR_A"))) {
-            errorReport.addEntry(
-                    new ErrorReportEntry(
-                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
-                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
-                            , String.valueOf(record.getLine())
-                            , " "
-                            , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
-                            , "Regionsnummer (" + record.getFieldAsString("REGION_NR_A") + ") og "
-                            + "kontornummer (" + record.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
-                            , Constants.NORMAL_ERROR
-                    )
-            );
-            return true;
+        if (Definitions.isRegionAndKontorValid(record.getFieldAsString("REGION_NR_A"), record.getFieldAsString("KONTOR_NR_A"))) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(
+                new ErrorReportEntry(
+                        createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                        , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                        , String.valueOf(record.getLine())
+                        , " "
+                        , "Kontroll 05 Manglende samsvar mellom regions- og kontornummer."
+                        , "Regionsnummer (" + record.getFieldAsString("REGION_NR_A") + ") og "
+                        + "kontornummer (" + record.getFieldAsString("KONTOR_NR_A") + ") stemmer ikke overens."
+                        , Constants.NORMAL_ERROR
+                )
+        );
+        return true;
     }
 
     public static boolean kontroll06Dubletter(
@@ -488,16 +489,16 @@ public class Main {
                 .sorted()
                 .toList();
 
-        if (!dubletter.isEmpty()) {
-            errorReport.addEntry(
-                    new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
-                            , "Kontroll 06 Dubletter"
-                            , "Journalnummeret er benyttet på mer enn en sak. Dubletter på kontornummer - journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
-                            , Constants.NORMAL_ERROR
-                    ));
-            return true;
+        if (dubletter.isEmpty()) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(
+                new ErrorReportEntry("Filuttrekk", "Dubletter", " ", " "
+                        , "Kontroll 06 Dubletter"
+                        , "Journalnummeret er benyttet på mer enn en sak. Dubletter på kontornummer - journalnummer. (Gjelder for:<br/>\n" + String.join(",<br/>\n", dubletter) + ")"
+                        , Constants.NORMAL_ERROR));
+        return true;
     }
 
     public static boolean kontroll07Henvendelsesdato(

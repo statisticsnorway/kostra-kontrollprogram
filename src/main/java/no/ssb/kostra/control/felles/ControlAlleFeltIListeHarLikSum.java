@@ -19,28 +19,29 @@ public class ControlAlleFeltIListeHarLikSum {
                 .map(record::getFieldAsIntegerDefaultEquals0)
                 .allMatch(item -> item.equals(sum));
 
-        if (!allSumsEqual) {
-            final var errorText = "Én eller flere i følgende liste har ulik verdi i forhold til de andre: "
-                    + fieldList.stream()
-                    .map(f -> "("
-                            .concat(f)
-                            .concat(" = ")
-                            .concat(record.getFieldAsIntegerDefaultEquals0(f).toString())
-                            .concat(")")
-                    )
-                    .collect(Collectors.joining(", "));
-
-            errorReport.addEntry(new ErrorReportEntry(
-                    errorReportEntry.getSaksbehandler()
-                    , errorReportEntry.getJournalnummer()
-                    , errorReportEntry.getIndividId()
-                    , String.valueOf(record.getLine())
-                    , errorReportEntry.getKontrollNr()
-                    , errorText
-                    , errorReportEntry.getErrorType()
-            ));
-            return true;
+        if (allSumsEqual) {
+            return false;
         }
-        return false;
+
+        final var errorText = "Én eller flere i følgende liste har ulik verdi i forhold til de andre: "
+                + fieldList.stream()
+                .map(f -> "("
+                        .concat(f)
+                        .concat(" = ")
+                        .concat(record.getFieldAsIntegerDefaultEquals0(f).toString())
+                        .concat(")")
+                )
+                .collect(Collectors.joining(", "));
+
+        errorReport.addEntry(new ErrorReportEntry(
+                errorReportEntry.getSaksbehandler()
+                , errorReportEntry.getJournalnummer()
+                , errorReportEntry.getIndividId()
+                , String.valueOf(record.getLine())
+                , errorReportEntry.getKontrollNr()
+                , errorText
+                , errorReportEntry.getErrorType()
+        ));
+        return true;
     }
 }

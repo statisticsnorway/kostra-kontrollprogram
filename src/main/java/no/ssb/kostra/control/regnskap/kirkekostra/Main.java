@@ -85,9 +85,7 @@ public class Main {
         );
 
         // Sektorer
-        final var sektorer = List.of(
-                "   "
-        );
+        final var sektorer = List.of("   ");
 
         final var result = new ArrayList<String>();
 
@@ -221,8 +219,7 @@ public class Main {
                     List.of("089 "),
                     funksjon089Arter,
                     "Korrigér i fila slik at art (%s) er gyldig mot funksjon 089. Gyldige arter er: " + funksjon089Arter + ".",
-                    Constants.CRITICAL_ERROR
-            );
+                    Constants.CRITICAL_ERROR);
         }
 
         if (isCodeInCodeList(args.getSkjema(), getBalanseRegnskapList())) {
@@ -257,16 +254,16 @@ public class Main {
         final var sumInvesteringsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("I"));
         final var sumDifferanse = sumInvesteringsUtgifter + sumInvesteringsInntekter;
 
-        if (outsideOf(sumDifferanse, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller", "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet", " ", " "
-                    , "Korrigér differansen (" + sumDifferanse + ") mellom inntekter (" + sumInvesteringsInntekter + ") og utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
-                    , ""
-                    , Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!outsideOf(sumDifferanse, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Kontroll Summeringskontroller investeringsregnskapet, differanse i investeringsregnskapet", " ", " "
+                , "Korrigér differansen (" + sumDifferanse + ") mellom inntekter (" + sumInvesteringsInntekter + ") og utgifter (" + sumInvesteringsUtgifter + ") i investeringsregnskapet"
+                , ""
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumDriftsUtgifter(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -275,18 +272,17 @@ public class Main {
         final var arguments = errorReport.getArgs();
         final var sumDriftsUtgifter = getSumUtgifter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
 
-        if (isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
-            if (!(0 < sumDriftsUtgifter)) {
-                errorReport.addEntry(new ErrorReportEntry(
-                        "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer i driftsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumDriftsUtgifter + ") i driftsregnskapet"
-                        , ""
-                        , Constants.CRITICAL_ERROR
-                ));
-                return true;
-            }
+        if (!isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))
+                || 0 < sumDriftsUtgifter) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, utgiftsposteringer i driftsregnskapet", " ", " "
+                , "Korrigér slik at fila inneholder utgiftsposteringene (" + sumDriftsUtgifter + ") i driftsregnskapet"
+                , ""
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumDriftsInntekter(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -294,18 +290,17 @@ public class Main {
         final var arguments = errorReport.getArgs();
         final var sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
 
-        if (isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))) {
-            if (!(sumDriftsInntekter < 0)) {
-                errorReport.addEntry(new ErrorReportEntry(
-                        "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer i driftsregnskapet", " ", " "
-                        , "Korrigér slik at fila inneholder inntektsposteringene (" + sumDriftsInntekter + ") i driftsregnskapet"
-                        , ""
-                        , Constants.CRITICAL_ERROR
-                ));
-                return true;
-            }
+        if (!isCodeInCodeList(arguments.getSkjema(), List.of("0A", "0C", "0I", "0M", "0P"))
+                || sumDriftsInntekter < 0) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, inntektsposteringer i driftsregnskapet", " ", " "
+                , "Korrigér slik at fila inneholder inntektsposteringene (" + sumDriftsInntekter + ") i driftsregnskapet"
+                , ""
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumDriftsDifferanse(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -315,16 +310,16 @@ public class Main {
         final var sumDriftsInntekter = getSumInntekter(arguments, regnskap, getBevilgningRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("D"));
         final var sumDifferanse = sumDriftsUtgifter + sumDriftsInntekter;
 
-        if (outsideOf(sumDifferanse, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet", " ", " "
-                    , "Korrigér differansen (" + sumDifferanse + ") mellom inntekter (" + sumDriftsInntekter + ") og utgifter (" + sumDriftsUtgifter + ") i driftsregnskapet"
-                    , ""
-                    , Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!outsideOf(sumDifferanse, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Kontroll Summeringskontroller bevilgningsregnskap, differanse i driftsregnskapet", " ", " "
+                , "Korrigér differansen (" + sumDifferanse + ") mellom inntekter (" + sumDriftsInntekter + ") og utgifter (" + sumDriftsUtgifter + ") i driftsregnskapet"
+                , ""
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumAktiva(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -332,16 +327,16 @@ public class Main {
         final var arguments = errorReport.getArgs();
         final var sumAktiva = getSumAktiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
 
-        if (!(0 < sumAktiva)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller", "Kontroll Summeringskontroller balanseregnskap, registrering av aktiva (Eiendeler)", " ", " "
-                    , "Korrigér slik at fila inneholder registrering av aktiva/eiendeler (" + sumAktiva + ") i balanse."
-                    , ""
-                    , Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (0 < sumAktiva) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Kontroll Summeringskontroller balanseregnskap, registrering av aktiva (Eiendeler)", " ", " "
+                , "Korrigér slik at fila inneholder registrering av aktiva/eiendeler (" + sumAktiva + ") i balanse."
+                , ""
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumPassiva(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -349,16 +344,16 @@ public class Main {
         final var arguments = errorReport.getArgs();
         final var sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
 
-        if (!(sumPassiva < 0)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller", "Balanseregnskap", " ", " "
-                    , "Kontroll Summeringskontroller balanseregnskap, registrering av passiva (Gjeld og egenkapital)"
-                    , "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital (" + sumPassiva + ") i balanse."
-                    , Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (sumPassiva < 0) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Balanseregnskap", " ", " "
+                , "Kontroll Summeringskontroller balanseregnskap, registrering av passiva (Gjeld og egenkapital)"
+                , "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital (" + sumPassiva + ") i balanse."
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumBalanseDifferanse(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -368,18 +363,18 @@ public class Main {
         final var sumPassiva = getSumPassiva(arguments, regnskap, getBalanseRegnskapList(), getKontoklasseAsMap(arguments.getSkjema()).get("B"));
         final var sumDifferanse = sumAktiva + sumPassiva;
 
-        if (outsideOf(sumDifferanse, -10, 10)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller", "Balanseregnskap", " ", " "
-                    , "Kontroll Summeringskontroller balanseregnskap, differanse"
-                    , "Korrigér differansen (" + sumDifferanse + ") mellom "
-                    + "aktiva (" + sumAktiva + ") og "
-                    + "passiva (" + sumPassiva + ") i fila (Differanser opptil ±10' godtas)"
-                    , Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!outsideOf(sumDifferanse, -10, 10)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller", "Balanseregnskap", " ", " "
+                , "Kontroll Summeringskontroller balanseregnskap, differanse"
+                , "Korrigér differansen (" + sumDifferanse + ") mellom "
+                + "aktiva (" + sumAktiva + ") og "
+                + "passiva (" + sumPassiva + ") i fila (Differanser opptil ±10' godtas)"
+                , Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumInterneOverforinger(
@@ -400,19 +395,19 @@ public class Main {
 
         final var sumInternKjopOgSalg = sumInternKjop + sumInternSalg;
 
-        if (Comparator.outsideOf(sumInternKjopOgSalg, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller",
-                    "Kontroll Interne overføringer, internkjøp og internsalg",
-                    " ",
-                    " ",
-                    "Korrigér i fila slik at differansen (" + sumInternKjopOgSalg + ") mellom internkjøp (" + sumInternKjop + ") og internsalg (" + sumInternSalg + ")  stemmer overens (margin på +/- 30')",
-                    "",
-                    Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!Comparator.outsideOf(sumInternKjopOgSalg, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller",
+                "Kontroll Interne overføringer, internkjøp og internsalg",
+                " ",
+                " ",
+                "Korrigér i fila slik at differansen (" + sumInternKjopOgSalg + ") mellom internkjøp (" + sumInternKjop + ") og internsalg (" + sumInternSalg + ")  stemmer overens (margin på +/- 30')",
+                "",
+                Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlSumKalkulatoriskeUtgifterInntekter(
@@ -430,19 +425,19 @@ public class Main {
 
         final var sumKalkulatoriske = sumKalkulatoriskeUtgifter + sumKalkulatoriskeInntekter;
 
-        if (Comparator.outsideOf(sumKalkulatoriske, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller",
-                    "Kontroll Interne overføringer, kalkulatoriske utgifter og inntekter",
-                    " ",
-                    " ",
-                    "Korrigér i fila slik at differansen (" + sumKalkulatoriske + ") mellom kalkulatoriske utgifter (" + sumKalkulatoriskeUtgifter + ") og inntekter (" + sumKalkulatoriskeInntekter + ")ved kommunal tjenesteytelse stemmer overens (margin på +/- 30')",
-                    "",
-                    Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!Comparator.outsideOf(sumKalkulatoriske, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller",
+                "Kontroll Interne overføringer, kalkulatoriske utgifter og inntekter",
+                " ",
+                " ",
+                "Korrigér i fila slik at differansen (" + sumKalkulatoriske + ") mellom kalkulatoriske utgifter (" + sumKalkulatoriskeUtgifter + ") og inntekter (" + sumKalkulatoriskeInntekter + ")ved kommunal tjenesteytelse stemmer overens (margin på +/- 30')",
+                "",
+                Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlInterneOverforinger(
@@ -460,19 +455,19 @@ public class Main {
 
         final var sumMidler = sumOverforinger + sumInnsamledeMidler;
 
-        if (Comparator.outsideOf(sumMidler, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller",
-                    "Kontroll Interne overføringer, midler",
-                    " ",
-                    " ",
-                    "Korrigér i fila slik at differansen (" + sumMidler + ") mellom overføringer av midler (" + sumOverforinger + ") og innsamlede midler (" + sumInnsamledeMidler + ") stemmer overens (margin på +/- 30')",
-                    "",
-                    Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!Comparator.outsideOf(sumMidler, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller",
+                "Kontroll Interne overføringer, midler",
+                " ",
+                " ",
+                "Korrigér i fila slik at differansen (" + sumMidler + ") mellom overføringer av midler (" + sumOverforinger + ") og innsamlede midler (" + sumInnsamledeMidler + ") stemmer overens (margin på +/- 30')",
+                "",
+                Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlOverforinger(
@@ -497,19 +492,19 @@ public class Main {
 
         final var sumDifferanse = sumDriftsoverforinger + sumInvesteringsoverforinger;
 
-        if (Comparator.outsideOf(sumDifferanse, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller",
-                    "Kontroll Overføring mellom drifts- og investeringsregnskap",
-                    " ",
-                    " ",
-                    "Korrigér i fila slik at differansen (" + sumDifferanse + ") i overføringer mellom drifts- (" + sumDriftsoverforinger + ") og investeringsregnskapet (" + sumInvesteringsoverforinger + ") stemmer overens",
-                    "",
-                    Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!Comparator.outsideOf(sumDifferanse, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller",
+                "Kontroll Overføring mellom drifts- og investeringsregnskap",
+                " ",
+                " ",
+                "Korrigér i fila slik at differansen (" + sumDifferanse + ") i overføringer mellom drifts- (" + sumDriftsoverforinger + ") og investeringsregnskapet (" + sumInvesteringsoverforinger + ") stemmer overens",
+                "",
+                Constants.CRITICAL_ERROR));
+        return true;
     }
 
     public static boolean controlAvskrivninger(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
@@ -533,19 +528,19 @@ public class Main {
 
         final var sumAvskrivninger = sumAvskrivninger590 + sumMotpostAvskrivninger990;
 
-        if (Comparator.outsideOf(sumAvskrivninger, -30, 30)) {
-            errorReport.addEntry(new ErrorReportEntry(
-                    "6. Summeringskontroller",
-                    "Kontroll Avskrivninger, art 590, art 990",
-                    " ",
-                    " ",
-                    "Korrigér i fila slik at differansen (" + sumAvskrivninger + ") mellom art 590 (" + sumAvskrivninger590 + ") stemmer overens med art 990 (" + sumMotpostAvskrivninger990 + ") (margin på +/- 30')",
-                    "",
-                    Constants.CRITICAL_ERROR
-            ));
-            return true;
+        if (!Comparator.outsideOf(sumAvskrivninger, -30, 30)) {
+            return false;
         }
-        return false;
+
+        errorReport.addEntry(new ErrorReportEntry(
+                "6. Summeringskontroller",
+                "Kontroll Avskrivninger, art 590, art 990",
+                " ",
+                " ",
+                "Korrigér i fila slik at differansen (" + sumAvskrivninger + ") mellom art 590 (" + sumAvskrivninger590 + ") stemmer overens med art 990 (" + sumMotpostAvskrivninger990 + ") (margin på +/- 30')",
+                "",
+                Constants.CRITICAL_ERROR));
+        return true;
     }
 }
 

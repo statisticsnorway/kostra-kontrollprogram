@@ -208,7 +208,6 @@ public abstract class NodeHandler {
         if (Comparator.isCodeInCodeList(kode, kodeliste)) {
             return controlExistsAndHasLength(errorReport, errorReportEntry, presisering);
         }
-
         return true;
     }
 
@@ -236,10 +235,11 @@ public abstract class NodeHandler {
     public boolean controlOrgnr(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry, final String orgnr) {
 
-        if (!Comparator.isValidOrgnr(orgnr)) {
-            errorReport.addEntry(errorReportEntry);
-            return false;
+        if (Comparator.isValidOrgnr(orgnr)) {
+            return true;
         }
-        return true;
+
+        errorReport.addEntry(errorReportEntry);
+        return false;
     }
 }

@@ -49,31 +49,22 @@ public class Utils {
             final List<FieldDefinition> fieldDefinitions, final Arguments args) {
 
         return fieldDefinitions.stream()
-                .peek(d -> {
-                    if (d.getName().equalsIgnoreCase("skjema")) {
-                        d.setCodeList(List.of(new Code(args.getSkjema(), "Skjematype")));
-                    } else if (d.getName().equalsIgnoreCase("aargang")) {
-                        d.setCodeList(List.of(new Code(args.getAargang(), "Årgang")));
-                    } else if (d.getName().equalsIgnoreCase("region")) {
-                        d.setCodeList(List.of(new Code(args.getRegion(), "Region")));
-                    } else if (d.getName().equalsIgnoreCase("orgnr")) {
-                        List<Code> list = Stream.of(args.getOrgnr().split(","))
-                                .toList()
-                                .stream()
+                .peek(fieldDefinition -> {
+                    if (fieldDefinition.getName().equalsIgnoreCase("skjema")) {
+                        fieldDefinition.setCodeList(List.of(new Code(args.getSkjema(), "Skjematype")));
+                    } else if (fieldDefinition.getName().equalsIgnoreCase("aargang")) {
+                        fieldDefinition.setCodeList(List.of(new Code(args.getAargang(), "Årgang")));
+                    } else if (fieldDefinition.getName().equalsIgnoreCase("region")) {
+                        fieldDefinition.setCodeList(List.of(new Code(args.getRegion(), "Region")));
+                    } else if (fieldDefinition.getName().equalsIgnoreCase("orgnr")) {
+                        fieldDefinition.setCodeList(Stream.of(args.getOrgnr().split(","))
                                 .map(n -> new Code(n, "Organisasjonsnummer"))
-                                .toList();
-
-                        d.setCodeList(list);
-                    } else if (d.getName().equalsIgnoreCase("foretaksnr")) {
-                        List<Code> list = Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
-                                .toList()
-                                .stream()
+                                .toList());
+                    } else if (fieldDefinition.getName().equalsIgnoreCase("foretaksnr")) {
+                        fieldDefinition.setCodeList(Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
                                 .map(n -> new Code(n, "Foretaksnummer"))
-                                .toList();
-
-                        d.setCodeList(list);
+                                .toList());
                     }
-
                 })
                 .toList();
     }

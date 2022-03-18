@@ -24,23 +24,24 @@ public class ControlFelt1ListeBlank {
             }
         }
 
-        if (!indices.isEmpty()) {
-            String errorText;
-            if (indices.size() == 1) {
-                errorText = "Gjelder for linje " + indices.get(0);
-            } else if (between(indices.size(), 2, 50)) {
-                errorText = "Gjelder for linjene " + indices;
-            } else {
-                errorText = "Gjelder for flere enn 50 linjer";
-            }
-
-            errorReport.addEntry(new ErrorReportEntry(controlCategoriTitle, "Kontroll " + title + ", Felt skal være blank", " ", " "
-                    , "Korrigér " + title.toLowerCase() + " til kun mellomrom / blanke tegn"
-                    , errorText
-                    , errorType));
-
-            return true;
+        if (indices.isEmpty()) {
+            return false;
         }
-        return false;
+
+        String errorText;
+        if (indices.size() == 1) {
+            errorText = "Gjelder for linje " + indices.get(0);
+        } else if (between(indices.size(), 2, 50)) {
+            errorText = "Gjelder for linjene " + indices;
+        } else {
+            errorText = "Gjelder for flere enn 50 linjer";
+        }
+
+        errorReport.addEntry(new ErrorReportEntry(controlCategoriTitle, "Kontroll " + title + ", Felt skal være blank", " ", " "
+                , "Korrigér " + title.toLowerCase() + " til kun mellomrom / blanke tegn"
+                , errorText
+                , errorType));
+
+        return true;
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ControlSosial {
 
     public static LocalDate assignDateFromString(final String date, final String format) {
@@ -122,22 +123,23 @@ public class ControlSosial {
                 .filter(p -> 1 < p.getValue().size())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (0 < dubletter.size()) {
-            dubletter.forEach((fnr, records) -> records.forEach(record -> {
-                List<String> otherRecords = records.stream().filter(r -> !record.equals(r)).map(r -> r.getFieldAsTrimmedString("PERSON_JOURNALNR")).toList();
-                errorReport.addEntry(
-                        new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 05A Fødselsnummer, dubletter"
-                                , "Fødselsnummeret i journalnummer " + record.getFieldAsString("PERSON_JOURNALNR") + " fins også i journalene " + otherRecords
-                                , Constants.CRITICAL_ERROR));
-            }));
-            return true;
+        if (0 >= dubletter.size()) {
+            return false;
         }
-        return false;
+
+        dubletter.forEach((fnr, records) -> records.forEach(record -> {
+            List<String> otherRecords = records.stream().filter(r -> !record.equals(r)).map(r -> r.getFieldAsTrimmedString("PERSON_JOURNALNR")).toList();
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 05A Fødselsnummer, dubletter"
+                            , "Fødselsnummeret i journalnummer " + record.getFieldAsString("PERSON_JOURNALNR") + " fins også i journalene " + otherRecords
+                            , Constants.CRITICAL_ERROR));
+        }));
+        return true;
     }
 
     public static boolean control05BJournalnummerDubletter(
@@ -152,22 +154,23 @@ public class ControlSosial {
                 .filter(r -> r.getValue().size() > 1)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (0 < dubletter.size()) {
-            dubletter.forEach((jnr, records) -> {
-                final var count = records.size();
-                records.forEach(record -> errorReport.addEntry(
-                        new ErrorReportEntry(
-                                record.getFieldAsString("SAKSBEHANDLER")
-                                , record.getFieldAsString("PERSON_JOURNALNR")
-                                , record.getFieldAsString("PERSON_FODSELSNR")
-                                , " "
-                                , "Kontroll 05B Journalnummer, dubletter"
-                                , "Journalnummer " + record.getFieldAsString("PERSON_JOURNALNR") + " forekommer " + count + " ganger."
-                                , Constants.CRITICAL_ERROR)));
-            });
-            return true;
+        if (0 >= dubletter.size()) {
+            return false;
         }
-        return false;
+
+        dubletter.forEach((jnr, records) -> {
+            final var count = records.size();
+            records.forEach(record -> errorReport.addEntry(
+                    new ErrorReportEntry(
+                            record.getFieldAsString("SAKSBEHANDLER")
+                            , record.getFieldAsString("PERSON_JOURNALNR")
+                            , record.getFieldAsString("PERSON_FODSELSNR")
+                            , " "
+                            , "Kontroll 05B Journalnummer, dubletter"
+                            , "Journalnummer " + record.getFieldAsString("PERSON_JOURNALNR") + " forekommer " + count + " ganger."
+                            , Constants.CRITICAL_ERROR)));
+        });
+        return true;
     }
 
     public static boolean control06AlderUnder18Aar(final ErrorReport errorReport, final KostraRecord record) {

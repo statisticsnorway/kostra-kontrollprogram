@@ -25,7 +25,8 @@ public class ControlDubletter {
                 .stream()
                 .filter(p -> p.getValue() > 1)
                 .map(Map.Entry::getKey)
-                .sorted().toList();
+                .sorted()
+                .toList();
 
         return !dubletter.isEmpty() && errorReport.addEntry(
                 new ErrorReportEntry("4. Dublettkontroller", "Kontroll Dubletter", " ", " "

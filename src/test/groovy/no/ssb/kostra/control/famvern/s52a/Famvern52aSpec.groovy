@@ -99,8 +99,8 @@ class Famvern52aSpec extends Specification {
         given:
         List<KostraRecord> records = kontornummerJournalnummerList.stream()
                 .map(m -> {
-                    String kontor = m.get("kontor")
-                    String journalnummer = m.get("journalnummer")
+                    final var kontor = m.get("kontor")
+                    final var journalnummer = m.get("journalnummer")
                     return new KostraRecord(Map.of("KONTOR_NR_A", kontor, "JOURNAL_NR_A", journalnummer), fieldDefinitions)
                 })
                 .collect()

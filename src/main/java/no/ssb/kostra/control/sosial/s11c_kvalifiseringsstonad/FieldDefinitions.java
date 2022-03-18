@@ -7,6 +7,7 @@ import java.util.List;
 
 import static no.ssb.kostra.felles.Constants.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class FieldDefinitions {
     private FieldDefinitions(){}
     

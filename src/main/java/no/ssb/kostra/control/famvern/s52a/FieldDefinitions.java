@@ -5,6 +5,7 @@ import no.ssb.kostra.felles.FieldDefinition;
 
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class FieldDefinitions {
     public static List<FieldDefinition> getFieldDefinitions() {
         return List.of(

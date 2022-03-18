@@ -41,25 +41,26 @@ public class ControlFelt1ListeInneholderKodeFraKodelisteSaaInneholderKodeFraKode
             }
         }
 
-        if (!result.isEmpty()) {
-            for (var key : result.keySet()) {
-                final var indices = result.get(key);
-                String errorText;
-                if (indices.size() == 1) {
-                    errorText = "Gjelder for linje " + indices.get(0);
-                } else if (between(indices.size(), 2, 50)) {
-                    errorText = "Gjelder for linjene " + indices;
-                } else {
-                    errorText = "Gjelder for flere enn 50 linjer";
-                }
-
-                errorReport.addEntry(new ErrorReportEntry(controlCategoryTitle, "Kontroll " + title, " ", " "
-                        , "Korrigér " + title.toLowerCase() + " (" + key + ")"
-                        , errorText
-                        , errorType));
-            }
-            return true;
+        if (result.isEmpty()) {
+            return false;
         }
-        return false;
+
+        for (var key : result.keySet()) {
+            final var indices = result.get(key);
+            String errorText;
+            if (indices.size() == 1) {
+                errorText = "Gjelder for linje " + indices.get(0);
+            } else if (between(indices.size(), 2, 50)) {
+                errorText = "Gjelder for linjene " + indices;
+            } else {
+                errorText = "Gjelder for flere enn 50 linjer";
+            }
+
+            errorReport.addEntry(new ErrorReportEntry(controlCategoryTitle, "Kontroll " + title, " ", " "
+                    , "Korrigér " + title.toLowerCase() + " (" + key + ")"
+                    , errorText
+                    , errorType));
+        }
+        return true;
     }
 }

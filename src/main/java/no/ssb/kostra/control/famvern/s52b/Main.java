@@ -40,7 +40,7 @@ public class Main {
         final var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         final var records = inputFileContent.stream()
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .toList();
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
@@ -110,7 +110,7 @@ public class Main {
                 .filter(p -> p.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
 
         if (!dubletter.isEmpty()) {
             errorReport.addEntry(
@@ -162,13 +162,12 @@ public class Main {
                             , "Kontroll 09 Målgruppe"
                             , "Det er ikke fylt ut hva som er målgruppe for behandlingen. "
                             + "Fant '" + currentRecord.getFieldAsString("STRUKTUR_GR_B") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::toString).toList() + " ). "
 
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("STRUKTUR_GR_B")
-                    , currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("STRUKTUR_GR_B"),
+                    currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -180,12 +179,11 @@ public class Main {
                             , "Kontroll 10 Gruppens hovedtema"
                             , "Det er ikke fylt ut hva som er hovedtema for gruppen."
                             + "Fant '" + currentRecord.getFieldAsString("HOVEDI_GR_B") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::toString).toList() + " ). "
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("HOVEDI_GR_B")
-                    , currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("HOVEDI_GR_B"),
+                    currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1Boolsk.doControl(
                     errorReport
@@ -316,12 +314,11 @@ public class Main {
                             , "Kontroll 18 Er det benyttet tolk i minst én gruppesamtale?"
                             , "Kontroller at feltet er utfylt. "
                             + "Fant '" + currentRecord.getFieldAsString("TOLK_B") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::toString).toList() + " ). "
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("TOLK_B")
-                    , currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("TOLK_B"),
+                    currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -333,12 +330,11 @@ public class Main {
                             , "Kontroll 19 Status ved året slutt"
                             , "Det er ikke fylt ut hva som er gruppens status ved utgangen av året."
                             + "Fant '" + currentRecord.getFieldAsString("STATUS_ARETSSL_B") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::toString).toList() + " ). "
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("STATUS_ARETSSL_B")
-                    , currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("STATUS_ARETSSL_B"),
+                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                     errorReport

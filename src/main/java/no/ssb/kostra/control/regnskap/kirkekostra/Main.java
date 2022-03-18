@@ -3,13 +3,15 @@ package no.ssb.kostra.control.regnskap.kirkekostra;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.KostraRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static no.ssb.kostra.control.felles.Comparator.*;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
@@ -32,7 +34,7 @@ public class Main {
         return getKontoklasseAsMap(skjema).values().stream()
                 .map(String::trim)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getFunksjonKapittelAsList(final String skjema) {
@@ -64,7 +66,7 @@ public class Main {
                 // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                 .map(c -> String.format("%1$-4s", c))
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getArtSektorAsList(final String skjema) {
@@ -99,7 +101,7 @@ public class Main {
 
         return result.stream()
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getArterUgyldigDrift() {
@@ -212,7 +214,7 @@ public class Main {
                             || between(i, 900, 980)
                     )
                     .mapToObj(String::valueOf)
-                    .collect(Collectors.toList());
+                    .toList();
 
             controlKombinasjonFunksjonArt(errorReport,
                     regnskap,
@@ -240,7 +242,7 @@ public class Main {
             return ControlFelt1ListeBlank.doControl(errorReport,
                     "3. Feltkontroller",
                     "Sektor",
-                    regnskap.stream().map(record -> record.getFieldAsTrimmedString("art_sektor")).collect(Collectors.toList()),
+                    regnskap.stream().map(record -> record.getFieldAsTrimmedString("art_sektor")).toList(),
                     Constants.CRITICAL_ERROR);
         }
         return false;

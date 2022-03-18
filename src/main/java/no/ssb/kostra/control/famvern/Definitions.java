@@ -62,7 +62,7 @@ public class Definitions {
                 .keySet()
                 .stream()
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getKontorAsList() {

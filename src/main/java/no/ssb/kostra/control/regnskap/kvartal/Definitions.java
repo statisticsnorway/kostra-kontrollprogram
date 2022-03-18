@@ -4,7 +4,6 @@ import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.felles.Utils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 // TODO full gjennomgang av Definitions mot kravspek
 @SuppressWarnings("SpellCheckingInspection")
@@ -27,7 +26,7 @@ public class Definitions {
                 .flatMap(List::stream)
                 .map(String::trim)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getFunksjonKapittelAsList(final String skjema, final String region) {
@@ -98,7 +97,7 @@ public class Definitions {
                 // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                 .map(c -> String.format("%1$-4s", c))
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getArtSektorAsList(final String skjema, final String region) {
@@ -150,7 +149,7 @@ public class Definitions {
                 // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 3 tegn lange
                 .map(c -> String.format("%1$-3s", c))
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getSpesifikkeFunksjoner(
@@ -166,7 +165,7 @@ public class Definitions {
 
         return Utils.rpadList(getList(kontoklasse, alle, ugyldigDrift, ugyldigInvestering).stream()
                 .sorted()
-                .collect(Collectors.toList()), 4);
+                .toList(), 4);
     }
 
     public static List<String> getSpesifikkeArter(final String skjema, final String region, final String kontoklasse) {
@@ -191,12 +190,12 @@ public class Definitions {
             case "1", "3" -> alle.stream()
                     .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigDrift))
                     .sorted()
-                    .collect(Collectors.toList());
+                    .toList();
             // Investering
             case "0", "4" -> alle.stream()
                     .filter(code -> !Comparator.isCodeInCodeList(code, ugyldigInvestering))
                     .sorted()
-                    .collect(Collectors.toList());
+                    .toList();
             default -> List.of();
         };
     }

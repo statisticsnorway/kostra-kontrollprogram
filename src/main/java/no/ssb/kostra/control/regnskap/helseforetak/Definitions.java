@@ -1,7 +1,6 @@
 package no.ssb.kostra.control.regnskap.helseforetak;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -13,7 +12,7 @@ public class Definitions {
                     Stream.of("400", "460", "600", "606", "620", "630", "636", "637", "641", "642", "651", "681", "840")
                             // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                             .map(c -> String.format("%1$-4s", c))
-                            .collect(Collectors.toList());
+                            .toList();
             case "0Y" -> List.of("    ");
             default -> List.of();
         };
@@ -109,7 +108,7 @@ public class Definitions {
         return Stream.of("620", "630", "636", "637", "641", "642", "651", "681", "840")
                 // rightPad / legger til mellomrom på slutten av kodene
                 .map(c -> String.format("%1$-4s", c))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getKontokodePositiveTall() {

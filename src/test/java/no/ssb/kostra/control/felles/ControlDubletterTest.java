@@ -1,13 +1,15 @@
 package no.ssb.kostra.control.felles;
 
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.FieldDefinition;
+import no.ssb.kostra.felles.KostraRecord;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
@@ -32,7 +34,7 @@ public class ControlDubletterTest {
     public void hasDuplicates() {
         var recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:1,KeyB:2")
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .toList();
 
         var hasDuplicates = ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B"));
         assertTrue(hasDuplicates);
@@ -43,7 +45,7 @@ public class ControlDubletterTest {
     public void hasNoDuplicates() {
         var recordList = Stream.of("KeyA:1,KeyB:2", "KeyA:1,KeyB:1", "KeyA:2,KeyB:2")
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .toList();
 
         assertFalse(ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B")));
     }

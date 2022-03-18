@@ -8,7 +8,6 @@ import no.ssb.kostra.utils.Format;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -24,7 +23,7 @@ public class Utils {
         return records.stream()
                 .peek(r -> r.setFieldAsInteger("linjenummer", lineNumber.incrementAndGet()))
                 .peek(r -> r.setFieldAsInteger("LINJENUMMER", lineNumber.get()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static KostraRecord addLineNumbering(final KostraRecord record) {
@@ -43,7 +42,7 @@ public class Utils {
                 // fjernet blanke linjer
                 .filter(l -> l.trim().length() != 0)
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<FieldDefinition> mergeFieldDefinitionsAndArguments(
@@ -59,31 +58,31 @@ public class Utils {
                         d.setCodeList(List.of(new Code(args.getRegion(), "Region")));
                     } else if (d.getName().equalsIgnoreCase("orgnr")) {
                         List<Code> list = Stream.of(args.getOrgnr().split(","))
-                                .collect(Collectors.toList())
+                                .toList()
                                 .stream()
                                 .map(n -> new Code(n, "Organisasjonsnummer"))
-                                .collect(Collectors.toList());
+                                .toList();
 
                         d.setCodeList(list);
                     } else if (d.getName().equalsIgnoreCase("foretaksnr")) {
                         List<Code> list = Stream.of(args.getForetaknr().concat(",").concat(args.getOrgnr()).split(","))
-                                .collect(Collectors.toList())
+                                .toList()
                                 .stream()
                                 .map(n -> new Code(n, "Foretaksnummer"))
-                                .collect(Collectors.toList());
+                                .toList();
 
                         d.setCodeList(list);
                     }
 
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> rpadList(final List<String> list, final int width) {
         return list.stream()
                 // rightPad / legger til mellomrom på slutten av tekstene slik at alle blir (width) tegn lange
                 .map(c -> String.format("%1$-" + width + "s", c))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static String replaceSpaceWithNoBreakingSpace(final String s) {
@@ -101,6 +100,6 @@ public class Utils {
                         return true;
                     }
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

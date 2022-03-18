@@ -9,8 +9,6 @@ import no.ssb.kostra.felles.FieldDefinition
 import no.ssb.kostra.felles.KostraRecord
 import spock.lang.Specification
 
-import java.util.stream.Collectors
-
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList
 
 class RegnskapKostraSpec extends Specification {
@@ -784,7 +782,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
 
         def records = Utils.addLineNumbering(unnumberedRecords)
 
@@ -906,7 +904,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", funksjon, "art_sektor", item.get("art"), "belop", item.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
 
         def records = Utils.addLineNumbering(unnumberedRecords)
 
@@ -1025,7 +1023,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(item -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", kontoklasse, "funksjon_kapittel", item.get("kapittel"), "art_sektor", sektor, "belop", item.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
         def records = Utils.addLineNumbering(unnumberedRecords)
 
         when:
@@ -1137,7 +1135,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
         def records = Utils.addLineNumbering(unnumberedRecords)
 
         when:
@@ -1245,7 +1243,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("funksjon"), "art_sektor", l.get("art"), "belop", l.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
         def records = Utils.addLineNumbering(unnumberedRecords)
 
         when:
@@ -1493,7 +1491,7 @@ class RegnskapKostraSpec extends Specification {
         ErrorReport errorReport = new ErrorReport(args)
         List<KostraRecord> unnumberedRecords = list.stream()
                 .map(l -> new KostraRecord(Map.of("skjema", skjema, "kontoklasse", l.get("kontoklasse"), "funksjon_kapittel", l.get("kapittel"), "art_sektor", l.get("sektor"), "belop", l.get("belop")), definitions))
-                .collect(Collectors.toList())
+                .toList()
         def records = Utils.addLineNumbering(unnumberedRecords)
 
         when:

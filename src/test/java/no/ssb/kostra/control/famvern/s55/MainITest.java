@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -91,7 +90,7 @@ public class MainITest {
         List<List<String>> fieldLists1 =
                 List.of(clTSSSTF.stream()
                         .map(item -> measure.concat("_").concat(item).concat("_TOT"))
-                        .collect(Collectors.toList()));
+                        .toList());
         List<List<String>> fieldLists2 = ControlFelt1LikSumAvListe.createFieldList(measure, clTSSSTF, "TOT");
 
         System.out.println(fieldLists1);

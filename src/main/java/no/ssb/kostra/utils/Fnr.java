@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -83,7 +82,7 @@ public final class Fnr {
 
         final var weights = List.of(4, 6, 3, 2, 4, 6, 3, 2, 7, 5);
 //        String dufNr = dufnr.replace(' ', '0');
-        final var numbers = dufnr.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
+        final var numbers = dufnr.chars().mapToObj(e -> (char) e).toList();
 
         try {
             final var sum = IntStream.range(0, Math.min(numbers.size(), weights.size()))

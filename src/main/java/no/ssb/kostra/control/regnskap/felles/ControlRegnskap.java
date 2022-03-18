@@ -7,7 +7,6 @@ import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.KostraRecord;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static no.ssb.kostra.control.felles.Comparator.between;
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
@@ -91,7 +90,7 @@ public class ControlRegnskap {
                     .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse)
                             && isCodeInCodeList(record.getFieldAsString("art_sektor"), artList)
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
                     "5. Kombinasjonskontroller",
@@ -115,7 +114,7 @@ public class ControlRegnskap {
                 .filter(record -> isCodeInCodeList(record.getFieldAsString("funksjon_kapittel"), funksjonList)
                         && isCodeInCodeList(record.getFieldAsString("art_sektor"), artList)
                 )
-                .collect(Collectors.toList());
+                .toList();
 
         return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
                 "5. Kombinasjonskontroller",

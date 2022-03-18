@@ -6,7 +6,6 @@ import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.KostraRecord;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
@@ -93,7 +92,7 @@ public class ControlIntegritet {
                 "Fant ugyldig organisasjonnummer '%s'. Korrigér organisasjonnummer til '" + errorReport.getArgs().getOrgnr() + "'",
                 "orgnr",
                 regnskap,
-                Stream.of(errorReport.getArgs().getOrgnr().split(",")).collect(Collectors.toList()),
+                Stream.of(errorReport.getArgs().getOrgnr().split(",")).toList(),
                 Constants.CRITICAL_ERROR);
     }
 
@@ -104,7 +103,7 @@ public class ControlIntegritet {
                 "Fant ugyldig foretaksnummer '(%s)'. Korrigér foretaksnummer til '" + errorReport.getArgs().getForetaknr() + "'",
                 "foretaksnr",
                 regnskap,
-                Stream.of(errorReport.getArgs().getForetaknr().concat(",").concat(errorReport.getArgs().getOrgnr()).split(",")).collect(Collectors.toList()),
+                Stream.of(errorReport.getArgs().getForetaknr().concat(",").concat(errorReport.getArgs().getOrgnr()).split(",")).toList(),
                 Constants.CRITICAL_ERROR);
     }
 
@@ -176,14 +175,14 @@ public class ControlIntegritet {
     public static boolean controlBelop(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         return ControlFelt1ListeHeltall.doControl(errorReport,
                 "Kontroll Beløp",
-                regnskap.stream().map(record -> record.getFieldAsInteger("belop")).collect(Collectors.toList()),
+                regnskap.stream().map(record -> record.getFieldAsInteger("belop")).toList(),
                 Constants.CRITICAL_ERROR);
     }
 
     public static boolean controlUgyldigeBelop(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         return ControlFelt1ListeUlovligTegnITallfelt.doControl(errorReport,
                 "Kontroll Ugyldige beløp",
-                regnskap.stream().map(record -> record.getFieldAsTrimmedString("belop")).collect(Collectors.toList()),
+                regnskap.stream().map(record -> record.getFieldAsTrimmedString("belop")).toList(),
                 Constants.CRITICAL_ERROR);
     }
 }

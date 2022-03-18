@@ -6,11 +6,13 @@ import no.ssb.kostra.control.felles.ControlFelt1LikSumAvListe;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.felles.KostraRecord;
 import no.ssb.kostra.utils.Format;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
@@ -33,7 +35,7 @@ public class Main {
         final var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         final var records = inputFileContent.stream()
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList());
+                .toList();
 
         // String saksbehandler = "Filuttrekk"; // TODO
         final var n = records.size();
@@ -83,10 +85,8 @@ public class Main {
                         .map(sublist -> sublist
                                 .stream()
                                 .map(item -> (item.equalsIgnoreCase("MEKLING_TOT_TOT") ? "MEKLING_TOT_ALLE" : item))
-                                .collect(Collectors.toList())
-
-                        )
-                        .collect(Collectors.toList());
+                                .toList())
+                        .toList();
 
                 ControlFelt1LikSumAvListe.doControl(
                         currentRecord
@@ -115,10 +115,8 @@ public class Main {
                                 .map(item -> (item.equalsIgnoreCase("TOT_BEGGE") ? "BEGGE_TOT" : item))
                                 .map(item -> (item.equalsIgnoreCase("TOT_EN") ? "EN_TOT" : item))
                                 .map(item -> (item.equalsIgnoreCase("TOT_TOT") ? "ENBEGGE_TOT" : item))
-                                .collect(Collectors.toList())
-
-                        )
-                        .collect(Collectors.toList());
+                                .toList())
+                        .toList();
 
                 ControlFelt1LikSumAvListe.doControl(
                         currentRecord

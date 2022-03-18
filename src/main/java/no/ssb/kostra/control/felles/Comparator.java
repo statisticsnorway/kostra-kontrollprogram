@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class Comparator {
@@ -56,7 +55,7 @@ public final class Comparator {
         return codeList.stream()
                 .filter(code -> !isCodeInCodeList(code, codesToRemoveList))
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static boolean isValidOrgnr(final String orgnr) {
@@ -66,8 +65,7 @@ public final class Comparator {
         if (orgnr.substring(0, 1).equalsIgnoreCase("0")) return false;
 
         final var s = Arrays.stream(orgnr.split(""))
-                .map(Format::parseInt)
-                .collect(Collectors.toList());
+                .map(Format::parseInt).toList();
 
         final var sum = IntStream.range(0, s.size() - 1)
                 .map(index -> s.get(index) * (7 - (index + 4) % 6))

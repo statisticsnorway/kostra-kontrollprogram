@@ -124,7 +124,7 @@ public class ControlSosial {
 
         if (0 < dubletter.size()) {
             dubletter.forEach((fnr, records) -> records.forEach(record -> {
-                List<String> otherRecords = records.stream().filter(r -> !record.equals(r)).map(r -> r.getFieldAsTrimmedString("PERSON_JOURNALNR")).collect(Collectors.toList());
+                List<String> otherRecords = records.stream().filter(r -> !record.equals(r)).map(r -> r.getFieldAsTrimmedString("PERSON_JOURNALNR")).toList();
                 errorReport.addEntry(
                         new ErrorReportEntry(
                                 record.getFieldAsString("SAKSBEHANDLER")
@@ -250,12 +250,12 @@ public class ControlSosial {
                         , " "
                         , "Kontroll 08 Kjønn"
                         , "Korrigér kjønn. Fant '" + record.getFieldAsTrimmedString("KJONN") + "', "
-                        + "forventet én av '" + record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                        + "forventet én av '" + record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::toString).toList() + "'. "
                         + "Mottakerens kjønn er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 ),
                 record.getFieldAsString("KJONN"),
-                record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::getCode).collect(Collectors.toList()));
+                record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean control09Sivilstand(final ErrorReport errorReport, final KostraRecord record) {
@@ -270,11 +270,11 @@ public class ControlSosial {
                         , " "
                         , "Kontroll 09 Sivilstand"
                         , "Korrigér sivilstand. Fant '" + record.getFieldAsString("EKTSTAT") + "', "
-                        + "forventet én av '" + record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + "'. "
+                        + "forventet én av '" + record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::toString).toList() + "'. "
                         + "Mottakerens sivilstand/sivilstatus ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 ),
                 record.getFieldAsString("EKTSTAT"),
-                record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::getCode).collect(Collectors.toList()));
+                record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::getCode).toList());
     }
 }

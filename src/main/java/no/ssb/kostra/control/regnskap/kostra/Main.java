@@ -3,13 +3,14 @@ package no.ssb.kostra.control.regnskap.kostra;
 import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
-import no.ssb.kostra.felles.*;
+import no.ssb.kostra.felles.Constants;
+import no.ssb.kostra.felles.ErrorReport;
+import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.felles.KostraRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static no.ssb.kostra.control.felles.Comparator.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
@@ -88,7 +89,7 @@ public class Main {
         return getKontoklasseAsMap(skjema).values().stream()
                 .map(String::trim)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getFunksjonKapittelAsList(final String skjema, final String region) {
@@ -172,7 +173,7 @@ public class Main {
             default -> {
             }
         }
-        return Utils.rpadList(result.stream().sorted().collect(Collectors.toList()), 4);
+        return Utils.rpadList(result.stream().sorted().toList(), 4);
     }
 
     public static List<String> getArtSektorAsList(final String skjema, final String region) {
@@ -214,7 +215,7 @@ public class Main {
         }
         return result.stream()
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<String> getFunksjonerUgyldigDrift() {

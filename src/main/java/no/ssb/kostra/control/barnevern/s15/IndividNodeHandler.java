@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -995,7 +994,7 @@ public class IndividNodeHandler extends NodeHandler {
         } catch (NullPointerException e) {
             errorReport.addEntry(new ErrorReportEntry("Kontrollprogram", journalnummer,
                     individId, refNr, "Individ K1: Feil for individet",
-                    Arrays.stream(e.getStackTrace()).collect(Collectors.toList()).toString(), Constants.CRITICAL_ERROR));
+                    Arrays.stream(e.getStackTrace()).toList().toString(), Constants.CRITICAL_ERROR));
         } catch (Exception e) {
             errorReport.addEntry(
                     new ErrorReportEntry(

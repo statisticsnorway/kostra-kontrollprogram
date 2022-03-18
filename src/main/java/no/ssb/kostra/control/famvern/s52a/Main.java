@@ -37,7 +37,7 @@ public class Main {
         final var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         final var records = Utils.addLineNumbering(inputFileContent.stream()
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                .collect(Collectors.toList()));
+                .toList());
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
@@ -79,7 +79,7 @@ public class Main {
                                 .getCodeList()
                                 .stream()
                                 .map(Code::getCode)
-                                .collect(Collectors.toList())
+                                .toList()
                                 .contains(currentRecord.getFieldAsString(field)))) {
                     errorReport.addEntry(
                             new ErrorReportEntry(
@@ -106,12 +106,12 @@ public class Main {
                             , "Kontroll 23 Hovedform på behandlingstilbudet"
                             , "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden saken ble opprettet, eller feil kode er benyttet. "
                             + "Fant '" + currentRecord.getFieldAsString("HOVEDF_BEHAND_A") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
                     )
                     , currentRecord.getFieldAsString("HOVEDF_BEHAND_A")
-                    , currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
+                    , currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::getCode).toList()
             );
 
             List.of(
@@ -137,9 +137,7 @@ public class Main {
                                     , Constants.NORMAL_ERROR
                             ),
                             currentRecord.getFieldAsString(fieldPair.get(1)),
-                            currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-                    )
-            );
+                            currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::getCode).toList()));
 
             if (Stream.of(
                             "SAMT_PRIMK_A", "SAMT_PARTNER_A", "SAMT_EKSPART_A", "SAMT_BARNU18_A", "SAMT_BARNO18_A",
@@ -193,7 +191,7 @@ public class Main {
                                         , Constants.NORMAL_ERROR
                                 ),
                                 currentRecord.getFieldAsString(fieldPair.get(1)),
-                                currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.getValue().equalsIgnoreCase("Ja")).map(Code::getCode).collect(Collectors.toList()),
+                                currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.getValue().equalsIgnoreCase("Ja")).map(Code::getCode).toList(),
                                 currentRecord.getFieldAsIntegerDefaultEquals0(fieldPair.get(2)),
                                 ">",
                                 0
@@ -321,13 +319,12 @@ public class Main {
                             , "Kontroll 33 Status ved året slutt"
                             , "Det er ikke fylt ut hva som er sakens status ved utgangen av året. "
                             + "Fant '" + currentRecord.getFieldAsString("STATUS_ARETSSL_A") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                             + "Feltet er obligatorisk å fylle ut."
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("STATUS_ARETSSL_A")
-                    , currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("STATUS_ARETSSL_A"),
+                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -339,14 +336,13 @@ public class Main {
                             , "Kontroll 34 Sakens hovedtema (Fylles ut når saken avsluttes)."
                             , "Det er krysset av for at saken er avsluttet i rapporteringsåret, men ikke fylt ut hovedtema for saken, eller feltet har ugyldig format."
                             + "Fant '" + currentRecord.getFieldAsString("HOVEDTEMA_A") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                             , Constants.NORMAL_ERROR
                     )
                     , currentRecord.getFieldAsString("STATUS_ARETSSL_A")
                     , List.of("1", "2")
                     , currentRecord.getFieldAsString("HOVEDTEMA_A")
-                    , currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    , currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::getCode).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                     errorReport
@@ -393,13 +389,12 @@ public class Main {
                             , "Kontroll 37 Bekymringsmelding sendt barnevernet"
                             , "Det er ikke svart på hvorvidt bekymringsmelding er sendt barnevernet eller ei, eller feil kode er benyttet. "
                             + "Fant '" + currentRecord.getFieldAsString("BEKYMR_MELD_A") + "', "
-                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                            + "forventet én av: " + currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                             + "Feltet er obligatorisk."
                             , Constants.NORMAL_ERROR
-                    )
-                    , currentRecord.getFieldAsString("BEKYMR_MELD_A")
-                    , currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-            );
+                    ),
+                    currentRecord.getFieldAsString("BEKYMR_MELD_A"),
+                    currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::getCode).toList());
         });
 
         return errorReport;
@@ -491,7 +486,7 @@ public class Main {
                 .filter(p -> p.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
 
         if (!dubletter.isEmpty()) {
             errorReport.addEntry(
@@ -543,13 +538,12 @@ public class Main {
                         , "Kontroll 09 Primærklient hatt kontakt med eller vært klient tidligere"
                         , "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. "
                         + "Fant '" + record.getFieldAsString("KONTAKT_TIDL_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("KONTAKT_TIDL_A")
-                , record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("KONTAKT_TIDL_A"),
+                record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll11HenvendelsesBegrunnelse(
@@ -568,13 +562,12 @@ public class Main {
                         , "Kontroll 11 Primærklientens viktigste begrunnelse for å ta kontakt."
                         , "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format."
                         + "Fant '" + record.getFieldAsString("HENV_GRUNN_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("HENV_GRUNN_A")
-                , record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("HENV_GRUNN_A"),
+                record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll13Kjonn(
@@ -593,13 +586,12 @@ public class Main {
                         , "Kontroll 13 Primærklientens kjønn"
                         , "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. "
                         + "Fant '" + record.getFieldAsString("PRIMK_KJONN_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_KJONN_A")
-                , record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_KJONN_A"),
+                record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll14Fodselsaar(
@@ -639,13 +631,12 @@ public class Main {
                         , "Kontroll 15 Primærklientens samlivsstatus"
                         , "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. "
                         + "Fant '" + record.getFieldAsString("PRIMK_SIVILS_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_SIVILS_A")
-                , record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_SIVILS_A"),
+                record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
 
@@ -665,14 +656,13 @@ public class Main {
                         , "Kontroll 16 Utdypende om primærklientens formelle sivilstand"
                         , "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens korrekt sivilstand"
                         + "Fant '" + record.getFieldAsString("FORMELL_SIVILS_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_SIVILS_A")
-                , List.of("3", "4")
-                , record.getFieldAsString("FORMELL_SIVILS_A")
-                , record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_SIVILS_A"),
+                List.of("3", "4"),
+                record.getFieldAsString("FORMELL_SIVILS_A"),
+                record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll17Bosituasjon(
@@ -691,13 +681,12 @@ public class Main {
                         , "Kontroll 17 Primærklientens bosituasjon ved opprettelsen"
                         , "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. "
                         + "Fant '" + record.getFieldAsString("PRIMK_SAMBO_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_SAMBO_A")
-                , record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_SAMBO_A"),
+                record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll18Arbeidsosituasjon(
@@ -716,13 +705,12 @@ public class Main {
                         , "Kontroll 18 Primærklientens tilknytning til utdanning og arbeidsliv"
                         , "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. "
                         + "Fant '" + record.getFieldAsString("PRIMK_ARBSIT_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         + "Feltet er obligatorisk å fylle ut."
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_ARBSIT_A")
-                , record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_ARBSIT_A"),
+                record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll19AVarighetSamtalepartner(
@@ -741,14 +729,13 @@ public class Main {
                         , "Kontroll 19A Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"
                         , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
                         + "Fant '" + record.getFieldAsString("PART_LENGDE_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_VSRELASJ_A")
-                , List.of("1")
-                , record.getFieldAsString("PART_LENGDE_A")
-                , record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_VSRELASJ_A"),
+                List.of("1"),
+                record.getFieldAsString("PART_LENGDE_A"),
+                record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll19B1VarighetSidenBrudd(
@@ -767,14 +754,13 @@ public class Main {
                         , "Kontroll 19B1 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, lengde"
                         , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
                         + "Fant '" + record.getFieldAsString("EKSPART_LENGDE_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_VSRELASJ_A")
-                , List.of("2")
-                , record.getFieldAsString("EKSPART_LENGDE_A")
-                , record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_VSRELASJ_A"),
+                List.of("2"),
+                record.getFieldAsString("EKSPART_LENGDE_A"),
+                record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
 
@@ -794,14 +780,13 @@ public class Main {
                         , "Kontroll 19B2 Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"
                         , "Det er oppgitt at primærklientens relasjon til viktigste deltager er partner, men det er ikke oppgitt hvor lenge partene har vært gift, samboere eller registrerte partnere. "
                         + "Fant '" + record.getFieldAsString("EKSPART_VARIGH_A") + "', "
-                        + "forventet én av: " + record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).collect(Collectors.toList()) + " ). "
+                        + "forventet én av: " + record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::toString).toList() + " ). "
                         , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsString("PRIMK_VSRELASJ_A")
-                , List.of("2")
-                , record.getFieldAsString("EKSPART_VARIGH_A")
-                , record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).collect(Collectors.toList())
-        );
+                ),
+                record.getFieldAsString("PRIMK_VSRELASJ_A"),
+                List.of("2"),
+                record.getFieldAsString("EKSPART_VARIGH_A"),
+                record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).toList());
     }
 
     public static boolean kontroll20DatoForsteBehandlingssamtale(

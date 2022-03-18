@@ -6,13 +6,10 @@ import no.ssb.kostra.felles.ErrorReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.util.List.of;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class ControlFelt1ListeHeltallTest {
     private final String title = "navn på felt";

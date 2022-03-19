@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.ssb.kostra.kontrollprogram</groupId>
     <artifactId>kontrollprogram</artifactId>
-    <version>2022.03.4-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
     <properties>
         <revision>LOCAL-SNAPSHOT</revision>

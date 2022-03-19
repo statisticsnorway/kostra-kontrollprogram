@@ -22,7 +22,7 @@ jobs:
         run: echo "github.ref_name = ${{github.ref_name}}"
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots -Drevision=${{github.ref_name}} verify
+        run: mvn --batch-mode --update-snapshots -Drevision=${{github.ref_name}} package
 
       - name: Release
         uses: softprops/action-gh-release@v1

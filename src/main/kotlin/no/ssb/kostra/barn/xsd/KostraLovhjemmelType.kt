@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LovhjemmelType")
-data class LovhjemmelType(
+data class KostraLovhjemmelType(
 
     @field:XmlAttribute(name = "Lov", required = true)
     var lov: String? = null,
@@ -25,8 +25,8 @@ data class LovhjemmelType(
     var punktum: String? = null
 ) {
     companion object {
-        fun createRandomLovhjemmelType(): LovhjemmelType =
-            LovhjemmelType(
+        fun createRandomLovhjemmelType(): KostraLovhjemmelType =
+            KostraLovhjemmelType(
                 lov = "~lov~",
                 kapittel = "~kapittel~",
                 paragraf = "~paragraf~",

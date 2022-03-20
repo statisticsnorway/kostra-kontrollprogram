@@ -6,9 +6,8 @@ import javax.xml.bind.annotation.XmlAttribute
 import javax.xml.bind.annotation.XmlType
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArsakFraType")
-
-data class ArsakFraType(
+@XmlType(name = "FlyttingTilType")
+data class KostraFlyttingTilType(
 
     @field:XmlAttribute(name = "Kode", required = true)
     var kode: String? = null,
@@ -17,10 +16,11 @@ data class ArsakFraType(
     var presisering: String? = null
 ) {
     companion object {
-
-        fun createRandomArsakFraType(): ArsakFraType =
-            ArsakFraType(
-                kode = "1.1.1" // TODO: Kodeliste
-            )
+        fun createRandomFlyttingTilType(): KostraFlyttingTilType =
+            KostraFlyttingTilType(
+                kode = (1..9).random().toString()
+            ).apply {
+                presisering = if (kode == "8") "~presisering~" else null
+            }
     }
 }

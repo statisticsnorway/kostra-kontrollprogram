@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VedtaksgrunnlagType", propOrder = ["presisering"])
-data class VedtaksgrunnlagType(
+data class KostraVedtaksgrunnlagType(
 
     @field:XmlElement(name = "Presisering")
     var presisering: String? = null,
@@ -14,8 +14,8 @@ data class VedtaksgrunnlagType(
 ) {
     companion object {
 
-        fun createRandomVedtaksgrunnlagType(): VedtaksgrunnlagType =
-            VedtaksgrunnlagType(null, (1..27).random().toString())
+        fun createRandomVedtaksgrunnlagType(): KostraVedtaksgrunnlagType =
+            KostraVedtaksgrunnlagType(null, (1..27).random().toString())
     }
 
     /*

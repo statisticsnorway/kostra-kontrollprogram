@@ -6,17 +6,8 @@ import javax.xml.bind.annotation.*
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MeldingType", propOrder = ["melder", "saksinnhold", "undersokelse"])
-data class MeldingType(
-
-    @field:XmlElement(name = "Melder")
-    var melder: List<MelderType>? = null,
-
-    @field:XmlElement(name = "Saksinnhold")
-    var saksinnhold: List<SaksinnholdType>? = null,
-
-    @field:XmlElement(name = "Undersokelse")
-    var undersokelse: UndersokelseType? = null,
+@XmlType(name = "PlanType")
+data class KostraPlanType(
 
     @field:XmlAttribute(name = "Id", required = true)
     var id: String? = null,
@@ -31,14 +22,20 @@ data class MeldingType(
     @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
     var sluttDato: LocalDate? = null,
 
-    @field:XmlAttribute(name = "Konklusjon")
-    var konklusjon: List<String>? = null
+    @field:XmlAttribute(name = "EvaluertDato")
+    @field:XmlSchemaType(name = "date")
+    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
+    var evaluertDato: LocalDate? = null,
+
+    @field:XmlAttribute(name = "Plantype", required = true)
+    var plantype: String? = null
 ) {
     companion object {
-        fun createRandomMeldingType(id: String, year: Int): MeldingType =
-            MeldingType(
+        fun createRandomPlanType(id: String, year: Int): KostraPlanType =
+            KostraPlanType(
                 id = id,
-                //startDato = DateUtils.createRandomDate(year)
+                //startDato = DateUtils.createRandomDate(year),
+                plantype = (1..4).random().toString()
             )
     }
 }

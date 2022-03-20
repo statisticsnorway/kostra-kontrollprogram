@@ -7,13 +7,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FlyttingType", propOrder = ["arsakFra", "flyttingTil"])
-data class FlyttingType(
+data class KostraFlyttingType(
 
     @field:XmlElement(name = "ArsakFra", required = true)
-    var arsakFra: ArsakFraType? = null,
+    var arsakFra: KostraArsakFraType? = null,
 
     @field:XmlElement(name = "FlyttingTil", required = true)
-    var flyttingTil: FlyttingTilType? = null,
+    var flyttingTil: KostraFlyttingTilType? = null,
 
     @field:XmlAttribute(name = "Id", required = true)
     var id: String? = null,
@@ -24,10 +24,10 @@ data class FlyttingType(
     var sluttDato: LocalDate? = null
 ) {
     companion object {
-        fun createRandomFlyttingType(id: String, year: Int): FlyttingType =
-            FlyttingType(
-                arsakFra = ArsakFraType.createRandomArsakFraType(),
-                flyttingTil = FlyttingTilType.createRandomFlyttingTilType(),
+        fun createRandomFlyttingType(id: String, year: Int): KostraFlyttingType =
+            KostraFlyttingType(
+                arsakFra = KostraArsakFraType.createRandomArsakFraType(),
+                flyttingTil = KostraFlyttingTilType.createRandomFlyttingTilType(),
                 id = id,
                 //sluttDato = DateUtils.createRandomDate(year)
             )

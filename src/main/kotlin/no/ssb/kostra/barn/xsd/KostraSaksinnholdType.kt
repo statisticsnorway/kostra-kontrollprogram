@@ -3,8 +3,8 @@ package no.ssb.kostra.barn.xsd
 import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KategoriType", propOrder = ["presisering"])
-data class KategoriType(
+@XmlType(name = "SaksinnholdType", propOrder = ["presisering"])
+data class KostraSaksinnholdType(
 
     @field:XmlElement(name = "Presisering")
     var presisering: String? = null,
@@ -13,10 +13,7 @@ data class KategoriType(
     var kode: String? = null
 ) {
     companion object {
-        fun createRandomKategoriType(): KategoriType {
-            return KategoriType(
-                kode = "1.99" // TODO: get codelist
-            )
-        }
+        fun createRandomSaksinnholdType(): KostraSaksinnholdType =
+            KostraSaksinnholdType(kode = (1..27).random().toString())
     }
 }

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OpphevelseType", propOrder = ["presisering"])
-data class OpphevelseType(
+data class KostraOpphevelseType(
 
     @field:XmlElement(name = "Presisering")
     var presisering: String? = null,
@@ -13,8 +13,8 @@ data class OpphevelseType(
     var kode: String? = null
 ) {
     companion object {
-        fun createRandomOpphevelseType(): OpphevelseType =
-            OpphevelseType(
+        fun createRandomOpphevelseType(): KostraOpphevelseType =
+            KostraOpphevelseType(
                 kode = (1..4).random().toString()
             ).apply {
                 presisering = if (kode == "4") {

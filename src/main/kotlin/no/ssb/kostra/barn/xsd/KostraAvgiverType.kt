@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AvgiverType")
-data class AvgiverType(
+data class KostraAvgiverType(
 
     @field:XmlAttribute(name = "Organisasjonsnummer", required = true)
     var organisasjonsnummer: String? = null,
@@ -22,8 +22,8 @@ data class AvgiverType(
     var kommunenavn: String? = null
 ) {
     companion object {
-        fun createRandomAvgiverType(year: Int): AvgiverType =
-            AvgiverType(
+        fun createRandomAvgiverType(year: Int): KostraAvgiverType =
+            KostraAvgiverType(
                 organisasjonsnummer = "~organisasjonsnummer~",
                 versjon = year,
                 kommunenummer = "~kommunenummer~",

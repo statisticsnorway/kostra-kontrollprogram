@@ -7,19 +7,19 @@ import javax.xml.bind.annotation.XmlType
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BarnevernType", propOrder = ["avgiver", "individ"])
-data class BarnevernType(
+data class KostraBarnevernType(
 
     @field:XmlElement(name = "Avgiver", required = true)
-    var avgiver: AvgiverType? = null,
+    var avgiver: KostraAvgiverType? = null,
 
     @field:XmlElement(name = "Individ", required = true)
-    var individ: List<IndividType>? = null
+    var individ: List<KostraIndividType>? = null
 ) {
     companion object {
-        fun createRandomBarnevernType(year: Int): BarnevernType =
-            BarnevernType(
-                avgiver = AvgiverType.createRandomAvgiverType(year),
-                individ = listOf(IndividType.createRandomIndividType("~ĩd~", year))
+        fun createRandomBarnevernType(year: Int): KostraBarnevernType =
+            KostraBarnevernType(
+                avgiver = KostraAvgiverType.createRandomAvgiverType(year),
+                individ = listOf(KostraIndividType.createRandomIndividType("~ĩd~", year))
             )
     }
 }

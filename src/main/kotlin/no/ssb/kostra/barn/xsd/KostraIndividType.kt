@@ -7,19 +7,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IndividType", propOrder = ["melding", "plan", "tiltak", "flytting"])
-data class IndividType(
+data class KostraIndividType(
 
     @field:XmlElement(name = "Melding")
-    var melding: List<MeldingType>? = null,
+    var melding: List<KostraMeldingType>? = null,
 
     @field:XmlElement(name = "Plan")
-    var plan: List<PlanType>? = null,
+    var plan: List<KostraPlanType>? = null,
 
     @field:XmlElement(name = "Tiltak")
-    var tiltak: List<TiltakType>? = null,
+    var tiltak: List<KostraTiltakType>? = null,
 
     @field:XmlElement(name = "Flytting")
-    var flytting: List<FlyttingType>? = null,
+    var flytting: List<KostraFlyttingType>? = null,
 
     @field:XmlAttribute(name = "Id", required = true)
     var id: String? = null,
@@ -60,8 +60,8 @@ data class IndividType(
 ) {
     companion object {
 
-        fun createRandomIndividType(id: String, year: Int) : IndividType =
-            IndividType(
+        fun createRandomIndividType(id: String, year: Int) : KostraIndividType =
+            KostraIndividType(
                 id = id,
                 //startDato = DateUtils.createRandomDate(year),
                 journalnummer = "~Journalnummer~", // TODO

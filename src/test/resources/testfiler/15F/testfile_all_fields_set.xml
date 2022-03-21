@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Barnevern>
+    <Avgiver Versjon="2020" Kommunenummer="0301" Kommunenavn="Oslo" Organisasjonsnummer="958935420"/>
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Distriktsnummer="42" Avslutta3112="1"
+             Saksbehandler="Sara Saksbehandler"
+             StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" DUFnummer="123456123456"
+             Journalnummer="J1">
+        <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
+            <Melder Kode="22">
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Saksinnhold Kode="18">
+                <Presisering>Presiseringstekst</Presisering>
+            </Saksinnhold>
+            <Undersokelse StartDato="2020-02-17" Id="U1" Konklusjon="1" SluttDato="2020-06-17">
+                <Presisering>Presiseringstekst</Presisering>
+                <Vedtaksgrunnlag Kode="1">
+                    <Presisering>Presiseringstekst</Presisering>
+                </Vedtaksgrunnlag>
+            </Undersokelse>
+        </Melding>
+        <Plan StartDato="2020-02-11" Id="P1" Plantype="1" EvaluertDato="2020-02-12" SluttDato="2020-06-17"/>
+        <Tiltak StartDato="2020-02-10" Id="T2" SluttDato="2020-04-10">
+            <Lovhjemmel Kapittel="4" Paragraf="12" Lov="BVL" Ledd="1" Punktum="Punkt"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="2"/>
+            <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="3"/>
+            <Kategori Kode="1.99">
+                <Presisering>Presisering</Presisering>
+            </Kategori>
+            <Opphevelse Kode="1">
+                <Presisering>Presisering</Presisering>
+            </Opphevelse>
+        </Tiltak>
+        <Flytting Id="42" SluttDato="2020-02-11">
+            <ArsakFra Kode="1.1.1" Presisering="Presisering"/>
+            <FlyttingTil Kode="1" Presisering="Presisering"/>
+        </Flytting>
+    </Individ>
+</Barnevern>

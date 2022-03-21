@@ -29,7 +29,7 @@ data class KostraUndersokelseType(
     var sluttDato: LocalDate? = null,
 
     @field:XmlAttribute(name = "Konklusjon")
-    var konklusjon: List<String>? = null
+    var konklusjon: String? = null
 ) {
     companion object {
 

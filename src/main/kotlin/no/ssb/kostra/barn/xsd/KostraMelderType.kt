@@ -10,14 +10,14 @@ data class KostraMelderType(
     var presisering: String? = null,
 
     @field:XmlAttribute(name = "Kode", required = true)
-    var kode: List<String>? = null
+    var kode: String? = null
 ) {
     companion object {
         fun createRandomMelderType(): KostraMelderType =
             KostraMelderType(
-                kode = listOf((1..23).random().toString())
+                kode = (1..23).random().toString()
             ).apply {
-                presisering = if (kode!![0] == "22") "~presisering~" else null
+                presisering = if (kode == "22") "~presisering~" else null
             }
     }
 }

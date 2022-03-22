@@ -12,12 +12,4 @@ data class KostraBarnevernType(
 
     @field:XmlElement(name = "Individ", required = true)
     var individ: List<KostraIndividType>? = null
-) {
-    companion object {
-        fun createRandomBarnevernType(year: Int): KostraBarnevernType =
-            KostraBarnevernType(
-                avgiver = KostraAvgiverType.createRandomAvgiverType(year),
-                individ = listOf(KostraIndividType.createRandomIndividType("~ĩd~", year))
-            )
-    }
-}
+)

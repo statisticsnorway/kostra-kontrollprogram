@@ -56,17 +56,5 @@ data class KostraIndividType(
     var saksbehandler: String? = null,
 
     @field:XmlAttribute(name = "Avslutta3112", required = true)
-    var avslutta3112: String? = null
-) {
-    companion object {
-
-        fun createRandomIndividType(id: String, year: Int) : KostraIndividType =
-            KostraIndividType(
-                id = id,
-                //startDato = DateUtils.createRandomDate(year),
-                journalnummer = "~Journalnummer~", // TODO
-                saksbehandler = "~saksbehandler~",
-                avslutta3112 = (1..2).random().toString()
-            )
-    }
-}
+    var avslutta3112: String? = null // 1 = Ja, 2 = Nei
+)

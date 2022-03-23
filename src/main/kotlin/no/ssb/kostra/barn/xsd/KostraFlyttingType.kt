@@ -22,14 +22,4 @@ data class KostraFlyttingType(
     @field:XmlSchemaType(name = "date")
     @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
     var sluttDato: LocalDate? = null
-) {
-    companion object {
-        fun createRandomFlyttingType(id: String, year: Int): KostraFlyttingType =
-            KostraFlyttingType(
-                arsakFra = KostraArsakFraType.createRandomArsakFraType(),
-                flyttingTil = KostraFlyttingTilType.createRandomFlyttingTilType(),
-                id = id,
-                //sluttDato = DateUtils.createRandomDate(year)
-            )
-    }
-}
+)

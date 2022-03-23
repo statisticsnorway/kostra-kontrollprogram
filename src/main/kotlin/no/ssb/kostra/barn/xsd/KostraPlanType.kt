@@ -29,13 +29,4 @@ data class KostraPlanType(
 
     @field:XmlAttribute(name = "Plantype", required = true)
     var plantype: String? = null
-) {
-    companion object {
-        fun createRandomPlanType(id: String, year: Int): KostraPlanType =
-            KostraPlanType(
-                id = id,
-                //startDato = DateUtils.createRandomDate(year),
-                plantype = (1..4).random().toString()
-            )
-    }
-}
+)

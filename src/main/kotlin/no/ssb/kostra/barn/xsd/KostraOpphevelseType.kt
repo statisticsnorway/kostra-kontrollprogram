@@ -11,17 +11,4 @@ data class KostraOpphevelseType(
 
     @field:XmlAttribute(name = "Kode", required = true)
     var kode: String? = null
-) {
-    companion object {
-        fun createRandomOpphevelseType(): KostraOpphevelseType =
-            KostraOpphevelseType(
-                kode = (1..4).random().toString()
-            ).apply {
-                presisering = if (kode == "4") {
-                    "~presisering~"
-                } else {
-                    null
-                }
-            }
-    }
-}
+)

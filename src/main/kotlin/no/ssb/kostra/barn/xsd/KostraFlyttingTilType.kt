@@ -14,13 +14,4 @@ data class KostraFlyttingTilType(
 
     @field:XmlAttribute(name = "Presisering")
     var presisering: String? = null
-) {
-    companion object {
-        fun createRandomFlyttingTilType(): KostraFlyttingTilType =
-            KostraFlyttingTilType(
-                kode = (1..9).random().toString()
-            ).apply {
-                presisering = if (kode == "8") "~presisering~" else null
-            }
-    }
-}
+)

@@ -6,7 +6,7 @@ import no.ssb.kostra.barn.xsd.KostraMeldingType
 import spock.lang.Specification
 
 import static no.ssb.kostra.TestUtils.getResourceAsString
-import static no.ssb.kostra.barn.validation.ValidationUtils.validate
+import static no.ssb.kostra.barn.ValidationUtils.validate
 
 class XmlMappingSpec extends Specification {
 
@@ -24,8 +24,7 @@ class XmlMappingSpec extends Specification {
 
     def "when deserializing valid XML, all props are set"() {
         when:
-        def root = BarnevernConverter.unmarshallXml(
-                getResourceAsString(XML_FILE))
+        def root = BarnevernConverter.unmarshallXml(getResourceAsString(XML_FILE))
 
         then:
         noExceptionThrown()

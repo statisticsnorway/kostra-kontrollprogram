@@ -30,13 +30,4 @@ data class KostraUndersokelseType(
 
     @field:XmlAttribute(name = "Konklusjon")
     var konklusjon: String? = null
-) {
-    companion object {
-
-        fun createRandomUndersokelseType(id: String, year: Int): KostraUndersokelseType =
-            KostraUndersokelseType(
-                id = id,
-                //startDato = DateUtils.createRandomDate(year)
-            )
-    }
-}
+)

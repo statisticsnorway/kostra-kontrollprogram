@@ -11,9 +11,4 @@ data class KostraSaksinnholdType(
 
     @field:XmlAttribute(name = "Kode", required = true)
     var kode: String? = null
-) {
-    companion object {
-        fun createRandomSaksinnholdType(): KostraSaksinnholdType =
-            KostraSaksinnholdType(kode = (1..27).random().toString())
-    }
-}
+)

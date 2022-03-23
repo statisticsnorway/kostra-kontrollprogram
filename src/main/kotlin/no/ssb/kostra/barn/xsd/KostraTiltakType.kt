@@ -34,14 +34,4 @@ data class KostraTiltakType(
     @field:XmlSchemaType(name = "date")
     @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
     var sluttDato: LocalDate? = null
-) {
-    companion object {
-        fun createRandomTiltakType(id: String, year: Int): KostraTiltakType =
-            KostraTiltakType(
-                lovhjemmel = KostraLovhjemmelType.createRandomLovhjemmelType(),
-                kategori = KostraKategoriType.createRandomKategoriType(),
-                id = id,
-                //startDato = DateUtils.createRandomDate(year)
-            )
-    }
-}
+)

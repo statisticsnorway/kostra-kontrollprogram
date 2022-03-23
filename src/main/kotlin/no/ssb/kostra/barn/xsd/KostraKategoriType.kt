@@ -11,12 +11,4 @@ data class KostraKategoriType(
 
     @field:XmlAttribute(name = "Kode", required = true)
     var kode: String? = null
-) {
-    companion object {
-        fun createRandomKategoriType(): KostraKategoriType {
-            return KostraKategoriType(
-                kode = "1.99" // TODO: get codelist
-            )
-        }
-    }
-}
+)

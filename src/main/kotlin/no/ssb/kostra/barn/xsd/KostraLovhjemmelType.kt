@@ -23,14 +23,4 @@ data class KostraLovhjemmelType(
 
     @field:XmlAttribute(name = "Punktum")
     var punktum: String? = null
-) {
-    companion object {
-        fun createRandomLovhjemmelType(): KostraLovhjemmelType =
-            KostraLovhjemmelType(
-                lov = "~lov~",
-                kapittel = "~kapittel~",
-                paragraf = "~paragraf~",
-                ledd = "~ledd~"
-            )
-    }
-}
+)

@@ -20,14 +20,4 @@ data class KostraAvgiverType(
 
     @field:XmlAttribute(name = "Kommunenavn", required = true)
     var kommunenavn: String? = null
-) {
-    companion object {
-        fun createRandomAvgiverType(year: Int): KostraAvgiverType =
-            KostraAvgiverType(
-                organisasjonsnummer = "~organisasjonsnummer~",
-                versjon = year,
-                kommunenummer = "~kommunenummer~",
-                kommunenavn = "~kommunenavn~"
-            )
-    }
-}
+)

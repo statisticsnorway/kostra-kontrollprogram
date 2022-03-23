@@ -15,12 +15,4 @@ data class KostraArsakFraType(
 
     @field:XmlAttribute(name = "Presisering")
     var presisering: String? = null
-) {
-    companion object {
-
-        fun createRandomArsakFraType(): KostraArsakFraType =
-            KostraArsakFraType(
-                kode = "1.1.1" // TODO: Kodeliste
-            )
-    }
-}
+)

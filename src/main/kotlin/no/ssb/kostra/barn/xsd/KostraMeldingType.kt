@@ -33,11 +33,4 @@ data class KostraMeldingType(
 
     @field:XmlAttribute(name = "Konklusjon")
     var konklusjon: String? = null
-) {
-    companion object {
-        fun createRandomMeldingType(id: String, year: Int): KostraMeldingType =
-            KostraMeldingType(
-                id = id,
-            )
-    }
-}
+)

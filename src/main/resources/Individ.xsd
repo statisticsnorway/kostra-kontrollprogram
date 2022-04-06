@@ -567,7 +567,6 @@ Koder om annet:
 6.2 = Nettverksmøter (Strukturerte dialogmøter som består av barneverntjenesten, foreldre og ungdom og andre personer som er viktige i ungdommens liv. Invitasjon av deltakere skjer i samråd mellom barneverntjenesten, ungdom og foreldre) 
 6.3 = Individuell plan
 6.4 = Deltakelse i ansvarsgruppe
-6.5 = Samarbeid om utdanning og arbeid
 6.99 = Andre tiltak (krever presisering)
 7.1 = Bvl § 4-10 medisinsk undersøkelse og behandling 
 7.2 = Bvl § 4-11 behandling av barn med særlige opplæringsbehov 
@@ -622,7 +621,6 @@ Koder om annet:
 					<xs:enumeration value="6.2"/>
 					<xs:enumeration value="6.3"/>
 					<xs:enumeration value="6.4"/>
-					<xs:enumeration value="6.5"/>
 					<xs:enumeration value="6.99"/>
 					<xs:enumeration value="7.1"/>
 					<xs:enumeration value="7.2"/>

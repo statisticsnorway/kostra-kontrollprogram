@@ -14,5 +14,5 @@ data class KostraBarnevernType(
 
     @field:JacksonXmlProperty(localName = "Individ")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val individ: List<KostraIndividType> = mutableListOf()
+    val individ: MutableList<KostraIndividType> = mutableListOf()
 )

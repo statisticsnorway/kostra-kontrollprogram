@@ -1,33 +1,32 @@
 package no.ssb.kostra.barn.xsd
 
-import no.ssb.kostra.barn.convert.LocalDateAdapter
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.time.LocalDate
 import javax.xml.bind.annotation.*
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UndersokelseType", propOrder = ["presisering", "vedtaksgrunnlag"])
+@XmlType(name = "UndersokelseType")
 data class KostraUndersokelseType(
 
-    @field:XmlElement(name = "Presisering")
-    var presisering: String? = null,
-
-    @field:XmlElement(name = "Vedtaksgrunnlag")
-    var vedtaksgrunnlag: List<KostraVedtaksgrunnlagType>? = null,
-
     @field:XmlAttribute(name = "Id", required = true)
-    var id: String? = null,
+    val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var startDato: LocalDate? = null,
+    val startDato: LocalDate,
 
     @field:XmlAttribute(name = "SluttDato")
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var sluttDato: LocalDate? = null,
+    val sluttDato: LocalDate? = null,
 
     @field:XmlAttribute(name = "Konklusjon")
-    var konklusjon: String? = null
+    val konklusjon: String? = null,
+
+    @field:XmlElement(name = "Presisering")
+    val presisering: String? = null,
+
+    @field:JacksonXmlProperty(localName = "Vedtaksgrunnlag")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val vedtaksgrunnlag: List<KostraVedtaksgrunnlagType> = mutableListOf()
 )

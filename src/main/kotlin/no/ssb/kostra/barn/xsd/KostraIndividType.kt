@@ -1,60 +1,62 @@
 package no.ssb.kostra.barn.xsd
 
-import no.ssb.kostra.barn.convert.LocalDateAdapter
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.time.LocalDate
 import javax.xml.bind.annotation.*
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IndividType", propOrder = ["melding", "plan", "tiltak", "flytting"])
+@XmlType(name = "IndividType")
 data class KostraIndividType(
 
-    @field:XmlElement(name = "Melding")
-    var melding: List<KostraMeldingType>? = null,
-
-    @field:XmlElement(name = "Plan")
-    var plan: List<KostraPlanType>? = null,
-
-    @field:XmlElement(name = "Tiltak")
-    var tiltak: List<KostraTiltakType>? = null,
-
-    @field:XmlElement(name = "Flytting")
-    var flytting: List<KostraFlyttingType>? = null,
-
     @field:XmlAttribute(name = "Id", required = true)
-    var id: String? = null,
+    val id: String,
+
+    @field:XmlAttribute(name = "Journalnummer", required = true)
+    val journalnummer: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var startDato: LocalDate? = null,
+    val startDato: LocalDate,
+
+    @field:XmlAttribute(name = "Saksbehandler", required = true)
+    val saksbehandler: String,
+
+    @field:XmlAttribute(name = "Avslutta3112", required = true)
+    val avslutta3112: String, // 1 = Ja, 2 = Nei
 
     @field:XmlAttribute(name = "SluttDato")
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var sluttDato: LocalDate? = null,
-
-    @field:XmlAttribute(name = "Journalnummer", required = true)
-    var journalnummer: String? = null,
+    val sluttDato: LocalDate? = null,
 
     @field:XmlAttribute(name = "Fodselsnummer")
-    var fodselsnummer: String? = null,
+    val fodselsnummer: String? = null,
 
     @field:XmlAttribute(name = "DUFnummer")
-    var duFnummer: String? = null,
+    val duFnummer: String? = null,
 
     @field:XmlAttribute(name = "Bydelsnummer")
-    var bydelsnummer: String? = null,
+    val bydelsnummer: String? = null,
 
     @field:XmlAttribute(name = "Bydelsnavn")
-    var bydelsnavn: String? = null,
+    val bydelsnavn: String? = null,
 
     @field:XmlAttribute(name = "Distriktsnummer")
-    var distriktsnummer: String? = null,
+    val distriktsnummer: String? = null,
 
-    @field:XmlAttribute(name = "Saksbehandler", required = true)
-    var saksbehandler: String? = null,
+    @field:JacksonXmlProperty(localName = "Melding")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val melding: List<KostraMeldingType> = mutableListOf(),
 
-    @field:XmlAttribute(name = "Avslutta3112", required = true)
-    var avslutta3112: String? = null // 1 = Ja, 2 = Nei
+    @field:JacksonXmlProperty(localName = "Plan")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val plan: List<KostraPlanType> = mutableListOf(),
+
+    @field:JacksonXmlProperty(localName = "Tiltak")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val tiltak: List<KostraTiltakType> = mutableListOf(),
+
+    @field:JacksonXmlProperty(localName = "Flytting")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val flytting: List<KostraFlyttingType> = mutableListOf()
 )

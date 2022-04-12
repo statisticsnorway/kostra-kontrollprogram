@@ -1,7 +1,7 @@
 //file:noinspection SpellCheckingInspection
 package no.ssb.kostra.xsd
 
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter
+
 import no.ssb.kostra.barn.xsd.KostraMeldingType
 import spock.lang.Specification
 

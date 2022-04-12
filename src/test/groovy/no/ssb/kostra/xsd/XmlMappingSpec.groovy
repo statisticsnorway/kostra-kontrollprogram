@@ -9,6 +9,8 @@ import java.time.LocalDate
 
 import static no.ssb.kostra.TestUtils.getResourceAsString
 import static no.ssb.kostra.barn.ValidationUtils.validate
+import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
+import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.unmarshallXml
 
 class XmlMappingSpec extends Specification {
 
@@ -24,9 +26,16 @@ class XmlMappingSpec extends Specification {
         validate(getResourceAsString(XML_FILE))
     }
 
+    def "when marshalling to XML, validate() == true"() {
+        expect:
+        def barnevernType = unmarshallXml(getResourceAsString(XML_FILE))
+        and:
+        validate(marshallInstance(barnevernType))
+    }
+
     def "when deserializing valid XML, all props are set"() {
         when:
-        def root = KostraBarnevernConverter.unmarshallXml(getResourceAsString(XML_FILE))
+        def root = unmarshallXml(getResourceAsString(XML_FILE))
 
         then:
         noExceptionThrown()

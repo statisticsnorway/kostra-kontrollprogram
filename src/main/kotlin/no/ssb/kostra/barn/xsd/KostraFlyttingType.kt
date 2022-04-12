@@ -4,7 +4,7 @@ import java.time.LocalDate
 import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FlyttingType")
+@XmlType(name = "FlyttingType", propOrder = ["arsakFra", "flyttingTil"])
 data class KostraFlyttingType(
 
     @field:XmlAttribute(name = "Id", required = true)

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.*
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TiltakType")
+@XmlType(name = "TiltakType", propOrder = ["lovhjemmel", "jmfrLovhjemmel", "kategori", "opphevelse"])
 data class KostraTiltakType(
 
     @field:XmlAttribute(name = "Id", required = true)

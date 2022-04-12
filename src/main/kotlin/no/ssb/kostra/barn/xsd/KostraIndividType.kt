@@ -6,7 +6,7 @@ import java.time.LocalDate
 import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IndividType")
+@XmlType(name = "IndividType", propOrder = ["melding", "plan", "tiltak", "flytting"])
 data class KostraIndividType(
 
     @field:XmlAttribute(name = "Id", required = true)

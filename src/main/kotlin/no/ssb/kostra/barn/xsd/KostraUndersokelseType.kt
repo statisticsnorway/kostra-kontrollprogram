@@ -6,7 +6,7 @@ import java.time.LocalDate
 import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UndersokelseType")
+@XmlType(name = "UndersokelseType", propOrder = ["presisering", "vedtaksgrunnlag"])
 data class KostraUndersokelseType(
 
     @field:XmlAttribute(name = "Id", required = true)

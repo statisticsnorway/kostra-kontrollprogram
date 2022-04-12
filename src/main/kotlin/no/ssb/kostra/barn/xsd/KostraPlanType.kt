@@ -14,12 +14,12 @@ data class KostraPlanType(
     @field:XmlSchemaType(name = "date")
     val startDato: LocalDate,
 
-    @field:XmlAttribute(name = "Plantype", required = true)
-    val plantype: String,
-
     @field:XmlAttribute(name = "SluttDato")
     @field:XmlSchemaType(name = "date")
     val sluttDato: LocalDate? = null,
+
+    @field:XmlAttribute(name = "Plantype", required = true)
+    val plantype: String,
 
     @field:XmlAttribute(name = "EvaluertDato")
     @field:XmlSchemaType(name = "date")

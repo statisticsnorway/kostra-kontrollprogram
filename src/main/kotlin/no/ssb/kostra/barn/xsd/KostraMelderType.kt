@@ -3,7 +3,7 @@ package no.ssb.kostra.barn.xsd
 import javax.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MelderType")
+@XmlType(name = "MelderType", propOrder = ["presisering"])
 data class KostraMelderType(
 
     @field:XmlAttribute(name = "Kode", required = true)

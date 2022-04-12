@@ -1,9 +1,11 @@
 //file:noinspection SpellCheckingInspection
 package no.ssb.kostra.xsd
 
-import no.ssb.kostra.barn.convert.BarnevernConverter
+import no.ssb.kostra.barn.convert.KostraBarnevernConverter
 import no.ssb.kostra.barn.xsd.KostraMeldingType
 import spock.lang.Specification
+
+import java.time.LocalDate
 
 import static no.ssb.kostra.TestUtils.getResourceAsString
 import static no.ssb.kostra.barn.ValidationUtils.validate
@@ -12,19 +14,19 @@ class XmlMappingSpec extends Specification {
 
     def XML_FILE = "testfiler/15F/testfile_all_fields_set.xml"
 
-    def "when given invalid XML, expect false"() {
+    def "when given invalid XML, expect validate() == false"() {
         expect:
         !validate("~xml~")
     }
 
-    def "when given valid XML, expect true"() {
+    def "when given valid XML, expect validate() == true"() {
         expect:
         validate(getResourceAsString(XML_FILE))
     }
 
     def "when deserializing valid XML, all props are set"() {
         when:
-        def root = BarnevernConverter.unmarshallXml(getResourceAsString(XML_FILE))
+        def root = KostraBarnevernConverter.unmarshallXml(getResourceAsString(XML_FILE))
 
         then:
         noExceptionThrown()
@@ -32,126 +34,122 @@ class XmlMappingSpec extends Specification {
         null != root
         and:
         verifyAll(root) {
-            null != it.avgiver
             verifyAll(root.avgiver) {
-                null != it.organisasjonsnummer
-                null != it.versjon
-                null != it.kommunenummer
-                null != it.kommunenavn
+                "958935420" == it.organisasjonsnummer
+                2020 == it.versjon
+                "0301" == it.kommunenummer
+                "Oslo" == it.kommunenavn
             }
 
-            null != it.individ
             1 == it.individ.size()
             verifyAll(it.individ[0]) {
 
-                null != it.id
-                null != it.startDato
-                null != it.sluttDato
-                null != it.journalnummer
-                null != it.fodselsnummer
-                null != it.duFnummer
-                null != it.bydelsnummer
-                null != it.bydelsnavn
-                null != it.distriktsnummer
-                null != it.saksbehandler
-                null != it.avslutta3112
+                "i1" == it.id
+                LocalDate.parse("2020-02-10") == it.startDato
+                LocalDate.parse("2020-06-17") == it.sluttDato
+                "J1" == it.journalnummer
+                "01011088194" == it.fodselsnummer
+                "123456123456" == it.duFnummer
+                "02" == it.bydelsnummer
+                "Gamle Oslo" == it.bydelsnavn
+                "42" == it.distriktsnummer
+                "Sara Saksbehandler" == it.saksbehandler
+                "1" == it.avslutta3112
 
-                null != it.flytting
                 1 == it.flytting.size()
                 verifyAll(it.flytting[0]) {
-                    null != it.id
-                    null != it.sluttDato
+                    "42" == it.id
+                    LocalDate.parse("2020-02-11") == it.sluttDato
 
                     null != it.arsakFra
                     verifyAll(it.arsakFra) {
-                        null != it.kode
-                        null != it.presisering
+                        "1.1.1" == it.kode
+                        "Presisering" == it.presisering
                     }
 
                     null != it.flyttingTil
                     verifyAll(it.flyttingTil) {
-                        null != it.kode
-                        null != it.presisering
+                        "1" == it.kode
+                        "Presisering" == it.presisering
                     }
                 }
 
-                null != it.tiltak
                 1 == it.tiltak.size()
                 verifyAll(it.tiltak[0]) {
-                    null != it.id
-                    null != it.startDato
-                    null != it.sluttDato
+                    "T2" == it.id
+                    LocalDate.parse("2020-02-10") == it.startDato
+                    LocalDate.parse("2020-04-10") == it.sluttDato
 
-                    null != it.lovhjemmel
                     verifyAll(it.lovhjemmel) {
-                        null != it.lov
-                        null != it.kapittel
-                        null != it.paragraf
-                        null != it.ledd
-                        null != it.punktum
+                        "BVL" == it.lov
+                        "4" == it.kapittel
+                        "12" == it.paragraf
+                        "1" == it.ledd
+                        "Punkt" == it.punktum
                     }
 
-                    null != it.jmfrLovhjemmel
                     2 == it.jmfrLovhjemmel.size()
 
-                    null != it.kategori
+                    verifyAll(it.jmfrLovhjemmel[0]) {
+                        "BVL" == it.lov
+                        "4" == it.kapittel
+                        "8" == it.paragraf
+                        "2" == it.ledd
+                    }
+
                     verifyAll(it.kategori) {
-                        null != it.kode
-                        null != it.presisering
+                        "1.99" == it.kode
+                        "Presisering" == it.presisering
                     }
 
                     null != it.opphevelse
                     verifyAll(it.opphevelse) {
-                        null != it.kode
-                        null != it.presisering
+                        "1" == it.kode
+                        "Presisering" == it.presisering
                     }
                 }
 
-                null != it.plan
                 1 == it.plan.size()
                 verifyAll(it.plan[0]) {
-                    null != it.id
-                    null != it.startDato
-                    null != it.sluttDato
-                    null != it.evaluertDato
-                    null != it.plantype
+                    "P1" == it.id
+                    LocalDate.parse("2020-02-11") == it.startDato
+                    LocalDate.parse("2020-06-17") == it.sluttDato
+                    LocalDate.parse("2020-02-12") == it.evaluertDato
+                    "1" == it.plantype
                 }
 
-                null != it.melding
                 1 == melding.size()
                 verifyAll(melding[0] as KostraMeldingType) {
-                    null != it.id
-                    null != it.startDato
-                    null != it.sluttDato
-                    null != it.konklusjon
 
-                    null != it.melder
+                    "M1" == it.id
+                    LocalDate.parse("2020-02-10") == it.startDato
+                    LocalDate.parse("2020-02-17") == it.sluttDato
+                    "1" == it.konklusjon
+
                     1 == it.melder.size()
                     verifyAll(melder[0]) {
-                        null != it.presisering
-                        null != it.kode
+                        "22" == it.kode
+                        "Presiseringstekst" == it.presisering
                     }
 
-                    null != it.saksinnhold
                     1 == it.saksinnhold.size()
                     verifyAll(it.saksinnhold[0]) {
-                        null != it.presisering
-                        null != it.kode
+                        "18" == it.kode
+                        "Presiseringstekst" == it.presisering
                     }
 
                     null != it.undersokelse
                     verifyAll(it.undersokelse) {
-                        null != it.presisering
-                        null != it.id
-                        null != it.startDato
-                        null != it.sluttDato
-                        null != it.konklusjon
+                        "U1" == it.id
+                        LocalDate.parse("2020-02-17") == it.startDato
+                        LocalDate.parse("2020-06-17") == it.sluttDato
+                        "1" == it.konklusjon
+                        "Presiseringstekst" == it.presisering
 
-                        null != it.vedtaksgrunnlag
                         1 == it.vedtaksgrunnlag.size()
                         verifyAll(it.vedtaksgrunnlag[0]) {
-                            null != it.presisering
-                            null != it.kode
+                            "1" == it.kode
+                            "Presiseringstekst" == it.presisering
                         }
                     }
                 }

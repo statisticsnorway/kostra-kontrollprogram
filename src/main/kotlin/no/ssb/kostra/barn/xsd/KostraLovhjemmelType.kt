@@ -10,17 +10,17 @@ import javax.xml.bind.annotation.XmlType
 data class KostraLovhjemmelType(
 
     @field:XmlAttribute(name = "Lov", required = true)
-    var lov: String? = null,
+    val lov: String,
 
     @field:XmlAttribute(name = "Kapittel", required = true)
-    var kapittel: String? = null,
+    val kapittel: String,
 
     @field:XmlAttribute(name = "Paragraf", required = true)
-    var paragraf: String? = null,
+    val paragraf: String,
 
     @field:XmlAttribute(name = "Ledd", required = true)
-    var ledd: String? = null,
+    val ledd: String,
 
     @field:XmlAttribute(name = "Punktum")
-    var punktum: String? = null
+    val punktum: String? = null
 )

@@ -7,12 +7,11 @@ import javax.xml.bind.annotation.XmlType
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArsakFraType")
-
 data class KostraArsakFraType(
 
     @field:XmlAttribute(name = "Kode", required = true)
-    var kode: String? = null,
+    val kode: String,
 
     @field:XmlAttribute(name = "Presisering")
-    var presisering: String? = null
+    val presisering: String? = null
 )

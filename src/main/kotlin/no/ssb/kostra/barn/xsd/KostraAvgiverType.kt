@@ -10,14 +10,14 @@ import javax.xml.bind.annotation.XmlType
 data class KostraAvgiverType(
 
     @field:XmlAttribute(name = "Organisasjonsnummer", required = true)
-    var organisasjonsnummer: String? = null,
+    val organisasjonsnummer: String,
 
     @field:XmlAttribute(name = "Versjon", required = true)
-    var versjon: Int? = null,
+    val versjon: Int,
 
     @field:XmlAttribute(name = "Kommunenummer", required = true)
-    var kommunenummer: String? = null,
+    val kommunenummer: String,
 
     @field:XmlAttribute(name = "Kommunenavn", required = true)
-    var kommunenavn: String? = null
+    val kommunenavn: String
 )

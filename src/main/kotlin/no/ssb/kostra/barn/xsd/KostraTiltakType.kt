@@ -1,37 +1,36 @@
 package no.ssb.kostra.barn.xsd
 
-import no.ssb.kostra.barn.convert.LocalDateAdapter
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.time.LocalDate
 import javax.xml.bind.annotation.*
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TiltakType", propOrder = ["lovhjemmel", "jmfrLovhjemmel", "kategori", "opphevelse"])
+@XmlType(name = "TiltakType")
 data class KostraTiltakType(
 
-    @field:XmlElement(name = "Lovhjemmel", required = true)
-    var lovhjemmel: KostraLovhjemmelType? = null,
-
-    @field:XmlElement(name = "JmfrLovhjemmel")
-    var jmfrLovhjemmel: List<KostraLovhjemmelType>? = null,
-
-    @field:XmlElement(name = "Kategori", required = true)
-    var kategori: KostraKategoriType? = null,
-
-    @field:XmlElement(name = "Opphevelse")
-    var opphevelse: KostraOpphevelseType? = null,
-
     @field:XmlAttribute(name = "Id", required = true)
-    var id: String? = null,
+    val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var startDato: LocalDate? = null,
+    val startDato: LocalDate,
 
     @field:XmlAttribute(name = "SluttDato")
     @field:XmlSchemaType(name = "date")
-    @field:XmlJavaTypeAdapter(LocalDateAdapter::class)
-    var sluttDato: LocalDate? = null
+    val sluttDato: LocalDate? = null,
+
+    @field:XmlElement(name = "Kategori", required = true)
+    val kategori: KostraKategoriType,
+
+    @field:XmlElement(name = "Lovhjemmel", required = true)
+    val lovhjemmel: KostraLovhjemmelType,
+
+    @field:XmlElement(name = "Opphevelse")
+    val opphevelse: KostraOpphevelseType? = null,
+
+    @field:JacksonXmlProperty(localName = "JmfrLovhjemmel")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val jmfrLovhjemmel: List<KostraLovhjemmelType> = mutableListOf()
 )

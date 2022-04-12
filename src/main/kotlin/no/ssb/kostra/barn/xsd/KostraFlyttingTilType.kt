@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlType
 data class KostraFlyttingTilType(
 
     @field:XmlAttribute(name = "Kode", required = true)
-    var kode: String? = null,
+    val kode: String,
 
     @field:XmlAttribute(name = "Presisering")
-    var presisering: String? = null
+    val presisering: String? = null
 )

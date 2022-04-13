@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.*
 data class KostraTiltakType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    val id: String,
+    override val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
@@ -33,4 +33,4 @@ data class KostraTiltakType(
     @field:JacksonXmlProperty(localName = "JmfrLovhjemmel")
     @field:JacksonXmlElementWrapper(useWrapping = false)
     val jmfrLovhjemmel: MutableList<KostraLovhjemmelType> = mutableListOf()
-)
+) : KostraEntity

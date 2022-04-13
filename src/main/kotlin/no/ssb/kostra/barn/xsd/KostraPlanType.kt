@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*
 data class KostraPlanType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    val id: String,
+    override val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
@@ -24,4 +24,4 @@ data class KostraPlanType(
     @field:XmlAttribute(name = "EvaluertDato")
     @field:XmlSchemaType(name = "date")
     val evaluertDato: LocalDate? = null
-)
+) : KostraEntity

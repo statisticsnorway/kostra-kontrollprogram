@@ -19,7 +19,7 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.1-groovy-3.0</spock.version>
 
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
         <jackson.version>2.13.2</jackson.version>
 
         <jacoco.version>0.8.7</jacoco.version>
@@ -185,7 +185,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.8.1</version>
+                <version>5.8.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

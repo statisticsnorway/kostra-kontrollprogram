@@ -28,9 +28,9 @@ data class KostraMeldingType(
 
     @field:JacksonXmlProperty(localName = "Melder")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val melder: MutableList<KostraMelderType> = mutableListOf(),
+    val melder: List<KostraMelderType> = listOf(),
 
     @field:JacksonXmlProperty(localName = "Saksinnhold")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val saksinnhold: MutableList<KostraSaksinnholdType> = mutableListOf()
+    val saksinnhold: List<KostraSaksinnholdType> = listOf()
 )

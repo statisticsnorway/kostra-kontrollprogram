@@ -32,5 +32,5 @@ data class KostraTiltakType(
 
     @field:JacksonXmlProperty(localName = "JmfrLovhjemmel")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val jmfrLovhjemmel: MutableList<KostraLovhjemmelType> = mutableListOf()
+    val jmfrLovhjemmel: List<KostraLovhjemmelType> = listOf()
 )

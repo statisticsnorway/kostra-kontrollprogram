@@ -28,5 +28,5 @@ data class KostraUndersokelseType(
 
     @field:JacksonXmlProperty(localName = "Vedtaksgrunnlag")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val vedtaksgrunnlag: MutableList<KostraVedtaksgrunnlagType> = mutableListOf()
+    val vedtaksgrunnlag: List<KostraVedtaksgrunnlagType> = listOf()
 )

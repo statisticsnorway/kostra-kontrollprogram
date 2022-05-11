@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*
 data class KostraMeldingType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    override val id: String,
+    val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
@@ -33,4 +33,4 @@ data class KostraMeldingType(
     @field:JacksonXmlProperty(localName = "Saksinnhold")
     @field:JacksonXmlElementWrapper(useWrapping = false)
     val saksinnhold: MutableList<KostraSaksinnholdType> = mutableListOf()
-) : KostraEntity
+)

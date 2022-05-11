@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*
 data class KostraIndividType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    override val id: String,
+    val id: String,
 
     @field:XmlAttribute(name = "Journalnummer", required = true)
     val journalnummer: String,
@@ -59,4 +59,4 @@ data class KostraIndividType(
     @field:JacksonXmlProperty(localName = "Flytting")
     @field:JacksonXmlElementWrapper(useWrapping = false)
     val flytting: MutableList<KostraFlyttingType> = mutableListOf()
-) : KostraEntity
+)

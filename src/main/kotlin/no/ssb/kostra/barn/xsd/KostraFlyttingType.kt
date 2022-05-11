@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*
 data class KostraFlyttingType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    override val id: String,
+    val id: String,
 
     @field:XmlAttribute(name = "SluttDato", required = true)
     @field:XmlSchemaType(name = "date")
@@ -19,4 +19,4 @@ data class KostraFlyttingType(
 
     @field:XmlElement(name = "FlyttingTil", required = true)
     val flyttingTil: KostraFlyttingTilType
-) : KostraEntity
+)

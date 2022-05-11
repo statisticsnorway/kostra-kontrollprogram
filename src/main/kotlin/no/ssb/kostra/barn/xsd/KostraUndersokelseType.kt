@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*
 data class KostraUndersokelseType(
 
     @field:XmlAttribute(name = "Id", required = true)
-    override val id: String,
+    val id: String,
 
     @field:XmlAttribute(name = "StartDato", required = true)
     @field:XmlSchemaType(name = "date")
@@ -29,4 +29,4 @@ data class KostraUndersokelseType(
     @field:JacksonXmlProperty(localName = "Vedtaksgrunnlag")
     @field:JacksonXmlElementWrapper(useWrapping = false)
     val vedtaksgrunnlag: MutableList<KostraVedtaksgrunnlagType> = mutableListOf()
-) : KostraEntity
+)

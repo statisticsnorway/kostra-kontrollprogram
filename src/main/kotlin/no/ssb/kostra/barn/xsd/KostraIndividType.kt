@@ -46,17 +46,17 @@ data class KostraIndividType(
 
     @field:JacksonXmlProperty(localName = "Melding")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val melding: List<KostraMeldingType> = listOf(),
+    val melding: MutableList<KostraMeldingType> = mutableListOf(),
 
     @field:JacksonXmlProperty(localName = "Plan")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val plan: List<KostraPlanType> = listOf(),
+    val plan: MutableList<KostraPlanType> = mutableListOf(),
 
     @field:JacksonXmlProperty(localName = "Tiltak")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val tiltak: List<KostraTiltakType> = listOf(),
+    val tiltak: MutableList<KostraTiltakType> = mutableListOf(),
 
     @field:JacksonXmlProperty(localName = "Flytting")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val flytting: List<KostraFlyttingType> = listOf()
+    val flytting: MutableList<KostraFlyttingType> = mutableListOf()
 )

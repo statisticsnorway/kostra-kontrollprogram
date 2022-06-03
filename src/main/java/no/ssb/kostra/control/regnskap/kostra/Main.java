@@ -121,7 +121,7 @@ public class Main {
 
         final var fylkeFinansielleFunksjoner = List.of("800", "840", "841", "860", "870", "880", "899");
 
-        final var sbdrFinansielleFunksjoner = List.of("841", "860", "870", "880", "899");
+        final var sbdrFinansielleFunksjoner = List.of("841", "850", "860", "870", "880", "899");
 
         // Kapitler
         final var basisKapitler = List.of(

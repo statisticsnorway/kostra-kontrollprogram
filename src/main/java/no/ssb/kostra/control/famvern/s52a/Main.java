@@ -12,9 +12,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static no.ssb.kostra.control.felles.Comparator.outsideOf;
+
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
-    private static String createKontorNr(final String kontornr) {
+    private Main() {
+        throw new IllegalStateException("Static processing class");
+    }
+
+    private static String createKontorNr(String kontornr) {
         return "Kontornummer ".concat(kontornr);
     }
 
@@ -598,22 +604,72 @@ public class Main {
     public static boolean kontroll14Fodselsaar(
             final ErrorReport errorReport, final KostraRecord record) {
 
+    //    Kontroll 14:        Primærklientens fødselsår.
+//    Felt som inngår i kontrollen: Feltnummer 8.
+//    Beskrivelse:
+//      Kontrollere
+//      at feltet er utfylt og har gyldig format åååå,
+//      at fødselsår ikke er et høyere tall en årgang (mindre eller lik årgang) og
+//      at fødselsår ikke er 100 år lavere enn årgang. Feltet er obligatorisk.
+//
+//    Feilmelding:
+//      Dette er ikke oppgitt fødselsår på primærklienten, årgang gir negativ alder, eller alder større enn 100 år, eller feltet har ugyldig format. Feltet er obligatorisk å fylle ut.
+//    Forslag tiltak:
+//      Primærklientens fødselsår skal fylles ut. Fyll inn fødselsår eller sjekk at fødselsårsfeltet har korrekt format og logisk verdi i forhold til alder. Er fødselsåret 1976 skal alle fire sifrene fylles ut.
+//    Feil hindrer innsending: NEI
+//
         // Kontroll 14 Primærklientens fødselsår
         errorReport.incrementCount();
 
-        return ControlHeltall.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
-                        , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
-                        , String.valueOf(record.getLine())
-                        , " "
-                        , "Kontroll 14 Primærklientens fødselsår"
-                        , "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format. Fant '" + record.getFieldAsString("PRIMK_FODT_A") + "'. Feltet er obligatorisk å fylle ut."
-                        , Constants.NORMAL_ERROR
-                )
-                , record.getFieldAsInteger("PRIMK_FODT_A")
-        );
+        System.out.println(record.getFieldAsString("PRIMK_FODT_A"));
+        System.out.println(errorReport.getArgs().getAargang());
+
+        Integer primk_fodt_a = record.getFieldAsInteger("PRIMK_FODT_A");
+
+        if (primk_fodt_a == null){
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                            , String.valueOf(record.getLine())
+                            , " "
+                            , "Kontroll 14 Primærklientens fødselsår"
+                            , "Dette er ikke oppgitt fødselsår ('" + record.getFieldAsString("PRIMK_FODT_A") + "') på primærklienten eller feltet har ugyldig format. Feltet er obligatorisk å fylle ut."
+                            , Constants.NORMAL_ERROR
+                    ));
+            return true;
+        }
+
+        if (Integer.parseInt(errorReport.getArgs().getAargang()) < primk_fodt_a) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                            , String.valueOf(record.getLine())
+                            , " "
+                            , "Kontroll 14 Primærklientens fødselsår"
+                            , "Dette er oppgitt fødselsår ('" + record.getFieldAsString("PRIMK_FODT_A") + "') på primærklienten der årgang gir negativ alder. Feltet er obligatorisk å fylle ut."
+                            , Constants.NORMAL_ERROR
+                    ));
+            return true;
+        }
+        Integer alder = Integer.parseInt(errorReport.getArgs().getAargang()) - primk_fodt_a;
+
+        if (outsideOf(alder, 0, 100)) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            createKontorNr(record.getFieldAsString("KONTOR_NR_A"))
+                            , createJournalNr(record.getFieldAsString("JOURNAL_NR_A"), String.valueOf(record.getLine()))
+                            , String.valueOf(record.getLine())
+                            , " "
+                            , "Kontroll 14 Primærklientens fødselsår"
+                            , "Dette er oppgitt fødselsår ('" + record.getFieldAsString("PRIMK_FODT_A") + "') på primærklienten som gir en alder større enn 100 år. Feltet er obligatorisk å fylle ut."
+                            , Constants.NORMAL_ERROR
+                    ));
+            return true;
+        }
+
+        return false;
     }
 
     public static boolean kontroll15Samlivsstatus(

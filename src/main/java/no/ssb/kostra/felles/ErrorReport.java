@@ -77,7 +77,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "2022.03.3";
+        final var VERSION = "2022.06.03";
         final var report = new StringBuilder();
         final var lf = System.getProperty("line.separator");
 

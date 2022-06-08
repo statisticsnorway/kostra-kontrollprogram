@@ -7,6 +7,7 @@ import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class FieldDefinitions {
+    @SuppressWarnings("Duplicates")
     public static List<FieldDefinition> getFieldDefinitions() {
         return List.of(
                 new FieldDefinition(1, "REGION_NR_A",

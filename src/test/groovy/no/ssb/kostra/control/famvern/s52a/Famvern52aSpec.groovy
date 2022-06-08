@@ -21,7 +21,7 @@ class Famvern52aSpec extends Specification {
     // runs before each test
     void setup() {
         KostraRecord.resetLineCount()
-        Arguments arguments = new Arguments(new String[]{"-s", "52AF", "-y", "2021", "-r", "667600"})
+        Arguments arguments = new Arguments(new String[]{"-s", "52AF", "-y", "2022", "-r", "667600"})
         errorReport = new ErrorReport(arguments)
         fieldDefinitions = FieldDefinitions.getFieldDefinitions()
         fieldLength = FieldDefinitions.getFieldLength()
@@ -99,8 +99,8 @@ class Famvern52aSpec extends Specification {
         given:
         List<KostraRecord> records = kontornummerJournalnummerList.stream()
                 .map(m -> {
-                    final var kontor = m.get("kontor")
-                    final var journalnummer = m.get("journalnummer")
+                    final String kontor = m.get("kontor")
+                    final String journalnummer = m.get("journalnummer")
                     return new KostraRecord(Map.of("KONTOR_NR_A", kontor, "JOURNAL_NR_A", journalnummer), fieldDefinitions)
                 })
                 .collect()
@@ -240,8 +240,14 @@ class Famvern52aSpec extends Specification {
         where:
         region_nr_a | kontor_nr_a | primk_fodt_a || hasError | errorlevel
         "667600"    | "017"       | "    "       || true     | Constants.NORMAL_ERROR
-        "667600"    | "017"       | "2015"       || false    | Constants.NO_ERROR
         "667600"    | "017"       | "XXXX"       || true     | Constants.NORMAL_ERROR
+        "667600"    | "017"       | "1920"       || true     | Constants.NORMAL_ERROR
+        "667600"    | "017"       | "1921"       || true     | Constants.NORMAL_ERROR
+        "667600"    | "017"       | "1922"       || false    | Constants.NO_ERROR
+        "667600"    | "017"       | "1923"       || false    | Constants.NO_ERROR
+        "667600"    | "017"       | "2021"       || false    | Constants.NO_ERROR
+        "667600"    | "017"       | "2022"       || false    | Constants.NO_ERROR
+        "667600"    | "017"       | "2023"       || true     | Constants.NORMAL_ERROR
     }
 
     def "K15 Samlivsstatus '#primk_sivils_a' -> #hasError -> #errorlevel"() {

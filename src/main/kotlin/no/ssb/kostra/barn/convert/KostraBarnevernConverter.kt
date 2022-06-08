@@ -2,6 +2,7 @@ package no.ssb.kostra.barn.convert
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
@@ -19,21 +20,21 @@ object KostraBarnevernConverter {
         .configure(KotlinFeature.NullIsSameAsDefault, true)
         .build()
 
-    private val xmlMapper =
-        XmlMapper(JacksonXmlModule())
-            .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-            .registerModule(kotlinModule)
-            .registerModule(JavaTimeModule())
-            .registerModule(JaxbAnnotationModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // to parse the dates as LocalDate, else parsing error
-            .enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+    @JvmStatic
+    val XML_MAPPER: ObjectMapper = XmlMapper(JacksonXmlModule())
+        .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+        .registerModule(kotlinModule)
+        .registerModule(JavaTimeModule())
+        .registerModule(JaxbAnnotationModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // to parse the dates as LocalDate, else parsing error
+        .enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
     @JvmStatic
     fun unmarshallXml(xml: String): KostraBarnevernType =
-        xmlMapper.readValue(xml, KostraBarnevernType::class.java)
+        XML_MAPPER.readValue(xml, KostraBarnevernType::class.java)
 
     @JvmStatic
     fun marshallInstance(barnevernType: KostraBarnevernType): String =
-        xmlMapper.writeValueAsString(barnevernType)
+        XML_MAPPER.writeValueAsString(barnevernType)
 }

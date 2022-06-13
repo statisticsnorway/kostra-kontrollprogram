@@ -77,9 +77,9 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "2022.06.03";
+        final var VERSION = "2022.06.13";
         final var report = new StringBuilder();
-        final var lf = System.getProperty("line.separator");
+        final var lf = (args.isRunAsExternalProcess()) ? "<br />" : "<br />" + System.getProperty("line.separator");
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;

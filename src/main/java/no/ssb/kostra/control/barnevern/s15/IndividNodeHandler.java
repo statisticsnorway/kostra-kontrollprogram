@@ -244,6 +244,19 @@ public class IndividNodeHandler extends NodeHandler {
                             Constants.NORMAL_ERROR), fodselsnummer,
                     "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.");
 
+            controlUtfyltFodselsnummer(errorReport, new ErrorReportEntry(
+                    saksbehandler, journalnummer, individId, refNr,
+                    "Individ Kontroll 12: Fødselsnummer",
+                    "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.",
+                    Constants.NORMAL_ERROR), fodselsnummer);
+
+            controlDUFnummer(errorReport, new ErrorReportEntry(
+                    saksbehandler, journalnummer, individId, refNr,
+                    "Individ Kontroll 19: DUF-nummer",
+                    "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer.",
+                    Constants.NORMAL_ERROR), individ.queryString("@DUFnummer")
+            );
+
             // Kontroller for Melding
             final var meldingList = individ.queryNodeList("Melding");
 
@@ -834,20 +847,19 @@ public class IndividNodeHandler extends NodeHandler {
                                 Constants.CRITICAL_ERROR), individStartDato,
                         tiltakStartDato);
 
-// Kommentert ut pga. utfordringer i fagsystem
-//                controlTiltakOmsorgstiltakPresisering(
-//                        er,
-//                        new ErrorReportEntry(
-//                                saksbehandler,
-//                                journalnummer,
-//                                individId,
-//                                refNr,
-//                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
-//                                "Tiltak (" + tiltakId
-//                                        + "). Omsorgstiltak med sluttdato ("
-//                                        + tiltakSluttDatoString
-//                                        + ") krever kode for opphevelse",
-//                                Constants.CRITICAL_ERROR), tiltak);
+                controlTiltakOmsorgstiltakPresisering(
+                        errorReport,
+                        new ErrorReportEntry(
+                                saksbehandler,
+                                journalnummer,
+                                individId,
+                                refNr,
+                                "Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse",
+                                "Tiltak (" + tiltakId
+                                        + "). Omsorgstiltak med sluttdato ("
+                                        + tiltakSluttDatoString
+                                        + ") krever kode for opphevelse",
+                                Constants.CRITICAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
                         errorReport,
@@ -1058,7 +1070,7 @@ public class IndividNodeHandler extends NodeHandler {
             }
 
         } else if (duFnummer != null) {
-            final var pattern = Pattern.compile("^[0-9]{12}$");
+            final var pattern = Pattern.compile("^\\d{12}$");
             final var matcher = pattern.matcher(duFnummer);
 
             if (!matcher.matches()) {
@@ -1067,6 +1079,47 @@ public class IndividNodeHandler extends NodeHandler {
             }
         } else {
             errorReportEntry.setErrorText(errorTextMangler);
+            errorReport.addEntry(errorReportEntry);
+        }
+    }
+
+
+    /**
+     * Kontrollerer at fødselsnummer er korrekt. Hvis fødselnummer mangler
+     * sjekkes DUF-nummer om det er korrekt. Ved feil eller at begge mangler
+     * returneres false samt at ErrorReportEntry legges til i ErrorReport.
+     *
+     * @param errorReport      - ErrorReport
+     * @param errorReportEntry - ErrorReportEntry
+     * @param fodselsnummer    - String
+     */
+    public void controlUtfyltFodselsnummer(
+            final ErrorReport errorReport,
+            final ErrorReportEntry errorReportEntry,
+            final String fodselsnummer) {
+
+        if (!(Fnr.isValidNorwId(fodselsnummer)
+                || fodselsnummer.endsWith("00100")
+                || fodselsnummer.endsWith("00200")
+                || fodselsnummer.endsWith("99999"))) {
+            errorReport.addEntry(errorReportEntry);
+        }
+    }
+
+    /**
+     * Kontrollerer at DUF-nummer er korrekt hvis det er utfylt.
+     * Ved feil eller mangler legges ErrorReportEntry til i ErrorReport
+     *
+     * @param errorReport      - ErrorReport
+     * @param errorReportEntry - ErrorReportEntry
+     * @param duFnummer        - String
+     */
+    public void controlDUFnummer(
+            final ErrorReport errorReport,
+            final ErrorReportEntry errorReportEntry,
+            final String duFnummer) {
+
+        if (duFnummer != null && !Fnr.isValidDUFnr(duFnummer)) {
             errorReport.addEntry(errorReportEntry);
         }
     }

@@ -75,7 +75,6 @@ public final class Fnr {
 //                .mod(11)
 //                .let { it.toString().padStart(2, '0') } == duf.substring(10)
 
-
         if (!Pattern.compile("^\\d{12}$").matcher(dufnr).matches()) return false;
 //        if (dufnr.length() != 12) return false;
 //        if (dufnr.trim().length() == 0) return false;

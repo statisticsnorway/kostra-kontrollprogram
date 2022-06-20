@@ -77,7 +77,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "2022.06.13";
+        final var VERSION = "2022.06.20";
         final var report = new StringBuilder();
         final var lf = (args.isRunAsExternalProcess()) ? "<br />" : "<br />" + System.getProperty("line.separator");
 

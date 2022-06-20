@@ -621,8 +621,8 @@ public class Main {
         // Kontroll 14 Primærklientens fødselsår
         errorReport.incrementCount();
 
-        System.out.println(record.getFieldAsString("PRIMK_FODT_A"));
-        System.out.println(errorReport.getArgs().getAargang());
+//        System.out.println(record.getFieldAsString("PRIMK_FODT_A"));
+//        System.out.println(errorReport.getArgs().getAargang());
 
         Integer primk_fodt_a = record.getFieldAsInteger("PRIMK_FODT_A");
 

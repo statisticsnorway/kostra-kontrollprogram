@@ -96,7 +96,6 @@ public class Main {
             control30HarVarighetMenManglerKvalifiseringssum(errorReport, r);
             control31HarKvalifiseringssumMenManglerVarighet(errorReport, r);
             control32KvalifiseringssumOverMaksimum(errorReport, r);
-            control33KvalifiseringssumUnderMinimum(errorReport, r);
             control36StatusForDeltakelseIKvalifiseringsprogram(errorReport, r);
             control37DatoForAvsluttetProgram(errorReport, r);
             control38FullforteAvsluttedeProgramSituasjon(errorReport, r);
@@ -287,53 +286,87 @@ public class Main {
                         , record.getFieldAsString(FNR)
                         , " "
                         , "Kontroll 13 Det bor barn under 18 år i husholdningen."
-                        , "Antall barn (" + record.getFieldAsTrimmedString(ANTBU18) + ") under 18 år i husholdningen er 11 eller flere, er dette riktig?"
+                        , "Antall barn (" + record.getFieldAsTrimmedString(ANTBU18) + ") under 18 år i husholdningen er 14 eller flere, er dette riktig?"
                         , Constants.CRITICAL_ERROR
                 )
                 , record.getFieldAsIntegerDefaultEquals0(ANTBU18)
                 , "<="
-                , 10);
+                , 13);
     }
 
     public static boolean control14RegDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
         final var REG_DATO = "REG_DATO";
+        final var valueAsString = record.getFieldAsString(REG_DATO);
+        final var datePattern = record.getFieldDefinitionByName(REG_DATO).getDatePattern();
+        final var isInvalidDate = !Comparator.isValidDate(valueAsString, datePattern);
+        var registrationYear = 0;
+        try {
+            registrationYear = Integer.parseInt(valueAsString.substring(4, 6).trim());
+        } catch (NumberFormatException ignored) {
+        }
 
-        return ControlFelt1Dato.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString(SAKSBEHANDLER)
-                        , record.getFieldAsString(JOURNALNR)
-                        , record.getFieldAsString(FNR)
-                        , " "
-                        , "Kontroll 14 Dato for registrert søknad ved NAV-kontoret."
-                        , "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString(REG_DATO) + "). Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , record.getFieldAsString(REG_DATO)
-                , record.getFieldDefinitionByName(REG_DATO).getDatePattern()
-        );
+        final var currentYear = record.getFieldAsInteger("VERSION");
+        final var isInvalidDiff = (currentYear - registrationYear) > 4;
+
+        if (isInvalidDate || isInvalidDiff) {
+
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            record.getFieldAsString(SAKSBEHANDLER)
+                            , record.getFieldAsString(JOURNALNR)
+                            , record.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 14 Dato for registrert søknad ved NAV-kontoret."
+                            , "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' "
+                            + "med verdien (" + valueAsString + ") enten mangler utfylling, har ugyldig dato "
+                            + "eller dato som er eldre enn 4 år fra rapporteringsåret (" + currentYear + "). "
+                            + "Feltet er obligatorisk å fylle ut."
+                            , Constants.CRITICAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+        return false;
     }
 
     public static boolean control15VedtakDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
         final var VEDTAK_DATO = "VEDTAK_DATO";
+        final var valueAsString = record.getFieldAsString(VEDTAK_DATO);
+        final var datePattern = record.getFieldDefinitionByName(VEDTAK_DATO).getDatePattern();
+        final var isInvalidDate = !Comparator.isValidDate(valueAsString, datePattern);
+        var registrationYear = 0;
+        try {
+            registrationYear = Integer.parseInt(valueAsString.substring(4, 6).trim());
+        } catch (NumberFormatException ignored) {
+        }
 
-        return ControlFelt1Dato.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString(SAKSBEHANDLER)
-                        , record.getFieldAsString(JOURNALNR)
-                        , record.getFieldAsString(FNR)
-                        , " "
-                        , "Kontroll 15 Dato for fattet vedtak om program (søknad innvilget)"
-                        , "Feltet for 'Hvilken dato det ble fattet vedtak om program (søknad innvilget)' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString(VEDTAK_DATO) + "). Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , record.getFieldAsString(VEDTAK_DATO)
-                , record.getFieldDefinitionByName(VEDTAK_DATO).getDatePattern());
+        final var currentYear = record.getFieldAsInteger("VERSION");
+        final var isInvalidDiff = (currentYear - registrationYear) > 4;
+
+        if (isInvalidDate || isInvalidDiff) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            record.getFieldAsString(SAKSBEHANDLER)
+                            , record.getFieldAsString(JOURNALNR)
+                            , record.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 15 Dato for fattet vedtak om program (søknad innvilget)"
+                            , "Feltet for 'Hvilken dato det ble fattet vedtak om program? (søknad innvilget)' "
+                            + "med verdien (" + valueAsString + ") enten mangler utfylling, har ugyldig dato "
+                            + "eller dato som er eldre enn 4 år fra rapporteringsåret (" + currentYear + "). "
+                            + "Feltet er obligatorisk å fylle ut."
+                            , Constants.CRITICAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+        return false;
     }
 
     public static boolean control16BegyntDato(ErrorReport errorReport, KostraRecord record) {
@@ -341,19 +374,38 @@ public class Main {
 
         final var BEGYNT_DATO = "BEGYNT_DATO";
 
-        return ControlFelt1Dato.doControl(
-                errorReport
-                , new ErrorReportEntry(
-                        record.getFieldAsString(SAKSBEHANDLER)
-                        , record.getFieldAsString(JOURNALNR)
-                        , record.getFieldAsString(FNR)
-                        , " "
-                        , "Kontroll 16 Dato for når deltakeren begynte i program (iverksettelse)."
-                        , "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' mangler utfylling eller har ugyldig dato (" + record.getFieldAsString(BEGYNT_DATO) + "). Feltet er obligatorisk å fylle ut."
-                        , Constants.CRITICAL_ERROR
-                )
-                , record.getFieldAsString(BEGYNT_DATO)
-                , record.getFieldDefinitionByName(BEGYNT_DATO).getDatePattern());
+        final var valueAsString = record.getFieldAsString(BEGYNT_DATO);
+        final var datePattern = record.getFieldDefinitionByName(BEGYNT_DATO).getDatePattern();
+        final var isInvalidDate = !Comparator.isValidDate(valueAsString, datePattern);
+        var registrationYear = 0;
+        try {
+            registrationYear = Integer.parseInt(valueAsString.substring(4, 6).trim());
+        } catch (NumberFormatException ignored) {
+        }
+
+        final var currentYear = record.getFieldAsInteger("VERSION");
+        final var isInvalidDiff = (currentYear - registrationYear) > 4;
+
+        if (isInvalidDate || isInvalidDiff) {
+            errorReport.addEntry(
+                    new ErrorReportEntry(
+                            record.getFieldAsString(SAKSBEHANDLER)
+                            , record.getFieldAsString(JOURNALNR)
+                            , record.getFieldAsString(FNR)
+                            , " "
+                            , "Kontroll 16 Dato for når deltakeren begynte i program (iverksettelse)"
+                            , "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' "
+                            + "med verdien (" + valueAsString + ") enten mangler utfylling, har ugyldig dato "
+                            + "eller dato som er eldre enn 4 år fra rapporteringsåret (" + currentYear + "). "
+                            + "Feltet er obligatorisk å fylle ut."
+                            , Constants.CRITICAL_ERROR
+                    )
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, KostraRecord record) {
@@ -677,31 +729,6 @@ public class Main {
                         , " "
                         , "Kontroll 32 Kvalifiseringssum på kr " + stonadSumMax + ",- eller mer."
                         , "Kvalifiseringsstønaden (" + record.getFieldAsString(KVP_STONAD) + ") som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMax + ",-."
-                        , Constants.NORMAL_ERROR));
-        return true;
-    }
-
-    public static boolean control33KvalifiseringssumUnderMinimum(
-            ErrorReport errorReport, KostraRecord record) {
-
-        errorReport.incrementCount();
-
-        final var stonad = record.getFieldAsInteger(KVP_STONAD);
-        final var stonadOK = (stonad != null);
-        final var stonadSumMin = 8000;
-
-        if (!stonadOK || stonad >= stonadSumMin) {
-            return false;
-        }
-
-        errorReport.addEntry(
-                new ErrorReportEntry(
-                        record.getFieldAsString(SAKSBEHANDLER)
-                        , record.getFieldAsString(JOURNALNR)
-                        , record.getFieldAsString(FNR)
-                        , " "
-                        , "Kontroll 33 Kvalifiseringsstønad på kr " + stonadSumMin + ",- eller lavere."
-                        , "Kvalifiseringsstønaden (" + record.getFieldAsString(KVP_STONAD) + ") som deltakeren har fått i løpet av rapporteringsåret er lavere enn Statistisk sentralbyrås kontrollgrense på kr. " + stonadSumMin + ",-."
                         , Constants.NORMAL_ERROR));
         return true;
     }

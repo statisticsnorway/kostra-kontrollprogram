@@ -60,7 +60,7 @@ class KvalifiseringstonadTest {
     static Stream<TestRecordInputAndResult> control05FodselsnummerProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "FNR_OK", "1"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1"), definitions), true, Constants.NORMAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "FNR_OK", "1"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -69,19 +69,18 @@ class KvalifiseringstonadTest {
                 new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), definitions)
-                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133"), definitions)
+                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1"), definitions)
+                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "789", "PERSON_FODSELSNR", "19096633133", "STATUS", "1"), definitions)
                 )
                         , false
                         , Constants.NO_ERROR
                 )
 
-
                 , new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188"), definitions)
-                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188"), definitions)
+                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1"), definitions)
+                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "STATUS", "1"), definitions)
                 )
                         , true
                         , Constants.CRITICAL_ERROR
@@ -90,8 +89,18 @@ class KvalifiseringstonadTest {
                 , new TestRecordListInputAndResult(
                         arguments
                         , List.of(
-                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
-                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345"), definitions)
+                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "STATUS", "1"), definitions)
+                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "456", "PERSON_FODSELSNR", "19096632188", "STATUS", "2"), definitions)
+                )
+                        , false
+                        , Constants.NO_ERROR
+                )
+
+                , new TestRecordListInputAndResult(
+                        arguments
+                        , List.of(
+                        new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "STATUS", "1"), definitions)
+                        , new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "STATUS", "1"), definitions)
                 )
                         , false
                         , Constants.NO_ERROR
@@ -181,32 +190,35 @@ class KvalifiseringstonadTest {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", " "), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "ANTBU18", "1"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "10"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "11"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "13"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "ANTBU18", "14"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control14RegDatoProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120", "VERSION", "22"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      ", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010117", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control15VedtakDatoProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VEDTAK_DATO", "010120"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VEDTAK_DATO", "010120", "VERSION", "22"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "      ", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VEDTAK_DATO", "321320", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VEDTAK_DATO", "010117", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
     static Stream<TestRecordInputAndResult> control16BegyntDatoProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BEGYNT_DATO", "010120"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "      "), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "321320"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BEGYNT_DATO", "010120", "VERSION", "22"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "      ", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "BEGYNT_DATO", "321320", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "BEGYNT_DATO", "010117", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR)
         );
     }
 
@@ -307,15 +319,6 @@ class KvalifiseringstonadTest {
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "235000"), definitions), false, Constants.NO_ERROR),
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "235001"), definitions), true, Constants.NORMAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
-        );
-    }
-
-    static Stream<TestRecordInputAndResult> control33KvalifiseringssumUnderMinimumProvider() {
-        return Stream.of(
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "123456"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "  8000"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "  7999"), definitions), true, Constants.NORMAL_ERROR),
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "KVP_STONAD", "      "), definitions), false, Constants.NO_ERROR)
         );
     }
@@ -467,19 +470,23 @@ class KvalifiseringstonadTest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05FodselsnummerProvider")
     void control05FodselsnummerTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        var result = control05Fodselsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecord());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control05AFodselsnummerDubletterProvider")
     void control05AFodselsnummerDubletterTest(TestRecordListInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        var result = control05AFodselsnummerDubletter(inputAndResult.getErrorReport(), inputAndResult.getRecordList());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
@@ -557,37 +564,45 @@ class KvalifiseringstonadTest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control13AntBu18Provider")
     void control13AntBu18Test(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control13AntBu18(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        final var result = control13AntBu18(inputAndResult.getErrorReport(), inputAndResult.getRecord());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control14RegDatoProvider")
     void control14RegDatoTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control14RegDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        final var result = control14RegDato(inputAndResult.getErrorReport(), inputAndResult.getRecord());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control15VedtakDatoProvider")
     void control15VedtakDatoTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control15VedtakDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        final var result = control15VedtakDato(inputAndResult.getErrorReport(), inputAndResult.getRecord());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("control16BegyntDatoProvider")
     void control16BegyntDatoTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control16BegyntDato(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+        final var result = control16BegyntDato(inputAndResult.getErrorReport(), inputAndResult.getRecord());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());
+
+        Assertions.assertEquals(inputAndResult.isResult(), result);
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
@@ -684,15 +699,6 @@ class KvalifiseringstonadTest {
     @MethodSource("control32KvalifiseringssumOverMaksimumProvider")
     void control32KvalifiseringssumOverMaksimumTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control32KvalifiseringssumOverMaksimum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
-        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
-
-        System.out.println(inputAndResult.getErrorReport().generateReport());
-    }
-
-    @ParameterizedTest(name = "#{index} - Run test with {0}")
-    @MethodSource("control33KvalifiseringssumUnderMinimumProvider")
-    void control33KvalifiseringssumUnderMinimumTest(TestRecordInputAndResult inputAndResult) {
-        Assertions.assertEquals(inputAndResult.isResult(), control33KvalifiseringssumUnderMinimum(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());

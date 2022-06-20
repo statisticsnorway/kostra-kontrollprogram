@@ -106,7 +106,7 @@ public class ControlSosial {
                         , "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret inneholder feil. "
                         + "Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt norsk personnummer eller d-nummer, "
                         + "skal feltet inneholde deltakeren fødselsnummer/d-nummer (11 siffer)."
-                        , Constants.NORMAL_ERROR),
+                        , Constants.CRITICAL_ERROR),
                 record.getFieldAsString("PERSON_FODSELSNR"));
     }
 
@@ -117,7 +117,10 @@ public class ControlSosial {
 
         final var dubletter = recordList.stream()
                 .filter(record -> Fnr.isValidNorwId(record.getFieldAsString("PERSON_FODSELSNR")))
-                .collect(Collectors.groupingBy(record -> record.getFieldAsTrimmedString("PERSON_FODSELSNR"), Collectors.toList()))
+                .collect(Collectors.groupingBy(record ->
+                        record.getFieldAsTrimmedString("PERSON_FODSELSNR")
+                                + "|" + record.getFieldAsTrimmedString("STATUS")
+                        , Collectors.toList()))
                 .entrySet()
                 .stream()
                 .filter(p -> 1 < p.getValue().size())

@@ -285,7 +285,8 @@ Koder om annet:
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="Ledd" use="required">
+		<xs:attribute name="Bokstav"/>
+		<xs:attribute name="Ledd">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:minLength value="0"/>
@@ -330,7 +331,7 @@ Koder om annet:
 		<xs:simpleType>
 			<xs:restriction base="xs:string">
 				<xs:minLength value="1"/>
-				<xs:maxLength value="100"/>
+				<xs:maxLength value="1000"/>
 			</xs:restriction>
 		</xs:simpleType>
 	</xs:element>

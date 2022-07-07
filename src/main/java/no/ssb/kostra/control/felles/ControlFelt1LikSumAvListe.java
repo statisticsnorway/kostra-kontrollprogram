@@ -54,11 +54,22 @@ public class ControlFelt1LikSumAvListe {
     public static List<List<String>> createFieldList(
             final String measure, final List<String> c1, final List<String> c2) {
 
-        return c1.stream()
+        List<List<String>> rowscols = c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", measure, c1Item, c2Item))
                         .toList())
                 .toList();
+
+        List<List<String>> colsrows = c2.stream()
+                .map(c2Item -> c1.stream()
+                        .map(c1Item -> String.join("_", measure, c1Item, c2Item))
+                        .toList())
+                .toList();
+
+        List<List<String>> all = new java.util.ArrayList<>(rowscols);
+        all.addAll(colsrows);
+
+        return all;
     }
 
     public static List<List<String>> createFieldList(
@@ -69,11 +80,30 @@ public class ControlFelt1LikSumAvListe {
                 .toList());
     }
 
+    public static List<List<String>> createFieldList(
+            final String measure, final List<String> c1) {
+
+        return List.of(c1.stream()
+                .map(c1Item -> String.join("_", measure, c1Item))
+                .toList());
+    }
     public static List<List<String>> createFieldList(final List<String> c1, final List<String> c2) {
-        return c1.stream()
+        List<List<String>> rowscols =  c1.stream()
                 .map(c1Item -> c2.stream()
                         .map(c2Item -> String.join("_", c1Item, c2Item))
                         .toList())
                 .toList();
+
+
+        List<List<String>> colsrows = c2.stream()
+                .map(c2Item -> c1.stream()
+                        .map(c1Item -> String.join("_", c1Item, c2Item))
+                        .toList())
+                .toList();
+
+        List<List<String>> all = new java.util.ArrayList<>(rowscols);
+        all.addAll(colsrows);
+
+        return all;
     }
 }

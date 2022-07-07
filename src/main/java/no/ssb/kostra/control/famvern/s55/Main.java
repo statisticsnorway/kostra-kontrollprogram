@@ -322,8 +322,8 @@ public class Main {
 
             // Kontroll 16 Avsluttede meklinger uten oppmøte
             {
-                final var measure = "UTEN";
-                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clO, clT12345);
+                final var measure = "UTEN_OPPM";
+                final var fieldLists = ControlFelt1LikSumAvListe.createFieldList(measure, clT12345);
 
                 ControlFelt1LikSumAvListe.doControl(
                         currentRecord

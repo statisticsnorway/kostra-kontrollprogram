@@ -73,6 +73,8 @@ public class Main {
             kontroll19AVarighetSamtalepartner(errorReport, currentRecord);
             kontroll19B1VarighetSidenBrudd(errorReport, currentRecord);
             kontroll19B2VarighetEkspartner(errorReport, currentRecord);
+            kontroll20DatoForsteBehandlingssamtale(errorReport, currentRecord);
+            kontroll21DatoForsteBehandlingssamtaleEtterHenvendelse(errorReport, currentRecord);
 
             {
                 if (Stream.of(

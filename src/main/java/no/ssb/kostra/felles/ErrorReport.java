@@ -77,7 +77,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "2022.06.30";
+        final var VERSION = "2022.07.07";
         final var report = new StringBuilder();
         final var lf = (args.isRunAsExternalProcess()) ? "<br />" : "<br />" + System.getProperty("line.separator");
 
@@ -119,8 +119,8 @@ public class ErrorReport {
             }
 
 
-            report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>");
-            report.append("<table>");
+            report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf);
+            report.append("<table>").append(lf);
 
             if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())) {
                 report.append("<tr>");
@@ -159,7 +159,7 @@ public class ErrorReport {
                     }
                 }
             }
-            report.append("</table>").append("<br />");
+            report.append("</table>");
 
         } else {
             if (count == 0) {

@@ -50,7 +50,7 @@ public class MainITest {
                         030370050    002000300080009000300040004000500030004000100020
                         0303800500070    00300080009000300040004000500030004000100020
                         03039005000700020    0080009000300040004000500030004000100020
-                        340450050007000200030    009000300040004000500030004000100020
+                        340460050007000200030    009000300040004000500030004000100020
                         3405200500070002000300080    00300040004000500030004000100020
                         30061005000700020003000800090    0040004000500030004000100020
                         300650050007000200030008000900030    004000500030004000100020
@@ -89,7 +89,7 @@ public class MainITest {
         ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
         System.setIn(in);
 
-        Arguments args = new Arguments(new String[]{"-s", "53F", "-y", "2020", "-r", "667600"});
+        Arguments args = new Arguments(new String[]{"-s", "53F", "-y", "2022", "-r", "667600"});
         ErrorReport er = Main.doControls(args);
 
         if (Constants.DEBUG) {

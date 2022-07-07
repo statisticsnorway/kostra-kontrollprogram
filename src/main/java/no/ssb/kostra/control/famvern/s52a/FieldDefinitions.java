@@ -250,7 +250,7 @@ public class FieldDefinitions {
                         50, 57
                         , List.of(),
                         "ddMMyyyy",
-                        false),
+                        true),
                 new FieldDefinition(18, "SAMT_FORHOLD_A",
                         "String",
                         "dropDownList",

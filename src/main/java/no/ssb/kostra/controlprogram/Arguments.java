@@ -91,7 +91,10 @@ public class Arguments {
                         harVedlegg = false;
                     break;
                 case 'e':
-                    isRunAsExternalProcess = (boolean) optionsFound.get(key);
+                    final var process = (String) optionsFound.get(key);
+                    if (process.equalsIgnoreCase("1"))
+                        isRunAsExternalProcess = true;
+
                     break;
                 case '?':
 //                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");

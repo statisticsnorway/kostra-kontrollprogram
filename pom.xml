@@ -17,10 +17,10 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.13.2</junit.version>
-        <spock.version>2.1-groovy-3.0</spock.version>
+        <spock.version>2.2-groovy-4.0</spock.version>
 
-        <kotlinVersion>1.7.0</kotlinVersion>
-        <jackson.version>2.13.3</jackson.version>
+        <kotlinVersion>1.7.10</kotlinVersion>
+        <jackson.version>2.13.4</jackson.version>
 
         <jacoco.version>0.8.7</jacoco.version>
         <checkstyle.version>8.45.1</checkstyle.version>
@@ -176,7 +176,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
@@ -185,7 +184,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.8.2</version>
+                <version>5.9.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

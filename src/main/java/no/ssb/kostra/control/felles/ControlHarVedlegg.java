@@ -47,7 +47,7 @@ public class ControlHarVedlegg {
                                 + " Kryptert fil uten innhold kan lastes ned fra https://www.ssb.no/innrapportering/kostra-innrapportering<br/>"
                                 + " -> Kontrollprogram og programmer til fagsystem for kommuner og leverandører<br/>"
                                 + " -> Kvalifiseringsstønad<br/>"
-                                + " -> Tom, kryptert fil (for dem som ikke har noen mottakere av kvalifiseringsstønad i 2021)<br/>"
+                                + " -> Tom, kryptert fil (for dem som ikke har noen mottakere av kvalifiseringsstønad i " + arguments.getAargang() + ")<br/>"
                                 , Constants.CRITICAL_ERROR));
                 return true;
             } else {

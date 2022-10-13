@@ -335,6 +335,10 @@ public class Main {
     public static boolean control15VedtakDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
+        if (record.getFieldAsString("KOMMUNE_NR").equalsIgnoreCase("0301")) {
+            return false;
+        }
+
         final var VEDTAK_DATO = "VEDTAK_DATO";
         final var valueAsString = record.getFieldAsString(VEDTAK_DATO);
         final var datePattern = record.getFieldDefinitionByName(VEDTAK_DATO).getDatePattern();
@@ -371,6 +375,10 @@ public class Main {
 
     public static boolean control16BegyntDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
+
+        if (record.getFieldAsString("KOMMUNE_NR").equalsIgnoreCase("0301")) {
+            return false;
+        }
 
         final var BEGYNT_DATO = "BEGYNT_DATO";
 
@@ -715,7 +723,7 @@ public class Main {
 
         final var stonad = record.getFieldAsInteger(KVP_STONAD);
         final var stonadOK = (stonad != null);
-        final var stonadSumMax = 235000;
+        final var stonadSumMax = 600000;
 
         if (!stonadOK || stonadSumMax >= stonad) {
             return false;

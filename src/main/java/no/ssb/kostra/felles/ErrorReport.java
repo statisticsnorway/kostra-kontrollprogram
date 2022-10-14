@@ -102,7 +102,7 @@ public class ErrorReport {
                 .append("<span>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</span>").append(lf)
                 .append("<span>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</span>").append(lf)
                 .append("<span>Antall sjekker utført: ").append(this.count).append("</span>").append(lf).append(lf)
-                .append("<span>errorType:").append(errorType).append("</span>").append(lf);
+                .append("<span>Feilkode: ").append(errorType).append("</span>").append(lf);
 
         if (!mapEntries.isEmpty()) {
             report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);

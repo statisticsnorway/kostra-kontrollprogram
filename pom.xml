@@ -17,7 +17,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.13.2</junit.version>
-        <spock.version>2.2-groovy-4.0</spock.version>
+        <spock.version>2.3-groovy-4.0</spock.version>
 
         <kotlinVersion>1.7.20</kotlinVersion>
         <jackson.version>2.13.4</jackson.version>
@@ -37,7 +37,7 @@
             <extension>
                 <groupId>com.google.cloud.artifactregistry</groupId>
                 <artifactId>artifactregistry-maven-wagon</artifactId>
-                <version>2.1.5</version>
+                <version>2.2.0</version>
             </extension>
         </extensions>
 
@@ -192,6 +192,17 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- next 2 to fix vulnz in jackson-dataformat-xml -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.woodstox</groupId>
+            <artifactId>woodstox-core</artifactId>
+            <version>6.4.0</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -239,13 +250,11 @@
             <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlinVersion}</version>
         </dependency>
-
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>

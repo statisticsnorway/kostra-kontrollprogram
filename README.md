@@ -1,10 +1,10 @@
 # **Veiledning for kontrollprogrammet - KOSTRA**
 
-**Publisert: 13. juli 2020**
+**Publisert: 1. november 2022**
 
 **Bruksanvisning for kontrollprogrammet:**
 
-1. Sørg for at datamaskinen har _Java utviklingsmiljø (JDK)_ installert. Minimum versjon: _**13.0.2 (**__**[OpenJDK](https://jdk.java.net/)**_  eller eventuelt _**[OracleJDK](https://www.oracle.com/java/technologies/javase-downloads.html)**__**)**_.
+1. Sørg for at datamaskinen har _Java utviklingsmiljø (JDK)_ installert. Minimum versjon: _**17 (**__**[OpenJDK](https://jdk.java.net/)**_  eller eventuelt _**[OracleJDK](https://www.oracle.com/java/technologies/javase-downloads.html)**__**)**_.
 2. Lagre filen _kontrollprogram.jar_ i en katalog på datamaskinens filsystem.
 3. Åpne et _kommandolinjevindu_, og naviger til katalogen nevnt i punkt 2.
 4. Avhengig av hvilken type filuttrekk du vil kontrollere, skriv inn et av følgende:

@@ -85,5 +85,3 @@ F.eks.:
  java -jar kontrollprogram.jar -y 2020 -s 0AK1 -q 1 -r 030100 -n &quot;OSLO KOMMUNE&quot;  **&lt;**  &quot;C:\sti\til\kildefil\BEV\_030100\_K1.dat&quot;  **&gt;**  &quot;C:\sti\til\rapport fil\kontrollrapport\_0ak1.html&quot;
 
 Programmet benytter standard in/out for henholdsvis kilde- og rapportfil.
-
-4

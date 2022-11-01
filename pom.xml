@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <properties>
         <revision>LOCAL-SNAPSHOT</revision>
-        <finalName>${artifactId}-${revision}</finalName>
+        <finalName>${project.artifactId}-${revision}</finalName>
 
         <jdk.version>17</jdk.version>
         <release.version>${jdk.version}</release.version>
@@ -109,6 +109,7 @@
 
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
+                    <outputDirectory>${project.build.directory}/jar</outputDirectory>
                     <descriptors>
                         <descriptor>src/main/resources/assembly.xml</descriptor>
                     </descriptors>

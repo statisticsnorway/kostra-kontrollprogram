@@ -28,4 +28,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./target/*.jar
+            ./target/kostra-kontrollprogram-${{github.ref_name}}.jar

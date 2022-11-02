@@ -79,7 +79,7 @@ public class ErrorReport {
     public String generateReport() {
         final var VERSION = "v2022.11.02";
         final var report = new StringBuilder();
-        final var lf = (args.isRunAsExternalProcess()) ? "<br />" : "<br />" + System.getProperty("line.separator");
+        final var lf = args.getNewline();
 
         if (count == 0) {
             this.errorType = Constants.CRITICAL_ERROR;
@@ -89,20 +89,16 @@ public class ErrorReport {
                 .append("<html>")
                 .append("<head>").append(lf)
                 .append("<title>Kontrollrapport</title>").append(lf)
-                .append("<style>").append(lf)
-                .append("ul.itemlist li.item { line-height: 5pt; }").append(lf)
-                .append("ul.summarylist li.summary { line-height: normal; }").append(lf)
-                .append("</style>").append(lf)
                 .append("</head>").append(lf)
                 .append("<body>").append(lf)
                 .append("<hr/>").append(lf)
                 .append("<h2>Kontrollrapport for ").append(this.args.getRegion()).append(" ").append(args.getNavn()).append("</h2>").append(lf)
-                .append("<hr/>").append(lf).append("<span>Kontrollprogramversjon: ").append(VERSION).append("</span>").append(lf)
-                .append("<span>Kontroller startet: ").append(startTime).append("</span>").append(lf)
-                .append("<span>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</span>").append(lf)
-                .append("<span>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</span>").append(lf)
-                .append("<span>Antall sjekker utført: ").append(this.count).append("</span>").append(lf).append(lf)
-                .append("<span>Feilkode: ").append(errorType).append("</span>").append(lf);
+                .append("<hr/>").append(lf).append("<div>Kontrollprogramversjon: ").append(VERSION).append("</div>").append(lf)
+                .append("<div>Kontroller startet: ").append(startTime).append("</div>").append(lf)
+                .append("<div>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</div>").append(lf)
+                .append("<div>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</div>").append(lf)
+                .append("<div>Antall sjekker utført: ").append(this.count).append("</div>").append(lf).append(lf)
+                .append("<div>Feilkode: ").append(errorType).append("</div>").append(lf);
 
         if (!mapEntries.isEmpty()) {
             report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf);
@@ -112,9 +108,9 @@ public class ErrorReport {
                 final var val = entry.getKey();
 
                 if (val.contains(s)) {
-                    report.append(String.format("<span style='color: red  '>%s har funnet %d feil som hindrer innsending</span>", entry.getKey(), entry.getValue())).append(lf);
+                    report.append(String.format("<div style='font-size:12pt; vertical-align: top; color: red  '>%s har funnet %d feil som hindrer innsending</div>", entry.getKey(), entry.getValue())).append(lf);
                 } else {
-                    report.append(String.format("<span style='color: black'>%s har funnet %d advarsler</span>", entry.getKey(), entry.getValue())).append(lf);
+                    report.append(String.format("<div style='font-size:12pt; vertical-align: top; color: black'>%s har funnet %d advarsler</div>", entry.getKey(), entry.getValue())).append(lf);
                 }
             }
 
@@ -122,10 +118,12 @@ public class ErrorReport {
             report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf);
             report.append("<table>").append(lf);
 
-            if (reportHeaders.stream().allMatch(s -> 0 < s.trim().length())) {
+            if (reportHeaders.stream().anyMatch(s -> 0 < s.trim().length())) {
+                report.append("<!-- header start -->");
                 report.append("<tr>");
                 reportHeaders.forEach(s -> report.append(String.format("<td>%s</td>", s)));
                 report.append("</tr>").append(lf);
+                report.append("<!-- header end -->");
             }
 
             for (String saksbehandler : rapportMap.keySet()) {
@@ -145,17 +143,13 @@ public class ErrorReport {
                                 ? "black"
                                 : "green";
 
-                        if (args.isRunAsExternalProcess()) {
-                            report.append(lf);
-                        }
-
                         report
                                 .append("<tr style='font-size:12pt; vertical-align: top; color: ").append(htmlcolor).append("'>")
                                 .append("<td>").append(Utils.replaceSpaceWithNoBreakingSpace(saksbehandler)).append("</td>")
                                 .append("<td>").append(journalnummer).append("</td>")
                                 .append("<td>").append(kontrollnummer).append("</td>")
                                 .append("<td>").append(kontrolltekst).append("</td>")
-                                .append("</tr>");
+                                .append("</tr>").append(lf);
                     }
                 }
             }

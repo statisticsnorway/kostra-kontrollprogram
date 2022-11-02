@@ -15,7 +15,7 @@ class ArgumentsSpec extends Specification {
         System.setIn(is)
 
         when:
-        Arguments args = new Arguments(new String[]{"-s", "test", "-y", "0000", "-r", "0000", "-a", hasAttachment})
+        Arguments args = new Arguments(new String[]{"-s", "test", "-y", "0000", "-r", "0000", "-a", hasAttachment, "-e", runAsExternalProcess})
         args.getInputContentAsStringList()
 
 
@@ -24,15 +24,17 @@ class ArgumentsSpec extends Specification {
         args.harVedlegg() == hasExpectedAttachment
         args.hasInputContent() == hasExpectedInputContent
         args.getInputContentAsStringList().size() == noOfRecords
+        args.isRunAsExternalProcess() == isRunAsExternalProcess
 
         where:
-        hasAttachment | attachment  || noOfRecords | hasExpectedAttachment | hasExpectedInputContent
-        "1"           | "123456789" || 1           | true                  | true
-        "1"           | " "         || 0           | true                  | false
-        "0"           | "123456789" || 1           | false                 | true
-        "0"           | ""          || 0           | false                 | false
-        "0"           | " "         || 0           | false                 | false
-        "0"           | "  "        || 0           | false                 | false
+        hasAttachment | attachment  | runAsExternalProcess || noOfRecords | hasExpectedAttachment | hasExpectedInputContent | isRunAsExternalProcess
+        "1"           | "123456789" | "0"                  || 1           | true                  | true                    | false
+        "1"           | "123456789" | "1"                  || 1           | true                  | true                    | true
+        "1"           | " "         | "0"                  || 0           | true                  | false                   | false
+        "0"           | "123456789" | "0"                  || 1           | false                 | true                    | false
+        "0"           | ""          | "0"                  || 0           | false                 | false                   | false
+        "0"           | " "         | "0"                  || 0           | false                 | false                   | false
+        "0"           | "  "        | "0"                  || 0           | false                 | false                   | false
     }
 
     @Unroll

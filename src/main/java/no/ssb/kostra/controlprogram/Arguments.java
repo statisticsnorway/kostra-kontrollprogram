@@ -87,14 +87,11 @@ public class Arguments {
                     break;
                 case 'a':
                     final var vedlegg = (String) optionsFound.get(key);
-                    if (vedlegg.equalsIgnoreCase("0"))
-                        harVedlegg = false;
+                    harVedlegg = vedlegg.equalsIgnoreCase("1");
                     break;
                 case 'e':
                     final var process = (String) optionsFound.get(key);
-                    if (process.equalsIgnoreCase("1"))
-                        isRunAsExternalProcess = true;
-
+                    isRunAsExternalProcess = process.equalsIgnoreCase("1");
                     break;
                 case '?':
 //                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
@@ -196,6 +193,10 @@ public class Arguments {
 
     public boolean isRunAsExternalProcess() {
         return isRunAsExternalProcess;
+    }
+
+    public String getNewline(){
+        return (isRunAsExternalProcess) ? "" : "\n";
     }
 
     @Override

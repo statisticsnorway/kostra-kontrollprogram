@@ -49,7 +49,7 @@ public class ArgumentsTest {
 
     @Test
     public void testArguments() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-i", "src/test/resources/15F/Testfil_21_OK_2020_15F_for_3401.xml"});
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
 
         assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
         assertTrue(args.getAargang().equalsIgnoreCase("9999"));
@@ -60,6 +60,43 @@ public class ArgumentsTest {
         assertTrue(args.getNavn().equalsIgnoreCase("Uoppgitt"));
         assertTrue(args.getOrgnr().equalsIgnoreCase("         "));
         assertTrue(args.getForetaknr().equalsIgnoreCase("         "));
+        assertFalse(args.isRunAsExternalProcess());
+        assertTrue(args.getNewline().equalsIgnoreCase("\n"));
+    }
+    @Test
+    public void testAllArgumentsAreSet() {
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-q", "1", "-r", "000000", "-n", "Name", "-u", "123456789", "-c", "987654321", "-a", "0", "-e", "1"});
+
+        assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
+        assertTrue(args.getAargang().equalsIgnoreCase("9999"));
+        assertTrue(args.getRegion().equalsIgnoreCase("000000"));
+
+        // test set values
+        assertTrue(args.getKvartal().equalsIgnoreCase("1"));
+        assertTrue(args.getNavn().equalsIgnoreCase("Name"));
+        assertTrue(args.getOrgnr().equalsIgnoreCase("123456789"));
+        assertTrue(args.getForetaknr().equalsIgnoreCase("987654321"));
+        assertFalse(args.harVedlegg());
+        assertTrue(args.isRunAsExternalProcess());
+        assertTrue(args.getNewline().equalsIgnoreCase(""));
+    }
+
+    @Test
+    public void testAllArgumentsAreSetToDefaultValues() {
+        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-q", " ", "-r", "000000", "-n", "Uoppgitt", "-u", "         ", "-c", "         ", "-a", "1", "-e", "0"});
+
+        assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
+        assertTrue(args.getAargang().equalsIgnoreCase("9999"));
+        assertTrue(args.getRegion().equalsIgnoreCase("000000"));
+
+        // test set values
+        assertTrue(args.getKvartal().equalsIgnoreCase(" "));
+        assertTrue(args.getNavn().equalsIgnoreCase("uoppgitt"));
+        assertTrue(args.getOrgnr().equalsIgnoreCase("         "));
+        assertTrue(args.getForetaknr().equalsIgnoreCase("         "));
+        assertTrue(args.harVedlegg());
+        assertFalse(args.isRunAsExternalProcess());
+        assertTrue(args.getNewline().equalsIgnoreCase("\n"));
     }
 
     @Test

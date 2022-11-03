@@ -1,0 +1,19 @@
+micronaut:
+  application:
+    name: kostra-kontrollprogram-web
+
+  views:
+    folder: static
+
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: /**/*
+        paths:
+          - classpath:static
+
+netty:
+  default:
+    allocator:
+      max-order: 3

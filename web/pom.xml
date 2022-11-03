@@ -23,6 +23,7 @@
 
         <kotlinVersion>1.7.20</kotlinVersion>
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
+        <sonar.projectKey>statisticsnorway_kostra-kontrollprogram-web</sonar.projectKey>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
     </properties>

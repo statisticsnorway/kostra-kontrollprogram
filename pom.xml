@@ -24,6 +24,10 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>statisticsnorway</sonar.organization>
         <sonar.projectKey>statisticsnorway_kostra-kontrollprogram</sonar.projectKey>
+        <sonar.exclusions>
+            **/Application.kt,
+            **/node_modules/**/*
+        </sonar.exclusions>
 
         <exec.mainClass>no.ssb.kostra.controlprogram.CLI</exec.mainClass>
     </properties>

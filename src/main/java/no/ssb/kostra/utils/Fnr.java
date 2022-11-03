@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
 public final class Fnr {
@@ -49,6 +50,13 @@ public final class Fnr {
         else k2 = 11 - rest;
 
         return (k1 == s[10]) && (k2 == s[11]);
+    }
+
+    public static boolean isPartiallyValidNorwId(final String fnr) {
+        if (isValidNorwId(fnr)) return true;
+        if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
+
+        return (isValidDate(fnr.substring(0, 6), "ddMMyy") && Stream.of("00100", "00200").anyMatch(it -> it.equalsIgnoreCase(fnr.substring(6, 11))));
     }
 
     public static int getAlderFromFnr(final String fnrDDMMYYSSGKK, final String rappAarYYYY) {

@@ -106,7 +106,7 @@ public class ControlSosial {
                         , "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret inneholder feil. "
                         + "Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt norsk personnummer eller d-nummer, "
                         + "skal feltet inneholde deltakeren fødselsnummer/d-nummer (11 siffer)."
-                        , Constants.CRITICAL_ERROR),
+                        , Constants.NORMAL_ERROR),
                 record.getFieldAsString("PERSON_FODSELSNR"));
     }
 

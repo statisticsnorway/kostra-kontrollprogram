@@ -31,6 +31,23 @@ class FnrSpec extends Specification {
         "           " || false
     }
 
+    def "should validate partial FNR"() {
+        expect:
+        isPartiallyValidNorwId(fnr) == result.toBoolean()
+
+        where:
+        fnr           || result
+        "01010150589" || true
+        "41010150572" || true
+        "01011200100" || true
+        "01011200200" || true
+        "01011200000" || false
+        "01011299999" || false
+        "           " || false
+        "1234567890"  || false
+
+    }
+
     def "should validate DUF"() {
         expect:
         isValidDUFnr(duf) == result.toBoolean()

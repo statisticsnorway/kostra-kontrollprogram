@@ -22,7 +22,7 @@
         <micronaut.runtime>netty</micronaut.runtime>
 
         <kotlinVersion>1.7.20</kotlinVersion>
-        <exec.mainClass>no.ssb.ApplicationKt</exec.mainClass>
+        <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
     </properties>
@@ -179,37 +179,6 @@
                         <configuration>
                             <arguments>run build</arguments>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.4.2</version>
-
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <outputDirectory>${project.build.directory}/jar</outputDirectory>
-                    <descriptors>
-                        <descriptor>src/main/resources/assembly.xml</descriptor>
-                    </descriptors>
-                    <archive>
-                        <manifest>
-                            <mainClass>no.ssb.kostra.web.ApplicationKt</mainClass>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>standalone</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>

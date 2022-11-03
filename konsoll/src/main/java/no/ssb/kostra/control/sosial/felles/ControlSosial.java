@@ -122,8 +122,8 @@ public class ControlSosial {
         final var dubletter = recordList.stream()
                 .filter(record -> Fnr.isValidNorwId(record.getFieldAsString("PERSON_FODSELSNR")))
                 .collect(Collectors.groupingBy(record ->
-                        record.getFieldAsTrimmedString("PERSON_FODSELSNR")
-                                + "|" + record.getFieldAsTrimmedString("STATUS")
+                                record.getFieldAsTrimmedString("PERSON_FODSELSNR")
+                                        + "|" + record.getFieldAsTrimmedString("STATUS")
                         , Collectors.toList()))
                 .entrySet()
                 .stream()

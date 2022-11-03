@@ -17,16 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control03Bydelsnummer;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control03Kommunenummer;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control04OppgaveAar;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control05AFodselsnummerDubletter;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control05BJournalnummerDubletter;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control05Fodselsnummer;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control06AlderUnder18Aar;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control07AlderEr68AarEllerOver;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control08Kjonn;
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.control09Sivilstand;
+import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
 import static no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.*;
 
 

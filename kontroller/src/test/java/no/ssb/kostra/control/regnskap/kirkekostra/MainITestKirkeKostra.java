@@ -3,7 +3,6 @@ package no.ssb.kostra.control.regnskap.kirkekostra;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.KostraRecord;
 import no.ssb.kostra.utils.TestRecordListInputAndResult;
 import org.junit.jupiter.api.Assertions;
@@ -127,19 +126,18 @@ public class MainITestKirkeKostra {
                         0F2020 300500976989732         3044 465       70
                         0F2020 300500976989732         3044 865      -60
                         """;
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
+        var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        var arguments = new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"},
+                byteArrayInputStream);
 
-        Arguments args = new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"});
-
-        ErrorReport er = Main.doControls(args);
+        var errorReport = Main.doControls(arguments);
 
         if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
+            System.out.print(errorReport.generateReport());
         }
 
-        Assertions.assertNotNull(er, "Has content ErrorReport");
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        Assertions.assertNotNull(errorReport, "Has content ErrorReport");
+        assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
 
     }
 //

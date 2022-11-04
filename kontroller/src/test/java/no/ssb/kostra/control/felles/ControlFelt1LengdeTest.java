@@ -10,25 +10,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ControlFelt1LengdeTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
-                , "TEST av blankt innhold", "Feil: fant ikke noe innhold", Constants.CRITICAL_ERROR);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " ",
+                "TEST av blankt innhold", "Feil: fant ikke noe innhold", Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testOK1() {
-        assertFalse(ControlFelt1Lengde.doControl(er, ere, "har innhold"));
+        assertFalse(ControlFelt1Lengde.doControl(errorReport, errorReportEntry, "har innhold"));
     }
 
     @Test
     public void testFail1() {
-        assertTrue(ControlFelt1Lengde.doControl(er, ere, ""));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        assertTrue(ControlFelt1Lengde.doControl(errorReport, errorReportEntry, ""));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

@@ -2,30 +2,15 @@ package no.ssb.kostra.control.regnskap.kvartal;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class MainITest {
-    InputStream sysInBackup;
-
-    @Before
-    public void beforeTest() {
-        sysInBackup = System.in; // backup System.in to restore it later
-    }
-
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
-    }
 
     @Test
     public void testDoControl0AK3NoErrors() {
@@ -53,21 +38,19 @@ public class MainITest {
                         0A20203303600                  1265 z          3""";
 
 
-        //@formatter:on
+        var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        var arguments = new Arguments(
+                new String[]{"-s", "0AK3", "-y", "2020", "-q", "3", "-r", "303600", "-n", "Nannestad Kommune"},
+                byteArrayInputStream);
 
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
-
-        Arguments args = new Arguments(new String[]{"-s", "0AK3", "-y", "2020", "-q", "3", "-r", "303600", "-n", "Nannestad Kommune"});
-
-        ErrorReport er = Main.doControls(args);
+        var errorReport = Main.doControls(arguments);
 
         if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
+            System.out.print(errorReport.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertNotNull("Has content ErrorReport", errorReport);
+        assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -96,18 +79,19 @@ public class MainITest {
 
         //@formatter:on
 
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
+        var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
 
-        Arguments args = new Arguments(new String[]{"-s", "0AK3", "-y", "2020", "-q", "3", "-r", "340000", "-n", "Innlandet Fylkeskommune"});
+        var arguments = new Arguments(new
+                String[]{"-s", "0AK3", "-y", "2020", "-q", "3", "-r", "340000", "-n", "Innlandet Fylkeskommune"},
+                byteArrayInputStream);
 
-        ErrorReport er = Main.doControls(args);
+        var errorReport = Main.doControls(arguments);
 
         if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
+            System.out.print(errorReport.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertNotNull("Has content ErrorReport", errorReport);
+        assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
 }

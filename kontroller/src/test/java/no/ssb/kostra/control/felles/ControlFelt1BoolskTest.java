@@ -10,25 +10,25 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ControlFelt1BoolskTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av boolsk", "Feil: fant boolsk", Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testOK1() {
-        ControlFelt1Boolsk.doControl(er, ere, 1, ">", 0);
+        ControlFelt1Boolsk.doControl(errorReport, errorReportEntry, 1, ">", 0);
     }
 
     @Test
     public void testFail1() {
-        ControlFelt1Boolsk.doControl(er, ere, 1, "<", 0);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        ControlFelt1Boolsk.doControl(errorReport, errorReportEntry, 1, "<", 0);
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

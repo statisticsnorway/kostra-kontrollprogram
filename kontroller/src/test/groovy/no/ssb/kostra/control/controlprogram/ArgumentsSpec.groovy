@@ -11,20 +11,21 @@ class ArgumentsSpec extends Specification {
     @Unroll
     def "test behaviour of attachment"() {
         given:
-        ByteArrayInputStream is = new ByteArrayInputStream(attachment.getBytes(StandardCharsets.ISO_8859_1))
-        System.setIn(is)
+        def inputStream = new ByteArrayInputStream(attachment.getBytes(StandardCharsets.ISO_8859_1))
 
         when:
-        Arguments args = new Arguments(new String[]{"-s", "test", "-y", "0000", "-r", "0000", "-a", hasAttachment, "-e", runAsExternalProcess})
-        args.getInputContentAsStringList()
+        def arguments = new Arguments(
+                new String[]{"-s", "test", "-y", "0000", "-r", "0000", "-a", hasAttachment, "-e", runAsExternalProcess},
+                inputStream)
 
+        arguments.getInputContentAsStringList()
 
         then:
         noExceptionThrown()
-        args.harVedlegg() == hasExpectedAttachment
-        args.hasInputContent() == hasExpectedInputContent
-        args.getInputContentAsStringList().size() == noOfRecords
-        args.isRunAsExternalProcess() == isRunAsExternalProcess
+        arguments.harVedlegg() == hasExpectedAttachment
+        arguments.hasInputContent() == hasExpectedInputContent
+        arguments.getInputContentAsStringList().size() == noOfRecords
+        arguments.isRunAsExternalProcess() == isRunAsExternalProcess
 
         where:
         hasAttachment | attachment  | runAsExternalProcess || noOfRecords | hasExpectedAttachment | hasExpectedInputContent | isRunAsExternalProcess

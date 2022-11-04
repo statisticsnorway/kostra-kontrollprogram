@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ControlFelt1ListeBlankTest {
-    private ErrorReport er;
+    private ErrorReport errorReport;
 
     static Stream<TestStringListInputAndResult> inputDoControlProvider() {
         return Stream.of(
@@ -32,15 +32,18 @@ public class ControlFelt1ListeBlankTest {
 
     @BeforeEach
     public void beforeEachTest() {
-        Arguments args0F = new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"});
-        er = new ErrorReport(args0F);
+        var args0F = new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"});
+        errorReport = new ErrorReport(args0F);
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputDoControlProvider")
     public void doControlTest(TestStringListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlFelt1ListeBlank.doControl(er, "Categori Title", "Title", inputAndResult.getStringList(), Constants.CRITICAL_ERROR));
-        System.out.println(er.generateReport());
-    }
+        assertEquals(inputAndResult.isResult(),
+                ControlFelt1ListeBlank.doControl(errorReport,
+                        "Categori Title", "Title",
+                        inputAndResult.getStringList(), Constants.CRITICAL_ERROR));
 
+        System.out.println(errorReport.generateReport());
+    }
 }

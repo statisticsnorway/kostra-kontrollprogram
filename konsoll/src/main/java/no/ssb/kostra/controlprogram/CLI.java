@@ -13,7 +13,7 @@ public class CLI {
         int error_type_found;
 
         try {
-            final var arguments = new Arguments(args);
+            final var arguments = new Arguments(args, System.in);
             final ErrorReport errorReport = ControlDispatcher.doControls(arguments);
 
             error_type_found = errorReport.getErrorType();

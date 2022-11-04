@@ -1,6 +1,5 @@
 package no.ssb.kostra.controlprogram;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,11 +7,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 public class ArgumentsTest {
-    InputStream sysInBackup;
-    private Arguments args;
+    InputStream inputStream;
+    private Arguments arguments;
     private String inputFileContent;
 
     @Before
@@ -22,23 +24,15 @@ public class ArgumentsTest {
                 0A20194040200                  1121 010     4306
                 0A20194040200                  1130 010      864""";
 
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
+        inputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
     }
-
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
-    }
-
 
     @Test
     public void ReadFileFromStdin() {
         try {
-            args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
+            arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"}, inputStream);
 
-            String result = String.join("\n", args.getInputContentAsStringList());
+            var result = String.join("\n", arguments.getInputContentAsStringList());
             assertEquals(result.length(), inputFileContent.length());
             assertTrue(result.equalsIgnoreCase(inputFileContent));
 
@@ -49,79 +43,85 @@ public class ArgumentsTest {
 
     @Test
     public void testArguments() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
+        arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"}, inputStream);
 
-        assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
-        assertTrue(args.getAargang().equalsIgnoreCase("9999"));
-        assertTrue(args.getRegion().equalsIgnoreCase("000000"));
+        assertTrue(arguments.getSkjema().equalsIgnoreCase("Test"));
+        assertTrue(arguments.getAargang().equalsIgnoreCase("9999"));
+        assertTrue(arguments.getRegion().equalsIgnoreCase("000000"));
 
         // test default values
-        assertTrue(args.getKvartal().equalsIgnoreCase(" "));
-        assertTrue(args.getNavn().equalsIgnoreCase("Uoppgitt"));
-        assertTrue(args.getOrgnr().equalsIgnoreCase("         "));
-        assertTrue(args.getForetaknr().equalsIgnoreCase("         "));
-        assertFalse(args.isRunAsExternalProcess());
-        assertTrue(args.getNewline().equalsIgnoreCase("\n"));
+        assertTrue(arguments.getKvartal().equalsIgnoreCase(" "));
+        assertTrue(arguments.getNavn().equalsIgnoreCase("Uoppgitt"));
+        assertTrue(arguments.getOrgnr().equalsIgnoreCase("         "));
+        assertTrue(arguments.getForetaknr().equalsIgnoreCase("         "));
+        assertFalse(arguments.isRunAsExternalProcess());
+        assertTrue(arguments.getNewline().equalsIgnoreCase("\n"));
     }
     @Test
     public void testAllArgumentsAreSet() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-q", "1", "-r", "000000", "-n", "Name", "-u", "123456789", "-c", "987654321", "-a", "0", "-e", "1"});
+        arguments = new Arguments(
+                new String[]{"-s", "Test", "-y", "9999", "-q", "1", "-r", "000000", "-n", "Name", "-u", "123456789", "-c", "987654321", "-a", "0", "-e", "1"},
+                inputStream);
 
-        assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
-        assertTrue(args.getAargang().equalsIgnoreCase("9999"));
-        assertTrue(args.getRegion().equalsIgnoreCase("000000"));
+        assertTrue(arguments.getSkjema().equalsIgnoreCase("Test"));
+        assertTrue(arguments.getAargang().equalsIgnoreCase("9999"));
+        assertTrue(arguments.getRegion().equalsIgnoreCase("000000"));
 
         // test set values
-        assertTrue(args.getKvartal().equalsIgnoreCase("1"));
-        assertTrue(args.getNavn().equalsIgnoreCase("Name"));
-        assertTrue(args.getOrgnr().equalsIgnoreCase("123456789"));
-        assertTrue(args.getForetaknr().equalsIgnoreCase("987654321"));
-        assertFalse(args.harVedlegg());
-        assertTrue(args.isRunAsExternalProcess());
-        assertTrue(args.getNewline().equalsIgnoreCase(""));
+        assertTrue(arguments.getKvartal().equalsIgnoreCase("1"));
+        assertTrue(arguments.getNavn().equalsIgnoreCase("Name"));
+        assertTrue(arguments.getOrgnr().equalsIgnoreCase("123456789"));
+        assertTrue(arguments.getForetaknr().equalsIgnoreCase("987654321"));
+        assertFalse(arguments.harVedlegg());
+        assertTrue(arguments.isRunAsExternalProcess());
+        assertTrue(arguments.getNewline().equalsIgnoreCase(""));
     }
 
     @Test
     public void testAllArgumentsAreSetToDefaultValues() {
-        args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-q", " ", "-r", "000000", "-n", "Uoppgitt", "-u", "         ", "-c", "         ", "-a", "1", "-e", "0"});
+        arguments = new Arguments(
+                new String[]{"-s", "Test", "-y", "9999", "-q", " ", "-r", "000000", "-n", "Uoppgitt", "-u", "         ", "-c", "         ", "-a", "1", "-e", "0"},
+                inputStream);
 
-        assertTrue(args.getSkjema().equalsIgnoreCase("Test"));
-        assertTrue(args.getAargang().equalsIgnoreCase("9999"));
-        assertTrue(args.getRegion().equalsIgnoreCase("000000"));
+        assertTrue(arguments.getSkjema().equalsIgnoreCase("Test"));
+        assertTrue(arguments.getAargang().equalsIgnoreCase("9999"));
+        assertTrue(arguments.getRegion().equalsIgnoreCase("000000"));
 
         // test set values
-        assertTrue(args.getKvartal().equalsIgnoreCase(" "));
-        assertTrue(args.getNavn().equalsIgnoreCase("uoppgitt"));
-        assertTrue(args.getOrgnr().equalsIgnoreCase("         "));
-        assertTrue(args.getForetaknr().equalsIgnoreCase("         "));
-        assertTrue(args.harVedlegg());
-        assertFalse(args.isRunAsExternalProcess());
-        assertTrue(args.getNewline().equalsIgnoreCase("\n"));
+        assertTrue(arguments.getKvartal().equalsIgnoreCase(" "));
+        assertTrue(arguments.getNavn().equalsIgnoreCase("uoppgitt"));
+        assertTrue(arguments.getOrgnr().equalsIgnoreCase("         "));
+        assertTrue(arguments.getForetaknr().equalsIgnoreCase("         "));
+        assertTrue(arguments.harVedlegg());
+        assertFalse(arguments.isRunAsExternalProcess());
+        assertTrue(arguments.getNewline().equalsIgnoreCase("\n"));
     }
 
     @Test
     public void testMissingArguments() {
-        Exception e1 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-y", "9999", "-r", "000000"}));
+        Exception e1 = assertThrows(
+                IllegalArgumentException.class,
+                () -> arguments = new Arguments(new String[]{"-y", "9999", "-r", "000000"}, inputStream));
 
-        String expectedMessage1 = "parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A";
-        String actualMessage1 = e1.getMessage();
+        var expectedMessage1 = "parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A";
+        var actualMessage1 = e1.getMessage();
 
         assertTrue(actualMessage1.contains(expectedMessage1));
 
-        Exception e2 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-s", "Test", "-r", "000000"}));
+        Exception e2 = assertThrows(IllegalArgumentException.class,
+                () -> arguments = new Arguments(new String[]{"-s", "Test", "-r", "000000"}, inputStream));
 
-        String expectedMessage2 = "parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020";
-        String actualMessage2 = e2.getMessage();
+        var expectedMessage2 = "parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020";
+        var actualMessage2 = e2.getMessage();
 
         assertTrue(actualMessage2.contains(expectedMessage2));
 
-        Exception e3 = assertThrows(IllegalArgumentException.class, () -> args = new Arguments(new String[]{"-s", "Test", "-y", "9999"}));
+        Exception e3 = assertThrows(IllegalArgumentException.class,
+                () -> arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999"}, inputStream));
 
-        String expectedMessage3 = "parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100";
-        String actualMessage3 = e3.getMessage();
+        var expectedMessage3 = "parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100";
+        var actualMessage3 = e3.getMessage();
 
         assertTrue(actualMessage3.contains(expectedMessage3));
-
     }
-
 }

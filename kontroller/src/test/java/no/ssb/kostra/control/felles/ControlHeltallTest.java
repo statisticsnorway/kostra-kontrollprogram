@@ -10,25 +10,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ControlHeltallTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
-                , "TEST av Heltall", "Feil i Heltall", Constants.CRITICAL_ERROR);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " ",
+                "TEST av Heltall", "Feil i Heltall", Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testOK1() {
-        assertFalse(ControlHeltall.doControl(er, ere, 12345));
+        assertFalse(ControlHeltall.doControl(errorReport, errorReportEntry, 12345));
     }
 
     @Test
     public void testHeltallFail1() {
-        assertTrue(ControlHeltall.doControl(er, ere, null));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        assertTrue(ControlHeltall.doControl(errorReport, errorReportEntry, null));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

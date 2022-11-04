@@ -11,38 +11,39 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ControlUlovligTegnITallfeltTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
-                , "TEST av Ulovlige tegn i tallfelt", "Ulovlige tegn i tallfelt", Constants.CRITICAL_ERROR);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " ",
+                "TEST av Ulovlige tegn i tallfelt", "Ulovlige tegn i tallfelt",
+                Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testOK() {
-        assertFalse(ControlUlovligTegnITallfelt.doControl(er, ere, "1"));
-        assertFalse(ControlUlovligTegnITallfelt.doControl(er, ere, "-1"));
-        assertFalse(ControlUlovligTegnITallfelt.doControl(er, ere, " 1"));
-        assertFalse(ControlUlovligTegnITallfelt.doControl(er, ere, " -1"));
+        assertFalse(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "1"));
+        assertFalse(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "-1"));
+        assertFalse(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, " 1"));
+        assertFalse(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, " -1"));
     }
 
     @Test
     public void testFail1() {
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "\t1"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "-\t1"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, " 1\t"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "\t -1"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "\t1"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "-\t1"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, " 1\t"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "\t -1"));
     }
 
     @Test
     public void testFail2() {
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "1A"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "-1A"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, " 1A"));
-        assertTrue(ControlUlovligTegnITallfelt.doControl(er, ere, "A -1"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "1A"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "-1A"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, " 1A"));
+        assertTrue(ControlUlovligTegnITallfelt.doControl(errorReport, errorReportEntry, "A -1"));
     }
 }

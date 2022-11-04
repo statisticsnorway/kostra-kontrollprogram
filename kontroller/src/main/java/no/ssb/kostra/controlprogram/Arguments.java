@@ -20,6 +20,7 @@ public class Arguments {
     private boolean harVedlegg = true;
     private boolean isRunAsExternalProcess = false;
 
+    private InputStream inputFileStream = null;
     private List<String> inputFileContent = null;
 
     public Arguments() {
@@ -47,7 +48,13 @@ public class Arguments {
         }
     }
 
+    public Arguments(final String[] argv, final InputStream inputFileStream) {
+        this(argv);
+        this.inputFileStream = inputFileStream;
+    }
+
     public Arguments(final String[] argv) {
+
         GetOptDesc[] options = {
                 new GetOptDesc('s', "schema", true),
                 new GetOptDesc('y', "year", true),
@@ -153,7 +160,7 @@ public class Arguments {
         if (this.inputFileContent == null) {
             this.inputFileContent = new ArrayList<>();
 
-            try (var reader = new BufferedReader(new InputStreamReader(System.in))) {
+            try (var reader = new BufferedReader(new InputStreamReader(inputFileStream))) {
                 String line;
 
                 while ((line = reader.readLine()) != null) {
@@ -170,7 +177,7 @@ public class Arguments {
     }
 
     public InputStream getInputContentAsInputStream() {
-        return System.in;
+        return inputFileStream;
     }
 
     public void setInputFileContent(final List<String> inputFileContent) {

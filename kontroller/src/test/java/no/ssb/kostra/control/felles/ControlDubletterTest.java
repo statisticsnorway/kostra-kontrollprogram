@@ -15,13 +15,14 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 
 public class ControlDubletterTest {
-    private ErrorReport er;
+    private ErrorReport errorReport;
     private List<FieldDefinition> fieldDefinitions;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+
         fieldDefinitions = List.of(
                 new FieldDefinition(1, "KeyA", "String", "", 1, 5, new ArrayList<>(), "", true),
                 new FieldDefinition(2, "ValueA", "String", "", 6, 6, new ArrayList<>(), "", true),
@@ -36,9 +37,9 @@ public class ControlDubletterTest {
                 .map(p -> new KostraRecord(p, fieldDefinitions))
                 .toList();
 
-        var hasDuplicates = ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B"));
+        var hasDuplicates = ControlDubletter.doControl(recordList, errorReport, List.of("ValueA", "ValueB"), List.of("A", "B"));
         assertTrue(hasDuplicates);
-        assertEquals(Constants.NORMAL_ERROR, er.getErrorType());
+        assertEquals(Constants.NORMAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -47,6 +48,6 @@ public class ControlDubletterTest {
                 .map(p -> new KostraRecord(p, fieldDefinitions))
                 .toList();
 
-        assertFalse(ControlDubletter.doControl(recordList, er, List.of("ValueA", "ValueB"), List.of("A", "B")));
+        assertFalse(ControlDubletter.doControl(recordList, errorReport, List.of("ValueA", "ValueB"), List.of("A", "B")));
     }
 }

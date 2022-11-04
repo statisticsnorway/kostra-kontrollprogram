@@ -137,105 +137,191 @@ public class ControlIntegritetTest {
 
     static Stream<TestRecordListInputAndResult> inputDoControl0FProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(
+                        new Arguments(
+                                new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}),
+                        List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695",
+                                FieldDefinitions.getFieldDefinitions())),
+                        false,
+                        Constants.NO_ERROR)
         );
     }
 
     static Stream<TestRecordListInputAndResult> inputDoControl0GProvider() {
         return Stream.of(
-                new TestRecordListInputAndResult(new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"}), List.of(new KostraRecord("0G2020 300500976989732         3041 650    -8695", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)
+                new TestRecordListInputAndResult(
+                        new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"}),
+                        List.of(new KostraRecord("0G2020 300500976989732         3041 650    -8695",
+                                FieldDefinitions.getFieldDefinitions())),
+                        false,
+                        Constants.NO_ERROR)
         );
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputSkjemaProvider")
     public void controlSkjemaTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlSkjema(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlSkjema(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputAargangProvider")
     public void controlAargangTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlAargang(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlAargang(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputKvartalProvider")
     public void controlKvartalTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlKvartal(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlKvartal(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputRegionProvider")
     public void controlRegionTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlRegion(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlRegion(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputOrganisasjonsnummerProvider")
     public void controlOrganisasjonsnummerTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlOrganisasjonsnummer(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlOrganisasjonsnummer(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputForetaksnummerProvider")
     public void controlForetaksnummerTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlForetaksnummer(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlForetaksnummer(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputKontoklasseProvider")
     public void controlKontoklasseTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlKontoklasse(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), List.of("3")));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlKontoklasse(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList(),
+                        List.of("3")));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputFunksjonProvider")
     public void controlFunksjonTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlFunksjon(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), List.of("041 ")));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlFunksjon(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList(),
+                        List.of("041 ")));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputArtProvider")
     public void controlArtTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlArt(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), List.of("650")));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlArt(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList(),
+                        List.of("650")));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputKapittelProvider")
     public void controlKapittelTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlKapittel(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), List.of("1234")));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlKapittel(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList(),
+                        List.of("1234")));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputSektorProvider")
     public void controlSektorTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlSektor(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), List.of("123")));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlSektor(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList(),
+                        List.of("123")));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputBelopProvider")
     public void controlBelopTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlBelop(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlBelop(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputBelopProvider")
     public void controlUgyldigeBelopTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), ControlIntegritet.controlUgyldigeBelop(inputAndResult.getErrorReport(), inputAndResult.getRecordList()));
+        assertEquals(
+                inputAndResult.isResult(),
+                ControlIntegritet.controlUgyldigeBelop(
+                        inputAndResult.getErrorReport(),
+                        inputAndResult.getRecordList()));
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputDoControl0FProvider")
     public void doControl0FTest(TestRecordListInputAndResult inputAndResult) {
-        ControlIntegritet.doControl(inputAndResult.getRecordList(), inputAndResult.getErrorReport(), inputAndResult.getErrorReport().getArgs(), List.of("0F"), List.of("0G"), List.of("3"), List.of("041 "), List.of("650"));
+        ControlIntegritet.doControl(
+                inputAndResult.getRecordList(),
+                inputAndResult.getErrorReport(),
+                inputAndResult.getErrorReport().getArgs(),
+                List.of("0F"),
+                List.of("0G"),
+                List.of("3"),
+                List.of("041 "),
+                List.of("650"));
+
         assertEquals(Constants.NO_ERROR, inputAndResult.getErrorReport().getErrorType());
     }
 
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputDoControl0GProvider")
     public void doControl0GTest(TestRecordListInputAndResult inputAndResult) {
-        ControlIntegritet.doControl(inputAndResult.getRecordList(), inputAndResult.getErrorReport(), inputAndResult.getErrorReport().getArgs(), List.of("0F"), List.of("0G"), List.of("3"), List.of("041 "), List.of("650"));
+        ControlIntegritet.doControl(
+                inputAndResult.getRecordList(),
+                inputAndResult.getErrorReport(),
+                inputAndResult.getErrorReport().getArgs(),
+                List.of("0F"),
+                List.of("0G"),
+                List.of("3"),
+                List.of("041 "),
+                List.of("650"));
+
         assertEquals(Constants.NO_ERROR, inputAndResult.getErrorReport().getErrorType());
     }
 }

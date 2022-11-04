@@ -11,8 +11,8 @@ public class ControlFelt1ListeInneholderKodeFraKodelisteTest {
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        errorReport = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
     }
 
 //    @Test

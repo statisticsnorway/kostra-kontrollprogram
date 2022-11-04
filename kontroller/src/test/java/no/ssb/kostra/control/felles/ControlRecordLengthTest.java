@@ -11,65 +11,65 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ControlRecordLengthTest {
-    private ErrorReport er;
+    private ErrorReport errorReport;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000"});
+        errorReport = new ErrorReport(arguments);
     }
 
     @Test
     public void testOK() {
-        boolean result = ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 2);
-        System.out.println(er.generateReport());
+        var result = ControlRecordLengde.doControl(List.of("12", "13", "14"), errorReport, 2);
+        System.out.println(errorReport.generateReport());
 
         assertFalse(result);
     }
 
     @Test
     public void testIncorrectLengthFail() {
-        boolean result = ControlRecordLengde.doControl(List.of("12", "13", "14"), er, 1);
-        System.out.println(er.generateReport());
+        var result = ControlRecordLengde.doControl(List.of("12", "13", "14"), errorReport, 1);
+        System.out.println(errorReport.generateReport());
 
         assertTrue(result);
-        assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
-        assertTrue(er.generateReport().contains("Gjelder for linjene"));
+        assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);
+        assertTrue(errorReport.generateReport().contains("Gjelder for linjene"));
     }
 
     @Test
     public void testNoDataInvalidFileFail() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        errorReport = new ErrorReport(arguments);
 
-        boolean result = ControlRecordLengde.doControl(List.of("Invalid file"), er, 1);
-        System.out.println(er.generateReport());
+        var result = ControlRecordLengde.doControl(List.of("Invalid file"), errorReport, 1);
+        System.out.println(errorReport.generateReport());
 
         assertTrue(result);
-        assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
+        assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);
     }
 
     @Test
     public void testNoDataOnlySpacesOK() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        errorReport = new ErrorReport(arguments);
 
-        boolean result = ControlRecordLengde.doControl(List.of(" "), er, 1);
-        System.out.println(er.generateReport());
+        var result = ControlRecordLengde.doControl(List.of(" "), errorReport, 1);
+        System.out.println(errorReport.generateReport());
 
         assertFalse(result);
-        assertEquals(er.getErrorType(), Constants.NO_ERROR);
+        assertEquals(errorReport.getErrorType(), Constants.NO_ERROR);
     }
 
     @Test
     public void testInvalidCharsFail() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "000000", "-a", "0"});
+        errorReport = new ErrorReport(arguments);
 
-        boolean result = ControlRecordLengde.doControl(List.of("\t"), er, 1);
-        System.out.println(er.generateReport());
+        var result = ControlRecordLengde.doControl(List.of("\t"), errorReport, 1);
+        System.out.println(errorReport.generateReport());
 
         assertTrue(result);
-        assertEquals(er.getErrorType(), Constants.CRITICAL_ERROR);
+        assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);
     }
 }

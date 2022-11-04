@@ -11,13 +11,13 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ControlFilbeskrivelseTest {
-    private ErrorReport er;
-    private KostraRecord r;
+    private ErrorReport errorReport;
+    private KostraRecord kostraRecord;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "0T", "-y", "2020", "-r", "030100"});
-        er = new ErrorReport(args);
+        var arguments = new Arguments(new String[]{"-s", "0T", "-y", "2020", "-r", "030100"});
+        errorReport = new ErrorReport(arguments);
     }
 
     @Test
@@ -26,8 +26,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
         var record1 = "OK   ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -36,9 +36,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, -1, new ArrayList<>(), "", false)
         );
         var record1 = "FAIL!";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
 
@@ -48,8 +48,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", false)
         );
         var record1 = "OK   ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -59,8 +59,8 @@ public class ControlFilbeskrivelseTest {
         );
 
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -69,8 +69,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
         var record1 = "OKstr";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -79,9 +79,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, new ArrayList<>(), "", true)
         );
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -90,8 +90,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         var record1 = "ABCDE";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -100,8 +100,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -110,9 +110,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "optionalString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", false)
         );
         var record1 = "FAIL!";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -121,8 +121,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         var record1 = "ABCDE";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -131,9 +131,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         var record1 = "FAIL!";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -142,9 +142,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryString", "String", "", 1, 5, List.of(new Code("ABCDE", "ABCDE")), "", true)
         );
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -153,8 +153,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         var record1 = "    1";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -163,8 +163,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -173,9 +173,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalInteger", "Integer", "", 1, 5, new ArrayList<>(), "", false)
         );
         var record1 = "FAIL!";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -184,8 +184,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         var record1 = "    1";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -194,9 +194,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         var record1 = "     ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -205,9 +205,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryInteger", "Integer", "", 1, 5, new ArrayList<>(), "", true)
         );
         var record1 = "FAIL!";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
 
@@ -217,8 +217,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         var record1 = "20200101";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -227,9 +227,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         var record1 = "20202020";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -238,9 +238,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         var record1 = "        ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -249,9 +249,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "", true)
         );
         var record1 = "20200101";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -260,9 +260,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", true)
         );
         var record1 = "FAIL!   ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -271,9 +271,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "MandatoryDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         var record1 = "20200000";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -282,8 +282,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         var record1 = "20200101";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -292,9 +292,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         var record1 = "20202020";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -303,8 +303,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         var record1 = "        ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertFalse(ControlFilbeskrivelse.doControl(List.of(r), er));
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertFalse(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
     }
 
     @Test
@@ -313,9 +313,9 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "", false)
         );
         var record1 = "20200101";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
     @Test
@@ -324,8 +324,8 @@ public class ControlFilbeskrivelseTest {
                 new FieldDefinition(1, "OptionalDate", "Date", "", 1, 8, new ArrayList<>(), "yyyyMMdd", false)
         );
         var record1 = "FAIL!   ";
-        r = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
-        assertTrue(ControlFilbeskrivelse.doControl(List.of(r), er));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        kostraRecord = Utils.addLineNumbering(new KostraRecord(record1, fieldDefinitions));
+        assertTrue(ControlFilbeskrivelse.doControl(List.of(kostraRecord), errorReport));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

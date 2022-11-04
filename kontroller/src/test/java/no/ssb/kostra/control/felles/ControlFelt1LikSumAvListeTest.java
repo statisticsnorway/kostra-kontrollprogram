@@ -11,17 +11,19 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ControlFelt1LikSumAvListeTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
     private KostraRecord r1;
     private KostraRecord r2;
 
     @Before
     public void beforeTest() {
-        var args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
-                , "TEST av Sumfelt er like summen av felt i liste", "Feil: Sumfeltet er forskjellig fra summen til feltene i liste", Constants.CRITICAL_ERROR);
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " ",
+                "TEST av Sumfelt er like summen av felt i liste", "Feil: Sumfeltet er forskjellig fra summen til feltene i liste",
+                Constants.CRITICAL_ERROR);
+
         var fieldDefinitions = List.of(
                 new FieldDefinition(1, "felt1", "String", "", 1, 2, new ArrayList<>(), "", false),
                 new FieldDefinition(2, "felt2", "String", "", 3, 4, new ArrayList<>(), "", false),
@@ -75,14 +77,14 @@ public class ControlFelt1LikSumAvListeTest {
     @Test
     public void testOK1() {
         var matrix = ControlFelt1LikSumAvListe.createFieldList("heltall", List.of("RS", "R1", "R2"), List.of("CS", "C1", "C2"));
-        assertFalse(ControlFelt1LikSumAvListe.doControl(r1, er, ere, matrix));
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        assertFalse(ControlFelt1LikSumAvListe.doControl(r1, errorReport, errorReportEntry, matrix));
+        assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
 
     @Test
     public void testFAIL1() {
         var matrix = ControlFelt1LikSumAvListe.createFieldList("heltall", List.of("RS", "R1", "R2"), List.of("CS", "C1", "C2"));
-        assertTrue(ControlFelt1LikSumAvListe.doControl(r2, er, ere, matrix));
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        assertTrue(ControlFelt1LikSumAvListe.doControl(r2, errorReport, errorReportEntry, matrix));
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

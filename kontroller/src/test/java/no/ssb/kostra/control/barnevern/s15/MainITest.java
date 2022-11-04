@@ -2,29 +2,19 @@ package no.ssb.kostra.control.barnevern.s15;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class MainITest {
-    InputStream sysInBackup;
-
-    @Before
-    public void beforeTest() {
-        sysInBackup = System.in; // backup System.in to restore it later
-    }
-
-    @After
-    public void afterTest() {
-        System.setIn(sysInBackup);
-    }
 
     @Test
     public void testFail00Blank() {
@@ -113,20 +103,17 @@ public class MainITest {
             }
         }
 
-        sysInBackup = System.in; // backup System.in to restore it later
-        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        System.setIn(in);
+        var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        var arguments = new Arguments(cliArgs, byteArrayInputStream);
 
-        Arguments args = new Arguments(cliArgs);
-
-        ErrorReport er = Main.doControls(args);
+        var errorReport = Main.doControls(arguments);
 
         if (Constants.DEBUG) {
-            System.out.print(er.generateReport());
+            System.out.print(errorReport.generateReport());
         }
 
-        assertNotNull("Has content ErrorReport", er);
-        assertEquals(expectedError, er.getErrorType());
+        assertNotNull("Has content ErrorReport", errorReport);
+        assertEquals(expectedError, errorReport.getErrorType());
     }
 
     private String readFromInputStream(InputStream inputStream) {

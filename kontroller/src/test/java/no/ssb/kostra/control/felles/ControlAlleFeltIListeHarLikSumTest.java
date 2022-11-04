@@ -11,15 +11,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class ControlAlleFeltIListeHarLikSumTest {
-    private ErrorReport er;
-    private ErrorReportEntry ere;
+    private ErrorReport errorReport;
+    private ErrorReportEntry errorReportEntry;
     private List<FieldDefinition> fieldDefinitions;
 
     @Before
     public void beforeTest() {
-        Arguments args = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
-        er = new ErrorReport(args);
-        ere = new ErrorReportEntry(" ", " ", " ", " "
+        var arguments = new Arguments(new String[]{"-s", "Test", "-y", "9999", "-r", "888888"});
+        errorReport = new ErrorReport(arguments);
+        errorReportEntry = new ErrorReportEntry(" ", " ", " ", " "
                 , "TEST av alle felt i liste har like sum", "Feil: Alle summene er ikke identiske", Constants.CRITICAL_ERROR);
         fieldDefinitions = List.of(
                 new FieldDefinition(1, "felt1", "String", "", 1, 2, new ArrayList<>(), "", false),
@@ -34,15 +34,15 @@ public class ControlAlleFeltIListeHarLikSumTest {
     public void testOK1() {
         var sumList = List.of("sum_1", "sum_2", "sum_3");
         var r1 = new KostraRecord("F1F2 1 1 1", fieldDefinitions);
-        ControlAlleFeltIListeHarLikSum.doControl(r1, er, ere, sumList);
-        assertEquals(Constants.NO_ERROR, er.getErrorType());
+        ControlAlleFeltIListeHarLikSum.doControl(r1, errorReport, errorReportEntry, sumList);
+        assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
 
     @Test
     public void testFAIL1() {
         var sumList = List.of("sum_1", "sum_2", "sum_3");
         var r2 = new KostraRecord("F1F2 1 2 3", fieldDefinitions);
-        ControlAlleFeltIListeHarLikSum.doControl(r2, er, ere, sumList);
-        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+        ControlAlleFeltIListeHarLikSum.doControl(r2, errorReport, errorReportEntry, sumList);
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 }

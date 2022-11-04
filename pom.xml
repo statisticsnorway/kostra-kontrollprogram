@@ -8,6 +8,7 @@
     <modules>
         <module>konsoll</module>
         <module>web</module>
+        <module>kontroller</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
@@ -59,7 +60,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>${project.build.directory}/jar</outputDirectory>
                     <descriptors>
-                        <descriptor>konsoll/src/main/resources/assembly.xml</descriptor>
+                        <descriptor>kontroller/src/main/resources/assembly.xml</descriptor>
                     </descriptors>
                     <archive>
                         <manifest>

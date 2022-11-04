@@ -8,10 +8,13 @@ import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.web.viewmodel.ReportRequestVm
 
 fun ReportRequestVm.toKostraArguments(): Arguments = Arguments(
-    arrayOf(
-        SCHEMA_ABBR.toString(), this.skjema,
-        YEAR_ABBR.toString(), this.aar.toString(),
-        REGION_ABBR.toString(), this.region,
-        NAME_ABBR.toString(), this.organisasjon ?: "UOPPGITT"
-    ),
-    this.contentAsInputStream)
+    mapOf(
+        SCHEMA_ABBR to this.skjema,
+        YEAR_ABBR to this.aar.toString(),
+        REGION_ABBR to this.region,
+        NAME_ABBR to (this.organisasjon ?: "UOPPGITT")
+    ).entries.flatMap { (arg, argValue) ->
+        listOf("-$arg", argValue)
+    }.toTypedArray(),
+    this.contentAsInputStream
+)

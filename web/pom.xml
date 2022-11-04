@@ -41,6 +41,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>no.ssb.kostra</groupId>
+            <artifactId>kostra-kontroller</artifactId>
+            <version>LOCAL-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
         </dependency>

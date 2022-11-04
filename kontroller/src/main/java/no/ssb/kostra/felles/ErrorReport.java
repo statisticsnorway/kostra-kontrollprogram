@@ -176,6 +176,21 @@ public class ErrorReport {
         return report.toString();
     }
 
+    // used by web version
+    public Map<String, Map<String, Map<String, List<String>>>> getRapportMap() {
+        return rapportMap;
+    }
+
+    // used by web version
+    public long getCount() {
+        return count;
+    }
+
+    // used by web version
+    public Arguments getArgs() {
+        return args;
+    }
+
     public int getErrorType() {
         return errorType;
     }
@@ -194,9 +209,5 @@ public class ErrorReport {
 
     public void addStats(final StatsReportEntry entry) {
         this.stats.add(entry);
-    }
-
-    public Arguments getArgs() {
-        return args;
     }
 }

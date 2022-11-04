@@ -1,0 +1,54 @@
+package no.ssb.kostra.web.extension
+
+import no.ssb.kostra.controlprogram.Arguments
+import no.ssb.kostra.felles.Constants.CRITICAL_ERROR
+import no.ssb.kostra.felles.Constants.NORMAL_ERROR
+import no.ssb.kostra.felles.Constants.PARAMETER_ERROR
+import no.ssb.kostra.felles.Constants.SYSTEM_ERROR
+import no.ssb.kostra.felles.ErrorReport
+import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import no.ssb.kostra.web.viewmodel.ErrorDetailsVm
+import no.ssb.kostra.web.viewmodel.ErrorReportVm
+import no.ssb.kostra.web.viewmodel.ReportRequestVm
+
+fun Arguments.toReportRequestVm(): ReportRequestVm {
+    return ReportRequestVm(
+        aar = this.aargang.toInt(),
+        skjema = this.skjema,
+        region = this.region,
+        organisasjon = this.navn
+    )
+}
+
+fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {
+    NORMAL_ERROR -> KostraErrorCode.NORMAL_ERROR
+    CRITICAL_ERROR -> KostraErrorCode.CRITICAL_ERROR
+    SYSTEM_ERROR -> KostraErrorCode.SYSTEM_ERROR
+    PARAMETER_ERROR -> KostraErrorCode.PARAMETER_ERROR
+    else -> KostraErrorCode.NO_ERROR
+}
+
+fun ErrorReport.toErrorReportVm(): ErrorReportVm {
+
+    val errorReportEntries = this.rapportMap.entries.flatMap { (saksbehandler, errorDetails) ->
+        errorDetails.entries.flatMap { (journalnummer, journalDetails) ->
+            journalDetails.map { (_, errorList) ->
+                ErrorDetailsVm(
+                    journalnummer = journalnummer,
+                    saksbehandler = saksbehandler,
+                    kontrollnummer = errorList[0],
+                    kontrolltekst = errorList[1],
+                    feilkode = errorList[2].toInt().toKostraErrorCode()
+                )
+            }
+        }
+    }
+
+    return ErrorReportVm(
+        innparametere = this.args.toReportRequestVm(),
+        antallKontroller = this.count.toInt(),
+        feil = errorReportEntries,
+        feilkode = errorReportEntries.map { it.feilkode }
+            .maxByOrNull { it.ordinal } ?: KostraErrorCode.NO_ERROR
+    )
+}

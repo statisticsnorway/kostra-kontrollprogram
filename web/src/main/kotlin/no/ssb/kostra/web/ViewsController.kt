@@ -5,6 +5,9 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.views.View
 
+/**
+ * Controller for serving React index.html
+ */
 @Controller("/")
 class ViewsController {
 

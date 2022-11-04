@@ -6,9 +6,9 @@ import no.ssb.kostra.felles.Constants.NORMAL_ERROR
 import no.ssb.kostra.felles.Constants.PARAMETER_ERROR
 import no.ssb.kostra.felles.Constants.SYSTEM_ERROR
 import no.ssb.kostra.felles.ErrorReport
-import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.ErrorDetailsVm
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
+import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.ReportRequestVm
 
 fun Arguments.toReportRequestVm(): ReportRequestVm {
@@ -16,7 +16,8 @@ fun Arguments.toReportRequestVm(): ReportRequestVm {
         aar = this.aargang.toInt(),
         skjema = this.skjema,
         region = this.region,
-        organisasjon = this.navn
+        organisasjon = this.navn,
+        base64EncodedContent = null
     )
 }
 

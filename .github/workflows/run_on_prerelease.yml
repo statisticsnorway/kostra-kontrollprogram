@@ -1,8 +1,9 @@
 name: Create pre-release
 
 on:
-  release:
-    types: [prereleased]
+  push:
+    tags:
+      - "pre-release-v*.*.*"
 
 jobs:
   build:

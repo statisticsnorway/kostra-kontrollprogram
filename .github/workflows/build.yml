@@ -21,11 +21,14 @@ jobs:
       - name: Output tag name
         run: echo "github.ref_name = ${{github.ref_name}}"
 
+      - name: Set version with Maven
+        run: mvn --batch-mode --update-snapshots versions:set -DnewVersion=${{github.ref_name}}
+
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots -Drevision=${{github.ref_name}} package
+        run: mvn --batch-mode package
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./target/jar/kostra-kontrollprogram-${{github.ref_name}}.jar
+            ./konsoll/target/jar/kostra-kontrollprogram-${{github.ref_name}}.jar

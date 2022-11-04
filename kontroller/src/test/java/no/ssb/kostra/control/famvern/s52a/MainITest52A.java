@@ -2,7 +2,6 @@ package no.ssb.kostra.control.famvern.s52a;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,8 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class MainITest52A {
 
-    private Arguments args;
-
+    private Arguments arguments;
 
     @Before
     public void beforeTest() {
@@ -63,15 +61,13 @@ public class MainITest52A {
                 6676000170201037000101202011119761 1113  1       0302202021                 1 122222220302              003000003005      00300521          10120052020
                 """;
 
-        //@formatter:on
-
         var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-        args = new Arguments(new String[]{"-s", "52AF", "-y", "2020", "-r", "667600"}, byteArrayInputStream);
+        arguments = new Arguments(new String[]{"-s", "52AF", "-y", "2020", "-r", "667600"}, byteArrayInputStream);
     }
 
     @Test
     public void testDoControl() {
-        ErrorReport errorReport = Main.doControls(args);
+        var errorReport = Main.doControls(arguments);
 
         if (Constants.DEBUG) {
             System.out.print(errorReport.generateReport());

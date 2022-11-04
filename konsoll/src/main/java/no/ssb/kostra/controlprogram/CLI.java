@@ -1,7 +1,6 @@
 package no.ssb.kostra.controlprogram;
 
 import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +13,7 @@ public class CLI {
 
         try {
             final var arguments = new Arguments(args, System.in);
-            final ErrorReport errorReport = ControlDispatcher.doControls(arguments);
+            final var errorReport = ControlDispatcher.doControls(arguments);
 
             error_type_found = errorReport.getErrorType();
 

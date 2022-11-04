@@ -8,6 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static no.ssb.kostra.controlprogram.ArgumentConstants.ATTACHMENT_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.COMPANY_ORGNR_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.EXTERNAL_PROCESS_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.NAME_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.QUARTER_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.REGION_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.SCHEMA_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.UNIT_ORGNR_ABBR;
+import static no.ssb.kostra.controlprogram.ArgumentConstants.YEAR_ABBR;
+
 @SuppressWarnings("SpellCheckingInspection")
 public class Arguments {
     private String skjema = " ";
@@ -23,8 +33,7 @@ public class Arguments {
     private InputStream inputFileStream = null;
     private List<String> inputFileContent = null;
 
-    public Arguments() {
-    }
+    public Arguments() { }
 
     public Arguments(
             final String skjema, final String aargang, final String kvartal, final String region,
@@ -41,6 +50,7 @@ public class Arguments {
         this.harVedlegg = harVedlegg;
         this.isRunAsExternalProcess = isRunAsExternalProcess;
         this.inputFileContent = new ArrayList<>();
+
         for (var line : inputFileContent) {
             if (line != null && line.trim().length() != 0) {
                 this.inputFileContent.add(line);
@@ -53,18 +63,19 @@ public class Arguments {
         this.inputFileStream = inputFileStream;
     }
 
+    // for testing only
     public Arguments(final String[] argv) {
 
         GetOptDesc[] options = {
-                new GetOptDesc('s', "schema", true),
-                new GetOptDesc('y', "year", true),
-                new GetOptDesc('q', "quarter", true),
-                new GetOptDesc('r', "region", true),
-                new GetOptDesc('n', "name", true),
-                new GetOptDesc('u', "unit-orgnr", true),
-                new GetOptDesc('c', "company-orgnr", true),
-                new GetOptDesc('a', "attachment", true),
-                new GetOptDesc('e', "external-process", true)
+                new GetOptDesc(SCHEMA_ABBR, "schema", true),
+                new GetOptDesc(YEAR_ABBR, "year", true),
+                new GetOptDesc(QUARTER_ABBR, "quarter", true),
+                new GetOptDesc(REGION_ABBR, "region", true),
+                new GetOptDesc(NAME_ABBR, "name", true),
+                new GetOptDesc(UNIT_ORGNR_ABBR, "unit-orgnr", true),
+                new GetOptDesc(COMPANY_ORGNR_ABBR, "company-orgnr", true),
+                new GetOptDesc(ATTACHMENT_ABBR, "attachment", true),
+                new GetOptDesc(EXTERNAL_PROCESS_ABBR, "external-process", true)
         };
 
         final var parser = new GetOpt(options);
@@ -73,32 +84,32 @@ public class Arguments {
             final var key = (String) o;
             final var c = key.charAt(0);
             switch (c) {
-                case 's':
+                case SCHEMA_ABBR:
                     skjema = (String) optionsFound.get(key);
                     break;
-                case 'y':
+                case YEAR_ABBR:
                     aargang = (String) optionsFound.get(key);
                     break;
-                case 'q':
+                case QUARTER_ABBR:
                     kvartal = (String) optionsFound.get(key);
                     break;
-                case 'r':
+                case REGION_ABBR:
                     region = (String) optionsFound.get(key);
                     break;
-                case 'n':
+                case NAME_ABBR:
                     navn = (String) optionsFound.get(key);
                     break;
-                case 'u':
+                case UNIT_ORGNR_ABBR:
                     orgnr = (String) optionsFound.get(key);
                     break;
-                case 'c':
+                case COMPANY_ORGNR_ABBR:
                     foretaknr = (String) optionsFound.get(key);
                     break;
-                case 'a':
+                case ATTACHMENT_ABBR:
                     final var vedlegg = (String) optionsFound.get(key);
                     harVedlegg = vedlegg.equalsIgnoreCase("1");
                     break;
-                case 'e':
+                case EXTERNAL_PROCESS_ABBR:
                     final var process = (String) optionsFound.get(key);
                     isRunAsExternalProcess = process.equalsIgnoreCase("1");
                     break;

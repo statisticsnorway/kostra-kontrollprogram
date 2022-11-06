@@ -19,7 +19,7 @@ class ApiErrorResponseProcessorTest(@Client("/") val client: HttpClient) : Behav
 
         forAll(
             row("non-existing URL", "/non-existing", HttpStatus.NOT_FOUND),
-            row("URL that throws exception", "/api/validate", HttpStatus.METHOD_NOT_ALLOWED),
+            row("URL that throws exception", "/api/kontroller-skjema", HttpStatus.METHOD_NOT_ALLOWED),
         ) { description, url, expectedHttpStatus ->
 
             `when`(description) {

@@ -18,7 +18,7 @@ import java.util.*
 class CustomConstraintExceptionHandlerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 
     given("request body with invalid values, receive ApiError") {
-        val urlInTest = "/api/validate"
+        val urlInTest = "/api/kontroller-skjema"
 
         val requestBody = ReportRequestVm(
             aar = 2020,

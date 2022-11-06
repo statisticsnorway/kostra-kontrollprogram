@@ -224,7 +224,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                 }
 
                 and("error report should contain expected values") {
-                    assertSoftly(response.body()) {
+                    assertSoftly(response.body()!!) {
                         it.antallKontroller shouldBe 2
                     }
                 }

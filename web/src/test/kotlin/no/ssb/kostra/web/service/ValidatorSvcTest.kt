@@ -35,7 +35,7 @@ class ValidatorSvcTest : BehaviorSpec({
                 errorReport.feil.size shouldBe 1
 
                 assertSoftly(errorReport.feil.first()){
-                    journalnummer shouldBe "Journalnummer 020102400 / Linjenummer 2"
+                    journalnummer shouldStartWith  "Journalnummer 020102400 / Linjenummer"
                     saksbehandler shouldBe "Kontornummer 017"
                     kontrolltekst shouldStartWith  "Det er ikke krysset av for om andre deltakere (Partner)"
                     feilkode shouldBe KostraErrorCode.NORMAL_ERROR

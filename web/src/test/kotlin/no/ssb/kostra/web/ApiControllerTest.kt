@@ -18,12 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
-import no.ssb.kostra.web.service.ValidatorSvcTest.Companion.PLAIN_TEXT
 import no.ssb.kostra.web.viewmodel.CompanyId
+import no.ssb.kostra.web.viewmodel.ErrorReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormType
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.util.*
 
+@Suppress("unused")
 @MicronautTest
 class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 
@@ -160,7 +161,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                 "Invalid orgnrVirksomhet",
                 KostraFormVm(
                     aar = 2022,
-                    skjema = "OX",
+                    skjema = "0X",
                     region = "667600",
                     orgnrForetak = CompanyId("987654321"),
                     orgnrVirksomhet = listOf(CompanyId("a")),
@@ -192,8 +193,52 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
             }
         }
     }
+
+    given("valid POST requests, receive result") {
+
+        forAll(
+            row(
+                "Valid orgnrVirksomhet",
+                KostraFormVm(
+                    aar = 2022,
+                    skjema = "0G",
+                    region = "667600",
+                    orgnrForetak = CompanyId("987654321"),
+                    //orgnrVirksomhet = listOf(CompanyId("987654321")),
+                    base64EncodedContent = base64EncodedContent
+                )
+            )
+        ) { description, requestBody ->
+
+            `when`(description) {
+                val response = withContext(Dispatchers.IO) {
+                    client.toBlocking()
+                        .exchange(
+                            HttpRequest.POST("/api/kontroller-skjema", requestBody),
+                            ErrorReportVm::class.java
+                        )
+                }
+
+                then("status should be OK") {
+                    response.status shouldBe HttpStatus.OK
+                }
+
+                and("error report should contain expected values") {
+                    assertSoftly(response.body()) {
+                        it.antallKontroller shouldBe 2
+                    }
+                }
+            }
+        }
+    }
 }) {
     companion object {
-        private val base64EncodedContent: String = Base64.getEncoder().encodeToString(PLAIN_TEXT.toByteArray())
+
+        private val PLAIN_TEXT_0G = """
+            0G2020 300500976989732         510  123      263
+            0G2020 300500976989732         510           263
+        """.trimIndent()
+
+        private val base64EncodedContent: String = Base64.getEncoder().encodeToString(PLAIN_TEXT_0G.toByteArray())
     }
 }

@@ -32,7 +32,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 
         val request: HttpRequest<Any> = HttpRequest.GET("/api/skjematyper")
 
-        `when`("val get request") {
+        `when`("valid get request") {
             val httpResponse = withContext(Dispatchers.IO) {
                 client.toBlocking().exchange(
                     request, Argument.listOf(KostraFormTypeVm::class.java)
@@ -130,7 +130,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     region = "667600",
                     base64EncodedContent = base64EncodedContent
                 ),
-                "reportRequest",
+                "kostraForm",
                 "Skjema krever orgnr"
             ),
             row(
@@ -154,7 +154,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     orgnrForetak = CompanyIdVm("987654321"),
                     base64EncodedContent = base64EncodedContent
                 ),
-                "reportRequest",
+                "kostraForm",
                 "Skjema krever ett eller flere orgnr for virksomhet(er)"
             ),
             row(
@@ -164,7 +164,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = CompanyIdVm("987654321"),
-                    orgnrVirksomhet = listOf(CompanyIdVm("a")),
+                    orgnrVirksomhet = setOf(CompanyIdVm("a")),
                     base64EncodedContent = base64EncodedContent
                 ),
                 "orgnr",
@@ -204,7 +204,6 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     skjema = "0G",
                     region = "667600",
                     orgnrForetak = CompanyIdVm("987654321"),
-                    //orgnrVirksomhet = listOf(CompanyId("987654321")),
                     base64EncodedContent = base64EncodedContent
                 )
             )

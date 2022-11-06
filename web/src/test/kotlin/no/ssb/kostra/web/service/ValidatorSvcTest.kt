@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
-import no.ssb.kostra.web.viewmodel.ReportRequestVm
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.util.*
 
 class ValidatorSvcTest : BehaviorSpec({
@@ -15,12 +15,14 @@ class ValidatorSvcTest : BehaviorSpec({
 
     given("request with non-fatal error") {
 
-        val request = ReportRequestVm(
+        val request = KostraFormVm(
             aar = 2020,
             skjema = "52AF",
             region = "667600",
-            organisasjon = "UOPPGITT",
-            base64EncodedContent = Base64.getEncoder().encodeToString(PLAIN_TEXT.toByteArray())
+            navn = "UOPPGITT",
+            base64EncodedContent = Base64.getEncoder().encodeToString(PLAIN_TEXT.toByteArray()),
+            orgnrForetak = null,
+            orgnrVirksomhet = null
         )
 
         `when`("validate with content") {

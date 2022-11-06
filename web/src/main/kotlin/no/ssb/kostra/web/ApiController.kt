@@ -9,7 +9,7 @@ import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.ValidatorSvc
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormType
-import no.ssb.kostra.web.viewmodel.ReportRequestVm
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 import javax.validation.Valid
 
 /**
@@ -34,6 +34,6 @@ open class ApiController(
         consumes = [MediaType.APPLICATION_JSON],
         produces = [MediaType.APPLICATION_JSON]
     )
-    open fun kontrollerSkjema(@Valid reportRequest: ReportRequestVm): HttpResponse<ErrorReportVm> =
+    open fun kontrollerSkjema(@Valid reportRequest: KostraFormVm): HttpResponse<ErrorReportVm> =
         HttpResponse.ok(validatorSvc.validateInput(reportRequest))
 }

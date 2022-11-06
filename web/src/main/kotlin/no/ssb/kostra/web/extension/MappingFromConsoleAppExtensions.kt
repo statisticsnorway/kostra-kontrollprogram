@@ -9,14 +9,16 @@ import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.web.viewmodel.ErrorDetailsVm
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
-import no.ssb.kostra.web.viewmodel.ReportRequestVm
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 
-fun Arguments.toReportRequestVm(): ReportRequestVm {
-    return ReportRequestVm(
+fun Arguments.toReportRequestVm(): KostraFormVm {
+    return KostraFormVm(
         aar = this.aargang.toInt(),
         skjema = this.skjema,
         region = this.region,
-        organisasjon = this.navn,
+        navn = this.navn,
+        orgnrForetak = null,
+        orgnrVirksomhet = null,
         base64EncodedContent = null
     )
 }

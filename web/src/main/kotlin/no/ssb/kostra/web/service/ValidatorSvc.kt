@@ -11,6 +11,6 @@ import no.ssb.kostra.web.viewmodel.KostraFormVm
 @Singleton
 class ValidatorSvc {
 
-    fun validateInput(request: KostraFormVm): ErrorReportVm =
-        ControlDispatcher.doControls(request.toKostraArguments()).toErrorReportVm()
+    fun validateInput(kostraForm: KostraFormVm): ErrorReportVm =
+        ControlDispatcher.doControls(kostraForm.toKostraArguments()).toErrorReportVm()
 }

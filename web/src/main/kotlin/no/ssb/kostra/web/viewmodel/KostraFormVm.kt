@@ -24,10 +24,10 @@ data class KostraFormVm(
     val navn: String? = null,
 
     @field:Valid
-    val orgnrForetak: CompanyId? = null,
+    val orgnrForetak: CompanyIdVm? = null,
 
     @field:Valid
-    val orgnrVirksomhet: Collection<CompanyId>? = null,
+    val orgnrVirksomhet: Collection<CompanyIdVm>? = null,
 
     @field:NotBlank(message = "Filvedlegg mangler")
     val base64EncodedContent: String? = null

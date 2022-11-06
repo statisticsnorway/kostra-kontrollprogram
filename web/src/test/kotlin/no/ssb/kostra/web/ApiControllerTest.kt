@@ -18,9 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
-import no.ssb.kostra.web.viewmodel.CompanyId
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
-import no.ssb.kostra.web.viewmodel.KostraFormType
+import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.util.*
 
@@ -35,7 +35,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
         `when`("val get request") {
             val httpResponse = withContext(Dispatchers.IO) {
                 client.toBlocking().exchange(
-                    request, Argument.listOf(KostraFormType::class.java)
+                    request, Argument.listOf(KostraFormTypeVm::class.java)
                 )
             }
 
@@ -139,7 +139,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     aar = 2022,
                     skjema = "0F",
                     region = "667600",
-                    orgnrForetak = CompanyId("a"),
+                    orgnrForetak = CompanyIdVm("a"),
                     base64EncodedContent = base64EncodedContent
                 ),
                 "orgnr",
@@ -151,7 +151,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     aar = 2022,
                     skjema = "0X",
                     region = "667600",
-                    orgnrForetak = CompanyId("987654321"),
+                    orgnrForetak = CompanyIdVm("987654321"),
                     base64EncodedContent = base64EncodedContent
                 ),
                 "reportRequest",
@@ -163,8 +163,8 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     aar = 2022,
                     skjema = "0X",
                     region = "667600",
-                    orgnrForetak = CompanyId("987654321"),
-                    orgnrVirksomhet = listOf(CompanyId("a")),
+                    orgnrForetak = CompanyIdVm("987654321"),
+                    orgnrVirksomhet = listOf(CompanyIdVm("a")),
                     base64EncodedContent = base64EncodedContent
                 ),
                 "orgnr",
@@ -203,7 +203,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     aar = 2022,
                     skjema = "0G",
                     region = "667600",
-                    orgnrForetak = CompanyId("987654321"),
+                    orgnrForetak = CompanyIdVm("987654321"),
                     //orgnrVirksomhet = listOf(CompanyId("987654321")),
                     base64EncodedContent = base64EncodedContent
                 )

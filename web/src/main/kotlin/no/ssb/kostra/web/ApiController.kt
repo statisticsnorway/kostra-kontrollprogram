@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.ValidatorSvc
-import no.ssb.kostra.web.viewmodel.KostraFormType
+import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import javax.validation.Valid
 
@@ -23,12 +23,12 @@ open class ApiController(
         value = "/skjematyper",
         produces = [MediaType.APPLICATION_JSON]
     )
-    fun skjematyper(): Collection<KostraFormType> = uiConfig.skjematyper
+    fun skjematyper(): Collection<KostraFormTypeVm> = uiConfig.skjematyper
 
     @Post(
         value = "/kontroller-skjema",
         consumes = [MediaType.APPLICATION_JSON],
         produces = [MediaType.APPLICATION_JSON]
     )
-    open fun kontrollerSkjema(@Valid reportRequest: KostraFormVm) = validatorSvc.validateInput(reportRequest)
+    open fun kontrollerSkjema(@Valid kostraForm: KostraFormVm) = validatorSvc.validateInput(kostraForm)
 }

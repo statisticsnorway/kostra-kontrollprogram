@@ -1,4 +1,4 @@
-import {describe, expect, it, vi} from 'vitest'
+import {describe, expect, it, vi} from "vitest"
 import {api, kontrollerSkjemaAsync, listSkjemaTyperAsync} from "./apiCalls"
 import {ErrorReportVm, KostraFormTypeVm, KostraFormVm} from "../kostraTypes"
 

@@ -1,44 +1,98 @@
-import { useState } from 'react'
-// @ts-ignore
-import reactLogo from './assets/react.svg'
-import './App.scss'
-import { Button } from 'react-bootstrap'
+import "./scss/check-out.scss"
+import "./scss/form-validation.scss"
+import {useEffect, useState} from "react"
+import {listSkjemaTyperAsync} from "./api/apiCalls"
+import {KostraFormTypeVm} from "./kostraTypes"
 
 function App() {
-  const [count, setCount] = useState(0);
 
-  return (
-      <div className="App">
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src="/vite.svg" className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://reactjs.org" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
+    const [loadError, setLoadError] = useState<string>()
+    const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
+
+    useEffect(() => {
+        listSkjemaTyperAsync()
+            .then(skjematyper => {
+                setSkjematyper(skjematyper)
+                setLoadError("")
+            })
+            .catch(() => setLoadError("Lasting av skjematyper feilet"))
+    }, [])
+
+    return <main>
+        {loadError && <span className="text-center text-danger">{loadError}</span>}
+
+        <div className="py-5 text-center">
+            <h2>Kontrollprogram</h2>
         </div>
-        <h1>Vite + React with Typescript + Bootstrap 5</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
+        <div className="row g-5">
+
+            <div className="row g-3">
+                <div className="col-sm-6">
+                    <label htmlFor="state" className="form-label">Årgang</label>
+                    <select className="form-select" id="aargang" required>
+                        <option value="2022">2022</option>
+                        <option value="2022">2021</option>
+                    </select>
+                </div>
+
+                <div className="col-sm-6">
+                    <label htmlFor="lastName" className="form-label">Regionsnummer</label>
+                    <input type="text" className="form-control" id="regionsnummer" placeholder="6 siffer"
+                           value=""
+                           required/>
+                </div>
+
+                <div className="col-12">
+                    <label htmlFor="state" className="form-label">Skjema</label>
+                    <select className="form-select" id="skjematype" required>
+                        {skjematyper.map(skjematype =>
+                            <option key={skjematype.id}
+                                    value={skjematype.id}>{skjematype.tittel}</option>)}
+                    </select>
+                </div>
+
+                <div className="col-sm-6">
+                    <label htmlFor="orgnrForetak" className="form-label">
+                        Organisasjonsnummer for foretaket
+                    </label>
+                    <div className="input-group has-validation">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="orgnrForetak"
+                            placeholder="9 siffer"
+                            required/>
+                    </div>
+                </div>
+
+                <div className="col-sm-6">
+                    <label htmlFor="orgnrVirksomhet" className="form-label">
+                        Organisasjonsnummer for virksomhetene
+                    </label>
+                    <div className="input-group has-validation">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="orgnrVirksomhet"
+                            placeholder="9 siffer"
+                            required/>
+                    </div>
+                </div>
+
+                <div className="col-12 mt-4">
+                    <div className="input-group has-validation">
+                        <input type="file" id="formFile" className="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <hr className="my-4"/>
+
+            <button className="btn btn-primary btn-lg" type="submit">
+                Kontroller fil
+            </button>
         </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
-        <Button variant="primary">Primary</Button>{' '}
-        <Button variant="secondary">Secondary</Button>{' '}
-        <Button variant="success">Success</Button>{' '}
-        <Button variant="warning">Warning</Button>{' '}
-        <Button variant="danger">Danger</Button>{' '}
-        <Button variant="info">Info</Button>{' '}
-        <Button variant="light">Light</Button>{' '}
-        <Button variant="dark">Dark</Button> <Button variant="link">Link</Button>
-      </div>
-  );
+    </main>
 }
 
-export default App;
+export default App

@@ -39,7 +39,7 @@ export interface KostraFormVm {
     skjema: Nullable<string>
     region: Nullable<string>
     navn: Nullable<string>
-    orgnrForetak: Nullable<string>
+    orgnrForetak: Nullable<CompanyIdVm>
     orgnrVirksomhet: Nullable<CompanyIdVm[]>
     base64EncodedContent: Nullable<string>
 }

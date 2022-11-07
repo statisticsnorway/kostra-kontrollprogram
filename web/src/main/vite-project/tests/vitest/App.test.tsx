@@ -17,7 +17,7 @@ describe('App', () => {
     })
 
     it("count is increased by one when button is clicked", async () => {
-        const countButton = screen.getByRole("button")
+        const countButton = screen.getByText(/count is 0/i)
         fireEvent.click(countButton)
         expect(screen.getByText(/count is 1/i)).toBeDefined()
     })

@@ -7,6 +7,7 @@ import {KostraFormTypeVm} from "./kostraTypes"
 function App() {
 
     const [loadError, setLoadError] = useState<string>()
+    const [regionsnummer, setRegionsnummer] = useState<string>()
     const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
 
     useEffect(() => {
@@ -38,7 +39,9 @@ function App() {
                 <div className="col-sm-6">
                     <label htmlFor="regionsnummer" className="form-label">Regionsnummer</label>
                     <input type="text" className="form-control" id="regionsnummer" placeholder="6 siffer"
-                           value=""
+                           defaultValue=""
+                           value={regionsnummer}
+                           onChange={e => setRegionsnummer(e.currentTarget.value)}
                            required/>
                 </div>
 

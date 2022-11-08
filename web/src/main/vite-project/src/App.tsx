@@ -28,7 +28,7 @@ function App() {
 
             <div className="row g-3">
                 <div className="col-sm-6">
-                    <label htmlFor="state" className="form-label">Årgang</label>
+                    <label htmlFor="aargang" className="form-label">Årgang</label>
                     <select className="form-select" id="aargang" required>
                         <option value="2022">2022</option>
                         <option value="2022">2021</option>
@@ -36,14 +36,14 @@ function App() {
                 </div>
 
                 <div className="col-sm-6">
-                    <label htmlFor="lastName" className="form-label">Regionsnummer</label>
+                    <label htmlFor="regionsnummer" className="form-label">Regionsnummer</label>
                     <input type="text" className="form-control" id="regionsnummer" placeholder="6 siffer"
                            value=""
                            required/>
                 </div>
 
                 <div className="col-12">
-                    <label htmlFor="state" className="form-label">Skjema</label>
+                    <label htmlFor="skjematype" className="form-label">Skjema</label>
                     <select className="form-select" id="skjematype" required>
                         {skjematyper.map(skjematype =>
                             <option key={skjematype.id}

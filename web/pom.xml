@@ -147,6 +147,7 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
+                <version>3.4.0</version>
                 <configuration>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>
@@ -313,6 +314,7 @@
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>position-react-build</id>

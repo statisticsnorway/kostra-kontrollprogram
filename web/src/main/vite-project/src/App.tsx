@@ -24,7 +24,7 @@ function App() {
     }, [])
 
     const handleFormTypeChanged = (event: ChangeEvent<HTMLSelectElement>) =>
-        setValgtSkjematype(skjematyper.find(it => it.id == event.target.value))
+        setValgtSkjematype(skjematyper.find(it => it.id === event.target.value))
 
     const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const {files} = event.target
@@ -33,14 +33,12 @@ function App() {
         }
         setDatafil(null)
 
-        const file = files[0]
         let reader = new FileReader()
-
         reader.onloadend = () => {
             setDatafil(reader.result as string)
             event.target.value = ""
         }
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(files[0])
     }
 
     return <form onSubmit={onSubmit}>

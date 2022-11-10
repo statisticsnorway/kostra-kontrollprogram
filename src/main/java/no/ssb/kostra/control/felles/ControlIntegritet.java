@@ -13,32 +13,28 @@ import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 @SuppressWarnings("SpellCheckingInspection")
 public class ControlIntegritet {
 
-    public static void doControl(
+    public static boolean doControl(
             final List<KostraRecord> regnskap, final ErrorReport errorReport,
             final Arguments args, final List<String> bevilgningRegnskapList,
             final List<String> balanseRegnskapList, final List<String> kontoklasseList,
             final List<String> funksjonkapittelList, final List<String> artsektorList) {
 
-        controlSkjema(errorReport, regnskap);
-        controlAargang(errorReport, regnskap);
-        controlKvartal(errorReport, regnskap);
-        controlRegion(errorReport, regnskap);
-        controlOrganisasjonsnummer(errorReport, regnskap);
-        controlForetaksnummer(errorReport, regnskap);
-        controlKontoklasse(errorReport, regnskap, kontoklasseList);
+        errorReport.incrementCount();
 
-        if (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
-            controlFunksjon(errorReport, regnskap, funksjonkapittelList);
-            controlArt(errorReport, regnskap, artsektorList);
-        }
-
-        if (isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
-            controlKapittel(errorReport, regnskap, funksjonkapittelList);
-            controlSektor(errorReport, regnskap, artsektorList);
-        }
-
-        controlBelop(errorReport, regnskap);
-        controlUgyldigeBelop(errorReport, regnskap);
+        return
+        controlSkjema(errorReport, regnskap)
+        || controlAargang(errorReport, regnskap)
+        || controlKvartal(errorReport, regnskap)
+        || controlRegion(errorReport, regnskap)
+        || controlOrganisasjonsnummer(errorReport, regnskap)
+        || controlForetaksnummer(errorReport, regnskap)
+        || controlKontoklasse(errorReport, regnskap, kontoklasseList)
+        || (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList) && controlFunksjon(errorReport, regnskap, funksjonkapittelList)
+                && controlArt(errorReport, regnskap, artsektorList))
+        || (isCodeInCodeList(args.getSkjema(), balanseRegnskapList) && controlKapittel(errorReport, regnskap, funksjonkapittelList)
+                && controlSektor(errorReport, regnskap, artsektorList))
+        || controlBelop(errorReport, regnskap)
+        || controlUgyldigeBelop(errorReport, regnskap);
     }
 
     public static boolean controlSkjema(final ErrorReport errorReport, final List<KostraRecord> regnskap) {

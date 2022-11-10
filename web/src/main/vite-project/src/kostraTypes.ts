@@ -43,3 +43,12 @@ export interface KostraFormVm {
     orgnrVirksomhet: Nullable<CompanyIdVm[]>
     base64EncodedContent: Nullable<string>
 }
+
+export interface LocalKostraFormVm {
+    aar: number
+    skjema: string
+    region: string
+    orgnrForetak: string
+    orgnrVirksomhet: Nullable<CompanyIdVm[]>
+    base64EncodedContent: Nullable<string>
+}

@@ -21,7 +21,7 @@
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlinVersion>1.7.20</kotlinVersion>
+        <kotlinVersion>1.7.21</kotlinVersion>
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
@@ -113,13 +113,13 @@
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-assertions-core-jvm</artifactId>
-            <version>5.5.3</version>
+            <version>5.5.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-runner-junit5-jvm</artifactId>
-            <version>5.5.3</version>
+            <version>5.5.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>

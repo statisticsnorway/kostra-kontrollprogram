@@ -50,7 +50,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 
                 assertSoftly(formTypes.first { it.id == "0X" }) {
                     it.id shouldBe "0X"
-                    it.tittel shouldBe "0X. Resultatregnskap for helsefortak"
+                    it.tittel shouldBe "0X. Resultatregnskap for helseforetak"
                     it.labelOrgnr shouldBe "Organisasjonsnummer for foretaket"
                     it.labelOrgnrVirksomhetene shouldBe "Organisasjonsnummer for virksomhetene"
                 }

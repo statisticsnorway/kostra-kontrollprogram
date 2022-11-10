@@ -93,12 +93,12 @@ iu-innstillinger:
       tittel: 0Q. Konsolidert balanseregnskap for fylkeskommuner
 
     - id: 0X
-      tittel: 0X. Resultatregnskap for helsefortak
+      tittel: 0X. Resultatregnskap for helseforetak
       label-orgnr: Organisasjonsnummer for foretaket
       label-orgnr-virksomhetene: Organisasjonsnummer for virksomhetene
 
     - id: 0Y
-      tittel: 0Y. Balanseregnskap for helsefortak
+      tittel: 0Y. Balanseregnskap for helseforetak
     - id: 11CF
       tittel: 11CF. Kvalifiseringsstønad
     - id: 11F

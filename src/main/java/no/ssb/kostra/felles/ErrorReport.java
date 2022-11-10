@@ -77,7 +77,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "v2022.11.03";
+        final var VERSION = "v2022.11.10";
         final var report = new StringBuilder();
         final var lf = args.getNewline();
 

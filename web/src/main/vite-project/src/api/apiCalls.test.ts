@@ -1,6 +1,8 @@
 import {describe, expect, it, vi} from "vitest"
 import {api, kontrollerSkjemaAsync, listSkjemaTyperAsync} from "./apiCalls"
-import {ErrorReportVm, KostraFormTypeVm, KostraFormVm} from "../kostraTypes"
+import {KostraFormVm} from "../kostratypes/kostraFormVm";
+import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm";
+import {ErrorReportVm} from "../kostratypes/errorReportVm";
 
 describe('apiCalls', () => {
     describe("skjematyper (GET)", () => {
@@ -36,8 +38,8 @@ describe('apiCalls', () => {
                 skjema: "0X",
                 region: "030100",
                 navn: "Oslo",
-                orgnrForetak: {orgnr: "987654321"},
-                orgnrVirksomhet: [{orgnr: "876543219"}],
+                orgnrForetak: "987654321",
+                orgnrVirksomhet: ["876543219"],
                 base64EncodedContent: "dfgsdfgsdfgfdsgsdfgdfgfdg"
             }
 

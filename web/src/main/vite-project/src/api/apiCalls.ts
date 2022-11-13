@@ -1,5 +1,7 @@
 import axios, {AxiosRequestConfig} from "axios"
-import {ErrorReportVm, KostraFormTypeVm, KostraFormVm} from "../kostraTypes"
+import {KostraFormVm} from "../kostratypes/kostraFormVm";
+import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm";
+import {ErrorReportVm} from "../kostratypes/errorReportVm";
 
 const config: AxiosRequestConfig = {baseURL: "/api"}
 export const api = axios.create(config)

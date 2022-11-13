@@ -17,9 +17,8 @@ fun Arguments.toReportRequestVm(): KostraFormVm {
         skjema = this.skjema,
         region = this.region,
         navn = this.navn,
-        orgnrForetak = null,
-        orgnrVirksomhet = null,
-        base64EncodedContent = null
+        orgnrForetak = this.foretaknr,
+        orgnrVirksomhet = this.orgnr?.split(",")
     )
 }
 

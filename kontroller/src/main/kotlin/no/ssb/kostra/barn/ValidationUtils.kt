@@ -24,7 +24,8 @@ object ValidationUtils {
         }
     }
 
-    private fun getSchemaValidator(): Validator {
+    @JvmStatic
+    fun getSchemaValidator(): Validator {
         val newInstance = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
         newInstance.setFeature(DISALLOW_DOCTYPE_DECL, true)
         return newInstance

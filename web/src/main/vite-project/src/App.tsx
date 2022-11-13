@@ -1,8 +1,10 @@
 import "./scss/check-out.scss"
 import {ChangeEvent, useEffect, useState} from "react"
 import {listSkjemaTyperAsync} from "./api/apiCalls"
-import {KostraFormTypeVm, LocalKostraFormVm, Nullable} from "./kostraTypes"
 import {useForm} from "react-hook-form"
+import {KostraFormVm} from "./kostratypes/kostraFormVm";
+import {KostraFormTypeVm} from "./kostratypes/kostraFormTypeVm";
+import {Nullable} from "./kostratypes/nullable";
 
 function App() {
 
@@ -11,7 +13,7 @@ function App() {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
     const [datafil, setDatafil] = useState<Nullable<string>>()
 
-    const {register, getValues, setValue, handleSubmit, formState: {errors}} = useForm<LocalKostraFormVm>()
+    const {register, getValues, setValue, handleSubmit, formState: {errors}} = useForm<KostraFormVm>()
     const onSubmit = handleSubmit(data => console.log(data));
 
     useEffect(() => {

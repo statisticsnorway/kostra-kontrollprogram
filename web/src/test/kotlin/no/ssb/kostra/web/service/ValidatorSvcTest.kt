@@ -21,7 +21,6 @@ class ValidatorSvcTest : BehaviorSpec({
             region = "667600",
             navn = "UOPPGITT",
             base64EncodedContent = Base64.getEncoder().encodeToString(PLAIN_TEXT.toByteArray()),
-            orgnrForetak = null,
             orgnrVirksomhet = null
         )
 

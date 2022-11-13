@@ -18,7 +18,7 @@ function App() {
 
     // @ts-ignore
     const validationSchema: ObjectSchema<KostraFormVm> = yup.object({
-        aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive().required("Årgang er påkrevet"),
+        aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
         region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
         skjema: yup.string().required("Skjematype er påkrevet"),
         orgnrForetak: yup.string().when([], {

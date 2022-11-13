@@ -7,7 +7,6 @@ import {Nullable} from "./kostratypes/nullable"
 import {Button, Form} from "react-bootstrap"
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup";
-import {ObjectSchema} from "yup";
 
 function App() {
 
@@ -16,8 +15,7 @@ function App() {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
     const [datafil, setDatafil] = useState<Nullable<string>>(null)
 
-    // @ts-ignore
-    const validationSchema: ObjectSchema<KostraFormVm> = yup.object({
+    const validationSchema = yup.object({
         aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
         region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
         skjema: yup.string().required("Skjematype er påkrevet"),
@@ -191,10 +189,8 @@ function App() {
                     type="file"
                     isInvalid={isDirty && datafil == null}
                     onChange={handleFileUpload}/>
-                <Form.Text>
-                    {!datafil && <div className="text-danger">Vennligst velg fil</div>}
-                    {datafil && <div className="text-success">Fil lastet opp</div>}
-                </Form.Text>
+                {!datafil && <div className="invalid-feedback">Vennligst velg fil</div>}
+                {datafil && <div className="text-success mt-1">Fil lastet opp</div>}
             </Form.Group>
 
             <hr className="my-4"/>

@@ -6,6 +6,6 @@ import io.micronaut.core.annotation.Introspected
 data class KostraFormTypeVm(
     val id: String,
     val tittel: String,
-    val labelOrgnr: String? = null,
-    val labelOrgnrVirksomhetene: String? = null
+    val labelOrgnr: String?,
+    val labelOrgnrVirksomhetene: String?
 )

@@ -131,6 +131,7 @@ function App() {
                     isValid={touchedFields.region && !errors.region}
                     isInvalid={errors.region?.type != null}
                     type="text"
+                    autoComplete="off"
                     maxLength={6}
                     placeholder="6 siffer"/>
                 <Form.Control.Feedback type="invalid">{errors.region?.message}</Form.Control.Feedback>
@@ -162,6 +163,7 @@ function App() {
                         isValid={touchedFields.orgnrForetak && !errors.orgnrForetak}
                         isInvalid={errors.orgnrForetak?.type != null}
                         type="text"
+                        autoComplete="off"
                         maxLength={9}
                         placeholder="9 siffer"/>
                     <Form.Control.Feedback type="invalid">{errors.orgnrForetak?.message}</Form.Control.Feedback>

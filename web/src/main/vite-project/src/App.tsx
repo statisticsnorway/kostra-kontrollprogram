@@ -6,7 +6,14 @@ import {KostraFormTypeVm} from "./kostratypes/kostraFormTypeVm"
 import {Nullable} from "./kostratypes/nullable"
 import {Button, Form} from "react-bootstrap"
 import * as yup from "yup"
-import {yupResolver} from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup"
+
+// @ts-ignore
+import PlusCircle from "./assets/icon/plus-circle.svg"
+// @ts-ignore
+import DashCircle from "./assets/icon/dash-circle.svg"
+// @ts-ignore
+import IconKostra from "./assets/icon/ikon-kostra.svg"
 
 function App() {
 
@@ -14,6 +21,9 @@ function App() {
     const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
     const [datafil, setDatafil] = useState<Nullable<string>>(null)
+
+    // for devel
+    const [orgnrVirksomhetene, setOrgnrVirksomhetene] = useState<NonNullable<string>[]>([])
 
     const validationSchema = yup.object({
         aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
@@ -54,8 +64,15 @@ function App() {
     useEffect(() => {
         if (skjematyper.length) {
             const subscription = watch((value, {name, type}) => {
-                if (name === 'skjema' && type === 'change') {
-                    setValgtSkjematype(skjematyper.find(it => it.id === value.skjema))
+                if (name == 'skjema' && type == 'change') {
+                    const localValgtSkjema = skjematyper.find(it => it.id == value.skjema)
+                    setValgtSkjematype(localValgtSkjema)
+
+                    if (localValgtSkjema?.labelOrgnrVirksomhetene) {
+                        setOrgnrVirksomhetene([""])
+                    } else {
+                        setOrgnrVirksomhetene([])
+                    }
                 }
             });
             return () => subscription.unsubscribe()
@@ -64,7 +81,7 @@ function App() {
 
     const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const {files} = event.target
-        if (files == null || files.length === 0) {
+        if (files == null || files.length == 0) {
             return
         }
         setDatafil(null)
@@ -78,33 +95,21 @@ function App() {
     }
 
     return <Form noValidate validated={formState.isValid} onSubmit={onSubmit}>
-        <Button
-            className="btn-secondary m-2"
-            onClick={() => {
-
-                setValue("aar", 2022)
-                setValue("region", "030100")
-                setValue("skjema", "0X")
-                setValue("orgnrForetak", "999999999")
-
-                setDatafil(null)
-                setValgtSkjematype(skjematyper.find(it => it.id === getValues("skjema")))
-            }}
-        >Sett testverdier 0X</Button>
-
-        <Button
-            className="btn-secondary m-2"
-            onClick={() => {
-                const values = getValues()
-                console.log(values)
-            }}>Get Values</Button>
-
         <div className="py-5 text-center">
-            <h2>Kostra kontrollprogram</h2>
+            <h2 className="mb-3">
+                <img src={IconKostra}
+                     height="70px"
+                     className="pe-4"
+                     alt="Kostra"/>
+                Kostra kontrollprogram
+            </h2>
+
+            <hr className="my-0"/>
+
             {loadError && <span className="text-center text-danger">{loadError}</span>}
         </div>
 
-        <div className="row g-4">
+        <div className="row g-3">
             { /** ÅRGANG */}
             <Form.Group
                 className="col-sm-6"
@@ -171,16 +176,51 @@ function App() {
             }
 
             { /** ORGNR 2 */}
-            {valgtSkjematype?.labelOrgnrVirksomhetene &&
-                <Form.Group
-                    className="col-sm-6"
-                    controlId="orgnrVirksomhet">
-                    <Form.Label>{valgtSkjematype.labelOrgnrVirksomhetene}</Form.Label>
-                    <Form.Control
-                        type="text"
-                        maxLength={9}
-                        placeholder="9 siffer"/>
-                </Form.Group>
+            {valgtSkjematype?.labelOrgnrVirksomhetene && orgnrVirksomhetene.length &&
+                <div className="col-sm-6">
+                    <div className="container">
+                        {orgnrVirksomhetene.map((loopValue, loopIndex, loopArray) =>
+                            <div key={loopIndex} className={loopIndex < 1 ? "row" : "row mt-2"}>
+                                <Form.Group className="col-sm-10">
+                                    {loopIndex < 1 &&
+                                        <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
+                                    <Form.Control
+                                        type="text"
+                                        value={loopValue}
+                                        onChange={event =>
+                                            setOrgnrVirksomhetene(
+                                                loopArray.map((it, index) =>
+                                                    index == loopIndex ? event.target.value : it
+                                                )
+                                            )
+                                        }
+                                        maxLength={9}
+                                        placeholder="9 siffer"/>
+                                </Form.Group>
+                                <div className="col-sm-2 mt-auto m-0 mb-2">
+                                    {loopIndex > 0 &&
+                                        <img
+                                            onClick={() =>
+                                                setOrgnrVirksomhetene(loopArray.filter((it, innerIndex) =>
+                                                    innerIndex != loopIndex)
+                                                )
+                                            }
+                                            src={DashCircle}
+                                            title="Fjern virksomhetsnummer"
+                                            alt="Fjern virksomhetsnummer"/>
+                                    }
+                                    {loopArray.length < 6 && loopIndex == loopArray.length - 1 &&
+                                        <img
+                                            className={loopIndex < 1 ? "ps-4" : "ps-1"}
+                                            onClick={() => setOrgnrVirksomhetene([...loopArray, ""])}
+                                            src={PlusCircle}
+                                            title="Legg til virksomhetsnummer"
+                                            alt="Legg til virksomhetsnummer"/>
+                                    }
+                                </div>
+                            </div>)}
+                    </div>
+                </div>
             }
 
             { /** FILE UPLOAD */}
@@ -199,8 +239,23 @@ function App() {
 
             <Button
                 type="submit"
+                className="btn-secondary"
                 disabled={!formState.isValid || !datafil}
             >Kontroller fil</Button>
+
+            <Button
+                className="btn-secondary mt-5"
+                onClick={() => {
+                    setValue("aar", 2022)
+                    setValue("region", "030100")
+                    setValue("skjema", "0X")
+                    setValue("orgnrForetak", "999999999")
+
+                    setDatafil(null)
+                    setValgtSkjematype(skjematyper.find(it => it.id == getValues("skjema")))
+                    setOrgnrVirksomhetene([""])
+                }}
+            >Sett testverdier 0X</Button>
         </div>
     </Form>
 }

@@ -176,51 +176,50 @@ function App() {
             }
 
             { /** ORGNR 2 */}
-            {valgtSkjematype?.labelOrgnrVirksomhetene && orgnrVirksomhetene.length &&
-                <div className="col-sm-6">
-                    <div className="container">
-                        {orgnrVirksomhetene.map((loopValue, loopIndex, loopArray) =>
-                            <div key={loopIndex} className={loopIndex < 1 ? "row" : "row mt-2"}>
-                                <Form.Group className="col-sm-10">
-                                    {loopIndex < 1 &&
-                                        <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
-                                    <Form.Control
-                                        type="text"
-                                        value={loopValue}
-                                        onChange={event =>
-                                            setOrgnrVirksomhetene(
-                                                loopArray.map((it, index) =>
-                                                    index == loopIndex ? event.target.value : it
-                                                )
+            {orgnrVirksomhetene.length > 0 && <div className="col-sm-6">
+                <div className="container">
+                    {orgnrVirksomhetene.map((loopValue, loopIndex, loopArray) =>
+                        <div key={loopIndex} className={loopIndex < 1 ? "row" : "row mt-2"}>
+                            <Form.Group className="col-sm-10">
+                                {loopIndex < 1 &&
+                                    <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
+                                <Form.Control
+                                    type="text"
+                                    value={loopValue}
+                                    onChange={event =>
+                                        setOrgnrVirksomhetene(
+                                            loopArray.map((it, index) =>
+                                                index == loopIndex ? event.target.value : it
+                                            )
+                                        )
+                                    }
+                                    maxLength={9}
+                                    placeholder="9 siffer"/>
+                            </Form.Group>
+                            <div className="col-sm-2 mt-auto m-0 mb-2">
+                                {loopIndex > 0 &&
+                                    <img
+                                        onClick={() =>
+                                            setOrgnrVirksomhetene(loopArray.filter((it, innerIndex) =>
+                                                innerIndex != loopIndex)
                                             )
                                         }
-                                        maxLength={9}
-                                        placeholder="9 siffer"/>
-                                </Form.Group>
-                                <div className="col-sm-2 mt-auto m-0 mb-2">
-                                    {loopIndex > 0 &&
-                                        <img
-                                            onClick={() =>
-                                                setOrgnrVirksomhetene(loopArray.filter((it, innerIndex) =>
-                                                    innerIndex != loopIndex)
-                                                )
-                                            }
-                                            src={DashCircle}
-                                            title="Fjern virksomhetsnummer"
-                                            alt="Fjern virksomhetsnummer"/>
-                                    }
-                                    {loopArray.length < 6 && loopIndex == loopArray.length - 1 &&
-                                        <img
-                                            className={loopIndex < 1 ? "ps-4" : "ps-1"}
-                                            onClick={() => setOrgnrVirksomhetene([...loopArray, ""])}
-                                            src={PlusCircle}
-                                            title="Legg til virksomhetsnummer"
-                                            alt="Legg til virksomhetsnummer"/>
-                                    }
-                                </div>
-                            </div>)}
-                    </div>
+                                        src={DashCircle}
+                                        title="Fjern virksomhetsnummer"
+                                        alt="Fjern virksomhetsnummer"/>
+                                }
+                                {loopArray.length < 6 && loopIndex == loopArray.length - 1 &&
+                                    <img
+                                        className={loopIndex < 1 ? "ps-4" : "ps-1"}
+                                        onClick={() => setOrgnrVirksomhetene([...loopArray, ""])}
+                                        src={PlusCircle}
+                                        title="Legg til virksomhetsnummer"
+                                        alt="Legg til virksomhetsnummer"/>
+                                }
+                            </div>
+                        </div>)}
                 </div>
+            </div>
             }
 
             { /** FILE UPLOAD */}

@@ -1,11 +1,12 @@
 import {ChangeEvent, useEffect, useState} from "react"
 import {listSkjemaTyperAsync} from "./api/apiCalls"
-import {useForm} from "react-hook-form"
+import {useFieldArray, useForm} from "react-hook-form"
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
 import {KostraFormTypeVm} from "./kostratypes/kostraFormTypeVm"
 import {Nullable} from "./kostratypes/nullable"
 import {Button, Form} from "react-bootstrap"
 import * as yup from "yup"
+import {array, string} from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
 
 // @ts-ignore
@@ -22,9 +23,6 @@ function App() {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
     const [datafil, setDatafil] = useState<Nullable<string>>(null)
 
-    // for devel
-    const [orgnrVirksomhetene, setOrgnrVirksomhetene] = useState<NonNullable<string>[]>([])
-
     const validationSchema = yup.object({
         aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
         region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
@@ -34,10 +32,15 @@ function App() {
             then: yup.string()
                 .required("Orgnr er påkrevet")
                 .matches(/^[8|9]\d{8}$/i, "Må starte med [8,9] etterfulgt av 8 siffer")
-        })
+        }),
+        orgnrVirksomhet: array().of(string()
+            .required("Orgnr er påkrevet")
+            .matches(/^[8|9]\d{8}$/i, "Må starte med [8,9] etterfulgt av 8 siffer")
+        )
     }).required()
 
     const {
+        control,
         register,
         getValues,
         setValue,
@@ -50,7 +53,13 @@ function App() {
         resolver: yupResolver(validationSchema)
     })
 
-    const onSubmit = handleSubmit(data => console.log(touchedFields));
+    // @ts-ignore
+    const {fields, append, remove} = useFieldArray<KostraFormVm, "orgnrVirksomhet", "id">({
+        control,
+        name: "orgnrVirksomhet"
+    })
+
+    const onSubmit = handleSubmit(data => console.log(getValues()))
 
     useEffect(() => {
         listSkjemaTyperAsync()
@@ -64,17 +73,20 @@ function App() {
     useEffect(() => {
         if (skjematyper.length) {
             const subscription = watch((value, {name, type}) => {
-                if (name == 'skjema' && type == 'change') {
-                    const localValgtSkjema = skjematyper.find(it => it.id == value.skjema)
-                    setValgtSkjematype(localValgtSkjema)
-
-                    if (localValgtSkjema?.labelOrgnrVirksomhetene) {
-                        setOrgnrVirksomhetene([""])
-                    } else {
-                        setOrgnrVirksomhetene([])
-                    }
+                if (!(name == 'skjema' && type == 'change')) {
+                    return;
                 }
-            });
+
+                const localValgtSkjema = skjematyper.find(it => it.id == value.skjema)
+                setValgtSkjematype(localValgtSkjema)
+
+                localValgtSkjema?.labelOrgnrVirksomhetene
+                    ? append("")
+                    : fields.forEach((it, index) => {
+                        // do mot remove braces, code will not be executed
+                        remove(index)
+                    })
+            })
             return () => subscription.unsubscribe()
         }
     }, [skjematyper, watch])
@@ -104,9 +116,9 @@ function App() {
                 Kostra kontrollprogram
             </h2>
 
-            <hr className="my-0"/>
+            {loadError && <span className="text-danger">{loadError}</span>}
 
-            {loadError && <span className="text-center text-danger">{loadError}</span>}
+            <hr className="my-0"/>
         </div>
 
         <div className="row g-3">
@@ -143,7 +155,7 @@ function App() {
             </Form.Group>
 
             { /** SKJEMATYPE */}
-            <Form.Group
+            {skjematyper.length > 0 && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
                 <Form.Label>Skjema</Form.Label>
@@ -157,7 +169,7 @@ function App() {
                                 value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
-            </Form.Group>
+            </Form.Group>}
 
             { /** ORGNR */}
             {valgtSkjematype?.labelOrgnr &&
@@ -172,55 +184,46 @@ function App() {
                         maxLength={9}
                         placeholder="9 siffer"/>
                     <Form.Control.Feedback type="invalid">{errors.orgnrForetak?.message}</Form.Control.Feedback>
-                </Form.Group>
-            }
+                </Form.Group>}
 
             { /** ORGNR 2 */}
-            {orgnrVirksomhetene.length > 0 && <div className="col-sm-6">
+            {fields.length > 0 && <div className="col-sm-6">
                 <div className="container">
-                    {orgnrVirksomhetene.map((loopValue, loopIndex, loopArray) =>
-                        <div key={loopIndex} className={loopIndex < 1 ? "row" : "row mt-2"}>
+                    {fields.map((item, index) => {
+                        return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
                             <Form.Group className="col-sm-10">
-                                {loopIndex < 1 &&
-                                    <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
+                                {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
                                 <Form.Control
+                                    {...register(`orgnrVirksomhet.${index}`)}
+                                    isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                        && !errors.orgnrVirksomhet?.[index]}
+                                    isInvalid={errors.orgnrVirksomhet?.[index] != null}
                                     type="text"
-                                    value={loopValue}
-                                    onChange={event =>
-                                        setOrgnrVirksomhetene(
-                                            loopArray.map((it, index) =>
-                                                index == loopIndex ? event.target.value : it
-                                            )
-                                        )
-                                    }
                                     maxLength={9}
                                     placeholder="9 siffer"/>
                             </Form.Group>
                             <div className="col-sm-2 mt-auto m-0 mb-2">
-                                {loopIndex > 0 &&
-                                    <img
-                                        onClick={() =>
-                                            setOrgnrVirksomhetene(loopArray.filter((it, innerIndex) =>
-                                                innerIndex != loopIndex)
-                                            )
-                                        }
-                                        src={DashCircle}
-                                        title="Fjern virksomhetsnummer"
-                                        alt="Fjern virksomhetsnummer"/>
-                                }
-                                {loopArray.length < 6 && loopIndex == loopArray.length - 1 &&
-                                    <img
-                                        className={loopIndex < 1 ? "ps-4" : "ps-1"}
-                                        onClick={() => setOrgnrVirksomhetene([...loopArray, ""])}
+                                {index > 0 && <img
+                                    onClick={() => remove(index)}
+                                    src={DashCircle}
+                                    title="Fjern virksomhetsnummer"
+                                    alt="Fjern virksomhetsnummer"/>}
+
+                                {fields.length < 21
+                                    && index == fields.length - 1
+                                    && !errors.orgnrVirksomhet?.[index]
+                                    && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                    && <img
+                                        className={index < 1 ? "ps-4" : "ps-1"}
+                                        onClick={() => append("")}
                                         src={PlusCircle}
                                         title="Legg til virksomhetsnummer"
-                                        alt="Legg til virksomhetsnummer"/>
-                                }
+                                        alt="Legg til virksomhetsnummer"/>}
                             </div>
-                        </div>)}
+                        </div>
+                    })}
                 </div>
-            </div>
-            }
+            </div>}
 
             { /** FILE UPLOAD */}
             <Form.Group
@@ -252,7 +255,7 @@ function App() {
 
                     setDatafil(null)
                     setValgtSkjematype(skjematyper.find(it => it.id == getValues("skjema")))
-                    setOrgnrVirksomhetene([""])
+                    append("")
                 }}
             >Sett testverdier 0X</Button>
         </div>

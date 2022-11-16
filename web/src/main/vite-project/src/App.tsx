@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import {listSkjemaTyperAsync} from "./api/apiCalls"
 import {useFieldArray, useForm} from "react-hook-form"
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -30,12 +30,12 @@ function App() {
         orgnrForetak: yup.string().when([], {
             is: () => valgtSkjematype?.labelOrgnr,
             then: yup.string()
-                .required("Orgnr er påkrevet")
-                .matches(/^[8|9]\d{8}$/i, "Må starte med [8,9] etterfulgt av 8 siffer")
+                .required("Organisasjonsnummer er påkrevet")
+                .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
         }),
         orgnrVirksomhet: array().of(string()
-            .required("Orgnr er påkrevet")
-            .matches(/^[8|9]\d{8}$/i, "Må starte med [8,9] etterfulgt av 8 siffer")
+            .required("Organisasjonsnummer er påkrevet")
+            .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
         )
     }).required()
 
@@ -193,14 +193,26 @@ function App() {
                         return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
                             <Form.Group className="col-sm-10">
                                 {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
-                                <Form.Control
-                                    {...register(`orgnrVirksomhet.${index}`)}
-                                    isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
-                                        && !errors.orgnrVirksomhet?.[index]}
-                                    isInvalid={errors.orgnrVirksomhet?.[index] != null}
-                                    type="text"
-                                    maxLength={9}
-                                    placeholder="9 siffer"/>
+
+{/*
+                                <OverlayTrigger
+                                    placement="top"
+                                    //show={errors.orgnrVirksomhet?.[index] != null}
+                                    delay={{show: 500, hide: 100}}
+                                    overlay={
+                                        <Tooltip
+                                            id={`button-tooltip-${index}`}>{errors.orgnrVirksomhet?.[index]?.message}
+                                        </Tooltip>}>
+*/}
+                                    <Form.Control
+                                        {...register(`orgnrVirksomhet.${index}`)}
+                                        isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                            && !errors.orgnrVirksomhet?.[index]}
+                                        isInvalid={errors.orgnrVirksomhet?.[index] != null}
+                                        type="text"
+                                        maxLength={9}
+                                        placeholder="9 siffer"/>
+                                {/*</OverlayTrigger>*/}
                             </Form.Group>
                             <div className="col-sm-2 mt-auto m-0 mb-2">
                                 {index > 0 && <img

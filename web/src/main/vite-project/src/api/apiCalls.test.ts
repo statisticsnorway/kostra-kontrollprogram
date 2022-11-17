@@ -39,7 +39,7 @@ describe('apiCalls', () => {
                 region: "030100",
                 navn: "Oslo",
                 orgnrForetak: "987654321",
-                orgnrVirksomhet: ["876543219"],
+                orgnrVirksomhet: [{orgnr: "876543219"}],
                 base64EncodedContent: "dfgsdfgsdfgfdsgsdfgdfgfdg"
             }
 

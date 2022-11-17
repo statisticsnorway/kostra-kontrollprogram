@@ -6,7 +6,6 @@ import {KostraFormTypeVm} from "./kostratypes/kostraFormTypeVm"
 import {Nullable} from "./kostratypes/nullable"
 import {Button, Form} from "react-bootstrap"
 import * as yup from "yup"
-import {array, string} from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
 
 // @ts-ignore
@@ -33,9 +32,12 @@ function App() {
                 .required("Organisasjonsnummer er påkrevet")
                 .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
         }),
-        orgnrVirksomhet: array().of(string()
-            .required("Organisasjonsnummer er påkrevet")
-            .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
+        orgnrVirksomhet: yup.array().of(
+            yup.object().shape({
+                orgnr: yup.string()
+                    .required("Organisasjonsnummer er påkrevet")
+                    .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
+            })
         )
     }).required()
 
@@ -57,8 +59,7 @@ function App() {
         fields: orgnrVirksomhetFields,
         append: appendOrgnr,
         remove: removeOrgnr
-        // @ts-ignore
-    } = useFieldArray<KostraFormVm, "orgnrVirksomhet", "id">({
+    } = useFieldArray<KostraFormVm>({
         control,
         name: "orgnrVirksomhet"
     })
@@ -85,7 +86,7 @@ function App() {
                 setValgtSkjematype(localValgtSkjema)
 
                 localValgtSkjema?.labelOrgnrVirksomhetene
-                    ? appendOrgnr("")
+                    ? appendOrgnr({orgnr: ""})
                     : orgnrVirksomhetFields.forEach((it, index) => {
                         // do mot remove braces, code will not be executed
                         removeOrgnr(index)
@@ -197,26 +198,14 @@ function App() {
                         return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
                             <Form.Group className="col-sm-10">
                                 {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
-
-                                {/*
-                                <OverlayTrigger
-                                    placement="top"
-                                    //show={errors.orgnrVirksomhet?.[index] != null}
-                                    delay={{show: 500, hide: 100}}
-                                    overlay={
-                                        <Tooltip
-                                            id={`button-tooltip-${index}`}>{errors.orgnrVirksomhet?.[index]?.message}
-                                        </Tooltip>}>
-*/}
                                 <Form.Control
-                                    {...register(`orgnrVirksomhet.${index}`)}
+                                    {...register(`orgnrVirksomhet.${index}.orgnr`)}
                                     isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
                                         && !errors.orgnrVirksomhet?.[index]}
                                     isInvalid={errors.orgnrVirksomhet?.[index] != null}
                                     type="text"
                                     maxLength={9}
                                     placeholder="9 siffer"/>
-                                {/*</OverlayTrigger>*/}
                             </Form.Group>
                             <div className="col-sm-2 mt-auto m-0 mb-2">
                                 {index > 0 && <img
@@ -231,7 +220,7 @@ function App() {
                                     && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
                                     && <img
                                         className={index < 1 ? "ps-4" : "ps-1"}
-                                        onClick={() => appendOrgnr("")}
+                                        onClick={() => appendOrgnr({orgnr: ""})}
                                         src={PlusCircle}
                                         title="Legg til virksomhetsnummer"
                                         alt="Legg til virksomhetsnummer"/>}
@@ -271,7 +260,7 @@ function App() {
 
                     setDatafil(null)
                     setValgtSkjematype(skjematyper.find(it => it.id == getValues("skjema")))
-                    appendOrgnr("")
+                    appendOrgnr({orgnr: ""})
                 }}
             >Sett testverdier 0X</Button>
         </div>

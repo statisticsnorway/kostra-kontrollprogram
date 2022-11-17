@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -142,7 +143,7 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                     base64EncodedContent = base64EncodedContent
                 ),
                 "orgnrForetak",
-                "Må starte med [8|9] etterfulgt av 8 siffer"
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             ),
             row(
                 "orgnrVirksomhet missing",
@@ -156,21 +157,19 @@ class ApiControllerTest(@Client("/") val client: HttpClient) : BehaviorSpec({
                 "kostraForm",
                 "Skjema krever ett eller flere orgnr for virksomhet(er)"
             ),
-            /* When Micronaut 4, fix validation rule in view model and comment in test
-                        row(
-                            "Invalid orgnrVirksomhet",
-                            KostraFormVm(
-                                aar = 2022,
-                                skjema = "0X",
-                                region = "667600",
-                                orgnrForetak = "987654321",
-                                orgnrVirksomhet = setOf("a"),
-                                base64EncodedContent = base64EncodedContent
-                            ),
-                            "orgnrVirksomhet",
-                            "Må starte med [8|9] etterfulgt av 8 siffer"
-                        )
-            */
+            row(
+                "Invalid orgnrVirksomhet",
+                KostraFormVm(
+                    aar = 2022,
+                    skjema = "0X",
+                    region = "667600",
+                    orgnrForetak = "987654321",
+                    orgnrVirksomhet = setOf(CompanyIdVm("a")),
+                    base64EncodedContent = base64EncodedContent
+                ),
+                "orgnr",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            )
         ) { description, requestBody, validationKey, expectedValidationError ->
 
             `when`(description) {

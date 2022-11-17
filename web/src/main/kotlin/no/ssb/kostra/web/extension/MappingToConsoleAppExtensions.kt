@@ -18,7 +18,7 @@ fun KostraFormVm.toKostraArguments(): Arguments = Arguments(
         REGION_ABBR to this.region,
         NAME_ABBR to (this.navn ?: "UOPPGITT"),
         COMPANY_ORGNR_ABBR to (this.orgnrForetak ?: ""),
-        UNIT_ORGNR_ABBR to (this.orgnrVirksomhet?.joinToString(separator = ",") ?: "")
+        UNIT_ORGNR_ABBR to (this.orgnrVirksomhet?.joinToString(separator = ",") { it.orgnr } ?: "")
     ).entries.flatMap { (arg, argValue) -> listOf("-$arg", argValue) }.toTypedArray(),
     ByteArrayInputStream(Base64.getDecoder().decode(this.base64EncodedContent))
 )

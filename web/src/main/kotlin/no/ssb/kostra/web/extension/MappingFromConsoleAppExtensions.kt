@@ -6,6 +6,7 @@ import no.ssb.kostra.felles.Constants.NORMAL_ERROR
 import no.ssb.kostra.felles.Constants.PARAMETER_ERROR
 import no.ssb.kostra.felles.Constants.SYSTEM_ERROR
 import no.ssb.kostra.felles.ErrorReport
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.ErrorDetailsVm
 import no.ssb.kostra.web.viewmodel.ErrorReportVm
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
@@ -18,7 +19,7 @@ fun Arguments.toReportRequestVm(): KostraFormVm {
         region = this.region,
         navn = this.navn,
         orgnrForetak = this.foretaknr,
-        orgnrVirksomhet = this.orgnr?.split(",")
+        orgnrVirksomhet = this.orgnr?.split(",")?.map { CompanyIdVm(it) }
     )
 }
 

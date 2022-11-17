@@ -40,7 +40,7 @@ describe('apiCalls', () => {
                 navn: "Oslo",
                 orgnrForetak: "987654321",
                 orgnrVirksomhet: [{orgnr: "876543219"}],
-                base64EncodedContent: "dfgsdfgsdfgfdsgsdfgdfgfdg"
+                skjemaFil: null
             }
 
             const errorReportJson = {

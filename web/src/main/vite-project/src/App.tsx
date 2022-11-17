@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {listSkjemaTyperAsync} from "./api/apiCalls"
 import {useFieldArray, useForm} from "react-hook-form"
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -23,23 +23,25 @@ function App() {
     const [datafil, setDatafil] = useState<Nullable<string>>(null)
 
     const validationSchema = yup.object({
-        aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
-        region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
-        skjema: yup.string().required("Skjematype er påkrevet"),
-        orgnrForetak: yup.string().when([], {
-            is: () => valgtSkjematype?.labelOrgnr,
-            then: yup.string()
-                .required("Organisasjonsnummer er påkrevet")
-                .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
-        }),
-        orgnrVirksomhet: yup.array().of(
-            yup.object().shape({
-                orgnr: yup.string()
+            aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
+            region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
+            skjema: yup.string().required("Skjematype er påkrevet"),
+            orgnrForetak: yup.string().when([], {
+                is: () => valgtSkjematype?.labelOrgnr,
+                then: yup.string()
                     .required("Organisasjonsnummer er påkrevet")
                     .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
-            })
-        )
-    }).required()
+            }),
+            orgnrVirksomhet: yup.array().of(
+                yup.object().shape({
+                    orgnr: yup.string()
+                        .required("Organisasjonsnummer er påkrevet")
+                        .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
+                })
+            ),
+            skjemaFil: yup.mixed().test("required", "Vennligst velg fil", (files: FileList) => files?.length > 0)
+        }
+    ).required()
 
     const {
         control,
@@ -47,7 +49,7 @@ function App() {
         getValues,
         setValue,
         handleSubmit,
-        formState: {errors, touchedFields, isDirty},
+        formState: {errors, touchedFields},
         formState,
         watch
     } = useForm<KostraFormVm>({
@@ -95,21 +97,6 @@ function App() {
             return () => subscription.unsubscribe()
         }
     }, [skjematyper, watch])
-
-    const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-        const {files} = event.target
-        if (files == null || files.length == 0) {
-            return
-        }
-        setDatafil(null)
-
-        let reader = new FileReader()
-        reader.onloadend = () => {
-            setDatafil(reader.result as string)
-            event.target.value = ""
-        }
-        reader.readAsDataURL(files[0])
-    }
 
     return <Form noValidate validated={formState.isValid} onSubmit={onSubmit}>
         <div className="py-5 text-center">
@@ -235,11 +222,11 @@ function App() {
                 className="col-sm-12 mt-4"
                 controlId="filnavn">
                 <Form.Control
-                    type="file"
-                    isInvalid={isDirty && datafil == null}
-                    onChange={handleFileUpload}/>
-                {!datafil && <div className="invalid-feedback">Vennligst velg fil</div>}
-                {datafil && <div className="text-success mt-1">Fil lastet opp</div>}
+                    {...register("skjemaFil")}
+                    isValid={touchedFields.skjemaFil && !errors.skjemaFil}
+                    isInvalid={errors.skjemaFil?.type != null}
+                    type="file"/>
+                <Form.Control.Feedback type="invalid">{errors.skjemaFil?.message}</Form.Control.Feedback>
             </Form.Group>
 
             <hr className="my-4"/>
@@ -268,3 +255,21 @@ function App() {
 }
 
 export default App
+
+
+/*
+    const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+        const {files} = event.target
+        if (files == null || files.length == 0) {
+            return
+        }
+        setDatafil(null)
+
+        let reader = new FileReader()
+        reader.onloadend = () => {
+            setDatafil(reader.result as string)
+            event.target.value = ""
+        }
+        reader.readAsDataURL(files[0])
+    }
+*/

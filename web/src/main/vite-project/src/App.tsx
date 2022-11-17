@@ -20,7 +20,6 @@ function App() {
     const [loadError, setLoadError] = useState<string>()
     const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
-    const [datafil, setDatafil] = useState<Nullable<string>>(null)
 
     const validationSchema = yup.object({
             aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
@@ -234,8 +233,7 @@ function App() {
             <Button
                 type="submit"
                 className="btn-secondary"
-                disabled={!formState.isValid || !datafil}
-            >Kontroller fil</Button>
+                disabled={!formState.isValid}>Kontroller fil</Button>
 
             <Button
                 className="btn-secondary mt-5"
@@ -245,7 +243,6 @@ function App() {
                     setValue("skjema", "0X")
                     setValue("orgnrForetak", "999999999")
 
-                    setDatafil(null)
                     setValgtSkjematype(skjematyper.find(it => it.id == getValues("skjema")))
                     appendOrgnr({orgnr: ""})
                 }}

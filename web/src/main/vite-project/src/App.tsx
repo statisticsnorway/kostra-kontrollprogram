@@ -179,7 +179,7 @@ function App() {
 
             { /** ORGNR 2 */}
             {orgnrVirksomhetFields.length > 0 && <div className="col-sm-6">
-                <div className="container">
+                <div className="container ps-0">
                     {orgnrVirksomhetFields.map((item, index) => {
                         return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
                             <Form.Group className="col-sm-10">

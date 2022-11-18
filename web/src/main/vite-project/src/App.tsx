@@ -15,30 +15,37 @@ import DashCircle from "./assets/icon/dash-circle.svg"
 // @ts-ignore
 import IconKostra from "./assets/icon/ikon-kostra.svg"
 
+const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
+const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
+
 function App() {
 
     const [loadError, setLoadError] = useState<string>()
     const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
-    const validationSchema = yup.object({
+    const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
             aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
             region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
             skjema: yup.string().required("Skjematype er påkrevet"),
             orgnrForetak: yup.string().when([], {
                 is: () => valgtSkjematype?.labelOrgnr,
                 then: yup.string()
-                    .required("Organisasjonsnummer er påkrevet")
-                    .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
+                    .required(COMPANY_ID_REQUIRED_MSG)
+                    .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
             }),
             orgnrVirksomhet: yup.array().of(
                 yup.object().shape({
                     orgnr: yup.string()
-                        .required("Organisasjonsnummer er påkrevet")
-                        .matches(/^[8|9]\d{8}$/i, "Må starte med '8' eller '9' etterfulgt av 8 siffer")
+                        .required(COMPANY_ID_REQUIRED_MSG)
+                        .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
                 })
             ),
-            skjemaFil: yup.mixed().test("required", "Vennligst velg fil", (files: FileList) => files?.length > 0)
+            skjemaFil: yup.mixed()
+                .test(
+                    "required",
+                    "Vennligst velg fil",
+                    (files: FileList) => files?.length > 0)
         }
     ).required()
 
@@ -192,7 +199,11 @@ function App() {
                                     type="text"
                                     maxLength={9}
                                     placeholder="9 siffer"/>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.orgnrVirksomhet?.[index]?.orgnr?.message}
+                                </Form.Control.Feedback>
                             </Form.Group>
+
                             <div className="col-sm-2 mt-auto m-0 mb-2">
                                 {index > 0 && <img
                                     onClick={() => removeOrgnr(index)}

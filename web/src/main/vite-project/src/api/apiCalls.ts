@@ -30,7 +30,6 @@ export const kostraFormToMultipartBody = (skjema: NonNullable<KostraFormVm>): Fo
         JSON.stringify({
             ...skjema,
             skjemaFil: null,
-            orgnrForetak: null,
             filnavn: skjema.skjemaFil[0].name
         })
     )

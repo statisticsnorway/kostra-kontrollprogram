@@ -20,6 +20,8 @@ netty:
 
 iu-innstillinger:
   skjematyper:
+    - id: 52AF
+      tittel: "52AF. TITTEL MANGLER"
     - id: 0A
       tittel: 0A. Bevilgningsregnskap for kommuner
     - id: 0AK1

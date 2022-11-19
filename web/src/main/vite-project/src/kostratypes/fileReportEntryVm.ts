@@ -1,6 +1,6 @@
 import {KostraErrorCode} from "./kostraErrorCode";
 
-export interface ErrorDetailsVm {
+export interface FileReportEntryVm {
     readonly journalnummer: NonNullable<string>
     readonly saksbehandler: NonNullable<string>
     readonly kontrollnummer: NonNullable<string>

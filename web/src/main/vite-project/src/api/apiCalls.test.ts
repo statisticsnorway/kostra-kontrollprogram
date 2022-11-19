@@ -1,8 +1,11 @@
 import {describe, expect, it, vi} from "vitest"
-import {api, kontrollerSkjemaAsync, listSkjemaTyperAsync} from "./apiCalls"
-import {KostraFormVm} from "../kostratypes/kostraFormVm";
-import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm";
-import {ErrorReportVm} from "../kostratypes/errorReportVm";
+import {
+    api,
+    kontrollerSkjemaAsync,
+    listSkjemaTyperAsync,
+    kostraFormToMultipartBody,
+    MULTIPART_HEADER_CONFIG
+} from "./apiCalls"
 
 describe('apiCalls', () => {
     describe("skjematyper (GET)", () => {
@@ -24,7 +27,7 @@ describe('apiCalls', () => {
             api.get = mockGetResponseAsync
 
             // make call and verify result
-            await expect(listSkjemaTyperAsync()).resolves.toEqual(kostraFormTypeArrayJson as KostraFormTypeVm[])
+            await expect(listSkjemaTyperAsync()).resolves.toEqual(kostraFormTypeArrayJson)
             expect(mockGetResponseAsync).toBeCalledWith("/skjematyper")
         })
     })
@@ -40,10 +43,10 @@ describe('apiCalls', () => {
                 navn: "Oslo",
                 orgnrForetak: "987654321",
                 orgnrVirksomhet: [{orgnr: "876543219"}],
-                skjemaFil: null
+                skjemaFil: createMockFileList()
             }
 
-            const errorReportJson = {
+            const fileReportJson = {
                 innparametere: kostraFormJson,
                 antallKontroller: 42,
                 feilkode: 1,
@@ -57,18 +60,33 @@ describe('apiCalls', () => {
             }
 
             const mockPostResponseAsync = vi.fn().mockImplementation(
-                () => new Promise(resolve => resolve({data: errorReportJson}))
+                () => new Promise(resolve => resolve({data: fileReportJson}))
             )
 
             // set mock
             api.post = mockPostResponseAsync
 
             // make call and verify result
-            await expect(kontrollerSkjemaAsync(kostraFormJson as KostraFormVm))
-                .resolves.toEqual(errorReportJson as ErrorReportVm)
-
+            await expect(kontrollerSkjemaAsync(kostraFormJson)).resolves.toEqual(fileReportJson)
             expect(mockPostResponseAsync).toBeCalledWith(
-                "/kontroller-skjema", kostraFormJson as KostraFormVm)
+                "/kontroller-skjema",
+                kostraFormToMultipartBody(kostraFormJson),
+                MULTIPART_HEADER_CONFIG)
         })
     })
 })
+
+const createMockFileList = (): FileList => {
+    const fakeFileInput = document.createElement("input")
+    fakeFileInput.setAttribute("type", "file")
+
+    let mockFileList = Object.create(fakeFileInput.files)
+    mockFileList[0] = new File(
+        ["foo"],
+        "foo.dat",
+        {
+            type: "text/plain",
+        })
+
+    return mockFileList
+}

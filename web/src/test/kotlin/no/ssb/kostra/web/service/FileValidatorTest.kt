@@ -1,32 +1,34 @@
 package no.ssb.kostra.web.service
 
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.KostraFormVm
-import java.util.*
 
-class ValidatorSvcTest : BehaviorSpec({
+class FileValidatorTest : BehaviorSpec({
 
-    val sut = ValidatorSvc()
+    val sut = FileValidator()
 
     given("request with non-fatal error") {
 
-        val request = KostraFormVm(
-            aar = 2020,
+        val kostraForm = KostraFormVm(
+            aar = 2022,
             skjema = "52AF",
             region = "667600",
             navn = "UOPPGITT",
-            base64EncodedContent = Base64.getEncoder().encodeToString(PLAIN_TEXT.toByteArray()),
+            filnavn = "fil.data",
             orgnrVirksomhet = null
         )
 
-        `when`("validate with content") {
+        `when`("validateDataFile with valid content") {
 
-            val errorReport = sut.validateInput(request)
+            val errorReport = sut.validateDataFile(
+                kostraForm = kostraForm,
+                inputStream = PLAIN_TEXT.toByteArray().inputStream()
+            )
 
             then("errorReportVm should be as expected") {
                 errorReport.feilkode shouldBe KostraErrorCode.NORMAL_ERROR
@@ -44,11 +46,11 @@ class ValidatorSvcTest : BehaviorSpec({
             }
         }
 
-        `when`("validate without content") {
-
-            shouldThrow<NullPointerException> {
-                sut.validateInput(
-                    request.copy(base64EncodedContent = null)
+        `when`("validateDataFile without content") {
+            shouldNotThrowAny {
+                sut.validateDataFile(
+                    kostraForm,
+                    "".byteInputStream()
                 )
             }
         }

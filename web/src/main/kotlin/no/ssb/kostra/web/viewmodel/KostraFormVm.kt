@@ -1,20 +1,20 @@
 package no.ssb.kostra.web.viewmodel
 
 import io.micronaut.core.annotation.Introspected
-import no.ssb.kostra.web.validation.GyldigSkjema
-import no.ssb.kostra.web.validation.GyldigSkjemaType
+import no.ssb.kostra.web.validation.ValidForm
+import no.ssb.kostra.web.validation.ValidFormType
 import javax.validation.Valid
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
 @Introspected
-@GyldigSkjema
+@ValidForm
 data class KostraFormVm(
     @field:Min(value = 2021, message = "År kan ikke være mindre enn {value}")
     val aar: Int = 0,
 
-    @field:GyldigSkjemaType
+    @field:ValidFormType
     @field:NotBlank(message = "Skjematype må være utfylt")
     val skjema: String = "",
 
@@ -30,5 +30,5 @@ data class KostraFormVm(
     val orgnrVirksomhet: Collection<CompanyIdVm>? = null,
 
     @field:NotBlank(message = "Filvedlegg mangler")
-    val base64EncodedContent: String? = null
+    val filnavn: String? = null
 )

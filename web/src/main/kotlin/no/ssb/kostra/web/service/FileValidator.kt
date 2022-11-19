@@ -4,13 +4,17 @@ import jakarta.inject.Singleton
 import no.ssb.kostra.controlprogram.ControlDispatcher
 import no.ssb.kostra.web.extension.toErrorReportVm
 import no.ssb.kostra.web.extension.toKostraArguments
-import no.ssb.kostra.web.viewmodel.ErrorReportVm
+import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
+import java.io.InputStream
 
 /** keep as singleton for testing purposes */
 @Singleton
-class ValidatorSvc {
+class FileValidator {
 
-    fun validateInput(kostraForm: KostraFormVm): ErrorReportVm =
-        ControlDispatcher.doControls(kostraForm.toKostraArguments()).toErrorReportVm()
+    fun validateDataFile(
+        kostraForm: KostraFormVm,
+        inputStream: InputStream
+    ): FileReportVm =
+        ControlDispatcher.doControls(kostraForm.toKostraArguments(inputStream)).toErrorReportVm()
 }

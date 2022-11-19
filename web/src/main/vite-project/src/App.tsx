@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {listSkjemaTyperAsync} from "./api/apiCalls"
+import {kontrollerSkjemaAsync, listSkjemaTyperAsync} from "./api/apiCalls"
 import {useFieldArray, useForm} from "react-hook-form"
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
 import {KostraFormTypeVm} from "./kostratypes/kostraFormTypeVm"
@@ -17,6 +17,8 @@ import IconKostra from "./assets/icon/ikon-kostra.svg"
 
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
+
+const MEBIBYTE_50 = 52428800
 
 function App() {
 
@@ -45,7 +47,12 @@ function App() {
                 .test(
                     "required",
                     "Vennligst velg fil",
-                    (files: FileList) => files?.length > 0)
+                    (files: FileList) => files?.length > 0
+                ).test(
+                    "size",
+                    "Maks. filstørrelse er 50 MiB",
+                    (files: FileList) => files?.[0]?.size < MEBIBYTE_50
+                )
         }
     ).required()
 
@@ -72,7 +79,9 @@ function App() {
         name: "orgnrVirksomhet"
     })
 
-    const onSubmit = handleSubmit(data => console.log(getValues()))
+    const onSubmit = handleSubmit(data => {
+        kontrollerSkjemaAsync(data).then(response => console.log(response))
+    })
 
     useEffect(() => {
         listSkjemaTyperAsync()
@@ -235,7 +244,9 @@ function App() {
                     {...register("skjemaFil")}
                     isValid={touchedFields.skjemaFil && !errors.skjemaFil}
                     isInvalid={errors.skjemaFil?.type != null}
-                    type="file"/>
+                    type="file"
+                    accept=".dat,.xml"
+                />
                 <Form.Control.Feedback type="invalid">{errors.skjemaFil?.message}</Form.Control.Feedback>
             </Form.Group>
 
@@ -263,21 +274,3 @@ function App() {
 }
 
 export default App
-
-
-/*
-    const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-        const {files} = event.target
-        if (files == null || files.length == 0) {
-            return
-        }
-        setDatafil(null)
-
-        let reader = new FileReader()
-        reader.onloadend = () => {
-            setDatafil(reader.result as string)
-            event.target.value = ""
-        }
-        reader.readAsDataURL(files[0])
-    }
-*/

@@ -1,7 +1,9 @@
 import axios, {AxiosRequestConfig} from "axios"
 import {KostraFormVm} from "../kostratypes/kostraFormVm";
 import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm";
-import {ErrorReportVm} from "../kostratypes/errorReportVm";
+import {FileReportVm} from "../kostratypes/fileReportVm";
+
+export const MULTIPART_HEADER_CONFIG = {headers: {"Content-Type": "multipart/form-data"}}
 
 const config: AxiosRequestConfig = {baseURL: "/api"}
 export const api = axios.create(config)
@@ -9,5 +11,32 @@ export const api = axios.create(config)
 export const listSkjemaTyperAsync = (): Promise<KostraFormTypeVm[]> =>
     api.get<KostraFormTypeVm[]>("/skjematyper").then(response => response.data)
 
-export const kontrollerSkjemaAsync = (skjema: NonNullable<KostraFormVm>): Promise<ErrorReportVm> =>
-    api.post<ErrorReportVm>("/kontroller-skjema", skjema).then(response => response.data)
+export const kontrollerSkjemaAsync = (skjema: NonNullable<KostraFormVm>): Promise<FileReportVm> =>
+    api.post<FileReportVm>(
+        "/kontroller-skjema",
+        kostraFormToMultipartBody(skjema),
+        MULTIPART_HEADER_CONFIG
+    ).then(response => response.data)
+
+/**
+ * builds FormData from KostraFormVm
+ */
+export const kostraFormToMultipartBody = (skjema: NonNullable<KostraFormVm>): FormData => {
+    const bodyFormData = new FormData()
+
+    // append form as JSON-string without file, add filename
+    bodyFormData.append(
+        "kostraFormAsJson",
+        JSON.stringify({
+            ...skjema,
+            skjemaFil: null,
+            orgnrForetak: null,
+            filnavn: skjema.skjemaFil[0].name
+        })
+    )
+
+    // append file
+    bodyFormData.append("file", skjema.skjemaFil[0])
+
+    return bodyFormData
+}

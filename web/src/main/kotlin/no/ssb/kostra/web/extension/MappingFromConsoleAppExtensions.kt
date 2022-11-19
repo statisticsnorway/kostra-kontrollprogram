@@ -7,8 +7,8 @@ import no.ssb.kostra.felles.Constants.PARAMETER_ERROR
 import no.ssb.kostra.felles.Constants.SYSTEM_ERROR
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
-import no.ssb.kostra.web.viewmodel.ErrorDetailsVm
-import no.ssb.kostra.web.viewmodel.ErrorReportVm
+import no.ssb.kostra.web.viewmodel.FileReportEntryVm
+import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
@@ -31,12 +31,12 @@ fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {
     else -> KostraErrorCode.NO_ERROR
 }
 
-fun ErrorReport.toErrorReportVm(): ErrorReportVm {
+fun ErrorReport.toErrorReportVm(): FileReportVm {
 
     val errorReportEntries = this.rapportMap.entries.flatMap { (saksbehandler, errorDetails) ->
         errorDetails.entries.flatMap { (journalnummer, journalDetails) ->
             journalDetails.map { (_, errorList) ->
-                ErrorDetailsVm(
+                FileReportEntryVm(
                     journalnummer = journalnummer,
                     saksbehandler = saksbehandler,
                     kontrollnummer = errorList[0],
@@ -47,7 +47,7 @@ fun ErrorReport.toErrorReportVm(): ErrorReportVm {
         }
     }
 
-    return ErrorReportVm(
+    return FileReportVm(
         innparametere = this.args.toReportRequestVm(),
         antallKontroller = this.count.toInt(),
         feil = errorReportEntries,

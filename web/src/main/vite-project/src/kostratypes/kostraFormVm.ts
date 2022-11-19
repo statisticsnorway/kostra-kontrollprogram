@@ -7,5 +7,5 @@ export interface KostraFormVm {
     region: NonNullable<string>
     orgnrForetak: Nullable<string>
     orgnrVirksomhet: Nullable<CompanyIdVm[]>
-    skjemaFil: Nullable<FileList>
+    skjemaFil: FileList
 }

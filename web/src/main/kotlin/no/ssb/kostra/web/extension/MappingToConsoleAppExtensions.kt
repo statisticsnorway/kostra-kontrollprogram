@@ -8,10 +8,9 @@ import no.ssb.kostra.controlprogram.ArgumentConstants.UNIT_ORGNR_ABBR
 import no.ssb.kostra.controlprogram.ArgumentConstants.YEAR_ABBR
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.web.viewmodel.KostraFormVm
-import java.io.ByteArrayInputStream
-import java.util.*
+import java.io.InputStream
 
-fun KostraFormVm.toKostraArguments(): Arguments = Arguments(
+fun KostraFormVm.toKostraArguments(inputStream: InputStream) = Arguments(
     mapOf(
         SCHEMA_ABBR to this.skjema,
         YEAR_ABBR to this.aar.toString(),
@@ -20,5 +19,5 @@ fun KostraFormVm.toKostraArguments(): Arguments = Arguments(
         COMPANY_ORGNR_ABBR to (this.orgnrForetak ?: ""),
         UNIT_ORGNR_ABBR to (this.orgnrVirksomhet?.joinToString(separator = ",") { it.orgnr } ?: "")
     ).entries.flatMap { (arg, argValue) -> listOf("-$arg", argValue) }.toTypedArray(),
-    ByteArrayInputStream(Base64.getDecoder().decode(this.base64EncodedContent))
+    inputStream
 )

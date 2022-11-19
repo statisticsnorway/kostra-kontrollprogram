@@ -3,9 +3,9 @@ package no.ssb.kostra.web.viewmodel
 import io.micronaut.core.annotation.Introspected
 
 @Introspected
-data class ErrorReportVm(
+data class FileReportVm(
     val innparametere: KostraFormVm,
     val antallKontroller: Int,
     val feilkode: KostraErrorCode,
-    val feil: Collection<ErrorDetailsVm>
+    val feil: Collection<FileReportEntryVm>
 )

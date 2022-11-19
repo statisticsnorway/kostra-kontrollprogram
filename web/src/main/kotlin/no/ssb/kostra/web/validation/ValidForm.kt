@@ -4,6 +4,6 @@ import javax.validation.Constraint
 
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [])
-annotation class GyldigSkjema(
+annotation class ValidForm(
     val message: String = "Ugyldig skjema ({validatedValue})" //
 )

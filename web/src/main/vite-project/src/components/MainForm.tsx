@@ -226,10 +226,11 @@ const MainForm = (props: {
                                     placeholder="9 siffer"/>
                             </Form.Group>
 
-                            <div className="col-sm-2 mt-auto m-0 mb-2">
+                            <div className="col-sm-2 mt-auto mb-2">
                                 {/** show minus icon for index > 0 */}
                                 {index > 0 && <img
                                     onClick={() => removeOrgnr(index)}
+                                    className="pe-2"
                                     src={DashCircle}
                                     title="Fjern virksomhetsnummer"
                                     alt="Fjern virksomhetsnummer"/>}
@@ -240,7 +241,7 @@ const MainForm = (props: {
                                     && !errors.orgnrVirksomhet?.[index]
                                     && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
                                     && <img
-                                        className={index < 1 ? "ps-4" : "ps-1"}
+                                        className={index > 0 ? "ps-3" : "ps-5"}
                                         onClick={() => appendOrgnr({orgnr: ""})}
                                         src={PlusCircle}
                                         title="Legg til virksomhetsnummer"

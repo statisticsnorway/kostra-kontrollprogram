@@ -23,7 +23,7 @@ export const ReportView = (props: {
                 <th scope="col">Feilkode</th>
                 <th scope="col">Journalnummer</th>
                 <th scope="col">Saksbehandler</th>
-                <th scope="col">Kontrollnummer</th>
+                <th scope="col">Kontrolltype</th>
                 <th scope="col">Kontrolltekst</th>
             </tr>
             </thead>

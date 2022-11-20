@@ -7,6 +7,7 @@ export const ReportView = (props: {
 }) => {
     const {fileReport} = props
 
+    // gets text value from enum KostraErrorCode
     const getEnumText = (untypedString: string): string =>
         KostraErrorCode[(untypedString as keyof typeof KostraErrorCode)]
 
@@ -39,7 +40,6 @@ export const ReportView = (props: {
             </tbody>
         </table>
     </div>
-
 }
 
 export default ReportView

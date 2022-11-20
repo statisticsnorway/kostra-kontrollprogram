@@ -1,16 +1,20 @@
 import React, {useState} from "react"
+import {Button} from "react-bootstrap";
 
+// app components
 import MainForm from "./components/MainForm";
 import ReportView from "./components/ReportView";
 
+// app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm";
 import {FileReportVm} from "./kostratypes/fileReportVm";
 
+// API calls
 import {kontrollerSkjemaAsync} from "./api/apiCalls";
 
+// icons
 // @ts-ignore
 import IconKostra from "./assets/icon/ikon-kostra.svg";
-import {Button} from "react-bootstrap";
 
 const App = () => {
 
@@ -18,10 +22,12 @@ const App = () => {
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
 
+    // Form submit handler.
+    // Submits form to backend and stores returned report
+    // at start of fileReports array state.
     const onSubmit = (form: KostraFormVm) => {
         kontrollerSkjemaAsync(form)
             .then(fileReport => {
-                console.log(fileReport)
                 setFileReports(prevState => [fileReport, ...prevState])
                 setActiveTabIndex(1)
                 setLoadError("")
@@ -71,7 +77,7 @@ const App = () => {
             onSubmit={onSubmit}
             onLoadError={message => setLoadError(message)}/>
 
-        { /** REPORTS */}
+        { /** FILE REPORT */}
         {activeTabIndex > 0 && <ReportView fileReport={fileReports[activeTabIndex - 1]}/>}
     </>
 }

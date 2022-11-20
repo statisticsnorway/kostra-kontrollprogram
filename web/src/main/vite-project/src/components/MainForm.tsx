@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from "react"
-import {listSkjemaTyperAsync} from "../api/apiCalls"
 import {useFieldArray, useForm} from "react-hook-form"
+import {Button, Form} from "react-bootstrap"
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as yup from "yup"
+
+// app types
 import {KostraFormVm} from "../kostratypes/kostraFormVm"
 import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm"
 import {Nullable} from "../kostratypes/nullable"
-import {Button, Form} from "react-bootstrap"
-import * as yup from "yup"
-import {yupResolver} from "@hookform/resolvers/yup"
 
+// API calls
+import {listSkjemaTyperAsync} from "../api/apiCalls"
+
+// icons
 // @ts-ignore
 import PlusCircle from "../assets/icon/plus-circle.svg"
 // @ts-ignore
@@ -15,10 +20,11 @@ import DashCircle from "../assets/icon/dash-circle.svg"
 // @ts-ignore
 import IconKostra from "../assets/icon/ikon-kostra.svg"
 
+// misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
-
 const MEBIBYTE_50 = 52428800
+const MAX_VIRKSOMHET_FIELDS = 20
 
 const MainForm = (props: {
     readonly showForm: boolean,
@@ -31,9 +37,11 @@ const MainForm = (props: {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
     const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
-            aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
-            region: yup.string().required("Region er påkrevet").matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
             skjema: yup.string().required("Skjematype er påkrevet"),
+            aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
+            region: yup.string()
+                .required("Region er påkrevet")
+                .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
             orgnrForetak: yup.string().when([], {
                 is: () => valgtSkjematype?.labelOrgnr,
                 then: yup.string()
@@ -53,20 +61,19 @@ const MainForm = (props: {
                     "Vennligst velg fil",
                     (files: FileList) => files?.length > 0
                 ).test(
-                    "size",
+                    "file-size",
                     "Maks. filstørrelse er 50 MiB",
                     (files: FileList) => files?.[0]?.size < MEBIBYTE_50
                 )
         }
     ).required()
 
+    // main form
     const {
         control,
         register,
         reset,
         resetField,
-        getValues,
-        setValue,
         handleSubmit,
         formState: {errors, touchedFields},
         formState,
@@ -76,6 +83,7 @@ const MainForm = (props: {
         resolver: yupResolver(validationSchema)
     })
 
+    // array for orgnrVirksomhet
     const {
         fields: orgnrVirksomhetFields,
         append: appendOrgnr,
@@ -85,8 +93,10 @@ const MainForm = (props: {
         name: "orgnrVirksomhet"
     })
 
+    // submit-handler, redirects call to parent
     const localOnSubmit = handleSubmit(data => onSubmit(data))
 
+    // get ui data
     useEffect(() => {
         listSkjemaTyperAsync()
             .then(skjematyper => {
@@ -96,6 +106,7 @@ const MainForm = (props: {
             .catch(() => onLoadError("Lasting av skjematyper feilet"))
     }, [])
 
+    // change skjema handling
     useEffect(() => {
         if (skjematyper.length) {
             const subscription = watch((value, {name, type}) => {
@@ -125,10 +136,11 @@ const MainForm = (props: {
         }
     }, [skjematyper, watch])
 
+    /** if active view is a file report, hide this component */
     return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
-            { /** SKJEMATYPE */}
+            {/** SKJEMATYPE */}
             {skjematyper.length > 0 && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
@@ -138,14 +150,14 @@ const MainForm = (props: {
                     isValid={touchedFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null}>
                     <option value="">Velg skjematype</option>
-                    {skjematyper.map(skjematype =>
-                        <option key={skjematype.id}
+                    {skjematyper.map((skjematype, index) =>
+                        <option key={index}
                                 value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
             </Form.Group>}
 
-            { /** ÅRGANG */}
+            {/** ÅRGANG */}
             <Form.Group
                 className="col-sm-6"
                 controlId="aar">
@@ -161,7 +173,7 @@ const MainForm = (props: {
                 <Form.Control.Feedback type="invalid">{errors.aar?.message}</Form.Control.Feedback>
             </Form.Group>
 
-            { /** REGION */}
+            {/** REGION */}
             <Form.Group
                 className="col-sm-6"
                 controlId="region">
@@ -177,7 +189,7 @@ const MainForm = (props: {
                 <Form.Control.Feedback type="invalid">{errors.region?.message}</Form.Control.Feedback>
             </Form.Group>
 
-            { /** ORGNR */}
+            {/** ORGNR */}
             {valgtSkjematype?.labelOrgnr &&
                 <Form.Group className="col-sm-6" controlId="orgnrForetak">
                     <Form.Label>{valgtSkjematype.labelOrgnr}</Form.Label>
@@ -192,12 +204,13 @@ const MainForm = (props: {
                     <Form.Control.Feedback type="invalid">{errors.orgnrForetak?.message}</Form.Control.Feedback>
                 </Form.Group>}
 
-            { /** VIRKSOMHETSNUMMER */}
+            {/** ORGNR VIRKSOMHET */}
             {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
                 <div className="container ps-0">
-                    {orgnrVirksomhetFields.map((item, index) => {
-                        return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
+                    {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
+                        return <div key={orgnrVirksomhet.id} className={index < 1 ? "row" : "row mt-2"}>
                             <Form.Group className="col-sm-10">
+                                {/** show label for first entry only */}
                                 {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
                                 <Form.Control
                                     {...register(`orgnrVirksomhet.${index}.orgnr`)}
@@ -210,13 +223,15 @@ const MainForm = (props: {
                             </Form.Group>
 
                             <div className="col-sm-2 mt-auto m-0 mb-2">
+                                {/** show minus icon for index > 0 */}
                                 {index > 0 && <img
                                     onClick={() => removeOrgnr(index)}
                                     src={DashCircle}
                                     title="Fjern virksomhetsnummer"
                                     alt="Fjern virksomhetsnummer"/>}
 
-                                {orgnrVirksomhetFields.length < 21
+                                {/** show plus icon for last entry only, when last entry is touched and valid */}
+                                {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
                                     && index == orgnrVirksomhetFields.length - 1
                                     && !errors.orgnrVirksomhet?.[index]
                                     && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
@@ -253,19 +268,6 @@ const MainForm = (props: {
                 type="submit"
                 className="btn-secondary"
                 disabled={!formState.isValid}>Kontroller fil</Button>
-
-            <Button
-                className="btn-secondary mt-5"
-                onClick={() => {
-                    setValue("aar", 2022)
-                    setValue("region", "030100")
-                    setValue("skjema", "0X")
-                    setValue("orgnrForetak", "999999999")
-
-                    setValgtSkjematype(skjematyper.find(it => it.id == getValues("skjema")))
-                    appendOrgnr({orgnr: ""})
-                }}
-            >Sett testverdier 0X</Button>
         </div>
     </Form>
 }

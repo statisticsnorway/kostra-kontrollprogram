@@ -21,7 +21,7 @@ export const ReportView = (props: {
             <div className="card-body">
                 <h5 className="card-title">Sammendrag</h5>
                 <p className="card-text">
-                    For detalinformasjon om hver enkelt feil, vennligst se tabell under.
+                    For detaljinformasjon om hver enkelt feil, vennligst se tabell under.
                 </p>
             </div>
             <ul className="list-group list-group-flush">

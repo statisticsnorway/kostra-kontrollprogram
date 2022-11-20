@@ -1,7 +1,7 @@
 export enum KostraErrorCode {
-    NO_ERROR = 0,
-    NORMAL_ERROR,
-    CRITICAL_ERROR,
-    SYSTEM_ERROR,
-    PARAMETER_ERROR
+    NO_ERROR = "OK",
+    NORMAL_ERROR = "Normal",
+    CRITICAL_ERROR = "Kritisk",
+    SYSTEM_ERROR = "Systemfeil",
+    PARAMETER_ERROR = "Parameterfeil"
 }

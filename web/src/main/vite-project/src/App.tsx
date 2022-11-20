@@ -14,7 +14,14 @@ import {kontrollerSkjemaAsync} from "./api/apiCalls";
 
 // icons
 // @ts-ignore
+import ArrowLeftCircle from "./assets/icon/arrow-left-circle.svg"
+// @ts-ignore
+import FilterLeft from "./assets/icon/filter-left.svg"
+// @ts-ignore
 import IconKostra from "./assets/icon/ikon-kostra.svg";
+// @ts-ignore
+import ListTask from "./assets/icon/list-task.svg";
+
 
 const App = () => {
 
@@ -60,13 +67,21 @@ const App = () => {
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
                         onClick={() => setActiveTabIndex(0)}>
+                    <img src={FilterLeft}
+                         className="pe-2"
+                         alt="Kostra"/>
                     {activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
                 </Button>
             </li>
             {fileReports.map((fileReport, index) =>
                 <li key={index} className="nav-item">
                     <Button className={activeTabIndex == index + 1 ? "nav-link active" : "nav-link"}
-                            onClick={() => setActiveTabIndex(index + 1)}>{fileReport.innparametere.skjema}</Button>
+                            onClick={() => setActiveTabIndex(index + 1)}>
+                        <img src={ListTask}
+                             className="pe-2"
+                             alt="Kostra"/>
+                        {fileReport.innparametere.skjema}
+                    </Button>
                 </li>
             )}
         </ul>}

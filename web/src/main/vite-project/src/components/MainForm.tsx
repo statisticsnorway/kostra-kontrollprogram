@@ -21,10 +21,11 @@ const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffe
 const MEBIBYTE_50 = 52428800
 
 const MainForm = (props: {
+    readonly showForm: boolean,
     onSubmit: (form: KostraFormVm) => void,
-    onLoadError: (message: string) => void
+    onLoadError: (message: string) => void,
 }) => {
-    const {onSubmit, onLoadError} = props
+    const {onSubmit, onLoadError, showForm} = props
 
     const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
@@ -114,7 +115,7 @@ const MainForm = (props: {
         }
     }, [skjematyper, watch])
 
-    return <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
             { /** ÅRGANG */}
             <Form.Group

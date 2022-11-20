@@ -64,10 +64,10 @@ const App = () => {
         </ul>}
 
         { /** FORM */}
-        {activeTabIndex == 0 && <MainForm
+        <MainForm
+            showForm={activeTabIndex == 0}
             onSubmit={onSubmit}
-            onLoadError={message => setLoadError(message)}
-        />}
+            onLoadError={message => setLoadError(message)}/>
 
         { /** REPORTS */}
         {activeTabIndex > 0 && <ReportView fileReport={fileReports[activeTabIndex - 1]}/>}

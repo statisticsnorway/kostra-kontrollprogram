@@ -19,21 +19,21 @@ export const ReportView = (props: {
         <table className="table table-striped table-sm">
             <thead>
             <tr>
+                <th scope="col">Feilkode</th>
                 <th scope="col">Journalnummer</th>
                 <th scope="col">Saksbehandler</th>
                 <th scope="col">Kontrollnummer</th>
                 <th scope="col">Kontrolltekst</th>
-                <th scope="col">Feilkode</th>
             </tr>
             </thead>
             <tbody>
             {fileReport.feil.map((reportEntry, index) => {
                 return <tr key={index}>
+                    <td>{renderErrorLevel(reportEntry.feilkode)}</td>
                     <td>{reportEntry.journalnummer}</td>
                     <td>{reportEntry.saksbehandler}</td>
                     <td>{reportEntry.kontrollnummer}</td>
                     <td>{reportEntry.kontrolltekst.replace("<br/>", "")}</td>
-                    <td>{renderErrorLevel(reportEntry.feilkode)}</td>
                 </tr>
             })}
             </tbody>

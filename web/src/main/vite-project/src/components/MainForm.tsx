@@ -210,45 +210,44 @@ const MainForm = (props: {
 
             {/** ORGNR VIRKSOMHET */}
             {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
-                <div className="container ps-0">
-                    {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
-                        return <div key={orgnrVirksomhet.id} className={index < 1 ? "row" : "row mt-2"}>
-                            <Form.Group className="col-sm-10">
-                                {/** show label for first entry only */}
-                                {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
-                                <Form.Control
-                                    {...register(`orgnrVirksomhet.${index}.orgnr`)}
-                                    isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
-                                        && !errors.orgnrVirksomhet?.[index]}
-                                    isInvalid={errors.orgnrVirksomhet?.[index] != null}
-                                    type="text"
-                                    maxLength={9}
-                                    placeholder="9 siffer"/>
-                            </Form.Group>
+                {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
+                    return <div key={orgnrVirksomhet.id} className="d-flex justify-content-between mb-2">
+                        <Form.Group className="col-sm-10">
+                            {/** show label for first entry only */}
+                            {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
+                            <Form.Control
+                                {...register(`orgnrVirksomhet.${index}.orgnr`)}
+                                isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                    && !errors.orgnrVirksomhet?.[index]}
+                                isInvalid={errors.orgnrVirksomhet?.[index] != null}
+                                type="text"
+                                maxLength={9}
+                                placeholder="9 siffer"/>
+                        </Form.Group>
 
-                            <div className="col-sm-2 mt-auto mb-2">
-                                {/** show minus icon for index > 0 */}
-                                {index > 0 && <img
-                                    onClick={() => removeOrgnr(index)}
-                                    className="pe-3"
-                                    src={DashCircle}
-                                    title="Fjern virksomhetsnummer"
-                                    alt="Fjern virksomhetsnummer"/>}
+                        <div className="mt-auto mb-2 d-flex justify-content-between">
+                            {/** show minus icon for index > 0 */}
+                            {index > 0 && <img
+                                onClick={() => removeOrgnr(index)}
+                                className="ps-2"
+                                src={DashCircle}
+                                title="Fjern virksomhetsnummer"
+                                alt="Fjern virksomhetsnummer"/>}
 
-                                {/** show plus icon for last entry only, when last entry is touched and valid */}
-                                {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
-                                    && index == orgnrVirksomhetFields.length - 1
-                                    && !errors.orgnrVirksomhet?.[index]
-                                    && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
-                                    && <img
-                                        onClick={() => appendOrgnr({orgnr: ""})}
-                                        src={PlusCircle}
-                                        title="Legg til virksomhetsnummer"
-                                        alt="Legg til virksomhetsnummer"/>}
-                            </div>
+                            {/** show plus icon for last entry only, when last entry is touched and valid */}
+                            {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
+                                && index == orgnrVirksomhetFields.length - 1
+                                && !errors.orgnrVirksomhet?.[index]
+                                && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                && <img
+                                    onClick={() => appendOrgnr({orgnr: ""})}
+                                    className="ps-2"
+                                    src={PlusCircle}
+                                    title="Legg til virksomhetsnummer"
+                                    alt="Legg til virksomhetsnummer"/>}
                         </div>
-                    })}
-                </div>
+                    </div>
+                })}
             </div>}
 
             {/** FILE UPLOAD */}

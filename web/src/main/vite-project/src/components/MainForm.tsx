@@ -94,7 +94,11 @@ const MainForm = (props: {
     })
 
     // submit-handler, redirects call to parent
-    const localOnSubmit = handleSubmit(data => onSubmit(data))
+    const localOnSubmit = handleSubmit(data => {
+        onSubmit(data)
+        // prevent re-submission of file
+        resetField("skjemaFil", {keepTouched: false})
+    })
 
     // get ui data
     useEffect(() => {
@@ -247,7 +251,7 @@ const MainForm = (props: {
                 </div>
             </div>}
 
-            { /** FILE UPLOAD */}
+            {/** FILE UPLOAD */}
             <Form.Group
                 className="col-sm-12"
                 controlId="filnavn">

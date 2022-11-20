@@ -226,14 +226,6 @@ const MainForm = (props: {
                         </Form.Group>
 
                         <div className="mt-auto mb-2 d-flex justify-content-between">
-                            {/** show minus icon for index > 0 */}
-                            {index > 0 && <img
-                                onClick={() => removeOrgnr(index)}
-                                className="ps-2"
-                                src={DashCircle}
-                                title="Fjern virksomhetsnummer"
-                                alt="Fjern virksomhetsnummer"/>}
-
                             {/** show plus icon for last entry only, when last entry is touched and valid */}
                             {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
                                 && index == orgnrVirksomhetFields.length - 1
@@ -245,6 +237,14 @@ const MainForm = (props: {
                                     src={PlusCircle}
                                     title="Legg til virksomhetsnummer"
                                     alt="Legg til virksomhetsnummer"/>}
+
+                            {/** show minus icon for index > 0 */}
+                            {index > 0 && <img
+                                onClick={() => removeOrgnr(index)}
+                                className="ps-2"
+                                src={DashCircle}
+                                title="Fjern virksomhetsnummer"
+                                alt="Fjern virksomhetsnummer"/>}
                         </div>
                     </div>
                 })}

@@ -67,7 +67,7 @@ const App = () => {
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
                         onClick={() => setActiveTabIndex(0)}
-                        title="Tilbake til skjema">
+                        title={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}>
                     <img src={FilterLeft}
                          className="pe-2"
                          alt="Kostra"/>

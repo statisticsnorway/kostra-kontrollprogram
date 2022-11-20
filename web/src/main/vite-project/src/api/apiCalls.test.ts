@@ -81,6 +81,7 @@ const createMockFileList = (): FileList => {
     fakeFileInput.setAttribute("type", "file")
 
     let mockFileList = Object.create(fakeFileInput.files)
+
     mockFileList[0] = new File(
         ["foo"],
         "foo.dat",

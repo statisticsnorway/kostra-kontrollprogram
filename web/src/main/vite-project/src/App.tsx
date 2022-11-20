@@ -66,7 +66,8 @@ const App = () => {
         {fileReports.length > 0 && <ul className="nav nav-tabs">
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
-                        onClick={() => setActiveTabIndex(0)}>
+                        onClick={() => setActiveTabIndex(0)}
+                        title="Tilbake til skjema">
                     <img src={FilterLeft}
                          className="pe-2"
                          alt="Kostra"/>
@@ -76,7 +77,8 @@ const App = () => {
             {fileReports.map((fileReport, index) =>
                 <li key={index} className="nav-item">
                     <Button className={activeTabIndex == index + 1 ? "nav-link active" : "nav-link"}
-                            onClick={() => setActiveTabIndex(index + 1)}>
+                            onClick={() => setActiveTabIndex(index + 1)}
+                            title={`Vis rapport for ${fileReport.innparametere.skjema}`}>
                         <img src={ListTask}
                              className="pe-2"
                              alt="Kostra"/>

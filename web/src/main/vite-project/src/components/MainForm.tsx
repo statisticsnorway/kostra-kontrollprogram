@@ -212,7 +212,7 @@ const MainForm = (props: {
             {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
                 {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
                     return <div key={orgnrVirksomhet.id} className="d-flex justify-content-between mb-2">
-                        <Form.Group className="col-sm-10">
+                        <Form.Group className="col-sm-10 me-2">
                             {/** show label for first entry only */}
                             {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
                             <Form.Control
@@ -231,20 +231,20 @@ const MainForm = (props: {
                                 && index == orgnrVirksomhetFields.length - 1
                                 && !errors.orgnrVirksomhet?.[index]
                                 && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
-                                && <img
+                                && <Button
                                     onClick={() => appendOrgnr({orgnr: ""})}
-                                    className="ps-2"
-                                    src={PlusCircle}
-                                    title="Legg til virksomhetsnummer"
-                                    alt="Legg til virksomhetsnummer"/>}
+                                    className="btn bg-transparent btn-outline-light p-0 me-2"
+                                    title="Legg til virksomhetsnummer">
+                                    <img src={PlusCircle} alt="Legg tit virksomhetsnummer"/>
+                                </Button>}
 
                             {/** show minus icon for index > 0 */}
-                            {index > 0 && <img
+                            {index > 0 && <Button
                                 onClick={() => removeOrgnr(index)}
-                                className="ps-2"
-                                src={DashCircle}
-                                title="Fjern virksomhetsnummer"
-                                alt="Fjern virksomhetsnummer"/>}
+                                className="btn bg-transparent btn-outline-light p-0"
+                                title="Fjern virksomhetsnummer">
+                                <img src={DashCircle} alt="Fjern virksomhetsnummer"/>
+                            </Button>}
                         </div>
                     </div>
                 })}

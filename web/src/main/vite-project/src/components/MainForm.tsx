@@ -63,6 +63,8 @@ const MainForm = (props: {
     const {
         control,
         register,
+        reset,
+        resetField,
         getValues,
         setValue,
         handleSubmit,
@@ -97,19 +99,27 @@ const MainForm = (props: {
     useEffect(() => {
         if (skjematyper.length) {
             const subscription = watch((value, {name, type}) => {
-                if (!(name == 'skjema' && type == 'change')) {
-                    return;
+                if (!(name == "skjema" && type == "change")) return
+
+                // reset keepTouched for individual fields before
+                // resetting the whole form
+                resetField("orgnrForetak", {keepTouched: false})
+                resetField("orgnrVirksomhet.0.orgnr", {keepTouched: false})
+                resetField("skjemaFil", {keepTouched: false})
+
+                // reset form, keep touched fields
+                reset({}, {keepTouched: true})
+
+                // get next skjemaType
+                const newSkjemaType = skjematyper.find(it => it.id == value.skjema)
+
+                // set new skjemaType
+                setValgtSkjematype(newSkjemaType)
+
+                if (newSkjemaType?.labelOrgnrVirksomhetene) {
+                    // add empty value to right-hand stack of orgnr
+                    appendOrgnr({orgnr: ""}, {shouldFocus: false})
                 }
-
-                const localValgtSkjema = skjematyper.find(it => it.id == value.skjema)
-                setValgtSkjematype(localValgtSkjema)
-
-                localValgtSkjema?.labelOrgnrVirksomhetene
-                    ? appendOrgnr({orgnr: ""})
-                    : orgnrVirksomhetFields.forEach((it, index) => {
-                        // do mot remove braces, code will not be executed
-                        removeOrgnr(index)
-                    })
             })
             return () => subscription.unsubscribe()
         }
@@ -117,6 +127,24 @@ const MainForm = (props: {
 
     return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
+
+            { /** SKJEMATYPE */}
+            {skjematyper.length > 0 && <Form.Group
+                className="col-sm-12"
+                controlId="skjema">
+                <Form.Label>Skjema</Form.Label>
+                <Form.Select
+                    {...register("skjema")}
+                    isValid={touchedFields.skjema && !errors.skjema}
+                    isInvalid={errors.skjema != null}>
+                    <option value="">Velg skjematype</option>
+                    {skjematyper.map(skjematype =>
+                        <option key={skjematype.id}
+                                value={skjematype.id}>{skjematype.tittel}</option>)}
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
+            </Form.Group>}
+
             { /** ÅRGANG */}
             <Form.Group
                 className="col-sm-6"
@@ -149,23 +177,6 @@ const MainForm = (props: {
                 <Form.Control.Feedback type="invalid">{errors.region?.message}</Form.Control.Feedback>
             </Form.Group>
 
-            { /** SKJEMATYPE */}
-            {skjematyper.length > 0 && <Form.Group
-                className="col-sm-12"
-                controlId="skjema">
-                <Form.Label>Skjema</Form.Label>
-                <Form.Select
-                    {...register("skjema")}
-                    isValid={touchedFields.skjema && !errors.skjema}
-                    isInvalid={errors.skjema != null}>
-                    <option value="">Velg skjematype</option>
-                    {skjematyper.map(skjematype =>
-                        <option key={skjematype.id}
-                                value={skjematype.id}>{skjematype.tittel}</option>)}
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
-            </Form.Group>}
-
             { /** ORGNR */}
             {valgtSkjematype?.labelOrgnr &&
                 <Form.Group className="col-sm-6" controlId="orgnrForetak">
@@ -182,7 +193,7 @@ const MainForm = (props: {
                 </Form.Group>}
 
             { /** VIRKSOMHETSNUMMER */}
-            {orgnrVirksomhetFields.length > 0 && <div className="col-sm-6">
+            {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
                 <div className="container ps-0">
                     {orgnrVirksomhetFields.map((item, index) => {
                         return <div key={item.id} className={index < 1 ? "row" : "row mt-2"}>
@@ -196,9 +207,6 @@ const MainForm = (props: {
                                     type="text"
                                     maxLength={9}
                                     placeholder="9 siffer"/>
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.orgnrVirksomhet?.[index]?.orgnr?.message}
-                                </Form.Control.Feedback>
                             </Form.Group>
 
                             <div className="col-sm-2 mt-auto m-0 mb-2">

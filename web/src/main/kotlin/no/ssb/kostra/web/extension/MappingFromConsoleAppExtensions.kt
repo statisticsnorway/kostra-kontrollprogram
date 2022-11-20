@@ -40,7 +40,7 @@ fun ErrorReport.toErrorReportVm(): FileReportVm {
                     journalnummer = journalnummer,
                     saksbehandler = saksbehandler,
                     kontrollnummer = errorList[0],
-                    kontrolltekst = errorList[1],
+                    kontrolltekst = errorList[1].replace("<br/>", ""),
                     feilkode = errorList[2].toInt().toKostraErrorCode()
                 )
             }

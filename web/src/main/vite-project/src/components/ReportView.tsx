@@ -33,7 +33,7 @@ export const ReportView = (props: {
                     <td>{reportEntry.journalnummer}</td>
                     <td>{reportEntry.saksbehandler}</td>
                     <td>{reportEntry.kontrollnummer}</td>
-                    <td>{reportEntry.kontrolltekst.replace("<br/>", "")}</td>
+                    <td>{reportEntry.kontrolltekst}</td>
                 </tr>
             })}
             </tbody>

@@ -53,7 +53,9 @@ const App = () => {
         {fileReports.length > 0 && <ul className="nav nav-tabs">
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
-                        onClick={() => setActiveTabIndex(0)}>Skjema</Button>
+                        onClick={() => setActiveTabIndex(0)}>
+                    {activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
+                </Button>
             </li>
             {fileReports.map((fileReport, index) =>
                 <li key={index} className="nav-item">

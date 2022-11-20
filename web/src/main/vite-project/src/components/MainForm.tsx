@@ -240,7 +240,10 @@ const MainForm = (props: {
 
                             {/** show minus icon for index > 0 */}
                             {index > 0 && <Button
-                                onClick={() => removeOrgnr(index)}
+                                onClick={() => {
+                                    resetField(`orgnrVirksomhet.${index}.orgnr`, {keepTouched: false})
+                                    removeOrgnr(index);
+                                }}
                                 className="btn bg-transparent btn-outline-light p-0"
                                 title="Fjern virksomhetsnummer">
                                 <img src={DashCircle} alt="Fjern virksomhetsnummer"/>

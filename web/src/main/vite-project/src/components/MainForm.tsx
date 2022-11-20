@@ -244,7 +244,7 @@ const MainForm = (props: {
                                     resetField(`orgnrVirksomhet.${index}.orgnr`, {keepTouched: false})
                                     removeOrgnr(index);
                                 }}
-                                className="btn bg-transparent btn-outline-light p-0"
+                                className="btn bg-transparent btn-outline-light p-0 me-2"
                                 title="Fjern virksomhetsnummer">
                                 <img src={DashCircle} alt="Fjern virksomhetsnummer"/>
                             </Button>}

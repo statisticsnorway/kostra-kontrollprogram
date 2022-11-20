@@ -13,6 +13,10 @@ micronaut:
         paths:
           - classpath:static
 
+  server:
+    multipart:
+      max-file-size: 52428800 # 50 MiB
+
 netty:
   default:
     allocator:

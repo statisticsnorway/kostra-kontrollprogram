@@ -254,7 +254,7 @@ const MainForm = (props: {
 
             {/** FILE UPLOAD */}
             <Form.Group
-                className="col-sm-12"
+                className="col-sm-12 mb-1"
                 controlId="filnavn">
                 <Form.Label>Datafil (.dat eller .xml)</Form.Label>
                 <Form.Control
@@ -267,11 +267,9 @@ const MainForm = (props: {
                 <Form.Control.Feedback type="invalid">{errors.skjemaFil?.message}</Form.Control.Feedback>
             </Form.Group>
 
-            <hr className="my-4"/>
-
             <Button
                 type="submit"
-                className="btn-secondary"
+                className="btn-secondary mt-4"
                 disabled={!formState.isValid}>Kontroller fil</Button>
         </div>
     </Form>

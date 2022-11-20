@@ -267,10 +267,12 @@ const MainForm = (props: {
                 <Form.Control.Feedback type="invalid">{errors.skjemaFil?.message}</Form.Control.Feedback>
             </Form.Group>
 
-            <Button
-                type="submit"
-                className="btn-secondary mt-4"
-                disabled={!formState.isValid}>Kontroller fil</Button>
+            <div className="d-flex justify-content-center mt-4">
+                <Button
+                    type="submit"
+                    className="btn-secondary flex-fill"
+                    disabled={!formState.isValid}>Kontroller fil</Button>
+            </div>
         </div>
     </Form>
 }

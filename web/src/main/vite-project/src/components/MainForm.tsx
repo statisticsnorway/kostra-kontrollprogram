@@ -230,7 +230,7 @@ const MainForm = (props: {
                                 {/** show minus icon for index > 0 */}
                                 {index > 0 && <img
                                     onClick={() => removeOrgnr(index)}
-                                    className="pe-2"
+                                    className="pe-3"
                                     src={DashCircle}
                                     title="Fjern virksomhetsnummer"
                                     alt="Fjern virksomhetsnummer"/>}
@@ -241,7 +241,6 @@ const MainForm = (props: {
                                     && !errors.orgnrVirksomhet?.[index]
                                     && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
                                     && <img
-                                        className={index > 0 ? "ps-3" : "ps-5"}
                                         onClick={() => appendOrgnr({orgnr: ""})}
                                         src={PlusCircle}
                                         title="Legg til virksomhetsnummer"

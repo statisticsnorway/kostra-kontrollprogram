@@ -225,8 +225,9 @@ const MainForm = (props: {
 
             { /** FILE UPLOAD */}
             <Form.Group
-                className="col-sm-12 mt-4"
+                className="col-sm-12"
                 controlId="filnavn">
+                <Form.Label>Datafil (.dat eller .xml)</Form.Label>
                 <Form.Control
                     {...register("skjemaFil")}
                     isValid={touchedFields.skjemaFil && !errors.skjemaFil}

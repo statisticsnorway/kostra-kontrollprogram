@@ -4,7 +4,7 @@
 kostra-kontrollprogram-web er en web-app som kjøres lokalt og benytter kostra-kontrollprogram internt for kontroll av
 datafiler.
 
-## Komme i gang med utvikling 
+## Komme i gang med utvikling backend 
 
 Bygge app fra rot
 ```bash
@@ -16,15 +16,23 @@ Starte app fra rot
 ./mvnw -pl web exec:java
 ```
 
-Starte React/Vite utviklingsmiljø (krever Node.js 18 eller nyere)
+## Komme i gang med utvikling frontend
+
+IntelliJ har som standard plugins for Typescript-utvikling.
+
+- Node.js 18 eller nyere er påkrevet
+- React Developer Tools plugin i Chrome anbefales
+- Vitest Runner kan være en nyttig IntelliJ-plugin
+
+Starte React/Vite utviklingsmiljø
 ```bash
 cd ./web/src/main/vite-project
 npm install
 npm run dev
 ```
-App må kjøre på port 8080, mens http://localhost/8081 med hot reload benyttes for endringer av frontend.
+Backend må være tilgjengelig på port 8080. http://localhost/8081 med hot reload benyttes for frontend.
 
-Kjøre frontend-tester (kjøres som en del av `mvn verify` også)
+Kjøre frontend-tester (også en del av `mvn verify`)
 ```bash
 npx vitest run
 ```

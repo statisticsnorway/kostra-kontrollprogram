@@ -21,7 +21,7 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <kotlinVersion>1.7.20</kotlinVersion>
+        <kotlinVersion>1.7.21</kotlinVersion>
         <jackson.version>2.14.0</jackson.version>
     </properties>
 
@@ -42,17 +42,6 @@
             <version>${kotlinVersion}</version>
         </dependency>
 
-        <!-- next 2 to fix vulnz in jackson-dataformat-xml -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.woodstox</groupId>
-            <artifactId>woodstox-core</artifactId>
-            <version>6.4.0</version>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>

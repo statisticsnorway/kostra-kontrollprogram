@@ -82,7 +82,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "v2022.11.02";
+        final var VERSION = "v2022.11.16";
         final var report = new StringBuilder();
         final var lf = args.getNewline();
 

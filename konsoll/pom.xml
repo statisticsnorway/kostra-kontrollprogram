@@ -62,7 +62,7 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>${project.build.directory}/jar</outputDirectory>
                             <descriptors>
-                                <descriptor>src/main/resources/assembly.xml</descriptor>
+                                <descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>
                             </descriptors>
                             <archive>
                                 <manifest>

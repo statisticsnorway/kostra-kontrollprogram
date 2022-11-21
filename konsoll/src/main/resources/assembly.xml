@@ -12,7 +12,6 @@
     </fileSets>
     <dependencySets>
         <dependencySet>
-            <outputDirectory></outputDirectory>
             <unpack>true</unpack>
             <scope>runtime</scope>
         </dependencySet>

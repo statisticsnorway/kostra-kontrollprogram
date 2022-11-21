@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Barnevern>
+    <Avgiver Organisasjonsnummer="958935420" Versjon="2021" Kommunenummer="0301" Kommunenavn="Oslo"/>
+    <Individ Id="I1" StartDato="2021-05-26" Journalnummer="aKM3IaG3esX9H4DhCZmw" Fodselsnummer="10060126777"
+             Bydelsnummer="01" Bydelsnavn="Gamle Oslo" Saksbehandler="Sara Saksbehandler" Avslutta3112="2">
+        <Melding Id="M1" StartDato="2022-03-23">
+            <Melder Kode="4"/>
+            <Saksinnhold Kode="6"/>
+        </Melding>
+    </Individ>
+    <Individ Id="I2" StartDato="2021-10-25" Journalnummer="b9eVt2ykdinhKRnkdDjH" Fodselsnummer="16099914940"
+             Bydelsnummer="01" Bydelsnavn="Gamle Oslo" Saksbehandler="Sara Saksbehandler" Avslutta3112="2">
+        <Melding Id="M1" StartDato="2022-03-23">
+            <Melder Kode="9"/>
+            <Saksinnhold Kode="22"/>
+        </Melding>
+    </Individ>
+</Barnevern>

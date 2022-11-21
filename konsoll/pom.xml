@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>no.ssb.kostra</groupId>
+        <artifactId>kostra-kontrollprogram-parent</artifactId>
+        <version>LOCAL-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kostra-kontrollprogram</artifactId>
+
+    <properties>
+        <revision>LOCAL-SNAPSHOT</revision>
+        <finalName>${project.artifactId}-${revision}</finalName>
+
+        <jdk.version>17</jdk.version>
+        <release.version>${jdk.version}</release.version>
+
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.13.2</junit.version>
+
+        <jackson.version>2.13.4</jackson.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>no.ssb.kostra</groupId>
+            <artifactId>kostra-kontroller</artifactId>
+            <version>LOCAL-SNAPSHOT</version>
+        </dependency>
+
+        <!-- scope = test -->
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

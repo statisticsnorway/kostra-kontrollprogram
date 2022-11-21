@@ -28,7 +28,7 @@ variables:
     ${{ else }}:
       value: "$(Build.SourceBranchName)-SNAPSHOT"
   - name: MAVEN_OPTS
-    value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram'
+    value: '-DnewVersion=$(ArtifactRevision) -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram'
 
 resources:
   repositories:
@@ -68,10 +68,18 @@ jobs:
       - template: maven/task-authenticate-gar.yml@templates
 
       # Verify and run sonarcloud, for non-tag-builds
-      # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-install-and-deploy-to-gar.yml
+      # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-verify.yml
       - template: maven/task-verify.yml@templates
         parameters:
           sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
+
+      - task: Maven@3
+        displayName: Set POM-version
+        inputs:
+          goals: 'versions:set'
+          options: '-DskipTests=true -Dmaven.javadoc.skip=true --batch-mode  $(MAVEN_OPTS)'
+          mavenVersionOption: 'Default'
+          javaHomeOption: 'JDKVersion'
 
       # Deploy artifact to artifact registry
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-install-and-deploy-to-gar.yml

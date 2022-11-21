@@ -25,3 +25,5 @@ hs_err_pid*
 target/
 .idea*
 *.iml
+/web/src/main/vite-project/dist/
+/web/src/main/vite-project/node_modules/

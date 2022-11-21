@@ -1,0 +1,37 @@
+{
+  "name": "vite-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "webstorm-integration": "vitest --watch --reporter=dot --reporter=json --outputFile=.vitest"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
+    "@popperjs/core": "^2.11.6",
+    "axios": "^1.1.3",
+    "bootstrap": "^5.2.2",
+    "esbuild": "^0.15.13",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.6.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.39.1",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
+    "@testing-library/react": "^13.4.0",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
+    "@vitejs/plugin-react": "^2.2.0",
+    "cypress": "^10.11.0",
+    "jsdom": "^20.0.2",
+    "sass": "^1.56.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.0",
+    "vitest": "^0.24.5"
+  }
+}

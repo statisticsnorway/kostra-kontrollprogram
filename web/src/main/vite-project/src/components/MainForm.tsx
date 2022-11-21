@@ -23,7 +23,7 @@ import IconKostra from "../assets/icon/ikon-kostra.svg"
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
-const MEBIBYTE_50 = 52428800
+const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 
 const MainForm = (props: {
@@ -62,8 +62,8 @@ const MainForm = (props: {
                     (files: FileList) => files?.length > 0
                 ).test(
                     "file-size",
-                    "Maks. filstørrelse er 50 MiB",
-                    (files: FileList) => files?.[0]?.size < MEBIBYTE_50
+                    "Maks. filstørrelse er 10 MiB",
+                    (files: FileList) => files?.[0]?.size < MEBIBYTE_10
                 )
         }
     ).required()

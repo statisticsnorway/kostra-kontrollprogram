@@ -15,7 +15,7 @@ micronaut:
 
   server:
     multipart:
-      max-file-size: 52428800 # 50 MiB
+      max-file-size: 10485760 # 10 MiB
 
 netty:
   default:
@@ -24,8 +24,6 @@ netty:
 
 iu-innstillinger:
   skjematyper:
-    - id: 52AF
-      tittel: "52AF. TITTEL MANGLER"
     - id: 0A
       tittel: 0A. Bevilgningsregnskap for kommuner
     - id: 0AK1
@@ -111,3 +109,12 @@ iu-innstillinger:
       tittel: 11F. Sosialhjelp
     - id: 15F
       tittel: 15F. Barnevern
+
+    - id: 52AF
+      tittel: "52AF. Familievernsaker, klientrapportering"
+    - id: 52BF
+      tittel: "52BF. Gruppeskjema for familievernet"
+    - id: 53F
+      tittel: "53F. Utadrettet virksomhet i familieverntjenesten"
+    - id: 55F
+      tittel: "55F. Meklingssaker i familieverntjenesten"

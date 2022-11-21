@@ -86,7 +86,7 @@ const createMockFileList = (): FileList => {
         ["foo"],
         "foo.dat",
         {
-            type: "text/plain",
+            type: "text/plain"
         })
 
     return mockFileList

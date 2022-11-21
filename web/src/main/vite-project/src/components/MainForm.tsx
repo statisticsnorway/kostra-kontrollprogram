@@ -172,7 +172,7 @@ const MainForm = (props: {
                     isInvalid={errors.aar != null}>
                     <option value="">Velg år</option>
                     <option value="2022">2022</option>
-                    <option value="2021">2021</option>
+                    <option value="2023">2023</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.aar?.message}</Form.Control.Feedback>
             </Form.Group>

@@ -26,6 +26,25 @@ export const ReportView = (props: {
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">
+                    Skjema: {fileReport.innparametere.skjema}
+                </li>
+                <li className="list-group-item">
+                    År: {fileReport.innparametere.aar}
+                </li>
+                <li className="list-group-item">
+                    Region: {fileReport.innparametere.region}
+                </li>
+                {fileReport.innparametere.orgnrForetak && <li className="list-group-item">
+                    Organisasjonsnummer: {fileReport.innparametere.orgnrForetak}
+                </li>}
+                {fileReport.innparametere.orgnrVirksomhet
+                    && fileReport.innparametere.orgnrVirksomhet?.length > 0 && <li className="list-group-item">
+                        Organisasjonsnummer virksomhet(er):
+                        {fileReport.innparametere.orgnrVirksomhet.map((value, index) =>
+                            index > 0 ? `, ${value.orgnr}` : ` ${value.orgnr}`
+                        )}
+                    </li>}
+                <li className="list-group-item">
                     Høyeste alvorlighetsgrad: {renderErrorLevel(fileReport.feilkode)}
                 </li>
                 <li className="list-group-item">

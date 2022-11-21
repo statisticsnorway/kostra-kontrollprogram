@@ -78,11 +78,13 @@ const App = () => {
                 <li key={index} className="nav-item">
                     <Button className={activeTabIndex == index + 1 ? "nav-link active" : "nav-link"}
                             onClick={() => setActiveTabIndex(index + 1)}
-                            title={`Vis rapport for ${fileReport.innparametere.skjema}`}>
+                            title={`Vis rapport for ${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                                + ` region ${fileReport.innparametere.region}`}>
                         <img src={ListTask}
                              className="pe-2"
                              alt="Kostra"/>
-                        {fileReport.innparametere.skjema}
+                        {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                            + ` region ${fileReport.innparametere.region}`}
                     </Button>
                 </li>
             )}

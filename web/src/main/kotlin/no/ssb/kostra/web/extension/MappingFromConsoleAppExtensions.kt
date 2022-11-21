@@ -19,7 +19,9 @@ fun Arguments.toReportRequestVm(): KostraFormVm {
         region = this.region,
         navn = this.navn,
         orgnrForetak = this.foretaknr,
-        orgnrVirksomhet = this.orgnr?.split(",")?.map { CompanyIdVm(it) }
+        orgnrVirksomhet = this.orgnr?.split(",")
+            ?.filter { it.isNotEmpty() }
+            ?.map { CompanyIdVm(it) }
     )
 }
 

@@ -210,8 +210,4 @@ public class ErrorReport {
     public void addStats(final StatsReportEntry entry) {
         this.stats.add(entry);
     }
-
-    public Arguments getArgs() {
-        return args;
-    }
 }

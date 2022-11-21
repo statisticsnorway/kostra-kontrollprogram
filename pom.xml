@@ -212,6 +212,23 @@
             </build>
         </profile>
         <profile>
+            <id>ssb-bip</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>artifact-registry</id>
+                    <url>
+                        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-snapshots
+                    </url>
+                </snapshotRepository>
+                <repository>
+                    <id>artifact-registry</id>
+                    <url>
+                        artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases
+                    </url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
             <id>github</id>
             <build>
                 <plugins>

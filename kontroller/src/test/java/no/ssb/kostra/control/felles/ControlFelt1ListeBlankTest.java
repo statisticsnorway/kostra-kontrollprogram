@@ -39,11 +39,12 @@ public class ControlFelt1ListeBlankTest {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputDoControlProvider")
     public void doControlTest(TestStringListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(),
-                ControlFelt1ListeBlank.doControl(errorReport,
-                        "Categori Title", "Title",
-                        inputAndResult.getStringList(), Constants.CRITICAL_ERROR));
+        final var result =  ControlFelt1ListeBlank.doControl(er, "Categori Title", "Title", inputAndResult.getStringList(), Constants.CRITICAL_ERROR);
 
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG)
+            System.out.println(er.generateReport());
+
+        assertEquals(inputAndResult.isResult(), result);
     }
+
 }

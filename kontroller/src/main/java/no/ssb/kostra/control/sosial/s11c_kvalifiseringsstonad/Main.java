@@ -322,6 +322,10 @@ public class Main {
     public static boolean control14RegDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
+        if (record.getFieldAsString("KOMMUNE_NR").equalsIgnoreCase("0301")){
+            return false;
+        }
+
         final var REG_DATO = "REG_DATO";
         final var valueAsString = record.getFieldAsString(REG_DATO);
         final var datePattern = record.getFieldDefinitionByName(REG_DATO).getDatePattern();

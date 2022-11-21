@@ -16,14 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static no.ssb.kostra.control.felles.Comparator.between;
-import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
-import static no.ssb.kostra.control.felles.Comparator.isEmpty;
-import static no.ssb.kostra.control.felles.Comparator.outsideOf;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumAktiva;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumInntekter;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumPassiva;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumUtgifter;
+import static java.util.stream.Collectors.toList;
+import static no.ssb.kostra.control.felles.Comparator.*;
+import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
@@ -102,7 +97,7 @@ public class Main {
                 .toList();
     }
 
-    public static List<String> getFunksjonKapittelAsList(final String skjema, final String region) {
+    public static List<String> getFunksjonKapittelAsList(final String skjema, final String region, final String orgnr) {
         // Funksjoner
         final var kommunaleFunksjoner = List.of(
                 "100", "110", "120", "121", "130",
@@ -131,7 +126,9 @@ public class Main {
 
         final var fylkeFinansielleFunksjoner = List.of("800", "840", "841", "860", "870", "880", "899");
 
-        final var sbdrFinansielleFunksjoner = List.of("841", "850", "860", "870", "880", "899");
+        final var fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner = List.of("841", "860", "870", "880", "899");
+
+        final var kommunaleSbdrFinansielleFunksjoner = List.of("841", "850", "860", "870", "880", "899");
 
         // Kapitler
         final var basisKapitler = List.of(
@@ -167,11 +164,17 @@ public class Main {
                     result.addAll(fylkeskommunaleFunksjoner);
                 }
                 result.addAll(kommunaleFunksjoner);
-                result.addAll(sbdrFinansielleFunksjoner);
+
+                if (isCodeInCodeList(orgnr, orgnrSpesial)){
+                    result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner);
+                } else {
+                    result.addAll(kommunaleSbdrFinansielleFunksjoner);
+                }
+
             }
             case "0K" -> {
                 result.addAll(fylkeskommunaleFunksjoner);
-                result.addAll(sbdrFinansielleFunksjoner);
+                result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner);
             }
 
             // Kapitler
@@ -197,12 +200,14 @@ public class Main {
                 "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
                 "600", "620", "629", "630", "640", "650", "660", "670",
                 "700", "710", "729", "730", "750", "770",
-                "800", "810", "830", "850", "870", "874", "875", "877", "890",
+                "800", "810", "830", "850", "870", "890",
                 "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "940", "950", "970", "980", "989", "990"
         );
 
         final var konserninterneArter = List.of("380", "480", "780", "880");
         final var osloArter = List.of("298", "379", "798");
+        final var kommunaleArter = List.of("874", "875", "877");
+        final var fylkeskommunaleArter = List.of("877");
 
         // Sektorer
         final var basisSektorer = List.of(
@@ -211,18 +216,33 @@ public class Main {
 
         final var result = new ArrayList<String>();
 
-        if (isCodeInCodeList(skjema, getBevilgningRegnskapList())) {
-            result.addAll(basisArter);
-            result.addAll(konserninterneArter);
+        switch (skjema){
+            case "0A", "0M" -> {
+                result.addAll(basisArter);
+                result.addAll(konserninterneArter);
+                result.addAll(kommunaleArter);
 
-            if (isCodeInCodeList(region, osloKommuner)) {
-                result.addAll(osloArter);
+                if (isCodeInCodeList(region, osloKommuner)) {
+                    result.addAll(osloArter);
+                }
+            }
+
+            case "0C", "0P" -> {
+                result.addAll(basisArter);
+                result.addAll(konserninterneArter);
+                result.addAll(fylkeskommunaleArter);
+            }
+
+            case "0I", "0K" -> {
+                result.addAll(basisArter);
+                result.addAll(konserninterneArter);
+            }
+
+            case "0B", "0D", "0J", "0L", "0N", "0Q" -> {
+                result.addAll(basisSektorer);
             }
         }
 
-        if (isCodeInCodeList(skjema, getBalanseRegnskapList())) {
-            result.addAll(basisSektorer);
-        }
         return result.stream()
                 .sorted()
                 .toList();
@@ -256,6 +276,37 @@ public class Main {
                 "870", "874", "875", "877", "909", "990");
     }
 
+    public static List<String> getArtSektorAsList(final String skjema, final String region, final String orgnr, final String kontoklasse) {
+        List<String> artSektor = getArtSektorAsList(skjema, region);
+
+        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")){
+            case "D" -> {
+               return removeCodesFromCodeList(artSektor, getArterUgyldigDrift(skjema, orgnr, region));
+            }
+
+            case "I" -> {
+                return removeCodesFromCodeList(artSektor, getArterUgyldigInvestering());
+            }
+        }
+
+        return artSektor;
+    }
+
+    public static List<String> getFunksjonKapittelAsList(final String skjema, final String region, final String orgnr, final String kontoklasse) {
+        List<String> funksjonKapittel = getFunksjonKapittelAsList(skjema, region, orgnr);
+
+        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")){
+            case "D" -> {
+                return removeCodesFromCodeList(funksjonKapittel, getFunksjonerUgyldigDrift());
+            }
+
+            case "I" -> {
+                return removeCodesFromCodeList(funksjonKapittel, getFunksjonerUgyldigInvestering());
+            }
+        }
+
+        return funksjonKapittel;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controls
@@ -287,7 +338,7 @@ public class Main {
                 getBevilgningRegnskapList(),
                 getBalanseRegnskapList(),
                 getKontoklasseAsList(arguments.getSkjema()),
-                getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion()),
+                getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()),
                 getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
 
         // Fjerner posteringer der beløp = 0
@@ -307,6 +358,11 @@ public class Main {
                     List.of(KONTOKLASSE, FUNKSJON_KAPITTEL, ART_SEKTOR),
                     List.of(KONTOKLASSE, "kapittel", "sektor"));
         }
+
+        kontroll1(errorReport, regnskap);
+        kontroll5(errorReport, regnskap);
+        kontroll10(errorReport, regnskap);
+        kontroll15(errorReport, regnskap);
 
         // Kombinasjonskontroller
         kontroll20(errorReport, regnskap);
@@ -407,6 +463,135 @@ public class Main {
         controlMemoriaKonti(errorReport, regnskap);
 
         return errorReport;
+    }
+
+    // Posteringskontroller
+    public static boolean kontroll1(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+        errorReport.incrementCount();
+
+        final var errors = regnskap
+                .stream()
+                .filter(kostraRecord -> getBevilgningRegnskapList()
+                        .stream()
+                        .anyMatch(item -> item.equalsIgnoreCase(kostraRecord.getFieldAsString("skjema"))))
+                .filter(kostraRecord ->
+                        !isCodeInCodeList(
+                                kostraRecord.getFieldAsString("funksjon_kapittel")
+                                , getFunksjonKapittelAsList(
+                                        kostraRecord.getFieldAsString("skjema")
+                                        , kostraRecord.getFieldAsString("region")
+                                        , kostraRecord.getFieldAsString("orgnr")
+                                        , kostraRecord.getFieldAsString("kontoklasse")
+
+                                )
+                        ))
+                .toList();
+
+        if (errors.isEmpty()) {
+            return false;
+        }
+
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 1 Funksjon", " ", " "
+                , String.format("Fant ugyldig funksjon '(%s)'. Korrigér funksjon i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
+                , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
+                , Constants.CRITICAL_ERROR)));
+        return true;
+    }
+
+    public static boolean kontroll5(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+        errorReport.incrementCount();
+
+        final var errors = regnskap
+                .stream()
+                .filter(kostraRecord -> getBalanseRegnskapList()
+                        .stream()
+                        .anyMatch(item -> item.equalsIgnoreCase(kostraRecord.getFieldAsString("skjema"))))
+                .filter(kostraRecord ->
+                        !isCodeInCodeList(
+                                kostraRecord.getFieldAsString("funksjon_kapittel")
+                                , getFunksjonKapittelAsList(
+                                        kostraRecord.getFieldAsString("skjema")
+                                        , kostraRecord.getFieldAsString("region")
+                                        , kostraRecord.getFieldAsString("orgnr")
+                                        , kostraRecord.getFieldAsString("kontoklasse")
+
+                                )
+                        ))
+                .toList();
+
+        if (errors.isEmpty()) {
+            return false;
+        }
+
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 5 Funksjon", " ", " "
+                , String.format("Fant ugyldig kapittel '(%s)'. Korrigér kapittel i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
+                , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
+                , Constants.CRITICAL_ERROR)));
+        return true;
+    }
+
+    public static boolean kontroll10(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+        errorReport.incrementCount();
+
+        final var errors = regnskap
+                .stream()
+                .filter(kostraRecord -> getBevilgningRegnskapList()
+                        .stream()
+                        .anyMatch(item -> item.equalsIgnoreCase(kostraRecord.getFieldAsString("skjema"))))
+                .filter(kostraRecord ->
+                        !isCodeInCodeList(
+                                kostraRecord.getFieldAsString("art_sektor")
+                                , getArtSektorAsList(
+                                        kostraRecord.getFieldAsString("skjema")
+                                        , kostraRecord.getFieldAsString("region")
+                                        , kostraRecord.getFieldAsString("orgnr")
+                                        , kostraRecord.getFieldAsString("kontoklasse")
+
+                                )
+                        ))
+                .toList();
+
+        if (errors.isEmpty()) {
+            return false;
+        }
+
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 10 Art", " ", " "
+                , String.format("Fant ugyldig art '(%s)'. Korrigér art i henhold til KOSTRA kontoplan.", r.getFieldAsString(ART_SEKTOR))
+                , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
+                , Constants.CRITICAL_ERROR)));
+        return true;
+    }
+
+    public static boolean kontroll15(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+        errorReport.incrementCount();
+
+        final var errors = regnskap
+                .stream()
+                .filter(kostraRecord -> getBalanseRegnskapList()
+                        .stream()
+                        .anyMatch(item -> item.equalsIgnoreCase(kostraRecord.getFieldAsString("skjema"))))
+                .filter(kostraRecord ->
+                    !isCodeInCodeList(
+                            kostraRecord.getFieldAsString("art_sektor")
+                            , getArtSektorAsList(
+                                    kostraRecord.getFieldAsString("skjema")
+                                    , kostraRecord.getFieldAsString("region")
+                                    , kostraRecord.getFieldAsString("orgnr")
+                                    , kostraRecord.getFieldAsString("kontoklasse")
+
+                            )
+                ))
+                .toList();
+
+        if (errors.isEmpty()) {
+            return false;
+        }
+
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 10 Art", " ", " "
+                , String.format("Fant ugyldig sektor '(%s)'. Korrigér sektor i henhold til KOSTRA kontoplan.", r.getFieldAsString(ART_SEKTOR))
+                , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
+                , Constants.CRITICAL_ERROR)));
+        return true;
     }
 
     // Kombinasjonskontroller

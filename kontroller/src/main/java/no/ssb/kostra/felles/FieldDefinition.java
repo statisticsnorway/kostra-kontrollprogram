@@ -102,4 +102,9 @@ public class FieldDefinition {
     public boolean isMandatory() {
         return mandatory;
     }
+
+    @Override
+    public String toString(){
+        return "{ \"number\" : \"" +number+ "\", \"codelist\" : " +codeList.toString()+ "}";
+    }
 }

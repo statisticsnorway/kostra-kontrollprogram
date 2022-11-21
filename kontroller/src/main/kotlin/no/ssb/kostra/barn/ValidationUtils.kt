@@ -2,6 +2,7 @@ package no.ssb.kostra.barn
 
 import org.xml.sax.SAXParseException
 import java.io.InputStream
+import java.io.Reader
 import java.io.StringReader
 import javax.xml.XMLConstants
 import javax.xml.transform.stream.StreamSource
@@ -16,8 +17,13 @@ object ValidationUtils {
 
     @JvmStatic
     fun validate(xml: String): Boolean {
+        return validate(StringReader(xml))
+
+    }
+    @JvmStatic
+    fun validate(xmlReader: Reader): Boolean {
         return try {
-            getSchemaValidator().validate(StreamSource(StringReader(xml)))
+            getSchemaValidator().validate(StreamSource(xmlReader))
             true
         } catch (e: SAXParseException) {
             false

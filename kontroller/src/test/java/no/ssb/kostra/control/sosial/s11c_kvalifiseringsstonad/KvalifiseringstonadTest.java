@@ -198,10 +198,15 @@ class KvalifiseringstonadTest {
 
     static Stream<TestRecordInputAndResult> control14RegDatoProvider() {
         return Stream.of(
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120", "VERSION", "22"), definitions), false, Constants.NO_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      ", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR),
-                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010117", "VERSION", "22"), definitions), true, Constants.CRITICAL_ERROR)
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120", "VERSION", "22", "KOMMUNE_NR", "3401"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      ", "VERSION", "22", "KOMMUNE_NR", "3401"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320", "VERSION", "22", "KOMMUNE_NR", "3401"), definitions), true, Constants.CRITICAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010117", "VERSION", "22", "KOMMUNE_NR", "3401"), definitions), true, Constants.CRITICAL_ERROR),
+
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010120", "VERSION", "22", "KOMMUNE_NR", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "      ", "VERSION", "22", "KOMMUNE_NR", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "REG_DATO", "321320", "VERSION", "22", "KOMMUNE_NR", "0301"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "REG_DATO", "010117", "VERSION", "22", "KOMMUNE_NR", "0301"), definitions), false, Constants.NO_ERROR)
         );
     }
 

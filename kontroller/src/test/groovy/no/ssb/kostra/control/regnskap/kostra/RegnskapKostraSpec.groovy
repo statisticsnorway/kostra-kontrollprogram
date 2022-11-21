@@ -1,5 +1,6 @@
 package no.ssb.kostra.control.regnskap.kostra
 
+
 import no.ssb.kostra.control.felles.Utils
 import no.ssb.kostra.control.regnskap.FieldDefinitions
 import no.ssb.kostra.controlprogram.Arguments
@@ -15,36 +16,310 @@ class RegnskapKostraSpec extends Specification {
     private static final String yyyy = "2021"
     private static final List<FieldDefinition> definitions = FieldDefinitions.getFieldDefinitions()
 
-    def "Skal validere at en gitt art er ugyldig i driftsregnskapet', skjema #skjema / orgnr #orgnr / region #region / art #art -> #result"() {
+    def "Skal validere Kontroll 1, #skjema / #region / #orgnr / #kontoklasse / #funksjonKapittel  -> #expectedResult / #errorlevel"() {
         given:
-        def arter = Main.getArterUgyldigDrift(skjema, orgnr, region)
+        Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region, "-u", orgnr})
+        ErrorReport errorReport = new ErrorReport(args)
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(
+                Map.of("skjema", skjema
+                        , "aargang", yyyy
+                        , "kvartal", " "
+                        , "region", region
+                        , "orgnr", orgnr
+                        , "foretaksnr", "         "
+                        , "kontoklasse", kontoklasse
+                        , "funksjon_kapittel", funksjonKapittel
+                        , "art_sektor", "010"
+                        , "belop", "1"
+                )
+                , definitions))
+        )
 
-        expect:
-        isCodeInCodeList(art, arter) == result
+        when:
+        boolean testResult = Main.kontroll1(errorReport, records)
+
+        then:
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
+        verifyAll {
+            testResult == expectedResult
+            errorReport.getErrorType() == errorlevel
+        }
 
         where:
-        skjema | orgnr       | region   | art   || result
-        "0A"   | "         " | "420400" | "921" || true
-        "0A"   | "         " | "420400" | "280" || true
-        "0C"   | "         " | "500000" | "921" || true
-        "0C"   | "         " | "500000" | "280" || true
-        "0I"   | "999999999" | "420400" | "921" || true
-        "0I"   | "817920632" | "500000" | "921" || false
-        "0I"   | "999999999" | "420400" | "280" || true
-        "0I"   | "817920632" | "500000" | "280" || true
-        "0K"   | "999999999" | "420400" | "921" || true
-        "0K"   | "817920632" | "500000" | "921" || false
-        "0K"   | "999999999" | "420400" | "280" || true
-        "0K"   | "817920632" | "500000" | "280" || true
-        "0M"   | "         " | "420400" | "921" || true
-        "0M"   | "         " | "500000" | "921" || false
-        "0M"   | "         " | "420400" | "280" || true
-        "0M"   | "         " | "500000" | "280" || true
-        "0P"   | "         " | "420400" | "921" || true
-        "0P"   | "         " | "500000" | "921" || false
-        "0P"   | "         " | "420400" | "280" || true
-        "0P"   | "         " | "500000" | "280" || true
+        skjema | region   | orgnr       | kontoklasse | funksjonKapittel || expectedResult | errorlevel
+// kommune
+        "0A"   | "420400" | "         " | "1"         | "100 "           || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "400 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "800 "           || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "841 "           || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "850 "           || false          | Constants.NO_ERROR
+// Oslo
+        "0A"   | "030100" | "         " | "1"         | "100 "           || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "030100" | "         " | "1"         | "400 "           || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "030100" | "         " | "1"         | "691 "           || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0A"   | "030100" | "         " | "1"         | "800 "           || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "841 "           || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "850 "           || false          | Constants.NO_ERROR
+// fylkeskommune
+        "0C"   | "340000" | "         " | "1"         | "100 "           || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "800 "           || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "841 "           || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "850 "           || true           | Constants.CRITICAL_ERROR
+// kommunal særbedrift
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           || false          | Constants.NO_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "400 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "800 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "850 "           || false          | Constants.NO_ERROR
+// kommunalt lånefond
+        "0I"   | "300500" | "921234554" | "3"         | "100 "           || false          | Constants.NO_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "400 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "800 "           || true           | Constants.CRITICAL_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0I"   | "300500" | "921234554" | "3"         | "850 "           || true           | Constants.CRITICAL_ERROR
+// fylkeskommunal særbedrift
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "400 "           || false          | Constants.NO_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "800 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "850 "           || true           | Constants.CRITICAL_ERROR
+// fylkeskommunalt lånefond
+        "0K"   | "500000" | "817920632" | "3"         | "100 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "400 "           || false          | Constants.NO_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "800 "           || true           | Constants.CRITICAL_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0K"   | "500000" | "817920632" | "3"         | "850 "           || true           | Constants.CRITICAL_ERROR
+// kommune
+        "0M"   | "420400" | "         " | "3"         | "100 "           || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "3"         | "400 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "3"         | "800 "           || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "3"         | "850 "           || false          | Constants.NO_ERROR
+// Oslo
+        "0M"   | "030100" | "         " | "3"         | "100 "           || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "030100" | "         " | "3"         | "400 "           || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "030100" | "         " | "3"         | "691 "           || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0M"   | "030100" | "         " | "3"         | "800 "           || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "3"         | "850 "           || false          | Constants.NO_ERROR
+// fylkeskommune
+        "0P"   | "340000" | "         " | "3"         | "100 "           || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "3"         | "399 "           || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "3"         | "400 "           || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "3"         | "799 "           || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "3"         | "691 "           || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "3"         | "699 "           || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "3"         | "800 "           || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "3"         | "841 "           || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "3"         | "850 "           || true           | Constants.CRITICAL_ERROR
     }
+
+    def "Skal validere Kontroll 5, skjema #skjema / kontoklasse #kontoklasse / funksjon_kapittel #funksjonKapittel / art_sektor #artSektor -> #expectedResult / #errorlevel"() {
+        given:
+        Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region, "-u", orgnr})
+        ErrorReport errorReport = new ErrorReport(args)
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(
+                Map.of("skjema", skjema
+                        , "aargang", yyyy
+                        , "kvartal", " "
+                        , "region", region
+                        , "orgnr", orgnr
+                        , "foretaksnr", "         "
+                        , "kontoklasse", kontoklasse
+                        , "funksjon_kapittel", funksjonKapittel
+                        , "art_sektor", artSektor
+                        , "belop", "1"
+                )
+                , definitions))
+        )
+
+        when:
+        boolean testResult = Main.kontroll5(errorReport, records)
+
+        then:
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
+        verifyAll {
+            testResult == expectedResult
+            errorReport.getErrorType() == errorlevel
+        }
+
+        where:
+        skjema | region   | orgnr       | kontoklasse | funksjonKapittel | artSektor || expectedResult | errorlevel
+        "0B"   | "420400" | "         " | "2"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0B"   | "420400" | "         " | "2"         | "17  "           | "000"     || true           | Constants.CRITICAL_ERROR
+        "0D"   | "420400" | "         " | "2"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0D"   | "420400" | "         " | "2"         | "17  "           | "000"     || true           | Constants.CRITICAL_ERROR
+        "0J"   | "420400" | "987654321" | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0J"   | "420400" | "987654321" | "5"         | "17  "           | "000"     || false          | Constants.NO_ERROR
+        "0L"   | "420400" | "987654321" | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0L"   | "420400" | "987654321" | "5"         | "17  "           | "000"     || false          | Constants.NO_ERROR
+        "0N"   | "420400" | "         " | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0N"   | "420400" | "         " | "5"         | "17  "           | "000"     || true           | Constants.CRITICAL_ERROR
+        "0Q"   | "420400" | "         " | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0Q"   | "420400" | "         " | "5"         | "17  "           | "000"     || true           | Constants.CRITICAL_ERROR
+    }
+
+    def "Skal validere Kontroll 10, skjema #skjema / kontoklasse #kontoklasse / funksjon_kapittel #funksjonKapittel / art_sektor #artSektor -> #expectedResult / #errorlevel"() {
+        given:
+        Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region, "-u", orgnr})
+        ErrorReport errorReport = new ErrorReport(args)
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(
+                Map.of("skjema", skjema
+                        , "aargang", yyyy
+                        , "kvartal", " "
+                        , "region", region
+                        , "orgnr", orgnr
+                        , "foretaksnr", "         "
+                        , "kontoklasse", kontoklasse
+                        , "funksjon_kapittel", funksjonKapittel
+                        , "art_sektor", artSektor
+                        , "belop", "1"
+                )
+                , definitions))
+        )
+
+        when:
+        boolean testResult = Main.kontroll10(errorReport, records)
+
+        then:
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
+        verifyAll {
+            testResult == expectedResult
+            errorReport.getErrorType() == errorlevel
+        }
+
+        where:
+        skjema | region   | orgnr       | kontoklasse | funksjonKapittel | artSektor || expectedResult | errorlevel
+        "0A"   | "030100" | "         " | "1"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "100 "           | "298"     || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "100 "           | "874"     || false          | Constants.NO_ERROR
+        "0A"   | "030100" | "         " | "1"         | "100 "           | "877"     || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "100 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0A"   | "420400" | "         " | "1"         | "100 "           | "874"     || false          | Constants.NO_ERROR
+        "0A"   | "420400" | "         " | "1"         | "100 "           | "877"     || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           | "010"     || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           | "380"     || false          | Constants.NO_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           | "874"     || true           | Constants.CRITICAL_ERROR
+        "0C"   | "340000" | "         " | "1"         | "400 "           | "877"     || false          | Constants.NO_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           | "874"     || true           | Constants.CRITICAL_ERROR
+        "0I"   | "420400" | "987654321" | "3"         | "100 "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           | "874"     || true           | Constants.CRITICAL_ERROR
+        "0K"   | "340000" | "987654321" | "3"         | "100 "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0M"   | "030100" | "         " | "1"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "1"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "1"         | "100 "           | "298"     || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "1"         | "100 "           | "874"     || false          | Constants.NO_ERROR
+        "0M"   | "030100" | "         " | "1"         | "100 "           | "877"     || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "1"         | "100 "           | "010"     || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "1"         | "100 "           | "380"     || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "1"         | "100 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0M"   | "420400" | "         " | "1"         | "100 "           | "874"     || false          | Constants.NO_ERROR
+        "0M"   | "420400" | "         " | "1"         | "100 "           | "877"     || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "1"         | "400 "           | "010"     || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "1"         | "400 "           | "380"     || false          | Constants.NO_ERROR
+        "0P"   | "340000" | "         " | "1"         | "400 "           | "298"     || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "1"         | "400 "           | "874"     || true           | Constants.CRITICAL_ERROR
+        "0P"   | "340000" | "         " | "1"         | "400 "           | "877"     || false          | Constants.NO_ERROR
+    }
+
+    def "Skal validere Kontroll 15, skjema #skjema / kontoklasse #kontoklasse / funksjon_kapittel #funksjonKapittel / art_sektor #artSektor -> #expectedResult / #errorlevel"() {
+        given:
+        Arguments args = new Arguments(new String[]{"-s", skjema, "-y", yyyy, "-r", region, "-u", orgnr})
+        ErrorReport errorReport = new ErrorReport(args)
+        List<KostraRecord> records = Utils.addLineNumbering(List.of(new KostraRecord(
+                Map.of("skjema", skjema
+                        , "aargang", yyyy
+                        , "kvartal", " "
+                        , "region", region
+                        , "orgnr", orgnr
+                        , "foretaksnr", "         "
+                        , "kontoklasse", kontoklasse
+                        , "funksjon_kapittel", funksjonKapittel
+                        , "art_sektor", artSektor
+                        , "belop", "1"
+                )
+                , definitions))
+        )
+
+        when:
+        boolean testResult = Main.kontroll15(errorReport, records)
+
+        then:
+        if (Constants.DEBUG)
+            System.out.println(errorReport.generateReport())
+
+        verifyAll {
+            testResult == expectedResult
+            errorReport.getErrorType() == errorlevel
+        }
+
+        where:
+        skjema | region   | orgnr       | kontoklasse | funksjonKapittel | artSektor || expectedResult | errorlevel
+        "0B"   | "420400" | "         " | "2"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0B"   | "420400" | "         " | "2"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0D"   | "420400" | "         " | "2"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0D"   | "420400" | "         " | "2"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0J"   | "420400" | "987654321" | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0J"   | "420400" | "987654321" | "5"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0L"   | "420400" | "987654321" | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0L"   | "420400" | "987654321" | "5"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0N"   | "420400" | "         " | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0N"   | "420400" | "         " | "5"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+        "0Q"   | "420400" | "         " | "5"         | "10  "           | "000"     || false          | Constants.NO_ERROR
+        "0Q"   | "420400" | "         " | "5"         | "10  "           | "877"     || true           | Constants.CRITICAL_ERROR
+    }
+
 
     def "Skal validere Kontroll 20, skjema #skjema / kontoklasse #kontoklasse / funksjon #funksjon -> #expectedResult / #errorlevel"() {
         given:
@@ -78,6 +353,37 @@ class RegnskapKostraSpec extends Specification {
         "0M"   | "3"         | "841 "   || true           | Constants.CRITICAL_ERROR
         "0P"   | "3"         | "100 "   || false          | Constants.NO_ERROR
         "0P"   | "3"         | "841 "   || true           | Constants.CRITICAL_ERROR
+    }
+
+    def "Skal validere at en gitt art er ugyldig i driftsregnskapet', skjema #skjema / orgnr #orgnr / region #region / art #art -> #result"() {
+        given:
+        def arter = Main.getArterUgyldigDrift(skjema, orgnr, region)
+
+        expect:
+        isCodeInCodeList(art, arter) == result
+
+        where:
+        skjema | orgnr       | region   | art   || result
+        "0A"   | "         " | "420400" | "921" || true
+        "0A"   | "         " | "420400" | "280" || true
+        "0C"   | "         " | "500000" | "921" || true
+        "0C"   | "         " | "500000" | "280" || true
+        "0I"   | "999999999" | "420400" | "921" || true
+        "0I"   | "817920632" | "500000" | "921" || false
+        "0I"   | "999999999" | "420400" | "280" || true
+        "0I"   | "817920632" | "500000" | "280" || true
+        "0K"   | "999999999" | "420400" | "921" || true
+        "0K"   | "817920632" | "500000" | "921" || false
+        "0K"   | "999999999" | "420400" | "280" || true
+        "0K"   | "817920632" | "500000" | "280" || true
+        "0M"   | "         " | "420400" | "921" || true
+        "0M"   | "         " | "500000" | "921" || false
+        "0M"   | "         " | "420400" | "280" || true
+        "0M"   | "         " | "500000" | "280" || true
+        "0P"   | "         " | "420400" | "921" || true
+        "0P"   | "         " | "500000" | "921" || false
+        "0P"   | "         " | "420400" | "280" || true
+        "0P"   | "         " | "500000" | "280" || true
     }
 
     def "Skal validere Kontroll 25, region #region / skjema #skjema / kontoklasse #kontoklasse / art #art / orgnr #orgnr -> #expectedResult / #errorlevel"() {
@@ -609,8 +915,6 @@ class RegnskapKostraSpec extends Specification {
         "0A"   | "100 "   | "877" || false          | Constants.NO_ERROR
         "0C"   | "800 "   | "010" || false          | Constants.NO_ERROR
         "0C"   | "800 "   | "870" || false          | Constants.NO_ERROR
-        "0C"   | "800 "   | "874" || false          | Constants.NO_ERROR
-        "0C"   | "800 "   | "875" || false          | Constants.NO_ERROR
         "0C"   | "800 "   | "877" || false          | Constants.NO_ERROR
         "0C"   | "100 "   | "870" || true           | Constants.CRITICAL_ERROR
         "0C"   | "100 "   | "874" || true           | Constants.CRITICAL_ERROR
@@ -646,8 +950,6 @@ class RegnskapKostraSpec extends Specification {
         "0P"   | "800 "   | "010" || false          | Constants.NO_ERROR
         "0P"   | "800 "   | "870" || false          | Constants.NO_ERROR
         "0P"   | "800 "   | "874" || false          | Constants.NO_ERROR
-        "0P"   | "800 "   | "875" || false          | Constants.NO_ERROR
-        "0P"   | "800 "   | "877" || false          | Constants.NO_ERROR
         "0P"   | "100 "   | "870" || true           | Constants.CRITICAL_ERROR
         "0P"   | "100 "   | "874" || true           | Constants.CRITICAL_ERROR
         "0P"   | "100 "   | "875" || true           | Constants.CRITICAL_ERROR

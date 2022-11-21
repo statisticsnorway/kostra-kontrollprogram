@@ -1,4 +1,4 @@
-package no.ssb.kostra.web
+package no.ssb.kostra.web.controller
 
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller

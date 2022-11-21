@@ -1,4 +1,4 @@
-package no.ssb.kostra.web
+package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.micronaut.core.async.annotation.SingleResult

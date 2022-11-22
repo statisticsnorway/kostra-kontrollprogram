@@ -21,6 +21,8 @@ import FilterLeft from "./assets/icon/filter-left.svg"
 import IconKostra from "./assets/icon/ikon-kostra.svg";
 // @ts-ignore
 import ListTask from "./assets/icon/list-task.svg";
+// @ts-ignore
+import IconX from "./assets/icon/x.svg";
 
 
 const App = () => {
@@ -28,6 +30,15 @@ const App = () => {
     const [loadError, setLoadError] = useState<string>()
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
+
+    const deleteReport = (incomingIndex: NonNullable<number>): void => {
+        // there's always a tab to the left, go there
+        setActiveTabIndex(incomingIndex)
+
+        // put all reports back to state except for the one that matches selected index
+        setFileReports(prevState =>
+            prevState.filter((it, index) => index != incomingIndex))
+    }
 
     // Form submit handler.
     // Submits form to backend and stores returned report
@@ -64,6 +75,7 @@ const App = () => {
 
         { /** TABS */}
         {fileReports.length > 0 && <ul className="nav nav-tabs">
+            {/** BACK TO FORM */}
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
                         onClick={() => setActiveTabIndex(0)}
@@ -74,18 +86,31 @@ const App = () => {
                     {activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
                 </Button>
             </li>
+
+            {/** REPORT TABS */}
             {fileReports.map((fileReport, index) =>
                 <li key={index} className="nav-item">
-                    <Button className={activeTabIndex == index + 1 ? "nav-link active" : "nav-link"}
+                    <div className={activeTabIndex == index + 1 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
+                        <Button
                             onClick={() => setActiveTabIndex(index + 1)}
+                            className="btn bg-transparent btn-outline-light p-0"
                             title={`Vis rapport for ${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
                                 + ` region ${fileReport.innparametere.region}`}>
-                        <img src={ListTask}
-                             className="pe-2"
-                             alt="Kostra"/>
-                        {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                            + ` region ${fileReport.innparametere.region}`}
-                    </Button>
+
+                            <img src={ListTask} className="pe-2" alt="Kostra"/>
+
+                            <span className="text-black-50">
+                                {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                                    + ` region ${fileReport.innparametere.region}`}
+                            </span>
+                        </Button>
+                        <Button
+                            onClick={() => deleteReport(index)}
+                            className="btn bg-transparent btn-outline-light pb-2"
+                            title="Slett rapport">
+                            <img src={IconX} alt="Slett rapport"/>
+                        </Button>
+                    </div>
                 </li>
             )}
         </ul>}
@@ -97,7 +122,10 @@ const App = () => {
             onLoadError={message => setLoadError(message)}/>
 
         { /** FILE REPORT */}
-        {activeTabIndex > 0 && <ReportView fileReport={fileReports[activeTabIndex - 1]}/>}
+        {activeTabIndex > 0 &&
+            <ReportView
+                fileReport={fileReports[activeTabIndex - 1]}
+            />}
     </>
 }
 

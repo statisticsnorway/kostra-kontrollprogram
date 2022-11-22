@@ -22,9 +22,6 @@
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>4.13.2</junit.version>
-
-        <jackson.version>2.13.4</jackson.version>
     </properties>
 
     <dependencies>
@@ -32,19 +29,6 @@
             <groupId>no.ssb.kostra</groupId>
             <artifactId>kostra-kontroller</artifactId>
             <version>LOCAL-SNAPSHOT</version>
-        </dependency>
-
-        <!-- scope = test -->
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -72,7 +56,6 @@
                                 </manifest>
                             </archive>
                         </configuration>
-
                         <executions>
                             <execution>
                                 <id>standalone</id>

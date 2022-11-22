@@ -12,7 +12,7 @@ import javax.xml.validation.Validator
 
 object ValidationUtils {
 
-    private const val XSD_RESOURCE = "BarnevernSingleFile.xsd"
+    private const val XSD_RESOURCE = "KostraBarnevernSingleFile.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic

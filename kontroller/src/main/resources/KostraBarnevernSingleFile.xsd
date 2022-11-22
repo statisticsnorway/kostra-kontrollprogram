@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	elementFormDefault="qualified">
 	<xs:include schemaLocation="Avgiver.xsd" />
 	<xs:include schemaLocation="Individ.xsd" />
 
@@ -43,7 +43,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="Fodselsnummer" use="optional">
+		<xs:attribute name="Fodselsnummer">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:minLength value="11"/>
@@ -52,7 +52,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="DUFnummer" use="optional">
+		<xs:attribute name="DUFnummer">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:minLength value="12"/>
@@ -61,7 +61,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="Bydelsnummer" use="optional">
+		<xs:attribute name="Bydelsnummer">
 			<xs:annotation>
 				<xs:documentation>2-sifret bydelsnummer for bydelene i Oslo</xs:documentation>
 			</xs:annotation>
@@ -236,8 +236,8 @@
 		</xs:sequence>
 		<xs:attribute ref="Id" use="required"/>
 		<xs:attribute ref="StartDato" use="required"/>
-		<xs:attribute ref="SluttDato" use="optional"/>
-		<xs:attribute name="Konklusjon" use="optional">
+		<xs:attribute ref="SluttDato"/>
+		<xs:attribute name="Konklusjon">
 			<xs:annotation>
 				<xs:documentation>Kode for konklusjon av meldingen:
 					1 = Henlagt
@@ -271,7 +271,7 @@
 		</xs:sequence>
 		<xs:attribute ref="Id" use="required"/>
 		<xs:attribute ref="StartDato" use="required"/>
-		<xs:attribute ref="SluttDato" use="optional"/>
+		<xs:attribute ref="SluttDato"/>
 	</xs:complexType>
 	<xs:complexType name="LovhjemmelType">
 		<xs:attribute name="Lov" use="required">
@@ -309,7 +309,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="Punktum" use="optional">
+		<xs:attribute name="Punktum">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:minLength value="0"/>
@@ -506,8 +506,8 @@
 		</xs:sequence>
 		<xs:attribute ref="Id" use="required"/>
 		<xs:attribute ref="StartDato" use="required"/>
-		<xs:attribute ref="SluttDato" use="optional"/>
-		<xs:attribute name="Konklusjon" use="optional">
+		<xs:attribute ref="SluttDato"/>
+		<xs:attribute name="Konklusjon">
 			<xs:annotation>
 				<xs:documentation>Kode for konklusjon av undersøkelse:
 					1 = Barneverntjenesten fatter vedtak om tiltak

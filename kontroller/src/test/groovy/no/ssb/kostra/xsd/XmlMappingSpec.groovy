@@ -8,7 +8,7 @@ import spock.lang.Specification
 import java.time.LocalDate
 
 import static no.ssb.kostra.TestUtils.getResourceAsString
-import static no.ssb.kostra.barn.ValidationUtils.validate
+import static no.ssb.kostra.barn.KostraValidationUtils.validate
 import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
 import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.unmarshallXml
 

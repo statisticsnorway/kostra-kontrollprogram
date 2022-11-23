@@ -10,7 +10,7 @@ import javax.xml.validation.SchemaFactory
 import javax.xml.validation.Validator
 
 
-object ValidationUtils {
+object KostraValidationUtils {
 
     private const val XSD_RESOURCE = "KostraBarnevernSingleFile.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"

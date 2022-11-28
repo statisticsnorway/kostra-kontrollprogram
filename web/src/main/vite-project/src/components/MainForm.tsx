@@ -72,14 +72,14 @@ const MainForm = (props: {
     const {
         control,
         register,
-        reset,
         resetField,
         handleSubmit,
-        formState: {errors, touchedFields},
+        formState: {errors, dirtyFields},
         formState,
-        watch
+        watch,
+        getValues
     } = useForm<KostraFormVm>({
-        mode: "onBlur",
+        mode: "onChange",
         resolver: yupResolver(validationSchema)
     })
 
@@ -117,13 +117,9 @@ const MainForm = (props: {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset keepTouched for individual fields before
-                // resetting the whole form
-                resetField("orgnrForetak", {keepTouched: false})
-                resetField("orgnrVirksomhet.0.orgnr", {keepTouched: false})
-                resetField("skjemaFil", {keepTouched: false})
-
-                // reset form, keep touched fields
-                reset({}, {keepTouched: true})
+                resetField("orgnrForetak", {keepDirty: false})
+                resetField("orgnrVirksomhet", {keepDirty: false})
+                resetField("skjemaFil", {keepDirty: false})
 
                 // get next skjemaType
                 const newSkjemaType = skjematyper.find(it => it.id == value.skjema)
@@ -151,7 +147,7 @@ const MainForm = (props: {
                 <Form.Label>Skjema</Form.Label>
                 <Form.Select
                     {...register("skjema")}
-                    isValid={touchedFields.skjema && !errors.skjema}
+                    isValid={dirtyFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null}>
                     <option value="">Velg skjematype</option>
                     {skjematyper.map((skjematype, index) =>
@@ -168,7 +164,7 @@ const MainForm = (props: {
                 <Form.Label>Årgang</Form.Label>
                 <Form.Select
                     {...register("aar")}
-                    isValid={touchedFields.aar && !errors.aar}
+                    isValid={dirtyFields.aar && !errors.aar}
                     isInvalid={errors.aar != null}>
                     <option value="">Velg år</option>
                     <option value="2022">2022</option>
@@ -184,8 +180,8 @@ const MainForm = (props: {
                 <Form.Label>Regionsnummer</Form.Label>
                 <Form.Control
                     {...register("region")}
-                    isValid={touchedFields.region && !errors.region}
-                    isInvalid={errors.region?.type != null}
+                    isValid={dirtyFields.region && !errors.region}
+                    isInvalid={errors.region != null}
                     type="text"
                     autoComplete="off"
                     maxLength={6}
@@ -199,8 +195,8 @@ const MainForm = (props: {
                     <Form.Label>{valgtSkjematype.labelOrgnr}</Form.Label>
                     <Form.Control
                         {...register("orgnrForetak")}
-                        isValid={touchedFields.orgnrForetak && !errors.orgnrForetak}
-                        isInvalid={errors.orgnrForetak?.type != null}
+                        isValid={dirtyFields.orgnrForetak && !errors.orgnrForetak}
+                        isInvalid={errors.orgnrForetak != null}
                         type="text"
                         autoComplete="off"
                         maxLength={9}
@@ -211,15 +207,17 @@ const MainForm = (props: {
             {/** ORGNR VIRKSOMHET */}
             {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
                 {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
-                    return <div key={orgnrVirksomhet.id} className="d-flex justify-content-between mb-2">
+                    return <div key={index} className="d-flex justify-content-between mb-2">
                         <Form.Group className="col-sm-10 me-2">
                             {/** show label for first entry only */}
                             {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
                             <Form.Control
                                 {...register(`orgnrVirksomhet.${index}.orgnr`)}
-                                isValid={(touchedFields.orgnrVirksomhet as boolean[])?.[index]
-                                    && !errors.orgnrVirksomhet?.[index]}
-                                isInvalid={errors.orgnrVirksomhet?.[index] != null}
+                                isValid={
+                                    getValues(`orgnrVirksomhet.${index}.orgnr`) != ""
+                                    && errors.orgnrVirksomhet?.[index]?.orgnr == null
+                                }
+                                isInvalid={errors.orgnrVirksomhet?.[index]?.orgnr != null}
                                 type="text"
                                 maxLength={9}
                                 placeholder="9 siffer"/>
@@ -229,8 +227,8 @@ const MainForm = (props: {
                             {/** show plus icon for last entry only, when last entry is touched and valid */}
                             {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
                                 && index == orgnrVirksomhetFields.length - 1
-                                && !errors.orgnrVirksomhet?.[index]
-                                && (touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                && getValues(`orgnrVirksomhet.${index}.orgnr`)
+                                && errors.orgnrVirksomhet?.[index]?.orgnr == null
                                 && <Button
                                     onClick={() => appendOrgnr({orgnr: ""})}
                                     className="btn bg-transparent btn-outline-light p-0 me-2"
@@ -240,10 +238,7 @@ const MainForm = (props: {
 
                             {/** show minus icon for index > 0 */}
                             {index > 0 && <Button
-                                onClick={() => {
-                                    resetField(`orgnrVirksomhet.${index}.orgnr`, {keepTouched: false})
-                                    removeOrgnr(index);
-                                }}
+                                onClick={() => removeOrgnr(index)}
                                 className="btn bg-transparent btn-outline-light p-0 me-2"
                                 title="Fjern virksomhetsnummer">
                                 <img src={DashCircle} alt="Fjern virksomhetsnummer"/>
@@ -260,8 +255,8 @@ const MainForm = (props: {
                 <Form.Label>Datafil (.dat eller .xml)</Form.Label>
                 <Form.Control
                     {...register("skjemaFil")}
-                    isValid={touchedFields.skjemaFil && !errors.skjemaFil}
-                    isInvalid={errors.skjemaFil?.type != null}
+                    isValid={dirtyFields.skjemaFil && !errors.skjemaFil}
+                    isInvalid={errors.skjemaFil != null}
                     type="file"
                     accept=".dat,.xml"
                 />

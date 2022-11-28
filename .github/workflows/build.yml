@@ -32,3 +32,4 @@ jobs:
         with:
           files: |
             ./konsoll/target/jar/kostra-kontrollprogram-${{github.ref_name}}.jar
+            ./web/target/jar/kostra-kontrollprogram-web-${{github.ref_name}}.jar

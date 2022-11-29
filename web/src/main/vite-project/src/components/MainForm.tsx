@@ -74,7 +74,7 @@ const MainForm = (props: {
         register,
         resetField,
         handleSubmit,
-        formState: {errors, dirtyFields},
+        formState: {errors, dirtyFields, touchedFields},
         formState,
         watch,
         getValues
@@ -116,7 +116,7 @@ const MainForm = (props: {
             const subscription = watch((value, {name, type}) => {
                 if (!(name == "skjema" && type == "change")) return
 
-                // reset keepTouched for individual fields before
+                // reset dirty state for individual fields
                 resetField("orgnrForetak", {keepDirty: false})
                 resetField("orgnrVirksomhet", {keepDirty: false})
                 resetField("skjemaFil", {keepDirty: false})
@@ -148,7 +148,7 @@ const MainForm = (props: {
                 <Form.Select
                     {...register("skjema")}
                     isValid={dirtyFields.skjema && !errors.skjema}
-                    isInvalid={errors.skjema != null}>
+                    isInvalid={errors.skjema != null || (touchedFields.skjema && !getValues("skjema"))}>
                     <option value="">Velg skjematype</option>
                     {skjematyper.map((skjematype, index) =>
                         <option key={index}
@@ -165,7 +165,7 @@ const MainForm = (props: {
                 <Form.Select
                     {...register("aar")}
                     isValid={dirtyFields.aar && !errors.aar}
-                    isInvalid={errors.aar != null}>
+                    isInvalid={errors.aar != null || (touchedFields.aar && !getValues("aar"))}>
                     <option value="">Velg år</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
@@ -181,7 +181,7 @@ const MainForm = (props: {
                 <Form.Control
                     {...register("region")}
                     isValid={dirtyFields.region && !errors.region}
-                    isInvalid={errors.region != null}
+                    isInvalid={errors.region != null || (touchedFields.region && !getValues("region"))}
                     type="text"
                     autoComplete="off"
                     maxLength={6}
@@ -196,7 +196,8 @@ const MainForm = (props: {
                     <Form.Control
                         {...register("orgnrForetak")}
                         isValid={dirtyFields.orgnrForetak && !errors.orgnrForetak}
-                        isInvalid={errors.orgnrForetak != null}
+                        isInvalid={errors.orgnrForetak != null
+                            || (touchedFields.orgnrForetak && !getValues("orgnrForetak"))}
                         type="text"
                         autoComplete="off"
                         maxLength={9}
@@ -217,7 +218,9 @@ const MainForm = (props: {
                                     getValues(`orgnrVirksomhet.${index}.orgnr`) != ""
                                     && errors.orgnrVirksomhet?.[index]?.orgnr == null
                                 }
-                                isInvalid={errors.orgnrVirksomhet?.[index]?.orgnr != null}
+                                isInvalid={errors.orgnrVirksomhet?.[index]?.orgnr != null
+                                    || ((touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                        && !getValues(`orgnrVirksomhet.${index}.orgnr`))}
                                 type="text"
                                 maxLength={9}
                                 placeholder="9 siffer"/>
@@ -256,7 +259,8 @@ const MainForm = (props: {
                 <Form.Control
                     {...register("skjemaFil")}
                     isValid={dirtyFields.skjemaFil && !errors.skjemaFil}
-                    isInvalid={errors.skjemaFil != null}
+                    isInvalid={errors.skjemaFil != null
+                        || (touchedFields.skjemaFil && getValues("skjemaFil").length < 1)}
                     type="file"
                     accept=".dat,.xml"
                 />

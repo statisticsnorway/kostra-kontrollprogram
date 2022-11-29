@@ -24,6 +24,7 @@ import ListTask from "./assets/icon/list-task.svg";
 // @ts-ignore
 import IconX from "./assets/icon/x.svg";
 
+import './scss/buttons.scss'
 
 const App = () => {
 
@@ -106,7 +107,7 @@ const App = () => {
                         </Button>
                         <Button
                             onClick={() => deleteReport(index)}
-                            className="btn bg-transparent btn-outline-light pb-2"
+                            className="bg-transparent btn-outline-light ms-1 p-0 ps-1 pe-1 rounded-circle"
                             title="Slett rapport">
                             <img src={IconX} alt="Slett rapport"/>
                         </Button>

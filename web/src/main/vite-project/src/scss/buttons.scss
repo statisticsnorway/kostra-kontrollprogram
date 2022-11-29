@@ -1,0 +1,9 @@
+
+.rounded-circle {
+  @extend .rounded-circle;
+
+  &:hover {
+    background-color: lightgray !important;
+  }
+}
+

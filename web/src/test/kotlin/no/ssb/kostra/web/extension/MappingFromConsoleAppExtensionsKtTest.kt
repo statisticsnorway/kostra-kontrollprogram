@@ -4,6 +4,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.controlprogram.ArgumentConstants.COMPANY_ORGNR_ABBR
 import no.ssb.kostra.controlprogram.ArgumentConstants.REGION_ABBR
@@ -27,6 +28,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             row("987654321,876543219", 2),
             row("987654321", 1),
             row("", 0),
+            row(null, 0),
         ) { virksomhetsnummer, expectedNumberOfCompanyIds ->
             val arguments = listOf(
                 SCHEMA_ABBR to "~skjema~",
@@ -48,9 +50,13 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                         region shouldBe "123456"
                         orgnrForetak shouldBe "888888888"
 
-                        orgnrVirksomhet?.size shouldBe expectedNumberOfCompanyIds
-                        if (expectedNumberOfCompanyIds > 0) {
-                            orgnrVirksomhet?.first()?.orgnr shouldBe "987654321"
+                        if (virksomhetsnummer != null) {
+                            orgnrVirksomhet?.size shouldBe expectedNumberOfCompanyIds
+                            if (expectedNumberOfCompanyIds > 0) {
+                                orgnrVirksomhet?.first()?.orgnr shouldBe "987654321"
+                            }
+                        } else {
+                            orgnrVirksomhet.shouldBeNull()
                         }
                     }
                 }
@@ -72,15 +78,6 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                 then("mappedErrorCode should be as expected") {
                     mappedErrorCode shouldBe expectedEnumErrorCode
                 }
-            }
-        }
-    }
-
-    given("toErrorReportVm") {
-        `when`("TODO") {
-
-            then("TODO") {
-
             }
         }
     }

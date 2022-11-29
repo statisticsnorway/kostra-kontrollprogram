@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import {useEffect, useState} from "react"
 import {useFieldArray, useForm} from "react-hook-form"
 import {Button, Form} from "react-bootstrap"
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -112,8 +112,8 @@ const MainForm = (props: {
 
     // change skjema handling
     useEffect(() => {
-        if (skjematyper.length) {
-            const subscription = watch((value, {name, type}) => {
+        const subscription = watch((value, {name, type}) => {
+            if (skjematyper.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields
@@ -131,9 +131,9 @@ const MainForm = (props: {
                     // add empty value to right-hand stack of orgnr
                     appendOrgnr({orgnr: ""}, {shouldFocus: false})
                 }
-            })
-            return () => subscription.unsubscribe()
-        }
+            }
+        })
+        return () => subscription.unsubscribe()
     }, [skjematyper, watch])
 
     /** if active view is a file report, hide this component */
@@ -207,7 +207,7 @@ const MainForm = (props: {
 
             {/** ORGNR VIRKSOMHET */}
             {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
-                {orgnrVirksomhetFields.map((orgnrVirksomhet, index) => {
+                {orgnrVirksomhetFields.map((_, index) => {
                     return <div key={index} className="d-flex justify-content-between mb-2">
                         <Form.Group className="col-sm-10 me-2">
                             {/** show label for first entry only */}
@@ -219,7 +219,7 @@ const MainForm = (props: {
                                     && errors.orgnrVirksomhet?.[index]?.orgnr == null
                                 }
                                 isInvalid={errors.orgnrVirksomhet?.[index]?.orgnr != null
-                                    || ((touchedFields.orgnrVirksomhet as boolean[])?.[index]
+                                    || ((touchedFields.orgnrVirksomhet as { orgnr: boolean }[])?.[index]?.orgnr
                                         && !getValues(`orgnrVirksomhet.${index}.orgnr`))}
                                 type="text"
                                 maxLength={9}

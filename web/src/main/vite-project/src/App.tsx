@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import {useState} from "react"
 import {Button} from "react-bootstrap";
 
 // app components
@@ -38,7 +38,7 @@ const App = () => {
 
         // put all reports back to state except for the one that matches selected index
         setFileReports(prevState =>
-            prevState.filter((it, index) => index != incomingIndex))
+            prevState.filter((_, index) => index != incomingIndex))
     }
 
     // Form submit handler.

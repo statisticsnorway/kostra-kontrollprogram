@@ -2,7 +2,6 @@ import {FileReportVm} from "../kostratypes/fileReportVm";
 import {KostraErrorCode} from "../kostratypes/kostraErrorCode";
 import {FileReportEntryVm} from "../kostratypes/fileReportEntryVm";
 
-
 export const ReportView = (props: {
     readonly fileReport: NonNullable<FileReportVm>
 }) => {

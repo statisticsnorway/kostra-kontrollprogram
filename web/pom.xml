@@ -21,7 +21,7 @@
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlinVersion>1.7.21</kotlinVersion>
+        <kotlinVersion>1.7.22</kotlinVersion>
         <kotestVersion>5.5.4</kotestVersion>
         <jackson.version>2.14.0</jackson.version>
         <swagger.version>2.2.7</swagger.version>
@@ -124,7 +124,7 @@
         <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-kotest5</artifactId>
-            <version>3.7.0</version>
+            <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -150,6 +150,12 @@
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core-jvm</artifactId>
             <version>1.6.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <version>3.5.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

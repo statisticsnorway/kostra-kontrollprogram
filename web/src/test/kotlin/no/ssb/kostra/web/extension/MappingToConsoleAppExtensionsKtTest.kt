@@ -34,18 +34,28 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     region = "123456",
                     orgnrVirksomhet = setOf()
                 )
+            ),
+            row(
+                KostraFormVm(
+                    skjema = "0A",
+                    aar = Year.now().value,
+                    region = "123456",
+                    navn = "~navn~"
+                )
             )
         ) { sut ->
-            `when`("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet}") {
+            `when`("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet} ${sut.navn}") {
                 val arguments = sut.toKostraArguments("".byteInputStream())
 
                 then("arguments should be as expected") {
-                    arguments.navn shouldBe NAME_FALLBACK_VALUE
                     arguments.aargang shouldBe Year.now().value.toString()
                     arguments.region shouldBe "123456"
 
                     arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
                     arguments.orgnr shouldBe generateCompanyIdInTest(' ')
+
+                    if (sut.navn == null) arguments.navn shouldBe NAME_FALLBACK_VALUE
+                    else arguments.navn shouldBe sut.navn
                 }
             }
         }

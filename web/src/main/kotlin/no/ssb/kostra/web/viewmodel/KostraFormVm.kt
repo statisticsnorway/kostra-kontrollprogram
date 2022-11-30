@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern
 @Introspected
 @ValidForm
 data class KostraFormVm(
-    @field:Min(value = 2021, message = "År kan ikke være mindre enn {value}")
+    @field:Min(value = 2022, message = "År kan ikke være mindre enn {value}")
     val aar: Int = 0,
 
     @field:ValidFormType

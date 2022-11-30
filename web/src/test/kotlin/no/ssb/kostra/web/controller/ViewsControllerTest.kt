@@ -15,7 +15,6 @@ import kotlinx.coroutines.withContext
 class ViewsControllerTest(@Client("/") client: HttpClient) : BehaviorSpec({
 
     given("index") {
-
         val request: HttpRequest<Any> = HttpRequest.GET("/")
 
         `when`("request") {

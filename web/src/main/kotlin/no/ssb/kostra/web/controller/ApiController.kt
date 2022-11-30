@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.HttpStatus.CONFLICT
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -88,7 +87,7 @@ open class ApiController(
                             outputStream.toByteArray().inputStream()
                         )
                     )
-                } else HttpResponse.status(CONFLICT)
+                } else throw RuntimeException("Failed to read file at backend")
             }
     }
 

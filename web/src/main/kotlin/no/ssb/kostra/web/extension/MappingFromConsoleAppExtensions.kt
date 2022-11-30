@@ -18,10 +18,10 @@ fun Arguments.toReportRequestVm(): KostraFormVm {
         skjema = this.skjema,
         region = this.region,
         navn = this.navn,
-        orgnrForetak = this.foretaknr,
+        orgnrForetak = this.foretaknr.ifBlank { null },
         orgnrVirksomhet = if (this.orgnr.isNullOrEmpty()) null else this.orgnr
             .split(",")
-            .filter { it.isNotEmpty() }
+            .filterNot { it.isBlank() }
             .map { CompanyIdVm(it) }
             .ifEmpty { null }
     )

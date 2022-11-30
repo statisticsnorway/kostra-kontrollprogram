@@ -10,7 +10,7 @@ import java.io.InputStream
 
 /** keep as singleton for testing purposes */
 @Singleton
-class FileValidator {
+class DataFileValidator {
 
     fun validateDataFile(
         kostraForm: KostraFormVm,

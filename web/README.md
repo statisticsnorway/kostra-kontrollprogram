@@ -42,3 +42,7 @@ npx vitest run
 ```bash
 java -jar <navn på JAR-fil>
 ```
+
+## Open API
+
+http://localhost:8080/swagger/kostra-kontrollprogram-api-1.0.yml

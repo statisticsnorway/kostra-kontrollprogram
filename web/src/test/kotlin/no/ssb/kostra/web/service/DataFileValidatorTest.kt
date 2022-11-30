@@ -8,9 +8,9 @@ import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
-class FileValidatorTest : BehaviorSpec({
+class DataFileValidatorTest : BehaviorSpec({
 
-    val sut = FileValidator()
+    val sut = DataFileValidator()
 
     given("request with non-fatal error") {
 
@@ -18,7 +18,6 @@ class FileValidatorTest : BehaviorSpec({
             aar = 2022,
             skjema = "52AF",
             region = "667600",
-            navn = "UOPPGITT",
             filnavn = "fil.data",
             orgnrVirksomhet = null
         )

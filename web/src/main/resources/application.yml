@@ -13,6 +13,10 @@ micronaut:
         paths:
           - classpath:static
 
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+
   server:
     multipart:
       max-file-size: 10485760 # 10 MiB
@@ -21,6 +25,11 @@ netty:
   default:
     allocator:
       max-order: 3
+
+api:
+  title: "Kostra Kontrollprogram API"
+  version: "1.0"
+  description: "API for Kostra Kontrollprogram konsoll-applikasjon"
 
 iu-innstillinger:
   aarganger: [ 2022,2023 ]

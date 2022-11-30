@@ -24,6 +24,8 @@
         <kotlinVersion>1.7.21</kotlinVersion>
         <kotestVersion>5.5.4</kotestVersion>
         <jackson.version>2.14.0</jackson.version>
+        <swagger.version>2.2.7</swagger.version>
+        <micronaut.openapi.version>4.7.1</micronaut.openapi.version>
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
@@ -105,6 +107,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <!-- scope = test -->
@@ -203,6 +211,11 @@
                                     <groupId>io.micronaut</groupId>
                                     <artifactId>micronaut-validation</artifactId>
                                     <version>${micronaut.version}</version>
+                                </annotationProcessorPath>
+                                <annotationProcessorPath>
+                                    <groupId>io.micronaut.openapi</groupId>
+                                    <artifactId>micronaut-openapi</artifactId>
+                                    <version>${micronaut.openapi.version}</version>
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>

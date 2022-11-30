@@ -74,7 +74,7 @@ class ApiControllerTest(
 
                 uiData.shouldNotBeNull()
 
-                uiData.releaseVersion shouldBe "N/A"
+                uiData.releaseVersion.length shouldBeGreaterThan 0
                 uiData.years.size shouldBeGreaterThan 1
 
                 uiData.formTypes.shouldNotBeNull()

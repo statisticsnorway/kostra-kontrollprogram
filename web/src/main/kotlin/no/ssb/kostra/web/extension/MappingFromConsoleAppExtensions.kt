@@ -12,18 +12,20 @@ import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
-fun Arguments.toReportRequestVm(): KostraFormVm = KostraFormVm(
-    aar = this.aargang.toInt(),
-    skjema = this.skjema,
-    region = this.region,
-    navn = this.navn,
-    orgnrForetak = this.foretaknr,
-    orgnrVirksomhet = this.orgnr
-        ?.split(",")
-        ?.filter { it.isNotEmpty() }
-        ?.map { CompanyIdVm(it) }
-        ?.ifEmpty { null }
-)
+fun Arguments.toReportRequestVm(): KostraFormVm {
+    return KostraFormVm(
+        aar = this.aargang.toInt(),
+        skjema = this.skjema,
+        region = this.region,
+        navn = this.navn,
+        orgnrForetak = this.foretaknr,
+        orgnrVirksomhet = if (this.orgnr.isNullOrEmpty()) null else this.orgnr
+            .split(",")
+            .filter { it.isNotEmpty() }
+            .map { CompanyIdVm(it) }
+            .ifEmpty { null }
+    )
+}
 
 fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {
     NORMAL_ERROR -> KostraErrorCode.NORMAL_ERROR

@@ -19,15 +19,9 @@ class GitPropertiesLoader {
         private const val GIT_TAGS_KEY = "git.tags"
         private const val NOT_AVAILABLE_VALUE = "N/A"
 
-        internal fun initGitProperties(gitPropertiesFilename: String): GitProperties {
-            val gitProperties = this::class.java.getResourceAsStream(gitPropertiesFilename).use {
+        internal fun initGitProperties(gitPropertiesFilename: String): GitProperties =
+            this::class.java.getResourceAsStream(gitPropertiesFilename)?.use {
                 GitProperties(tags = Properties().apply { load(it) }.getProperty(GIT_TAGS_KEY, NOT_AVAILABLE_VALUE))
-            }
-
-            return when {
-                gitProperties.tags.isEmpty() -> GitProperties(tags = NOT_AVAILABLE_VALUE)
-                else -> gitProperties
-            }
-        }
+            } ?: GitProperties(tags = NOT_AVAILABLE_VALUE)
     }
 }

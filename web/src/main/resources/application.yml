@@ -29,7 +29,7 @@ netty:
 api:
   title: "Kostra Kontrollprogram API"
   version: "1.0"
-  description: "API for Kostra Kontrollprogram konsoll-applikasjon"
+  description: "API for Kostra Kontrollprogram web-applikasjon"
 
 iu-innstillinger:
   aarganger: [ 2022,2023 ]

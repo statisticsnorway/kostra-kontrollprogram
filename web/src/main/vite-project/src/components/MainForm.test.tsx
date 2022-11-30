@@ -1,6 +1,6 @@
-import MainForm from "./MainForm";
+import MainForm from "./MainForm"
 import {fireEvent, render, screen} from '@testing-library/react'
-import {describe, expect, test} from 'vitest';
+import {describe, expect, test} from 'vitest'
 
 //screen.debug()
 
@@ -15,13 +15,13 @@ describe("MainForm", () => {
                     years: [(new Date()).getFullYear()]
                 }}
                 onSubmit={() => {
-                }}/>);
+                }}/>)
 
-            expect((screen.getByRole("option", {name: "Velg skjematype"}) as HTMLOptionElement).selected).toBe(true)
-            expect((screen.getByRole("option", {name: "Velg årgang"}) as HTMLOptionElement).selected).toBe(true)
-            expect((screen.getByLabelText("Regionsnummer") as HTMLInputElement).placeholder).toBe("6 siffer")
+            expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg skjematype"}).selected).toBe(true)
+            expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg årgang"}).selected).toBe(true)
+            expect(screen.getByLabelText<HTMLInputElement>("Regionsnummer").placeholder).toBe("6 siffer")
             expect(() => screen.getByRole("file")).toBeDefined()
-            expect((screen.getByRole("button", {name: "Kontroller fil"}) as HTMLButtonElement).disabled).toBe(true)
+            expect(screen.getByRole<HTMLButtonElement>("button", {name: "Kontroller fil"}).disabled).toBe(true)
         })
     })
 
@@ -56,9 +56,9 @@ describe("MainForm", () => {
                     ],
                     years: [(new Date()).getFullYear()]
                 }}
-                onSubmit={() => {}}/>);
+                onSubmit={() => {}}/>)
 
-            formSelect = screen.getByLabelText("Skjema") as HTMLSelectElement
+            formSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
         })
 
         test("when a form type without company-id and sub-company-id is selected", () => {

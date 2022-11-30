@@ -1,4 +1,4 @@
-import {Nullable} from "./nullable";
+import {Nullable} from "./nullable"
 
 export interface KostraFormTypeVm {
     readonly id: NonNullable<string>

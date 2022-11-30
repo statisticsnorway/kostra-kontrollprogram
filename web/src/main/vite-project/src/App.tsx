@@ -1,17 +1,17 @@
 import {useEffect, useState} from "react"
-import {Button} from "react-bootstrap";
+import {Button} from "react-bootstrap"
 
 // app components
-import MainForm from "./components/MainForm";
-import ReportView from "./components/ReportView";
+import MainForm from "./components/MainForm"
+import ReportView from "./components/ReportView"
 
 // app types
-import {KostraFormVm} from "./kostratypes/kostraFormVm";
-import {FileReportVm} from "./kostratypes/fileReportVm";
-import {UiDataVm} from "./kostratypes/uiDataVm";
+import {KostraFormVm} from "./kostratypes/kostraFormVm"
+import {FileReportVm} from "./kostratypes/fileReportVm"
+import {UiDataVm} from "./kostratypes/uiDataVm"
 
 // API calls
-import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls";
+import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
 
 // icons
 // @ts-ignore
@@ -19,15 +19,14 @@ import ArrowLeftCircle from "./assets/icon/arrow-left-circle.svg"
 // @ts-ignore
 import FilterLeft from "./assets/icon/filter-left.svg"
 // @ts-ignore
-import IconKostra from "./assets/icon/ikon-kostra.svg";
+import IconKostra from "./assets/icon/ikon-kostra.svg"
 // @ts-ignore
-import ListTask from "./assets/icon/list-task.svg";
-// @ts-ignore
-import IconX from "./assets/icon/x.svg";
+import ListTask from "./assets/icon/list-task.svg"
 
 import './scss/buttons.scss'
 
 const App = () => {
+    const multiplicationX = "\u2715"
 
     const [loadError, setLoadError] = useState<string>()
     const [uiData, setUiData] = useState<UiDataVm>()
@@ -51,7 +50,7 @@ const App = () => {
                 setUiData(uiData)
                 setLoadError("")
             })
-            .catch(() => setLoadError("Lasting av skjematyper feilet"))
+            .catch(() => setLoadError("Lasting av UI-data feilet"))
     }, [])
 
     // Form submit handler.
@@ -74,12 +73,12 @@ const App = () => {
 
     return <>
         <div className="py-3 text-center">
-            <h2 className="mb-3">
+            <h2>
                 <img src={IconKostra}
                      height="70px"
                      className="pe-4"
                      alt="Kostra"/>
-                Kostra kontrollprogram {uiData?.releaseVersion}
+                Kostra Kontrollprogram
             </h2>
 
             {loadError && <span className="text-danger">{loadError}</span>}
@@ -120,27 +119,33 @@ const App = () => {
                         </Button>
                         <Button
                             onClick={() => deleteReport(index)}
-                            className="bg-transparent btn-outline-light ms-1 p-0 ps-1 pe-1 rounded-circle"
+                            className="bg-transparent btn-outline-light ms-1 p-0 ps-1 pe-1 rounded-circle text-black-50"
                             title="Slett rapport">
-                            <img src={IconX} alt="Slett rapport"/>
+                            {multiplicationX}
                         </Button>
                     </div>
                 </li>
             )}
         </ul>}
 
-        { /** FORM */}
-        <MainForm
-            showForm={activeTabIndex == 0}
-            uiData={uiData as UiDataVm}
-            onSubmit={onSubmit}
-        />
+        {/** show when UI-data is loaded */}
+        {uiData && <>
 
-        { /** FILE REPORT */}
-        {activeTabIndex > 0 &&
-            <ReportView
-                fileReport={fileReports[activeTabIndex - 1]}
-            />}
+            { /** FORM */}
+            <MainForm
+                showForm={activeTabIndex == 0}
+                uiData={uiData}
+                onSubmit={onSubmit}
+            />
+
+            { /** FILE REPORT */}
+            {activeTabIndex > 0 &&
+                <ReportView
+                    fileReport={fileReports[activeTabIndex - 1]}
+                    appReleaseVersion={uiData.releaseVersion}
+                />
+            }
+        </>}
     </>
 }
 

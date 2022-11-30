@@ -1,29 +1,22 @@
-import {FileReportVm} from "../kostratypes/fileReportVm";
-import {KostraErrorCode} from "../kostratypes/kostraErrorCode";
-import {FileReportEntryVm} from "../kostratypes/fileReportEntryVm";
+import {FileReportVm} from "../kostratypes/fileReportVm"
+import {KostraErrorCode} from "../kostratypes/kostraErrorCode"
+import {FileReportEntryVm} from "../kostratypes/fileReportEntryVm"
+import {getEnumText, getEnumValue} from "../util/enumUtils"
+
+interface ErrorAggregateEntry {
+    feilkode: KostraErrorCode
+    kontrollnummer: string,
+    itemCount: number
+}
 
 export const ReportView = (props: {
-    readonly fileReport: NonNullable<FileReportVm>
+    appReleaseVersion: NonNullable<string>,
+    fileReport: NonNullable<FileReportVm>
 }) => {
-    const {fileReport} = props
+    const {appReleaseVersion, fileReport} = props
 
-    // gets text value from enum KostraErrorCode
-    const getEnumText = (untypedString: string): string =>
-        KostraErrorCode[(untypedString as keyof typeof KostraErrorCode)]
-
-    const getEnumValue = (untypedString: string): KostraErrorCode =>
-        KostraErrorCode[untypedString as keyof typeof KostraErrorCode]
-
-    const reduceErrors = (reportEntries: FileReportEntryVm[]): {
-        feilkode: KostraErrorCode,
-        kontrollnummer: string,
-        itemCount: number
-    }[] => reportEntries.reduce(
-        (accumulator: {
-            feilkode: KostraErrorCode
-            kontrollnummer: string,
-            itemCount: number
-        }[], currentValue) => {
+    const reduceErrors = (reportEntries: FileReportEntryVm[]): ErrorAggregateEntry[] => reportEntries.reduce(
+        (accumulator: ErrorAggregateEntry[], currentValue) => {
             const findIndex = accumulator.findIndex(it => it.kontrollnummer === currentValue.kontrollnummer)
             if (findIndex < 0) {
                 accumulator.push({
@@ -41,18 +34,15 @@ export const ReportView = (props: {
         let cssStyle
 
         switch (getEnumValue(untypedErrorCode)) {
-            case KostraErrorCode.NO_ERROR: {
+            case KostraErrorCode.NO_ERROR:
                 cssStyle = "text-success"
-                break;
-            }
-            case KostraErrorCode.NORMAL_ERROR: {
+                break
+            case KostraErrorCode.NORMAL_ERROR:
                 cssStyle = "text-warning"
-                break;
-            }
-            default: {
+                break
+            default:
                 cssStyle = "text-danger"
-                break;
-            }
+                break
         }
         return <span className={cssStyle}>{getEnumText(untypedErrorCode)}</span>
     }
@@ -93,6 +83,9 @@ export const ReportView = (props: {
             </p>
         </div>
         <ul className="list-group list-group-flush">
+            <li className="list-group-item">
+                Programvareversjon: {appReleaseVersion}
+            </li>
             <li className="list-group-item">
                 Skjema: {fileReport.innparametere.skjema}
             </li>

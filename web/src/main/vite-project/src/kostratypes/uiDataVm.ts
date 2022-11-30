@@ -1,4 +1,4 @@
-import {KostraFormTypeVm} from "./kostraFormTypeVm";
+import {KostraFormTypeVm} from "./kostraFormTypeVm"
 
 export interface UiDataVm {
     readonly releaseVersion: NonNullable<string>

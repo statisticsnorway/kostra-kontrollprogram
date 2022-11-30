@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react"
 import {useFieldArray, useForm} from "react-hook-form"
 import {Button, Form} from "react-bootstrap"
-import {yupResolver} from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 // app types
@@ -16,7 +16,7 @@ import PlusCircle from "../assets/icon/plus-circle.svg"
 import DashCircle from "../assets/icon/dash-circle.svg"
 // @ts-ignore
 import IconKostra from "../assets/icon/ikon-kostra.svg"
-import {UiDataVm} from "../kostratypes/uiDataVm";
+import {UiDataVm} from "../kostratypes/uiDataVm"
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"

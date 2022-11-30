@@ -1,11 +1,11 @@
-package no.ssb.kostra.web.status
+package no.ssb.kostra.felles.git
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import no.ssb.kostra.web.status.GitPropertiesLoader.Companion.GIT_PROPERTIES_FILENAME
-import no.ssb.kostra.web.status.GitPropertiesLoader.Companion.NOT_AVAILABLE_VALUE
-import no.ssb.kostra.web.status.GitPropertiesLoader.Companion.initGitProperties
+import no.ssb.kostra.felles.git.GitPropertiesLoader.DEFAULT_GIT_PROPERTIES_FILENAME
+import no.ssb.kostra.felles.git.GitPropertiesLoader.NOT_AVAILABLE_VALUE
+import no.ssb.kostra.felles.git.GitPropertiesLoader.loadGitProperties
 
 class GitPropertiesLoaderTest : BehaviorSpec({
 
@@ -13,7 +13,7 @@ class GitPropertiesLoaderTest : BehaviorSpec({
 
         `when`("non-existing gitPropertiesFilename") {
 
-            val result = initGitProperties("non-existing.properties")
+            val result = loadGitProperties("non-existing.properties")
 
             then("result should be fallback") {
                 result shouldBe GitProperties(
@@ -24,7 +24,7 @@ class GitPropertiesLoaderTest : BehaviorSpec({
 
         `when`("existing gitPropertiesFilename") {
 
-            val result = initGitProperties(GIT_PROPERTIES_FILENAME)
+            val result = loadGitProperties(DEFAULT_GIT_PROPERTIES_FILENAME)
 
             then("result should not be fallback") {
                 result shouldNotBe GitProperties(

@@ -1,5 +1,5 @@
-import {Nullable} from "./nullable";
-import {CompanyIdVm} from "./companyIdVm";
+import {Nullable} from "./nullable"
+import {CompanyIdVm} from "./companyIdVm"
 
 export interface KostraFormVm {
     aar: NonNullable<number>

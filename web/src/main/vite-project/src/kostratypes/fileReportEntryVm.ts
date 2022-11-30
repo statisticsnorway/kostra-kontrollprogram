@@ -1,4 +1,4 @@
-import {KostraErrorCode} from "./kostraErrorCode";
+import {KostraErrorCode} from "./kostraErrorCode"
 
 export interface FileReportEntryVm {
     readonly journalnummer: NonNullable<string>

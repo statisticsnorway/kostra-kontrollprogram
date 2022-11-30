@@ -46,7 +46,10 @@ public class ErrorReportTest {
         ));
 
         assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
-        assertTrue(errorReport.generateReport().contains("\n"));
+
+        var errorReportHtml = errorReport.generateReport();
+        assertTrue(errorReportHtml.contains("\n"));
+        assertTrue(errorReportHtml.contains("Kontrollprogramversjon: LOCAL-SNAPSHOT"));
     }
 
     @Test

@@ -22,6 +22,8 @@
         <micronaut.runtime>netty</micronaut.runtime>
 
         <kotlinVersion>1.7.21</kotlinVersion>
+        <kotestVersion>5.5.4</kotestVersion>
+        <jackson.version>2.14.0</jackson.version>
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
@@ -61,6 +63,11 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlinVersion}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>io.projectreactor</groupId>
@@ -70,33 +77,19 @@
 
         <dependency>
             <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-inject</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
             <artifactId>micronaut-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.14.0</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-client</artifactId>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-jackson-databind</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.micronaut.kotlin</groupId>
             <artifactId>micronaut-kotlin-extension-functions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jackson-databind</artifactId>
         </dependency>
         <dependency>
             <groupId>io.micronaut.kotlin</groupId>
@@ -107,38 +100,42 @@
             <artifactId>micronaut-views-thymeleaf</artifactId>
             <version>3.7.2</version>
         </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
 
+        <!-- scope = test -->
         <dependency>
-            <groupId>io.kotest</groupId>
-            <artifactId>kotest-assertions-core-jvm</artifactId>
-            <version>5.5.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.kotest</groupId>
-            <artifactId>kotest-runner-junit5-jvm</artifactId>
-            <version>5.5.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
-            <version>1.13.2</version>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-client</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-kotest5</artifactId>
             <version>3.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.kotest</groupId>
+            <artifactId>kotest-assertions-core-jvm</artifactId>
+            <version>${kotestVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.kotest</groupId>
+            <artifactId>kotest-runner-junit5-jvm</artifactId>
+            <version>${kotestVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -155,30 +152,6 @@
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
         <plugins>
-            <plugin>
-                <groupId>io.github.git-commit-id</groupId>
-                <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>5.0.0</version>
-                <executions>
-                    <execution>
-                        <id>get-the-git-infos</id>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
-                    </generateGitPropertiesFilename>
-                    <includeOnlyProperties>
-                        <includeOnlyProperty>^git.tags$</includeOnlyProperty>
-                    </includeOnlyProperties>
-                    <commitIdGenerationMode>full</commitIdGenerationMode>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
@@ -348,6 +321,7 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.0</version>
                 <executions>
@@ -380,6 +354,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.4.2</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>${project.build.directory}/jar</outputDirectory>

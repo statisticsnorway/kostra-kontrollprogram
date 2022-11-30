@@ -1,6 +1,6 @@
-import {KostraFormVm} from "./kostraFormVm";
-import {FileReportEntryVm} from "./fileReportEntryVm";
-import {KostraErrorCode} from "./kostraErrorCode";
+import {KostraFormVm} from "./kostraFormVm"
+import {FileReportEntryVm} from "./fileReportEntryVm"
+import {KostraErrorCode} from "./kostraErrorCode"
 
 export interface FileReportVm {
     readonly innparametere: NonNullable<KostraFormVm>

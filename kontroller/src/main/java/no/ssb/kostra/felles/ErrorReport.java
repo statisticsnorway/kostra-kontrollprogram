@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static no.ssb.kostra.felles.git.GitPropertiesLoader.DEFAULT_GIT_PROPERTIES_FILENAME;
+import static no.ssb.kostra.felles.git.GitPropertiesLoader.loadGitProperties;
+
 @SuppressWarnings("SpellCheckingInspection")
 public class ErrorReport {
     private final List<ErrorReportEntry> entries = new ArrayList<>();
@@ -82,7 +85,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
-        final var VERSION = "v2022.11.16";
+        final var releaseVersion = loadGitProperties(DEFAULT_GIT_PROPERTIES_FILENAME).getTags();
         final var report = new StringBuilder();
         final var lf = args.getNewline();
 
@@ -98,7 +101,7 @@ public class ErrorReport {
                 .append("<body>").append(lf)
                 .append("<hr/>").append(lf)
                 .append("<h2>Kontrollrapport for ").append(this.args.getRegion()).append(" ").append(args.getNavn()).append("</h2>").append(lf)
-                .append("<hr/>").append(lf).append("<div>Kontrollprogramversjon: ").append(VERSION).append("</div>").append(lf)
+                .append("<hr/>").append(lf).append("<div>Kontrollprogramversjon: ").append(releaseVersion).append("</div>").append(lf)
                 .append("<div>Kontroller startet: ").append(startTime).append("</div>").append(lf)
                 .append("<div>Rapport generert: ").append(Calendar.getInstance().getTime()).append("</div>").append(lf)
                 .append("<div>Type filuttrekk: ").append(this.args.getSkjema()).append(".").append(this.args.getAargang()).append("</div>").append(lf)

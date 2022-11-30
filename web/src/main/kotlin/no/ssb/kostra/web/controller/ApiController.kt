@@ -1,5 +1,6 @@
 package no.ssb.kostra.web.controller
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
@@ -10,9 +11,9 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.multipart.StreamingFileUpload
 import io.micronaut.validation.validator.Validator
+import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.FileValidator
-import no.ssb.kostra.web.status.GitProperties
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
@@ -44,7 +45,7 @@ open class ApiController(
     ): Mono<HttpResponse<FileReportVm>> {
 
         /**  we'll have to deserialize and validate our self because of multipart request */
-        val kostraForm = objectMapper.readValue(kostraFormAsJson, KostraFormVm::class.java)
+        val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }

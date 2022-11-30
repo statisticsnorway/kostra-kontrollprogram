@@ -10,14 +10,22 @@ import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.io.InputStream
 
+private const val SEPARATOR_CHAR = ","
+internal const val NAME_FALLBACK_VALUE = "UOPPGITT"
+
 fun KostraFormVm.toKostraArguments(inputStream: InputStream) = Arguments(
-    mapOf(
+    mutableMapOf(
         SCHEMA_ABBR to this.skjema,
         YEAR_ABBR to this.aar.toString(),
         REGION_ABBR to this.region,
-        NAME_ABBR to (this.navn ?: "UOPPGITT"),
-        COMPANY_ORGNR_ABBR to (this.orgnrForetak ?: ""),
-        UNIT_ORGNR_ABBR to (this.orgnrVirksomhet?.joinToString(separator = ",") { it.orgnr } ?: "")
-    ).entries.flatMap { (arg, argValue) -> listOf("-$arg", argValue) }.toTypedArray(),
+        NAME_ABBR to (this.navn ?: NAME_FALLBACK_VALUE)
+    ).also { parameterMap ->
+        if (!this.orgnrForetak.isNullOrEmpty()) {
+            parameterMap[COMPANY_ORGNR_ABBR] = this.orgnrForetak
+        }
+        if (this.orgnrVirksomhet?.any() == true) {
+            parameterMap[UNIT_ORGNR_ABBR] = this.orgnrVirksomhet.joinToString(separator = SEPARATOR_CHAR) { it.orgnr }
+        }
+    }.entries.flatMap { (arg, argValue) -> listOf("-$arg", argValue) }.toTypedArray(),
     inputStream
 )

@@ -27,7 +27,7 @@
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",
     "cypress": "^10.11.0",
-    "jsdom": "^20.0.2",
+    "jsdom": "^20.0.3",
     "sass": "^1.56.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.0",

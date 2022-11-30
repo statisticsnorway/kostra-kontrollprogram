@@ -6,7 +6,7 @@ import {describe, expect, test} from 'vitest';
 
 describe("MainForm", () => {
     describe("Layout", () => {
-        test("initial screen, displays 2 selects, 1 input and 1 button", () => {
+        test("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
             render(<MainForm
                 showForm={true}
                 uiData={{
@@ -20,60 +20,74 @@ describe("MainForm", () => {
             expect((screen.getByRole("option", {name: "Velg skjematype"}) as HTMLOptionElement).selected).toBe(true)
             expect((screen.getByRole("option", {name: "Velg årgang"}) as HTMLOptionElement).selected).toBe(true)
             expect((screen.getByLabelText("Regionsnummer") as HTMLInputElement).placeholder).toBe("6 siffer")
+            expect(() => screen.getByRole("file")).toBeDefined()
             expect((screen.getByRole("button", {name: "Kontroller fil"}) as HTMLButtonElement).disabled).toBe(true)
         })
     })
 
     describe("Interactions", () => {
-        test("when a form type with company-id is selected", () => {
+
+        let formSelect: HTMLSelectElement
+
+        beforeEach(() => {
             render(<MainForm
                 showForm={true}
                 uiData={{
                     releaseVersion: "N/A",
-                    formTypes: [{
-                        id: "~id~",
-                        tittel: "~tittel~",
-                        labelOrgnr: "~labelOrgnr~",
-                        labelOrgnrVirksomhetene: null
-                    }],
+                    formTypes: [
+                        {
+                            id: "~id~",
+                            tittel: "~tittel~",
+                            labelOrgnr: "~labelOrgnr~",
+                            labelOrgnrVirksomhetene: null
+                        },
+                        {
+                            id: "~idWithCompanyId~",
+                            tittel: "~tittel~",
+                            labelOrgnr: "~labelOrgnr~",
+                            labelOrgnrVirksomhetene: null
+                        },
+                        {
+                            id: "~idWithSubCompanyId~",
+                            tittel: "~tittel~",
+                            labelOrgnr: "~labelOrgnr~",
+                            labelOrgnrVirksomhetene: "~labelOrgnrVirksomhetene~"
+                        },
+                    ],
                     years: [(new Date()).getFullYear()]
                 }}
-                onSubmit={() => {
-                }}/>);
+                onSubmit={() => {}}/>);
 
-            // verify that input does not exist
-            expect(() => screen.getByText("Organisasjonsnummer")).toThrow()
+            formSelect = screen.getByLabelText("Skjema") as HTMLSelectElement
+        })
 
-            const formSelect = screen.getByLabelText("Skjema") as HTMLSelectElement
+        test("when a form type without company-id and sub-company-id is selected", () => {
             fireEvent.change(formSelect, {target: {value: "~id~"}})
 
-            // verify that input exists
+            // verify that inputs are not in the document
+            expect(() => screen.getByLabelText("Organisasjonsnummer")).toThrow()
+            expect(() => screen.getByLabelText("Organisasjonsnummer for virksomhetene")).toThrow()
+        })
+
+        test("when a form type with company-id is selected", () => {
+
+            // verify that input is not in the document
+            expect(() => screen.getByText("Organisasjonsnummer")).toThrow()
+
+            fireEvent.change(formSelect, {target: {value: "~idWithCompanyId~"}})
+
+            // verify that input is in the document
             expect(() => screen.getByLabelText("Organisasjonsnummer")).toBeDefined()
         })
 
-        test("when a form type with sub-company-id is selected", async () => {
-            render(<MainForm
-                showForm={true}
-                uiData={{
-                    releaseVersion: "N/A",
-                    formTypes: [{
-                        id: "~id~",
-                        tittel: "~tittel~",
-                        labelOrgnr: null,
-                        labelOrgnrVirksomhetene: "~labelOrgnrVirksomhetene~"
-                    }],
-                    years: [(new Date()).getFullYear()]
-                }}
-                onSubmit={() => {
-                }}/>);
+        test("when a form type with sub-company-id is selected", () => {
 
-            // verify that input does not exist
+            // verify that input is not in the document
             expect(() => screen.getByText("Organisasjonsnummer for virksomhetene")).toThrow()
 
-            const formSelect = screen.getByLabelText("Skjema") as HTMLSelectElement
-            fireEvent.change(formSelect, {target: {value: "~id~"}})
+            fireEvent.change(formSelect, {target: {value: "~labelOrgnrVirksomhetene~"}})
 
-            // verify that input exists
+            // verify that input is in the document
             expect(() => screen.getByLabelText("Organisasjonsnummer for virksomhetene")).toBeDefined()
         })
     })

@@ -18,16 +18,25 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     aar = Year.now().value,
                     region = "123456"
                 )
-            ), row(
+            ),
+            row(
                 KostraFormVm(
                     skjema = "0A",
                     aar = Year.now().value,
                     region = "123456",
                     orgnrForetak = ""
                 )
+            ),
+            row(
+                KostraFormVm(
+                    skjema = "0A",
+                    aar = Year.now().value,
+                    region = "123456",
+                    orgnrVirksomhet = setOf()
+                )
             )
         ) { sut ->
-            `when`("toKostraArguments ${sut.orgnrForetak}") {
+            `when`("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet}") {
                 val arguments = sut.toKostraArguments("".byteInputStream())
 
                 then("arguments should be as expected") {

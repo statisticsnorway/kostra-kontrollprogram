@@ -23,6 +23,7 @@ netty:
       max-order: 3
 
 iu-innstillinger:
+  aarganger: [ 2022,2023 ]
   skjematyper:
     - id: 0A
       tittel: "0A. Bevilgningsregnskap for kommuner"

@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {Button} from "react-bootstrap";
 
 // app components
@@ -8,9 +8,10 @@ import ReportView from "./components/ReportView";
 // app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm";
 import {FileReportVm} from "./kostratypes/fileReportVm";
+import {UiDataVm} from "./kostratypes/uiDataVm";
 
 // API calls
-import {kontrollerSkjemaAsync} from "./api/apiCalls";
+import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls";
 
 // icons
 // @ts-ignore
@@ -29,6 +30,8 @@ import './scss/buttons.scss'
 const App = () => {
 
     const [loadError, setLoadError] = useState<string>()
+    const [uiData, setUiData] = useState<UiDataVm>()
+
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
 
@@ -40,6 +43,16 @@ const App = () => {
         setFileReports(prevState =>
             prevState.filter((_, index) => index != incomingIndex))
     }
+
+    // get ui data
+    useEffect(() => {
+        uiDataAsync()
+            .then(uiData => {
+                setUiData(uiData)
+                setLoadError("")
+            })
+            .catch(() => setLoadError("Lasting av skjematyper feilet"))
+    }, [])
 
     // Form submit handler.
     // Submits form to backend and stores returned report
@@ -66,7 +79,7 @@ const App = () => {
                      height="70px"
                      className="pe-4"
                      alt="Kostra"/>
-                Kostra kontrollprogram
+                Kostra kontrollprogram {uiData?.releaseVersion}
             </h2>
 
             {loadError && <span className="text-danger">{loadError}</span>}
@@ -119,8 +132,9 @@ const App = () => {
         { /** FORM */}
         <MainForm
             showForm={activeTabIndex == 0}
+            uiData={uiData as UiDataVm}
             onSubmit={onSubmit}
-            onLoadError={message => setLoadError(message)}/>
+        />
 
         { /** FILE REPORT */}
         {activeTabIndex > 0 &&

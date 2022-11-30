@@ -27,6 +27,8 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
         forAll(
             row("987654321,876543219", 2),
             row("987654321", 1),
+            row(",987654321", 1),
+            row(",", 0),
             row("", 0),
             row(null, 0),
         ) { virksomhetsnummer, expectedNumberOfCompanyIds ->
@@ -50,11 +52,9 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                         region shouldBe "123456"
                         orgnrForetak shouldBe "888888888"
 
-                        if (virksomhetsnummer != null) {
+                        if (expectedNumberOfCompanyIds > 0) {
                             orgnrVirksomhet?.size shouldBe expectedNumberOfCompanyIds
-                            if (expectedNumberOfCompanyIds > 0) {
-                                orgnrVirksomhet?.first()?.orgnr shouldBe "987654321"
-                            }
+                            orgnrVirksomhet?.first()?.orgnr shouldBe "987654321"
                         } else {
                             orgnrVirksomhet.shouldBeNull()
                         }
@@ -70,7 +70,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             row(CRITICAL_ERROR, KostraErrorCode.CRITICAL_ERROR),
             row(SYSTEM_ERROR, KostraErrorCode.SYSTEM_ERROR),
             row(PARAMETER_ERROR, KostraErrorCode.PARAMETER_ERROR),
-            row(NO_ERROR, KostraErrorCode.NO_ERROR),
+            row(NO_ERROR, KostraErrorCode.NO_ERROR)
         ) { errorCodeAsInt, expectedEnumErrorCode ->
             `when`("toKostraErrorCode $errorCodeAsInt") {
                 val mappedErrorCode = errorCodeAsInt.toKostraErrorCode()

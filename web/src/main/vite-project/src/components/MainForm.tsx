@@ -9,9 +9,6 @@ import {KostraFormVm} from "../kostratypes/kostraFormVm"
 import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm"
 import {Nullable} from "../kostratypes/nullable"
 
-// API calls
-import {listSkjemaTyperAsync} from "../api/apiCalls"
-
 // icons
 // @ts-ignore
 import PlusCircle from "../assets/icon/plus-circle.svg"
@@ -19,6 +16,7 @@ import PlusCircle from "../assets/icon/plus-circle.svg"
 import DashCircle from "../assets/icon/dash-circle.svg"
 // @ts-ignore
 import IconKostra from "../assets/icon/ikon-kostra.svg"
+import {UiDataVm} from "../kostratypes/uiDataVm";
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
@@ -28,12 +26,10 @@ const MAX_VIRKSOMHET_FIELDS = 20
 
 const MainForm = (props: {
     readonly showForm: boolean,
+    uiData: UiDataVm,
     onSubmit: (form: KostraFormVm) => void,
-    onLoadError: (message: string) => void,
 }) => {
-    const {onSubmit, onLoadError, showForm} = props
-
-    const [skjematyper, setSkjematyper] = useState<KostraFormTypeVm[]>([])
+    const {onSubmit, uiData, showForm} = props
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
     const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
@@ -100,20 +96,10 @@ const MainForm = (props: {
         resetField("skjemaFil", {keepTouched: false})
     })
 
-    // get ui data
-    useEffect(() => {
-        listSkjemaTyperAsync()
-            .then(skjematyper => {
-                setSkjematyper(skjematyper)
-                onLoadError("")
-            })
-            .catch(() => onLoadError("Lasting av skjematyper feilet"))
-    }, [])
-
     // change skjema handling
     useEffect(() => {
         const subscription = watch((value, {name, type}) => {
-            if (skjematyper.length) {
+            if (uiData?.formTypes.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields
@@ -122,7 +108,7 @@ const MainForm = (props: {
                 resetField("skjemaFil", {keepDirty: false})
 
                 // get next skjemaType
-                const newSkjemaType = skjematyper.find(it => it.id == value.skjema)
+                const newSkjemaType = uiData.formTypes.find(it => it.id == value.skjema)
 
                 // set new skjemaType
                 setValgtSkjematype(newSkjemaType)
@@ -134,14 +120,14 @@ const MainForm = (props: {
             }
         })
         return () => subscription.unsubscribe()
-    }, [skjematyper, watch])
+    }, [uiData, watch])
 
     /** if active view is a file report, hide this component */
-    return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return !showForm || !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}
-            {skjematyper.length > 0 && <Form.Group
+            {uiData?.formTypes && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
                 <Form.Label>Skjema</Form.Label>
@@ -150,9 +136,8 @@ const MainForm = (props: {
                     isValid={dirtyFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null || (touchedFields.skjema && !getValues("skjema"))}>
                     <option value="">Velg skjematype</option>
-                    {skjematyper.map((skjematype, index) =>
-                        <option key={index}
-                                value={skjematype.id}>{skjematype.tittel}</option>)}
+                    {uiData?.formTypes.map((skjematype, index) =>
+                        <option key={index} value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
             </Form.Group>}
@@ -166,9 +151,8 @@ const MainForm = (props: {
                     {...register("aar")}
                     isValid={dirtyFields.aar && !errors.aar}
                     isInvalid={errors.aar != null || (touchedFields.aar && !getValues("aar"))}>
-                    <option value="">Velg år</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
+                    <option value="">Velg årgang</option>
+                    {uiData.years.map((it, index) => <option key={index}>{it}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.aar?.message}</Form.Control.Feedback>
             </Form.Group>

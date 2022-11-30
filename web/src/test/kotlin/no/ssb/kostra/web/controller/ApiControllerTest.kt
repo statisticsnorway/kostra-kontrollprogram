@@ -25,8 +25,8 @@ import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.DEFAULT_PROPERTY_PATH
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
-import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
+import no.ssb.kostra.web.viewmodel.UiDataVm
 import java.io.File
 import java.io.FileWriter
 import java.util.*
@@ -54,14 +54,14 @@ class ApiControllerTest(
             ).build()
     }
 
-    given("skjematyper request") {
+    given("uiData request") {
 
-        val request: HttpRequest<Any> = HttpRequest.GET("/api/skjematyper")
+        val request: HttpRequest<Any> = HttpRequest.GET("/api/ui-data")
 
         `when`("valid get request") {
             val httpResponse = withContext(Dispatchers.IO) {
                 client.toBlocking().exchange(
-                    request, Argument.listOf(KostraFormTypeVm::class.java)
+                    request, Argument.of(UiDataVm::class.java)
                 )
             }
 
@@ -70,11 +70,17 @@ class ApiControllerTest(
             }
 
             and("body should contain data") {
-                val formTypes = httpResponse.body()
-                formTypes.shouldNotBeNull()
-                formTypes.size shouldBeGreaterThan 30
+                val uiData = httpResponse.body()
 
-                assertSoftly(formTypes.first { it.id == "0X" }) {
+                uiData.shouldNotBeNull()
+
+                uiData.releaseVersion shouldBe "N/A"
+                uiData.years.size shouldBeGreaterThan 1
+
+                uiData.formTypes.shouldNotBeNull()
+                uiData.formTypes.size shouldBeGreaterThan 30
+
+                assertSoftly(uiData.formTypes.first { it.id == "0X" }) {
                     it.id shouldBe "0X"
                     it.tittel shouldBe "0X. Resultatregnskap for helseforetak"
                     it.labelOrgnr shouldBe "Organisasjonsnummer for foretaket"

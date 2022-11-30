@@ -18,9 +18,11 @@ fun Arguments.toReportRequestVm(): KostraFormVm = KostraFormVm(
     region = this.region,
     navn = this.navn,
     orgnrForetak = this.foretaknr,
-    orgnrVirksomhet = this.orgnr?.split(",")
+    orgnrVirksomhet = this.orgnr
+        ?.split(",")
         ?.filter { it.isNotEmpty() }
         ?.map { CompanyIdVm(it) }
+        ?.ifEmpty { null }
 )
 
 fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {

@@ -12,9 +12,10 @@ import io.micronaut.http.multipart.StreamingFileUpload
 import io.micronaut.validation.validator.Validator
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.FileValidator
+import no.ssb.kostra.web.status.GitProperties
 import no.ssb.kostra.web.viewmodel.FileReportVm
-import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
+import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
 import javax.validation.ConstraintViolationException
@@ -28,9 +29,9 @@ open class ApiController(
     private val uiConfig: UiConfig,
     private val fileValidator: FileValidator,
     private val objectMapper: ObjectMapper,
-    private val validator: Validator
+    private val validator: Validator,
+    private val gitProperties: GitProperties
 ) {
-
     @Post(
         value = "/kontroller-skjema",
         consumes = [MediaType.MULTIPART_FORM_DATA],
@@ -65,8 +66,12 @@ open class ApiController(
     }
 
     @Get(
-        value = "/skjematyper",
+        value = "/ui-data",
         produces = [MediaType.APPLICATION_JSON]
     )
-    fun skjematyper(): Collection<KostraFormTypeVm> = uiConfig.skjematyper
+    fun uiData(): UiDataVm = UiDataVm(
+        releaseVersion = gitProperties.tags,
+        years = uiConfig.aarganger,
+        formTypes = uiConfig.skjematyper
+    )
 }

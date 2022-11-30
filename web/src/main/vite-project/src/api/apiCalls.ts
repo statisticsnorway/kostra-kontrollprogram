@@ -1,15 +1,15 @@
 import axios, {AxiosRequestConfig} from "axios"
 import {KostraFormVm} from "../kostratypes/kostraFormVm";
-import {KostraFormTypeVm} from "../kostratypes/kostraFormTypeVm";
 import {FileReportVm} from "../kostratypes/fileReportVm";
+import {UiDataVm} from "../kostratypes/uiDataVm";
 
 export const MULTIPART_HEADER_CONFIG = {headers: {"Content-Type": "multipart/form-data"}}
 
 const config: AxiosRequestConfig = {baseURL: "/api"}
 export const api = axios.create(config)
 
-export const listSkjemaTyperAsync = (): Promise<KostraFormTypeVm[]> =>
-    api.get<KostraFormTypeVm[]>("/skjematyper").then(response => response.data)
+export const uiDataAsync = (): Promise<UiDataVm> =>
+    api.get<UiDataVm>("/ui-data").then(response => response.data)
 
 export const kontrollerSkjemaAsync = (skjema: NonNullable<KostraFormVm>): Promise<FileReportVm> =>
     api.post<FileReportVm>(

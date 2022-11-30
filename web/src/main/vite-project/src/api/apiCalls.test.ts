@@ -2,33 +2,37 @@ import {describe, expect, it, vi} from "vitest"
 import {
     api,
     kontrollerSkjemaAsync,
-    listSkjemaTyperAsync,
+    uiDataAsync,
     kostraFormToMultipartBody,
     MULTIPART_HEADER_CONFIG
 } from "./apiCalls"
 
 describe('apiCalls', () => {
-    describe("skjematyper (GET)", () => {
+    describe("ui-data (GET)", () => {
 
-        it("calls /skjematyper", async () => {
+        it("calls /ui-data", async () => {
 
-            const kostraFormTypeArrayJson = [{
-                id: "~id~",
-                tittel: "~tittel~",
-                labelOrgnr: "~labelOrgnr~",
-                labelOrgnrVirksomhetene: "~labelOrgnrVirksomhetene~"
-            }]
+            const uiDataVmJson = {
+                releaseVersion: "N/A",
+                years: [2022,2023],
+                formTypes: [{
+                    id: "~id~",
+                    tittel: "~tittel~",
+                    labelOrgnr: "~labelOrgnr~",
+                    labelOrgnrVirksomhetene: "~labelOrgnrVirksomhetene~"
+                }]
+            }
 
             const mockGetResponseAsync = vi.fn().mockImplementation(
-                () => new Promise(resolve => resolve({data: kostraFormTypeArrayJson}))
+                () => new Promise(resolve => resolve({data: uiDataVmJson}))
             )
 
             // set mock
             api.get = mockGetResponseAsync
 
             // make call and verify result
-            await expect(listSkjemaTyperAsync()).resolves.toEqual(kostraFormTypeArrayJson)
-            expect(mockGetResponseAsync).toBeCalledWith("/skjematyper")
+            await expect(uiDataAsync()).resolves.toEqual(uiDataVmJson)
+            expect(mockGetResponseAsync).toBeCalledWith("/ui-data")
         })
     })
 

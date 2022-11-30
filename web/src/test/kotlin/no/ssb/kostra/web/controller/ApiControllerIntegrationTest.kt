@@ -253,7 +253,6 @@ class ApiControllerIntegrationTest(
             filnavn = "0G.dat"
         )
 
-
         private val PLAIN_TEXT_0G = """
             0G2020 300500976989732         510  123      263
             0G2020 300500976989732         510           263

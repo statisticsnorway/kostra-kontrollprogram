@@ -32,27 +32,10 @@ import java.io.FileWriter
 import java.util.*
 
 @MicronautTest
-class ApiControllerTest(
-    @Client("/")
-    client: HttpClient,
+class ApiControllerIntegrationTest(
+    @Client("/") client: HttpClient,
     objectMapper: ObjectMapper
 ) : BehaviorSpec({
-
-    fun buildMultipartRequest(formData: KostraFormVm): MultipartBody {
-        val testFile = createTestFile()
-
-        return MultipartBody.builder()
-            .addPart(
-                "kostraFormAsJson",
-                objectMapper.writeValueAsString(formData)
-            )
-            .addPart(
-                "file",
-                testFile.name,
-                MediaType.TEXT_PLAIN_TYPE,
-                testFile
-            ).build()
-    }
 
     given("uiData request") {
 
@@ -206,7 +189,7 @@ class ApiControllerTest(
 
             `when`(description) {
 
-                val requestBody = buildMultipartRequest(kostraForm)
+                val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
                 val apiError = shouldThrow<HttpClientResponseException> {
                     client.toBlocking().exchange(
@@ -248,7 +231,7 @@ class ApiControllerTest(
             )
         ) { description, kostraForm ->
 
-            val requestBody = buildMultipartRequest(kostraForm)
+            val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
             `when`(description) {
                 val response = withContext(Dispatchers.IO) {
@@ -279,6 +262,25 @@ class ApiControllerTest(
             0G2020 300500976989732         510  123      263
             0G2020 300500976989732         510           263
         """.trimIndent()
+
+        private fun buildMultipartRequest(
+            formData: KostraFormVm,
+            objectMapper: ObjectMapper
+        ): MultipartBody {
+            val testFile = createTestFile()
+
+            return MultipartBody.builder()
+                .addPart(
+                    "kostraFormAsJson",
+                    objectMapper.writeValueAsString(formData)
+                )
+                .addPart(
+                    "file",
+                    testFile.name,
+                    MediaType.TEXT_PLAIN_TYPE,
+                    testFile
+                ).build()
+        }
 
         private fun createTestFile(): File = File.createTempFile("data", ".dat").apply {
             FileWriter(this).use {

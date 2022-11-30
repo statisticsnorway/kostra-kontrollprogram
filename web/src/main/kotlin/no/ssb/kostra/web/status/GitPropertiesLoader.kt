@@ -17,7 +17,7 @@ class GitPropertiesLoader {
     companion object {
         internal const val GIT_PROPERTIES_FILENAME = "/git.properties"
         private const val GIT_TAGS_KEY = "git.tags"
-        private const val NOT_AVAILABLE_VALUE = "N/A"
+        internal const val NOT_AVAILABLE_VALUE = ""
 
         internal fun initGitProperties(gitPropertiesFilename: String): GitProperties =
             this::class.java.getResourceAsStream(gitPropertiesFilename)?.use {

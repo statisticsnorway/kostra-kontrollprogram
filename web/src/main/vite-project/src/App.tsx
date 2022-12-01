@@ -4,6 +4,8 @@ import {Button} from "react-bootstrap"
 // app components
 import MainForm from "./components/MainForm"
 import ReportView from "./components/ReportView"
+import {ImageNameButton} from "./components/ImageNameButton"
+import {CloseButton} from "./components/CloseButton"
 
 // app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -26,7 +28,6 @@ import ListTask from "./assets/icon/list-task.svg"
 import './scss/buttons.scss'
 
 const App = () => {
-    const multiplicationX = "\u2715"
 
     const [loadError, setLoadError] = useState<string>()
     const [uiData, setUiData] = useState<UiDataVm>()
@@ -94,7 +95,7 @@ const App = () => {
         </header>
 
         { /** TABS */}
-        {fileReports.length > 0 && <ul className="nav nav-tabs">
+        {fileReports.length > 0 && <ul className="nav nav-tabs" role={"navigation"}>
             {/** BACK TO FORM */}
             <li className="nav-item">
                 <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
@@ -111,25 +112,12 @@ const App = () => {
             {fileReports.map((fileReport, index) =>
                 <li key={index} className="nav-item">
                     <div className={activeTabIndex == index + 1 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
-                        <Button
+                        <ImageNameButton
                             onClick={() => setActiveTabIndex(index + 1)}
-                            className="btn bg-transparent btn-outline-light p-0"
-                            title={`Vis rapport for ${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                                + ` region ${fileReport.innparametere.region}`}>
-
-                            <img src={ListTask} className="pe-2" alt="Kostra"/>
-
-                            <span className="text-black">
-                                {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                                    + ` region ${fileReport.innparametere.region}`}
-                            </span>
-                        </Button>
-                        <Button
-                            onClick={() => deleteReport(index)}
-                            className="bg-transparent btn-outline-light ms-1 p-0 ps-1 pe-1 rounded-circle text-black-50"
-                            title="Slett rapport">
-                            {multiplicationX}
-                        </Button>
+                            text = {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                            + ` region ${fileReport.innparametere.region}`}
+                        />
+                        <CloseButton onClick={() => deleteReport(index)} />
                     </div>
                 </li>
             )}

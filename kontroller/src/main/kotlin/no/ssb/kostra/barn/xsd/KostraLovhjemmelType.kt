@@ -18,8 +18,11 @@ data class KostraLovhjemmelType(
     @field:XmlAttribute(name = "Paragraf", required = true)
     val paragraf: String,
 
-    @field:XmlAttribute(name = "Ledd", required = true)
-    val ledd: String,
+    @field:XmlAttribute(name = "Bokstav")
+    val bokstav: String? = null,
+
+    @field:XmlAttribute(name = "Ledd")
+    val ledd: String? = null,
 
     @field:XmlAttribute(name = "Punktum")
     val punktum: String? = null

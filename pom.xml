@@ -32,6 +32,9 @@
         </sonar.exclusions>
 
         <exec.mainClass>no.ssb.kostra.controlprogram.CLI</exec.mainClass>
+
+        <!-- removes [WARNING] Unable to locate Source XRef to link to - DISABLED -->
+        <linkXRef>false</linkXRef>
     </properties>
 
     <dependencyManagement>

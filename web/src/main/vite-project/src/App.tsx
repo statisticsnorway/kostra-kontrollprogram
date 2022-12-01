@@ -119,7 +119,7 @@ const App = () => {
 
                             <img src={ListTask} className="pe-2" alt="Kostra"/>
 
-                            <span className="text-black-50">
+                            <span className="text-black">
                                 {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
                                     + ` region ${fileReport.innparametere.region}`}
                             </span>

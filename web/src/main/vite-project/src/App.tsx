@@ -3,8 +3,7 @@ import {useEffect, useState} from "react"
 // app components
 import MainForm from "./components/MainForm"
 import ReportView from "./components/ReportView"
-import {ImageNameButton} from "./components/ImageNameButton"
-import {CloseButton} from "./components/CloseButton"
+import {TabRow} from "./features/navigationbar/TabRow";
 
 // app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -33,6 +32,8 @@ const App = () => {
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
 
     const deleteReport = (incomingIndex: NonNullable<number>): void => {
+        console.log(`Deleting report at index ${incomingIndex}`)
+
         // there's always a tab to the left, go there
         setActiveTabIndex(incomingIndex)
 
@@ -94,33 +95,11 @@ const App = () => {
         </header>
 
         { /** TABS */}
-        {fileReports.length > 0 && <ul className="nav nav-tabs" role={"navigation"}>
-            {/** BACK TO FORM */}
-            <li className="nav-item">
-                <div className={activeTabIndex == 0 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
-                    <ImageNameButton
-                        onClick={() => setActiveTabIndex(0)}
-                        text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
-                        image={FilterLeft}
-                    />
-                </div>
-            </li>
-
-            {/** REPORT TABS */}
-            {fileReports.map((fileReport, index) =>
-                <li key={index} className="nav-item">
-                    <div className={activeTabIndex == index + 1 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
-                        <ImageNameButton
-                            onClick={() => setActiveTabIndex(index + 1)}
-                            text={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                                + ` region ${fileReport.innparametere.region}`}
-                            image={ListTask}
-                        />
-                        <CloseButton onClick={() => deleteReport(index)}/>
-                    </div>
-                </li>
-            )}
-        </ul>}
+        {fileReports.length > 0 && <TabRow
+            fileReports={fileReports}
+            activeTabIndex={activeTabIndex}
+            onTabSelect={setActiveTabIndex}
+            onReportDelete={deleteReport}/>}
 
         {/** show when UI-data is loaded */}
         <main>

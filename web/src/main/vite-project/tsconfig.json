@@ -21,15 +21,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "jsx": "react-jsx",
-    "types": [
-      "@testing-library/cypress",
-      "cypress"
-    ]
+    "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "./cypress"
+    "src"
   ],
   "references": [
     {

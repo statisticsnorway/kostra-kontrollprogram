@@ -16,13 +16,11 @@ import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
 
 // icons
 // @ts-ignore
-import ArrowLeftCircle from "./assets/icon/arrow-left-circle.svg"
-// @ts-ignore
 import FilterLeft from "./assets/icon/filter-left.svg"
 // @ts-ignore
-import IconKostra from "./assets/icon/ikon-kostra.svg"
-// @ts-ignore
 import ListTask from "./assets/icon/list-task.svg"
+// @ts-ignore
+import IconKostra from "./assets/icon/ikon-kostra.svg"
 
 import './scss/buttons.scss'
 
@@ -102,7 +100,9 @@ const App = () => {
                 <div className={activeTabIndex == 0 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
                     <ImageNameButton
                         onClick={() => setActiveTabIndex(0)}
-                        text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}/>
+                        text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
+                        image={FilterLeft}
+                    />
                 </div>
             </li>
 
@@ -114,6 +114,7 @@ const App = () => {
                             onClick={() => setActiveTabIndex(index + 1)}
                             text={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
                                 + ` region ${fileReport.innparametere.region}`}
+                            image={ListTask}
                         />
                         <CloseButton onClick={() => deleteReport(index)}/>
                     </div>

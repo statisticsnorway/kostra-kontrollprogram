@@ -25,11 +25,10 @@ const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 
 const MainForm = (props: {
-    readonly showForm: boolean,
     uiData: UiDataVm,
     onSubmit: (form: KostraFormVm) => void,
 }) => {
-    const {onSubmit, uiData, showForm} = props
+    const {onSubmit, uiData} = props
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
     const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
@@ -123,7 +122,7 @@ const MainForm = (props: {
     }, [uiData, watch])
 
     /** if active view is a file report, hide this component */
-    return !showForm || !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}

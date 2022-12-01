@@ -71,6 +71,13 @@ const App = () => {
             })
     }
 
+    const MainElement = !uiData ? <></> : (activeTabIndex == 0 ? <MainForm
+        uiData={uiData}
+        onSubmit={onSubmit}
+    /> : <ReportView
+        fileReport={fileReports[activeTabIndex - 1]}
+        appReleaseVersion={uiData.releaseVersion}
+    />);
     return <>
         <header className="py-3 text-center">
             <h2>
@@ -129,23 +136,10 @@ const App = () => {
         </ul>}
 
         {/** show when UI-data is loaded */}
-        {uiData && <>
-
-            { /** FORM */}
-            <MainForm
-                showForm={activeTabIndex == 0}
-                uiData={uiData}
-                onSubmit={onSubmit}
-            />
-
-            { /** FILE REPORT */}
-            {activeTabIndex > 0 &&
-                <ReportView
-                    fileReport={fileReports[activeTabIndex - 1]}
-                    appReleaseVersion={uiData.releaseVersion}
-                />
-            }
-        </>}
+         <main>
+            { /** FORM or FILE REPORT */}
+            {MainElement}
+        </main>
     </>
 }
 

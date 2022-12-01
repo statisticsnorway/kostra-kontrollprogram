@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react"
-import {Button} from "react-bootstrap"
 
 // app components
 import MainForm from "./components/MainForm"
 import ReportView from "./components/ReportView"
+import TabRow from "./features/navigationbar/TabRow";
 
 // app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -15,18 +15,15 @@ import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
 
 // icons
 // @ts-ignore
-import ArrowLeftCircle from "./assets/icon/arrow-left-circle.svg"
-// @ts-ignore
 import FilterLeft from "./assets/icon/filter-left.svg"
 // @ts-ignore
-import IconKostra from "./assets/icon/ikon-kostra.svg"
-// @ts-ignore
 import ListTask from "./assets/icon/list-task.svg"
+// @ts-ignore
+import IconKostra from "./assets/icon/ikon-kostra.svg"
 
 import './scss/buttons.scss'
 
 const App = () => {
-    const multiplicationX = "\u2715"
 
     const [loadError, setLoadError] = useState<string>()
     const [uiData, setUiData] = useState<UiDataVm>()
@@ -35,6 +32,8 @@ const App = () => {
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
 
     const deleteReport = (incomingIndex: NonNullable<number>): void => {
+        console.log(`Deleting report at index ${incomingIndex}`)
+
         // there's always a tab to the left, go there
         setActiveTabIndex(incomingIndex)
 
@@ -72,7 +71,7 @@ const App = () => {
     }
 
     return <>
-        <div className="py-3 text-center">
+        <header className="py-3 text-center">
             <h2>
                 <img src={IconKostra}
                      height="70px"
@@ -84,52 +83,17 @@ const App = () => {
             {loadError && <span className="text-danger">{loadError}</span>}
 
             <hr className="my-0"/>
-        </div>
+        </header>
 
         { /** TABS */}
-        {fileReports.length > 0 && <ul className="nav nav-tabs">
-            {/** BACK TO FORM */}
-            <li className="nav-item">
-                <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
-                        onClick={() => setActiveTabIndex(0)}
-                        title={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}>
-                    <img src={FilterLeft}
-                         className="pe-2"
-                         alt="Kostra"/>
-                    {activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
-                </Button>
-            </li>
-
-            {/** REPORT TABS */}
-            {fileReports.map((fileReport, index) =>
-                <li key={index} className="nav-item">
-                    <div className={activeTabIndex == index + 1 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
-                        <Button
-                            onClick={() => setActiveTabIndex(index + 1)}
-                            className="btn bg-transparent btn-outline-light p-0"
-                            title={`Vis rapport for ${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                                + ` region ${fileReport.innparametere.region}`}>
-
-                            <img src={ListTask} className="pe-2" alt="Kostra"/>
-
-                            <span className="text-black-50">
-                                {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                                    + ` region ${fileReport.innparametere.region}`}
-                            </span>
-                        </Button>
-                        <Button
-                            onClick={() => deleteReport(index)}
-                            className="bg-transparent btn-outline-light ms-1 p-0 ps-1 pe-1 rounded-circle text-black-50"
-                            title="Slett rapport">
-                            {multiplicationX}
-                        </Button>
-                    </div>
-                </li>
-            )}
-        </ul>}
+        {fileReports.length > 0 && <TabRow
+            fileReports={fileReports}
+            activeTabIndex={activeTabIndex}
+            onTabSelect={setActiveTabIndex}
+            onReportDelete={deleteReport}/>}
 
         {/** show when UI-data is loaded */}
-        {uiData && <>
+        {uiData && <main>
 
             { /** FORM */}
             <MainForm
@@ -145,7 +109,7 @@ const App = () => {
                     appReleaseVersion={uiData.releaseVersion}
                 />
             }
-        </>}
+        </main>}
     </>
 }
 

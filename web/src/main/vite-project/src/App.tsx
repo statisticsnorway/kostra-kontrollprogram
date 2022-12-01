@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react"
-import {Button} from "react-bootstrap"
 
 // app components
 import MainForm from "./components/MainForm"
@@ -100,14 +99,11 @@ const App = () => {
         {fileReports.length > 0 && <ul className="nav nav-tabs" role={"navigation"}>
             {/** BACK TO FORM */}
             <li className="nav-item">
-                <Button className={activeTabIndex == 0 ? "nav-link active" : "nav-link"}
+                <div className={activeTabIndex == 0 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
+                    <ImageNameButton
                         onClick={() => setActiveTabIndex(0)}
-                        title={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}>
-                    <img src={FilterLeft}
-                         className="pe-2"
-                         alt="Kostra"/>
-                    {activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
-                </Button>
+                        text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}/>
+                </div>
             </li>
 
             {/** REPORT TABS */}

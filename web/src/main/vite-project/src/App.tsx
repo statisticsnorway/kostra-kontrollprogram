@@ -72,13 +72,15 @@ const App = () => {
             })
     }
 
-    const MainElement = !uiData ? <></> : (activeTabIndex == 0 ? <MainForm
-        uiData={uiData}
-        onSubmit={onSubmit}
-    /> : <ReportView
-        fileReport={fileReports[activeTabIndex - 1]}
-        appReleaseVersion={uiData.releaseVersion}
-    />);
+    const mainElementInDisplay = !uiData ? <></>
+        : (activeTabIndex == 0 ?
+            <MainForm
+                uiData={uiData}
+                onSubmit={onSubmit}/>
+            : <ReportView
+                fileReport={fileReports[activeTabIndex - 1]}
+                appReleaseVersion={uiData.releaseVersion}/>)
+
     return <>
         <header className="py-3 text-center">
             <h2>
@@ -114,19 +116,19 @@ const App = () => {
                     <div className={activeTabIndex == index + 1 ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
                         <ImageNameButton
                             onClick={() => setActiveTabIndex(index + 1)}
-                            text = {`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                            + ` region ${fileReport.innparametere.region}`}
+                            text={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                                + ` region ${fileReport.innparametere.region}`}
                         />
-                        <CloseButton onClick={() => deleteReport(index)} />
+                        <CloseButton onClick={() => deleteReport(index)}/>
                     </div>
                 </li>
             )}
         </ul>}
 
         {/** show when UI-data is loaded */}
-         <main>
+        <main>
             { /** FORM or FILE REPORT */}
-            {MainElement}
+            {mainElementInDisplay}
         </main>
     </>
 }

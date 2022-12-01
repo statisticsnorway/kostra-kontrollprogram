@@ -25,10 +25,11 @@ const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 
 const MainForm = (props: {
+    readonly showForm: boolean,
     uiData: UiDataVm,
     onSubmit: (form: KostraFormVm) => void,
 }) => {
-    const {onSubmit, uiData} = props
+    const {onSubmit, uiData, showForm} = props
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
     const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
@@ -98,7 +99,7 @@ const MainForm = (props: {
     // change skjema handling
     useEffect(() => {
         const subscription = watch((value, {name, type}) => {
-            if (uiData.formTypes.length) {
+            if (uiData?.formTypes.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields
@@ -122,11 +123,11 @@ const MainForm = (props: {
     }, [uiData, watch])
 
     /** if active view is a file report, hide this component */
-    return !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return !showForm || !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}
-            {uiData.formTypes && <Form.Group
+            {uiData?.formTypes && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
                 <Form.Label>Skjema</Form.Label>
@@ -135,7 +136,7 @@ const MainForm = (props: {
                     isValid={dirtyFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null || (touchedFields.skjema && !getValues("skjema"))}>
                     <option value="">Velg skjematype</option>
-                    {uiData.formTypes.map((skjematype, index) =>
+                    {uiData?.formTypes.map((skjematype, index) =>
                         <option key={index} value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>

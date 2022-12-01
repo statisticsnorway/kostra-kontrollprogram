@@ -9,3 +9,5 @@ export const CloseButton = ({onClick}: { onClick: () => void }) =>
         title="Slett rapport">
         {CHAR_MULTIPLICATION_X}
     </Button>
+
+export default CloseButton

@@ -1,5 +1,5 @@
-import {ImageNameButton} from "./ImageNameButton";
-import {CloseButton} from "./CloseButton";
+import ImageNameButton from "./ImageNameButton";
+import CloseButton from "./CloseButton";
 
 export const TabItem = (props: {
     text: string,
@@ -36,3 +36,4 @@ TabItem.defaultProps = {
     onClose: () => {}
 }
 
+export default TabItem

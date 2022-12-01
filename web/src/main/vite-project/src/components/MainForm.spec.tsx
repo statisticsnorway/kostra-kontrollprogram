@@ -6,6 +6,7 @@ describe("MainForm", () => {
     describe("Layout", () => {
         test("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
             render(<MainForm
+                showForm={true}
                 uiData={{
                     releaseVersion: "N/A",
                     formTypes: [],
@@ -47,6 +48,7 @@ describe("MainForm", () => {
 
         beforeEach(() => {
             render(<MainForm
+                showForm={true}
                 uiData={{
                     releaseVersion: "N/A",
                     formTypes: [formTypeOne, formTypeTwo, formTypeThree],

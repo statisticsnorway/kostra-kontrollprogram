@@ -1,5 +1,5 @@
 import {FileReportVm} from "../../kostratypes/fileReportVm";
-import {TabItem} from "./TabItem";
+import TabItem from "./TabItem";
 
 // @ts-ignore
 import FilterLeft from "../../assets/icon/filter-left.svg";
@@ -36,3 +36,5 @@ export const TabRow = (
                 onClose={() => onReportDelete(index)}/>
         )}
     </ul>
+
+export default TabRow

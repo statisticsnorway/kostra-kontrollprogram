@@ -15,3 +15,5 @@ export const ImageNameButton = ({onClick, text, image}: ImageNameButtonProps) =>
         <img src={image} className="pe-2" alt="Kostra"/>
         <span className="text-black">{text}</span>
     </Button>
+
+export default ImageNameButton

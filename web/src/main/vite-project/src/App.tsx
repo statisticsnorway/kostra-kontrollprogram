@@ -3,7 +3,7 @@ import {useEffect, useState} from "react"
 // app components
 import MainForm from "./components/MainForm"
 import ReportView from "./components/ReportView"
-import {TabRow} from "./features/navigationbar/TabRow";
+import TabRow from "./features/navigationbar/TabRow";
 
 // app types
 import {KostraFormVm} from "./kostratypes/kostraFormVm"
@@ -70,15 +70,6 @@ const App = () => {
             })
     }
 
-    const mainElementInDisplay = !uiData ? <></>
-        : (activeTabIndex == 0 ?
-            <MainForm
-                uiData={uiData}
-                onSubmit={onSubmit}/>
-            : <ReportView
-                fileReport={fileReports[activeTabIndex - 1]}
-                appReleaseVersion={uiData.releaseVersion}/>)
-
     return <>
         <header className="py-3 text-center">
             <h2>
@@ -102,10 +93,23 @@ const App = () => {
             onReportDelete={deleteReport}/>}
 
         {/** show when UI-data is loaded */}
-        <main>
-            { /** FORM or FILE REPORT */}
-            {mainElementInDisplay}
-        </main>
+        {uiData && <main>
+
+            { /** FORM */}
+            <MainForm
+                showForm={activeTabIndex == 0}
+                uiData={uiData}
+                onSubmit={onSubmit}
+            />
+
+            { /** FILE REPORT */}
+            {activeTabIndex > 0 &&
+                <ReportView
+                    fileReport={fileReports[activeTabIndex - 1]}
+                    appReleaseVersion={uiData.releaseVersion}
+                />
+            }
+        </main>}
     </>
 }
 

@@ -72,7 +72,7 @@ const App = () => {
     }
 
     return <>
-        <div className="py-3 text-center">
+        <header className="py-3 text-center">
             <h2>
                 <img src={IconKostra}
                      height="70px"
@@ -84,7 +84,7 @@ const App = () => {
             {loadError && <span className="text-danger">{loadError}</span>}
 
             <hr className="my-0"/>
-        </div>
+        </header>
 
         { /** TABS */}
         {fileReports.length > 0 && <ul className="nav nav-tabs">

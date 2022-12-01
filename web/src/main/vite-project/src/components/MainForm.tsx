@@ -98,7 +98,7 @@ const MainForm = (props: {
     // change skjema handling
     useEffect(() => {
         const subscription = watch((value, {name, type}) => {
-            if (uiData?.formTypes.length) {
+            if (uiData.formTypes.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields
@@ -126,7 +126,7 @@ const MainForm = (props: {
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}
-            {uiData?.formTypes && <Form.Group
+            {uiData.formTypes && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
                 <Form.Label>Skjema</Form.Label>
@@ -135,7 +135,7 @@ const MainForm = (props: {
                     isValid={dirtyFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null || (touchedFields.skjema && !getValues("skjema"))}>
                     <option value="">Velg skjematype</option>
-                    {uiData?.formTypes.map((skjematype, index) =>
+                    {uiData.formTypes.map((skjematype, index) =>
                         <option key={index} value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>

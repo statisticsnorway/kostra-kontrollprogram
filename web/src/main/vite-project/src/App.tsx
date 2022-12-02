@@ -93,7 +93,8 @@ const App = () => {
             { /** FORM */}
             <MainForm
                 showForm={activeTabIndex == 0}
-                uiData={uiData}
+                formTypes={uiData.formTypes}
+                years={uiData.years}
                 onSubmit={onSubmit}
             />
 

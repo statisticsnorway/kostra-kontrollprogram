@@ -7,11 +7,8 @@ describe("MainForm", () => {
         test("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
             render(<MainForm
                 showForm={true}
-                uiData={{
-                    releaseVersion: "N/A",
-                    formTypes: [],
-                    years: [(new Date()).getFullYear()]
-                }}
+                formTypes={[]}
+                years={[(new Date()).getFullYear()]}
                 onSubmit={() => {
                 }}/>)
 
@@ -49,11 +46,8 @@ describe("MainForm", () => {
         beforeEach(() => {
             render(<MainForm
                 showForm={true}
-                uiData={{
-                    releaseVersion: "N/A",
-                    formTypes: [formTypeOne, formTypeTwo, formTypeThree],
-                    years: [(new Date()).getFullYear()]
-                }}
+                formTypes={[formTypeOne, formTypeTwo, formTypeThree]}
+                years={[(new Date()).getFullYear()]}
                 onSubmit={() => {
                 }}/>)
 

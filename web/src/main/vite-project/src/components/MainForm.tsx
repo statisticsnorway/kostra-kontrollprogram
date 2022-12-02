@@ -8,7 +8,6 @@ import * as yup from "yup"
 import KostraFormVm from "../kostratypes/kostraFormVm"
 import KostraFormTypeVm from "../kostratypes/kostraFormTypeVm"
 import Nullable from "../kostratypes/nullable"
-import UiDataVm from "../kostratypes/uiDataVm"
 
 // icons
 // @ts-ignore
@@ -22,9 +21,10 @@ const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffe
 const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 
-const MainForm = ({onSubmit, uiData, showForm}: {
-    readonly showForm: boolean,
-    uiData: UiDataVm,
+const MainForm = ({showForm, formTypes, years, onSubmit}: {
+    showForm: boolean,
+    formTypes: KostraFormTypeVm[],
+    years: number[],
     onSubmit: (form: KostraFormVm) => void,
 }) => {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
@@ -96,7 +96,7 @@ const MainForm = ({onSubmit, uiData, showForm}: {
     // change skjema handling
     useEffect(() => {
         const subscription = watch((value, {name, type}) => {
-            if (uiData.formTypes.length) {
+            if (formTypes.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields
@@ -105,7 +105,7 @@ const MainForm = ({onSubmit, uiData, showForm}: {
                 resetField("skjemaFil", {keepDirty: false})
 
                 // get next skjemaType
-                const newSkjemaType = uiData.formTypes.find(it => it.id == value.skjema)
+                const newSkjemaType = formTypes.find(it => it.id == value.skjema)
 
                 // set new skjemaType
                 setValgtSkjematype(newSkjemaType)
@@ -117,14 +117,14 @@ const MainForm = ({onSubmit, uiData, showForm}: {
             }
         })
         return () => subscription.unsubscribe()
-    }, [uiData, watch])
+    }, [formTypes, watch])
 
     /** if active view is a file report, hide this component */
-    return !showForm || !uiData ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}
-            {uiData?.formTypes && <Form.Group
+            {formTypes && <Form.Group
                 className="col-sm-12"
                 controlId="skjema">
                 <Form.Label>Skjema</Form.Label>
@@ -133,7 +133,7 @@ const MainForm = ({onSubmit, uiData, showForm}: {
                     isValid={dirtyFields.skjema && !errors.skjema}
                     isInvalid={errors.skjema != null || (touchedFields.skjema && !getValues("skjema"))}>
                     <option value="">Velg skjematype</option>
-                    {uiData?.formTypes.map((skjematype, index) =>
+                    {formTypes.map((skjematype, index) =>
                         <option key={index} value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
@@ -149,7 +149,7 @@ const MainForm = ({onSubmit, uiData, showForm}: {
                     isValid={dirtyFields.aar && !errors.aar}
                     isInvalid={errors.aar != null || (touchedFields.aar && !getValues("aar"))}>
                     <option value="">Velg årgang</option>
-                    {uiData.years.map((it, index) => <option key={index}>{it}</option>)}
+                    {years.map((it, index) => <option key={index}>{it}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.aar?.message}</Form.Control.Feedback>
             </Form.Group>
@@ -192,7 +192,7 @@ const MainForm = ({onSubmit, uiData, showForm}: {
                     return <div key={index} className="d-flex justify-content-between mb-2">
                         <Form.Group className="col-sm-10 me-2">
                             {/** show label for first entry only */}
-                            {index < 1 && <Form.Label>{valgtSkjematype?.labelOrgnrVirksomhetene}</Form.Label>}
+                            {index < 1 && <Form.Label>{valgtSkjematype.labelOrgnrVirksomhetene}</Form.Label>}
                             <Form.Control
                                 {...register(`orgnrVirksomhet.${index}.orgnr`)}
                                 isValid={

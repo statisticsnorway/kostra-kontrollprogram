@@ -1,24 +1,24 @@
-import {getEnumText, getEnumValue} from "../../util/enumUtils";
-import {KostraErrorCode} from "../../kostratypes/kostraErrorCode";
+import KostraErrorCode from "../../kostratypes/kostraErrorCode";
 
+// gets text value from enum KostraErrorCode
+const getEnumText = (untypedString: string): string =>
+    KostraErrorCode[(untypedString as keyof typeof KostraErrorCode)]
 
-const ErrorLevel = ({ level }: { level: string }) => {
+const getEnumValue = (untypedString: string): KostraErrorCode =>
+    KostraErrorCode[untypedString as keyof typeof KostraErrorCode]
 
-    let cssStyle
-
+const getClassName = (level: string) => {
     switch (getEnumValue(level)) {
         case KostraErrorCode.NO_ERROR:
-            cssStyle = "text-success"
-            break
+            return "text-success"
         case KostraErrorCode.NORMAL_ERROR:
-            cssStyle = "text-warning"
-            break
+            return "text-warning"
         default:
-            cssStyle = "text-danger"
-            break
+            return "text-danger"
     }
-
-  return <span className={cssStyle}>{getEnumText(level)}</span>;
 }
+
+const ErrorLevel = ({level}: { level: string }) =>
+    <span className={getClassName(level)}>{getEnumText(level)}</span>
 
 export default ErrorLevel

@@ -1,7 +1,9 @@
-import {KostraFormTypeVm} from "./kostraFormTypeVm"
+import KostraFormTypeVm from "./kostraFormTypeVm"
 
-export interface UiDataVm {
+interface UiDataVm {
     readonly releaseVersion: NonNullable<string>
     readonly years: NonNullable<number[]>
     readonly formTypes: NonNullable<KostraFormTypeVm[]>
 }
+
+export default UiDataVm

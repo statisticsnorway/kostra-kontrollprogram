@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig} from "axios"
-import {KostraFormVm} from "../kostratypes/kostraFormVm"
-import {FileReportVm} from "../kostratypes/fileReportVm"
-import {UiDataVm} from "../kostratypes/uiDataVm"
+import KostraFormVm from "../kostratypes/kostraFormVm"
+import FileReportVm from "../kostratypes/fileReportVm"
+import UiDataVm from "../kostratypes/uiDataVm"
 
 export const MULTIPART_HEADER_CONFIG = {headers: {"Content-Type": "multipart/form-data"}}
 

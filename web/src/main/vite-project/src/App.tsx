@@ -6,18 +6,13 @@ import ReportView from "./components/ReportView"
 import TabRow from "./features/navigationbar/TabRow";
 
 // app types
-import {KostraFormVm} from "./kostratypes/kostraFormVm"
-import {FileReportVm} from "./kostratypes/fileReportVm"
-import {UiDataVm} from "./kostratypes/uiDataVm"
+import KostraFormVm from "./kostratypes/kostraFormVm"
+import FileReportVm from "./kostratypes/fileReportVm"
+import UiDataVm from "./kostratypes/uiDataVm"
 
 // API calls
 import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
 
-// icons
-// @ts-ignore
-import FilterLeft from "./assets/icon/filter-left.svg"
-// @ts-ignore
-import ListTask from "./assets/icon/list-task.svg"
 // @ts-ignore
 import IconKostra from "./assets/icon/ikon-kostra.svg"
 

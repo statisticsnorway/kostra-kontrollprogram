@@ -6,7 +6,7 @@ interface ImageNameButtonProps {
     image: string
 }
 
-export const ImageNameButton = ({onClick, text, image}: ImageNameButtonProps) =>
+const ImageNameButton = ({onClick, text, image}: ImageNameButtonProps) =>
     <Button
         onClick={onClick}
         className="btn bg-transparent btn-outline-light p-0"

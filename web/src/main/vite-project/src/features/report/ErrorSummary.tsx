@@ -1,6 +1,6 @@
-import {FileReportEntryVm} from "../../kostratypes/fileReportEntryVm";
+import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 import ErrorLevel from "./ErrorLevel";
-import {KostraErrorCode} from "../../kostratypes/kostraErrorCode";
+import KostraErrorCode from "../../kostratypes/kostraErrorCode";
 
 interface ErrorAggregateEntry {
     feilkode: KostraErrorCode
@@ -8,24 +8,23 @@ interface ErrorAggregateEntry {
     itemCount: number
 }
 
-export const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[]}) => {
+const reduceErrors = (reportEntries: FileReportEntryVm[]): ErrorAggregateEntry[] => reportEntries.reduce(
+    (accumulator: ErrorAggregateEntry[], currentValue) => {
+        const findIndex = accumulator.findIndex(it => it.kontrollnummer === currentValue.kontrollnummer)
+        if (findIndex < 0) {
+            accumulator.push({
+                feilkode: currentValue.feilkode,
+                kontrollnummer: currentValue.kontrollnummer,
+                itemCount: 1
+            })
+        } else {
+            accumulator[findIndex].itemCount++
+        }
+        return accumulator
+    }, []).sort((a, b) => b.itemCount - a.itemCount)
 
-    const reduceErrors = (reportEntries: FileReportEntryVm[]): ErrorAggregateEntry[] => reportEntries.reduce(
-        (accumulator: ErrorAggregateEntry[], currentValue) => {
-            const findIndex = accumulator.findIndex(it => it.kontrollnummer === currentValue.kontrollnummer)
-            if (findIndex < 0) {
-                accumulator.push({
-                    feilkode: currentValue.feilkode,
-                    kontrollnummer: currentValue.kontrollnummer,
-                    itemCount: 1
-                })
-            } else {
-                accumulator[findIndex].itemCount++
-            }
-            return accumulator
-        }, []).sort((a, b) => b.itemCount - a.itemCount)
-
-    return <div className="card mt-3">
+const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[]}) =>
+    <div className="card mt-3">
         <div className="card-body">
             <h5 className="card-title mb-0">Oversikt feilkoder og antall</h5>
         </div>
@@ -52,6 +51,5 @@ export const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[
             </li>
         </ul>
     </div>
-}
 
 export default ErrorSummary

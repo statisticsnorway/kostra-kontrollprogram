@@ -1,4 +1,4 @@
-import {FileReportVm} from "../../kostratypes/fileReportVm";
+import FileReportVm from "../../kostratypes/fileReportVm";
 import TabItem from "./TabItem";
 
 // @ts-ignore
@@ -7,7 +7,7 @@ import FilterLeft from "../../assets/icon/filter-left.svg";
 import ListTask from "../../assets/icon/list-task.svg";
 
 
-export const TabRow = (
+const TabRow = (
     {fileReports, activeTabIndex, onTabSelect, onReportDelete}: {
         fileReports: FileReportVm[],
         activeTabIndex: number,

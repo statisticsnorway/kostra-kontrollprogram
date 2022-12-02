@@ -1,7 +1,7 @@
-import {Nullable} from "./nullable"
-import {CompanyIdVm} from "./companyIdVm"
+import Nullable from "./nullable"
+import CompanyIdVm from "./companyIdVm"
 
-export interface KostraFormVm {
+interface KostraFormVm {
     aar: NonNullable<number>
     skjema: NonNullable<string>
     region: NonNullable<string>
@@ -9,3 +9,5 @@ export interface KostraFormVm {
     orgnrVirksomhet: Nullable<CompanyIdVm[]>
     skjemaFil: FileList
 }
+
+export default KostraFormVm

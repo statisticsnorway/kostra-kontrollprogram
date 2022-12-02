@@ -1,3 +1,5 @@
-export interface CompanyIdVm {
+interface CompanyIdVm {
     orgnr: NonNullable<string>
 }
+
+export default CompanyIdVm

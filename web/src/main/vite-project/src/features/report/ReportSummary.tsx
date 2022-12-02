@@ -1,8 +1,8 @@
-import {FileReportVm} from "../../kostratypes/fileReportVm";
+import FileReportVm from "../../kostratypes/fileReportVm";
 import ErrorLevel from "./ErrorLevel";
 
 
-export const ReportSummary = ({appReleaseVersion, fileReport}: {
+const ReportSummary = ({appReleaseVersion, fileReport}: {
     appReleaseVersion: NonNullable<string>
     fileReport: FileReportVm
 }) =>

@@ -99,7 +99,7 @@ const MainForm = (props: {
     // change skjema handling
     useEffect(() => {
         const subscription = watch((value, {name, type}) => {
-            if (uiData?.formTypes.length) {
+            if (uiData.formTypes.length) {
                 if (!(name == "skjema" && type == "change")) return
 
                 // reset dirty state for individual fields

@@ -45,10 +45,10 @@ class ApiControllerTest : BehaviorSpec({
         forAll(
             row("valid file stream", true),
             row("invalid file stream", false)
-        ) { description, validFileStream ->
+        ) { description, isValidFileStream ->
             `when`(description) {
 
-                every { file.transferTo(any<OutputStream>()) } answers { Mono.just(validFileStream) }
+                every { file.transferTo(any<OutputStream>()) } answers { Mono.just(isValidFileStream) }
 
                 val monoResult = sut.kontrollerSkjema(
                     kostraFormAsJson = objectMapper.writeValueAsString(kostraFormVmInTest),
@@ -56,7 +56,7 @@ class ApiControllerTest : BehaviorSpec({
                 )
 
                 then("monoResult should be as expected") {
-                    if (validFileStream) {
+                    if (isValidFileStream) {
                         StepVerifier.create(monoResult)
                             .expectNextCount(1)
                             .verifyComplete()

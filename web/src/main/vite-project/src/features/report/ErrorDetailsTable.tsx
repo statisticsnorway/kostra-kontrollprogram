@@ -2,7 +2,7 @@ import ErrorLevel from "./ErrorLevel";
 import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 
 const ErrorDetailsTable = ({reportEntries}: { reportEntries: FileReportEntryVm[] }) =>
-    <div className="card mt-3">
+    <div className="card mt-3 mb-4">
         <div className="card-body">
             <h5 className="card-title mb-0">Feilliste</h5>
         </div>

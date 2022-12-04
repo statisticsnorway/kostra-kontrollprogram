@@ -1,6 +1,6 @@
 import {Button} from "react-bootstrap";
 
-const CHAR_MULTIPLICATION_X = "\u2715"
+export const CHAR_MULTIPLICATION_X = "\u2715"
 
 const CloseButton = ({onClick}: { onClick: () => void }) =>
     <Button

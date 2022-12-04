@@ -7,12 +7,12 @@ import ErrorDetailsTable from "../features/report/ErrorDetailsTable";
 
 const ReportView = ({appReleaseVersion, fileReport}: {
     appReleaseVersion: NonNullable<string>,
-    fileReport: NonNullable<FileReportVm>
+    fileReport: FileReportVm
 }) =>
     <>
         <ReportSummary appReleaseVersion={appReleaseVersion} fileReport={fileReport}/>
-        <ErrorSummary reportEntries={fileReport.feil}/>
-        <ErrorDetailsTable reportEntries={fileReport.feil}/>
+        {fileReport.feil?.length  && <ErrorSummary reportEntries={fileReport.feil}/>}
+        {fileReport.feil?.length && <ErrorDetailsTable reportEntries={fileReport.feil}/>}
     </>
 
 export default ReportView

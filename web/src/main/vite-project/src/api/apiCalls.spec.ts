@@ -1,4 +1,5 @@
 import {describe, expect, it, vi} from "vitest"
+import {fileReportInTest, kostraFormInTest} from "../specData"
 import {
     api,
     kontrollerSkjemaAsync,
@@ -40,58 +41,19 @@ describe('apiCalls', () => {
 
         it("calls /kontroller-skjema", async () => {
 
-            const kostraFormJson = {
-                aar: 2022,
-                skjema: "0X",
-                region: "030100",
-                navn: "Oslo",
-                orgnrForetak: "987654321",
-                orgnrVirksomhet: [{orgnr: "876543219"}],
-                skjemaFil: createMockFileList()
-            }
-
-            const fileReportJson = {
-                innparametere: kostraFormJson,
-                antallKontroller: 42,
-                feilkode: 1,
-                feil: [{
-                    journalnummer: "~journalnummer~",
-                    saksbehandler: "~saksbehandler~",
-                    kontrollnummer: "~kontrollnummer~",
-                    kontrolltekst: "~kontrolltekst~",
-                    feilkode: 1
-                }]
-            }
-
             const mockPostResponseAsync = vi.fn().mockImplementation(
-                () => new Promise(resolve => resolve({data: fileReportJson}))
+                () => new Promise(resolve => resolve({data: fileReportInTest}))
             )
 
             // set mock
             api.post = mockPostResponseAsync
 
             // make call and verify result
-            await expect(kontrollerSkjemaAsync(kostraFormJson)).resolves.toEqual(fileReportJson)
+            await expect(kontrollerSkjemaAsync(kostraFormInTest)).resolves.toEqual(fileReportInTest)
             expect(mockPostResponseAsync).toBeCalledWith(
                 "/kontroller-skjema",
-                kostraFormToMultipartBody(kostraFormJson),
+                kostraFormToMultipartBody(kostraFormInTest),
                 MULTIPART_HEADER_CONFIG)
         })
     })
 })
-
-const createMockFileList = (): FileList => {
-    const fakeFileInput = document.createElement("input")
-    fakeFileInput.setAttribute("type", "file")
-
-    let mockFileList = Object.create(fakeFileInput.files)
-
-    mockFileList[0] = new File(
-        ["foo"],
-        "foo.dat",
-        {
-            type: "text/plain"
-        })
-
-    return mockFileList
-}

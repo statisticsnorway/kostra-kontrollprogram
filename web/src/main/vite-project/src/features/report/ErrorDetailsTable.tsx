@@ -19,7 +19,7 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: FileReportEntryVm[]
                             <th scope="col">Kontrolltekst</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody data-testid="error-details-table-tbody">
                         {reportEntries.map((reportEntry, index) =>
                             <tr key={index}>
                                 <th scope="row"><ErrorLevel level={reportEntry.feilkode}/></th>

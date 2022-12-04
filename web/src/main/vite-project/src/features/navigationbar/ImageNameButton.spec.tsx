@@ -18,7 +18,8 @@ const setup = (onClick: () => void) => {
 describe("ImageNameButton", () => {
     describe("Layout", () => {
         beforeEach(() => {
-            setup(() => {})
+            setup(() => {
+            })
         })
 
         test("has button", () => {
@@ -34,7 +35,8 @@ describe("ImageNameButton", () => {
 
     describe("Interactions", () => {
         test("clicking button calls onClick", () => {
-            const onClick = vi.fn().mockImplementation(() => {})
+            const onClick = vi.fn().mockImplementation(() => {
+            })
             setup(onClick)
 
             fireEvent.click(screen.getByRole("button"))

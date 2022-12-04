@@ -18,7 +18,7 @@ const TabRow = (
     <ul className="nav nav-tabs" role={"navigation"}>
         {/** BACK TO FORM */}
         <TabItem
-            text={activeTabIndex == 0 ? "Tilbake til skjema" : "Skjema"}
+            text={activeTabIndex == 0 ?"Skjema" : "Tilbake til skjema"}
             image={FilterLeft}
             tabIsActive={activeTabIndex === 0}
             onSelect={() => onTabSelect(0)}

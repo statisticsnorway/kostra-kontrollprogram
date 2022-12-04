@@ -1,47 +1,8 @@
 import {describe, expect, test, vi} from "vitest";
 import FileReportVm from "../../kostratypes/fileReportVm";
-import KostraErrorCode from "../../kostratypes/kostraErrorCode";
-import KostraFormVm from "../../kostratypes/kostraFormVm";
 import {render, screen} from "@testing-library/react";
 import TabRow from "./TabRow";
-
-const createMockFileList = (): FileList => {
-    const fakeFileInput = document.createElement("input")
-    fakeFileInput.setAttribute("type", "file")
-
-    let mockFileList = Object.create(fakeFileInput.files)
-
-    mockFileList[0] = new File(
-        ["foo"],
-        "foo.dat",
-        {
-            type: "text/plain"
-        })
-
-    return mockFileList
-}
-
-const kostraFormInTest: KostraFormVm = {
-    aar: (new Date()).getFullYear(),
-    skjema: "0X",
-    region: "030100",
-    orgnrForetak: "987654321",
-    orgnrVirksomhet: [{orgnr: "876543219"}],
-    skjemaFil: createMockFileList()
-}
-
-const fileReportInTest: FileReportVm = {
-    innparametere: kostraFormInTest,
-    antallKontroller: 42,
-    feilkode: KostraErrorCode.NO_ERROR,
-    feil: [{
-        journalnummer: "~journalnummer~",
-        saksbehandler: "~saksbehandler~",
-        kontrollnummer: "~kontrollnummer~",
-        kontrolltekst: "~kontrolltekst~",
-        feilkode: KostraErrorCode.NO_ERROR
-    }]
-}
+import {fileReportInTest, kostraFormInTest} from "../../specData";
 
 const expectedTabTitle = `${kostraFormInTest.skjema} ${kostraFormInTest.aar}, region ${kostraFormInTest.region}`
 
@@ -65,9 +26,9 @@ const setupForInteractionTests = (onTabSelect: () => void, onReportDelete: () =>
 
 describe("TabRow", () => {
     describe("Layout", () => {
-        test("when no file reports, expect 'Tilbake til skjema'", () => {
+        test("when no file reports, expect tab title 'Skjema'", () => {
             setupForLayoutTests([], 0)
-            expect(screen.getByText("Tilbake til skjema")).toBeDefined()
+            expect(screen.getByText("Skjema")).toBeDefined()
         })
         test("delete button is not displayed for left-most tab", () => {
             setupForLayoutTests([], 0)
@@ -75,8 +36,8 @@ describe("TabRow", () => {
         })
         test("when one file report and file report selected, back to form button changes text", () => {
             setupForLayoutTests([fileReportInTest], 1)
-            expect(() => screen.getByText("Tilbake til skjema")).toThrow()
-            expect(screen.getByText("Skjema")).toBeDefined()
+            expect(() => screen.getByText("Skjema")).toThrow()
+            expect(screen.getByText("Tilbake til skjema")).toBeDefined()
         })
         test("when one file report, report info is displayed as tab", () => {
             setupForLayoutTests([fileReportInTest], 1)
@@ -88,7 +49,8 @@ describe("TabRow", () => {
         test("clicking report name button calls onTabSelect", () => {
             const onTabSelect = vi.fn().mockImplementation(() => {
             })
-            setupForInteractionTests(onTabSelect, () => { })
+            setupForInteractionTests(onTabSelect, () => {
+            })
 
             screen.getByTitle<HTMLButtonElement>(expectedTabTitle).click()
 

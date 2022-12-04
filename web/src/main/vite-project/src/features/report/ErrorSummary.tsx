@@ -30,7 +30,6 @@ const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[]}) =>
         </div>
         <ul className="list-group list-group-flush">
             <li className="list-group-item">
-
                 <table className="table table-striped table-sm">
                     <thead>
                     <tr>
@@ -39,7 +38,7 @@ const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[]}) =>
                         <th scope="col">Kontrolltype</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody data-testid="error-summary-table-tbody">
                     {reduceErrors(reportEntries).map((it, index) =>
                         <tr key={index}>
                             <th scope="row"><ErrorLevel level={it.feilkode}/></th>

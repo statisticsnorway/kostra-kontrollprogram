@@ -10,7 +10,7 @@ const TabItem = (props: {
     onClose: () => void
 }) =>
     <li className="nav-item">
-        <div className={props.tabIsActive ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
+        <div data-testid="tab-item-div" className={props.tabIsActive ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
             <ImageNameButton
                 onClick={props.onSelect}
                 text={props.text}

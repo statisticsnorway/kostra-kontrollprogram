@@ -8,7 +8,7 @@ interface ErrorAggregateEntry {
     itemCount: number
 }
 
-const reduceErrors = (reportEntries: FileReportEntryVm[]): ErrorAggregateEntry[] => reportEntries.reduce(
+const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAggregateEntry[] => reportEntries.reduce(
     (accumulator: ErrorAggregateEntry[], currentValue) => {
         const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.kontrollnummer)
         if (findIndex < 0) {
@@ -23,7 +23,7 @@ const reduceErrors = (reportEntries: FileReportEntryVm[]): ErrorAggregateEntry[]
         return accumulator
     }, []).sort((a, b) => b.itemCount - a.itemCount)
 
-const ErrorSummary = ({reportEntries}: {reportEntries: FileReportEntryVm[]}) =>
+const ErrorSummary = ({reportEntries}: {reportEntries: NonNullable<FileReportEntryVm[]>}) =>
     <div className="card mt-3">
         <div className="card-body">
             <h5 className="card-title mb-0">Oversikt feilkoder og antall</h5>

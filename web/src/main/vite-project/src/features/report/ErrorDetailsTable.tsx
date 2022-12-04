@@ -1,7 +1,7 @@
 import ErrorLevel from "./ErrorLevel";
 import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 
-const ErrorDetailsTable = ({reportEntries}: { reportEntries: FileReportEntryVm[] }) =>
+const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileReportEntryVm[]> }) =>
     <div className="card mt-3 mb-4">
         <div className="card-body">
             <h5 className="card-title mb-0">Feilliste</h5>

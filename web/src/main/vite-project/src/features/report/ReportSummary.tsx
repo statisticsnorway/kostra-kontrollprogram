@@ -4,7 +4,7 @@ import ErrorLevel from "./ErrorLevel";
 
 const ReportSummary = ({appReleaseVersion, fileReport}: {
     appReleaseVersion: NonNullable<string>
-    fileReport: FileReportVm
+    fileReport: NonNullable<FileReportVm>
 }) =>
     <div className="card mt-3">
         <div className="card-body">
@@ -26,11 +26,12 @@ const ReportSummary = ({appReleaseVersion, fileReport}: {
             <li className="list-group-item">
                 Regionsnummer: {fileReport.innparametere.region}
             </li>
-            {fileReport.innparametere.orgnrForetak && <li className="list-group-item">
-                Organisasjonsnummer: {fileReport.innparametere.orgnrForetak}
-            </li>}
+            {fileReport.innparametere.orgnrForetak &&
+                <li className="list-group-item">
+                    Organisasjonsnummer: {fileReport.innparametere.orgnrForetak}
+                </li>}
             {fileReport.innparametere.orgnrVirksomhet != undefined
-                && fileReport.innparametere.orgnrVirksomhet?.length > 0
+                && fileReport.innparametere.orgnrVirksomhet.length > 0
                 && <li className="list-group-item">
                     Organisasjonsnummer virksomhet(er):
                     {fileReport.innparametere.orgnrVirksomhet.map((value, index) =>

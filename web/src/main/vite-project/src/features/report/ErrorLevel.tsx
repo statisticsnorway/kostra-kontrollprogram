@@ -1,6 +1,6 @@
 import KostraErrorCode from "../../kostratypes/kostraErrorCode";
 
-const getClassName = (level: KostraErrorCode) => {
+const getClassName = (level: NonNullable<KostraErrorCode>) => {
     switch (level) {
         case KostraErrorCode.NO_ERROR:
             return "text-success"
@@ -11,7 +11,7 @@ const getClassName = (level: KostraErrorCode) => {
     }
 }
 
-const getErrorText = (level: KostraErrorCode) => {
+const getErrorText = (level: NonNullable<KostraErrorCode>) => {
     switch (level) {
         case KostraErrorCode.NO_ERROR:
             return "OK"
@@ -22,7 +22,7 @@ const getErrorText = (level: KostraErrorCode) => {
     }
 }
 
-const ErrorLevel = ({level}: { level: KostraErrorCode }) =>
+const ErrorLevel = ({level}: { level: NonNullable<KostraErrorCode> }) =>
     <span className={getClassName(level)}>{getErrorText(level)}</span>
 
 export default ErrorLevel

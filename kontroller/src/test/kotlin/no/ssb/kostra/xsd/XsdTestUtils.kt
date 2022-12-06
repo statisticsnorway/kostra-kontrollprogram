@@ -10,7 +10,7 @@ fun String.toStreamSource() = StreamSource(StringReader(this))
 object TestUtils {
     fun getResourceAsString(resourceName: String) = this.javaClass.getResource("/$resourceName")!!.readText()
 
-    const val LOVHJEMMEL_XML = "<Lovhjemmel><Lov>BVL</Lov><Kapittel>1</Kapittel><Paragraf>2</Paragraf></Lovhjemmel>"
+    const val LOVHJEMMEL_XML = "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" Ledd=\"3\"/>"
 
     const val EMPTY_DATE_ERROR = "cvc-datatype-valid.1.2.1: '' is not a valid value for 'date'."
     const val INVALID_DATE_ERROR = "cvc-datatype-valid.1.2.1: '2022' is not a valid value for 'date'."

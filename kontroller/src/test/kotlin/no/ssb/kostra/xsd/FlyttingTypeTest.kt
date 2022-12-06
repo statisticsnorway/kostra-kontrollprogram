@@ -78,12 +78,11 @@ class FlyttingTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildFlyttingXml(startTag: String): String =
-            buildKostraXml(
-                startTag +
-                        "<ArsakFra Kode=\"1.1.1\" />" +
-                        "<FlyttingTil Kode=\"1\" />" +
-                        "</Flytting>"
-            )
+        private fun buildFlyttingXml(startTag: String) = buildKostraXml(
+            startTag +
+                    "<ArsakFra Kode=\"1.1.1\" />" +
+                    "<FlyttingTil Kode=\"1\" />" +
+                    "</Flytting>"
+        )
     }
 }

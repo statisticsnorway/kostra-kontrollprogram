@@ -72,7 +72,7 @@ class ArsakFraTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildArsakFraXml(innerXml: String): String = buildKostraXml(
+        private fun buildArsakFraXml(innerXml: String) = buildKostraXml(
             "<Flytting Id=\"42\" SluttDato=\"2022-11-14\">" +
                     innerXml +
                     "<FlyttingTil Kode=\"1\" /></Flytting>"

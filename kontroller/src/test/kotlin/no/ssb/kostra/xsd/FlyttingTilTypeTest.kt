@@ -72,7 +72,7 @@ class FlyttingTilTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildFlyttingTilXml(innerXml: String): String = buildKostraXml(
+        private fun buildFlyttingTilXml(innerXml: String) = buildKostraXml(
             "<Flytting Id=\"42\" SluttDato=\"2022-11-14\">" +
                     "<ArsakFra Kode=\"1.1.1\" Presisering=\"~Presisering~\" />" +
                     innerXml +

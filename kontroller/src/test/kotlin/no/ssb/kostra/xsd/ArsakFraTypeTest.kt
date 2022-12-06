@@ -7,7 +7,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.xsd.TestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
 import org.xml.sax.SAXException
 
 class ArsakFraTypeTest : BehaviorSpec({

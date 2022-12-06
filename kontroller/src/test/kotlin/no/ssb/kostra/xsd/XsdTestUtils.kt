@@ -7,7 +7,7 @@ import javax.xml.transform.stream.StreamSource
 fun String.toStreamSource() = StreamSource(StringReader(this))
 
 
-object TestUtils {
+object XsdTestUtils {
     fun getResourceAsString(resourceName: String) = this.javaClass.getResource("/$resourceName")!!.readText()
 
     const val LOVHJEMMEL_XML = "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" Ledd=\"3\"/>"

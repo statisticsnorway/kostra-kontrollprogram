@@ -12,7 +12,7 @@ import javax.xml.validation.Validator
 
 object KostraValidationUtils {
 
-    private const val XSD_RESOURCE = "KostraBarnevernSingleFile.xsd"
+    private const val XSD_RESOURCE = "/KostraBarnevernSingleFile.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic
@@ -25,20 +25,18 @@ object KostraValidationUtils {
         return try {
             getSchemaValidator().validate(StreamSource(xmlReader))
             true
-        } catch (e: SAXParseException) {
+        } catch (thrown: SAXParseException) {
             false
         }
     }
 
     @JvmStatic
-    fun getSchemaValidator(): Validator {
-        val newInstance = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
-        newInstance.setFeature(DISALLOW_DOCTYPE_DECL, true)
-        return newInstance
-            .newSchema(StreamSource(getResourceFromClasspath()))
-            .newValidator()
-    }
+    fun getSchemaValidator(): Validator = SchemaFactory
+        .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+        .apply { setFeature(DISALLOW_DOCTYPE_DECL, true) }
+        .newSchema(StreamSource(getXsdResourceFromClasspath()))
+        .newValidator()
 
-    private fun getResourceFromClasspath(): InputStream? =
-        this::class.java.classLoader.getResource(XSD_RESOURCE)!!.openStream()
+    private fun getXsdResourceFromClasspath(): InputStream? =
+        this::class.java.getResourceAsStream(XSD_RESOURCE)
 }

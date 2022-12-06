@@ -8,7 +8,7 @@ datafiler.
 
 Bygge app fra rot
 ```bash
-./mvnw clean -pl web -am verify
+./mvnw clean -pl web -am install
 ```
 
 Starte app fra rot

@@ -1,7 +1,6 @@
 package no.ssb.kostra.barn
 
 import org.xml.sax.SAXParseException
-import java.io.InputStream
 import java.io.Reader
 import java.io.StringReader
 import javax.xml.XMLConstants
@@ -12,7 +11,7 @@ import javax.xml.validation.Validator
 
 object KostraValidationUtils {
 
-    private const val XSD_RESOURCE = "/KostraBarnevernSingleFile.xsd"
+    private const val XSD_RESOURCE = "KostraBarnevern.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic
@@ -35,9 +34,6 @@ object KostraValidationUtils {
     fun getSchemaValidator(): Validator = SchemaFactory
         .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
         .apply { setFeature(DISALLOW_DOCTYPE_DECL, true) }
-        .newSchema(StreamSource(getXsdResourceFromClasspath()))
+        .newSchema(javaClass.classLoader.getResource(XSD_RESOURCE))
         .newValidator()
-
-    private fun getXsdResourceFromClasspath(): InputStream? =
-        this::class.java.getResourceAsStream(XSD_RESOURCE)
 }

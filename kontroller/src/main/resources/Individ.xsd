@@ -90,11 +90,13 @@
 		</xs:attribute>
 		<xs:attribute name="Avslutta3112" use="required">
 			<xs:annotation>
-				<xs:documentation>Kode for avsluttet før utgangen av året: 
-1 = Ja 
-2 = Nei
+				<xs:documentation>Kode for avsluttet før utgangen av året:
+					1 = Ja
+					2 = Nei
 
-Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avsluttet"-knapp som setter denne informasjonen i tillegg</xs:documentation>
+					Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avsluttet"-knapp som setter
+					denne informasjonen i tillegg
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -117,40 +119,44 @@ Man kan bruke //Individ/@SluttDato, men det virker som systemene har en "Avslutt
 				<!-- Kode 16 utgår for 2021-data, delt i 25 og 26-->
 				<!-- Kode 27 ny for 2021-data-->
 				<xs:documentation>Kode for vedtaksgrunnlag:
-Koder om foreldrene:
-1 = Foreldres somatiske sykdom
-2 = Foreldres psykiske problem/ lidelse
-3 = Foreldres rusmisbruk
-4 = Foreldres manglende foreldreferdigheter
-20 = Foreldres manglende beskyttelse av barnet
-21 = Foreldres manglende stimulering og regulering av barnet
-22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
-23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
-24 = Konflikt mellom foreldre som ikke bor sammen
-5 = Foreldres kriminalitet
+					Koder om foreldrene:
+					1 = Foreldres somatiske sykdom
+					2 = Foreldres psykiske problem/ lidelse
+					3 = Foreldres rusmisbruk
+					4 = Foreldres manglende foreldreferdigheter
+					20 = Foreldres manglende beskyttelse av barnet
+					21 = Foreldres manglende stimulering og regulering av barnet
+					22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
+					23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
+					24 = Konflikt mellom foreldre som ikke bor sammen
+					5 = Foreldres kriminalitet
 
-Koder mellom foreldre og barnet:
-6 = Høy grad av konflikt hjemme
-7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
+					Koder mellom foreldre og barnet:
+					6 = Høy grad av konflikt hjemme
+					7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
 
-Koder om barnet:
-8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
-9 = Barnet utsatt for fysisk vold
-10 = Barnet utsatt for psykisk vold
-11 = Barnet utsatt for seksuelle overgrep
-12 = Barnet mangler omsorgsperson
-13 = Barnet har nedsatt funksjonsevne
-14 = Barnets psykiske problem/lidelse
-15 = Barnets rusmisbruk
-16 = Barnets atferd/ kriminalitet
-17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner) 
-25 = Barnets atferd
-26 = Barnets kriminelle handlinger
-27 = Barnet utsatt for menneskehandel
+					Koder om barnet:
+					8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
+					9 = Barnet utsatt for fysisk vold
+					10 = Barnet utsatt for psykisk vold
+					11 = Barnet utsatt for seksuelle overgrep
+					12 = Barnet mangler omsorgsperson
+					13 = Barnet har nedsatt funksjonsevne
+					14 = Barnets psykiske problem/lidelse
+					15 = Barnets rusmisbruk
+					16 = Barnets atferd/ kriminalitet
+					17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk
+					knyttet til samspillet mellom barn og omsorgspersoner)
+					25 = Barnets atferd
+					26 = Barnets kriminelle handlinger
+					27 = Barnet utsatt for menneskehandel
 
-Koder om annet:
-18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)
-19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)</xs:documentation>
+					Koder om annet:
+					18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes
+					dersom ingen av kategoriene 1-27 passer.)
+					19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes
+					dersom ingen av kategoriene 1-27 passer.)
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -195,10 +201,11 @@ Koder om annet:
 		<xs:attribute name="Plantype" use="required">
 			<xs:annotation>
 				<xs:documentation>Kode for plantype:
-1 = Tiltaksplan etter § 4-5
-2 = Tiltaksplan etter § 4-28
-3 = Foreløpig omsorgsplan etter § 4-15, 3. ledd
-4 = Omsorgsplan etter § 4-15, 3. ledd</xs:documentation>
+					1 = Tiltaksplan etter § 4-5
+					2 = Tiltaksplan etter § 4-28
+					3 = Foreløpig omsorgsplan etter § 4-15, 3. ledd
+					4 = Omsorgsplan etter § 4-15, 3. ledd
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -223,26 +230,23 @@ Koder om annet:
 		<xs:attribute ref="SluttDato"/>
 		<xs:attribute name="Konklusjon">
 			<xs:annotation>
-				<xs:documentation>Kode for konklusjon av meldingen: 
-1 = Henlagt 
-2 = Ikke henlagt – konklusjonsdato melding (eventuelt 7 dager etter mottatt melding) er startdato undersøkelse
-3 = Henlagt pga. aktive tiltak
-4 = Melding i pågående undersøkelse
-</xs:documentation>
+				<xs:documentation>Kode for konklusjon av meldingen:
+					1 = Henlagt
+					2 = Ikke henlagt – konklusjonsdato melding (eventuelt 7 dager etter mottatt melding) er startdato
+					undersøkelse
+					3 = Henlagt pga. aktive tiltak
+					4 = Melding i pågående undersøkelse
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
-				<xs:list>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:minLength value="1"/>
-							<xs:maxLength value="1"/>
-							<xs:enumeration value="1"/>
-							<xs:enumeration value="2"/>
-							<xs:enumeration value="3"/>
-							<xs:enumeration value="4"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:list>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="1"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
@@ -285,7 +289,14 @@ Koder om annet:
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="Bokstav"/>
+		<xs:attribute name="Bokstav">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
 		<xs:attribute name="Ledd">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -326,7 +337,9 @@ Koder om annet:
 	</xs:attribute>
 	<xs:element name="Presisering">
 		<xs:annotation>
-			<xs:documentation>Globalt element for presisering, brukes i forbindelse der en overliggende kode må presiseres</xs:documentation>
+			<xs:documentation>Globalt element for presisering, brukes i forbindelse der en overliggende kode må
+				presiseres
+			</xs:documentation>
 		</xs:annotation>
 		<xs:simpleType>
 			<xs:restriction base="xs:string">
@@ -342,62 +355,59 @@ Koder om annet:
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
 				<xs:documentation>Kode for melder:
-1 = Barnet selv
-2 = Mor/ far/ foresatte
-3 = Familie for øvrig
-4 = Andre privatpersoner
-5 = Barnvernstjenesten
-6 = NAV (kommune og stat)
-7 = Barnevernsvakt
-8 = Politi/lensmann
-9 = Barnehage
-10 = Helsestasjon/skolehelsetjenesten
-11 = Skole
-12 = Pedagogisk-psykologisk tjeneste (PPT)
-13 = Psykisk helsevern for barn og unge (kommune og stat)
-14 = Psykisk helsevern for voksne (kommune og stat)
-15 = Lege/ sykehus/ tannlege
-16 = Familievernkontor
-17 = Tjenester og instanser med ansvar for oppfølging av personers rusproblemer (kommune og stat)
-18 = Krisesenter
-19 = Asylmottak/ UDI/ innvandringsmyndighet
-20 = Utekontakt/ fritidsklubb
-21 = Frivillige organisasjoner/ idrettslag
-22 = Andre offentlige instanser (krever presisering)
-23 = Anonym</xs:documentation>
+					1 = Barnet selv
+					2 = Mor/ far/ foresatte
+					3 = Familie for øvrig
+					4 = Andre privatpersoner
+					5 = Barnvernstjenesten
+					6 = NAV (kommune og stat)
+					7 = Barnevernsvakt
+					8 = Politi/lensmann
+					9 = Barnehage
+					10 = Helsestasjon/skolehelsetjenesten
+					11 = Skole
+					12 = Pedagogisk-psykologisk tjeneste (PPT)
+					13 = Psykisk helsevern for barn og unge (kommune og stat)
+					14 = Psykisk helsevern for voksne (kommune og stat)
+					15 = Lege/ sykehus/ tannlege
+					16 = Familievernkontor
+					17 = Tjenester og instanser med ansvar for oppfølging av personers rusproblemer (kommune og stat)
+					18 = Krisesenter
+					19 = Asylmottak/ UDI/ innvandringsmyndighet
+					20 = Utekontakt/ fritidsklubb
+					21 = Frivillige organisasjoner/ idrettslag
+					22 = Andre offentlige instanser (krever presisering)
+					23 = Anonym
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
-				<xs:list>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:minLength value="1"/>
-							<xs:maxLength value="2"/>
-							<xs:enumeration value="1"/>
-							<xs:enumeration value="2"/>
-							<xs:enumeration value="3"/>
-							<xs:enumeration value="4"/>
-							<xs:enumeration value="5"/>
-							<xs:enumeration value="6"/>
-							<xs:enumeration value="7"/>
-							<xs:enumeration value="8"/>
-							<xs:enumeration value="9"/>
-							<xs:enumeration value="10"/>
-							<xs:enumeration value="11"/>
-							<xs:enumeration value="12"/>
-							<xs:enumeration value="13"/>
-							<xs:enumeration value="14"/>
-							<xs:enumeration value="15"/>
-							<xs:enumeration value="16"/>
-							<xs:enumeration value="17"/>
-							<xs:enumeration value="18"/>
-							<xs:enumeration value="19"/>
-							<xs:enumeration value="20"/>
-							<xs:enumeration value="21"/>
-							<xs:enumeration value="22"/>
-							<xs:enumeration value="23"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:list>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="2"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+					<xs:enumeration value="6"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="8"/>
+					<xs:enumeration value="9"/>
+					<xs:enumeration value="10"/>
+					<xs:enumeration value="11"/>
+					<xs:enumeration value="12"/>
+					<xs:enumeration value="13"/>
+					<xs:enumeration value="14"/>
+					<xs:enumeration value="15"/>
+					<xs:enumeration value="16"/>
+					<xs:enumeration value="17"/>
+					<xs:enumeration value="18"/>
+					<xs:enumeration value="19"/>
+					<xs:enumeration value="20"/>
+					<xs:enumeration value="21"/>
+					<xs:enumeration value="22"/>
+					<xs:enumeration value="23"/>
+				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
@@ -412,41 +422,45 @@ Koder om annet:
 				<!-- Kode 16 utgår for 2021-data, delt i 25 og 26-->
 				<!-- Kode 27 ny for 2021-data-->
 				<xs:documentation>Kode for saksinnhold:
-Koder om foreldrene:
-1 = Foreldres somatiske sykdom
-2 = Foreldres psykiske problem/ lidelse
-3 = Foreldres rusmisbruk
-4 = Foreldres manglende foreldreferdigheter
-20 = Foreldres manglende beskyttelse av barnet
-21 = Foreldres manglende stimulering og regulering av barnet
-22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
-23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
-24 = Konflikt mellom foreldre som ikke bor sammen
-28 = Foreldres manglende oppfølging av barnets behov for helsetjenester
-5 = Foreldres kriminalitet
+					Koder om foreldrene:
+					1 = Foreldres somatiske sykdom
+					2 = Foreldres psykiske problem/ lidelse
+					3 = Foreldres rusmisbruk
+					4 = Foreldres manglende foreldreferdigheter
+					20 = Foreldres manglende beskyttelse av barnet
+					21 = Foreldres manglende stimulering og regulering av barnet
+					22 = Foreldres manglende sensitivitet og følelsesmessige tilgjengelighet for barnet
+					23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
+					24 = Konflikt mellom foreldre som ikke bor sammen
+					28 = Foreldres manglende oppfølging av barnets behov for helsetjenester
+					5 = Foreldres kriminalitet
 
-Koder mellom foreldre og barnet:
-6 = Høy grad av konflikt hjemme
-7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
+					Koder mellom foreldre og barnet:
+					6 = Høy grad av konflikt hjemme
+					7 = Vold i hjemmet/ barnet vitne til vold i nære relasjoner
 
-Koder om barnet:
-8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
-9 = Barnet utsatt for fysisk vold
-10 = Barnet utsatt for psykisk vold
-11 = Barnet utsatt for seksuelle overgrep
-12 = Barnet mangler omsorgsperson
-13 = Barnet har nedsatt funksjonsevne
-14 = Barnets psykiske problem/lidelse
-15 = Barnets rusmisbruk
-16 = Barnets atferd/ kriminalitet
-17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk knyttet til samspillet mellom barn og omsorgspersoner) 
-25 = Barnets atferd
-26 = Barnets kriminelle handlinger
-27 = Barnet utsatt for menneskehandel
+					Koder om barnet:
+					8 = Barnet utsatt for vanskjøtsel (Barnet overlatt til seg selv, dårlig kosthold, dårlig hygiene)
+					9 = Barnet utsatt for fysisk vold
+					10 = Barnet utsatt for psykisk vold
+					11 = Barnet utsatt for seksuelle overgrep
+					12 = Barnet mangler omsorgsperson
+					13 = Barnet har nedsatt funksjonsevne
+					14 = Barnets psykiske problem/lidelse
+					15 = Barnets rusmisbruk
+					16 = Barnets atferd/ kriminalitet
+					17 = Barnets relasjonsvansker (mistanke om eller diagnostiserte tilknytningsvansker, problematikk
+					knyttet til samspillet mellom barn og omsorgspersoner)
+					25 = Barnets atferd
+					26 = Barnets kriminelle handlinger
+					27 = Barnet utsatt for menneskehandel
 
-Koder om annet:
-18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)
-19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes dersom ingen av kategoriene 1-27 passer.)</xs:documentation>
+					Koder om annet:
+					18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes
+					dersom ingen av kategoriene 1-27 passer.)
+					19 = Andre forhold ved barnets situasjon (krever presisering) (Denne kategorien skal kunne benyttes
+					dersom ingen av kategoriene 1-27 passer.)
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -495,29 +509,32 @@ Koder om annet:
 		<xs:attribute name="Konklusjon">
 			<xs:annotation>
 				<xs:documentation>Kode for konklusjon av undersøkelse:
-1 = Barneverntjenesten fatter vedtak om tiltak 
-2 = Begjæring om tiltak for fylkesnemnda 
-3 = Undersøkelsen henlagt etter barnverntjenestens vurdering (kategorien gjelder når barneverntjenesten vurderer at vilkår for å sette inn tiltak ikke er oppfylt)
-4 = Undersøkelsen henlagt etter partens ønske (kategorien gjelder når barneverntjenesten vurderer at vilkår for å sette inn tiltak etter § 4-4 er tilstede, men saken henlegges fordi foreldre/barnet ikke samtykker til tiltak. Gjelder bare når det er snakk om hjelpetiltak som foreldre/barn kan takke nei til.)
-5 = Undersøkelsen henlagt som følge av flytting (kategorien gjelder når undersøkelsessak henlegges fordi barnet flytter til en ny kommune. Bør også innebære et underpunkt der barneverntjenesten må oppgi om saken er meldt videre til barnets nye oppholdskommune, obligatorisk ja/nei svar) (krever presisering)
-6 = Undersøkelsen henlagt etter henvisning til annen instans
-</xs:documentation>
+					1 = Barneverntjenesten fatter vedtak om tiltak
+					2 = Begjæring om tiltak for fylkesnemnda
+					3 = Undersøkelsen henlagt etter barnverntjenestens vurdering (kategorien gjelder når
+					barneverntjenesten vurderer at vilkår for å sette inn tiltak ikke er oppfylt)
+					4 = Undersøkelsen henlagt etter partens ønske (kategorien gjelder når barneverntjenesten vurderer at
+					vilkår for å sette inn tiltak etter § 4-4 er tilstede, men saken henlegges fordi foreldre/barnet
+					ikke samtykker til tiltak. Gjelder bare når det er snakk om hjelpetiltak som foreldre/barn kan takke
+					nei til.)
+					5 = Undersøkelsen henlagt som følge av flytting (kategorien gjelder når undersøkelsessak henlegges
+					fordi barnet flytter til en ny kommune. Bør også innebære et underpunkt der barneverntjenesten må
+					oppgi om saken er meldt videre til barnets nye oppholdskommune, obligatorisk ja/nei svar) (krever
+					presisering)
+					6 = Undersøkelsen henlagt etter henvisning til annen instans
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
-				<xs:list>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:minLength value="1"/>
-							<xs:maxLength value="1"/>
-							<xs:enumeration value="1"/>
-							<xs:enumeration value="2"/>
-							<xs:enumeration value="3"/>
-							<xs:enumeration value="4"/>
-							<xs:enumeration value="5"/>
-							<xs:enumeration value="6"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:list>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:maxLength value="1"/>
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+					<xs:enumeration value="6"/>
+				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
@@ -528,55 +545,62 @@ Koder om annet:
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
 				<xs:documentation>Kode for tiltakskategori:
-1.1 = Barnvernsinstitusjoner (gjelder alle typer barnevernsinstitusjoner)
-1.2 = Plassering i institusjon etter annen lov
-1.99 = Andre tiltak (krever presisering)
-2.1 = Fosterhjem i familie og nære nettverk
-2.2 = Fosterhjem utenfor familie og nære nettverk
-2.3 = Statlige familiehjem (gjelder fosterhjem som staten har ansvar for)  
-2.4 = Fosterhjem etter § 4-27
-2.5 = Beredskapshjem utenom familie og nære nettverk
-2.6 = Midlertidig hjem i familie og nære nettverk
-2.99 = Andre tiltak (krever presisering)
-3.1 = MST
-3.2 = PMTO
-3.3 = FFT
-3.4 = Weber Stratton
-3.5 = ICDP
-3.6 = Marte Meo
-3.7 = Andre hjemmebaserte tiltak (gjelder andre tiltak i hjemmet som følger en spesiell metodikk og som gjenomføres på en systematisk måte) (krever presisering)
-3.8 = Sentre for foreldre og barn
-3.9 = Vedtak om råd og veiledning
-3.10 = Hjemmekonsulent/miljøarbeider
-3.99 = Andre tiltak (krever presisering)
-4.1 = Barnehage
-4.2 = SFO/ Aktivitetsskole
-4.3 = Fritidsaktiviteter
-4.4 = Økonomisk hjelp for øvrig (gjelder økonomisk hjelp som ikke inngår i 4.1, 4.2 og 4.3)
-4.5 = Besøkshjem/ avlastningstiltak
-4.6 = Støttekontakt
-4.7 = Samtalegrupper/ barnegrupper (gjelder strukturerte samtale- og aktivitetstilbud for aldersbestemte grupper). 
-4.8 = Utdanning og arbeid (gjelder oppfølging og støtte for å styrke barn og ungdoms tilknytning til skole eller arbeid) 
-4.9 = ART
-4.99 = Andre tiltak (krever presisering)
-5.1 = Frivillig tilsyn i hjemmet (gjelder der foreldre har samtykket til tilsyn)
-5.2 = Pålagt tilsyn i hjemmet (gjelder der tilsyn skjer etter vedtak i fylkesnemnd) 
-5.3 = Tilsyn under samvær
-5.4 = Ruskontroll
-5.99 = Andre tiltak (krever presisering)
-6.1 = Familieråd
-6.2 = Nettverksmøter (Strukturerte dialogmøter som består av barneverntjenesten, foreldre og ungdom og andre personer som er viktige i ungdommens liv. Invitasjon av deltakere skjer i samråd mellom barneverntjenesten, ungdom og foreldre) 
-6.3 = Individuell plan
-6.4 = Deltakelse i ansvarsgruppe
-6.99 = Andre tiltak (krever presisering)
-7.1 = Bvl § 4-10 medisinsk undersøkelse og behandling 
-7.2 = Bvl § 4-11 behandling av barn med særlige opplæringsbehov 
-7.3 = Psykisk helsehjelp for barn og unge (Gjelder ikke ved henvisninger, men når barn får behandling av psykolog eller innen psykisk helsevern/BUP)
-7.99 = Andre tiltak (krever presisering)
-8.1 = Økonomisk hjelp ved etablering i egen bolig/ hybel (Ikke husleie)
-8.2 = Bolig med oppfølging (inkluderer også bofellesskap)
-8.3 = Botreningskurs
-8.99 = Andre tiltak (krever presisering)</xs:documentation>
+					1.1 = Barnvernsinstitusjoner (gjelder alle typer barnevernsinstitusjoner)
+					1.2 = Plassering i institusjon etter annen lov
+					1.99 = Andre tiltak (krever presisering)
+					2.1 = Fosterhjem i familie og nære nettverk
+					2.2 = Fosterhjem utenfor familie og nære nettverk
+					2.3 = Statlige familiehjem (gjelder fosterhjem som staten har ansvar for)
+					2.4 = Fosterhjem etter § 4-27
+					2.5 = Beredskapshjem utenom familie og nære nettverk
+					2.6 = Midlertidig hjem i familie og nære nettverk
+					2.99 = Andre tiltak (krever presisering)
+					3.1 = MST
+					3.2 = PMTO
+					3.3 = FFT
+					3.4 = Weber Stratton
+					3.5 = ICDP
+					3.6 = Marte Meo
+					3.7 = Andre hjemmebaserte tiltak (gjelder andre tiltak i hjemmet som følger en spesiell metodikk og
+					som gjenomføres på en systematisk måte) (krever presisering)
+					3.8 = Sentre for foreldre og barn
+					3.9 = Vedtak om råd og veiledning
+					3.10 = Hjemmekonsulent/miljøarbeider
+					3.99 = Andre tiltak (krever presisering)
+					4.1 = Barnehage
+					4.2 = SFO/ Aktivitetsskole
+					4.3 = Fritidsaktiviteter
+					4.4 = Økonomisk hjelp for øvrig (gjelder økonomisk hjelp som ikke inngår i 4.1, 4.2 og 4.3)
+					4.5 = Besøkshjem/ avlastningstiltak
+					4.6 = Støttekontakt
+					4.7 = Samtalegrupper/ barnegrupper (gjelder strukturerte samtale- og aktivitetstilbud for
+					aldersbestemte grupper).
+					4.8 = Utdanning og arbeid (gjelder oppfølging og støtte for å styrke barn og ungdoms tilknytning til
+					skole eller arbeid)
+					4.9 = ART
+					4.99 = Andre tiltak (krever presisering)
+					5.1 = Frivillig tilsyn i hjemmet (gjelder der foreldre har samtykket til tilsyn)
+					5.2 = Pålagt tilsyn i hjemmet (gjelder der tilsyn skjer etter vedtak i fylkesnemnd)
+					5.3 = Tilsyn under samvær
+					5.4 = Ruskontroll
+					5.99 = Andre tiltak (krever presisering)
+					6.1 = Familieråd
+					6.2 = Nettverksmøter (Strukturerte dialogmøter som består av barneverntjenesten, foreldre og ungdom
+					og andre personer som er viktige i ungdommens liv. Invitasjon av deltakere skjer i samråd mellom
+					barneverntjenesten, ungdom og foreldre)
+					6.3 = Individuell plan
+					6.4 = Deltakelse i ansvarsgruppe
+					6.99 = Andre tiltak (krever presisering)
+					7.1 = Bvl § 4-10 medisinsk undersøkelse og behandling
+					7.2 = Bvl § 4-11 behandling av barn med særlige opplæringsbehov
+					7.3 = Psykisk helsehjelp for barn og unge (Gjelder ikke ved henvisninger, men når barn får
+					behandling av psykolog eller innen psykisk helsevern/BUP)
+					7.99 = Andre tiltak (krever presisering)
+					8.1 = Økonomisk hjelp ved etablering i egen bolig/ hybel (Ikke husleie)
+					8.2 = Bolig med oppfølging (inkluderer også bofellesskap)
+					8.3 = Botreningskurs
+					8.99 = Andre tiltak (krever presisering)
+				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -642,10 +666,10 @@ Koder om annet:
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
 				<xs:documentation>Kode for opphevelse av tiltak:
-1 = Barnet tilbakeført til foreldre/ familien jamfør § 4-21
-2 = Barnet har fylt 18 år
-3 = Adopsjon § 4-20
-4 = Annet (krever presisering)
+					1 = Barnet tilbakeført til foreldre/ familien jamfør § 4-21
+					2 = Barnet har fylt 18 år
+					3 = Adopsjon § 4-20
+					4 = Annet (krever presisering)
 				</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
@@ -672,64 +696,82 @@ Koder om annet:
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
 				<xs:documentation>
-1 Årsaker til flytting fra fosterhjem:
+					1 Årsaker til flytting fra fosterhjem:
 
-1.1 Barnevernstjenesten avslutter kontrakt med fosterhjem:
+					1.1 Barnevernstjenesten avslutter kontrakt med fosterhjem:
 
-1.1.1 = Omsorgsplasseringen opphører 
-1.1.2 = Barnet blir myndig 
-1.1.3 = Fosterforeldre klarer ikke å dekke barnets behov (forhold ved fosterhjemmet) 
-1.1.4 = Barnet har behov for annet plasseringssted (institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. 
-1.1.5 = Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak mv.) (krever presisering)
- 
-1.2 Fosterforeldre avslutter kontrakten med barnevernet:
+					1.1.1 = Omsorgsplasseringen opphører
+					1.1.2 = Barnet blir myndig
+					1.1.3 = Fosterforeldre klarer ikke å dekke barnets behov (forhold ved fosterhjemmet)
+					1.1.4 = Barnet har behov for annet plasseringssted (institusjon, TFCO-fosterhjem, forsterket
+					fosterhjem, osv.
+					1.1.5 = Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak mv.)
+					(krever presisering)
 
-1.2.1 = Barnet har behov fosterforeldre ikke kan dekke 
-1.2.2 = Endring i fosterforeldres livssituasjon (skilsmisse, død, osv.) 
-1.2.3 = Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak, manglende eller lite effektiv veiledning, mv.) (krever presisering) 
- 
-1.3 = Barnet flytter sammen med fosterforeldre til nytt bosted
+					1.2 Fosterforeldre avslutter kontrakten med barnevernet:
 
-2 Årsaker til flytting fra institusjon:
+					1.2.1 = Barnet har behov fosterforeldre ikke kan dekke
+					1.2.2 = Endring i fosterforeldres livssituasjon (skilsmisse, død, osv.)
+					1.2.3 = Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak,
+					manglende eller lite effektiv veiledning, mv.) (krever presisering)
 
-2.1 = Avsluttet i henhold til plan ved oppstart av institusjonsoppholdet
-2.2 = Institusjonen barnet bor i klarer ikke å dekke barnets behov (manglende kompetanse hos ansatte, beboersammensetning, fysiske forhold ved institusjonen osv)
-2.3 = Barnet har behov for annen type plasseringstiltak (annen type institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. 
-2.4 = Barnet blir myndig og velger selv å flytte ut
-2.5 = Barnet trekker samtykke
-2.6 = Foreldre trekker samtykke
-2.7 = Ikke medhold i fylkesnemnda
-2.8 = Uenighet mellom barnevernstjenesten og Bufetat om oppdragets omfang og/eller økonomi,
-2.9 = Andre grunner (krever presisering)
-				 </xs:documentation>
+					1.3 = Barnet flytter sammen med fosterforeldre til nytt bosted
+
+					2 Årsaker til flytting fra institusjon:
+
+					2.1 = Avsluttet i henhold til plan ved oppstart av institusjonsoppholdet
+					2.2 = Institusjonen barnet bor i klarer ikke å dekke barnets behov (manglende kompetanse hos
+					ansatte, beboersammensetning, fysiske forhold ved institusjonen osv)
+					2.3 = Barnet har behov for annen type plasseringstiltak (annen type institusjon, TFCO-fosterhjem,
+					forsterket fosterhjem, osv.
+					2.4 = Barnet blir myndig og velger selv å flytte ut
+					2.5 = Barnet trekker samtykke
+					2.6 = Foreldre trekker samtykke
+					2.7 = Ikke medhold i fylkesnemnda
+					2.8 = Uenighet mellom barnevernstjenesten og Bufetat om oppdragets omfang og/eller økonomi,
+					2.9 = Andre grunner (krever presisering)
+				</xs:documentation>
 				<xs:appinfo xml:lang="json">
-{
-   "type":"codelist",
-   "term":"Flytting",
-   "title":"ArsakFra",
-   "path":"/Barnevern/Sak/Virksomhet/Flytting/ArsakFra/@Kode",
-   "items":[
-	  { "code":"1.1.1", "validFrom":"2022-01-01", "title":"Omsorgsplasseringen opphører " },
-	  { "code":"1.1.2", "validFrom":"2022-01-01", "title":"Barnet blir myndig " },
-	  { "code":"1.1.3", "validFrom":"2022-01-01", "title":"Fosterforeldre klarer ikke å dekke barnets behov (forhold ved fosterhjemmet) " },
-	  { "code":"1.1.4", "validFrom":"2022-01-01", "title":"Barnet har behov for annet plasseringssted (institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. " },
-	  { "code":"1.1.5", "validFrom":"2022-01-01", "title":"Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak mv.) (krever presisering)" },
-	  { "code":"1.2.1", "validFrom":"2022-01-01", "title":"Barnet har behov fosterforeldre ikke kan dekke " },
-	  { "code":"1.2.2", "validFrom":"2022-01-01", "title":"Endring i fosterforeldres livssituasjon (skilsmisse, død, osv.) " },
-	  { "code":"1.2.3", "validFrom":"2022-01-01", "title":"Andre grunner; (f.eks. uenighet om oppdragets omfang, økonomi, forsterkningstiltak, manglende eller lite effektiv veiledning, mv.) (krever presisering) " },
-	  { "code":"1.3", "validFrom":"2022-01-01", "title":"Barnet flytter sammen med fosterforeldre til nytt bosted" },
-	  { "code":"2.1", "validFrom":"2022-01-01", "title":"Avsluttet i henhold til plan ved oppstart av institusjonsoppholdet" },
-	  { "code":"2.2", "validFrom":"2022-01-01", "title":"Institusjonen barnet bor i klarer ikke å dekke barnets behov (manglende kompetanse hos ansatte, beboersammensetning, fysiske forhold ved institusjonen osv)" },
-	  { "code":"2.3", "validFrom":"2022-01-01", "title":"Barnet har behov for annen type plasseringstiltak (annen type institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. " },
-	  { "code":"2.4", "validFrom":"2022-01-01", "title":"Barnet blir myndig og velger selv å flytte ut" },
-	  { "code":"2.5", "validFrom":"2022-01-01", "title":"Barnet trekker samtykke" },
-	  { "code":"2.6", "validFrom":"2022-01-01", "title":"Foreldre trekker samtykke" },
-	  { "code":"2.7", "validFrom":"2022-01-01", "title":"Ikke medhold i fylkesnemnda" },
-	  { "code":"2.8", "validFrom":"2022-01-01", "title":"Uenighet mellom barnevernstjenesten og Bufetat om oppdragets omfang og/eller økonomi," },
-	  { "code":"2.9", "validFrom":"2022-01-01", "title":"Andre grunner (krever presisering)" } 
-   ]
-}
-							</xs:appinfo>
+					{
+					"type":"codelist",
+					"term":"Flytting",
+					"title":"ArsakFra",
+					"path":"/Barnevern/Sak/Virksomhet/Flytting/ArsakFra/@Kode",
+					"items":[
+					{ "code":"1.1.1", "validFrom":"2022-01-01", "title":"Omsorgsplasseringen opphører " },
+					{ "code":"1.1.2", "validFrom":"2022-01-01", "title":"Barnet blir myndig " },
+					{ "code":"1.1.3", "validFrom":"2022-01-01", "title":"Fosterforeldre klarer ikke å dekke barnets
+					behov (forhold ved fosterhjemmet) " },
+					{ "code":"1.1.4", "validFrom":"2022-01-01", "title":"Barnet har behov for annet plasseringssted
+					(institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. " },
+					{ "code":"1.1.5", "validFrom":"2022-01-01", "title":"Andre grunner; (f.eks. uenighet om oppdragets
+					omfang, økonomi, forsterkningstiltak mv.) (krever presisering)" },
+					{ "code":"1.2.1", "validFrom":"2022-01-01", "title":"Barnet har behov fosterforeldre ikke kan dekke
+					" },
+					{ "code":"1.2.2", "validFrom":"2022-01-01", "title":"Endring i fosterforeldres livssituasjon
+					(skilsmisse, død, osv.) " },
+					{ "code":"1.2.3", "validFrom":"2022-01-01", "title":"Andre grunner; (f.eks. uenighet om oppdragets
+					omfang, økonomi, forsterkningstiltak, manglende eller lite effektiv veiledning, mv.) (krever
+					presisering) " },
+					{ "code":"1.3", "validFrom":"2022-01-01", "title":"Barnet flytter sammen med fosterforeldre til nytt
+					bosted" },
+					{ "code":"2.1", "validFrom":"2022-01-01", "title":"Avsluttet i henhold til plan ved oppstart av
+					institusjonsoppholdet" },
+					{ "code":"2.2", "validFrom":"2022-01-01", "title":"Institusjonen barnet bor i klarer ikke å dekke
+					barnets behov (manglende kompetanse hos ansatte, beboersammensetning, fysiske forhold ved
+					institusjonen osv)" },
+					{ "code":"2.3", "validFrom":"2022-01-01", "title":"Barnet har behov for annen type plasseringstiltak
+					(annen type institusjon, TFCO-fosterhjem, forsterket fosterhjem, osv. " },
+					{ "code":"2.4", "validFrom":"2022-01-01", "title":"Barnet blir myndig og velger selv å flytte ut" },
+					{ "code":"2.5", "validFrom":"2022-01-01", "title":"Barnet trekker samtykke" },
+					{ "code":"2.6", "validFrom":"2022-01-01", "title":"Foreldre trekker samtykke" },
+					{ "code":"2.7", "validFrom":"2022-01-01", "title":"Ikke medhold i fylkesnemnda" },
+					{ "code":"2.8", "validFrom":"2022-01-01", "title":"Uenighet mellom barnevernstjenesten og Bufetat om
+					oppdragets omfang og/eller økonomi," },
+					{ "code":"2.9", "validFrom":"2022-01-01", "title":"Andre grunner (krever presisering)" }
+					]
+					}
+				</xs:appinfo>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -769,36 +811,36 @@ Koder om annet:
 		<xs:attribute name="Kode" use="required">
 			<xs:annotation>
 				<xs:documentation>
-Barnet/ungdommen flytter til:
-1 = Fosterhjem i familie og nære nettverk
-2 = Fosterhjem utenfor familie og nære nettverk
-3 = Beredskapshjem
-4 = Barnevernsinstitusjon
-5 = Bolig med oppfølging
-6 = Foreldre
-7 = Egen bolig uten oppfølging
-8 = Annet bosted (spesifiser)
-9 = Adresseendring
-				 </xs:documentation>
+					Barnet/ungdommen flytter til:
+					1 = Fosterhjem i familie og nære nettverk
+					2 = Fosterhjem utenfor familie og nære nettverk
+					3 = Beredskapshjem
+					4 = Barnevernsinstitusjon
+					5 = Bolig med oppfølging
+					6 = Foreldre
+					7 = Egen bolig uten oppfølging
+					8 = Annet bosted (spesifiser)
+					9 = Adresseendring
+				</xs:documentation>
 				<xs:appinfo xml:lang="json">
-{
-   "type":"codelist",
-   "term":"Flytting",
-   "title":"FlytteTil",
-   "path":"/Barnevern/Sak/Virksomhet/Flytting/FlytteTil/@Kode",
-   "items":[
-	  {"code" : "1", "validFrom" : "2022-01-01", "title" : "Fosterhjem i familie og nære nettverk"},
-	  {"code" : "2", "validFrom" : "2022-01-01", "title" : "Fosterhjem utenfor familie og nære nettverk"},
-	  {"code" : "3", "validFrom" : "2022-01-01", "title" : "Beredskapshjem"},
-	  {"code" : "4", "validFrom" : "2022-01-01", "title" : "Barnevernsinstitusjon"},
-	  {"code" : "5", "validFrom" : "2022-01-01", "title" : "Bolig med oppfølging"},
-	  {"code" : "6", "validFrom" : "2022-01-01", "title" : "Foreldre"},
-	  {"code" : "7", "validFrom" : "2022-01-01", "title" : "Egen bolig uten oppfølging"},
-	  {"code" : "8", "validFrom" : "2022-01-01", "title" : "Annet bosted (spesifiser)"},
-	  {"code" : "9", "validFrom" : "2022-01-01", "title" : "Adresseendring"}
-   ]
-}
-							</xs:appinfo>
+					{
+					"type":"codelist",
+					"term":"Flytting",
+					"title":"FlytteTil",
+					"path":"/Barnevern/Sak/Virksomhet/Flytting/FlytteTil/@Kode",
+					"items":[
+					{"code" : "1", "validFrom" : "2022-01-01", "title" : "Fosterhjem i familie og nære nettverk"},
+					{"code" : "2", "validFrom" : "2022-01-01", "title" : "Fosterhjem utenfor familie og nære nettverk"},
+					{"code" : "3", "validFrom" : "2022-01-01", "title" : "Beredskapshjem"},
+					{"code" : "4", "validFrom" : "2022-01-01", "title" : "Barnevernsinstitusjon"},
+					{"code" : "5", "validFrom" : "2022-01-01", "title" : "Bolig med oppfølging"},
+					{"code" : "6", "validFrom" : "2022-01-01", "title" : "Foreldre"},
+					{"code" : "7", "validFrom" : "2022-01-01", "title" : "Egen bolig uten oppfølging"},
+					{"code" : "8", "validFrom" : "2022-01-01", "title" : "Annet bosted (spesifiser)"},
+					{"code" : "9", "validFrom" : "2022-01-01", "title" : "Adresseendring"}
+					]
+					}
+				</xs:appinfo>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">

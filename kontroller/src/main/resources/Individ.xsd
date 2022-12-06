@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2006 rel. 3 sp2 (http://www.altova.com) by Statistics Norway (Statistics Norway) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<xs:element name="Individ" type="IndividType">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
@@ -300,7 +300,7 @@
 		<xs:attribute name="Ledd">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:minLength value="0"/>
+					<xs:minLength value="1"/>
 					<xs:maxLength value="5"/>
 				</xs:restriction>
 			</xs:simpleType>

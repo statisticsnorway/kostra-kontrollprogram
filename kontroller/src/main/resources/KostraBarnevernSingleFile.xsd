@@ -255,14 +255,18 @@
                 </xs:documentation>
             </xs:annotation>
             <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="1"/>
-                    <xs:maxLength value="1"/>
-                    <xs:enumeration value="1"/>
-                    <xs:enumeration value="2"/>
-                    <xs:enumeration value="3"/>
-                    <xs:enumeration value="4"/>
-                </xs:restriction>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="1"/>
+                            <xs:enumeration value="1"/>
+                            <xs:enumeration value="2"/>
+                            <xs:enumeration value="3"/>
+                            <xs:enumeration value="4"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
@@ -305,7 +309,8 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
-        <xs:attribute name="Ledd" use="required">
+        <xs:attribute name="Bokstav"/>
+        <xs:attribute name="Ledd">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:minLength value="0"/>
@@ -352,7 +357,7 @@
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:minLength value="1"/>
-                <xs:maxLength value="100"/>
+                <xs:maxLength value="1000"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -363,7 +368,6 @@
         <xs:attribute name="Kode" use="required">
             <xs:annotation>
                 <xs:documentation>Kode for melder:
-                    0 = Uoppgitt
                     1 = Barnet selv
                     2 = Mor/ far/ foresatte
                     3 = Familie for øvrig
@@ -390,34 +394,37 @@
                 </xs:documentation>
             </xs:annotation>
             <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="1"/>
-                    <xs:maxLength value="2"/>
-                    <xs:enumeration value="0"/>
-                    <xs:enumeration value="1"/>
-                    <xs:enumeration value="2"/>
-                    <xs:enumeration value="3"/>
-                    <xs:enumeration value="4"/>
-                    <xs:enumeration value="5"/>
-                    <xs:enumeration value="6"/>
-                    <xs:enumeration value="7"/>
-                    <xs:enumeration value="8"/>
-                    <xs:enumeration value="9"/>
-                    <xs:enumeration value="10"/>
-                    <xs:enumeration value="11"/>
-                    <xs:enumeration value="12"/>
-                    <xs:enumeration value="13"/>
-                    <xs:enumeration value="14"/>
-                    <xs:enumeration value="15"/>
-                    <xs:enumeration value="16"/>
-                    <xs:enumeration value="17"/>
-                    <xs:enumeration value="18"/>
-                    <xs:enumeration value="19"/>
-                    <xs:enumeration value="20"/>
-                    <xs:enumeration value="21"/>
-                    <xs:enumeration value="22"/>
-                    <xs:enumeration value="23"/>
-                </xs:restriction>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="2"/>
+                            <xs:enumeration value="1"/>
+                            <xs:enumeration value="2"/>
+                            <xs:enumeration value="3"/>
+                            <xs:enumeration value="4"/>
+                            <xs:enumeration value="5"/>
+                            <xs:enumeration value="6"/>
+                            <xs:enumeration value="7"/>
+                            <xs:enumeration value="8"/>
+                            <xs:enumeration value="9"/>
+                            <xs:enumeration value="10"/>
+                            <xs:enumeration value="11"/>
+                            <xs:enumeration value="12"/>
+                            <xs:enumeration value="13"/>
+                            <xs:enumeration value="14"/>
+                            <xs:enumeration value="15"/>
+                            <xs:enumeration value="16"/>
+                            <xs:enumeration value="17"/>
+                            <xs:enumeration value="18"/>
+                            <xs:enumeration value="19"/>
+                            <xs:enumeration value="20"/>
+                            <xs:enumeration value="21"/>
+                            <xs:enumeration value="22"/>
+                            <xs:enumeration value="23"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
@@ -535,16 +542,20 @@
                 </xs:documentation>
             </xs:annotation>
             <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="1"/>
-                    <xs:maxLength value="1"/>
-                    <xs:enumeration value="1"/>
-                    <xs:enumeration value="2"/>
-                    <xs:enumeration value="3"/>
-                    <xs:enumeration value="4"/>
-                    <xs:enumeration value="5"/>
-                    <xs:enumeration value="6"/>
-                </xs:restriction>
+                <xs:list>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="1"/>
+                            <xs:enumeration value="1"/>
+                            <xs:enumeration value="2"/>
+                            <xs:enumeration value="3"/>
+                            <xs:enumeration value="4"/>
+                            <xs:enumeration value="5"/>
+                            <xs:enumeration value="6"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:list>
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
@@ -600,7 +611,6 @@
                     barneverntjenesten, ungdom og foreldre)
                     6.3 = Individuell plan
                     6.4 = Deltakelse i ansvarsgruppe
-                    6.5 = Samarbeid om utdanning og arbeid
                     6.99 = Andre tiltak (krever presisering)
                     7.1 = Bvl § 4-10 medisinsk undersøkelse og behandling
                     7.2 = Bvl § 4-11 behandling av barn med særlige opplæringsbehov
@@ -657,7 +667,6 @@
                     <xs:enumeration value="6.2"/>
                     <xs:enumeration value="6.3"/>
                     <xs:enumeration value="6.4"/>
-                    <xs:enumeration value="6.5"/>
                     <xs:enumeration value="6.99"/>
                     <xs:enumeration value="7.1"/>
                     <xs:enumeration value="7.2"/>
@@ -874,53 +883,6 @@
                 <xs:restriction base="xs:string">
                     <xs:minLength value="1"/>
                     <xs:maxLength value="300"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
-
-    <!-- Avgiver.xsd from here -->
-    <xs:complexType name="AvgiverType">
-        <xs:attribute name="Organisasjonsnummer" use="required">
-            <xs:annotation>
-                <xs:documentation>Organisasjonsnummeret til kommunen som er avgiver
-                    for dataene
-                </xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="9"/>
-                    <xs:maxLength value="9"/>
-                    <xs:pattern value="\d{9}"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="Versjon" type="xs:gYear" use="required">
-            <xs:annotation>
-                <xs:documentation>Rapporteringsår for innsendingen
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="Kommunenummer" use="required">
-            <xs:annotation>
-                <xs:documentation>4-sifret kommunenummer</xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="4"/>
-                    <xs:maxLength value="4"/>
-                    <xs:pattern value="\d{4}"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="Kommunenavn" use="required">
-            <xs:annotation>
-                <xs:documentation>Kommunens navn</xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:minLength value="1"/>
-                    <xs:maxLength value="250"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>

@@ -23,11 +23,13 @@ class UndersokelseTypeTest : BehaviorSpec({
         /** make sure it's possible to make a valid test XML */
         `when`("valid XML, expect no exceptions") {
             shouldNotThrowAny {
-                getSchemaValidator().validate(buildXmlInTest(
-                    "<Undersokelse Id=\"42\" StartDato=\"2022-11-14\" " +
-                            "SluttDato=\"2022-11-15\" Konklusjon=\"1\">" +
-                    "<Presisering>~Presisering~</Presisering></Undersokelse>"
-                ).toStreamSource())
+                getSchemaValidator().validate(
+                    buildXmlInTest(
+                        "<Undersokelse Id=\"42\" StartDato=\"2022-11-14\" " +
+                                "SluttDato=\"2022-11-15\" Konklusjon=\"1\">" +
+                                "<Presisering>~Presisering~</Presisering></Undersokelse>"
+                    ).toStreamSource()
+                )
             }
         }
 
@@ -119,8 +121,9 @@ class UndersokelseTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(undersokelseXml:String) =
-            buildKostraXml("<Melding Id=\"42\" StartDato=\"2022-11-14\">" +
-                    undersokelseXml + "</Melding>")
+        private fun buildXmlInTest(undersokelseXml: String) = buildKostraXml(
+            "<Melding Id=\"42\" StartDato=\"2022-11-14\">" +
+                    undersokelseXml + "</Melding>"
+        )
     }
 }

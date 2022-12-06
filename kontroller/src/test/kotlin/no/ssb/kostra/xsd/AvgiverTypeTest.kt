@@ -123,7 +123,7 @@ class AvgiverTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(avgiverXml: String): String =
+        private fun buildXmlInTest(avgiverXml: String) =
             "<Barnevern>" +
                     avgiverXml +
                     "<Individ Saksbehandler=\"Sara Saksbehandler\" Avslutta3112=\"1\" " +

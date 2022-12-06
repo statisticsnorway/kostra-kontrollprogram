@@ -23,8 +23,7 @@ class FlyttingTypeTest : BehaviorSpec({
             shouldNotThrowAny {
                 getSchemaValidator().validate(
                     buildFlyttingXml(
-                        "<Flytting Id=\"42\" " +
-                                "SluttDato=\"2022-11-14\">"
+                        "<Flytting Id=\"42\" SluttDato=\"2022-11-14\">"
                     ).toStreamSource()
                 )
             }

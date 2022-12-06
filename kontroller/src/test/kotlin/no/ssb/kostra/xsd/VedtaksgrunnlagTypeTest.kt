@@ -74,7 +74,7 @@ class VedtaksgrunnlagTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(vedtaksgrunnlagXml: String): String = buildKostraXml(
+        private fun buildXmlInTest(vedtaksgrunnlagXml: String) = buildKostraXml(
             "<Melding Id=\"42\" StartDato=\"2022-11-14\">" +
                     "<Undersokelse Id=\"42\" StartDato=\"2022-11-14\">" +
                     vedtaksgrunnlagXml +

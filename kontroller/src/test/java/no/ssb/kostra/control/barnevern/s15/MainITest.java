@@ -59,6 +59,13 @@ public class MainITest {
     }
 
     @Test
+    public void testFail05() {
+        controlFile("/testfiler/15F/Testfil_05_FEIL_2020_15F_for_3401_feil_i_melding_mangler_kode.xml"
+                , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av ugyldig Melding informasjon :-("}
+                , Constants.CRITICAL_ERROR);
+    }
+
+    @Test
     public void testWarning11() {
         controlFile("/testfiler/15F/Testfil_11_ADVARSEL_2020_15F_for_3401.xml"
                 , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av advarselskontroller :-|"}

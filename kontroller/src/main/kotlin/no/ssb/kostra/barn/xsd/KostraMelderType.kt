@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.*
 data class KostraMelderType(
 
     @field:XmlAttribute(name = "Kode", required = true)
-    val kode: String,
+    val kode: String = "0",
 
     @field:XmlElement(name = "Presisering")
     val presisering: String? = null,

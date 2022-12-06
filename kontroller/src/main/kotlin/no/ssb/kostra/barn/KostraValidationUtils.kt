@@ -20,6 +20,7 @@ object KostraValidationUtils {
         return validate(StringReader(xml))
 
     }
+
     @JvmStatic
     fun validate(xmlReader: Reader): Boolean {
         return try {

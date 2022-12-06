@@ -363,7 +363,6 @@
         <xs:attribute name="Kode" use="required">
             <xs:annotation>
                 <xs:documentation>Kode for melder:
-                    0 = Uoppgitt
                     1 = Barnet selv
                     2 = Mor/ far/ foresatte
                     3 = Familie for øvrig
@@ -393,7 +392,6 @@
                 <xs:restriction base="xs:string">
                     <xs:minLength value="1"/>
                     <xs:maxLength value="2"/>
-                    <xs:enumeration value="0"/>
                     <xs:enumeration value="1"/>
                     <xs:enumeration value="2"/>
                     <xs:enumeration value="3"/>

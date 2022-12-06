@@ -7,6 +7,8 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
+import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_PRESISERING_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_PRESISERING_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
 import org.xml.sax.SAXException
 
@@ -50,14 +52,12 @@ class MelderTypeTest : BehaviorSpec({
             row(
                 "empty Presisering",
                 "<Melder Kode=\"1\"><Presisering></Presisering></Melder>",
-                "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect " +
-                        "to minLength '1' for type '#AnonType_Presisering'."
+                EMPTY_PRESISERING_ERROR
             ),
             row(
                 "too long Presisering",
                 "<Melder Kode=\"1\"><Presisering>${"a".repeat(1001)}</Presisering></Melder>",
-                "cvc-maxLength-valid: Value '${"a".repeat(1001)}' with length = '1001' is not facet-valid " +
-                        "with respect to maxLength '1000' for type '#AnonType_Presisering'."
+                TOO_LONG_PRESISERING_ERROR
             )
         ) { description, partialXml, expectedError ->
             `when`(description) {

@@ -8,7 +8,6 @@ fun String.toStreamSource() = StreamSource(StringReader(this))
 
 
 object XsdTestUtils {
-    fun getResourceAsString(resourceName: String) = this.javaClass.getResource("/$resourceName")!!.readText()
 
     const val LOVHJEMMEL_XML = "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" Ledd=\"3\"/>"
 
@@ -19,6 +18,11 @@ object XsdTestUtils {
             "minLength '1' for type '#AnonType_Id'."
     const val TOO_LONG_ID_ERROR = "cvc-maxLength-valid: Value 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' with length = '31' " +
             "is not facet-valid with respect to maxLength '30' for type '#AnonType_Id'."
+
+    const val EMPTY_PRESISERING_ERROR = "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to " +
+            "minLength '1' for type '#AnonType_Presisering'."
+    val TOO_LONG_PRESISERING_ERROR = "cvc-maxLength-valid: Value '${"a".repeat(1001)}' with length = '1001' is not facet-valid " +
+            "with respect to maxLength '1000' for type '#AnonType_Presisering'."
 
     fun buildKostraXml(innerXml: String) =
         "<Barnevern>" +

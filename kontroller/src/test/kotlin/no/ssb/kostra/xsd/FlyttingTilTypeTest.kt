@@ -55,8 +55,8 @@ class FlyttingTilTypeTest : BehaviorSpec({
             row(
                 "too long Presisering",
                 "<FlyttingTil Kode=\"1\" Presisering=\"${"a".repeat(301)}\" />",
-                "cvc-maxLength-valid: Value '${"a".repeat(301)}' with length = '301' is not facet-valid " +
-                        "with respect to maxLength '300' for type '#AnonType_PresiseringFlyttingTilType'."
+                "cvc-maxLength-valid: Value '${"a".repeat(301)}' with length = '301' is not facet-valid with " +
+                        "respect to maxLength '300' for type '#AnonType_PresiseringFlyttingTilType'."
             )
         ) { description, partialXml, expectedError ->
             `when`(description) {

@@ -92,19 +92,21 @@ class AvgiverTypeTest : BehaviorSpec({
             /** Organisasjonsnummer */
             row(
                 "missing Organisasjonsnummer",
-                "<Avgiver Kommunenummer=\"1234\" Kommunenavn=\"En kommune\" />",
+                "<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" />",
                 "cvc-complex-type.4: Attribute 'Organisasjonsnummer' must appear on element 'Avgiver'."
             ),
             row(
                 "empty Organisasjonsnummer",
-                "<Avgiver Organisasjonsnummer=\"\" Kommunenummer=\"1234\" Kommunenavn=\"En kommune\" />",
+                "<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
+                        "Organisasjonsnummer=\"\"/>",
                 "cvc-pattern-valid: Value '' is not facet-valid with respect to pattern '\\d{9}' for " +
                         "type '#AnonType_OrganisasjonsnummerAvgiverType'."
             ),
             row(
                 "invalid Organisasjonsnummer",
-                "<Avgiver Organisasjonsnummer=\"1234\" Kommunenummer=\"1234\" Kommunenavn=\"En kommune\" />",
-                "cvc-pattern-valid: Value '1234' is not facet-valid with respect to pattern '\\d{9}' for " +
+                "<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
+                        "Organisasjonsnummer=\"42\"/>",
+                "cvc-pattern-valid: Value '42' is not facet-valid with respect to pattern '\\d{9}' for " +
                         "type '#AnonType_OrganisasjonsnummerAvgiverType'."
             )
         ) { description, partialXml, expectedError ->

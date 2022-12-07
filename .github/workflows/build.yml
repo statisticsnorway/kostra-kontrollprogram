@@ -18,9 +18,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Set version with Maven
-        run: mvn --batch-mode --update-snapshots versions:set -DnewVersion=${{github.ref_name}}
-
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots -P github -Drevision=${{github.ref_name}} package
 

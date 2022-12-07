@@ -94,4 +94,46 @@ public class MainITest {
         assertNotNull("Has content ErrorReport", errorReport);
         assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
+
+    @Test
+    public void testDoControl0DK4WithErrors() {
+        //@formatter:off
+        String inputFileContent =
+                //00000000111111111122222222223333333333444444444
+                //23456789012345678901234567890123456789012345678
+                """
+                        0D20224340001                  215  000     2899
+                        0D20224340000                  215  070   302276
+                        0D20224340000                  215  080    40000
+                        0D20224340000                  216  110    28888
+                        0D20224340000                  235  161      438
+                        0D20224340000                  234  152     2881
+                        0D20224340000                  234  153    -7583
+                        0D20224340000                  234  320      304
+                        0D20224340000                  234  395       32
+                        0D20224340000                  234  430       32
+                        0D20224340000                  234  450       32
+                        0D20224340000                  234  499       32
+                        0D20224340000                  234  550       32
+                        0D20224340000                  234  570       32
+                        0D20224340000                  234  610       32
+                        0D20224340000                  234  640       32""";
+
+        //@formatter:on
+
+        var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+
+        var arguments = new Arguments(new
+                String[]{"-s", "0DK4", "-y", "2022", "-q", "4", "-r", "340000", "-n", "Innlandet Fylkeskommune"},
+                byteArrayInputStream);
+
+        var errorReport = Main.doControls(arguments);
+
+        if (Constants.DEBUG) {
+            System.out.print(errorReport.generateReport());
+        }
+
+        assertNotNull("Has content ErrorReport", errorReport);
+        assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
+    }
 }

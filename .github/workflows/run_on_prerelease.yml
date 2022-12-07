@@ -18,6 +18,12 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Output tag name
+        run: echo "github.ref_name = ${{github.ref_name}}"
+
+      - name: Set version with Maven
+        run: mvn --batch-mode --update-snapshots versions:set -DnewVersion=${{github.ref_name}}
+
       - name: Build with Maven
         run: mvn --batch-mode package
 

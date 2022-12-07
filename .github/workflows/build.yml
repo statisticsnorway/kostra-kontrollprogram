@@ -19,10 +19,10 @@ jobs:
           distribution: 'adopt'
 
       - name: Set version with Maven
-        run: mvn --batch-mode --update-snapshots versions:set -DnewVersion=${{github.ref_name}}
+        run: mvn --batch-mode -U versions:set -DnewVersion=${{github.ref_name}}
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots -P github -Drevision=${{github.ref_name}} package
+        run: mvn --batch-mode -P github -Drevision=${{github.ref_name}} package
 
       - name: Release
         uses: softprops/action-gh-release@v1

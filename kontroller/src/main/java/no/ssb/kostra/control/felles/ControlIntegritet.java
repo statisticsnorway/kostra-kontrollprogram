@@ -8,8 +8,6 @@ import no.ssb.kostra.felles.KostraRecord;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
-
 @SuppressWarnings("SpellCheckingInspection")
 public class ControlIntegritet {
 
@@ -21,20 +19,35 @@ public class ControlIntegritet {
 
         errorReport.incrementCount();
 
-        return
-        controlSkjema(errorReport, regnskap)
-        || controlAargang(errorReport, regnskap)
-        || controlKvartal(errorReport, regnskap)
-        || controlRegion(errorReport, regnskap)
-        || controlOrganisasjonsnummer(errorReport, regnskap)
-        || controlForetaksnummer(errorReport, regnskap)
-        || controlKontoklasse(errorReport, regnskap, kontoklasseList)
-        || (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList) && controlFunksjon(errorReport, regnskap, funksjonkapittelList)
-                && controlArt(errorReport, regnskap, artsektorList))
-        || (isCodeInCodeList(args.getSkjema(), balanseRegnskapList) && controlKapittel(errorReport, regnskap, funksjonkapittelList)
-                && controlSektor(errorReport, regnskap, artsektorList))
-        || controlBelop(errorReport, regnskap)
-        || controlUgyldigeBelop(errorReport, regnskap);
+        boolean isControlSkjema = controlSkjema(errorReport, regnskap);
+        boolean isControlAargang = controlAargang(errorReport, regnskap);
+        boolean isControlKvartal = controlKvartal(errorReport, regnskap);
+        boolean isControlRegion = controlRegion(errorReport, regnskap);
+        boolean isControlOrganisasjonsnummer = controlOrganisasjonsnummer(errorReport, regnskap);
+        boolean isControlForetaksnummer = controlForetaksnummer(errorReport, regnskap);
+        boolean isControlKontoklasse = controlKontoklasse(errorReport, regnskap, kontoklasseList);
+        boolean isControlFunksjon = controlFunksjon(errorReport, regnskap, funksjonkapittelList);
+        boolean isControlArt = controlArt(errorReport, regnskap, artsektorList);
+        boolean isControlKapittel = controlKapittel(errorReport, regnskap, funksjonkapittelList);
+        boolean isControlSektor = controlSektor(errorReport, regnskap, artsektorList);
+        boolean isControlBelop = controlBelop(errorReport, regnskap);
+        boolean isControlUgyldigeBelop = controlUgyldigeBelop(errorReport, regnskap);
+
+        return (
+                isControlSkjema
+                        || isControlAargang
+                        || isControlKvartal
+                        || isControlRegion
+                        || isControlOrganisasjonsnummer
+                        || isControlForetaksnummer
+                        || isControlKontoklasse
+                        || isControlFunksjon
+                        || isControlArt
+                        || isControlKapittel
+                        || isControlSektor
+                        || isControlBelop
+                        || isControlUgyldigeBelop
+        );
     }
 
     public static boolean controlSkjema(final ErrorReport errorReport, final List<KostraRecord> regnskap) {

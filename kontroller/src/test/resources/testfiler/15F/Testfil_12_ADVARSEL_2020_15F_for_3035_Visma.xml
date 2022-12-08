@@ -10,24 +10,24 @@
             <Undersokelse Id="30360" StartDato="2020-07-08"/>
         </Melding>
         <Tiltak StartDato="2001-01-01" Id="2">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4" Ledd="2" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4" Ledd="2"/>
             <Kategori Kode="1.1"/>
         </Tiltak>
         <Tiltak StartDato="2017-03-29" Id="12424">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4" Ledd="" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4"/>
             <Kategori Kode="3.1"/>
         </Tiltak>
     </Individ>
     <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2011-10-15" Id="78791" Fodselsnummer="15040500200" Journalnummer="78791">
         <Tiltak StartDato="2012-01-01" Id="12396">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="8" Ledd="2" Punktum=""/>
-            <JmfrLovhjemmel Lov="bvl" Kapittel="4" Paragraf="24" Ledd="" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="8" Ledd="2"/>
+            <JmfrLovhjemmel Lov="bvl" Kapittel="4" Paragraf="24"/>
             <Kategori Kode="2.1"/>
         </Tiltak>
     </Individ>
     <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2014-11-05" Id="78796" Fodselsnummer="15040299999" Journalnummer="78796">
         <Tiltak SluttDato="2020-01-30" StartDato="2020-01-01" Id="12467">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="20a" Ledd="" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="20a"/>
             <Kategori Kode="4.6"/>
         </Tiltak>
     </Individ>
@@ -46,11 +46,11 @@
             <Saksinnhold Kode="7"/>
         </Melding>
         <Tiltak StartDato="2017-03-01" Id="12423">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4" Ledd="" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="4"/>
             <Kategori Kode="4.4"/>
         </Tiltak>
         <Tiltak StartDato="2020-03-03" Id="12466">
-            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="28" Ledd="3" Punktum=""/>
+            <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="28" Ledd="3"/>
             <Kategori Kode="2.2"/>
         </Tiltak>
         <Tiltak StartDato="2020-03-04" Id="12472">

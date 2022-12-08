@@ -2,6 +2,7 @@ package no.ssb.kostra.control.barnevern.s15;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -55,6 +56,13 @@ public class MainITest {
     public void testFail04() {
         controlFile("/testfiler/15F/Testfil_04_FEIL_2020_15F_for_3401.xml"
                 , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av alle kontroller :-("}
+                , Constants.CRITICAL_ERROR);
+    }
+
+    @Test
+    public void testFail05() {
+        controlFile("/testfiler/15F/Testfil_05_FEIL_2020_15F_for_3401_feil_i_melding_mangler_kode.xml"
+                , new String[]{"-s", "15F", "-y", "2020", "-r", "340100", "-n", "Test av ugyldig Melding informasjon :-("}
                 , Constants.CRITICAL_ERROR);
     }
 

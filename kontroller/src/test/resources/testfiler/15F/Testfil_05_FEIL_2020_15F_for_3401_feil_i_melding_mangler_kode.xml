@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Barnevern>
+    <Avgiver Versjon="2020" Kommunenummer="3401" Kommunenavn="Kongsvinger" Organisasjonsnummer="944117784"/>
+    <Individ Saksbehandler="Siri Saksbehandlersen" Avslutta3112="2" StartDato="2020-02-09" Id="I4" Journalnummer="J4" Fodselsnummer="02011088123">
+        <Melding Id="M1" StartDato="2020-02-10" SluttDato="2020-02-15" Konklusjon="1">
+            <Melder>
+                <Presisering>Presiseringstekst</Presisering>
+            </Melder>
+            <Saksinnhold Kode="1"/>
+            <Undersokelse StartDato="2020-02-15" Id="U2" Konklusjon="1" SluttDato="2020-02-17">
+                <Vedtaksgrunnlag Kode="1"/>
+            </Undersokelse>
+        </Melding>
+    </Individ>
+</Barnevern>

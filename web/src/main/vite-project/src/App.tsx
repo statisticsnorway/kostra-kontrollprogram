@@ -80,7 +80,7 @@ const App = () => {
             <hr className="my-0"/>
         </header>
 
-        { /** TABS */}
+        {/** TABS */}
         {fileReports.length > 0 && <TabRow
             fileReports={fileReports}
             activeTabIndex={activeTabIndex}
@@ -90,7 +90,7 @@ const App = () => {
         {/** show when UI-data is loaded */}
         {uiData && <main>
 
-            { /** FORM */}
+            {/** FORM */}
             <MainForm
                 showForm={activeTabIndex == 0}
                 formTypes={uiData.formTypes}
@@ -98,7 +98,7 @@ const App = () => {
                 onSubmit={onSubmit}
             />
 
-            { /** FILE REPORT */}
+            {/** FILE REPORT */}
             {activeTabIndex > 0 &&
                 <ReportView
                     fileReport={fileReports[activeTabIndex - 1]}

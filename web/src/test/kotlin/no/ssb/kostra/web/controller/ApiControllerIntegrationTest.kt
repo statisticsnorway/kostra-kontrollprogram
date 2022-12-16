@@ -22,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
-import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.DEFAULT_PROPERTY_PATH
+import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -146,7 +146,7 @@ class ApiControllerIntegrationTest(
                     region = "667600",
                     filnavn = "test.dat"
                 ),
-                DEFAULT_PROPERTY_PATH,
+                FALLBACK_PROPERTY_PATH,
                 "Skjema krever orgnr"
             ),
             row(
@@ -170,7 +170,7 @@ class ApiControllerIntegrationTest(
                     orgnrForetak = "987654321",
                     filnavn = "test.dat"
                 ),
-                DEFAULT_PROPERTY_PATH,
+                FALLBACK_PROPERTY_PATH,
                 "Skjema krever ett eller flere orgnr for virksomhet(er)"
             ),
             row(

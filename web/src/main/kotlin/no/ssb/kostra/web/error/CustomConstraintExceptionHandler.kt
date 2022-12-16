@@ -34,10 +34,10 @@ class CustomConstraintExceptionHandler(responseProcessor: ErrorResponseProcessor
                 errorType = ApiErrorType.VALIDATION_ERROR,
                 url = request.path,
                 validationErrors = exception.constraintViolations
-                    .associate { (it.propertyPath.lastOrNull()?.name ?: DEFAULT_PROPERTY_PATH) to it.message }
+                    .associate { (it.propertyPath.lastOrNull()?.name ?: FALLBACK_PROPERTY_PATH) to it.message }
             ))
 
     companion object {
-        const val DEFAULT_PROPERTY_PATH = "ROOT"
+        const val FALLBACK_PROPERTY_PATH = "ROOT"
     }
 }

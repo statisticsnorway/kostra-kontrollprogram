@@ -421,6 +421,8 @@
 				<!-- Kode 13 utgår for 2021-data -->
 				<!-- Kode 16 utgår for 2021-data, delt i 25 og 26-->
 				<!-- Kode 27 ny for 2021-data-->
+				<!-- Kode 28 ny for 2022-data-->
+				<!-- Kode 29, 30 ,31 nye for 2023-data-->
 				<xs:documentation>Kode for saksinnhold:
 					Koder om foreldrene:
 					1 = Foreldres somatiske sykdom
@@ -433,6 +435,8 @@
 					23 = Foreldres manglende oppfølging av barnets behov for barnehage, skole og pedagogiske tjenester
 					24 = Konflikt mellom foreldre som ikke bor sammen
 					28 = Foreldres manglende oppfølging av barnets behov for helsetjenester
+					29 = Foreldres kognitive vansker
+					31 = Foreldre har vedvarende økonomiske problemer/vedvarende lavinntekt
 					5 = Foreldres kriminalitet
 
 					Koder mellom foreldre og barnet:
@@ -454,6 +458,7 @@
 					25 = Barnets atferd
 					26 = Barnets kriminelle handlinger
 					27 = Barnet utsatt for menneskehandel
+					30 = Barnets kognitive vansker
 
 					Koder om annet:
 					18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes
@@ -494,6 +499,9 @@
 					<xs:enumeration value="26"/>
 					<xs:enumeration value="27"/>
 					<xs:enumeration value="28"/>
+					<xs:enumeration value="29"/>
+					<xs:enumeration value="30"/>
+					<xs:enumeration value="31"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>

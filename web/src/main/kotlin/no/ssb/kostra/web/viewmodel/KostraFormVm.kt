@@ -6,6 +6,7 @@ import no.ssb.kostra.web.validation.ValidFormType
 import javax.validation.Valid
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Pattern
 
 @Introspected
@@ -15,8 +16,8 @@ data class KostraFormVm(
     val aar: Int = 0,
 
     @field:ValidFormType
-    @field:NotBlank(message = "Skjematype må være utfylt")
-    val skjema: String = "",
+    @field:NotEmpty(message = "Skjematype må være utfylt")
+    val skjema: String? = null,
 
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")
     val region: String = "",

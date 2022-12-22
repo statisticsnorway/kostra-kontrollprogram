@@ -79,7 +79,7 @@ class ApiControllerIntegrationTest(
 
         forAll(
             row(
-                "Invalid aar",
+                "invalid aar",
                 KostraFormVm(
                     aar = 2020,
                     skjema = "15F",
@@ -89,7 +89,17 @@ class ApiControllerIntegrationTest(
                 "År kan ikke være mindre enn 2022"
             ),
             row(
-                "Blank skjematype",
+                "skjematype = null",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = null,
+                    region = "667600"
+                ),
+                "skjema",
+                "Skjematype må være utfylt"
+            ),
+            row(
+                "blank skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "",

@@ -18,8 +18,9 @@ class ValidatorFactory(private val uiConfig: UiConfig) {
     @Singleton
     fun validForm(): ConstraintValidator<ValidForm, KostraFormVm> = ConstraintValidator { value, _, context ->
 
-        if (value == null || value.skjema.isBlank()
-            /** let dedicated validator handle invalid skjematype */
+        /** leave validation to dedicated validators */
+        if (value == null
+            || value.skjema.isNullOrBlank()
             || uiConfig.skjematyper.none { it.id == value.skjema }
         ) return@ConstraintValidator true
 

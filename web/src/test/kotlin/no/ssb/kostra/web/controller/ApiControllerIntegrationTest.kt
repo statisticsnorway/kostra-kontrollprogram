@@ -128,7 +128,7 @@ class ApiControllerIntegrationTest(
                     region = ""
                 ),
                 "region",
-                "Region er påkrevet"
+                "Region må bestå av 6 siffer uten mellomrom"
             ),
             row(
                 "white-space region",
@@ -138,7 +138,7 @@ class ApiControllerIntegrationTest(
                     region = "   "
                 ),
                 "region",
-                "Region er påkrevet"
+                "Region må bestå av 6 siffer uten mellomrom"
             ),
             row(
                 "invalid region",

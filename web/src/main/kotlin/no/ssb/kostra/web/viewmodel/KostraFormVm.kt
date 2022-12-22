@@ -18,7 +18,6 @@ data class KostraFormVm(
     @field:NotBlank(message = "Skjematype er påkrevet")
     val skjema: String = "",
 
-    @field:NotBlank(message = "Region er påkrevet")
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")
     val region: String = "",
 

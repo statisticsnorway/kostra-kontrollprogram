@@ -199,18 +199,6 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "orgnrVirksomhet = null",
-                KostraFormVm(
-                    aar = Year.now().value,
-                    skjema = "0X",
-                    region = "667600",
-                    orgnrForetak = "987654321",
-                    filnavn = "test.dat"
-                ),
-                FALLBACK_PROPERTY_PATH,
-                "Skjema krever ett eller flere orgnr for virksomhet(er)"
-            ),
-            row(
                 "empty orgnrVirksomhet",
                 KostraFormVm(
                     aar = Year.now().value,

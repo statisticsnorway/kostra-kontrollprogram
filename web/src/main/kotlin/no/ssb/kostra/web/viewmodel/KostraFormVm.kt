@@ -26,7 +26,7 @@ data class KostraFormVm(
     val orgnrForetak: String? = null,
 
     @field:Valid
-    val orgnrVirksomhet: Collection<CompanyIdVm>? = null,
+    val orgnrVirksomhet: Collection<CompanyIdVm> = setOf(),
 
     @field:NotBlank(message = "Filvedlegg er påkrevet")
     val filnavn: String = ""

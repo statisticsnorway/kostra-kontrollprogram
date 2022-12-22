@@ -12,7 +12,7 @@ class ValidatorFactory(private val uiConfig: UiConfig) {
     @Singleton
     fun validFormType(): ConstraintValidator<ValidFormType, String> = ConstraintValidator { value, _, context ->
         context.messageTemplate("Ugyldig skjematype ({validatedValue})")
-        value?.isBlank() != false || uiConfig.skjematyper.any { it.id == value }
+        uiConfig.skjematyper.any { it.id == value }
     }
 
     @Singleton

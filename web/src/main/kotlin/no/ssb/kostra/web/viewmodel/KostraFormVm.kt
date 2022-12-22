@@ -15,7 +15,6 @@ data class KostraFormVm(
     val aar: Int = 0,
 
     @field:ValidFormType
-    @field:NotBlank(message = "Skjematype er påkrevet")
     val skjema: String = "",
 
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")

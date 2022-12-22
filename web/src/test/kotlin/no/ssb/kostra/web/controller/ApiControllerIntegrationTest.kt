@@ -97,7 +97,7 @@ class ApiControllerIntegrationTest(
                     region = "667600"
                 ),
                 "skjema",
-                "Skjematype er påkrevet"
+                "Ugyldig skjematype ()"
             ),
             row(
                 "white-space skjematype",
@@ -107,7 +107,7 @@ class ApiControllerIntegrationTest(
                     region = "667600"
                 ),
                 "skjema",
-                "Skjematype er påkrevet"
+                "Ugyldig skjematype (   )"
             ),
             row(
                 "invalid skjematype",
@@ -199,12 +199,25 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "orgnrVirksomhet missing",
+                "orgnrVirksomhet = null",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = "987654321",
+                    filnavn = "test.dat"
+                ),
+                FALLBACK_PROPERTY_PATH,
+                "Skjema krever ett eller flere orgnr for virksomhet(er)"
+            ),
+            row(
+                "empty orgnrVirksomhet",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
+                    orgnrForetak = "987654321",
+                    orgnrVirksomhet = setOf(),
                     filnavn = "test.dat"
                 ),
                 FALLBACK_PROPERTY_PATH,

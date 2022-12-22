@@ -12,15 +12,14 @@ class ValidatorFactory(private val uiConfig: UiConfig) {
     @Singleton
     fun validFormType(): ConstraintValidator<ValidFormType, String> = ConstraintValidator { value, _, context ->
         context.messageTemplate("Ugyldig skjematype ({validatedValue})")
-        value.isNullOrBlank() || uiConfig.skjematyper.any { it.id == value }
+        value?.isBlank() != false || uiConfig.skjematyper.any { it.id == value }
     }
 
     @Singleton
     fun validForm(): ConstraintValidator<ValidForm, KostraFormVm> = ConstraintValidator { value, _, context ->
 
         /** leave validation to dedicated validators */
-        if (value == null
-            || value.skjema.isNullOrBlank()
+        if (value!!.skjema.isBlank()
             || uiConfig.skjematyper.none { it.id == value.skjema }
         ) return@ConstraintValidator true
 

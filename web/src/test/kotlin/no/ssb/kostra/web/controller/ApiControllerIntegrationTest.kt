@@ -90,20 +90,20 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "skjematype = null",
+                "blank skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
-                    skjema = null,
+                    skjema = "",
                     region = "667600"
                 ),
                 "skjema",
                 "Skjematype er påkrevet"
             ),
             row(
-                "blank skjematype",
+                "white-space skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
-                    skjema = "",
+                    skjema = "   ",
                     region = "667600"
                 ),
                 "skjema",
@@ -121,21 +121,21 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "region = null",
-                KostraFormVm(
-                    aar = Year.now().value,
-                    skjema = "15F",
-                    region = null
-                ),
-                "region",
-                "Region er påkrevet"
-            ),
-            row(
                 "blank region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
                     region = ""
+                ),
+                "region",
+                "Region er påkrevet"
+            ),
+            row(
+                "white-space region",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "   "
                 ),
                 "region",
                 "Region er påkrevet"
@@ -152,23 +152,23 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "filnavn = null",
-                KostraFormVm(
-                    aar = Year.now().value,
-                    skjema = "15F",
-                    region = "667600",
-                    filnavn = null
-                ),
-                "filnavn",
-                "Filvedlegg er påkrevet"
-            ),
-            row(
                 "blank filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
                     region = "667600",
                     filnavn = ""
+                ),
+                "filnavn",
+                "Filvedlegg er påkrevet"
+            ),
+            row(
+                "white-space filnavn",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "667600",
+                    filnavn = "  "
                 ),
                 "filnavn",
                 "Filvedlegg er påkrevet"

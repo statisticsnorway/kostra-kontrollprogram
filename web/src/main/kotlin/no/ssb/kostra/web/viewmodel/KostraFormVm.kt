@@ -5,7 +5,6 @@ import no.ssb.kostra.web.validation.ValidForm
 import no.ssb.kostra.web.validation.ValidFormType
 import javax.validation.Valid
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Pattern
 
@@ -16,11 +15,12 @@ data class KostraFormVm(
     val aar: Int = 0,
 
     @field:ValidFormType
-    @field:NotEmpty(message = "Skjematype må være utfylt")
+    @field:NotEmpty(message = "Skjematype er påkrevet")
     val skjema: String? = null,
 
+    @field:NotEmpty(message = "Region er påkrevet")
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")
-    val region: String = "",
+    val region: String? = null,
 
     val navn: String? = null,
 
@@ -30,6 +30,6 @@ data class KostraFormVm(
     @field:Valid
     val orgnrVirksomhet: Collection<CompanyIdVm>? = null,
 
-    @field:NotBlank(message = "Filvedlegg mangler")
+    @field:NotEmpty(message = "Filvedlegg er påkrevet")
     val filnavn: String? = null
 )

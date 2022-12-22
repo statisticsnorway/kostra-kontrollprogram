@@ -88,6 +88,7 @@ class ApiControllerIntegrationTest(
                 "aar",
                 "År kan ikke være mindre enn 2022"
             ),
+
             row(
                 "skjematype = null",
                 KostraFormVm(
@@ -96,7 +97,7 @@ class ApiControllerIntegrationTest(
                     region = "667600"
                 ),
                 "skjema",
-                "Skjematype må være utfylt"
+                "Skjematype er påkrevet"
             ),
             row(
                 "blank skjematype",
@@ -106,10 +107,10 @@ class ApiControllerIntegrationTest(
                     region = "667600"
                 ),
                 "skjema",
-                "Skjematype må være utfylt"
+                "Skjematype er påkrevet"
             ),
             row(
-                "Invalid skjematype",
+                "invalid skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "a",
@@ -118,18 +119,29 @@ class ApiControllerIntegrationTest(
                 "skjema",
                 "Ugyldig skjematype (a)"
             ),
+
             row(
-                "Blank region",
+                "region = null",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = null
+                ),
+                "region",
+                "Region er påkrevet"
+            ),
+            row(
+                "blank region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
                     region = ""
                 ),
                 "region",
-                "Region må bestå av 6 siffer uten mellomrom"
+                "Region er påkrevet"
             ),
             row(
-                "Invalid region",
+                "invalid region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -138,16 +150,30 @@ class ApiControllerIntegrationTest(
                 "region",
                 "Region må bestå av 6 siffer uten mellomrom"
             ),
+
             row(
-                "filnavn missing",
+                "filnavn = null",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
-                    region = "667600"
+                    region = "667600",
+                    filnavn = null
                 ),
                 "filnavn",
-                "Filvedlegg mangler"
+                "Filvedlegg er påkrevet"
             ),
+            row(
+                "blank filnavn",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "667600",
+                    filnavn = ""
+                ),
+                "filnavn",
+                "Filvedlegg er påkrevet"
+            ),
+
             row(
                 "orgnrForetak missing",
                 KostraFormVm(
@@ -160,7 +186,7 @@ class ApiControllerIntegrationTest(
                 "Skjema krever orgnr"
             ),
             row(
-                "Invalid orgnrForetak",
+                "invalid orgnrForetak",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0F",
@@ -171,6 +197,7 @@ class ApiControllerIntegrationTest(
                 "orgnrForetak",
                 "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             ),
+
             row(
                 "orgnrVirksomhet missing",
                 KostraFormVm(

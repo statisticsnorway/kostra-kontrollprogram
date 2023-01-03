@@ -79,7 +79,7 @@ class ApiControllerIntegrationTest(
 
         forAll(
             row(
-                "Invalid aar",
+                "invalid aar",
                 KostraFormVm(
                     aar = 2020,
                     skjema = "15F",
@@ -88,18 +88,29 @@ class ApiControllerIntegrationTest(
                 "aar",
                 "År kan ikke være mindre enn 2022"
             ),
+
             row(
-                "Blank skjematype",
+                "blank skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "",
                     region = "667600"
                 ),
                 "skjema",
-                "Skjematype må være utfylt"
+                "Ugyldig skjematype ()"
             ),
             row(
-                "Invalid skjematype",
+                "white-space skjematype",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "   ",
+                    region = "667600"
+                ),
+                "skjema",
+                "Ugyldig skjematype (   )"
+            ),
+            row(
+                "invalid skjematype",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "a",
@@ -108,8 +119,9 @@ class ApiControllerIntegrationTest(
                 "skjema",
                 "Ugyldig skjematype (a)"
             ),
+
             row(
-                "Blank region",
+                "blank region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -119,7 +131,17 @@ class ApiControllerIntegrationTest(
                 "Region må bestå av 6 siffer uten mellomrom"
             ),
             row(
-                "Invalid region",
+                "white-space region",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "   "
+                ),
+                "region",
+                "Region må bestå av 6 siffer uten mellomrom"
+            ),
+            row(
+                "invalid region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -128,16 +150,30 @@ class ApiControllerIntegrationTest(
                 "region",
                 "Region må bestå av 6 siffer uten mellomrom"
             ),
+
             row(
-                "filnavn missing",
+                "blank filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
-                    region = "667600"
+                    region = "667600",
+                    filnavn = ""
                 ),
                 "filnavn",
-                "Filvedlegg mangler"
+                "Filvedlegg er påkrevet"
             ),
+            row(
+                "white-space filnavn",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "667600",
+                    filnavn = "  "
+                ),
+                "filnavn",
+                "Filvedlegg er påkrevet"
+            ),
+
             row(
                 "orgnrForetak missing",
                 KostraFormVm(
@@ -150,7 +186,7 @@ class ApiControllerIntegrationTest(
                 "Skjema krever orgnr"
             ),
             row(
-                "Invalid orgnrForetak",
+                "invalid orgnrForetak",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0F",
@@ -161,13 +197,15 @@ class ApiControllerIntegrationTest(
                 "orgnrForetak",
                 "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             ),
+
             row(
-                "orgnrVirksomhet missing",
+                "empty orgnrVirksomhet",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = "987654321",
+                    orgnrVirksomhet = setOf(),
                     filnavn = "test.dat"
                 ),
                 FALLBACK_PROPERTY_PATH,

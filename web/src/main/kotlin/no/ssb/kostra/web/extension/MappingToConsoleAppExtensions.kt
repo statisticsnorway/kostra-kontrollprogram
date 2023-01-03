@@ -23,7 +23,7 @@ fun KostraFormVm.toKostraArguments(inputStream: InputStream) = Arguments(
         if (!this.orgnrForetak.isNullOrEmpty()) {
             parameterMap[COMPANY_ORGNR_ABBR] = this.orgnrForetak
         }
-        if (this.orgnrVirksomhet?.any() == true) {
+        if (this.orgnrVirksomhet.any()) {
             parameterMap[UNIT_ORGNR_ABBR] = this.orgnrVirksomhet.joinToString(separator = SEPARATOR_CHAR) { it.orgnr }
         }
     }.entries.flatMap { (arg, argValue) -> listOf("-$arg", argValue) }.toTypedArray(),

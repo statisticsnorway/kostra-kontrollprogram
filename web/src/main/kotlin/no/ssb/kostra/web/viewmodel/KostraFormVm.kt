@@ -15,7 +15,6 @@ data class KostraFormVm(
     val aar: Int = 0,
 
     @field:ValidFormType
-    @field:NotBlank(message = "Skjematype må være utfylt")
     val skjema: String = "",
 
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")
@@ -27,8 +26,8 @@ data class KostraFormVm(
     val orgnrForetak: String? = null,
 
     @field:Valid
-    val orgnrVirksomhet: Collection<CompanyIdVm>? = null,
+    val orgnrVirksomhet: Collection<CompanyIdVm> = setOf(),
 
-    @field:NotBlank(message = "Filvedlegg mangler")
-    val filnavn: String? = null
+    @field:NotBlank(message = "Filvedlegg er påkrevet")
+    val filnavn: String = ""
 )

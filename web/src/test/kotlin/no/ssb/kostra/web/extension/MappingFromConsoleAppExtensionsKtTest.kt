@@ -4,7 +4,6 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.controlprogram.ArgumentConstants.COMPANY_ORGNR_ABBR
 import no.ssb.kostra.controlprogram.ArgumentConstants.REGION_ABBR
@@ -52,11 +51,9 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                         region shouldBe "123456"
                         orgnrForetak shouldBe "888888888"
 
+                        orgnrVirksomhet.size shouldBe expectedNumberOfCompanyIds
                         if (expectedNumberOfCompanyIds > 0) {
-                            orgnrVirksomhet?.size shouldBe expectedNumberOfCompanyIds
-                            orgnrVirksomhet?.first()?.orgnr shouldBe "987654321"
-                        } else {
-                            orgnrVirksomhet.shouldBeNull()
+                            orgnrVirksomhet.first().orgnr shouldBe "987654321"
                         }
                     }
                 }

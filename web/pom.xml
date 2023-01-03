@@ -16,16 +16,16 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.7.4</micronaut.version>
+        <micronaut.version>3.8.0</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlinVersion>1.7.22</kotlinVersion>
+        <kotlinVersion>1.8.0</kotlinVersion>
         <kotestVersion>5.5.4</kotestVersion>
-        <jackson.version>2.14.0</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
         <swagger.version>2.2.7</swagger.version>
-        <micronaut.openapi.version>4.7.1</micronaut.openapi.version>
+        <micronaut.openapi.version>4.8.1</micronaut.openapi.version>
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
         <frontend-src-dir>${project.basedir}/src/main/vite-project</frontend-src-dir>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <version>3.5.0</version>
+            <version>3.5.1</version>
         </dependency>
 
         <dependency>
@@ -100,7 +100,6 @@
         <dependency>
             <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
-            <version>3.7.2</version>
         </dependency>
 
         <dependency>
@@ -124,7 +123,6 @@
         <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-kotest5</artifactId>
-            <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -143,7 +141,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
-            <version>1.13.2</version>
+            <version>1.13.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -155,7 +153,7 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
-            <version>3.5.0</version>
+            <version>3.5.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -169,7 +167,7 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.2</version>
                 <configuration>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>

@@ -863,7 +863,7 @@ public class IndividNodeHandler extends NodeHandler {
                                         + "). Omsorgstiltak med sluttdato ("
                                         + tiltakSluttDatoString
                                         + ") krever kode for opphevelse",
-                                Constants.CRITICAL_ERROR), tiltak);
+                                Constants.NORMAL_ERROR), tiltak);
 
                 controlOver7OgIBarnehage(
                         errorReport,

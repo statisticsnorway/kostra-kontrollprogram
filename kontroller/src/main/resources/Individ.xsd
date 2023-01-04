@@ -292,7 +292,7 @@
 		<xs:attribute name="Bokstav">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:minLength value="1"/>
+					<xs:minLength value="0"/>
 					<xs:maxLength value="1"/>
 				</xs:restriction>
 			</xs:simpleType>
@@ -300,7 +300,7 @@
 		<xs:attribute name="Ledd">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:minLength value="1"/>
+					<xs:minLength value="0"/>
 					<xs:maxLength value="5"/>
 				</xs:restriction>
 			</xs:simpleType>
@@ -308,7 +308,7 @@
 		<xs:attribute name="Punktum">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:minLength value="1"/>
+					<xs:minLength value="0"/>
 					<xs:maxLength value="5"/>
 				</xs:restriction>
 			</xs:simpleType>

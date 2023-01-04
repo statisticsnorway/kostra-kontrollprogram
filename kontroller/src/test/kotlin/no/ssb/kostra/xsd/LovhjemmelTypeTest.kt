@@ -86,13 +86,6 @@ class LovhjemmelTypeTest : BehaviorSpec({
 
             /** Bokstav */
             row(
-                "empty Bokstav",
-                "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +
-                        "Bokstav=\"\" Ledd=\"3\" Punktum=\"2\" />",
-                "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to " +
-                        "minLength '1' for type '#AnonType_BokstavLovhjemmelType'."
-            ),
-            row(
                 "too long Bokstav",
                 "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +
                         "Bokstav=\"ab\" Ledd=\"3\" Punktum=\"2\" />",
@@ -102,13 +95,6 @@ class LovhjemmelTypeTest : BehaviorSpec({
 
             /** Ledd */
             row(
-                "empty Ledd",
-                "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +
-                        "Bokstav=\"a\" Ledd=\"\" Punktum=\"2\" />",
-                "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to " +
-                        "minLength '1' for type '#AnonType_LeddLovhjemmelType'."
-            ),
-            row(
                 "too long Ledd",
                 "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +
                         "Bokstav=\"a\" Ledd=\"123456\" Punktum=\"2\" />",
@@ -117,13 +103,6 @@ class LovhjemmelTypeTest : BehaviorSpec({
             ),
 
             /** Punktum */
-            row(
-                "empty Punktum",
-                "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +
-                        "Bokstav=\"a\" Ledd=\"3\" Punktum=\"\" />",
-                "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to " +
-                        "minLength '1' for type '#AnonType_PunktumLovhjemmelType'."
-            ),
             row(
                 "too long Punktum",
                 "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" " +

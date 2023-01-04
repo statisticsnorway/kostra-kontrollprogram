@@ -22,7 +22,9 @@ public class ControlRecordLengthTest {
     @Test
     public void testOK() {
         var result = ControlRecordLengde.doControl(List.of("12", "13", "14"), errorReport, 2);
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG) {
+            System.out.println(errorReport.generateReport());
+        }
 
         assertFalse(result);
     }
@@ -30,7 +32,9 @@ public class ControlRecordLengthTest {
     @Test
     public void testIncorrectLengthFail() {
         var result = ControlRecordLengde.doControl(List.of("12", "13", "14"), errorReport, 1);
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG) {
+            System.out.println(errorReport.generateReport());
+        }
 
         assertTrue(result);
         assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);
@@ -43,7 +47,9 @@ public class ControlRecordLengthTest {
         errorReport = new ErrorReport(arguments);
 
         var result = ControlRecordLengde.doControl(List.of("Invalid file"), errorReport, 1);
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG) {
+            System.out.println(errorReport.generateReport());
+        }
 
         assertTrue(result);
         assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);
@@ -55,7 +61,9 @@ public class ControlRecordLengthTest {
         errorReport = new ErrorReport(arguments);
 
         var result = ControlRecordLengde.doControl(List.of(" "), errorReport, 1);
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG) {
+            System.out.println(errorReport.generateReport());
+        }
 
         assertFalse(result);
         assertEquals(errorReport.getErrorType(), Constants.NO_ERROR);
@@ -67,7 +75,9 @@ public class ControlRecordLengthTest {
         errorReport = new ErrorReport(arguments);
 
         var result = ControlRecordLengde.doControl(List.of("\t"), errorReport, 1);
-        System.out.println(errorReport.generateReport());
+        if (Constants.DEBUG) {
+            System.out.println(errorReport.generateReport());
+        }
 
         assertTrue(result);
         assertEquals(errorReport.getErrorType(), Constants.CRITICAL_ERROR);

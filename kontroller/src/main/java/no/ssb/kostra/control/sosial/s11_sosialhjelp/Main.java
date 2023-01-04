@@ -84,11 +84,11 @@ public class Main {
                 .peek(r -> {
                     try {
                         r.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)), arguments.getAargang()));
-                        r.setFieldAsInteger(FNR_OK, (Fnr.isValidNorwId(dnr2fnr(r.getFieldAsString(PERSON_FODSELSNR)))) ? 1 : 0);
+                        r.setFieldAsInteger(FNR_OK, (Fnr.isValidNorwId(r.getFieldAsString(PERSON_FODSELSNR))) ? 1 : 0);
 
                     } catch (Exception e) {
                         r.setFieldAsInteger(ALDER, -1);
-                        r.setFieldAsInteger(FNR_OK, 0);
+                        r.setFieldAsInteger(FNR_OK, -1);
                     }
                 })
                 .toList();
@@ -164,7 +164,7 @@ public class Main {
                         "Tilfeller"
                         , List.of(
                         new Code("I_ALT", "I alt")
-                        , new Code("0_18", "Under 18")
+                        , new Code("0_17", "Under 18")
                         , new Code("18_24", "18 - 24")
                         , new Code("25_44", "25 - 44")
                         , new Code("45_66", "45 - 66")
@@ -173,12 +173,12 @@ public class Main {
                 )
                         , List.of(
                         new StatsEntry("I_ALT", String.valueOf(records.size()))
-                        , new StatsEntry("0_18", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 0, 17)).count()))
+                        , new StatsEntry("0_17", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 0, 17)).count()))
                         , new StatsEntry("18_24", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 18, 24)).count()))
                         , new StatsEntry("25_44", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 25, 44)).count()))
                         , new StatsEntry("45_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 45, 66)).count()))
                         , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 67, 999)).count()))
-                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) == 0).count()))
+                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) != 1).count()))
                 )
                 ));
 

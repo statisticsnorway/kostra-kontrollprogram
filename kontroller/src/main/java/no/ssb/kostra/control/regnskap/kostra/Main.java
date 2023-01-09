@@ -524,7 +524,7 @@ public class Main {
         }
 
         errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 5 Funksjon", " ", " "
-                , String.format("Fant ugyldig kapittel '(%s)'. Korrigér kapittel i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
+                , String.format("Fant ugyldig funksjon '(%s)'. Korrigér funksjon i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
                 , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                 , Constants.CRITICAL_ERROR)));
         return true;

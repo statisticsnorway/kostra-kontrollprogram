@@ -21,7 +21,7 @@
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlinVersion>1.8.0</kotlinVersion>
+        <kotlin.version>1.8.0</kotlin.version>
         <kotestVersion>5.5.4</kotestVersion>
         <jackson.version>2.14.1</jackson.version>
         <swagger.version>2.2.7</swagger.version>
@@ -36,17 +36,17 @@
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-common</artifactId>
-                <version>${kotlinVersion}</version>
+                <version>${kotlin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlinVersion}</version>
+                <version>${kotlin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-reflect</artifactId>
-                <version>${kotlinVersion}</version>
+                <version>${kotlin.version}</version>
             </dependency>
 
             <dependency>
@@ -167,7 +167,7 @@
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
-                <version>${kotlinVersion}</version>
+                <version>${kotlin.version}</version>
                 <configuration>
                     <jvmTarget>${jdk.version}</jvmTarget>
                     <compilerPlugins>
@@ -273,7 +273,7 @@
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlinVersion}</version>
+                        <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

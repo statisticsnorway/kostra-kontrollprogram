@@ -1102,10 +1102,9 @@ public class IndividNodeHandler extends NodeHandler {
             final ErrorReportEntry errorReportEntry,
             final String fodselsnummer) {
 
-        if (!(Fnr.isValidNorwId(fodselsnummer)
-                || fodselsnummer.endsWith("00100")
-                || fodselsnummer.endsWith("00200")
-                || fodselsnummer.endsWith("99999"))) {
+        if (!Fnr.isValidNorwId(fodselsnummer)
+                && !Fnr.isPartiallyValidNorwId(fodselsnummer)
+        ) {
             errorReport.addEntry(errorReportEntry);
         }
     }

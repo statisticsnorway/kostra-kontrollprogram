@@ -57,7 +57,7 @@ public final class Fnr {
         if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
         if (isValidNorwId(fnr)) return true;
 
-        return (isValidDate(fnr.substring(0, 6), "ddMMyy") && Stream.of("00100", "00200").anyMatch(it -> it.equalsIgnoreCase(fnr.substring(6, 11))));
+        return (isValidDate(fnr.substring(0, 6), "ddMMyy") && Stream.of("00100", "00200", "99999").anyMatch(it -> it.equalsIgnoreCase(fnr.substring(6, 11))));
     }
 
     public static int getAlderFromFnr(final String fnrDDMMYYSSGKK, final String rappAarYYYY) {

@@ -47,8 +47,8 @@ class FnrSpec extends Specification {
         "41010150572" || true
         "01011200100" || true
         "01011200200" || true
+        "01011299999" || true
         "01011200000" || false
-        "01011299999" || false
         "           " || false
         "1234567890"  || false
         null          || false

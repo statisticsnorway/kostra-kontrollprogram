@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public final class Fnr {
 
     static boolean isValidDate(final String dateStr, final String dateFormat) {
+        if (dateStr == null || dateFormat == null) return false;
         final var simpleDateFormat = new SimpleDateFormat(dateFormat);
         simpleDateFormat.setLenient(false);
 
@@ -25,6 +26,7 @@ public final class Fnr {
     public static boolean isValidNorwId(final String fnr) {
         final var s = new int[12];
 
+        if (fnr == null) return false;
         if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
         if (fnr.length() != 11) return false;
         if (fnr.trim().length() == 0) return false;
@@ -53,6 +55,7 @@ public final class Fnr {
     }
 
     public static boolean isPartiallyValidNorwId(final String fnr) {
+        if (fnr == null) return false;
         if (isValidNorwId(fnr)) return true;
         if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
 
@@ -60,6 +63,8 @@ public final class Fnr {
     }
 
     public static int getAlderFromFnr(final String fnrDDMMYYSSGKK, final String rappAarYYYY) {
+        if (fnrDDMMYYSSGKK == null || rappAarYYYY == null) return -1;
+
         if (isValidDate(fnrDDMMYYSSGKK.substring(0, 6), "ddMMyy")) {
             final var fodselsAar = Integer.parseInt(fnrDDMMYYSSGKK.substring(4, 6));
             final var aargang = Integer.parseInt(rappAarYYYY.substring(2, 4));
@@ -71,6 +76,8 @@ public final class Fnr {
     }
 
     public static boolean isValidDUFnr(final String dufnr) {
+        if (dufnr == null) return false;
+
 //        @JvmStatic
 //        fun validateDUF(duf: String): Boolean =
 //                Pattern.compile("^\\d{12}$").matcher(duf).matches()

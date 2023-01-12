@@ -2,6 +2,8 @@ package no.ssb.kostra.utils
 
 import spock.lang.Specification
 
+import java.util.regex.Pattern
+
 import static no.ssb.kostra.utils.Fnr.*
 
 class FnrSpec extends Specification {
@@ -14,6 +16,9 @@ class FnrSpec extends Specification {
         "010112"   | "ddMMyy"   || true
         "01012012" | "ddMMyyyy" || true
         "30022012" | "ddMMyyyy" || false
+        null       | "ddMMyy"   || false
+        "010112"   | null       || false
+        null       | null       || false
     }
 
     def "should validate FNR"() {
@@ -29,6 +34,7 @@ class FnrSpec extends Specification {
         "01011255555" || false
         "01011299999" || false
         "           " || false
+        null          || false
     }
 
     def "should validate partial FNR"() {
@@ -45,7 +51,7 @@ class FnrSpec extends Specification {
         "01011299999" || false
         "           " || false
         "1234567890"  || false
-
+        null          || false
     }
 
     def "should validate DUF"() {
@@ -58,6 +64,7 @@ class FnrSpec extends Specification {
         "201234567890" || false
         "            " || false
         "12345678901"  || false
+        null           || false
     }
 
     def "should validate age from the datepart of FNR"() {
@@ -69,5 +76,8 @@ class FnrSpec extends Specification {
         "01010150589" | "2021" || 20
         "01010100000" | "2021" || 20
         "01012100000" | "2021" || 0
+        null          | "2021" || -1
+        "01012100000" | null   || -1
+        null          | null   || -1
     }
 }

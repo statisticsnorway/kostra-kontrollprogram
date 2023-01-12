@@ -17,6 +17,8 @@ class FnrSpec extends Specification {
         "01012012" | "ddMMyyyy" || true
         "30022012" | "ddMMyyyy" || false
         null       | "ddMMyy"   || false
+        "010112"   | null       || false
+        null       | null       || false
     }
 
     def "should validate FNR"() {
@@ -75,6 +77,7 @@ class FnrSpec extends Specification {
         "01010100000" | "2021" || 20
         "01012100000" | "2021" || 0
         null          | "2021" || -1
-
+        "01012100000" | null   || -1
+        null          | null   || -1
     }
 }

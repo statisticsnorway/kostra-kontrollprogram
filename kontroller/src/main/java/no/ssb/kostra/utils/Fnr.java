@@ -28,8 +28,6 @@ public final class Fnr {
 
         if (fnr == null) return false;
         if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
-        if (fnr.length() != 11) return false;
-        if (fnr.trim().length() == 0) return false;
 
         for (var i = 1; i <= 11; i++) {
             s[i] = Format.parseInt(fnr.substring(i - 1, i));
@@ -56,8 +54,8 @@ public final class Fnr {
 
     public static boolean isPartiallyValidNorwId(final String fnr) {
         if (fnr == null) return false;
-        if (isValidNorwId(fnr)) return true;
         if (!Pattern.compile("^\\d{11}$").matcher(fnr).matches()) return false;
+        if (isValidNorwId(fnr)) return true;
 
         return (isValidDate(fnr.substring(0, 6), "ddMMyy") && Stream.of("00100", "00200").anyMatch(it -> it.equalsIgnoreCase(fnr.substring(6, 11))));
     }

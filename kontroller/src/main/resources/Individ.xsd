@@ -201,11 +201,14 @@
 		<xs:attribute name="Plantype" use="required">
 			<xs:annotation>
 				<xs:documentation>Kode for plantype:
-					1 = Tiltaksplan etter § 4-5
-					2 = Tiltaksplan etter § 4-28
-					3 = Foreløpig omsorgsplan etter § 4-15, 3. ledd
-					4 = Omsorgsplan etter § 4-15, 3. ledd
-				</xs:documentation>
+                    1 = Tiltaksplan etter BVL2021 § 8-1 (tidligere BVL1992 § 4-5)
+                    2 = Tiltaksplan etter BVL2021 § 8-4 (tidligere BVL1992 § 4-28)
+                    3 = Foreløpig omsorgsplan etter BVL1992 § 4-15, 3. ledd. Utgår fra og med 1. januar 2023
+                    4 = Omsorgsplan etter BVL2021 § 8-3, 4. ledd (tidligere BVL1992 § 4-15, 3. ledd)
+                    5 = Tiltaksplan – ettervern etter BVL 2021 § 8-5, 2. ledd
+                    6 = Samværsplan etter BVL 2021 § 7-6
+                    7 = Undersøkelsesplan etter BVL 2021 § 2-2, 3. ledd
+                    8 = Undersøkelsesplan etter akuttvedtak etter BVL 2021 § 8-2, 3. ledd</xs:documentation>
 			</xs:annotation>
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
@@ -215,6 +218,10 @@
 					<xs:enumeration value="2"/>
 					<xs:enumeration value="3"/>
 					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+					<xs:enumeration value="6"/>
+					<xs:enumeration value="7"/>
+					<xs:enumeration value="8"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
@@ -255,6 +262,7 @@
 			<xs:element name="Lovhjemmel" type="LovhjemmelType"/>
 			<xs:element name="JmfrLovhjemmel" type="LovhjemmelType" minOccurs="0" maxOccurs="3"/>
 			<xs:element name="Kategori" type="KategoriType"/>
+			<xs:element name="Tiltaksgrunnlag" type="SaksinnholdType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Opphevelse" type="OpphevelseType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute ref="Id" use="required"/>

@@ -77,7 +77,7 @@ class PlanTypeTest : BehaviorSpec({
                 "invalid Plantype",
                 "<Plan Id=\"42\" StartDato=\"2022-11-14\" Plantype=\"42\" />",
                 "cvc-enumeration-valid: Value '42' is not facet-valid with respect to " +
-                        "enumeration '[1, 2, 3, 4]'. It must be a value from the enumeration."
+                        "enumeration '[1, 2, 3, 4, 5, 6, 7, 8]'. It must be a value from the enumeration."
             ),
         ) { description, partialXml, expectedError ->
             `when`(description) {

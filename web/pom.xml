@@ -16,7 +16,7 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.8.2</micronaut.version>
+        <micronaut.version>3.8.3</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
@@ -24,7 +24,7 @@
         <kotlin.version>1.8.0</kotlin.version>
         <kotestVersion>5.5.4</kotestVersion>
         <reactorCoreVersion>3.5.2</reactorCoreVersion>
-        <jackson.version>2.14.1</jackson.version>
+        <jackson.version>2.14.2</jackson.version>
         <swagger.version>2.2.8</swagger.version>
         <micronaut.openapi.version>4.8.1</micronaut.openapi.version>
         <slf4j.version>2.0.6</slf4j.version>

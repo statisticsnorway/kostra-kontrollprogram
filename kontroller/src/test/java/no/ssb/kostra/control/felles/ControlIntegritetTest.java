@@ -135,29 +135,6 @@ public class ControlIntegritetTest {
         );
     }
 
-    static Stream<TestRecordListInputAndResult> inputDoControl0FProvider() {
-        return Stream.of(
-                new TestRecordListInputAndResult(
-                        new Arguments(
-                                new String[]{"-s", "0F", "-y", "2020", "-r", "300500", "-u", "976989732"}),
-                        List.of(new KostraRecord("0F2020 300500976989732         3041 650    -8695",
-                                FieldDefinitions.getFieldDefinitions())),
-                        false,
-                        Constants.NO_ERROR)
-        );
-    }
-
-    static Stream<TestRecordListInputAndResult> inputDoControl0GProvider() {
-        return Stream.of(
-                new TestRecordListInputAndResult(
-                        new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"}),
-                        List.of(new KostraRecord("0G2020 300500976989732         3041 650    -8695",
-                                FieldDefinitions.getFieldDefinitions())),
-                        false,
-                        Constants.NO_ERROR)
-        );
-    }
-
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("inputSkjemaProvider")
     public void controlSkjemaTest(TestRecordListInputAndResult inputAndResult) {
@@ -291,37 +268,5 @@ public class ControlIntegritetTest {
                 ControlIntegritet.controlUgyldigeBelop(
                         inputAndResult.getErrorReport(),
                         inputAndResult.getRecordList()));
-    }
-
-    @ParameterizedTest(name = "#{index} - Run test with {0}")
-    @MethodSource("inputDoControl0FProvider")
-    public void doControl0FTest(TestRecordListInputAndResult inputAndResult) {
-        ControlIntegritet.doControl(
-                inputAndResult.getRecordList(),
-                inputAndResult.getErrorReport(),
-                inputAndResult.getErrorReport().getArgs(),
-                List.of("0F"),
-                List.of("0G"),
-                List.of("3"),
-                List.of("041 "),
-                List.of("650"));
-
-        assertEquals(Constants.NO_ERROR, inputAndResult.getErrorReport().getErrorType());
-    }
-
-    @ParameterizedTest(name = "#{index} - Run test with {0}")
-    @MethodSource("inputDoControl0GProvider")
-    public void doControl0GTest(TestRecordListInputAndResult inputAndResult) {
-        ControlIntegritet.doControl(
-                inputAndResult.getRecordList(),
-                inputAndResult.getErrorReport(),
-                inputAndResult.getErrorReport().getArgs(),
-                List.of("0F"),
-                List.of("0G"),
-                List.of("3"),
-                List.of("041 "),
-                List.of("650"));
-
-        assertEquals(Constants.NO_ERROR, inputAndResult.getErrorReport().getErrorType());
     }
 }

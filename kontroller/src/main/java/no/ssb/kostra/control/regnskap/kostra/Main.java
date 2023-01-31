@@ -2,7 +2,6 @@ package no.ssb.kostra.control.regnskap.kostra;
 
 import no.ssb.kostra.control.felles.ControlDubletter;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
-import no.ssb.kostra.control.felles.ControlIntegritet;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
@@ -16,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
 import static no.ssb.kostra.control.felles.Comparator.*;
+import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -165,7 +164,7 @@ public class Main {
                 }
                 result.addAll(kommunaleFunksjoner);
 
-                if (isCodeInCodeList(orgnr, orgnrSpesial)){
+                if (isCodeInCodeList(orgnr, orgnrSpesial)) {
                     result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner);
                 } else {
                     result.addAll(kommunaleSbdrFinansielleFunksjoner);
@@ -216,7 +215,7 @@ public class Main {
 
         final var result = new ArrayList<String>();
 
-        switch (skjema){
+        switch (skjema) {
             case "0A", "0M" -> {
                 result.addAll(basisArter);
                 result.addAll(konserninterneArter);
@@ -279,9 +278,9 @@ public class Main {
     public static List<String> getArtSektorAsList(final String skjema, final String region, final String orgnr, final String kontoklasse) {
         List<String> artSektor = getArtSektorAsList(skjema, region);
 
-        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")){
+        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")) {
             case "D" -> {
-               return removeCodesFromCodeList(artSektor, getArterUgyldigDrift(skjema, orgnr, region));
+                return removeCodesFromCodeList(artSektor, getArterUgyldigDrift(skjema, orgnr, region));
             }
 
             case "I" -> {
@@ -295,7 +294,7 @@ public class Main {
     public static List<String> getFunksjonKapittelAsList(final String skjema, final String region, final String orgnr, final String kontoklasse) {
         List<String> funksjonKapittel = getFunksjonKapittelAsList(skjema, region, orgnr);
 
-        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")){
+        switch (getKontoklasseAsMap(skjema).getOrDefault(kontoklasse, " ")) {
             case "D" -> {
                 return removeCodesFromCodeList(funksjonKapittel, getFunksjonerUgyldigDrift());
             }
@@ -331,15 +330,26 @@ public class Main {
         ControlFilbeskrivelse.doControl(regnskap1, errorReport);
 
         // integritetskontroller
-        ControlIntegritet.doControl(
-                regnskap1,
-                errorReport,
-                arguments,
-                getBevilgningRegnskapList(),
-                getBalanseRegnskapList(),
-                getKontoklasseAsList(arguments.getSkjema()),
-                getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()),
-                getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
+        controlSkjema(errorReport, regnskap1);
+        controlAargang(errorReport, regnskap1);
+        controlKvartal(errorReport, regnskap1);
+        controlRegion(errorReport, regnskap1);
+        controlOrganisasjonsnummer(errorReport, regnskap1);
+        controlForetaksnummer(errorReport, regnskap1);
+        controlKontoklasse(errorReport, regnskap1, getKontoklasseAsList(arguments.getSkjema()));
+
+        if (isCodeInCodeList(arguments.getSkjema(), getBevilgningRegnskapList())) {
+            controlFunksjon(errorReport, regnskap1, getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()));
+            controlArt(errorReport, regnskap1, getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
+        }
+
+        if (isCodeInCodeList(arguments.getSkjema(), getBalanseRegnskapList())) {
+            controlKapittel(errorReport, regnskap1, getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()));
+            controlSektor(errorReport, regnskap1, getBalanseRegnskapList());
+        }
+
+        controlBelop(errorReport, regnskap1);
+        controlUgyldigeBelop(errorReport, regnskap1);
 
         // Fjerner posteringer der beløp = 0
         final var regnskap = Utils.removeBelopEquals0(regnskap1);
@@ -466,7 +476,7 @@ public class Main {
     }
 
     // Posteringskontroller
-    public static boolean kontroll1(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+    public static boolean kontroll1(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         errorReport.incrementCount();
 
         final var errors = regnskap
@@ -498,7 +508,7 @@ public class Main {
         return true;
     }
 
-    public static boolean kontroll5(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+    public static boolean kontroll5(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         errorReport.incrementCount();
 
         final var errors = regnskap
@@ -530,7 +540,7 @@ public class Main {
         return true;
     }
 
-    public static boolean kontroll10(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+    public static boolean kontroll10(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         errorReport.incrementCount();
 
         final var errors = regnskap
@@ -562,7 +572,7 @@ public class Main {
         return true;
     }
 
-    public static boolean kontroll15(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+    public static boolean kontroll15(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         errorReport.incrementCount();
 
         final var errors = regnskap
@@ -571,16 +581,16 @@ public class Main {
                         .stream()
                         .anyMatch(item -> item.equalsIgnoreCase(kostraRecord.getFieldAsString("skjema"))))
                 .filter(kostraRecord ->
-                    !isCodeInCodeList(
-                            kostraRecord.getFieldAsString("art_sektor")
-                            , getArtSektorAsList(
-                                    kostraRecord.getFieldAsString("skjema")
-                                    , kostraRecord.getFieldAsString("region")
-                                    , kostraRecord.getFieldAsString("orgnr")
-                                    , kostraRecord.getFieldAsString("kontoklasse")
+                        !isCodeInCodeList(
+                                kostraRecord.getFieldAsString("art_sektor")
+                                , getArtSektorAsList(
+                                        kostraRecord.getFieldAsString("skjema")
+                                        , kostraRecord.getFieldAsString("region")
+                                        , kostraRecord.getFieldAsString("orgnr")
+                                        , kostraRecord.getFieldAsString("kontoklasse")
 
-                            )
-                ))
+                                )
+                        ))
                 .toList();
 
         if (errors.isEmpty()) {

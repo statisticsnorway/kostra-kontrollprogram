@@ -17,6 +17,9 @@ import no.ssb.kostra.utils.Format;
 
 import java.util.List;
 
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
+import static no.ssb.kostra.control.felles.ControlIntegritet.*;
+
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
     private static String createLinenumber(final Integer l, final int line, final String record) {
@@ -51,11 +54,27 @@ public class Main {
         }
 
         // integritetskontroller
-        ControlIntegritet.doControl(regnskap, errorReport, args, bevilgningRegnskapList, balanseRegnskapList
-                , List.of(" ")
-                , Definitions.getFunksjonKapittelAsList(args.getSkjema())
-                , Definitions.getArtSektorAsList(args.getSkjema())
-        );
+        controlSkjema(errorReport, regnskap);
+        controlAargang(errorReport, regnskap);
+        controlKvartal(errorReport, regnskap);
+        controlRegion(errorReport, regnskap);
+        controlOrganisasjonsnummer(errorReport, regnskap);
+        controlForetaksnummer(errorReport, regnskap);
+        controlKontoklasse(errorReport, regnskap, List.of(" "));
+
+        if (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
+            controlFunksjon(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema()));
+            controlArt(errorReport, regnskap, Definitions.getArtSektorAsList(args.getSkjema()));
+        }
+
+        if (isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
+            controlKapittel(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema()));
+            controlSektor(errorReport, regnskap, balanseRegnskapList);
+        }
+
+        controlBelop(errorReport, regnskap);
+        controlUgyldigeBelop(errorReport, regnskap);
+
 
         // Dublett kontroll
         if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {

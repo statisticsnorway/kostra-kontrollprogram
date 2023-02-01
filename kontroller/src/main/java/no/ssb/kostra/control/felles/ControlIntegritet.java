@@ -1,6 +1,5 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.KostraRecord;

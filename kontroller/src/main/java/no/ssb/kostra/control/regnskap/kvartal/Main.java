@@ -14,7 +14,6 @@ import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
-import static no.ssb.kostra.control.regnskap.kvartal.Definitions.getArtSektorAsList;
 import static no.ssb.kostra.control.regnskap.kvartal.Definitions.getKontoklasseAsList;
 
 @SuppressWarnings("SpellCheckingInspection")

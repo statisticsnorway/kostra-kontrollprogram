@@ -8,7 +8,7 @@ public class Definitions {
     public static List<String> getFunksjonKapittelAsList(final String skjema) {
         return switch (skjema) {
             case "0X" ->
-                    // Funksjoner
+                // Funksjoner
                     Stream.of("400", "460", "600", "606", "620", "630", "636", "637", "641", "642", "651", "681", "840")
                             // rightPad / legger til mellomrom på slutten av kodene slik at alle blir 4 tegn lange
                             .map(c -> String.format("%1$-4s", c))
@@ -21,7 +21,7 @@ public class Definitions {
     public static List<String> getArtSektorAsList(final String skjema) {
         return switch (skjema) {
             case "0X" ->
-                    // Arter / kontokoder
+                // Arter / kontokoder
                     List.of(
                             "300", "301", "306", "307", "308",
                             "310", "311", "312", "313", "318",
@@ -73,7 +73,7 @@ public class Definitions {
                             "893", "895", "896"
                     );
             case "0Y" ->
-                    // Sektorer / kontokoder
+                // Sektorer / kontokoder
                     List.of(
                             "100", "102", "103", "104", "105", "106", "107", "108",
                             "110", "112", "113", "114", "115", "116", "119",
@@ -100,7 +100,7 @@ public class Definitions {
 
     public static List<String> getFunksjon400Orgnr() {
         return List.of(
-                "991324968", "983658725", "983658776", "883658752", "911912759", "914637651", "814630722", "987601787", "916879067", "818711832", "918177833", "918695079", "922307814"
+                "928033821", "991324968", "983658725", "983658776", "883658752", "911912759", "914637651", "814630722", "987601787", "916879067", "818711832", "918177833", "918695079", "922307814"
         );
     }
 

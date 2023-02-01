@@ -2,7 +2,6 @@ package no.ssb.kostra.control.regnskap.kvartal;
 
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodeliste;
-import no.ssb.kostra.control.felles.ControlIntegritet;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
@@ -12,6 +11,10 @@ import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
 import java.util.List;
+
+import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
+import static no.ssb.kostra.control.felles.ControlIntegritet.*;
+import static no.ssb.kostra.control.regnskap.kvartal.Definitions.getKontoklasseAsList;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
@@ -50,16 +53,26 @@ public class Main {
         final var l = String.valueOf(n).length();
 
         // integritetskontroller
-        ControlIntegritet.doControl(
-                regnskap,
-                errorReport,
-                args,
-                bevilgningRegnskapList,
-                balanseRegnskapList,
-                Definitions.getKontoklasseAsList(args.getSkjema()),
-                Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()),
-                Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion()));
+        controlSkjema(errorReport, regnskap);
+        controlAargang(errorReport, regnskap);
+        controlKvartal(errorReport, regnskap);
+        controlRegion(errorReport, regnskap);
+        controlOrganisasjonsnummer(errorReport, regnskap);
+        controlForetaksnummer(errorReport, regnskap);
+        controlKontoklasse(errorReport, regnskap, getKontoklasseAsList(args.getSkjema()));
 
+        if (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
+            controlFunksjon(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()));
+            controlArt(errorReport, regnskap, Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion()));
+        }
+
+        if (isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
+            controlKapittel(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()));
+            controlSektor(errorReport, regnskap, balanseRegnskapList);
+        }
+
+        controlBelop(errorReport, regnskap);
+        controlUgyldigeBelop(errorReport, regnskap);
         // Kombinasjonskontroller, per record
         regnskap.forEach(currentRecord -> {
             if (Comparator.isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {

@@ -1,6 +1,5 @@
 package no.ssb.kostra.control.felles;
 
-import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.KostraRecord;
@@ -10,46 +9,6 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class ControlIntegritet {
-
-    public static boolean doControl(
-            final List<KostraRecord> regnskap, final ErrorReport errorReport,
-            final Arguments args, final List<String> bevilgningRegnskapList,
-            final List<String> balanseRegnskapList, final List<String> kontoklasseList,
-            final List<String> funksjonkapittelList, final List<String> artsektorList) {
-
-        errorReport.incrementCount();
-
-        boolean isControlSkjema = controlSkjema(errorReport, regnskap);
-        boolean isControlAargang = controlAargang(errorReport, regnskap);
-        boolean isControlKvartal = controlKvartal(errorReport, regnskap);
-        boolean isControlRegion = controlRegion(errorReport, regnskap);
-        boolean isControlOrganisasjonsnummer = controlOrganisasjonsnummer(errorReport, regnskap);
-        boolean isControlForetaksnummer = controlForetaksnummer(errorReport, regnskap);
-        boolean isControlKontoklasse = controlKontoklasse(errorReport, regnskap, kontoklasseList);
-        boolean isControlFunksjon = controlFunksjon(errorReport, regnskap, funksjonkapittelList);
-        boolean isControlArt = controlArt(errorReport, regnskap, artsektorList);
-        boolean isControlKapittel = controlKapittel(errorReport, regnskap, funksjonkapittelList);
-        boolean isControlSektor = controlSektor(errorReport, regnskap, artsektorList);
-        boolean isControlBelop = controlBelop(errorReport, regnskap);
-        boolean isControlUgyldigeBelop = controlUgyldigeBelop(errorReport, regnskap);
-
-        return (
-                isControlSkjema
-                        || isControlAargang
-                        || isControlKvartal
-                        || isControlRegion
-                        || isControlOrganisasjonsnummer
-                        || isControlForetaksnummer
-                        || isControlKontoklasse
-                        || isControlFunksjon
-                        || isControlArt
-                        || isControlKapittel
-                        || isControlSektor
-                        || isControlBelop
-                        || isControlUgyldigeBelop
-        );
-    }
-
     public static boolean controlSkjema(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
                 "3. Feltkontroller",

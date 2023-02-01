@@ -5,7 +5,6 @@ import no.ssb.kostra.control.felles.ControlDubletter;
 import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodelisteSaaFelt2Boolsk;
 import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
-import no.ssb.kostra.control.felles.ControlIntegritet;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;

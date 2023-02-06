@@ -345,7 +345,7 @@ public class Main {
 
         if (isCodeInCodeList(arguments.getSkjema(), getBalanseRegnskapList())) {
             controlKapittel(errorReport, regnskap1, getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()));
-            controlSektor(errorReport, regnskap1, getBalanseRegnskapList());
+            controlSektor(errorReport, regnskap1, getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
         }
 
         controlBelop(errorReport, regnskap1);

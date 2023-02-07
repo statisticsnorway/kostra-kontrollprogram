@@ -68,7 +68,7 @@ public class Main {
 
         if (isCodeInCodeList(args.getSkjema(), balanseRegnskapList)) {
             controlKapittel(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()));
-            controlSektor(errorReport, regnskap, balanseRegnskapList);
+            controlSektor(errorReport, regnskap, Definitions.getArtSektorAsList(args.getSkjema(), args.getRegion()));
         }
 
         controlBelop(errorReport, regnskap);

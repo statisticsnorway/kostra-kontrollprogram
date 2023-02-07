@@ -187,7 +187,7 @@ public class Main {
 
         if (isCodeInCodeList(args.getSkjema(), getBalanseRegnskapList())) {
             controlKapittel(errorReport, regnskap1, getFunksjonKapittelAsList(args.getSkjema()));
-            controlSektor(errorReport, regnskap1, getBalanseRegnskapList());
+            controlSektor(errorReport, regnskap1, getArtSektorAsList(args.getSkjema()));
         }
 
         controlBelop(errorReport, regnskap1);

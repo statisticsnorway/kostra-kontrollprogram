@@ -20,8 +20,8 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <kotlin.version>1.8.0</kotlin.version>
-        <kotestVersion>5.5.4</kotestVersion>
+        <kotlin.version>1.8.10</kotlin.version>
+        <kotestVersion>5.5.5</kotestVersion>
         <jackson.version>2.14.2</jackson.version>
     </properties>
 
@@ -69,7 +69,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.24</version>
+                <version>1.18.26</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

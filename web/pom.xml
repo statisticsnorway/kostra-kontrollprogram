@@ -16,13 +16,13 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.8.3</micronaut.version>
+        <micronaut.version>3.8.4</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlin.version>1.8.0</kotlin.version>
-        <kotestVersion>5.5.4</kotestVersion>
+        <kotlin.version>1.8.10</kotlin.version>
+        <kotestVersion>5.5.5</kotestVersion>
         <reactorCoreVersion>3.5.2</reactorCoreVersion>
         <jackson.version>2.14.2</jackson.version>
         <swagger.version>2.2.8</swagger.version>
@@ -72,12 +72,12 @@
             <dependency>
                 <groupId>io.kotest</groupId>
                 <artifactId>kotest-assertions-core-jvm</artifactId>
-                <version>5.5.4</version>
+                <version>${kotestVersion}</version>
             </dependency>
             <dependency>
                 <groupId>io.kotest</groupId>
                 <artifactId>kotest-runner-junit5-jvm</artifactId>
-                <version>5.5.4</version>
+                <version>${kotestVersion}</version>
             </dependency>
 
             <dependency>

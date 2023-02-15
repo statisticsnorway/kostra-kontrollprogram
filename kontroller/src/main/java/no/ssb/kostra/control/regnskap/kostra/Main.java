@@ -533,8 +533,8 @@ public class Main {
             return false;
         }
 
-        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 5 Funksjon", " ", " "
-                , String.format("Fant ugyldig funksjon '(%s)'. Korrigér funksjon i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 5 Kapittel", " ", " "
+                , String.format("Fant ugyldig kapittel '(%s)'. Korrigér funksjon i henhold til KOSTRA kontoplan.", r.getFieldAsString(FUNKSJON_KAPITTEL))
                 , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                 , Constants.CRITICAL_ERROR)));
         return true;
@@ -597,7 +597,7 @@ public class Main {
             return false;
         }
 
-        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 10 Art", " ", " "
+        errors.forEach(r -> errorReport.addEntry(new ErrorReportEntry("3. Feltkontroller", "Kontroll 15 Sektor", " ", " "
                 , String.format("Fant ugyldig sektor '(%s)'. Korrigér sektor i henhold til KOSTRA kontoplan.", r.getFieldAsString(ART_SEKTOR))
                 , String.format(GJELDER_FOR_LINJENUMMER, r.getFieldAsInteger(LINJENUMMER))
                 , Constants.CRITICAL_ERROR)));

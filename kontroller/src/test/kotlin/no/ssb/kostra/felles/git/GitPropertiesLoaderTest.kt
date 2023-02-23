@@ -9,24 +9,24 @@ import no.ssb.kostra.felles.git.GitPropertiesLoader.loadGitProperties
 
 class GitPropertiesLoaderTest : BehaviorSpec({
 
-    given("initGitProperties") {
+    Given("initGitProperties") {
 
-        `when`("non-existing gitPropertiesFilename") {
+        When("non-existing gitPropertiesFilename") {
 
             val result = loadGitProperties("non-existing.properties")
 
-            then("result should be fallback") {
+            Then("result should be fallback") {
                 result shouldBe GitProperties(
                     tags = NOT_AVAILABLE_VALUE
                 )
             }
         }
 
-        `when`("existing gitPropertiesFilename") {
+        When("existing gitPropertiesFilename") {
 
             val result = loadGitProperties(DEFAULT_GIT_PROPERTIES_FILENAME)
 
-            then("result should not be fallback") {
+            Then("result should not be fallback") {
                 result shouldNotBe GitProperties(
                     tags = NOT_AVAILABLE_VALUE
                 )

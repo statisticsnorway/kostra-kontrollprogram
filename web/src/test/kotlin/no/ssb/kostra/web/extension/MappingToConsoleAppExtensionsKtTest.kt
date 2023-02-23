@@ -10,7 +10,7 @@ import java.time.Year
 
 class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
 
-    given("minimal KostraFormVm instance") {
+    Given("minimal KostraFormVm instance") {
         forAll(
             row(
                 KostraFormVm(
@@ -44,10 +44,10 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                 )
             )
         ) { sut ->
-            `when`("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet} ${sut.navn}") {
+            When("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet} ${sut.navn}") {
                 val arguments = sut.toKostraArguments("".byteInputStream())
 
-                then("arguments should be as expected") {
+                Then("arguments should be as expected") {
                     arguments.aargang shouldBe Year.now().value.toString()
                     arguments.region shouldBe "123456"
 
@@ -61,7 +61,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
         }
     }
 
-    given("KostraFormVm instance with orgnrForetak") {
+    Given("KostraFormVm instance with orgnrForetak") {
         val sut = KostraFormVm(
             skjema = "0A",
             aar = Year.now().value,
@@ -69,17 +69,17 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
             orgnrForetak = generateCompanyIdInTest('9')
         )
 
-        `when`("toKostraArguments") {
+        When("toKostraArguments") {
             val arguments = sut.toKostraArguments("".byteInputStream())
 
-            then("arguments should be as expected") {
+            Then("arguments should be as expected") {
                 arguments.foretaknr shouldBe generateCompanyIdInTest('9')
                 arguments.orgnr shouldBe generateCompanyIdInTest(' ')
             }
         }
     }
 
-    given("KostraFormVm instance with both orgnrForetak and orgnrVirksomhet") {
+    Given("KostraFormVm instance with both orgnrForetak and orgnrVirksomhet") {
         val sut = KostraFormVm(
             skjema = "0A",
             aar = Year.now().value,
@@ -91,10 +91,10 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
             )
         )
 
-        `when`("toKostraArguments") {
+        When("toKostraArguments") {
             val arguments = sut.toKostraArguments("".byteInputStream())
 
-            then("arguments should be as expected") {
+            Then("arguments should be as expected") {
                 arguments.foretaknr shouldBe generateCompanyIdInTest('9')
                 arguments.orgnr shouldBe
                         "${generateCompanyIdInTest('8')},${generateCompanyIdInTest('9')}"

@@ -40,13 +40,13 @@ class ApiControllerTest : BehaviorSpec({
         file = mockk(relaxed = true)
     }
 
-    given("kontrollerSkjema") {
+    Given("kontrollerSkjema") {
 
         forAll(
             row("valid file stream", true),
             row("invalid file stream", false)
         ) { description, isValidFileStream ->
-            `when`(description) {
+            When(description) {
 
                 every { file.transferTo(any<OutputStream>()) } answers { Mono.just(isValidFileStream) }
 
@@ -55,7 +55,7 @@ class ApiControllerTest : BehaviorSpec({
                     file = file
                 )
 
-                then("monoResult should be as expected") {
+                Then("monoResult should be as expected") {
                     if (isValidFileStream) {
                         StepVerifier.create(monoResult)
                             .expectNextCount(1)

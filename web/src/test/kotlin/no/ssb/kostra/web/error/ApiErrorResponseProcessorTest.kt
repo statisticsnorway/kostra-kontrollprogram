@@ -15,20 +15,20 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 @MicronautTest
 class ApiErrorResponseProcessorTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 
-    given("ApiErrorResponseProcessor") {
+    Given("ApiErrorResponseProcessor") {
 
         forAll(
             row("non-existing URL", "/non-existing", HttpStatus.NOT_FOUND),
             row("URL that throws exception", "/api/kontroller-skjema", HttpStatus.METHOD_NOT_ALLOWED),
         ) { description, url, expectedHttpStatus ->
 
-            `when`(description) {
+            When(description) {
 
                 val exception = shouldThrow<HttpClientResponseException> {
                     client.toBlocking().exchange<Any>(url)
                 }
 
-                then("receive API error") {
+                Then("receive API error") {
                     exception.status shouldBe expectedHttpStatus
 
                     assertSoftly(exception.response.getBody(ApiError::class.java).get()) {

@@ -12,7 +12,7 @@ class DataFileValidatorTest : BehaviorSpec({
 
     val sut = DataFileValidator()
 
-    given("request with non-fatal error") {
+    Given("request with non-fatal error") {
 
         val kostraForm = KostraFormVm(
             aar = 2022,
@@ -22,14 +22,14 @@ class DataFileValidatorTest : BehaviorSpec({
             orgnrVirksomhet = setOf()
         )
 
-        `when`("validateDataFile with valid content") {
+        When("validateDataFile with valid content") {
 
             val errorReport = sut.validateDataFile(
                 kostraForm = kostraForm,
                 inputStream = PLAIN_TEXT.toByteArray().inputStream()
             )
 
-            then("errorReportVm should be as expected") {
+            Then("errorReportVm should be as expected") {
                 errorReport.feilkode shouldBe KostraErrorCode.NORMAL_ERROR
                 errorReport.antallKontroller shouldBe 37
                 errorReport.feil.size shouldBe 1
@@ -45,7 +45,7 @@ class DataFileValidatorTest : BehaviorSpec({
             }
         }
 
-        `when`("validateDataFile without content") {
+        When("validateDataFile without content") {
             shouldNotThrowAny {
                 sut.validateDataFile(
                     kostraForm,

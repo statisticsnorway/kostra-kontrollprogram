@@ -38,18 +38,18 @@ class ApiControllerIntegrationTest(
     objectMapper: ObjectMapper
 ) : BehaviorSpec({
 
-    given("uiData request") {
+    Given("uiData request") {
 
         val request: HttpRequest<Any> = HttpRequest.GET("/api/ui-data")
 
-        `when`("valid get request") {
+        When("valid get request") {
             val httpResponse = withContext(Dispatchers.IO) {
                 client.toBlocking().exchange(
                     request, Argument.of(UiDataVm::class.java)
                 )
             }
 
-            then("response code should be OK") {
+            Then("response code should be OK") {
                 httpResponse.status shouldBe HttpStatus.OK
             }
 
@@ -74,7 +74,7 @@ class ApiControllerIntegrationTest(
         }
     }
 
-    given("invalid POST requests, receive ApiError") {
+    Given("invalid POST requests, receive ApiError") {
         val urlInTest = "/api/kontroller-skjema"
 
         forAll(
@@ -226,7 +226,7 @@ class ApiControllerIntegrationTest(
             )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
 
-            `when`(description) {
+            When(description) {
 
                 val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
@@ -238,7 +238,7 @@ class ApiControllerIntegrationTest(
                     )
                 }.response.getBody(ApiError::class.java).get()
 
-                then("apiError should contain expected values") {
+                Then("apiError should contain expected values") {
                     assertSoftly(apiError) {
                         errorType shouldBe ApiErrorType.VALIDATION_ERROR
                         httpStatusCode shouldBe HttpStatus.BAD_REQUEST.code
@@ -255,11 +255,11 @@ class ApiControllerIntegrationTest(
         }
     }
 
-    given("valid POST requests, receive result") {
+    Given("valid POST requests, receive result") {
 
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)
 
-        `when`("post multipart request") {
+        When("post multipart request") {
             val response = withContext(Dispatchers.IO) {
                 client.toBlocking()
                     .exchange(
@@ -269,7 +269,7 @@ class ApiControllerIntegrationTest(
                     )
             }
 
-            then("status should be OK") {
+            Then("status should be OK") {
                 response.status shouldBe HttpStatus.OK
             }
 

@@ -21,7 +21,7 @@ import java.time.Year
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
-    given("populated list of arguments") {
+    Given("populated list of arguments") {
 
         forAll(
             row("987654321,876543219", 2),
@@ -41,10 +41,10 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
             val sut = Arguments(arguments)
 
-            `when`("toReportRequestVm $virksomhetsnummer") {
+            When("toReportRequestVm $virksomhetsnummer") {
                 val kostraFormVm = sut.toReportRequestVm()
 
-                then("mapped view model should be as expected") {
+                Then("mapped view model should be as expected") {
                     assertSoftly(kostraFormVm) {
                         skjema shouldBe "~skjema~"
                         aar shouldBe Year.now().value
@@ -61,7 +61,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
         }
     }
 
-    given("all error codes as int") {
+    Given("all error codes as int") {
         forAll(
             row(NORMAL_ERROR, KostraErrorCode.NORMAL_ERROR),
             row(CRITICAL_ERROR, KostraErrorCode.CRITICAL_ERROR),
@@ -69,10 +69,10 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             row(PARAMETER_ERROR, KostraErrorCode.PARAMETER_ERROR),
             row(NO_ERROR, KostraErrorCode.NO_ERROR)
         ) { errorCodeAsInt, expectedEnumErrorCode ->
-            `when`("toKostraErrorCode $errorCodeAsInt") {
+            When("toKostraErrorCode $errorCodeAsInt") {
                 val mappedErrorCode = errorCodeAsInt.toKostraErrorCode()
 
-                then("mappedErrorCode should be as expected") {
+                Then("mappedErrorCode should be as expected") {
                     mappedErrorCode shouldBe expectedEnumErrorCode
                 }
             }

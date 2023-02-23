@@ -17,10 +17,10 @@ import org.xml.sax.SAXException
 
 class TiltakTypeTest : BehaviorSpec({
 
-    given("misc TiltakType XML") {
+    Given("misc TiltakType XML") {
 
         /** make sure it's possible to make a valid test XML */
-        `when`("valid XML, expect no exceptions") {
+        When("valid XML, expect no exceptions") {
             shouldNotThrowAny {
                 getSchemaValidator().validate(buildKostraXml(
                     "<Tiltak Id=\"42\" StartDato=\"2022-11-14\" SluttDato=\"2022-11-15\">" +
@@ -104,12 +104,12 @@ class TiltakTypeTest : BehaviorSpec({
                 INVALID_DATE_ERROR
             )
         ) { description, partialXml, expectedError ->
-            `when`(description) {
+            When(description) {
                 val thrown = shouldThrow<SAXException> {
                     getSchemaValidator().validate(buildKostraXml(partialXml).toStreamSource())
                 }
 
-                then("thrown should be as expected") {
+                Then("thrown should be as expected") {
                     thrown.message shouldBe expectedError
                 }
             }

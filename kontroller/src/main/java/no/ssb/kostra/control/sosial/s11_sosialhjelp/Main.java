@@ -114,6 +114,7 @@ public class Main {
             control18ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control19ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control20ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
+// TODO: aktiveres for 2023-data            control21ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control22TilknytningTilTrygdesystemetOgAlder(errorReport, currentRecord);
             control23TilknytningTilTrygdesystemetOgBarn(errorReport, currentRecord);
             control24TilknytningTilTrygdesystemetOgArbeidssituasjon(errorReport, currentRecord);
@@ -491,6 +492,34 @@ public class Main {
         );
     }
 
+
+    public static boolean control21ViktigsteKildeTilLivsopphold(
+            final ErrorReport errorReport, final KostraRecord record) {
+
+        errorReport.incrementCount();
+
+        return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
+                errorReport
+                , new ErrorReportEntry(
+                        record.getFieldAsString(SAKSBEHANDLER)
+                        , record.getFieldAsString(PERSON_JOURNALNR)
+                        , record.getFieldAsString(PERSON_FODSELSNR)
+                        , " "
+                        , "Kontroll 21 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("5"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("5"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + "Arbeidssituasjonen er '" + record.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
+                        + record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::toString).toList()
+                        + "'. Feltet er obligatorisk å fylle ut."
+                        , Constants.NORMAL_ERROR
+                )
+                , record.getFieldAsString(VKLO)
+                , List.of("5")
+                , record.getFieldAsString(ARBSIT)
+                , List.of("02", "03", "04", "05", "06", "07", "08")
+        );
+    }
     public static boolean control22TilknytningTilTrygdesystemetOgAlder(
             final ErrorReport errorReport, final KostraRecord record) {
 

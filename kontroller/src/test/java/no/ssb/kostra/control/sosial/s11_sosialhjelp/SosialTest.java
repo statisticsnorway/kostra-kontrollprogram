@@ -243,6 +243,15 @@ class SosialTest {
         );
     }
 
+    static Stream<TestRecordInputAndResult> control21iktigsteKildeTilLivsoppholdProvider() {
+        return Stream.of(
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "VKLO", "X", "ARBSIT", "XX"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "5", "ARBSIT", "02"), definitions), false, Constants.NO_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "5", "ARBSIT", "12"), definitions), true, Constants.NORMAL_ERROR),
+                new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "12028012345", "VKLO", "5", "ARBSIT", "XX"), definitions), true, Constants.NORMAL_ERROR)
+        );
+    }
+
     static Stream<TestRecordInputAndResult> control22TilknytningTilTrygdesystemetOgAlderProvider() {
         return Stream.of(
                 new TestRecordInputAndResult(arguments, new KostraRecord(Map.of("SAKSBEHANDLER", "Sara Sak", "PERSON_JOURNALNR", "123", "PERSON_FODSELSNR", "19096632188", "TRYGDESIT", "XX", "ALDER", "XX"), definitions), false, Constants.NO_ERROR),
@@ -652,6 +661,15 @@ class SosialTest {
     @MethodSource("control20ViktigsteKildeTilLivsoppholdProvider")
     void control20ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
         Assertions.assertEquals(inputAndResult.isResult(), control20ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
+        Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
+
+        System.out.println(inputAndResult.getErrorReport().generateReport());
+    }
+
+    @ParameterizedTest(name = "#{index} - Run test with {0}")
+    @MethodSource("control21iktigsteKildeTilLivsoppholdProvider")
+    void control21ViktigsteKildeTilLivsoppholdTest(TestRecordInputAndResult inputAndResult) {
+        Assertions.assertEquals(inputAndResult.isResult(), control21ViktigsteKildeTilLivsopphold(inputAndResult.getErrorReport(), inputAndResult.getRecord()));
         Assertions.assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
 
         System.out.println(inputAndResult.getErrorReport().generateReport());

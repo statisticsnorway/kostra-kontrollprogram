@@ -87,9 +87,7 @@ public class ControlRegnskap {
 
         if (isCodeInCodeList(errorReport.getArgs().getSkjema(), regnskapList)) {
             final var filteredRegnskap = regnskap.stream()
-                    .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse)
-                            && isCodeInCodeList(record.getFieldAsString("art_sektor"), artList)
-                    )
+                    .filter(record -> record.getFieldAsString("kontoklasse").equalsIgnoreCase(kontoklasse))
                     .toList();
 
             return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
@@ -111,9 +109,7 @@ public class ControlRegnskap {
             final String formattedControlText, final int errorType) {
 
         final var filteredRegnskap = regnskap.stream()
-                .filter(record -> isCodeInCodeList(record.getFieldAsString("funksjon_kapittel"), funksjonList)
-                        && isCodeInCodeList(record.getFieldAsString("art_sektor"), artList)
-                )
+                .filter(record -> isCodeInCodeList(record.getFieldAsString("funksjon_kapittel"), funksjonList))
                 .toList();
 
         return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,

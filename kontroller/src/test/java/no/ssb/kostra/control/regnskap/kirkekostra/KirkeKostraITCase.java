@@ -16,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static no.ssb.kostra.control.felles.ControlIntegritet.controlSektor;
@@ -36,9 +35,9 @@ class KirkeKostraITCase {
 
     static Stream<TestRecordListInputAndResult> controlKombinasjonKontoklasseArtInvesteringsregnskapInputs() {
         return Stream.of(
-                new TestRecordListInputAndResult(args0G, List.of(new KostraRecord("0G2020 300500976989732         510  123    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR)//,
-//                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 110    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
-//                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 990    -3000", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR)
+                new TestRecordListInputAndResult(args0G, List.of(new KostraRecord("0G2020 300500976989732         510  123    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 110    -3000", FieldDefinitions.getFieldDefinitions())), false, Constants.NO_ERROR),
+                new TestRecordListInputAndResult(args0F, List.of(new KostraRecord("0F2020 300500976989732         4041 990    -3000", FieldDefinitions.getFieldDefinitions())), true, Constants.CRITICAL_ERROR)
         );
     }
 

@@ -114,6 +114,7 @@ public class Main {
             control18ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control19ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control20ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
+// TODO: aktiveres for 2023-data            control21ViktigsteKildeTilLivsopphold(errorReport, currentRecord);
             control22TilknytningTilTrygdesystemetOgAlder(errorReport, currentRecord);
             control23TilknytningTilTrygdesystemetOgBarn(errorReport, currentRecord);
             control24TilknytningTilTrygdesystemetOgArbeidssituasjon(errorReport, currentRecord);

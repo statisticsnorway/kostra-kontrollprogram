@@ -73,8 +73,8 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
             val arguments = sut.toKostraArguments("".byteInputStream())
 
             Then("arguments should be as expected") {
-                arguments.foretaknr shouldBe generateCompanyIdInTest('9')
-                arguments.orgnr shouldBe generateCompanyIdInTest(' ')
+                arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
+                arguments.orgnr shouldBe generateCompanyIdInTest('9')
             }
         }
     }

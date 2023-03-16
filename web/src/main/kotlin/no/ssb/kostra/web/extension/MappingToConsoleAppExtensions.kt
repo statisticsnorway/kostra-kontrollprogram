@@ -21,7 +21,11 @@ fun KostraFormVm.toKostraArguments(inputStream: InputStream) = Arguments(
         NAME_ABBR to (this.navn ?: NAME_FALLBACK_VALUE)
     ).also { parameterMap ->
         if (!this.orgnrForetak.isNullOrEmpty()) {
-            parameterMap[COMPANY_ORGNR_ABBR] = this.orgnrForetak
+            if (this.orgnrVirksomhet.none()){
+                parameterMap[UNIT_ORGNR_ABBR] = this.orgnrForetak
+            } else {
+                parameterMap[COMPANY_ORGNR_ABBR] = this.orgnrForetak
+            }
         }
         if (this.orgnrVirksomhet.any()) {
             parameterMap[UNIT_ORGNR_ABBR] = this.orgnrVirksomhet.joinToString(separator = SEPARATOR_CHAR) { it.orgnr }

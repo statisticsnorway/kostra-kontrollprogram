@@ -23,7 +23,7 @@
 
         <kotlin.version>1.8.10</kotlin.version>
         <kotestVersion>5.5.5</kotestVersion>
-        <reactorCoreVersion>3.5.3</reactorCoreVersion>
+        <reactorCoreVersion>3.5.4</reactorCoreVersion>
         <jackson.version>2.14.2</jackson.version>
         <swagger.version>2.2.8</swagger.version>
         <micronaut.openapi.version>4.8.1</micronaut.openapi.version>

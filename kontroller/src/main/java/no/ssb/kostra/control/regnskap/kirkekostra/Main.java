@@ -2,7 +2,6 @@ package no.ssb.kostra.control.regnskap.kirkekostra;
 
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.felles.ControlDubletter;
-import no.ssb.kostra.control.felles.ControlFelt1ListeBlank;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;

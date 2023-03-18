@@ -28,7 +28,7 @@
         <swagger.version>2.2.8</swagger.version>
         <micronaut.openapi.version>4.8.1</micronaut.openapi.version>
         <slf4j.version>2.0.6</slf4j.version>
-        <logback.version>1.4.5</logback.version>
+        <logback.version>1.4.6</logback.version>
 
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 

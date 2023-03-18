@@ -2,7 +2,6 @@ package no.ssb.kostra.control.regnskap.kirkekostra;
 
 import no.ssb.kostra.control.felles.Comparator;
 import no.ssb.kostra.control.felles.ControlDubletter;
-import no.ssb.kostra.control.felles.ControlFelt1ListeBlank;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;
@@ -22,18 +21,7 @@ import static no.ssb.kostra.control.felles.Comparator.between;
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 import static no.ssb.kostra.control.felles.Comparator.outsideOf;
 import static no.ssb.kostra.control.felles.Comparator.removeCodesFromCodeList;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlAargang;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlArt;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlBelop;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlForetaksnummer;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlFunksjon;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlKapittel;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlKontoklasse;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlKvartal;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlOrganisasjonsnummer;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlRegion;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlSkjema;
-import static no.ssb.kostra.control.felles.ControlIntegritet.controlUgyldigeBelop;
+import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.controlKombinasjonFunksjonArt;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.controlKombinasjonKontoklasseArt;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumAktiva;
@@ -256,18 +244,6 @@ public class Main {
         return errorReport;
     }
 
-    public static boolean controlSektor(
-            final ErrorReport errorReport, final List<KostraRecord> regnskap, final List<String> balanseRegnskapList) {
-
-        if (isCodeInCodeList(errorReport.getArgs().getSkjema(), balanseRegnskapList)) {
-            return ControlFelt1ListeBlank.doControl(errorReport,
-                    "3. Feltkontroller",
-                    "Sektor",
-                    regnskap.stream().map(record -> record.getFieldAsTrimmedString("art_sektor")).toList(),
-                    Constants.CRITICAL_ERROR);
-        }
-        return false;
-    }
 
     public static boolean controlSumInvesteringsDifferanse(
             final ErrorReport errorReport, final List<KostraRecord> regnskap) {

@@ -12,10 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static no.ssb.kostra.control.felles.ControlIntegritet.controlSektor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class MainITestKirkeKostra {
@@ -36,7 +39,7 @@ public class MainITestKirkeKostra {
     @ParameterizedTest(name = "#{index} - Run test with {0}")
     @MethodSource("controlSektorInputs")
     public void controlSektorTest(TestRecordListInputAndResult inputAndResult) {
-        assertEquals(inputAndResult.isResult(), Main.controlSektor(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), Main.getBalanseRegnskapList()));
+        assertEquals(inputAndResult.isResult(), controlSektor(inputAndResult.getErrorReport(), inputAndResult.getRecordList(), Main.getBalanseRegnskapList()));
         assertEquals(inputAndResult.getExpectedErrorType(), inputAndResult.getErrorReport().getErrorType());
     }
 
@@ -136,55 +139,54 @@ public class MainITestKirkeKostra {
             System.out.print(errorReport.generateReport());
         }
 
-        Assertions.assertNotNull(errorReport, "Has content ErrorReport");
+        assertNotNull(errorReport, "Has content ErrorReport");
         assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
 
     }
-//
-//    @Test
-//    public void testDoControl0G() {
-//        //@formatter:off
-//        inputFileContent =
-//            //00000000111111111122222222223333333333444444444
-//            //23456789012345678901234567890123456789012345678
-//            "0G2020 300500976989732         510           263\n" +
-//            "0G2020 300500976989732         511         38896\n" +
-//            "0G2020 300500976989732         512         80297\n" +
-//            "0G2020 300500976989732         513         36431\n" +
-//            "0G2020 300500976989732         518           202\n" +
-//            "0G2020 300500976989732         521         95733\n" +
-//            "0G2020 300500976989732         522         35500\n" +
-//            "0G2020 300500976989732         524         32842\n" +
-//            "0G2020 300500976989732         527         95113\n" +
-//            "0G2020 300500976989732         531        -84392\n" +
-//            "0G2020 300500976989732         532        -99758\n" +
-//            "0G2020 300500976989732         541        -18392\n" +
-//            "0G2020 300500976989732         545        -57043\n" +
-//            "0G2020 300500976989732         551        -55373\n" +
-//            "0G2020 300500976989732         553        -13875\n" +
-//            "0G2020 300500976989732         555         -9935\n" +
-//            "0G2020 300500976989732         556        -99116\n" +
-//            "0G2020 300500976989732         5581        32670\n" +
-//            "0G2020 300500976989732         55990      -10063\n" +
-//            "0G2020 300500976989732         59100        9897\n" +
-//            "0G2020 300500976989732         59200       12171\n" +
-//            "0G2020 300500976989732         59999      -22068\n";
-//        //@formatter:on
-//
-//        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
-//        System.setIn(in);
-//
-//        args = new Arguments(new String[]{"-s", "0G", "-y", "2020", "-r", "300500", "-u", "976989732"});
-//
-//        er = Main.doControls(args);
-//
-//        if (Constants.DEBUG) {
-//            System.out.print(er.generateReport());
-//        }
-//
-//        assertNotNull("Has content ErrorReport", er);
-//        assertEquals(Constants.NO_ERROR, er.getErrorType());
-//    }
+
+    @Test
+    void testDoControl0G() {
+        //@formatter:off
+        String inputFileContent =
+            //00000000111111111122222222223333333333444444444
+            //23456789012345678901234567890123456789012345678
+            "0G2021 777700987654321         510  000        0\n" +
+            "0G2021 777700987654321         510  070     1139\n" +
+            "0G2021 777700987654321         510  320    24872\n" +
+            "0G2021 777700987654321         513  080      355\n" +
+            "0G2021 777700987654321         513  640     1699\n" +
+            "0G2021 777700987654321         513  890      600\n" +
+            "0G2021 777700987654321         521  200     1998\n" +
+            "0G2021 777700987654321         524  080    44297\n" +
+            "0G2021 777700987654321         527  080   116753\n" +
+            "0G2021 777700987654321         532  080    -2349\n" +
+            "0G2021 777700987654321         532  610    -2527\n" +
+            "0G2021 777700987654321         532  640    -2188\n" +
+            "0G2021 777700987654321         532  890    -6780\n" +
+            "0G2021 777700987654321         551  080     -287\n" +
+            "0G2021 777700987654321         553  080     -281\n" +
+            "0G2021 777700987654321         555  080   -10222\n" +
+            "0G2021 777700987654321         556  080    -3365\n" +
+            "0G2021 777700987654321         55950080      -89\n" +
+            "0G2021 777700987654321         55960080     -577\n" +
+            "0G2021 777700987654321         55990080  -163048\n";
+        //@formatter:on
+
+        ByteArrayInputStream in = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
+        System.setIn(in);
+
+        var args = new Arguments(new String[]{"-s", "0G", "-y", "2021", "-r", "777700", "-u", "987654321"});
+        args.setInputFileContent(Arrays.stream(inputFileContent.split("\n")).toList());
+
+        var er = Main.doControls(args);
+
+        if (Constants.DEBUG) {
+            System.out.print(er.generateReport());
+        }
+
+        //assertNotNull("Has content ErrorReport", er);
+        assertEquals(Constants.CRITICAL_ERROR, er.getErrorType());
+    }
 //
 //
 //    @Test

@@ -42,7 +42,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
                 ? schema
                     .required(COMPANY_ID_REQUIRED_MSG)
                     .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-                : schema.optional()
+                : schema.nullable().default(null)
         ),
 
         orgnrVirksomhet: yup.array(

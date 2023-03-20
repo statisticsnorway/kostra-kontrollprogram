@@ -44,7 +44,7 @@ describe("ReportSummary", () => {
             const localKostraFormInTest = {
                 ...kostraFormInTest,
                 orgnrForetak: "",
-                orgnrVirksomhet: null
+                orgnrVirksomhet: undefined
             }
 
             render(<ReportSummary

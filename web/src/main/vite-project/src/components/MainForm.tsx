@@ -29,37 +29,40 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
 }) => {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
 
-    const validationSchema: yup.SchemaOf<KostraFormVm> = yup.object().shape({
-            skjema: yup.string().required("Skjematype er påkrevet"),
-            aar: yup.number().transform(value => (isNaN(value) ? 0 : value)).positive("Årgang er påkrevet"),
-            region: yup.string()
-                .required("Region er påkrevet")
-                .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
-            orgnrForetak: yup.string().when([], {
-                is: () => valgtSkjematype?.labelOrgnr,
-                then: yup.string()
+    const validationSchema: yup.ObjectSchema<KostraFormVm> = yup.object().shape({
+        skjema: yup.string().required("Skjematype er påkrevet"),
+        aar: yup.number().required().positive("Årgang er påkrevet"),
+
+        region: yup.string()
+            .required("Region er påkrevet")
+            .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
+
+        orgnrForetak: yup.string().when(([], schema) =>
+            valgtSkjematype?.labelOrgnr
+                ? schema
                     .required(COMPANY_ID_REQUIRED_MSG)
                     .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-            }),
-            orgnrVirksomhet: yup.array().of(
-                yup.object().shape({
-                    orgnr: yup.string()
-                        .required(COMPANY_ID_REQUIRED_MSG)
-                        .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-                })
-            ),
-            skjemaFil: yup.mixed()
-                .test(
-                    "required",
-                    "Vennligst velg fil",
-                    (files: FileList) => files?.length > 0
-                ).test(
-                    "file-size",
-                    "Maks. filstørrelse er 10 MiB",
-                    (files: FileList) => files?.[0]?.size < MEBIBYTE_10
-                )
-        }
-    ).required()
+                : schema.optional()
+        ),
+
+        orgnrVirksomhet: yup.array(
+            yup.object({
+                orgnr: yup.string()
+                    .required(COMPANY_ID_REQUIRED_MSG)
+                    .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
+            })),
+
+        skjemaFil: yup.mixed<FileList>().defined()
+            .test(
+                "required",
+                "Vennligst velg fil",
+                (files: FileList) => files?.length > 0
+            ).test(
+                "file-size",
+                "Maks. filstørrelse er 10 MiB",
+                (files: FileList) => files?.[0]?.size < MEBIBYTE_10
+            )
+    })
 
     // main form
     const {

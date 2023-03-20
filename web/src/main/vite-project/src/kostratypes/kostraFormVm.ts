@@ -6,7 +6,7 @@ interface KostraFormVm {
     skjema: NonNullable<string>
     region: NonNullable<string>
     orgnrForetak: Nullable<string>
-    orgnrVirksomhet: CompanyIdVm[] | undefined
+    orgnrVirksomhet: Nullable<CompanyIdVm[]>
     skjemaFil: FileList
 }
 

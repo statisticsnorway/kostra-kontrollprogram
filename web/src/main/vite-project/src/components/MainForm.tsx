@@ -14,6 +14,7 @@ import Nullable from "../kostratypes/nullable"
 import PlusCircle from "../assets/icon/plus-circle.svg"
 // @ts-ignore
 import DashCircle from "../assets/icon/dash-circle.svg"
+import CompanyIdVm from "../kostratypes/companyIdVm";
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
@@ -42,7 +43,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
                 ? schema
                     .required(COMPANY_ID_REQUIRED_MSG)
                     .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-                : schema.nullable().optional()
+                : schema.nullable()
         ),
 
         orgnrVirksomhet: yup.array(
@@ -50,7 +51,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
                 orgnr: yup.string()
                     .required(COMPANY_ID_REQUIRED_MSG)
                     .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-            })),
+            })).default<Nullable<CompanyIdVm[]>>(null).nullable(),
 
         skjemaFil: yup.mixed<FileList>().defined()
             .test(

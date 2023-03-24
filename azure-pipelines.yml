@@ -38,7 +38,7 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
       # The version of the repo on GitHub. Change to needed version
-      ref: refs/tags/1.1.38
+      ref: refs/tags/1.1.39
       # Service connection in the barn project on Pipelines
       # with access to the template repository.
       endpoint: 'github-Barnevernsregisteret'
@@ -67,19 +67,38 @@ jobs:
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-authenticate-gar.yml
       - template: maven/task-authenticate-gar.yml@templates
 
-      # Verify and run sonarcloud, for non-tag-builds
-      # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-verify.yml
-      - template: maven/task-verify.yml@templates
-        parameters:
-          sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
+      - task: SonarCloudPrepare@1
+        condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          SonarCloud: 'bipSonarCloud-Barnevernsregisteret'
+          organization: 'statisticsnorway'
+          scannerMode: 'Other'
 
       - task: Maven@3
-        displayName: Set POM-version
+        condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        displayName: 'Maven test and verify'
         inputs:
-          goals: 'versions:set'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true --batch-mode  $(MAVEN_OPTS)'
-          mavenVersionOption: 'Default'
+          mavenPomFile: 'pom.xml'
+          goals: 'verify versions:set'
+          options: '-X -P ssb-bip,coverage --batch-mode $(MAVEN_OPTS)'
+          publishJUnitResults: true
+          testResultsFiles: '**/TEST-*.xml'
           javaHomeOption: 'JDKVersion'
+          mavenVersionOption: 'Default'
+          mavenOptions: '-Xmx3072m'
+          mavenAuthenticateFeed: false
+          effectivePomSkip: false
+          isJacocoCoverageReportXML: true
+          checkStyleRunAnalysis: false
+          pmdRunAnalysis: false
+          sonarQubeRunAnalysis: true
+          sqMavenPluginVersionChoice: 'pom'
+
+      # Task to display the quality gate status in the build summary. This tasks is optional, as it can increase the overall build time.
+      - task: SonarCloudPublish@1
+        condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          pollingTimeoutSec: '300'
 
       # Deploy artifact to artifact registry
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-install-and-deploy-to-gar.yml

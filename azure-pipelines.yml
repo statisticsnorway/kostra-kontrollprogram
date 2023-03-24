@@ -73,12 +73,21 @@ jobs:
         parameters:
           sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
 
+      - task: Maven@3
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+        displayName: Set POM-version
+        inputs:
+          goals: 'versions:set'
+          options: '-DskipTests=true -Dmaven.javadoc.skip=true --batch-mode  $(MAVEN_OPTS)'
+          mavenVersionOption: 'Default'
+          javaHomeOption: 'JDKVersion'
+
       # Deploy artifact to artifact registry
       - task: Maven@3
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
         displayName: 'Maven install and deploy'
         inputs:
-          goals: 'versions:set deploy'
+          goals: 'deploy'
           mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
           options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
           mavenPomFile: 'pom.xml'

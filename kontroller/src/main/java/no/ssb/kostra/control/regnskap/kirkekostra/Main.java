@@ -215,23 +215,7 @@ public class Main {
             controlInterneOverforinger(errorReport, regnskap);
             controlOverforinger(errorReport, regnskap);
             controlAvskrivninger(errorReport, regnskap);
-
-            final var funksjon089Arter = getArtSektorAsList(errorReport.getArgs().getSkjema())
-                    .stream()
-                    .mapToInt(Integer::valueOf)
-                    .filter(i -> between(i, 500, 580)
-                            || i == 830
-                            || between(i, 900, 980)
-                    )
-                    .mapToObj(String::valueOf)
-                    .toList();
-
-            controlKombinasjonFunksjonArt(errorReport,
-                    regnskap,
-                    List.of("089 "),
-                    funksjon089Arter,
-                    "Korrigér i fila slik at art (%s) er gyldig mot funksjon 089. Gyldige arter er: " + funksjon089Arter + ".",
-                    Constants.CRITICAL_ERROR);
+            control200Funksjon089(errorReport, regnskap);
         }
 
         if (isCodeInCodeList(args.getSkjema(), getBalanseRegnskapList())) {
@@ -540,6 +524,43 @@ public class Main {
                 "Korrigér i fila slik at differansen (" + sumAvskrivninger + ") mellom art 590 (" + sumAvskrivninger590 + ") stemmer overens med art 990 (" + sumMotpostAvskrivninger990 + ") (margin på +/- 30')",
                 "",
                 Constants.CRITICAL_ERROR));
+        return true;
+    }
+
+    public static boolean control200Funksjon089(final ErrorReport errorReport, final List<KostraRecord> regnskap){
+        errorReport.incrementCount();
+
+        if (!isCodeInCodeList(errorReport.getArgs().getSkjema(), getBevilgningRegnskapList())){
+            return false;
+        }
+
+        final var funksjon089Arter = getArtSektorAsList(errorReport.getArgs().getSkjema())
+                .stream()
+                .mapToInt(Integer::valueOf)
+                .filter(i -> between(i, 500, 580) || i == 830 || between(i, 900, 980))
+                .mapToObj(String::valueOf)
+                .toList();
+
+        final var errors = regnskap.stream()
+                .filter(p -> Objects.equals("089", p.getFieldAsTrimmedString("funksjon_kapittel"))
+                        && !isCodeInCodeList(p.getFieldAsString("art_sektor"), funksjon089Arter))
+                .toList();
+
+        if (errors.isEmpty()){
+            return false;
+        }
+
+        errors.forEach(p ->
+                errorReport.addEntry(new ErrorReportEntry(
+                        "6. Summeringskontroller",
+                        "Kontroll Funksjon 089 - Finansieringstransaksjoner",
+                        " ",
+                        " ",
+                        "Korrigér i fila slik at art (" + p.getFieldAsString("art_sektor") + ") er gyldig mot funksjon 089. Gyldige arter er: ( " + funksjon089Arter + ")",
+                        "",
+                        Constants.CRITICAL_ERROR))
+        );
+
         return true;
     }
 }

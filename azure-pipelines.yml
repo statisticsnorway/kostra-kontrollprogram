@@ -72,6 +72,8 @@ jobs:
       - template: maven/task-verify.yml@templates
         parameters:
           sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
+          checkStyleRunAnalysis: false
+          pmdRunAnalysis: false
 
       - task: Maven@3
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')

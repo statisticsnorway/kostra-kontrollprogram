@@ -21,6 +21,7 @@
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
+        <!-- wait with 1.8.20, it does not work with micronaut 3.8.8 -->
         <kotlin.version>1.8.10</kotlin.version>
         <kotestVersion>5.5.5</kotestVersion>
         <reactorCoreVersion>3.5.4</reactorCoreVersion>

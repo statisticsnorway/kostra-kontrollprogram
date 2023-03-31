@@ -21,7 +21,7 @@
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <kotlin.version>1.8.10</kotlin.version>
+        <kotlin.version>1.8.20</kotlin.version>
         <kotestVersion>5.5.5</kotestVersion>
         <reactorCoreVersion>3.5.4</reactorCoreVersion>
         <jackson.version>2.14.2</jackson.version>

@@ -16,11 +16,12 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.8.7</micronaut.version>
+        <micronaut.version>3.8.8</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
+        <!-- wait with 1.8.20, it does not work with micronaut 3.8.8 -->
         <kotlin.version>1.8.10</kotlin.version>
         <kotestVersion>5.5.5</kotestVersion>
         <reactorCoreVersion>3.5.4</reactorCoreVersion>
@@ -176,7 +177,7 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.3</version>
                 <configuration>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>
@@ -349,7 +350,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>position-react-build</id>

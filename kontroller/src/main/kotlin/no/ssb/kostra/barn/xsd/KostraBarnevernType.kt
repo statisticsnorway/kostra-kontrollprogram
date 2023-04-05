@@ -2,7 +2,7 @@ package no.ssb.kostra.barn.xsd
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import javax.xml.bind.annotation.*
+import jakarta.xml.bind.annotation.*
 
 @XmlRootElement(name = "Barnevern")
 @XmlAccessorType(XmlAccessType.FIELD)

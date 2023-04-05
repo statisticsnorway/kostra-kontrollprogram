@@ -3,7 +3,7 @@ package no.ssb.kostra.barn.xsd
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import java.time.LocalDate
-import javax.xml.bind.annotation.*
+import jakarta.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UndersokelseType", propOrder = ["presisering", "vedtaksgrunnlag"])

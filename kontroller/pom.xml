@@ -21,7 +21,7 @@
         <spock.version>2.3-groovy-4.0</spock.version>
 
         <kotlin.version>1.8.20</kotlin.version>
-        <kotestVersion>5.5.5</kotestVersion>
+        <kotestVersion>5.6.0</kotestVersion>
         <jackson.version>2.14.2</jackson.version>
     </properties>
 

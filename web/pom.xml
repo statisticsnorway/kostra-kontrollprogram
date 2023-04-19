@@ -23,7 +23,7 @@
 
         <!-- wait with 1.8.20, it does not work with micronaut 3.8.8 -->
         <kotlin.version>1.8.10</kotlin.version>
-        <kotestVersion>5.6.0</kotestVersion>
+        <kotestVersion>5.6.1</kotestVersion>
         <reactorCoreVersion>3.5.5</reactorCoreVersion>
         <jackson.version>2.14.2</jackson.version>
         <swagger.version>2.2.9</swagger.version>

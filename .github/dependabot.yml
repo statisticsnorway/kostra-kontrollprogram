@@ -7,6 +7,12 @@ updates:
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: "/web/src/main/vite-project"
+    schedule:
+      interval: daily
+      time: "03:00"
+      timezone: Europe/Oslo
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

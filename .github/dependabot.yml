@@ -8,6 +8,7 @@ updates:
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
+    versioning-strategy: increase
     directory: "/web/src/main/vite-project"
     schedule:
       interval: daily

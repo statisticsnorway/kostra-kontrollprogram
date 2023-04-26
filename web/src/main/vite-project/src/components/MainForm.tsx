@@ -38,7 +38,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
             .required("Region er påkrevet")
             .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
 
-        orgnrForetak: yup.string().default<Nullable<string>>(null).when(([], schema) =>
+        orgnrForetak: yup.string().default<Nullable<string>>(null).when(([valgtSkjematype], schema) =>
             valgtSkjematype?.labelOrgnr
                 ? schema
                     .required(COMPANY_ID_REQUIRED_MSG)

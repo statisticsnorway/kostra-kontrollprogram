@@ -12,7 +12,7 @@ const setupForLayoutTests = (fileReports: FileReportVm[], activeTabIndex: number
         activeTabIndex={activeTabIndex}
         onTabSelect={() => {
         }}
-        onReportDelete={() => {
+        onDeleteFileReport={() => {
         }}/>)
 }
 
@@ -21,7 +21,7 @@ const setupForInteractionTests = (onTabSelect: () => void, onReportDelete: () =>
         fileReports={[fileReportInTest]}
         activeTabIndex={1}
         onTabSelect={onTabSelect}
-        onReportDelete={onReportDelete}/>)
+        onDeleteFileReport={onReportDelete}/>)
 }
 
 describe("TabRow", () => {

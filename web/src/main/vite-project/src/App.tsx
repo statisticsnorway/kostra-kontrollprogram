@@ -1,4 +1,5 @@
 import {useQuery} from 'react-query'
+import {useState} from "react";
 
 // app components
 import MainForm from "./components/MainForm"
@@ -16,7 +17,6 @@ import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
 import IconKostra from "./assets/icon/ikon-kostra.svg"
 
 import './scss/buttons.scss'
-import {useState} from "react";
 
 const App = () => {
 

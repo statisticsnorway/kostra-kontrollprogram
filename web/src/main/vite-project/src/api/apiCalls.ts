@@ -9,14 +9,14 @@ const config: AxiosRequestConfig = {baseURL: "/api"}
 export const api = axios.create(config)
 
 export const uiDataAsync = (): Promise<UiDataVm> =>
-    api.get<UiDataVm>("/ui-data").then(response => response.data)
+    api.get<UiDataVm>("/ui-data").then(({data}) => data)
 
 export const kontrollerSkjemaAsync = (skjema: NonNullable<KostraFormVm>): Promise<FileReportVm> =>
     api.post<FileReportVm>(
         "/kontroller-skjema",
         kostraFormToMultipartBody(skjema),
         MULTIPART_HEADER_CONFIG
-    ).then(response => response.data)
+    ).then(({data}) => data)
 
 /**
  * builds FormData from KostraFormVm

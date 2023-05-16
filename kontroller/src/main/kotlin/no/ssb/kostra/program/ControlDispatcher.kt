@@ -6,7 +6,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 class ControlDispatcher {
     companion object {
         fun doControls(arguments: Arguments): ValidationReport {
-            var validationReportEntries: List<ValidationReportEntry>? = listOf()
+            var validationReportEntries: List<ValidationReportEntry>? = emptyList()
 /*
             if (Comparator.isCodeInCodeList(
                     arguments.skjema, listOf(

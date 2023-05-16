@@ -8,7 +8,7 @@ data class FieldDefinition(
     val viewType: String = INPUTBOX_VIEWTYPE,
     val from: Int = 0,
     val to: Int = 0,
-    var codeList: List<Code> = listOf(),
+    var codeList: List<Code> = emptyList(),
     var datePattern: String = "",
     val mandatory: Boolean = false
 ){

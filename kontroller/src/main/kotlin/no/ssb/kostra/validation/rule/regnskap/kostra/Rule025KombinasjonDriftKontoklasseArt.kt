@@ -7,8 +7,8 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
 import no.ssb.kostra.validation.rule.regnskap.isBevilgningDriftRegnskap
 
-class Rule025KombinasjonKontoklasseArt(
-    val invalidDriftArtList: List<String>
+class Rule025KombinasjonDriftKontoklasseArt(
+    private val invalidDriftArtList: List<String>
 ) : AbstractRecordRule(
     "Kontroll 025 : Kombinasjon i driftsregnskapet, kontoklasse og art",
     Severity.ERROR

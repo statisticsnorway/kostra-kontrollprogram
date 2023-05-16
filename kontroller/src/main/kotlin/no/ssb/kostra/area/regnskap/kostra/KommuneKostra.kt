@@ -1,6 +1,5 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.FieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
@@ -24,6 +23,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.Arguments
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.plus
@@ -157,7 +157,7 @@ class KommuneKostra(
                 )
             }
         )
-            return listOf()
+            return emptyList()
 
         val result = ArrayList<String>()
         when (arguments.skjema) {
@@ -198,7 +198,7 @@ class KommuneKostra(
         return result.map { it.padEnd(4, ' ') }.sorted().toList()
     }
 
-    private fun getDriftFunksjonAsList(): List<String> {
+    private fun getInvalidDriftFunksjonList(): List<String> {
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it in listOf(
                     ACCOUNTING_TYPE_BEVILGNING,
@@ -206,11 +206,42 @@ class KommuneKostra(
                 )
             }
         )
-            return listOf()
+            return emptyList()
 
-        val invalidDriftFunksjonList = listOf("841 ")
-        return getFunksjonAsList().minus(invalidDriftFunksjonList)
+        // Kun gyldig i investering og skal fjernes fra drift
+        return listOf("841 ")
     }
+
+    private fun getInvalidInvesteringFunksjonAsList(): List<String> {
+        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
+                it in listOf(
+                    ACCOUNTING_TYPE_BEVILGNING,
+                    ACCOUNTING_TYPE_REGIONALE
+                )
+            }
+        )
+            return emptyList()
+
+        // Kun gyldig i drift og skal fjernes fra investering
+        return listOf("800 ", "840 ", "850 ", "860 ")
+    }
+
+    private fun getIllogicalInvesteringFunksjonAsList(): List<String> {
+        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
+                it in listOf(
+                    ACCOUNTING_TYPE_BEVILGNING,
+                    ACCOUNTING_TYPE_REGIONALE
+                )
+            }
+        )
+            return emptyList()
+
+        // Anses som ulogisk i investering
+        return listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
+    }
+
+
+
 
     // Kapitler
     private fun getKapittelAsList(): List<String> {
@@ -218,7 +249,7 @@ class KommuneKostra(
                 it == ACCOUNTING_TYPE_BALANSE
             }
         )
-            return listOf()
+            return emptyList()
 
         val result = mutableListOf(
             // @formatter:off
@@ -238,11 +269,6 @@ class KommuneKostra(
         return result.map { it.padEnd(4, ' ') }.sorted().toList()
     }
 
-
-    // Kun gyldig i investering og skal fjernes fra drift
-    fun getInvalidDriftFunksjon() = listOf("841 ")
-
-    fun invalidInvesteringFunksjon() = listOf("800 ", "840 ", "850 ", "860 ")
 
     // Arter
     private val basisArter = listOf(
@@ -284,7 +310,7 @@ class KommuneKostra(
                 )
             }
         )
-            return listOf()
+            return emptyList()
 
         val result = ArrayList<String>(basisArter)
         when (arguments.skjema) {
@@ -316,7 +342,7 @@ class KommuneKostra(
                 it == ACCOUNTING_TYPE_BALANSE
             }
         )
-            return listOf()
+            return emptyList()
 
         // Sektorer
         return listOf(
@@ -334,7 +360,7 @@ class KommuneKostra(
     }
 
     // Kun gyldig i investering og skal fjernes fra drift
-    fun getArterUgyldigDrift() =
+    fun getInvalidDriftArtList() =
         if ((arguments.skjema in listOf("0I", "0K") && arguments.orgnr in orgnrSpesial)
             || (arguments.skjema in listOf("0M", "0P") && arguments.region in kommunenummerSpesial)
         ) {
@@ -344,7 +370,7 @@ class KommuneKostra(
         }
 
     // Kun gyldig i drift og skal fjernes fra investering
-    fun getArterUgyldigInvestering() = listOf(
+    fun getInvalidInvesteringArtList() = listOf(
         // @formatter:off
         "070", "080",
         "110", "114",
@@ -372,11 +398,11 @@ class KommuneKostra(
                     TITLE_KONTOKLASSE, TITLE_KAPITTEL, TITLE_SEKTOR
                 )
 
-            else -> listOf<String>() to listOf()
+            else -> emptyList<String>() to emptyList()
         }
 
     private val fatalRules = listOf(
-        Rule001RecordLength(FieldDefinitions().getFieldLength())
+        Rule001RecordLength(RegnskapFieldDefinitions.getFieldLength())
     )
 
     private val validationRules = listOf(
@@ -393,9 +419,20 @@ class KommuneKostra(
         Rule013Sektor(sektorList = getSektorAsList()),
         Rule014Belop(),
         Rule015Duplicates(mappingDuplicates()),
-        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = getInvalidDriftFunksjon()),
-        Rule025KombinasjonKontoklasseArt(invalidDriftArtList = getArterUgyldigDrift()),
-                Rule030KombinasjonKontoklasseArt()
+        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = getInvalidDriftFunksjonList()),
+        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
+        Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
+        Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
+        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
+        Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = getIllogicalInvesteringFunksjonAsList()),
+        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
+        Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
+        Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
+        Rule065KombinasjonBevilgningFunksjonArt(),
+        Rule070KombinasjonBevilgningFunksjonArt(),
+        Rule075KombinasjonBevilgningFunksjonArt(),
+        Rule080KombinasjonBevilgningFunksjonArt(),
+
 
     )
 

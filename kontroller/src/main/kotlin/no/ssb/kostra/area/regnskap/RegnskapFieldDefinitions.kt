@@ -15,7 +15,7 @@ import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.STRING_TYPE
 
-class FieldDefinitions : AbstractFieldDefinitions() {
+object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
     override fun getFieldDefinitions(): List<FieldDefinition> {
         return listOf(
             FieldDefinition(

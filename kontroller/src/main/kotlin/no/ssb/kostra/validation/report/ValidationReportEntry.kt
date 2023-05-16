@@ -10,5 +10,5 @@ data class ValidationReportEntry(
     val ruleId: String = "",
     val ruleName: String = "",
     val messageText: String = "",
-    val lineNumbers: List<Int> = listOf()
+    val lineNumbers: List<Int> = emptyList()
 )

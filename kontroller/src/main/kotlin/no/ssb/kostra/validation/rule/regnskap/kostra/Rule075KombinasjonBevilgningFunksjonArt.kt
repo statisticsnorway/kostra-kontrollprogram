@@ -1,0 +1,27 @@
+package no.ssb.kostra.validation.rule.regnskap.kostra
+
+import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.regnskap.isBevilgningRegnskap
+
+class Rule075KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
+    "Kontroll 075 : Ugyldig kombinasjon i bevilgningsregnskapet, funksjon og art",
+    Severity.ERROR
+) {
+    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+        .filter { kostraRecord ->
+            kostraRecord.isBevilgningRegnskap()
+                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in listOf("870", "871", "872", "873", "875", "876")
+                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) != "800 "
+        }
+        .map { kostraRecord ->
+            createValidationReportEntry(
+                messageText = "Artene 870, 871, 872, 873, 875 og 876 er kun tillat brukt i kombinasjon med funksjon 800.",
+                lineNumbers = listOf(kostraRecord.index)
+            )
+        }
+        .ifEmpty { null }
+}

@@ -10,7 +10,7 @@ import java.time.LocalDate
 class KostraRecordTest : BehaviorSpec({
     Given("That data is supplied by default values") {
         val field = "field"
-        val expectedMap: Map<String, String> = mapOf()
+        val expectedMap = emptyMap<String, String>()
 
         When("data is based on an empty record string") {
             val kostraRecord = KostraRecord()
@@ -48,7 +48,7 @@ class KostraRecordTest : BehaviorSpec({
     Given("that dataType is string") {
         val fieldDefinitionsByName = listOf(
             FieldDefinition(0, "Field", STRING_TYPE, INPUTBOX_VIEWTYPE, 1, 3, listOf(), "ddMMyyyy", false)
-        ).associate { with(it) { name to it } }
+        ).associateBy { it.name }
 
         forAll(
             row("no data", mapOf("Field" to " ".repeat(3)), "   ", ""),
@@ -71,7 +71,7 @@ class KostraRecordTest : BehaviorSpec({
     Given("that dataType is integer") {
         val fieldDefinitionsByName = listOf(
             FieldDefinition(0, "Field", INTEGER_TYPE, INPUTBOX_VIEWTYPE, 1, 3, listOf(), "ddMMyyyy", false)
-        ).associate { with(it) { name to it } }
+        ).associateBy { it.name }
 
         forAll(
             row("no data", mapOf("Field" to " ".repeat(3)), null, 0),
@@ -94,7 +94,7 @@ class KostraRecordTest : BehaviorSpec({
     Given("that dataType is date and using default datePattern of ddMMyyyy") {
         val fieldDefinitionsByName = listOf(
             FieldDefinition(0, "Field", DATE_TYPE, INPUTBOX_VIEWTYPE, 1, 3, listOf(), "", false)
-        ).associate { with(it) { name to it } }
+        ).associateBy { it.name }
 
         forAll(
             row("no data", mapOf("Field" to " ".repeat(8)), null),
@@ -114,7 +114,7 @@ class KostraRecordTest : BehaviorSpec({
     Given("that dataType is date and using wrong datePattern of dd-MM-yyyy") {
         val fieldDefinitionsByName = listOf(
             FieldDefinition(0, "Field", DATE_TYPE, INPUTBOX_VIEWTYPE, 1, 3, listOf(), "dd-MM-yyyy", false)
-        ).associate { with(it) { name to it } }
+        ).associateBy { it.name }
 
         forAll(
             row("no data", mapOf("Field" to " ".repeat(8)), null),
@@ -135,7 +135,7 @@ class KostraRecordTest : BehaviorSpec({
     Given("that fieldDefinitionsByName is set, but is missing a particular field") {
         val fieldDefinitionsByName = listOf(
             FieldDefinition(0, "Field", DATE_TYPE, INPUTBOX_VIEWTYPE, 1, 3, listOf(), "        ", false)
-        ).associate { with(it) { name to it } }
+        ).associateBy { it.name }
 
         val valuesByName = mapOf("Field" to " ".repeat(8))
 
@@ -157,8 +157,8 @@ class KostraRecordTest : BehaviorSpec({
         )
         val valuesByName = mapOf("Field123" to "12", "Field456" to "456", "Field789" to "789", "Field012" to "-1")
         val recordString = "12 456789 -1"
-        val kostraRecord1a = KostraRecord(0, valuesByName, fieldDefinitions.associate { with(it) { name to it } })
-        val kostraRecord1b = KostraRecord(0, valuesByName, fieldDefinitions.associate { with(it) { name to it } })
+        val kostraRecord1a = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
+        val kostraRecord1b = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
         val kostraRecord2 = kostraRecord1a.plus("Added" to "be different")
 
         forAll(

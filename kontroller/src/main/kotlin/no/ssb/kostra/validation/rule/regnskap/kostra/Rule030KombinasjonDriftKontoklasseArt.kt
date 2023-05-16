@@ -7,20 +7,24 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
 import no.ssb.kostra.validation.rule.regnskap.isBevilgningDriftRegnskap
 
-class Rule020KombinasjonDriftKontoklasseFunksjon(
-    private val invalidDriftFunksjonList: List<String>
+class Rule030KombinasjonDriftKontoklasseArt(
+    private val illogicalDriftArtList: List<String>
 ) : AbstractRecordRule(
-    "Kontroll 020 : Kombinasjon i driftsregnskapet, kontoklasse og funksjon",
-    Severity.ERROR
+    "Kontroll 030 : Kombinasjon i driftsregnskapet, kontoklasse og art",
+    Severity.INFO
 ) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningDriftRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) in invalidDriftFunksjonList
+                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in illogicalDriftArtList
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = """Korrigér ugyldig funksjon '${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON)}' i driftsregnskapet til en gyldig funksjon i driftsregnskapet eller overfør posteringen til investeringsregnskapet.""".trimIndent(),
+                messageText = "Kun advarsel, hindrer ikke innsending: ('${
+                    kostraRecord.getFieldAsString(
+                        RegnskapConstants.FIELD_ART
+                    )
+                }') regnes å være ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om posteringen hører til i investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

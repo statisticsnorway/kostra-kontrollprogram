@@ -1,9 +1,7 @@
 package no.ssb.kostra.validation.report
 
-import io.micronaut.core.annotation.Introspected
 import no.ssb.kostra.program.Arguments
 
-@Introspected
 class ValidationReport(
     private val arguments: Arguments,
     private val validationEntries: List<ValidationReportEntry>?
@@ -15,8 +13,7 @@ class ValidationReport(
             ?.map { it.severity }
             ?.maxByOrNull { it.ordinal } ?: Severity.OK
 
-    fun generateReport() : String {
-        return "" + newline()
-    }
+    /** TODO: Incomplete */
+    fun generateReport() : String = newline()
 }
 

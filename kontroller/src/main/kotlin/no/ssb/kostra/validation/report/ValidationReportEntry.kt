@@ -1,8 +1,5 @@
 package no.ssb.kostra.validation.report
 
-import io.micronaut.core.annotation.Introspected
-
-@Introspected
 data class ValidationReportEntry(
     val severity: Severity = Severity.OK,
     val caseworker: String = "",

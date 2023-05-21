@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react"
+import {useQuery} from 'react-query'
+import {useState} from "react";
 
 // app components
 import MainForm from "./components/MainForm"
@@ -8,7 +9,6 @@ import TabRow from "./features/navigationbar/TabRow";
 // app types
 import KostraFormVm from "./kostratypes/kostraFormVm"
 import FileReportVm from "./kostratypes/fileReportVm"
-import UiDataVm from "./kostratypes/uiDataVm"
 
 // API calls
 import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
@@ -20,11 +20,34 @@ import './scss/buttons.scss'
 
 const App = () => {
 
-    const [loadError, setLoadError] = useState<string>()
-    const [uiData, setUiData] = useState<UiDataVm>()
-
+    const [isPostError, setIsPostError] = useState<boolean>(false)
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
+
+    // Fetch UI-data from backend
+    const {
+        isError: isUiDataLoadError,
+        data: uiData
+    } = useQuery("uiData", () => {
+            console.log("Fetching UI-data")
+            return uiDataAsync().then(uiData => uiData)
+        }
+    )
+
+    // Form submit handler.
+    // Submits form to backend and stores returned report at start of fileReports array state.
+    const onSubmit = (form: KostraFormVm) => {
+        kontrollerSkjemaAsync(form)
+            .then(fileReport => {
+                setFileReports(prevState => [fileReport, ...prevState])
+                setActiveTabIndex(1)
+                setIsPostError(false)
+            })
+            .catch((error) => {
+                if (error.response) console.log(error.response)
+                setIsPostError(true)
+            })
+    }
 
     const deleteReport = (incomingIndex: NonNullable<number>): void => {
         console.log(`Deleting report at index ${incomingIndex}`)
@@ -37,34 +60,6 @@ const App = () => {
             prevState.filter((_, index) => index != incomingIndex))
     }
 
-    // get ui data
-    useEffect(() => {
-        uiDataAsync()
-            .then(uiData => {
-                setUiData(uiData)
-                setLoadError("")
-            })
-            .catch(() => setLoadError("Lasting av UI-data feilet"))
-    }, [])
-
-    // Form submit handler.
-    // Submits form to backend and stores returned report
-    // at start of fileReports array state.
-    const onSubmit = (form: KostraFormVm) => {
-        kontrollerSkjemaAsync(form)
-            .then(fileReport => {
-                setFileReports(prevState => [fileReport, ...prevState])
-                setActiveTabIndex(1)
-                setLoadError("")
-            })
-            .catch((error) => {
-                if (error.response) {
-                    console.log(error.response)
-                }
-                setLoadError("Feil ved kontroll av fil")
-            })
-    }
-
     return <>
         <header className="py-3 text-center">
             <h2>
@@ -75,7 +70,8 @@ const App = () => {
                 Kostra Kontrollprogram
             </h2>
 
-            {loadError && <span className="text-danger">{loadError}</span>}
+            {isUiDataLoadError && <span className="text-danger">Feil ved lasting av UI-data</span>}
+            {isPostError && <span className="text-danger">"Feil ved kontroll av fil"</span>}
 
             <hr className="my-0"/>
         </header>

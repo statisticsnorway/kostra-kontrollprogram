@@ -44,22 +44,25 @@ public class Main {
         }
 
         final var fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), args);
-        final var regnskap = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
+        final var regnskap1 = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
         final var bevilgningRegnskapList = List.of("0A", "0C");
         final var balanseRegnskapList = List.of("0B", "0D");
 
         final var saksbehandler = "Filuttrekk";
-        final var n = regnskap.size();
+        final var n = regnskap1.size();
         final var l = String.valueOf(n).length();
 
         // integritetskontroller
-        controlSkjema(errorReport, regnskap);
-        controlAargang(errorReport, regnskap);
-        controlKvartal(errorReport, regnskap);
-        controlRegion(errorReport, regnskap);
-        controlOrganisasjonsnummer(errorReport, regnskap);
-        controlForetaksnummer(errorReport, regnskap);
-        controlKontoklasse(errorReport, regnskap, getKontoklasseAsList(args.getSkjema()));
+        controlSkjema(errorReport, regnskap1);
+        controlAargang(errorReport, regnskap1);
+        controlKvartal(errorReport, regnskap1);
+        controlRegion(errorReport, regnskap1);
+        controlOrganisasjonsnummer(errorReport, regnskap1);
+        controlForetaksnummer(errorReport, regnskap1);
+        controlKontoklasse(errorReport, regnskap1, getKontoklasseAsList(args.getSkjema()));
+
+        // Fjerner posteringer der beløp = 0
+        final var regnskap = Utils.removeBelopEquals0(regnskap1);
 
         if (isCodeInCodeList(args.getSkjema(), bevilgningRegnskapList)) {
             controlFunksjon(errorReport, regnskap, Definitions.getFunksjonKapittelAsList(args.getSkjema(), args.getRegion()));

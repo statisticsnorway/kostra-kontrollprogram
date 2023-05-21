@@ -20,9 +20,9 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <kotlin.version>1.8.10</kotlin.version>
-        <kotestVersion>5.5.5</kotestVersion>
-        <jackson.version>2.14.2</jackson.version>
+        <kotlin.version>1.8.20</kotlin.version>
+        <kotestVersion>5.6.2</kotestVersion>
+        <jackson.version>2.15.1</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -30,7 +30,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.9.2</version>
+                <version>5.9.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -76,6 +76,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+            <artifactId>jackson-jakarta-rs-xml-provider</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
         </dependency>
@@ -88,16 +98,11 @@
         <dependency>
             <groupId>com.fasterxml.woodstox</groupId>
             <artifactId>woodstox-core</artifactId>
-            <version>6.5.0</version>
+            <version>6.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
@@ -112,7 +117,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.2</version>
+            <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -162,7 +167,7 @@
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>5.0.0</version>
+                <version>6.0.0</version>
                 <executions>
                     <execution>
                         <id>get-the-git-infos</id>

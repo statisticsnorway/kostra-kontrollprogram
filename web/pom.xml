@@ -16,19 +16,20 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.8.7</micronaut.version>
+        <micronaut.version>3.9.1</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
 
+        <!-- wait with 1.8.20, it does not work with micronaut 3.9.x -->
         <kotlin.version>1.8.10</kotlin.version>
-        <kotestVersion>5.5.5</kotestVersion>
-        <reactorCoreVersion>3.5.4</reactorCoreVersion>
-        <jackson.version>2.14.2</jackson.version>
-        <swagger.version>2.2.8</swagger.version>
-        <micronaut.openapi.version>4.8.1</micronaut.openapi.version>
-        <slf4j.version>2.0.6</slf4j.version>
-        <logback.version>1.4.6</logback.version>
+        <kotestVersion>5.6.2</kotestVersion>
+        <reactorCoreVersion>3.5.6</reactorCoreVersion>
+        <jackson.version>2.15.1</jackson.version>
+        <swagger.version>2.2.10</swagger.version>
+        <micronaut.openapi.version>4.8.7</micronaut.openapi.version>
+        <slf4j.version>2.0.7</slf4j.version>
+        <logback.version>1.4.7</logback.version>
 
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 
@@ -37,6 +38,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Kotlin -->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-common</artifactId>
@@ -53,6 +55,38 @@
                 <version>${kotlin.version}</version>
             </dependency>
 
+            <!-- Micronaut -->
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-runtime</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-aop</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-server</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-inject</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.thymeleaf</groupId>
+                <artifactId>thymeleaf</artifactId>
+                <version>3.1.1.RELEASE</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
@@ -67,7 +101,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-coroutines-core-jvm</artifactId>
-                <version>1.6.4</version>
+                <version>1.7.1</version>
             </dependency>
             <dependency>
                 <groupId>io.kotest</groupId>
@@ -78,14 +112,6 @@
                 <groupId>io.kotest</groupId>
                 <artifactId>kotest-runner-junit5-jvm</artifactId>
                 <version>${kotestVersion}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-bom</artifactId>
-                <version>${micronaut.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -116,22 +142,27 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-validation</artifactId>
+            <version>${micronaut.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
+            <version>${micronaut.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.kotlin</groupId>
             <artifactId>micronaut-kotlin-extension-functions</artifactId>
+            <version>3.2.2</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.kotlin</groupId>
             <artifactId>micronaut-kotlin-runtime</artifactId>
+            <version>3.2.2</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
+            <version>3.8.2</version>
         </dependency>
 
         <dependency>
@@ -149,14 +180,21 @@
 
         <!-- scope = test -->
         <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk-jvm</artifactId>
+            <version>1.13.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>
+            <version>${micronaut.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-kotest5</artifactId>
-            <version>3.9.1</version>
+            <version>3.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -176,7 +214,7 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.3</version>
                 <configuration>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>
@@ -315,12 +353,12 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>npm install</id>
+                        <id>npm ci</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>ci</arguments>
                         </configuration>
                     </execution>
 
@@ -349,7 +387,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>position-react-build</id>
@@ -380,7 +418,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.5.0</version>
+                        <version>3.6.0</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>${project.build.directory}/jar</outputDirectory>

@@ -16,88 +16,86 @@ import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.STRING_TYPE
 
 object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
-    override fun getFieldDefinitions(): List<FieldDefinition> {
-        return listOf(
-            FieldDefinition(
-                number = 1,
-                from = 1,
-                to = 2,
-                name = FIELD_SKJEMA,
-                dataType = STRING_TYPE,
-                mandatory = true
-            ),
-            FieldDefinition(
-                number = 2,
-                from = 3,
-                to = 6,
-                name = FIELD_AARGANG,
-                dataType = STRING_TYPE,
-                mandatory = true
-            ),
-            FieldDefinition(
-                number = 3,
-                from = 7,
-                to = 7,
-                name = FIELD_KVARTAL,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 4,
-                from = 8,
-                to = 13,
-                name = FIELD_REGION,
-                dataType = STRING_TYPE,
-                mandatory = true
-            ),
-            FieldDefinition(
-                number = 5,
-                from = 14,
-                to = 22,
-                name = FIELD_ORGNR,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 6,
-                from = 23,
-                to = 31,
-                name = FIELD_FORETAKSNR,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 7,
-                from = 32,
-                to = 32,
-                name = FIELD_KONTOKLASSE,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 8,
-                from = 33,
-                to = 36,
-                name = FIELD_FUNKSJON_KAPITTEL,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 9,
-                from = 37,
-                to = 39,
-                name = FIELD_ART_SEKTOR,
-                dataType = STRING_TYPE,
-                mandatory = false
-            ),
-            FieldDefinition(
-                number = 10,
-                from = 40,
-                to = 48,
-                name = FIELD_BELOP,
-                dataType = INTEGER_TYPE,
-                mandatory = true
-            )
+    override fun getFieldDefinitions(): List<FieldDefinition> = listOf(
+        FieldDefinition(
+            number = 1,
+            from = 1,
+            to = 2,
+            name = FIELD_SKJEMA,
+            dataType = STRING_TYPE,
+            mandatory = true
+        ),
+        FieldDefinition(
+            number = 2,
+            from = 3,
+            to = 6,
+            name = FIELD_AARGANG,
+            dataType = STRING_TYPE,
+            mandatory = true
+        ),
+        FieldDefinition(
+            number = 3,
+            from = 7,
+            to = 7,
+            name = FIELD_KVARTAL,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 4,
+            from = 8,
+            to = 13,
+            name = FIELD_REGION,
+            dataType = STRING_TYPE,
+            mandatory = true
+        ),
+        FieldDefinition(
+            number = 5,
+            from = 14,
+            to = 22,
+            name = FIELD_ORGNR,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 6,
+            from = 23,
+            to = 31,
+            name = FIELD_FORETAKSNR,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 7,
+            from = 32,
+            to = 32,
+            name = FIELD_KONTOKLASSE,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 8,
+            from = 33,
+            to = 36,
+            name = FIELD_FUNKSJON_KAPITTEL,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 9,
+            from = 37,
+            to = 39,
+            name = FIELD_ART_SEKTOR,
+            dataType = STRING_TYPE,
+            mandatory = false
+        ),
+        FieldDefinition(
+            number = 10,
+            from = 40,
+            to = 48,
+            name = FIELD_BELOP,
+            dataType = INTEGER_TYPE,
+            mandatory = true
         )
-    }
+    )
 }

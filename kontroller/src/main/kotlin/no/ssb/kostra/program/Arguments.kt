@@ -26,11 +26,7 @@ data class Arguments(
         }
     }
 
-    fun getInputContentAsStringList(delimiter: String = "\n"): List<String> {
-        return inputFileContent.split(delimiter)
-    }
+    fun getInputContentAsStringList(delimiter: String = "\n"): List<String> = inputFileContent.split(delimiter)
 
-    fun getInputContentAsInputStream(): InputStream {
-        return inputFileContent.byteInputStream(Charsets.ISO_8859_1)
-    }
+    fun getInputContentAsInputStream(): InputStream = inputFileContent.byteInputStream(Charsets.ISO_8859_1)
 }

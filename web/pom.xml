@@ -16,7 +16,7 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.9.1</micronaut.version>
+        <micronaut.version>3.9.2</micronaut.version>
         <micronaut.aot.enabled>true</micronaut.aot.enabled>
         <micronaut.aot.packageName>no.ssb.aot.generated</micronaut.aot.packageName>
         <micronaut.runtime>netty</micronaut.runtime>
@@ -59,27 +59,27 @@
             <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-runtime</artifactId>
-                <version>3.9.1</version>
+                <version>${micronaut.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-aop</artifactId>
-                <version>3.9.1</version>
+                <version>${micronaut.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-http</artifactId>
-                <version>3.9.1</version>
+                <version>${micronaut.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-http-server</artifactId>
-                <version>3.9.1</version>
+                <version>${micronaut.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-inject</artifactId>
-                <version>3.9.1</version>
+                <version>${micronaut.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.thymeleaf</groupId>
@@ -194,7 +194,7 @@
         <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-kotest5</artifactId>
-            <version>3.9.2</version>
+            <version>${micronaut.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

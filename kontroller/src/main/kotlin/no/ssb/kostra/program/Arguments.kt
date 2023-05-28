@@ -12,7 +12,8 @@ data class Arguments(
     val foretaknr: String = "         ",
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
-    val inputFileContent: String = " "
+    val inputFileContent: String = " ",
+    val inputFileStream: InputStream? = null
 ) {
     init {
         require(skjema.trim { it <= ' ' }.isNotEmpty()) {

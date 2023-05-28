@@ -12,22 +12,16 @@ object ValidationUtils {
     private val SSN_SUFFIX_EXCEPTIONS = setOf("00100", "00200", "99999")
 
     private val SSN_PATTERN = Pattern.compile("^\\d{11}$")
-    val DUF_PATTERN: Pattern = Pattern.compile("^\\d{12}$")
+    private val DUF_PATTERN: Pattern = Pattern.compile("^\\d{12}$")
 
-    internal val LOCAL_DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyy")
+    private val LOCAL_DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyy")
 
     private val CONTROL_SUM_DIGITS_1 = listOf(3, 7, 6, 1, 8, 9, 4, 5, 2, 1)
     private val CONTROL_SUM_DIGITS_2 = listOf(5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1)
 
-    fun extractBirthDateFromSocialSecurityId(
-        socialSecurityId: String,
-        allowFregSyntheticFnr: Boolean
-    ): LocalDate? = try {
+    fun extractBirthDateFromSocialSecurityId(socialSecurityId: String): LocalDate? = try {
         when {
             !SSN_PATTERN.matcher(socialSecurityId).matches() -> null
-
-            allowFregSyntheticFnr -> parseDateWithAutoPivotYear(convertFregMonth(convertDNumber(socialSecurityId)))
-
             else -> parseDateWithAutoPivotYear(convertDNumber(socialSecurityId))
         }
     } catch (ex: DateTimeParseException) {
@@ -41,12 +35,14 @@ object ValidationUtils {
             else it
         }
 
+    fun isValidSocialSecurityId(personId: String) = SSN_PATTERN.matcher(personId).matches() && isModulo11Valid(personId)
+
     fun isValidSocialSecurityIdOrDnr(personId: String) = SSN_PATTERN.matcher(personId).matches()
             &&
             (
                     isModulo11Valid(personId)
                             ||
-                            extractBirthDateFromSocialSecurityId(personId, false) != null
+                            extractBirthDateFromSocialSecurityId(personId) != null
                             && SSN_SUFFIX_EXCEPTIONS.contains(personId.takeLast(PERSON_ID_LENGTH))
                     )
 
@@ -67,16 +63,6 @@ object ValidationUtils {
             (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 6))
         }
 
-    private fun convertFregMonth(socialSecurityId: String): String {
-        val monthPart = socialSecurityId.substring(2, 4).toInt()
-
-        return if (monthPart > FREG_MONTH_OFFSET) {
-            "${socialSecurityId.substring(0, 2)}${
-                (monthPart - FREG_MONTH_OFFSET).toString().padStart(2, '0')
-            }${socialSecurityId.substring(4)}"
-        } else socialSecurityId
-    }
-
     internal fun isModulo11Valid(socialSecurityId: String): Boolean =
         modulo11(
             toCheck = socialSecurityId.substring(0, socialSecurityId.length - 1),
@@ -96,6 +82,4 @@ object ValidationUtils {
         } else {
             -1
         }
-
-    private const val FREG_MONTH_OFFSET = 80
 }

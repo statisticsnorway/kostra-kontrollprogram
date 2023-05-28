@@ -8,17 +8,16 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.barnevern.RandomUtils.generateRandomDuf
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.argumentsInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.report.Severity
 import java.time.Year
 
-class Individ03Test : BehaviorSpec({
-    val sut = Individ03()
+class Individ19Test : BehaviorSpec({
+    val sut = Individ19()
 
     Given("valid context") {
         forAll(
-            row("individ with valid SSN", kostraIndividInTest),
+            row("individ without DUF-nummer", kostraIndividInTest),
             row(
                 "individ with valid DUF-nummer", kostraIndividInTest.copy(
                     fodselsnummer = null,
@@ -28,7 +27,7 @@ class Individ03Test : BehaviorSpec({
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldBeNull()
@@ -40,40 +39,25 @@ class Individ03Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "individ with invalid SSN",
-                kostraIndividInTest.copy(fodselsnummer = "~fodselsnummer~"),
-                "Feil i fødselsnummer. Kan ikke identifisere individet."
-            ),
-            row(
-                "individ with invalid DUF-nummer",
-                kostraIndividInTest.copy(
+                "individ with invalid DUF-nummer", kostraIndividInTest.copy(
                     fodselsnummer = null,
-                    duFnummer = "~duFnummer~"
-                ),
-                "DUF-nummer mangler. Kan ikke identifisere individet."
-            ),
-            row(
-                "individ with neither SSN nor DUF-nummer",
-                kostraIndividInTest.copy(
-                    fodselsnummer = null,
-                    duFnummer = null
-                ),
-                "Fødselsnummer og DUF-nummer mangler. Kan ikke identifisere individet."
+                    duFnummer = generateRandomDuf(Year.now().value - 1, Year.now().value - 1).take(10)
+                )
             )
-        ) { description, currentContext, expectedErrorMessage ->
+        ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
 
-                Then("expect non-null result") {
+                Then("expect null") {
                     reportEntryList.shouldNotBeNull()
                     reportEntryList.size shouldBe 1
 
                     assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
+                        it.severity shouldBe Severity.WARNING
                         it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.id
-                        it.messageText shouldBe expectedErrorMessage
+                        it.messageText shouldBe "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."
                     }
                 }
             }

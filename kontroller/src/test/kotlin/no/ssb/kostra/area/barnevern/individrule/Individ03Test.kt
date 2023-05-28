@@ -71,6 +71,7 @@ class Individ03Test : BehaviorSpec({
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
+                        it.contextId shouldBe currentContext.id
                         it.messageText shouldBe expectedErrorMessage
                     }
                 }

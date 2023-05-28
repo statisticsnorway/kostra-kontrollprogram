@@ -25,8 +25,6 @@ class BarnevernValidator {
 
         val validationErrors = mutableListOf<ValidationReportEntry>()
 
-        var individType: KostraIndividType?
-
         val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
         val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
@@ -49,13 +47,15 @@ class BarnevernValidator {
 
                 /** process current individual */
                 INDIVID_XML_TAG -> {
-                    individType = KostraBarnevernConverter.XML_MAPPER.readValue(
-                        xmlStreamReader, KostraIndividType::class.java
-                    )
-                    validationErrors.addAll(individRules.validate(individType, arguments))
-                    when (val fodselsnummer = individType.fodselsnummer) {
-                        null -> {}
-                        else -> {
+                    try {
+                        val individType = KostraBarnevernConverter.XML_MAPPER.readValue(
+                            xmlStreamReader, KostraIndividType::class.java
+                        )
+
+                        validationErrors.addAll(individRules.validate(individType, arguments))
+
+                        val fodselsnummer = individType.fodselsnummer
+                        if (fodselsnummer != null) {
                             if (seenFodselsnummer.containsKey(fodselsnummer)) {
                                 seenFodselsnummer[fodselsnummer]!!.add(individType.journalnummer)
                             } else seenFodselsnummer[fodselsnummer] = mutableListOf()
@@ -64,6 +64,12 @@ class BarnevernValidator {
                                 seenJournalNummer[individType.journalnummer]!!.add(fodselsnummer)
                             } else seenJournalNummer[individType.journalnummer] = mutableListOf()
                         }
+                    } catch (thrown: Throwable) {
+                        ValidationReportEntry(
+                            severity = Severity.FATAL,
+                            ruleId = IndividRuleId.INDIVID_01.title,
+                            messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+                        )
                     }
                 }
             }

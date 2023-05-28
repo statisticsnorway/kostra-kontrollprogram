@@ -45,6 +45,7 @@ class Individ02bTest : BehaviorSpec({
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
                     it.journalId shouldBe invalidContext.journalnummer
+                    it.contextId shouldBe invalidContext.id
                     it.messageText shouldContain "Individets sluttdato (${invalidContext.sluttDato}) er før forrige telletidspunkt"
                 }
             }

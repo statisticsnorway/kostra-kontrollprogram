@@ -51,6 +51,7 @@ class Individ02dTest : BehaviorSpec({
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
                     it.journalId shouldBe invalidContext.journalnummer
+                    it.contextId shouldBe invalidContext.id
                     it.messageText shouldBe  "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. " +
                             "Sluttdato er ${invalidContext.sluttDato}. Kode for avsluttet er '$KOSTRA_IS_CLOSED_TRUE'."
                 }

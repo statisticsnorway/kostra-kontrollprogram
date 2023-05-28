@@ -4,6 +4,7 @@ data class ValidationReportEntry(
     val severity: Severity = Severity.OK,
     val caseworker: String = "",
     val journalId: String = "",
+    val contextId: String = "",
     val ruleId: String = "",
     val ruleName: String = "",
     val messageText: String = "",

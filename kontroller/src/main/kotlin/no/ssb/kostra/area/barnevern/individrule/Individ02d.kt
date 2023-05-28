@@ -15,6 +15,7 @@ class Individ02d : AbstractRule<KostraIndividType>(
         ?.let { individ ->
             createSingleReportEntryList(
                 journalId = individ.journalnummer,
+                contextId = context.id,
                 messageText = "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. " +
                         "Sluttdato er ${individ.sluttDato}. Kode for avsluttet er '$KOSTRA_IS_CLOSED_TRUE'."
             )

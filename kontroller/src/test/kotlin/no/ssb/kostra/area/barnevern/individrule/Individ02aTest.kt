@@ -45,6 +45,7 @@ class Individ02aTest : BehaviorSpec({
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
                     it.journalId shouldBe invalidContext.journalnummer
+                    it.contextId shouldBe invalidContext.id
                     it.messageText shouldContain "Individets startdato"
                 }
             }

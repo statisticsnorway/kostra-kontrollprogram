@@ -19,17 +19,17 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.1",
     "react-query": "^3.5.0",
-    "yup": "^1.1.1"
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.6",
+    "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^22.0.0",
     "sass": "^1.62.1",
     "typescript": "^5.0.2",
-    "vite": "^4.3.7",
+    "vite": "^4.3.8",
     "vitest": "^0.31.1"
   }
 }

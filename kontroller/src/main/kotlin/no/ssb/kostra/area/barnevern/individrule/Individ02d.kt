@@ -1,6 +1,6 @@
 package no.ssb.kostra.area.barnevern.individrule
 
-import no.ssb.kostra.area.barnevern.KOSTRA_IS_CLOSED_TRUE
+import no.ssb.kostra.area.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.Arguments
 import no.ssb.kostra.validation.report.Severity

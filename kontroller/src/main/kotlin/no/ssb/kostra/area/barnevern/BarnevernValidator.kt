@@ -13,9 +13,6 @@ import java.io.Reader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
 
-const val KOSTRA_IS_CLOSED_TRUE = "1"
-const val KOSTRA_IS_CLOSED_FALSE = "2"
-
 class BarnevernValidator {
     private val avgiverRules = AvgiverRules()
     private val individRules = IndividRules()

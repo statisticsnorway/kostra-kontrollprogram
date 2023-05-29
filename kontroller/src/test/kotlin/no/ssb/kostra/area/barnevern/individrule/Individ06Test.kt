@@ -8,7 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTes
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
 import no.ssb.kostra.validation.report.Severity
@@ -18,7 +18,7 @@ class Individ06Test : BehaviorSpec({
 
     Given("valid context") {
         forAll(
-            row("individ with melding", kostraIndividInTest.copy(melding = mutableListOf(kostraMeldingTypeInTes))),
+            row("individ with melding", kostraIndividInTest.copy(melding = mutableListOf(kostraMeldingTypeInTest))),
             row("individ with plan", kostraIndividInTest.copy(plan = mutableListOf(kostraPlanTypeInTest))),
             row("individ with tiltak", kostraIndividInTest.copy(tiltak = mutableListOf(kostraTiltakTypeInTest))),
         ) { description, currentContext ->

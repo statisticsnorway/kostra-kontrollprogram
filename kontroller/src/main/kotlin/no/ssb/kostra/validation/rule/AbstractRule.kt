@@ -46,6 +46,18 @@ open class AbstractRule<in T : Any>(
         lineNumbers = lineNumbers
     )
 
+    protected fun createReportEntry(
+        journalId: String,
+        contextId: String,
+        messageText: String,
+    ) = ValidationReportEntry(
+            ruleName = ruleName,
+            severity = severity,
+            journalId = journalId,
+            contextId = contextId,
+            messageText = messageText
+    )
+
     protected fun createSingleReportEntryList(
         journalId: String,
         contextId: String,

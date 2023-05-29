@@ -7,29 +7,34 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.area.barnevern.RandomUtils.generateRandomSSN
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraLovhjemmelTypeInTest
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
 import no.ssb.kostra.validation.report.Severity
-import java.time.LocalDate
 
-class Lovhjemmel03Test : BehaviorSpec({
-    val sut = Lovhjemmel03()
+class Melding02cTest : BehaviorSpec({
+    val sut = Melding02c()
 
     Given("valid context") {
         forAll(
-            row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
-            row("individ with fodselsnummer, age below eighteen, no tiltak", kostraIndividInTest),
+            row("individ without sluttDato", kostraIndividInTest),
             row(
-                "age above eighteen, no omsorgstiltak",
+                "individ with sluttDato, without melding", kostraIndividInTest.copy(
+                    sluttDato = dateInTest.plusDays(1)
+                )
+            ),
+            row(
+                "melding without sluttDato",
                 kostraIndividInTest.copy(
-                    fodselsnummer = generateRandomSSN(
-                        LocalDate.now().minusYears(20),
-                        LocalDate.now().minusYears(19)
-                    ),
-                    tiltak = mutableListOf(kostraTiltakTypeInTest.copy(lovhjemmel = kostraLovhjemmelTypeInTest))
+                    sluttDato = dateInTest.plusDays(1),
+                    melding = mutableListOf(kostraMeldingTypeInTest)
+                )
+            ),
+            row(
+                "melding with sluttDato equal to individ",
+                kostraIndividInTest.copy(
+                    sluttDato = dateInTest.plusDays(1),
+                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.plusDays(1)))
                 )
             )
         ) { description, currentContext ->
@@ -47,13 +52,10 @@ class Lovhjemmel03Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "age above eighteen, no omsorgstiltak",
+                "melding with sluttDato after individ sluttDato",
                 kostraIndividInTest.copy(
-                    fodselsnummer = generateRandomSSN(
-                        LocalDate.now().minusYears(20),
-                        LocalDate.now().minusYears(19)
-                    ),
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                    sluttDato = dateInTest.plusDays(1),
+                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.plusDays(2)))
                 )
             )
         ) { description, currentContext ->
@@ -68,9 +70,12 @@ class Lovhjemmel03Test : BehaviorSpec({
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
-                        it.contextId shouldBe currentContext.tiltak.first().id
-                        it.messageText shouldStartWith
-                                "Tiltak (${currentContext.tiltak.first().id}). Individet er"
+                        it.contextId shouldBe currentContext.melding.first().id
+
+                        with(currentContext.melding.first()) {
+                            it.messageText shouldBe "Melding ($id). Meldingens sluttdato ($sluttDato) " +
+                                    "er etter individets sluttdato (${currentContext.sluttDato})"
+                        }
                     }
                 }
             }

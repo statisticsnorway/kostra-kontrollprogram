@@ -20,8 +20,8 @@ class Lovhjemmel03 : AbstractRule<KostraIndividType>(
         }?.let { ageInYears ->
             context.tiltak
                 .filter { it.erOmsorgsTiltak() }
-                .flatMap {
-                    createSingleReportEntryList(
+                .map {
+                    createReportEntry(
                         journalId = context.journalnummer,
                         contextId = it.id,
                         messageText = "Tiltak (${it.id}). Individet er $ageInYears år og skal dermed ikke ha omsorgstiltak"

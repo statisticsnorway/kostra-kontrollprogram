@@ -1,9 +1,9 @@
 package no.ssb.kostra.area.barnevern.individrule
 
-import no.ssb.kostra.area.barnevern.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.area.barnevern.RandomUtils
 import no.ssb.kostra.area.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.area.barnevern.SharedValidationConstants.KAPITTEL_4
+import no.ssb.kostra.area.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.area.barnevern.SharedValidationConstants.PARAGRAF_12
 import no.ssb.kostra.barn.xsd.*
 import no.ssb.kostra.program.Arguments
@@ -26,6 +26,16 @@ object IndividRuleTestData {
     )
 
     /** START sub-types */
+
+    val kostraSaksinnholdTypeInTest = KostraSaksinnholdType(
+        kode = "~kode~",
+        presisering = "~presisering~"
+    )
+
+    val kostraMelderTypeInTest = KostraMelderType(
+        kode = "~kode~",
+        presisering = "~presisering~"
+    )
 
     val kostraKategoriTypeInTest = KostraKategoriType(
         kode = "~kode~",
@@ -71,7 +81,7 @@ object IndividRuleTestData {
         distriktsnummer = "12"
     )
 
-    val kostraMeldingTypeInTes = KostraMeldingType(
+    val kostraMeldingTypeInTest = KostraMeldingType(
         id = KOSTRA_MELDING_ID,
         startDato = dateInTest,
         sluttDato = null,

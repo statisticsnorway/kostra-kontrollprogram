@@ -7,7 +7,7 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.barnevern.KOSTRA_IS_CLOSED_TRUE
+import no.ssb.kostra.area.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.argumentsInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest

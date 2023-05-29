@@ -12,8 +12,8 @@ class Lovhjemmel04 : AbstractRule<KostraIndividType>(
     override fun validate(context: KostraIndividType, arguments: Arguments) = context.tiltak.filter {
         it.lovhjemmel.kapittel == "0"
                 || it.lovhjemmel.paragraf == "0"
-    }.flatMap {
-        createSingleReportEntryList(
+    }.map {
+        createReportEntry(
             journalId = context.journalnummer,
             contextId = it.id,
             messageText = "Tiltak (${it.id}). Kapittel (${it.lovhjemmel.kapittel}) eller paragraf " +

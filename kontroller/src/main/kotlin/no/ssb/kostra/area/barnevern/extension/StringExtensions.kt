@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 fun String.ageInYears(reportingYear: Int): Long? =
-    extractBirthDateFromSocialSecurityId(this)?.let { dateOfBirth ->
+    extractBirthDateFromSocialSecurityId(socialSecurityId = this)?.let { dateOfBirth ->
         ChronoUnit.YEARS.between(
             dateOfBirth,
             LocalDate.of(reportingYear, 12, 31)

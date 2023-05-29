@@ -7,40 +7,34 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.argumentsInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
 import no.ssb.kostra.validation.report.Severity
 
-class Melding02cTest : BehaviorSpec({
-    val sut = Melding02c()
+class Plan02bTest : BehaviorSpec({
+    val sut = Plan02b()
 
     Given("valid context") {
         forAll(
-            row("individ without sluttDato", kostraIndividInTest),
+            row("individ without plan", kostraIndividInTest),
             row(
-                "individ with sluttDato, without melding", kostraIndividInTest.copy(
-                    sluttDato = dateInTest.plusDays(1)
-                )
+                "plan without sluttDato",
+                kostraIndividInTest.copy(plan = mutableListOf(kostraPlanTypeInTest))
             ),
             row(
-                "melding without sluttDato",
+                "plan with sluttDato in reporting year",
                 kostraIndividInTest.copy(
-                    sluttDato = dateInTest.plusDays(1),
-                    melding = mutableListOf(kostraMeldingTypeInTest)
-                )
-            ),
-            row(
-                "melding with sluttDato equal to individ",
-                kostraIndividInTest.copy(
-                    sluttDato = dateInTest.plusDays(1),
-                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.plusDays(1)))
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
+                    )
                 )
             )
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldBeNull()
@@ -52,16 +46,17 @@ class Melding02cTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "melding with sluttDato after individ sluttDato",
+                "plan with sluttDato before startDato",
                 kostraIndividInTest.copy(
-                    sluttDato = dateInTest.plusDays(1),
-                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.plusDays(2)))
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
+                    )
                 )
             )
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldNotBeNull()
@@ -71,10 +66,10 @@ class Melding02cTest : BehaviorSpec({
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
 
-                        with(currentContext.melding.first()) {
+                        with(currentContext.plan.first()) {
                             it.contextId shouldBe id
-                            it.messageText shouldBe "Melding ($id). Meldingens sluttdato ($sluttDato) " +
-                                    "er etter individets sluttdato (${currentContext.sluttDato})"
+                            it.messageText shouldBe "Plan ($id). Planens sluttdato ($sluttDato) er ikke " +
+                                    "i rapporteringsåret (${argumentsInTest.aargang})"
                         }
                     }
                 }

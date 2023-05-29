@@ -98,9 +98,9 @@ class Melding04Test : BehaviorSpec({
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
-                        it.contextId shouldBe currentContext.melding.first().id
 
                         with(currentContext.melding.first()) {
+                            it.contextId shouldBe id
                             it.messageText shouldBe "Melding ($id). Konkludert melding mangler melder(e)."
                         }
                     }

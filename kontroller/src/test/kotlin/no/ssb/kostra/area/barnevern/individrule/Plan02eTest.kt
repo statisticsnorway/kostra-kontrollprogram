@@ -10,19 +10,19 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.argumentsInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
+import no.ssb.kostra.area.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
 import no.ssb.kostra.validation.report.Severity
 
-class Melding02eTest : BehaviorSpec({
-    val sut = Melding02e()
+class Plan02eTest : BehaviorSpec({
+    val sut = Plan02e()
 
     Given("valid context") {
         forAll(
-            row("individ without melding", kostraIndividInTest),
+            row("individ without plan", kostraIndividInTest),
             row(
-                "melding with startDato equal to individ startDato",
+                "plan with startDato equal to individ startDato",
                 kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                    plan = mutableListOf(kostraPlanTypeInTest)
                 )
             )
         ) { description, currentContext ->
@@ -40,10 +40,10 @@ class Melding02eTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "melding with startDato before individ startDato",
+                "plan with startDato before individ startDato",
                 kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(startDato = dateInTest.minusDays(1))
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(startDato = dateInTest.minusDays(1))
                     )
                 )
             )
@@ -60,9 +60,9 @@ class Melding02eTest : BehaviorSpec({
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
 
-                        with(currentContext.melding.first()) {
+                        with(currentContext.plan.first()) {
                             it.contextId shouldBe id
-                            it.messageText shouldBe "Melding ($id). Startdato ($startDato) skal være lik eller " +
+                            it.messageText shouldBe "Plan ($id). StartDato ($startDato) skal være lik eller " +
                                     "etter individets startdato (${currentContext.startDato})"
                         }
                     }

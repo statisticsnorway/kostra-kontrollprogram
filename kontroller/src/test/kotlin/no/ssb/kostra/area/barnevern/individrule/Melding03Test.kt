@@ -63,9 +63,9 @@ class Melding03Test : BehaviorSpec({
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
                         it.journalId shouldBe currentContext.journalnummer
-                        it.contextId shouldBe currentContext.melding.first().id
 
                         with(currentContext.melding.first()) {
+                            it.contextId shouldBe id
                             it.messageText shouldBe "Melding ($id). Fristoverskridelse på behandlingstid for melding,  " +
                                     "($startDato -> $sluttDato)"
                         }

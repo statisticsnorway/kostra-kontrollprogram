@@ -64,9 +64,9 @@ class Melding02aTest : BehaviorSpec({
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
                         it.journalId shouldBe currentContext.journalnummer
-                        it.contextId shouldBe currentContext.melding.first().id
 
                         with(currentContext.melding.first()) {
+                            it.contextId shouldBe id
                             it.messageText shouldBe "Melding ($id). Meldingens startdato ($startDato) er etter " +
                                     "meldingens sluttdato ($sluttDato)"
                         }

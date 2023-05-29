@@ -23,7 +23,7 @@ class Tiltak02d : AbstractRule<KostraIndividType>(
                     journalId = innerContext.journalnummer,
                     contextId = tiltak.id,
                     messageText = "Tiltak (${tiltak.id}). Individet er avsluttet hos barnevernet og dets tiltak " +
-                            "skal dermed være avsluttet. Sluttdato er ${tiltak.sluttDato}"
+                            "skal dermed være avsluttet. Sluttdato er ${tiltak.sluttDato ?: "uoppgitt"}"
                 )
             }.ifEmpty { null }
         }

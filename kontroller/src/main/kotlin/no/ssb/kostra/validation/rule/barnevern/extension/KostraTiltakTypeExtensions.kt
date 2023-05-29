@@ -22,9 +22,7 @@ fun KostraTiltakType.erPlasseringsTiltak() =
             || this.kategori.kode.startsWith(ALLOCATION_CODE_2_PREFIX)
             || this.kategori.kode == MEASURE_CATEGORY_CODE_8_2
 
-fun KostraTiltakType.erOmsorgsTiltak(): Boolean {
-    return lovhjemmelOmsorgstiltak.any { this.lovhjemmel.matches(it) }
-}
+fun KostraTiltakType.erOmsorgsTiltak(): Boolean = lovhjemmelOmsorgstiltak.any { this.lovhjemmel.matches(it) }
 
 fun KostraTiltakType.isOverlapWithAtLeastThreeMonthsOf(
     other: KostraTiltakType,

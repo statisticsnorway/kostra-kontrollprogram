@@ -10,8 +10,6 @@ open class AbstractRule<in T : Any>(
 ) {
     open fun validate(context: List<T>): List<ValidationReportEntry>? = null
 
-    open fun validate(context: T): List<ValidationReportEntry>? = null
-
     open fun validate(context: T, arguments: Arguments): List<ValidationReportEntry>? = null
 
     protected fun createValidationReportEntry(

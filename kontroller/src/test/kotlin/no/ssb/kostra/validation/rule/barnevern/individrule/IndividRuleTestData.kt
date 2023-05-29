@@ -17,6 +17,7 @@ object IndividRuleTestData {
 
     const val KOSTRA_TILTAK_ID = "~tiltak~"
     const val KOSTRA_MELDING_ID = "~melding~"
+    const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
     const val KOSTRA_PLAN_ID = "~plan~"
 
     val argumentsInTest = Arguments(
@@ -62,6 +63,11 @@ object IndividRuleTestData {
         presisering = "~presisering~"
     )
 
+    val kostraVedtaksgrunnlagTypeInTest = KostraVedtaksgrunnlagType(
+        kode = "~kode~",
+        presisering = "~presisering~"
+    )
+
     /** START Kostra types */
 
     val kostraIndividInTest = KostraIndividType(
@@ -89,6 +95,15 @@ object IndividRuleTestData {
         undersokelse = null,
         melder = mutableListOf(),
         saksinnhold = mutableListOf()
+    )
+
+    val kostraUndersokelseTypeInTest = KostraUndersokelseType(
+        id = KOSTRA_UNDERSOKELSE_ID,
+        startDato = dateInTest,
+        sluttDato =  null,
+        konklusjon =  null,
+        presisering = null,
+        vedtaksgrunnlag = mutableListOf()
     )
 
     val kostraTiltakTypeInTest = KostraTiltakType(

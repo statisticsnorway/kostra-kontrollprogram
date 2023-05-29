@@ -35,9 +35,10 @@ class BarnevernValidator {
                 AVGIVER_XML_TAG -> {
                     validationErrors.addAll(
                         avgiverRules.validate(
-                            KostraBarnevernConverter.XML_MAPPER.readValue(
+                            context = KostraBarnevernConverter.XML_MAPPER.readValue(
                                 xmlStreamReader, KostraAvgiverType::class.java
-                            )
+                            ),
+                            arguments = arguments
                         )
                     )
                 }
@@ -49,7 +50,12 @@ class BarnevernValidator {
                             xmlStreamReader, KostraIndividType::class.java
                         )
 
-                        validationErrors.addAll(individRules.validate(individType, arguments))
+                        validationErrors.addAll(
+                            individRules.validate(
+                                context = individType,
+                                arguments = arguments
+                            )
+                        )
 
                         val fodselsnummer = individType.fodselsnummer
                         if (fodselsnummer != null) {

@@ -43,7 +43,9 @@ class Vedtak02Test : BehaviorSpec({
                     melding = mutableListOf(
                         kostraMeldingTypeInTest.copy(
                             undersokelse = kostraUndersokelseTypeInTest.copy(
-                                vedtaksgrunnlag = mutableListOf(kostraVedtaksgrunnlagTypeInTest)
+                                vedtaksgrunnlag = mutableListOf(
+                                    kostraVedtaksgrunnlagTypeInTest.copy(presisering = null)
+                                )
                             )
                         )
                     )
@@ -78,7 +80,7 @@ class Vedtak02Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "undersokelse with vedtaksgrunnlag without presisering-",
+                "undersokelse with vedtaksgrunnlag without presisering, kode = 18",
                 kostraIndividInTest.copy(
                     melding = mutableListOf(
                         kostraMeldingTypeInTest.copy(
@@ -86,6 +88,23 @@ class Vedtak02Test : BehaviorSpec({
                                 vedtaksgrunnlag = mutableListOf(
                                     kostraVedtaksgrunnlagTypeInTest.copy(
                                         kode = "18",
+                                        presisering = null
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
+            row(
+                "undersokelse with vedtaksgrunnlag without presisering, kode = 19",
+                kostraIndividInTest.copy(
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                                vedtaksgrunnlag = mutableListOf(
+                                    kostraVedtaksgrunnlagTypeInTest.copy(
+                                        kode = "19",
                                         presisering = null
                                     )
                                 )

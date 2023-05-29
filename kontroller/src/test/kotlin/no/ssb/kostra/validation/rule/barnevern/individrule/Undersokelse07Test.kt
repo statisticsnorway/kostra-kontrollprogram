@@ -75,12 +75,24 @@ class Undersokelse07Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "undersokelse with konklusjon without vedtaksgrunnlag",
+                "undersokelse with konklusjon without vedtaksgrunnlag, konklusjon = 1",
                 kostraIndividInTest.copy(
                     melding = mutableListOf(
                         kostraMeldingTypeInTest.copy(
                             undersokelse = kostraUndersokelseTypeInTest.copy(
                                 konklusjon = "1"
+                            )
+                        )
+                    )
+                )
+            ),
+            row(
+                "undersokelse with konklusjon without vedtaksgrunnlag, konklusjon = 2",
+                kostraIndividInTest.copy(
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                                konklusjon = "2"
                             )
                         )
                     )

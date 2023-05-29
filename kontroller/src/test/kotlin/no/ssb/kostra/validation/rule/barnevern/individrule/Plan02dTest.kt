@@ -1,0 +1,101 @@
+package no.ssb.kostra.validation.rule.barnevern.individrule
+
+import io.kotest.assertions.assertSoftly
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
+
+class Plan02dTest : BehaviorSpec({
+    val sut = Plan02d()
+
+    Given("valid context") {
+        forAll(
+            row("individ with avslutta3112 = '2'", kostraIndividInTest),
+            row(
+                "avslutta3112 = '1', no plan", kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE
+                )
+            ),
+            row(
+                "avslutta3112 = '1', plan with sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = dateInTest.minusYears(1).plusDays(1),
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(
+                            sluttDato = dateInTest.minusYears(1).plusDays(1)
+                        )
+                    )
+                )
+            )
+        ) { description, currentContext ->
+
+            When(description) {
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+
+                Then("expect null") {
+                    reportEntryList.shouldBeNull()
+                }
+            }
+        }
+    }
+
+    Given("invalid context") {
+        forAll(
+            row(
+                "avslutta3112 = '1', plan without sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = dateInTest.minusYears(1).plusDays(1),
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(
+                            sluttDato = null
+                        )
+                    )
+                )
+            ),
+            row(
+                "avslutta3112 = '1', plan with sluttDato after reporting year",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = dateInTest.minusYears(1).plusDays(1),
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(
+                            sluttDato = dateInTest
+                        )
+                    )
+                )
+            )
+        ) { description, currentContext ->
+
+            When(description) {
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+
+                Then("expect null") {
+                    reportEntryList.shouldNotBeNull()
+                    reportEntryList.size shouldBe 1
+
+                    assertSoftly(reportEntryList.first()) {
+                        it.severity shouldBe Severity.ERROR
+                        it.journalId shouldBe currentContext.journalnummer
+
+                        with(currentContext.plan.first()) {
+                            it.contextId shouldBe id
+                            it.messageText shouldBe "Plan ($id). Individet er avsluttet hos barnevernet og dets planer skal " +
+                                    "dermed være avsluttet. Sluttdato er ${sluttDato ?: "uoppgitt"}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+})

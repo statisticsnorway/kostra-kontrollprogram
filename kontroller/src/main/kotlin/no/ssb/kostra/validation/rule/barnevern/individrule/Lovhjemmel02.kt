@@ -1,0 +1,24 @@
+package no.ssb.kostra.validation.rule.barnevern.individrule
+
+import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.barnevern.extension.erOmsorgsTiltak
+
+class Lovhjemmel02 : AbstractRule<KostraIndividType>(
+    ruleName = IndividRuleId.LOVHJEMMEL_02.title,
+    severity = Severity.WARNING
+) {
+    override fun validate(context: KostraIndividType, arguments: Arguments) = context.tiltak.filter {
+        it.erOmsorgsTiltak()
+                && it.sluttDato != null
+                && it.opphevelse == null
+    }.map { tiltak ->
+        createValidationReportEntry(
+            journalId = context.journalnummer,
+            contextId = tiltak.id,
+            messageText = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"
+        )
+    }.ifEmpty { null }
+}

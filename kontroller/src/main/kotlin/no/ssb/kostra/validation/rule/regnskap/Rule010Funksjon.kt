@@ -16,7 +16,7 @@ class Rule010Funksjon(
             .map { kostraRecord ->
                 createValidationReportEntry(
                     messageText = """Fant ugyldig funksjon '${kostraRecord.getFieldAsString(FIELD_FUNKSJON)}'. 
-                    Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
+                                Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.index)
                 )
             }

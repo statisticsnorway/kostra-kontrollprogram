@@ -16,7 +16,7 @@ class Rule013Sektor(
             .map { kostraRecord ->
                 createValidationReportEntry(
                     messageText = """Fant ugyldig sektor '${kostraRecord.getFieldAsString(FIELD_SEKTOR)}'. 
-                    Korrigér sektor til en av '${sektorList.joinToString(", ")}'""".trimMargin(),
+                                Korrigér sektor til en av '${sektorList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.index)
                 )
             }

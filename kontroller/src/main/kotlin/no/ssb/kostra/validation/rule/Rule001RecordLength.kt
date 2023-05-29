@@ -13,8 +13,8 @@ class Rule001RecordLength(
         .map {
             createValidationReportEntry(
                 messageText = """Korrigér filen slik at alle records er på $length tegn.<br/>
-                    Mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift.<br/>
-                    Denne feilen hindrer de andre kontrollene i å bli kjørt""".trimIndent(),
+                            Mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift.<br/>
+                            Denne feilen hindrer de andre kontrollene i å bli kjørt""".trimIndent(),
                 lineNumbers = listOf(it.index + 1)
             )
         }

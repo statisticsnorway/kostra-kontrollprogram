@@ -214,7 +214,7 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.4</version>
                 <configuration>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>

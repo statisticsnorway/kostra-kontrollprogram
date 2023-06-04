@@ -17,6 +17,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
+import javax.xml.stream.XMLStreamReader
 
 object BarnevernValidator {
 
@@ -35,7 +36,7 @@ object BarnevernValidator {
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
             try {
-                val xmlStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(fileStream)
+                val xmlStreamReader: XMLStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(fileStream)
 
                 while (xmlStreamReader.hasNext()) {
                     xmlStreamReader.next()
@@ -43,73 +44,27 @@ object BarnevernValidator {
                     if (xmlStreamReader.eventType != XMLStreamConstants.START_ELEMENT) continue
 
                     when (xmlStreamReader.localName) {
-                        /** capture avgiver */
+                        /** process  avgiver */
                         AVGIVER_XML_TAG -> {
-
-                            try {
-                                val avgiverType = KostraBarnevernConverter.XML_MAPPER.readValue(
-                                    xmlStreamReader,
-                                    KostraAvgiverType::class.java
-                                )
-
-                                if (validate(
-                                        xmlReader = StringReader(marshallInstance(avgiverType)),
-                                        xsdResourceName = KOSTRA_AVGIVER_XSD_RESOURCE
-                                    )
-                                ) {
-                                    validationErrors.addAll(
-                                        avgiverRules.validate(
-                                            context = avgiverType,
-                                            arguments = arguments
-                                        )
-                                    )
-                                } else validationErrors.add(avgiverFileError)
-                            } catch (thrown: Throwable) {
-                                validationErrors.add(avgiverFileError)
-                            }
+                            validationErrors.addAll(processAvgiver(xmlStreamReader, arguments))
                         }
 
-                        /** process current individual */
+                        /** process individ */
                         INDIVID_XML_TAG -> {
+                            validationErrors.addAll(
+                                processIndivid(
+                                    xmlStreamReader,
+                                    arguments
+                                ) { journalnummer: String, fodselsnummer: String ->
+                                    if (seenFodselsnummer.containsKey(fodselsnummer)) {
+                                        seenFodselsnummer[fodselsnummer]!!.add(journalnummer)
+                                    } else seenFodselsnummer[fodselsnummer] = mutableListOf()
 
-                            try {
-                                val individType = KostraBarnevernConverter.XML_MAPPER.readValue(
-                                    xmlStreamReader, KostraIndividType::class.java
-                                )
-
-                                if (validate(
-                                        xmlReader = StringReader(marshallInstance(individType)),
-                                        xsdResourceName = KOSTRA_INDIVID_XSD_RESOURCE
-                                    )
-                                ) {
-                                    validationErrors.addAll(
-                                        individRules.validate(
-                                            context = individType,
-                                            arguments = arguments
-                                        ).map { reportEntry ->
-                                            reportEntry.copy(
-                                                caseworker = individType.saksbehandler,
-                                                journalId = individType.journalnummer,
-                                                individId = individType.id
-                                            )
-                                        }
-                                    )
-
-                                    individType.fodselsnummer
-                                        .takeUnless { fnr -> fnr.isNullOrBlank() }
-                                        ?.also { fnr ->
-                                            if (seenFodselsnummer.containsKey(fnr)) {
-                                                seenFodselsnummer[fnr]!!.add(individType.journalnummer)
-                                            } else seenFodselsnummer[fnr] = mutableListOf()
-
-                                            if (seenJournalNummer.containsKey(individType.journalnummer)) {
-                                                seenJournalNummer[individType.journalnummer]!!.add(fnr)
-                                            } else seenJournalNummer[individType.journalnummer] = mutableListOf()
-                                        }
-                                } else validationErrors.add(individFileError)
-                            } catch (thrown: Throwable) {
-                                validationErrors.add(individFileError)
-                            }
+                                    if (seenJournalNummer.containsKey(journalnummer)) {
+                                        seenJournalNummer[journalnummer]!!.add(fodselsnummer)
+                                    } else seenJournalNummer[journalnummer] = mutableListOf()
+                                }
+                            )
                         }
                     }
                 }
@@ -139,6 +94,74 @@ object BarnevernValidator {
             return validationErrors
         }
     }
+
+    private fun processAvgiver(
+        xmlStreamReader: XMLStreamReader,
+        arguments: KotlinArguments
+    ) = mutableListOf<ValidationReportEntry>().apply {
+        try {
+            val avgiverType = KostraBarnevernConverter.XML_MAPPER.readValue(
+                xmlStreamReader,
+                KostraAvgiverType::class.java
+            )
+
+            if (validate(
+                    xmlReader = StringReader(marshallInstance(avgiverType)),
+                    xsdResourceName = KOSTRA_AVGIVER_XSD_RESOURCE
+                )
+            ) {
+                addAll(
+                    avgiverRules.validate(
+                        context = avgiverType,
+                        arguments = arguments
+                    )
+                )
+            } else add(avgiverFileError)
+        } catch (thrown: Throwable) {
+            add(avgiverFileError)
+        }
+    }
+
+    private fun processIndivid(
+        xmlStreamReader: XMLStreamReader,
+        arguments: KotlinArguments,
+        fodselsnummerAndJournalIdFunc: (String, String) -> Unit
+    ) = mutableListOf<ValidationReportEntry>().apply {
+        try {
+            val individType = KostraBarnevernConverter.XML_MAPPER.readValue(
+                xmlStreamReader, KostraIndividType::class.java
+            )
+
+            if (validate(
+                    xmlReader = StringReader(marshallInstance(individType)),
+                    xsdResourceName = KOSTRA_INDIVID_XSD_RESOURCE
+                )
+            ) {
+                addAll(
+                    individRules.validate(
+                        context = individType,
+                        arguments = arguments
+                    ).map { reportEntry ->
+                        reportEntry.copy(
+                            caseworker = individType.saksbehandler,
+                            journalId = individType.journalnummer,
+                            individId = individType.id
+                        )
+                    }
+                )
+
+                if (!individType.fodselsnummer.isNullOrBlank()) {
+                    fodselsnummerAndJournalIdFunc(
+                        individType.journalnummer,
+                        individType.fodselsnummer
+                    )
+                }
+            } else add(individFileError)
+        } catch (thrown: Throwable) {
+            add(individFileError)
+        }
+    }
+
 
     private fun Map<String, Collection<String>>.mapToValidationReportEntries(
         ruleName: String,

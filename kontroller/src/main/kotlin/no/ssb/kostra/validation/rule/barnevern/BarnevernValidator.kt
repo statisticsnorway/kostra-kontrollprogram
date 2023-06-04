@@ -114,29 +114,19 @@ object BarnevernValidator {
                     }
                 }
 
-                validationErrors.addAll(seenFodselsnummer.entries
-                    .filter { innerSeenFodselsnummer -> innerSeenFodselsnummer.value.any() }
-                    .map { innerSeenFodselsnummer ->
-                        ValidationReportEntry(
-                            severity = Severity.ERROR,
-                            ruleName = IndividRuleId.INDIVID_04.title,
-                            messageText = "Dublett for fødselsnummer for journalnummer (${
-                                innerSeenFodselsnummer.value.joinToString(", ")
-                            })"
-                        )
-                    })
+                validationErrors.addAll(
+                    seenFodselsnummer.mapToValidationReportEntries(
+                        IndividRuleId.INDIVID_04.title,
+                        "Dublett for fødselsnummer for journalnummer"
+                    )
+                )
 
-                validationErrors.addAll(seenJournalNummer.entries
-                    .filter { innerSeenJournalNummer -> innerSeenJournalNummer.value.any() }
-                    .map { innerSeenJournalNummer ->
-                        ValidationReportEntry(
-                            severity = Severity.ERROR,
-                            ruleName = IndividRuleId.INDIVID_05.title,
-                            messageText = "Dublett for journalnummer for fødselsnummer (${
-                                innerSeenJournalNummer.value.joinToString(", ")
-                            })"
-                        )
-                    })
+                validationErrors.addAll(
+                    seenJournalNummer.mapToValidationReportEntries(
+                        IndividRuleId.INDIVID_05.title,
+                        "Dublett for journalnummer for fødselsnummer"
+                    )
+                )
             } catch (thrown: Throwable) {
                 validationErrors.add(
                     ValidationReportEntry(
@@ -148,6 +138,17 @@ object BarnevernValidator {
 
             return validationErrors
         }
+    }
+
+    private fun Map<String, Collection<String>>.mapToValidationReportEntries(
+        ruleName: String,
+        messageText: String,
+    ) = this.filterValues { it.any() }.map { entry ->
+        ValidationReportEntry(
+            severity = Severity.ERROR,
+            ruleName = ruleName,
+            messageText = "$messageText (${entry.value.joinToString(", ")})"
+        )
     }
 
     private val avgiverFileError = ValidationReportEntry(

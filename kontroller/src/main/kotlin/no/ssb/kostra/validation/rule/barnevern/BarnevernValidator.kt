@@ -29,13 +29,13 @@ object BarnevernValidator {
     @JvmStatic
     fun validateBarnevern(arguments: KotlinArguments): List<ValidationReportEntry> {
 
-        arguments.inputFileStream.use {
+        arguments.inputFileStream.use { fileStream ->
             val validationErrors = mutableListOf<ValidationReportEntry>()
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
             try {
-                val xmlStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(it)
+                val xmlStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(fileStream)
 
                 while (xmlStreamReader.hasNext()) {
                     xmlStreamReader.next()
@@ -141,7 +141,7 @@ object BarnevernValidator {
                 validationErrors.add(
                     ValidationReportEntry(
                         severity = Severity.ERROR,
-                        messageText = "Klarer ikke å lese fil. Får feilmeldingen: " + thrown.message
+                        messageText = "Klarer ikke å lese fil. Får feilmeldingen: ${thrown.message}"
                     )
                 )
             }

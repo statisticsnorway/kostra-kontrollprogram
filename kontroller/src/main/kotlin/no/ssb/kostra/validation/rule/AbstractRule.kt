@@ -21,7 +21,7 @@ open class AbstractRule<in T : Any>(
         messageText = messageText,
         lineNumbers = lineNumbers
     )
-    
+
     protected fun createValidationReportEntry(
         caseworker: String,
         journalId: String,
@@ -41,11 +41,11 @@ open class AbstractRule<in T : Any>(
         contextId: String,
         messageText: String,
     ) = ValidationReportEntry(
-            ruleName = ruleName,
-            severity = severity,
-            journalId = journalId,
-            contextId = contextId,
-            messageText = messageText
+        ruleName = ruleName,
+        severity = severity,
+        journalId = journalId,
+        contextId = contextId,
+        messageText = messageText
     )
 
     protected fun createSingleReportEntryList(
@@ -58,6 +58,16 @@ open class AbstractRule<in T : Any>(
             severity = severity,
             journalId = journalId,
             contextId = contextId,
+            messageText = messageText
+        )
+    )
+
+    protected fun createSingleReportEntryList(
+        messageText: String
+    ) = listOf(
+        ValidationReportEntry(
+            ruleName = ruleName,
+            severity = severity,
             messageText = messageText
         )
     )

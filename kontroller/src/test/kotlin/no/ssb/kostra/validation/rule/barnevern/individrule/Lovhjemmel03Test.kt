@@ -8,11 +8,12 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomSSN
+import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraLovhjemmelTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
-import no.ssb.kostra.validation.report.Severity
 import java.time.LocalDate
 
 class Lovhjemmel03Test : BehaviorSpec({
@@ -35,7 +36,7 @@ class Lovhjemmel03Test : BehaviorSpec({
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldBeNull()
@@ -59,7 +60,7 @@ class Lovhjemmel03Test : BehaviorSpec({
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldNotBeNull()

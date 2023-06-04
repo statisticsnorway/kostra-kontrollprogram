@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barn.xsd.*
-import no.ssb.kostra.program.Arguments
 import no.ssb.kostra.validation.rule.barnevern.RandomUtils
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTEL_4
@@ -19,12 +18,6 @@ object IndividRuleTestData {
     const val KOSTRA_MELDING_ID = "~melding~"
     const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
     const val KOSTRA_PLAN_ID = "~plan~"
-
-    val argumentsInTest = Arguments(
-        skjema = "15F",
-        aargang = (Year.now().value - 1).toString(),
-        region = "030100"
-    )
 
     /** START sub-types */
 

@@ -12,7 +12,6 @@ class AvgiverRules {
     ): List<ValidationReportEntry> = rules.mapNotNull { it.validate(context, arguments) }.flatten()
 
     private val rules = setOf(
-        Avgiver01(),
         Avgiver02(),
         Avgiver03(),
         Avgiver04(),

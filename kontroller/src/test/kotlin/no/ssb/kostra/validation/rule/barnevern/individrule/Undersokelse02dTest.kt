@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.xsd.KostraUndersokelseType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest

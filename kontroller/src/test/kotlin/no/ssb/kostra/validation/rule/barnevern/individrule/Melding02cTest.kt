@@ -7,10 +7,11 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.report.Severity
 
 class Melding02cTest : BehaviorSpec({
     val sut = Melding02c()
@@ -40,7 +41,7 @@ class Melding02cTest : BehaviorSpec({
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldBeNull()
@@ -61,7 +62,7 @@ class Melding02cTest : BehaviorSpec({
         ) { description, currentContext ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, IndividRuleTestData.argumentsInTest)
+                val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
                 Then("expect null") {
                     reportEntryList.shouldNotBeNull()

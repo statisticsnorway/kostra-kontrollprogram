@@ -7,9 +7,9 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 
 class Individ10Test : BehaviorSpec({
     val sut = Individ10()
@@ -40,6 +40,7 @@ class Individ10Test : BehaviorSpec({
 
     Given("invalid context") {
         val invalidContext = kostraIndividInTest.copy(bydelsnavn = null)
+        val argumentsInTest = argumentsInTest.copy(region = "030114")
 
         When("validate") {
             val reportEntryList = sut.validate(invalidContext, argumentsInTest)

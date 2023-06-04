@@ -6,6 +6,7 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.Arguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
@@ -33,14 +34,27 @@ class BarnevernValidator {
             when (xmlStreamReader.localName) {
                 /** capture avgiver */
                 AVGIVER_XML_TAG -> {
-                    validationErrors.addAll(
-                        avgiverRules.validate(
-                            context = KostraBarnevernConverter.XML_MAPPER.readValue(
-                                xmlStreamReader, KostraAvgiverType::class.java
-                            ),
-                            arguments = arguments
+
+                    try {
+                        val avgiverType = KostraBarnevernConverter.XML_MAPPER.readValue(
+                            xmlStreamReader, KostraAvgiverType::class.java
                         )
-                    )
+
+                        validationErrors.addAll(
+                            avgiverRules.validate(
+                                context = avgiverType,
+                                arguments = arguments
+                            )
+                        )
+                    } catch (thrown: Throwable) {
+                        validationErrors.add(
+                            ValidationReportEntry(
+                                severity = Severity.FATAL,
+                                ruleId = AvgiverRuleId.AVGIVER_01.title,
+                                messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
+                            )
+                        )
+                    }
                 }
 
                 /** process current individual */
@@ -68,10 +82,12 @@ class BarnevernValidator {
                             } else seenJournalNummer[individType.journalnummer] = mutableListOf()
                         }
                     } catch (thrown: Throwable) {
-                        ValidationReportEntry(
-                            severity = Severity.FATAL,
-                            ruleId = IndividRuleId.INDIVID_01.title,
-                            messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+                        validationErrors.add(
+                            ValidationReportEntry(
+                                severity = Severity.FATAL,
+                                ruleId = IndividRuleId.INDIVID_01.title,
+                                messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+                            )
                         )
                     }
                 }

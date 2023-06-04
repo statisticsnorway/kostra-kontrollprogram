@@ -15,6 +15,7 @@ class Melding02c : AbstractRule<KostraIndividType>(
             innerContext.melding.filter {
                 it.sluttDato != null
                         && it.sluttDato.isAfter(context.sluttDato)
+                        && it.konklusjon != HENLAGT
             }.map { melding ->
                 createValidationReportEntry(
                     contextId = melding.id,
@@ -22,5 +23,9 @@ class Melding02c : AbstractRule<KostraIndividType>(
                             "er etter individets sluttdato (${innerContext.sluttDato})"
                 )
             }.ifEmpty { null }
+        }
+
+        companion object{
+            const val HENLAGT = "1"
         }
 }

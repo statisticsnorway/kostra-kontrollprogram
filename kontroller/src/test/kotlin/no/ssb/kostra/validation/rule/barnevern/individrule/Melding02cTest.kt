@@ -12,6 +12,7 @@ import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.Melding02c.Companion.HENLAGT
 
 class Melding02cTest : BehaviorSpec({
     val sut = Melding02c()
@@ -36,6 +37,18 @@ class Melding02cTest : BehaviorSpec({
                 kostraIndividInTest.copy(
                     sluttDato = dateInTest.plusDays(1),
                     melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.plusDays(1)))
+                )
+            ),
+            row(
+                "melding with sluttDato  after individ sluttDato, henlagt",
+                kostraIndividInTest.copy(
+                    sluttDato = dateInTest.plusDays(1),
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            sluttDato = dateInTest.plusDays(2),
+                            konklusjon = HENLAGT
+                        )
+                    )
                 )
             )
         ) { description, currentContext ->

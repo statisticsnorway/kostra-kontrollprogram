@@ -18,7 +18,6 @@ class Vedtak02 : AbstractRule<KostraIndividType>(
                         && it.presisering == null
             }.map { vedtaksgrunnlag ->
                 createValidationReportEntry(
-                    journalId = context.journalnummer,
                     contextId = undersokelse.id,
                     messageText = "Vedtaksgrunnlag med kode ${vedtaksgrunnlag.kode} mangler presisering"
                 )

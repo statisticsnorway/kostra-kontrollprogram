@@ -15,7 +15,6 @@ class Tiltak02b : AbstractRule<KostraIndividType>(
                     && it.sluttDato.year != arguments.aargang.toInt()
         }.map { plan ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = plan.id,
                 messageText = "Tiltak (${plan.id}). Sluttdato (${plan.sluttDato}) er ikke " +
                         "i rapporteringsåret (${arguments.aargang})"

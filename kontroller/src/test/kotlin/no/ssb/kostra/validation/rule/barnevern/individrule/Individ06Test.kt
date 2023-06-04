@@ -46,7 +46,6 @@ class Individ06Test : BehaviorSpec({
 
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
-                    it.journalId shouldBe invalidContext.journalnummer
                     it.contextId shouldBe invalidContext.id
                     it.messageText shouldBe "Individet har ingen meldinger, planer eller tiltak i løpet av året"
                 }

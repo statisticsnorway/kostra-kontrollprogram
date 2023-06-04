@@ -15,7 +15,6 @@ class Plan02a : AbstractRule<KostraIndividType>(
                     && it.startDato.isAfter(it.sluttDato)
         }.map { plan ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = plan.id,
                 messageText = "Plan (${plan.id}). Planens startdato (${plan.startDato}) er etter " +
                         "planens sluttdato (${plan.sluttDato})"

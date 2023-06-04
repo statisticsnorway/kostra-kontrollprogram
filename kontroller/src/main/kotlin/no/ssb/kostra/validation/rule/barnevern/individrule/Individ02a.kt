@@ -14,7 +14,6 @@ class Individ02a : AbstractRule<KostraIndividType>(
             ?.takeIf { sluttDato -> context.startDato.isAfter(sluttDato) }
             ?.let { sluttDato ->
                 createSingleReportEntryList(
-                    journalId = journalnummer,
                     contextId = context.id,
                     messageText = "Individets startdato ($startDato) er etter sluttdato ($sluttDato)",
                 )

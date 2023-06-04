@@ -14,7 +14,6 @@ class Lovhjemmel04 : AbstractRule<KostraIndividType>(
                 || it.lovhjemmel.paragraf == "0"
     }.map {
         createValidationReportEntry(
-            journalId = context.journalnummer,
             contextId = it.id,
             messageText = "Tiltak (${it.id}). Kapittel (${it.lovhjemmel.kapittel}) eller paragraf " +
                     "(${it.lovhjemmel.paragraf}) er rapportert med den ugyldige koden 0"

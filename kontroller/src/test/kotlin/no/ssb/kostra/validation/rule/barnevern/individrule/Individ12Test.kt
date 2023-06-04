@@ -7,9 +7,9 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.report.Severity
 
 class Individ12Test : BehaviorSpec({
     val sut = Individ12()
@@ -45,7 +45,6 @@ class Individ12Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
-                        it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.id
                         it.messageText shouldBe "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                     }

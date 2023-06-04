@@ -64,7 +64,6 @@ class Melding02aTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
 
                         with(currentContext.melding.first()) {
                             it.contextId shouldBe id

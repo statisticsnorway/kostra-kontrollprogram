@@ -14,7 +14,6 @@ class Undersokelse02e : AbstractRule<KostraIndividType>(
         .filter { it.startDato.isBefore(context.startDato) }
         .map { undersokelse ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). StartDato (${undersokelse.startDato}) skal " +
                         "være lik eller etter StartDatoen (${context.startDato}) på individet"

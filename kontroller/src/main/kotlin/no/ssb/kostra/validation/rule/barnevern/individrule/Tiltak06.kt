@@ -19,7 +19,6 @@ class Tiltak06 : AbstractRule<KostraIndividType>(
                 .filter { it.kategori.kode == "4.2" }
                 .map { tiltak ->
                     createValidationReportEntry(
-                        journalId = context.journalnummer,
                         contextId = tiltak.id,
                         messageText = "Tiltak (${tiltak.id}). Barnet er over 11 år og i SFO. " +
                                 "Barnets alder er $ageInYears år"

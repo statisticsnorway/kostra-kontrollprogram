@@ -17,7 +17,6 @@ class Individ07 : AbstractRule<KostraIndividType>(
             ?.takeIf { it > AGE_TWENTY_FOUR }
             ?.let { ageInYears ->
                 createSingleReportEntryList(
-                    journalId = context.journalnummer,
                     contextId = context.id,
                     messageText = "Individet er $ageInYears år og skal avsluttes som klient"
                 )

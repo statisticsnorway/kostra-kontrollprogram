@@ -18,7 +18,6 @@ class Tiltak04 : AbstractRule<KostraIndividType>(
         }
         .map { tiltak ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = tiltak.id,
                 messageText = "Tiltak (${tiltak.id}). Omsorgstiltak med sluttdato (${tiltak.sluttDato}) " +
                         "krever kode for opphevelse"

@@ -19,7 +19,6 @@ class Individ08 : AbstractRule<KostraIndividType>(
                     && context.tiltak.none()
         }?.let {
             createSingleReportEntryList(
-                journalId = context.journalnummer,
                 contextId = context.id,
                 messageText = "Individet er over 18 år og skal dermed ha tiltak"
             )

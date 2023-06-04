@@ -16,7 +16,6 @@ class Lovhjemmel02 : AbstractRule<KostraIndividType>(
                 && it.opphevelse == null
     }.map { tiltak ->
         createValidationReportEntry(
-            journalId = context.journalnummer,
             contextId = tiltak.id,
             messageText = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"
         )

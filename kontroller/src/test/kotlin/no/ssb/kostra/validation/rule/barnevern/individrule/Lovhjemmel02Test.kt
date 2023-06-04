@@ -87,7 +87,6 @@ class Lovhjemmel02Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
-                        it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.tiltak.first().id
                         it.messageText shouldBe
                                 "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"

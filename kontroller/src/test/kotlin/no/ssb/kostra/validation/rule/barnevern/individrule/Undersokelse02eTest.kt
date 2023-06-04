@@ -74,7 +74,6 @@ class Undersokelse02eTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
 
                         with(currentContext.melding.first().undersokelse as KostraUndersokelseType) {
                             it.contextId shouldBe id

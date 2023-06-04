@@ -9,10 +9,10 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.report.Severity
 import java.time.LocalDate
 import java.time.Year
 
@@ -61,7 +61,6 @@ class Individ07Test : BehaviorSpec({
 
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
-                    it.journalId shouldBe invalidContext.journalnummer
                     it.contextId shouldBe invalidContext.id
                     it.messageText shouldStartWith "Individet er"
                     it.messageText shouldEndWith "år og skal avsluttes som klient"

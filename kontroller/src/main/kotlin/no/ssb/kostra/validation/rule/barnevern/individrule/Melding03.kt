@@ -16,7 +16,6 @@ class Melding03 : AbstractRule<KostraIndividType>(
         }
         .map { melding ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = melding.id,
                 messageText = "Melding (${melding.id}). Fristoverskridelse på behandlingstid for melding,  " +
                         "(${melding.startDato} -> ${melding.sluttDato})"

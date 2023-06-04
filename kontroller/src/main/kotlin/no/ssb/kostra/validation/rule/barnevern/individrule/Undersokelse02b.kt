@@ -16,7 +16,6 @@ class Undersokelse02b : AbstractRule<KostraIndividType>(
                     && it.sluttDato.year != arguments.aargang.toInt()
         }.map { undersokelse ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). Undersøkelsens sluttdato " +
                         "(${undersokelse.sluttDato}) er ikke i rapporteringsåret (${arguments.aargang})"

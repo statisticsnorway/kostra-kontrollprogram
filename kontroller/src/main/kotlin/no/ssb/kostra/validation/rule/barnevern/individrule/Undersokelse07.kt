@@ -17,7 +17,6 @@ class Undersokelse07 : AbstractRule<KostraIndividType>(
         }
         .map { undersokelse ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). Undersøkelse konkludert med kode " +
                         "${undersokelse.konklusjon} skal ha vedtaksgrunnlag"

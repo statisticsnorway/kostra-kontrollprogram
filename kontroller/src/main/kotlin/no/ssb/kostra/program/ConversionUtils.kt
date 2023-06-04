@@ -15,9 +15,9 @@ object ConversionUtils {
 
     @JvmStatic
     fun toErrorReportEntry(reportEntry: ValidationReportEntry) = ErrorReportEntry(
-        " ",
+        reportEntry.caseworker,
         reportEntry.journalId,
-        " ",
+        reportEntry.individId,
         " ",
         "Kontrollprogrammet",
         reportEntry.messageText,

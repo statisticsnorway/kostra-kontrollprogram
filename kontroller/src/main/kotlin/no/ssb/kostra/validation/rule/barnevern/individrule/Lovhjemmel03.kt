@@ -22,7 +22,6 @@ class Lovhjemmel03 : AbstractRule<KostraIndividType>(
                 .filter { it.erOmsorgsTiltak() }
                 .map {
                     createValidationReportEntry(
-                        journalId = context.journalnummer,
                         contextId = it.id,
                         messageText = "Tiltak (${it.id}). Individet er $ageInYears år og skal dermed ikke ha omsorgstiltak"
                     )

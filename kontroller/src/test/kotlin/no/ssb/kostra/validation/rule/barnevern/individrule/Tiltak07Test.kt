@@ -7,10 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
-import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraKategoriTypeInTest as kostraKategoriTypeInTest1
 
 class Tiltak07Test : BehaviorSpec({
@@ -73,7 +73,6 @@ class Tiltak07Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
 
                         with(currentContext.tiltak.first()) {
                             it.contextId shouldBe id

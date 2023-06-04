@@ -24,7 +24,6 @@ class Melding02d : AbstractRule<KostraIndividType>(
                         || it.sluttDato.isAfter(LocalDate.of(arguments.aargang.toInt(), 12, 31))
             }.map { melding ->
                 createValidationReportEntry(
-                    journalId = innerContext.journalnummer,
                     contextId = melding.id,
                     messageText = "Melding (${melding.id}). Individet er avsluttet hos barnevernet og dets " +
                             "meldinger skal dermed være avsluttet. Sluttdato er ${melding.sluttDato ?: "uoppgitt"}"

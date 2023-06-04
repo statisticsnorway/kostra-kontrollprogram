@@ -17,7 +17,6 @@ class Melding02c : AbstractRule<KostraIndividType>(
                         && it.sluttDato.isAfter(context.sluttDato)
             }.map { melding ->
                 createValidationReportEntry(
-                    journalId = innerContext.journalnummer,
                     contextId = melding.id,
                     messageText = "Melding (${melding.id}). Meldingens sluttdato (${melding.sluttDato}) " +
                             "er etter individets sluttdato (${innerContext.sluttDato})"

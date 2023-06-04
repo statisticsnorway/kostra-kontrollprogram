@@ -16,7 +16,6 @@ class Tiltak08 : AbstractRule<KostraIndividType>(
                     && it.opphevelse.presisering == null
         }.map { tiltak ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = tiltak.id,
                 messageText = "Tiltak (${tiltak.id}). Tiltaksopphevelse (${tiltak.opphevelse?.kode}) mangler presisering"
             )

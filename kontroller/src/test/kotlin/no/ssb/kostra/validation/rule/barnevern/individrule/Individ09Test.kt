@@ -51,7 +51,6 @@ class Individ09Test : BehaviorSpec({
 
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
-                    it.journalId shouldBe invalidContext.journalnummer
                     it.contextId shouldBe invalidContext.id
                     it.messageText shouldBe  "Filen mangler bydelsnummer."
                 }

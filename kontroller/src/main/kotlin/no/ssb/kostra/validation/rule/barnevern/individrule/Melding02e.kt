@@ -13,7 +13,6 @@ class Melding02e : AbstractRule<KostraIndividType>(
         .filter { it.startDato.isBefore(context.startDato) }
         .map { melding ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = melding.id,
                 messageText = "Melding (${melding.id}). Startdato (${melding.startDato}) skal være lik eller " +
                         "etter individets startdato (${context.startDato})"

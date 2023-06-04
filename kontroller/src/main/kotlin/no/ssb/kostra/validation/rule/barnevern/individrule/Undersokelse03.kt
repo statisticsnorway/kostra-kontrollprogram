@@ -17,7 +17,6 @@ class Undersokelse03 : AbstractRule<KostraIndividType>(
         }
         .map { undersokelse ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). Undersøkelse der kode for konklusjon " +
                         "er ${undersokelse.konklusjon} mangler presisering"

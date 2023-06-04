@@ -52,7 +52,11 @@ object BarnevernValidator {
                                     KostraAvgiverType::class.java
                                 )
 
-                                if (validate(StringReader(marshallInstance(avgiverType)), KOSTRA_AVGIVER_XSD_RESOURCE)) {
+                                if (validate(
+                                        StringReader(marshallInstance(avgiverType)),
+                                        KOSTRA_AVGIVER_XSD_RESOURCE
+                                    )
+                                ) {
                                     validationErrors.addAll(
                                         avgiverRules.validate(
                                             context = avgiverType,
@@ -73,12 +77,22 @@ object BarnevernValidator {
                                     xmlStreamReader, KostraIndividType::class.java
                                 )
 
-                                if (validate(StringReader(marshallInstance(individType)), KOSTRA_INDIVID_XSD_RESOURCE)) {
+                                if (validate(
+                                        StringReader(marshallInstance(individType)),
+                                        KOSTRA_INDIVID_XSD_RESOURCE
+                                    )
+                                ) {
                                     validationErrors.addAll(
                                         individRules.validate(
                                             context = individType,
                                             arguments = arguments
-                                        )
+                                        ).map { reportEntry ->
+                                            reportEntry.copy(
+                                                caseworker = individType.saksbehandler,
+                                                journalId = individType.journalnummer,
+                                                individId = individType.id
+                                            )
+                                        }
                                     )
 
                                     val fodselsnummer = individType.fodselsnummer

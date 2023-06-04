@@ -79,7 +79,6 @@ class Individ08Test : BehaviorSpec({
 
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.WARNING
-                    it.journalId shouldBe invalidContext.journalnummer
                     it.contextId shouldBe invalidContext.id
                     it.messageText shouldBe  "Individet er over 18 år og skal dermed ha tiltak"
                 }

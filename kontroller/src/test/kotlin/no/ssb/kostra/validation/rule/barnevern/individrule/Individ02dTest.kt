@@ -8,8 +8,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 
@@ -50,7 +50,6 @@ class Individ02dTest : BehaviorSpec({
 
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.ERROR
-                    it.journalId shouldBe invalidContext.journalnummer
                     it.contextId shouldBe invalidContext.id
                     it.messageText shouldBe  "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. " +
                             "Sluttdato er ${invalidContext.sluttDato}. Kode for avsluttet er '$KOSTRA_IS_CLOSED_TRUE'."

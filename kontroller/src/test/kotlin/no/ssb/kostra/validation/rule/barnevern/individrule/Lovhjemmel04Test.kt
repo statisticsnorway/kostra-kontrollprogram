@@ -69,7 +69,6 @@ class Lovhjemmel04Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.tiltak.first().id
 
                         with(currentContext.tiltak.first().lovhjemmel) {

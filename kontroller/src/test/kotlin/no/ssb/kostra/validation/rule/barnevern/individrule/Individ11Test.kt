@@ -47,7 +47,6 @@ class Individ11Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
-                        it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.id
                         it.messageText shouldBe "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                     }

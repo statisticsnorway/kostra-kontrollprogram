@@ -13,9 +13,8 @@ class Individ06 : AbstractRule<KostraIndividType>(
         it.melding.none()
                 && it.plan.none()
                 && it.tiltak.none()
-    }?.let { individ ->
+    }?.let {
         createSingleReportEntryList(
-            journalId = individ.journalnummer,
             contextId = context.id,
             messageText = "Individet har ingen meldinger, planer eller tiltak i løpet av året"
         )

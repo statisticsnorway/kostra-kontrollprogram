@@ -16,7 +16,6 @@ class Saksinnhold02 : AbstractRule<KostraIndividType>(
                 it.kode in setOf("18", "19") && it.presisering == null
             }.map { saksinnhold ->
                 createValidationReportEntry(
-                    journalId = context.journalnummer,
                     contextId = melding.id,
                     messageText = "Saksinnhold med kode (${saksinnhold.kode}) mangler presisering"
                 )

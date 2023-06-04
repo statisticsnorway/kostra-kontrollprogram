@@ -35,7 +35,6 @@ class Tiltak09 : AbstractRule<KostraIndividType>(
                                     )
                                 }.map { innerMeasure ->
                                     createValidationReportEntry(
-                                        journalId = context.journalnummer,
                                         contextId = innerMeasure.id,
                                         messageText = "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder"
                                     )

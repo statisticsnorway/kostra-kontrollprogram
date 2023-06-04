@@ -15,7 +15,6 @@ class Individ12 : AbstractRule<KostraIndividType>(
             || !isValidSocialSecurityIdOrDnr(context.fodselsnummer)
         ) {
             createSingleReportEntryList(
-                journalId = context.journalnummer,
                 contextId = context.id,
                 messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
             )

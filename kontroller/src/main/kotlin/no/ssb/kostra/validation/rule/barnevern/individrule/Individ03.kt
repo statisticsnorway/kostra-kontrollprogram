@@ -16,7 +16,6 @@ class Individ03 : AbstractRule<KostraIndividType>(
             fodselsnummer != null -> when {
                 isValidSocialSecurityIdOrDnr(fodselsnummer) -> null
                 else -> createSingleReportEntryList(
-                    journalId = journalnummer,
                     contextId = context.id,
                     messageText = "Feil i fødselsnummer. Kan ikke identifisere individet."
                 )
@@ -25,14 +24,12 @@ class Individ03 : AbstractRule<KostraIndividType>(
             duFnummer != null -> when {
                 validateDUF(duFnummer) -> null
                 else -> createSingleReportEntryList(
-                    journalId = journalnummer,
                     contextId = context.id,
                     messageText = "DUF-nummer mangler. Kan ikke identifisere individet."
                 )
             }
 
             else -> createSingleReportEntryList(
-                journalId = journalnummer,
                 contextId = context.id,
                 messageText = "Fødselsnummer og DUF-nummer mangler. Kan ikke identifisere individet."
             )

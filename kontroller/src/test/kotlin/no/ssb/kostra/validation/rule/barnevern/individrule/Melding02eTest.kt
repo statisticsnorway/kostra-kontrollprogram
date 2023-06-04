@@ -7,11 +7,11 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.report.Severity
 
 class Melding02eTest : BehaviorSpec({
     val sut = Melding02e()
@@ -58,7 +58,6 @@ class Melding02eTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
 
                         with(currentContext.melding.first()) {
                             it.contextId shouldBe id

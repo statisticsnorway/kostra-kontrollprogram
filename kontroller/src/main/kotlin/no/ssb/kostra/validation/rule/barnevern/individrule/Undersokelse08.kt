@@ -18,7 +18,6 @@ class Undersokelse08 : AbstractRule<KostraIndividType>(
         }
         .map { undersokelse ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). Undersøkelsen startet ${undersokelse.startDato} " +
                         "og skal konkluderes da den har pågått i mer enn 6 måneder"

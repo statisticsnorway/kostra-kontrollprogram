@@ -12,7 +12,6 @@ class Individ10 : AbstractRule<KostraIndividType>(
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
         if (arguments.region.startsWith("0301") && context.bydelsnavn == null) {
             createSingleReportEntryList(
-                journalId = context.journalnummer,
                 contextId = context.id,
                 messageText = "Filen mangler bydelsnavn."
             )

@@ -7,10 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.report.Severity
 import java.time.Year
 
 class Individ03Test : BehaviorSpec({
@@ -71,7 +71,6 @@ class Individ03Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.journalId shouldBe currentContext.journalnummer
                         it.contextId shouldBe currentContext.id
                         it.messageText shouldBe expectedErrorMessage
                     }

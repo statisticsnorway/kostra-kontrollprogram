@@ -18,7 +18,6 @@ class Individ02b : AbstractRule<KostraIndividType>(
             ?.takeIf { sluttDato -> sluttDato.isBefore(forrigeTelleDato) }
             ?.let { sluttDato ->
                 createSingleReportEntryList(
-                    journalId = journalnummer,
                     contextId = context.id,
                     messageText = "Individets sluttdato ($sluttDato) er før forrige telletidspunkt ($forrigeTelleDato)"
                 )

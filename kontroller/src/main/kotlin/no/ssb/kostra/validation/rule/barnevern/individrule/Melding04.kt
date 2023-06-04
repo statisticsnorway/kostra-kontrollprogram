@@ -19,7 +19,6 @@ class Melding04 : AbstractRule<KostraIndividType>(
         }
         .map { melding ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = melding.id,
                 messageText = "Melding (${melding.id}). Konkludert melding mangler melder(e)."
             )

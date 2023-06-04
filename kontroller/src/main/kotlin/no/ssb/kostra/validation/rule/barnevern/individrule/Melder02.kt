@@ -15,7 +15,6 @@ class Melder02 : AbstractRule<KostraIndividType>(
                     && melder.presisering.isNullOrEmpty()
         }.map { melder ->
             createValidationReportEntry(
-                journalId = context.journalnummer,
                 contextId = melding.id,
                 messageText = "Melder med kode (${melder.kode}) mangler presisering"
             )

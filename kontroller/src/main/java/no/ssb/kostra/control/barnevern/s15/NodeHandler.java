@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-@SuppressWarnings("SpellCheckingInspection")
+@Deprecated
 public abstract class NodeHandler {
     protected final ErrorReport errorReport;
     protected final Arguments args;

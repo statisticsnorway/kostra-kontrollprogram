@@ -3,6 +3,7 @@ package no.ssb.kostra.control.barnevern.s15;
 import javax.xml.xpath.XPathExpressionException;
 import java.util.Comparator;
 
+@Deprecated
 public class ComparatorNodeByStartDato implements Comparator<StructuredNode> {
 
     public static final String DATO_FORMAT_LANGT = "yyyy-MM-dd";

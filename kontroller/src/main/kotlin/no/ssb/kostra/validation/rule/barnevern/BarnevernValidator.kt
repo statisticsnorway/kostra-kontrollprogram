@@ -53,8 +53,8 @@ object BarnevernValidator {
                                 )
 
                                 if (validate(
-                                        StringReader(marshallInstance(avgiverType)),
-                                        KOSTRA_AVGIVER_XSD_RESOURCE
+                                        xmlReader = StringReader(marshallInstance(avgiverType)),
+                                        xsdResourceName = KOSTRA_AVGIVER_XSD_RESOURCE
                                     )
                                 ) {
                                     validationErrors.addAll(
@@ -78,8 +78,8 @@ object BarnevernValidator {
                                 )
 
                                 if (validate(
-                                        StringReader(marshallInstance(individType)),
-                                        KOSTRA_INDIVID_XSD_RESOURCE
+                                        xmlReader = StringReader(marshallInstance(individType)),
+                                        xsdResourceName = KOSTRA_INDIVID_XSD_RESOURCE
                                     )
                                 ) {
                                     validationErrors.addAll(
@@ -95,16 +95,17 @@ object BarnevernValidator {
                                         }
                                     )
 
-                                    val fodselsnummer = individType.fodselsnummer
-                                    if (fodselsnummer != null) {
-                                        if (seenFodselsnummer.containsKey(fodselsnummer)) {
-                                            seenFodselsnummer[fodselsnummer]!!.add(individType.journalnummer)
-                                        } else seenFodselsnummer[fodselsnummer] = mutableListOf()
+                                    individType.fodselsnummer
+                                        .takeUnless { fnr -> fnr.isNullOrBlank() }
+                                        ?.also { fnr ->
+                                            if (seenFodselsnummer.containsKey(fnr)) {
+                                                seenFodselsnummer[fnr]!!.add(individType.journalnummer)
+                                            } else seenFodselsnummer[fnr] = mutableListOf()
 
-                                        if (seenJournalNummer.containsKey(individType.journalnummer)) {
-                                            seenJournalNummer[individType.journalnummer]!!.add(fodselsnummer)
-                                        } else seenJournalNummer[individType.journalnummer] = mutableListOf()
-                                    }
+                                            if (seenJournalNummer.containsKey(individType.journalnummer)) {
+                                                seenJournalNummer[individType.journalnummer]!!.add(fnr)
+                                            } else seenJournalNummer[individType.journalnummer] = mutableListOf()
+                                        }
                                 } else validationErrors.add(individFileError)
                             } catch (thrown: Throwable) {
                                 validationErrors.add(individFileError)

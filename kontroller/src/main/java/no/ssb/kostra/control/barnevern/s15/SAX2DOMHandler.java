@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 /**
  * Used to create a dom-tree for incoming nodes.
  */
+@Deprecated
 class SAX2DOMHandler {
 
 	private final Document document;

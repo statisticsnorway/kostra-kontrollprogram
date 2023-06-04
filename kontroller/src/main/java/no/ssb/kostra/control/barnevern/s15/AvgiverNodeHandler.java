@@ -7,7 +7,7 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 
 import javax.xml.xpath.XPathExpressionException;
 
-@SuppressWarnings("SpellCheckingInspection")
+@Deprecated
 public class AvgiverNodeHandler extends NodeHandler {
     public AvgiverNodeHandler(
             ErrorReport errorReport,

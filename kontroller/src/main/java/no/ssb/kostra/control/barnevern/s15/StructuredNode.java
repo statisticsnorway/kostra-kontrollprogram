@@ -6,6 +6,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.time.LocalDate;
 import java.util.List;
 
+@Deprecated
 public interface StructuredNode extends Comparable<StructuredNode> {
     Node getNode();
 

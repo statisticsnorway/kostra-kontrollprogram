@@ -29,13 +29,11 @@ public class IndividNodeHandler extends NodeHandler {
     private LocalDate forrigeTelleDato;
     private int individAlder = -1;
 
-    @Deprecated
     public IndividNodeHandler(ErrorReport er, Arguments args) {
         super(er, args);
         er.setReportHeaders(List.of("Saksbehandler", "Journalnummer", "Kontroll", "Feilmelding"));
     }
 
-    @Deprecated
     public static void reset() {
         mapDublettJournalnummer = new TreeMap<>();
         mapDublettFodselsnummer = new TreeMap<>();
@@ -46,7 +44,6 @@ public class IndividNodeHandler extends NodeHandler {
      *
      * @param alder Age
      */
-    @Deprecated
     public void setIndividAlder(final int alder) {
         this.individAlder = alder;
     }
@@ -54,12 +51,10 @@ public class IndividNodeHandler extends NodeHandler {
     /**
      * @return int Individets alder
      */
-    @Deprecated
     public int getIndividAlder() {
         return this.individAlder;
     }
 
-    @Deprecated
     @Override
     void process(final StructuredNode individ) {
         String saksbehandler;
@@ -1682,7 +1677,6 @@ public class IndividNodeHandler extends NodeHandler {
      * @param ledd             - String
      * @param alder            - int
      */
-    @Deprecated
     public void controlTiltakLovhjemmelOver18OgPaOmsorgstiltak(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
             final String kapittel, final String paragraf, final String ledd, final long alder) {
@@ -1718,7 +1712,6 @@ public class IndividNodeHandler extends NodeHandler {
      * @param kode             - String
      * @param alder            - int
      */
-    @Deprecated
     public void controlOver7OgIBarnehage(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
             final String kode, final long alder) {
@@ -1736,7 +1729,6 @@ public class IndividNodeHandler extends NodeHandler {
      * @param kode             - String
      * @param alder            - int
      */
-    @Deprecated
     public void controlOver11OgISFO(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
             final String kode, final long alder) {
@@ -1755,7 +1747,6 @@ public class IndividNodeHandler extends NodeHandler {
      * @param sluttDato        - LocalDate
      * @param frist            - LocalDate
      */
-    @Deprecated
     public void controlAvslutta3112(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
             final String kode, final LocalDate sluttDato, final LocalDate frist) {
@@ -1773,7 +1764,6 @@ public class IndividNodeHandler extends NodeHandler {
         }
     }
 
-    @Deprecated
     private String dnr2fnr(final String dnr) {
         var day = Format.parseInt(dnr.substring(0, 2));
 

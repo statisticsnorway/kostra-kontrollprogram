@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
  * like HTTP parameters. It supports elegant <code>null</code> handling and type
  * conversions.
  */
+@Deprecated
 public class Value {
 	private Object data;
 

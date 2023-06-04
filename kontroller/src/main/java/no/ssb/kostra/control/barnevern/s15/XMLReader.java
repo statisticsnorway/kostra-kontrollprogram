@@ -25,6 +25,7 @@ import java.util.TreeMap;
  * inconvenient, this class extracts part of the SAX-stream, converts them into
  * sub-DOMs and calls the application for each sub-DOM.
  */
+@Deprecated
 public class XMLReader extends DefaultHandler {
 
     private final Map<String, NodeHandler> handlers = new TreeMap<>();

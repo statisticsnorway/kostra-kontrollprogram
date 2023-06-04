@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Default implementation for XMLNode
  */
+@Deprecated
 public class XMLNodeImpl implements StructuredNode {
 
     private static final XPathFactory XPATH = XPathFactory.newInstance();

@@ -19,7 +19,7 @@ object ConversionUtils {
         reportEntry.journalId,
         reportEntry.individId,
         " ",
-        "Kontrollprogrammet",
+        reportEntry.ruleName,
         reportEntry.messageText,
         reportEntry.severity.toInt()
     )

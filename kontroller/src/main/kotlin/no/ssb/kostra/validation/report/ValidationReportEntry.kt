@@ -6,7 +6,6 @@ data class ValidationReportEntry(
     val journalId: String = "",
     val individId: String = "",
     val contextId: String = "",
-    val ruleId: String = "",
     val ruleName: String = "",
     val messageText: String = "",
     val lineNumbers: List<Int> = emptyList()

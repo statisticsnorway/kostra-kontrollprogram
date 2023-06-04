@@ -118,7 +118,7 @@ object BarnevernValidator {
                     .map { innerSeenFodselsnummer ->
                         ValidationReportEntry(
                             severity = Severity.ERROR,
-                            ruleId = IndividRuleId.INDIVID_04.title,
+                            ruleName = IndividRuleId.INDIVID_04.title,
                             messageText = "Dublett for fødselsnummer for journalnummer (${
                                 innerSeenFodselsnummer.value.joinToString(", ")
                             })"
@@ -130,7 +130,7 @@ object BarnevernValidator {
                     .map { innerSeenJournalNummer ->
                         ValidationReportEntry(
                             severity = Severity.ERROR,
-                            ruleId = IndividRuleId.INDIVID_05.title,
+                            ruleName = IndividRuleId.INDIVID_05.title,
                             messageText = "Dublett for journalnummer for fødselsnummer (${
                                 innerSeenJournalNummer.value.joinToString(", ")
                             })"
@@ -151,13 +151,13 @@ object BarnevernValidator {
 
     private val avgiverFileError = ValidationReportEntry(
         severity = Severity.ERROR,
-        ruleId = AvgiverRuleId.AVGIVER_01.title,
+        ruleName = AvgiverRuleId.AVGIVER_01.title,
         messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
     )
 
     private val individFileError = ValidationReportEntry(
         severity = Severity.ERROR,
-        ruleId = IndividRuleId.INDIVID_01.title,
+        ruleName = IndividRuleId.INDIVID_01.title,
         messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
     )
 }

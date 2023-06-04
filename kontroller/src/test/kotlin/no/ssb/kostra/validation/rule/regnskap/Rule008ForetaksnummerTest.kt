@@ -4,14 +4,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FORETAKSNR
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.toKostraRecord
 
 class Rule008ForetaksnummerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule008Foretaksnummer(
-            arguments = Arguments(skjema = "OK", aargang = "2023", region = "1234", foretaknr = "987654321")
+            arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234", foretaknr = "987654321")
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FORETAKSNR, from = 1, to = 9))
 

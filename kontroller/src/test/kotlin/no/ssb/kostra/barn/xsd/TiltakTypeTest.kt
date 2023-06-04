@@ -1,4 +1,4 @@
-package no.ssb.kostra.xsd
+package no.ssb.kostra.barn.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
@@ -7,12 +7,12 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_DATE_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_ID_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.INVALID_DATE_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.LOVHJEMMEL_XML
-import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_DATE_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_ID_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.INVALID_DATE_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.LOVHJEMMEL_XML
+import no.ssb.kostra.barn.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.buildKostraXml
 import org.xml.sax.SAXException
 
 class TiltakTypeTest : BehaviorSpec({

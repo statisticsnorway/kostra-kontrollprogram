@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule
 
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
@@ -10,7 +10,7 @@ open class AbstractRule<in T : Any>(
 ) {
     open fun validate(context: List<T>): List<ValidationReportEntry>? = null
 
-    open fun validate(context: T, arguments: Arguments): List<ValidationReportEntry>? = null
+    open fun validate(context: T, arguments: KotlinArguments): List<ValidationReportEntry>? = null
 
     protected fun createValidationReportEntry(
         messageText: String,

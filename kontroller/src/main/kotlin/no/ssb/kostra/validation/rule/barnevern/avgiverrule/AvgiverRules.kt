@@ -1,14 +1,14 @@
 package no.ssb.kostra.validation.rule.barnevern.avgiverrule
 
 import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class AvgiverRules {
 
     fun validate(
         context: KostraAvgiverType,
-        arguments: Arguments
+        arguments: KotlinArguments
     ): List<ValidationReportEntry> = rules.mapNotNull { it.validate(context, arguments) }.flatten()
 
     private val rules = setOf(

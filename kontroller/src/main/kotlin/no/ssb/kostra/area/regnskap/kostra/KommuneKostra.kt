@@ -24,8 +24,8 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.Arguments
 import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.plus
 import no.ssb.kostra.program.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -37,7 +37,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostra(
-    private val arguments: Arguments,
+    private val arguments: KotlinArguments,
     private val fieldDefinitionList: List<FieldDefinition>
 ) {
     private val osloKommuner = listOf(

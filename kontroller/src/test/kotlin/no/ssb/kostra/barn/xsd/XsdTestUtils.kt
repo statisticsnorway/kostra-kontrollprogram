@@ -1,4 +1,4 @@
-package no.ssb.kostra.xsd
+package no.ssb.kostra.barn.xsd
 
 import java.io.StringReader
 import javax.xml.transform.stream.StreamSource

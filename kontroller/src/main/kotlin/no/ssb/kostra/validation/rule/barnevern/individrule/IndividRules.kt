@@ -1,14 +1,14 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barn.xsd.KostraIndividType
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class IndividRules {
 
     fun validate(
         context: KostraIndividType,
-        arguments: Arguments
+        arguments: KotlinArguments
     ): List<ValidationReportEntry> = rules.mapNotNull { it.validate(context, arguments) }.flatten()
 
     private val rules = setOf(

@@ -4,14 +4,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.toKostraRecord
 
 class Rule007OrganisasjonsnummerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule007Organisasjonsnummer(
-            arguments = Arguments(skjema = "OK", aargang = "2023", region = "1234", orgnr = "987654321,123456789")
+            arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234", orgnr = "987654321,123456789")
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ORGNR, from = 1, to = 9))
 

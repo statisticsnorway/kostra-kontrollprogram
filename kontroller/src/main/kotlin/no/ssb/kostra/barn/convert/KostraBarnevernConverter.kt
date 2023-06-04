@@ -9,7 +9,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraBarnevernType
+import no.ssb.kostra.barn.xsd.KostraIndividType
 
 object KostraBarnevernConverter {
 
@@ -37,4 +39,12 @@ object KostraBarnevernConverter {
     @JvmStatic
     fun marshallInstance(barnevernType: KostraBarnevernType): String =
         XML_MAPPER.writeValueAsString(barnevernType)
+
+    @JvmStatic
+    fun marshallInstance(avgiverType: KostraAvgiverType): String =
+        XML_MAPPER.writeValueAsString(avgiverType)
+
+    @JvmStatic
+    fun marshallInstance(individType: KostraIndividType): String =
+        XML_MAPPER.writeValueAsString(individType)
 }

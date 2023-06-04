@@ -4,14 +4,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.toKostraRecord
 
 class Rule003SkjemaTest : BehaviorSpec({
     Given("context") {
         val sut = Rule003Skjema(
-            arguments = Arguments(skjema = "OK", aargang = "2023", region = "1234")
+            arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234")
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SKJEMA, from = 1, to = 2))
 

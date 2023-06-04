@@ -30,7 +30,7 @@ object ValidationUtils {
 
     private fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate =
         LocalDate.parse(socialSecurityId, LOCAL_DATE_FORMATTER).let {
-            /** unborn will have date of birth in future, do not subtract a century for those */
+            /** unborn will have date of birth in the future, do not subtract a century for those */
             if (it.isAfter(LocalDate.now().plusYears(1))) it.minusYears(CENTURY)
             else it
         }
@@ -63,7 +63,7 @@ object ValidationUtils {
             (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 6))
         }
 
-    internal fun isModulo11Valid(socialSecurityId: String): Boolean =
+    private fun isModulo11Valid(socialSecurityId: String): Boolean =
         modulo11(
             toCheck = socialSecurityId.substring(0, socialSecurityId.length - 1),
             controlDigits = CONTROL_SUM_DIGITS_1

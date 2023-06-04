@@ -1,4 +1,4 @@
-package no.ssb.kostra.xsd
+package no.ssb.kostra.barn.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow

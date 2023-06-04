@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barn.xsd.*
-import no.ssb.kostra.validation.rule.barnevern.RandomUtils
+import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTEL_4
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
@@ -69,7 +69,7 @@ object IndividRuleTestData {
         startDato = dateInTest,
         sluttDato = null,
         avslutta3112 = KOSTRA_IS_CLOSED_FALSE,
-        fodselsnummer = RandomUtils.generateRandomSSN(
+        fodselsnummer = generateRandomSSN(
             LocalDate.now().minusYears(1),
             LocalDate.of(Year.now().value - 1, 12, 31)
         ),

@@ -2,7 +2,7 @@ package no.ssb.kostra.program
 
 import java.io.InputStream
 
-data class Arguments(
+data class KotlinArguments(
     val skjema: String = " ",
     val aargang: String = "    ",
     val kvartal: String = " ",

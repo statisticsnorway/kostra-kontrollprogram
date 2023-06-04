@@ -1,9 +1,9 @@
 package no.ssb.kostra.validation.report
 
-import no.ssb.kostra.program.Arguments
+import no.ssb.kostra.program.KotlinArguments
 
 class ValidationReport(
-    private val arguments: Arguments,
+    private val arguments: KotlinArguments,
     private val validationEntries: List<ValidationReportEntry>?
 ){
     private fun newline(): String = if (arguments.isRunAsExternalProcess) "" else "\n"

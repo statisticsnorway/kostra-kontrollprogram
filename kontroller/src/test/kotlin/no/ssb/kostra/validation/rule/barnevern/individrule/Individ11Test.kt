@@ -7,9 +7,9 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.report.Severity
 
 class Individ11Test : BehaviorSpec({
     val sut = Individ11()
@@ -32,6 +32,8 @@ class Individ11Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
+            row("individ with empty fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "")),
+            row("individ with blank fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "  ")),
             row("individ with invalid fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "12345612345")),
             row("individ with 555555 fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "123456555555")),
         ) { description, currentContext ->

@@ -1,10 +1,8 @@
 package no.ssb.kostra.barn.xsd
 
-import jakarta.xml.bind.annotation.XmlAccessType
-import jakarta.xml.bind.annotation.XmlAccessorType
-import jakarta.xml.bind.annotation.XmlAttribute
-import jakarta.xml.bind.annotation.XmlType
+import jakarta.xml.bind.annotation.*
 
+@XmlRootElement(name = "Avgiver")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AvgiverType")
 data class KostraAvgiverType(

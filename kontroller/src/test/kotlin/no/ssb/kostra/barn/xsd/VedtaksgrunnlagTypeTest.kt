@@ -1,4 +1,4 @@
-package no.ssb.kostra.xsd
+package no.ssb.kostra.barn.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
@@ -7,22 +7,22 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_PRESISERING_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.LOVHJEMMEL_XML
-import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_PRESISERING_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_PRESISERING_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.TOO_LONG_PRESISERING_ERROR
+import no.ssb.kostra.barn.xsd.XsdTestUtils.buildKostraXml
 import org.xml.sax.SAXException
 
-class OpphevelseTypeTest : BehaviorSpec({
+class VedtaksgrunnlagTypeTest : BehaviorSpec({
 
-    Given("misc Opphevelse XML") {
+    Given("misc Vedtaksgrunnlag XML") {
 
         /** make sure it's possible to make a valid test XML */
         When("valid XML, expect no exceptions") {
             shouldNotThrowAny {
                 getSchemaValidator().validate(
                     buildXmlInTest(
-                        "<Opphevelse Kode=\"1\"><Presisering>~Presisering~</Presisering></Opphevelse>"
+                        "<Vedtaksgrunnlag Kode=\"1\">" +
+                                "<Presisering>~Presisering~</Presisering></Vedtaksgrunnlag>"
                     ).toStreamSource()
                 )
             }
@@ -32,31 +32,32 @@ class OpphevelseTypeTest : BehaviorSpec({
             /** Kode */
             row(
                 "missing Kode",
-                "<Opphevelse />",
-                "cvc-complex-type.4: Attribute 'Kode' must appear on element 'Opphevelse'."
+                "<Vedtaksgrunnlag />",
+                "cvc-complex-type.4: Attribute 'Kode' must appear on element 'Vedtaksgrunnlag'."
             ),
             row(
                 "empty Kode",
-                "<Opphevelse Kode=\"\" />",
+                "<Vedtaksgrunnlag Kode=\"\" />",
                 "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to " +
-                        "minLength '1' for type '#AnonType_KodeOpphevelseType'."
+                        "minLength '1' for type '#AnonType_KodeSaksinnholdType'."
             ),
             row(
                 "invalid Kode",
-                "<Opphevelse Kode=\"5\" />",
-                "cvc-enumeration-valid: Value '5' is not facet-valid with respect to enumeration '[1, 2, 3, 4]'. " +
-                        "It must be a value from the enumeration."
+                "<Vedtaksgrunnlag Kode=\"42\" />",
+                "cvc-enumeration-valid: Value '42' is not facet-valid with respect to enumeration " +
+                        "'[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, " +
+                        "25, 26, 27, 28, 29, 30, 31]'. It must be a value from the enumeration."
             ),
 
             /** Presisering */
             row(
                 "empty Presisering",
-                "<Opphevelse Kode=\"1\"><Presisering></Presisering></Opphevelse>",
+                "<Vedtaksgrunnlag Kode=\"1\"><Presisering></Presisering></Vedtaksgrunnlag>",
                 EMPTY_PRESISERING_ERROR
             ),
             row(
                 "too long Presisering",
-                "<Opphevelse Kode=\"1\"><Presisering>${"a".repeat(1001)}</Presisering></Opphevelse>",
+                "<Vedtaksgrunnlag Kode=\"1\"><Presisering>${"a".repeat(1001)}</Presisering></Vedtaksgrunnlag>",
                 TOO_LONG_PRESISERING_ERROR
             )
         ) { description, partialXml, expectedError ->
@@ -73,12 +74,11 @@ class OpphevelseTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(opphevelseXml: String): String = buildKostraXml(
-            "<Tiltak Id=\"42\" StartDato=\"2022-11-14\">" +
-                    LOVHJEMMEL_XML +
-                    "<Kategori Kode=\"1.1\" />" +
-                    opphevelseXml +
-                    "</Tiltak>"
+        private fun buildXmlInTest(vedtaksgrunnlagXml: String) = buildKostraXml(
+            "<Melding Id=\"42\" StartDato=\"2022-11-14\">" +
+                    "<Undersokelse Id=\"42\" StartDato=\"2022-11-14\">" +
+                    vedtaksgrunnlagXml +
+                    "</Undersokelse></Melding>"
         )
     }
 }

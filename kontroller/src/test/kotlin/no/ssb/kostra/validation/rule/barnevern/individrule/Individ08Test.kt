@@ -21,6 +21,10 @@ class Individ08Test : BehaviorSpec({
         forAll(
             row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
             row(
+                "individ with invalid fodselsnummer",
+                kostraIndividInTest.copy(fodselsnummer = "12345612345")
+            ),
+            row(
                 "individ with fodselsnummer, age below 18",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
@@ -70,7 +74,7 @@ class Individ08Test : BehaviorSpec({
                 assertSoftly(reportEntryList.first()) {
                     it.severity shouldBe Severity.WARNING
                     it.contextId shouldBe invalidContext.id
-                    it.messageText shouldBe  "Individet er over 18 år og skal dermed ha tiltak"
+                    it.messageText shouldBe "Individet er over 18 år og skal dermed ha tiltak"
                 }
             }
         }

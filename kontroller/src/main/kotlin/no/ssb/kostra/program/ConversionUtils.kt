@@ -7,7 +7,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 
 object ConversionUtils {
 
-    private fun Severity.toInt() = when (this) {
+    internal fun Severity.toInt() = when (this) {
         Severity.WARNING -> 1
         Severity.ERROR -> 2
         else -> 0

@@ -13,12 +13,11 @@ class Individ08 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.fodselsnummer
         ?.ageInYears(arguments.aargang.toInt())
-        ?.let { ageInYears ->
-            if (ageInYears > AGE_SEVENTEEN && context.tiltak.none()) {
-                createSingleReportEntryList(
-                    contextId = context.id,
-                    messageText = "Individet er over 18 år og skal dermed ha tiltak"
-                )
-            } else null
+        ?.takeIf { ageInYears -> ageInYears > AGE_SEVENTEEN && context.tiltak.none() }
+        ?.let {
+            createSingleReportEntryList(
+                contextId = context.id,
+                messageText = "Individet er over 18 år og skal dermed ha tiltak"
+            )
         }
 }

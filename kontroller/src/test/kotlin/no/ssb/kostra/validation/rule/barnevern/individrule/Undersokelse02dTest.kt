@@ -35,7 +35,7 @@ class Undersokelse02dTest : BehaviorSpec({
                 )
             ),
             row(
-                "avslutta3112 = '1', melding with undersokelse",
+                "avslutta3112 = '1', melding with undersokelse with valid sluttDato",
                 kostraIndividInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = dateInTest.minusYears(1).plusDays(1),
@@ -71,6 +71,20 @@ class Undersokelse02dTest : BehaviorSpec({
                         kostraMeldingTypeInTest.copy(
                             undersokelse = kostraUndersokelseTypeInTest.copy(
                                 sluttDato = null
+                            )
+                        )
+                    )
+                )
+            ),
+            row(
+                "avslutta3112 = '1', undersokelse with valid sluttDato, context without sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = null,
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                                sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
                         )
                     )

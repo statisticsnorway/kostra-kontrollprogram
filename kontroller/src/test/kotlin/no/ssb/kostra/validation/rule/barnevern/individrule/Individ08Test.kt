@@ -13,7 +13,6 @@ import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
 import java.time.LocalDate
-import java.time.Year
 
 class Individ08Test : BehaviorSpec({
     val sut = Individ08()
@@ -25,17 +24,8 @@ class Individ08Test : BehaviorSpec({
                 "individ with fodselsnummer, age below 18",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        LocalDate.now(),
-                        LocalDate.of(Year.now().value, 12, 31)
-                    )
-                )
-            ),
-            row(
-                "individ with fodselsnummer, age above 25",
-                kostraIndividInTest.copy(
-                    fodselsnummer = generateRandomSSN(
-                        LocalDate.now().minusYears(26),
-                        LocalDate.of(Year.now().minusYears(26).value, 12, 31)
+                        LocalDate.now().minusYears(17),
+                        LocalDate.now().minusYears(16)
                     )
                 )
             ),
@@ -44,8 +34,8 @@ class Individ08Test : BehaviorSpec({
                 kostraIndividInTest.copy(
                     tiltak = mutableListOf(kostraTiltakTypeInTest),
                     fodselsnummer = generateRandomSSN(
-                        LocalDate.now().minusYears(19),
-                        LocalDate.of(Year.now().minusYears(19).value, 12, 31)
+                        LocalDate.now().minusYears(20),
+                        LocalDate.now().minusYears(19)
                     )
                 )
             ),
@@ -64,8 +54,8 @@ class Individ08Test : BehaviorSpec({
     Given("invalid context") {
         val invalidContext = kostraIndividInTest.copy(
             fodselsnummer = generateRandomSSN(
-                LocalDate.now().minusYears(19),
-                LocalDate.of(Year.now().value - 19, 12, 31)
+                LocalDate.now().minusYears(20),
+                LocalDate.now().minusYears(19)
             )
         )
 

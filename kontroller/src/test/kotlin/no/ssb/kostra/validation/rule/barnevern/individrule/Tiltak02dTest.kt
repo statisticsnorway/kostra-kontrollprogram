@@ -64,6 +64,18 @@ class Tiltak02dTest : BehaviorSpec({
                 )
             ),
             row(
+                "avslutta3112 = '1', tiltak with valid sluttDato, context without sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = null,
+                    tiltak = mutableListOf(
+                        kostraTiltakTypeInTest.copy(
+                            sluttDato = dateInTest.minusYears(1).plusDays(1)
+                        )
+                    )
+                )
+            ),
+            row(
                 "avslutta3112 = '1', tiltak with sluttDato after reporting year",
                 kostraIndividInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,

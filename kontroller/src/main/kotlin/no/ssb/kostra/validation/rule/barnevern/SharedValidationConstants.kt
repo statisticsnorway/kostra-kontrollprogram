@@ -7,7 +7,7 @@ object SharedValidationConstants {
 
     const val AGE_SIX = 6
     const val AGE_TEN = 10
-    const val AGE_EIGHTEEN = 18
+    const val AGE_SEVENTEEN = 17
     const val AGE_TWENTY_FOUR = 24
 
     const val BVL1992 = "BVL"

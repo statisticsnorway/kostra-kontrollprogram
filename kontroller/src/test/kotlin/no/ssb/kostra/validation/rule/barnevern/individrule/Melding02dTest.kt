@@ -64,6 +64,18 @@ class Melding02dTest : BehaviorSpec({
                 )
             ),
             row(
+                "avslutta3112 = '1', melding with valid sluttDato, context without sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = null,
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            sluttDato = dateInTest.minusYears(1).plusDays(1)
+                        )
+                    )
+                )
+            ),
+            row(
                 "avslutta3112 = '1', melding with sluttDato after reporting year",
                 kostraIndividInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,

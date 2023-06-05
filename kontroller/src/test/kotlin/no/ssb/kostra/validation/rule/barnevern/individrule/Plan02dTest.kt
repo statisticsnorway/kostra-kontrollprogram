@@ -64,6 +64,18 @@ class Plan02dTest : BehaviorSpec({
                 )
             ),
             row(
+                "avslutta3112 = '1', plan with valid sluttDato, context without sluttDato",
+                kostraIndividInTest.copy(
+                    avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
+                    sluttDato = null,
+                    plan = mutableListOf(
+                        kostraPlanTypeInTest.copy(
+                            sluttDato = dateInTest.minusYears(1).plusDays(1)
+                        )
+                    )
+                )
+            ),
+            row(
                 "avslutta3112 = '1', plan with sluttDato after reporting year",
                 kostraIndividInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,

@@ -4,8 +4,7 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.AGE_EIGHTEEN
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.AGE_TWENTY_FOUR
+import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.AGE_SEVENTEEN
 import no.ssb.kostra.validation.rule.barnevern.extension.ageInYears
 
 class Individ08 : AbstractRule<KostraIndividType>(
@@ -14,10 +13,8 @@ class Individ08 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.fodselsnummer
         ?.ageInYears(arguments.aargang.toInt())
-        ?.takeIf { ageInYears ->
-            ageInYears in AGE_EIGHTEEN..AGE_TWENTY_FOUR
-                    && context.tiltak.none()
-        }?.let {
+        ?.takeIf { ageInYears -> ageInYears > AGE_SEVENTEEN && context.tiltak.none() }
+        ?.let {
             createSingleReportEntryList(
                 contextId = context.id,
                 messageText = "Individet er over 18 år og skal dermed ha tiltak"

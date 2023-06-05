@@ -62,7 +62,7 @@ class Tiltak06Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "individ with fodselsnummer, age above 11, tiltak with kategori#kode different from 4.2",
+                "individ with fodselsnummer, age above 11, tiltak with kategori#kode equal to 4.2",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
                         dateInTest.plusYears(11),

@@ -31,7 +31,7 @@ object BarnevernValidator {
     fun validateBarnevern(arguments: KotlinArguments): List<ValidationReportEntry> {
 
         arguments.inputFileStream.use { fileStream ->
-            val validationErrors = mutableListOf<ValidationReportEntry>()
+            val reportEntries = mutableListOf<ValidationReportEntry>()
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
@@ -46,12 +46,12 @@ object BarnevernValidator {
                     when (xmlStreamReader.localName) {
                         /** process  avgiver */
                         AVGIVER_XML_TAG -> {
-                            validationErrors.addAll(processAvgiver(xmlStreamReader, arguments))
+                            reportEntries.addAll(processAvgiver(xmlStreamReader, arguments))
                         }
 
                         /** process individ */
                         INDIVID_XML_TAG -> {
-                            validationErrors.addAll(
+                            reportEntries.addAll(
                                 processIndivid(
                                     xmlStreamReader,
                                     arguments
@@ -69,21 +69,21 @@ object BarnevernValidator {
                     }
                 }
 
-                validationErrors.addAll(
+                reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
                         IndividRuleId.INDIVID_04.title,
                         "Dublett for fødselsnummer for journalnummer"
                     )
                 )
 
-                validationErrors.addAll(
+                reportEntries.addAll(
                     seenJournalNummer.mapToValidationReportEntries(
                         IndividRuleId.INDIVID_05.title,
                         "Dublett for journalnummer for fødselsnummer"
                     )
                 )
             } catch (thrown: Throwable) {
-                validationErrors.add(
+                reportEntries.add(
                     ValidationReportEntry(
                         severity = Severity.ERROR,
                         messageText = "Klarer ikke å lese fil. Får feilmeldingen: ${thrown.message}"
@@ -91,7 +91,7 @@ object BarnevernValidator {
                 )
             }
 
-            return validationErrors
+            return reportEntries
         }
     }
 
@@ -163,7 +163,7 @@ object BarnevernValidator {
     }
 
 
-    private fun Map<String, Collection<String>>.mapToValidationReportEntries(
+    internal fun Map<String, Collection<String>>.mapToValidationReportEntries(
         ruleName: String,
         messageText: String,
     ) = this.filterValues { it.any() }.map { entry ->

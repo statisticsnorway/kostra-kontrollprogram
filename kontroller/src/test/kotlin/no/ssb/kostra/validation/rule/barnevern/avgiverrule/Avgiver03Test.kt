@@ -7,9 +7,9 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleTestData.kostraAvgiverTypeInTest
 
 class Avgiver03Test : BehaviorSpec({
     val sut = Avgiver03()

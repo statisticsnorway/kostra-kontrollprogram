@@ -35,7 +35,6 @@ class Individ11Test : BehaviorSpec({
             row("individ with empty fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "")),
             row("individ with blank fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "  ")),
             row("individ with invalid fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "12345612345")),
-            row("individ with 555555 fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "123456555555")),
         ) { description, currentContext ->
 
             When(description) {

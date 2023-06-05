@@ -17,7 +17,7 @@ class Tiltak08 : AbstractRule<KostraIndividType>(
         }.map { tiltak ->
             createValidationReportEntry(
                 contextId = tiltak.id,
-                messageText = "Tiltak (${tiltak.id}). Tiltaksopphevelse (${tiltak.opphevelse?.kode}) mangler presisering"
+                messageText = "Tiltak (${tiltak.id}). Tiltaksopphevelse (${tiltak.opphevelse!!.kode}) mangler presisering"
             )
         }.ifEmpty { null }
 }

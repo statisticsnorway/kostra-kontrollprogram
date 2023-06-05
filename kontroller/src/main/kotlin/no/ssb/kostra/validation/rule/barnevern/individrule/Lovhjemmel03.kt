@@ -14,15 +14,16 @@ class Lovhjemmel03 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.fodselsnummer
         ?.ageInYears(arguments.aargang.toInt())
-        ?.takeIf { ageInYears -> ageInYears > AGE_SEVENTEEN && context.tiltak.any { it.erOmsorgsTiltak() }
-        }?.let { ageInYears ->
-            context.tiltak
-                .filter { it.erOmsorgsTiltak() }
-                .map {
-                    createValidationReportEntry(
-                        contextId = it.id,
-                        messageText = "Tiltak (${it.id}). Individet er $ageInYears år og skal dermed ikke ha omsorgstiltak"
-                    )
-                }
+        ?.let { ageInYears ->
+            if (ageInYears > AGE_SEVENTEEN && context.tiltak.any { it.erOmsorgsTiltak() }) {
+                context.tiltak
+                    .filter { it.erOmsorgsTiltak() }
+                    .map {
+                        createValidationReportEntry(
+                            contextId = it.id,
+                            messageText = "Tiltak (${it.id}). Individet er $ageInYears år og skal dermed ikke ha omsorgstiltak"
+                        )
+                    }.ifEmpty { null }
+            } else null
         }
 }

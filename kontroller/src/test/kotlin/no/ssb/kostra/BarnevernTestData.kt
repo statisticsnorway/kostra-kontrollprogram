@@ -27,8 +27,8 @@ object BarnevernTestData {
         avslutta3112 = KOSTRA_IS_CLOSED_FALSE,
         sluttDato = dateInTest,
         fodselsnummer = RandomUtils.generateRandomSSN(
-            LocalDate.now().minusYears(1),
-            LocalDate.of(Year.now().value - 1, 12, 31)
+            LocalDate.now().minusYears(2),
+            LocalDate.now().minusYears(1)
         ),
         duFnummer = null,
         bydelsnummer = "11",

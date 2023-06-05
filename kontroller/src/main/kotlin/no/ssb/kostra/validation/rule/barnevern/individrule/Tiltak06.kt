@@ -13,17 +13,16 @@ class Tiltak06 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.fodselsnummer
         ?.ageInYears(arguments.aargang.toInt())
+        ?.takeIf { it > AGE_TEN }
         ?.let { ageInYears ->
-            if (ageInYears > AGE_TEN) {
-                context.tiltak
-                    .filter { it.kategori.kode == "4.2" }
-                    .map { tiltak ->
-                        createValidationReportEntry(
-                            contextId = tiltak.id,
-                            messageText = "Tiltak (${tiltak.id}). Barnet er over 11 år og i SFO. " +
-                                    "Barnets alder er $ageInYears år"
-                        )
-                    }.ifEmpty { null }
-            } else null
+            context.tiltak
+                .filter { it.kategori.kode == "4.2" }
+                .map { tiltak ->
+                    createValidationReportEntry(
+                        contextId = tiltak.id,
+                        messageText = "Tiltak (${tiltak.id}). Barnet er over 11 år og i SFO. " +
+                                "Barnets alder er $ageInYears år"
+                    )
+                }.ifEmpty { null }
         }
 }

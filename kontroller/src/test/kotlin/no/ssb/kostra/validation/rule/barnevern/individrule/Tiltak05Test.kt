@@ -23,6 +23,10 @@ class Tiltak05Test : BehaviorSpec({
         forAll(
             row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
             row(
+                "individ with invalid fodselsnummer",
+                kostraIndividInTest.copy(fodselsnummer = "12345612345")
+            ),
+            row(
                 "individ with fodselsnummer, age below 7",
                 kostraIndividInTest.copy(fodselsnummer = generateRandomSSN(dateInTest, dateInTest.plusYears(1)))
             ),
@@ -30,8 +34,8 @@ class Tiltak05Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 7, no tiltak",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(8),
-                        dateInTest.plusYears(9)
+                        dateInTest.minusYears(9),
+                        dateInTest.minusYears(8)
                     )
                 )
             ),
@@ -39,8 +43,8 @@ class Tiltak05Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 7, tiltak with kategori#kode different from 4.1",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(8),
-                        dateInTest.plusYears(9)
+                        dateInTest.minusYears(9),
+                        dateInTest.minusYears(8)
                     ),
                     tiltak = mutableListOf(kostraTiltakTypeInTest)
                 )
@@ -63,8 +67,8 @@ class Tiltak05Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 7, tiltak with kategori#kode different from 4.1",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(8),
-                        dateInTest.plusYears(9)
+                        dateInTest.minusYears(9),
+                        dateInTest.minusYears(8)
                     ),
                     tiltak = mutableListOf(kostraTiltakTypeInTest.copy(
                         kategori = kostraKategoriTypeInTest.copy(kode = "4.1")

@@ -74,6 +74,21 @@ class Melder02Test : BehaviorSpec({
                         )
                     )
                 )
+            ),
+            row(
+                "individ with melding with melder, kode = 22, presisering empty",
+                kostraIndividInTest.copy(
+                    melding = mutableListOf(
+                        kostraMeldingTypeInTest.copy(
+                            melder = mutableListOf(
+                                kostraMelderTypeInTest.copy(
+                                    kode = ANDRE_OFFENTLIGE_INSTANSER,
+                                    presisering = ""
+                                )
+                            )
+                        )
+                    )
+                )
             )
         ) { description, currentContext ->
 

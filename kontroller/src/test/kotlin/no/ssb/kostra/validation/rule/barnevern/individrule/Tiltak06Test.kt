@@ -23,17 +23,24 @@ class Tiltak06Test : BehaviorSpec({
         forAll(
             row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
             row(
+                "individ with invalid fodselsnummer",
+                kostraIndividInTest.copy(fodselsnummer = "12345612345")
+            ),
+            row(
                 "individ with fodselsnummer, age below 7",
-                kostraIndividInTest.copy(fodselsnummer = generateRandomSSN(
-                    dateInTest, dateInTest.plusYears(1))
+                kostraIndividInTest.copy(
+                    fodselsnummer = generateRandomSSN(
+                        dateInTest.minusYears(1),
+                        dateInTest
+                    )
                 )
             ),
             row(
                 "individ with fodselsnummer, age above 11, no tiltak",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(11),
-                        dateInTest.plusYears(12)
+                        dateInTest.minusYears(12),
+                        dateInTest.minusYears(11)
                     )
                 )
             ),
@@ -41,8 +48,8 @@ class Tiltak06Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 11, tiltak with kategori#kode different from 4.2",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(11),
-                        dateInTest.plusYears(12)
+                        dateInTest.minusYears(12),
+                        dateInTest.minusYears(11)
                     ),
                     tiltak = mutableListOf(kostraTiltakTypeInTest)
                 )
@@ -65,13 +72,14 @@ class Tiltak06Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 11, tiltak with kategori#kode equal to 4.2",
                 kostraIndividInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.plusYears(11),
-                        dateInTest.plusYears(12)
+                        dateInTest.minusYears(13),
+                        dateInTest.minusYears(12)
                     ),
                     tiltak = mutableListOf(
                         kostraTiltakTypeInTest.copy(
-                        kategori = kostraKategoriTypeInTest.copy(kode = "4.2")
-                    ))
+                            kategori = kostraKategoriTypeInTest.copy(kode = "4.2")
+                        )
+                    )
                 )
             )
         ) { description, currentContext ->
@@ -88,7 +96,7 @@ class Tiltak06Test : BehaviorSpec({
 
                         with(currentContext.tiltak.first()) {
                             it.contextId shouldBe id
-                            it.messageText shouldStartWith  "Tiltak ($id). Barnet er over 11 år og i SFO. " +
+                            it.messageText shouldStartWith "Tiltak ($id). Barnet er over 11 år og i SFO. " +
                                     "Barnets alder er"
                         }
                     }

@@ -7,7 +7,6 @@ import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTE
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRAF_12
 import java.time.LocalDate
-import java.time.Year
 
 object IndividRuleTestData {
 
@@ -71,7 +70,7 @@ object IndividRuleTestData {
         avslutta3112 = KOSTRA_IS_CLOSED_FALSE,
         fodselsnummer = generateRandomSSN(
             LocalDate.now().minusYears(1),
-            LocalDate.of(Year.now().value - 1, 12, 31)
+            LocalDate.now()
         ),
         duFnummer = null,
         saksbehandler = "~saksbehandler~",

@@ -14,6 +14,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.mapToValidationReportEntries
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
+import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import java.time.Year
@@ -91,6 +92,26 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     messageText = "Klarer ikke å lese fil. Får feilmeldingen: Unexpected character 'e' " +
                             "(code 101) in prolog; expected '<'\n at [row,col {unknown-source}]: [1,1]"
+                )
+            ),
+            row(
+                "individ fodselsnummer = null",
+                kostraAvgiverTypeInTest,
+                mutableListOf(
+                    kostraIndividInTest.copy(
+                        fodselsnummer = null,
+                        duFnummer = generateRandomDuf(Year.now().value - 2, Year.now().value - 1)
+                    )
+                ),
+                false,
+                ValidationReportEntry(
+                    caseworker = kostraIndividInTest.saksbehandler,
+                    journalId = kostraIndividInTest.journalnummer,
+                    individId = kostraIndividInTest.id,
+                    contextId = kostraIndividInTest.id,
+                    severity = Severity.WARNING,
+                    ruleName = IndividRuleId.INDIVID_11.title,
+                    messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                 )
             )
         ) { description, avgiver, individList, destroyXml, expectedResult ->

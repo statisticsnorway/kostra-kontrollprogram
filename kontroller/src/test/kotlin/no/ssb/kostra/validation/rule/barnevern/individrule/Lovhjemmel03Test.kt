@@ -22,7 +22,14 @@ class Lovhjemmel03Test : BehaviorSpec({
     Given("valid context") {
         forAll(
             row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
-            row("individ with fodselsnummer, age below eighteen, no tiltak", kostraIndividInTest),
+            row(
+                "individ with invalid fodselsnummer",
+                kostraIndividInTest.copy(fodselsnummer = "12345612345")
+            ),
+            row(
+                "individ with fodselsnummer, age below eighteen, no tiltak",
+                kostraIndividInTest
+            ),
             row(
                 "age above eighteen, no omsorgstiltak",
                 kostraIndividInTest.copy(

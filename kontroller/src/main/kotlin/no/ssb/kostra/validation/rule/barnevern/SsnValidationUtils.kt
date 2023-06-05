@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.regex.Pattern
 
-object ValidationUtils {
+object SsnValidationUtils {
 
     private const val CENTURY = 100L
     private const val PERSON_ID_LENGTH = 5
@@ -63,7 +63,7 @@ object ValidationUtils {
             (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 6))
         }
 
-    private fun isModulo11Valid(socialSecurityId: String): Boolean =
+    internal fun isModulo11Valid(socialSecurityId: String): Boolean =
         modulo11(
             toCheck = socialSecurityId.substring(0, socialSecurityId.length - 1),
             controlDigits = CONTROL_SUM_DIGITS_1

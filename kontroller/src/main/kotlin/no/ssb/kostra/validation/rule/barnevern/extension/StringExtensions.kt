@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.extension
 
-import no.ssb.kostra.validation.rule.barnevern.ValidationUtils.extractBirthDateFromSocialSecurityId
+import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.extractBirthDateFromSocialSecurityId
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 

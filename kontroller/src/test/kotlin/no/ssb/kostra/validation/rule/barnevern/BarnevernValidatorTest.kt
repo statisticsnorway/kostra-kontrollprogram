@@ -95,22 +95,20 @@ class BarnevernValidatorTest : BehaviorSpec({
             )
         ) { description, avgiver, individList, destroyXml, expectedResult ->
 
-            val barnevernType = KostraBarnevernType(
-                avgiver = avgiver,
-                individ = individList
-            )
-
-            val xml = marshallInstance(barnevernType)
-
-            val args = KotlinArguments(
-                skjema = "15F",
-                aargang = (Year.now().value - 1).toString(),
-                region = "1234",
-                inputFileStream = (if (destroyXml) xml.substring(5, xml.length) else xml).byteInputStream()
-            )
-
             When(description) {
-                val reportEntries = validateBarnevern(args)
+                val reportEntries = validateBarnevern(
+                    arguments = KotlinArguments(
+                        skjema = "15F",
+                        aargang = (Year.now().value - 1).toString(),
+                        region = "1234",
+                        inputFileStream = marshallInstance(
+                            KostraBarnevernType(
+                                avgiver = avgiver,
+                                individ = individList
+                            )
+                        ).let { if (destroyXml) it.substring(5, it.length) else it }.byteInputStream()
+                    )
+                )
 
                 Then("result should be as expected") {
                     reportEntries shouldContain expectedResult

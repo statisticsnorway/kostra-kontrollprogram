@@ -20,8 +20,8 @@ object KostraValidationUtils {
     fun validate(xml: String): Boolean = validate(StringReader(xml))
 
     @JvmStatic
-    fun validate(xmlReader: Reader): Boolean = try {
-        getSchemaValidator().validate(StreamSource(xmlReader))
+    fun validate(xmlReader: Reader, xsdResource: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Boolean = try {
+        getSchemaValidator(xsdResource).validate(StreamSource(xmlReader))
         true
     } catch (thrown: SAXParseException) {
         false

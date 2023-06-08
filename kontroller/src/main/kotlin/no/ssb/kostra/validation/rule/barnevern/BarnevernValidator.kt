@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern
 
-import no.ssb.kostra.barn.KostraValidationUtils.KOSTRA_AVGIVER_XSD_RESOURCE
-import no.ssb.kostra.barn.KostraValidationUtils.KOSTRA_INDIVID_XSD_RESOURCE
+import no.ssb.kostra.barn.KostraValidationUtils.AVGIVER_XSD_RESOURCE
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.validate
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
@@ -107,7 +107,7 @@ object BarnevernValidator {
 
             if (validate(
                     xmlReader = StringReader(marshallInstance(avgiverType)),
-                    xsdResourceName = KOSTRA_AVGIVER_XSD_RESOURCE
+                    xsdResource = AVGIVER_XSD_RESOURCE
                 )
             ) {
                 addAll(
@@ -134,7 +134,7 @@ object BarnevernValidator {
 
             if (validate(
                     xmlReader = StringReader(marshallInstance(individType)),
-                    xsdResourceName = KOSTRA_INDIVID_XSD_RESOURCE
+                    xsdResource = INDIVID_XSD_RESOURCE
                 )
             ) {
                 addAll(
@@ -161,7 +161,6 @@ object BarnevernValidator {
             add(individFileError)
         }
     }
-
 
     internal fun Map<String, Collection<String>>.mapToValidationReportEntries(
         ruleName: String,

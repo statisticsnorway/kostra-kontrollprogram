@@ -24,12 +24,8 @@ object XsdTestUtils {
     val TOO_LONG_PRESISERING_ERROR = "cvc-maxLength-valid: Value '${"a".repeat(1001)}' with length = '1001' " +
             "is not facet-valid with respect to maxLength '1000' for type '#AnonType_Presisering'."
 
-    fun buildKostraXml(innerXml: String) =
-        "<Barnevern>" +
-                "<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
-                "Organisasjonsnummer=\"999999999\"/>" +
+    fun buildIndividXml(innerXml: String) =
                 "<Individ Saksbehandler=\"Sara Saksbehandler\" Avslutta3112=\"1\" " +
                 "StartDato=\"2022-11-14\" Id=\"42\" Journalnummer=\"2022-00004\">" +
-                innerXml +
-                "</Individ></Barnevern>"
+                innerXml + "</Individ>"
 }

@@ -5,6 +5,23 @@
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
 		</xs:annotation>
+		<!-- unique-checks-->
+		<xs:unique name="MeldingIdUnique">
+			<xs:selector xpath="Melding"/>
+			<xs:field xpath="@Id"/>
+		</xs:unique>
+		<xs:unique name="PlanIdUnique">
+			<xs:selector xpath="Plan"/>
+			<xs:field xpath="@Id"/>
+		</xs:unique>
+		<xs:unique name="TiltakIdUnique">
+			<xs:selector xpath="Tiltak"/>
+			<xs:field xpath="@Id"/>
+		</xs:unique>
+		<xs:unique name="FlyttingIdUnique">
+			<xs:selector xpath="Flytting"/>
+			<xs:field xpath="@Id"/>
+		</xs:unique>
 	</xs:element>
 	<xs:complexType name="IndividType">
 		<xs:sequence>

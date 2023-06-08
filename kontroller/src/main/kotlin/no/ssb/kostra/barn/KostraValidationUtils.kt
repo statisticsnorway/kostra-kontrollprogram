@@ -11,7 +11,9 @@ import javax.xml.validation.Validator
 
 object KostraValidationUtils {
 
-    private const val XSD_RESOURCE = "KostraBarnevern.xsd"
+    private const val KOSTRA_BARNEVERN_XSD_RESOURCE = "KostraBarnevern.xsd"
+    const val AVGIVER_XSD_RESOURCE = "Avgiver.xsd"
+    const val INDIVID_XSD_RESOURCE = "Individ.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic
@@ -26,9 +28,9 @@ object KostraValidationUtils {
     }
 
     @JvmStatic
-    fun getSchemaValidator(): Validator = SchemaFactory
+    fun getSchemaValidator(xsdResource: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Validator = SchemaFactory
         .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
         .apply { setFeature(DISALLOW_DOCTYPE_DECL, true) }
-        .newSchema(javaClass.classLoader.getResource(XSD_RESOURCE))
+        .newSchema(javaClass.classLoader.getResource(xsdResource))
         .newValidator()
 }

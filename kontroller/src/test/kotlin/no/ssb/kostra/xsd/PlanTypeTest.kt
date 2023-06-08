@@ -6,12 +6,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
 import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_DATE_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_ID_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.INVALID_DATE_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class PlanTypeTest : BehaviorSpec({
@@ -21,13 +22,23 @@ class PlanTypeTest : BehaviorSpec({
         /** make sure it's possible to make a valid test XML */
         When("valid XML, expect no exceptions") {
             shouldNotThrowAny {
-                getSchemaValidator().validate(buildKostraXml(
-                    "<Plan Id=\"42\" StartDato=\"2022-11-14\" Plantype=\"1\"/>").toStreamSource())
+                getSchemaValidator(INDIVID_XSD_RESOURCE).validate(
+                    buildIndividXml(
+                        "<Plan Id=\"42\" StartDato=\"2022-11-14\" Plantype=\"1\"/>"
+                    ).toStreamSource()
+                )
             }
         }
 
         forAll(
             /** Id */
+            row(
+                "duplicate Id",
+                "<Plan Id=\"42\"  StartDato=\"2022-11-14\" Plantype=\"1\" />" +
+                        "<Plan Id=\"42\"  StartDato=\"2022-11-14\" Plantype=\"1\" />",
+                "cvc-identity-constraint.4.1: Duplicate unique value [42] declared for identity " +
+                        "constraint \"PlanIdUnique\" of element \"Individ\"."
+            ),
             row(
                 "missing Id",
                 "<Plan StartDato=\"2022-11-14\" Plantype=\"1\" />",
@@ -82,7 +93,7 @@ class PlanTypeTest : BehaviorSpec({
         ) { description, partialXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildKostraXml(partialXml).toStreamSource())
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildIndividXml(partialXml).toStreamSource())
                 }
 
                 Then("thrown should be as expected") {

@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.AVGIVER_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
 import org.xml.sax.SAXException
 
@@ -17,10 +18,8 @@ class AvgiverTypeTest : BehaviorSpec({
         When("valid XML, expect no exceptions") {
             shouldNotThrowAny {
                 getSchemaValidator().validate(
-                    buildXmlInTest(
-                        "<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
-                                "Organisasjonsnummer=\"999999999\"/>"
-                    ).toStreamSource()
+                    ("<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
+                                "Organisasjonsnummer=\"999999999\"/>").toStreamSource()
                 )
             }
         }
@@ -109,10 +108,10 @@ class AvgiverTypeTest : BehaviorSpec({
                 "cvc-pattern-valid: Value '42' is not facet-valid with respect to pattern '\\d{9}' for " +
                         "type '#AnonType_OrganisasjonsnummerAvgiverType'."
             )
-        ) { description, partialXml, expectedError ->
+        ) { description, avgiverXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildXmlInTest(partialXml).toStreamSource())
+                    getSchemaValidator(AVGIVER_XSD_RESOURCE).validate(avgiverXml.toStreamSource())
                 }
 
                 Then("thrown should be as expected") {
@@ -121,13 +120,4 @@ class AvgiverTypeTest : BehaviorSpec({
             }
         }
     }
-}) {
-    companion object {
-        private fun buildXmlInTest(avgiverXml: String) =
-            "<Barnevern>" +
-                    avgiverXml +
-                    "<Individ Saksbehandler=\"Sara Saksbehandler\" Avslutta3112=\"1\" " +
-                    "StartDato=\"2022-11-14\" Id=\"42\" Journalnummer=\"2022-00004\">" +
-                    "</Individ></Barnevern>"
-    }
-}
+})

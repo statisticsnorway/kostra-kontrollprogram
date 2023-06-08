@@ -6,8 +6,9 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class FlyttingTilTypeTest : BehaviorSpec({
@@ -61,7 +62,7 @@ class FlyttingTilTypeTest : BehaviorSpec({
         ) { description, partialXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildFlyttingTilXml(partialXml).toStreamSource())
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildFlyttingTilXml(partialXml).toStreamSource())
                 }
 
                 Then("thrown should be as expected") {
@@ -72,7 +73,7 @@ class FlyttingTilTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildFlyttingTilXml(innerXml: String) = buildKostraXml(
+        private fun buildFlyttingTilXml(innerXml: String) = buildIndividXml(
             "<Flytting Id=\"42\" SluttDato=\"2022-11-14\">" +
                     "<ArsakFra Kode=\"1.1.1\" Presisering=\"~Presisering~\" />" +
                     innerXml +

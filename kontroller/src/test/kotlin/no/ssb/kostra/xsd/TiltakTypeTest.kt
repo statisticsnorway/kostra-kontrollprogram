@@ -6,13 +6,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
 import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_DATE_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_ID_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.INVALID_DATE_ERROR
 import no.ssb.kostra.xsd.XsdTestUtils.LOVHJEMMEL_XML
 import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
-import no.ssb.kostra.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class TiltakTypeTest : BehaviorSpec({
@@ -22,16 +23,28 @@ class TiltakTypeTest : BehaviorSpec({
         /** make sure it's possible to make a valid test XML */
         When("valid XML, expect no exceptions") {
             shouldNotThrowAny {
-                getSchemaValidator().validate(buildKostraXml(
-                    "<Tiltak Id=\"42\" StartDato=\"2022-11-14\" SluttDato=\"2022-11-15\">" +
-                            LOVHJEMMEL_XML +
-                            "<Kategori Kode=\"1.1\"/>" +
-                            "</Tiltak>").toStreamSource())
+                getSchemaValidator(INDIVID_XSD_RESOURCE).validate(
+                    buildIndividXml(
+                        "<Tiltak Id=\"42\" StartDato=\"2022-11-14\" SluttDato=\"2022-11-15\">" +
+                                LOVHJEMMEL_XML +
+                                "<Kategori Kode=\"1.1\"/>" +
+                                "</Tiltak>"
+                    ).toStreamSource()
+                )
             }
         }
 
         forAll(
             /** Id */
+            row(
+                "duplicate Id",
+                "<Tiltak  Id=\"42\" StartDato=\"2022-11-14\">" +
+                        LOVHJEMMEL_XML + "<Kategori Kode=\"1.1\"/></Tiltak>" +
+                        "<Tiltak  Id=\"42\" StartDato=\"2022-11-14\">" +
+                        LOVHJEMMEL_XML + "<Kategori Kode=\"1.1\"/></Tiltak>",
+                "cvc-identity-constraint.4.1: Duplicate unique value [42] declared for identity " +
+                        "constraint \"TiltakIdUnique\" of element \"Individ\"."
+            ),
             row(
                 "missing Id",
                 "<Tiltak " +
@@ -106,7 +119,7 @@ class TiltakTypeTest : BehaviorSpec({
         ) { description, partialXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildKostraXml(partialXml).toStreamSource())
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildIndividXml(partialXml).toStreamSource())
                 }
 
                 Then("thrown should be as expected") {

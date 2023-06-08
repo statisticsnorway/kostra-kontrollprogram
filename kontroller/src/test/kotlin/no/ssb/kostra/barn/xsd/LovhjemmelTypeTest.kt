@@ -1,4 +1,4 @@
-package no.ssb.kostra.barn.xsd
+package no.ssb.kostra.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
@@ -6,8 +6,9 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.barn.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class LovhjemmelTypeTest : BehaviorSpec({
@@ -113,7 +114,7 @@ class LovhjemmelTypeTest : BehaviorSpec({
         ) { description, partialXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildXmlInTest(partialXml).toStreamSource())
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildXmlInTest(partialXml).toStreamSource())
                 }
 
                 Then("thrown should be as expected") {
@@ -124,7 +125,7 @@ class LovhjemmelTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(lovhjemmelXml: String) = buildKostraXml(
+        private fun buildXmlInTest(lovhjemmelXml: String) = buildIndividXml(
             "<Tiltak Id=\"42\" StartDato=\"2022-11-14\">" +
                     lovhjemmelXml +
                     "<Kategori Kode=\"1.1\"><Presisering>~Presisering~</Presisering></Kategori>" +

@@ -1,4 +1,4 @@
-package no.ssb.kostra.barn.xsd
+package no.ssb.kostra.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
@@ -6,12 +6,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_DATE_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_ID_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.INVALID_DATE_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_DATE_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_ID_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.INVALID_DATE_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class FlyttingTypeTest : BehaviorSpec({
@@ -74,14 +75,35 @@ class FlyttingTypeTest : BehaviorSpec({
                 }
             }
         }
+
+        forAll(
+            /** Id */
+            row(
+                "duplicate Id",
+                buildFlyttingPartialXml("<Flytting Id=\"42\" SluttDato=\"2022-11-14\">") +
+                        buildFlyttingPartialXml("<Flytting Id=\"42\" SluttDato=\"2022-11-14\">"),
+                "cvc-identity-constraint.4.1: Duplicate unique value [42] declared for identity " +
+                        "constraint \"FlyttingIdUnique\" of element \"Individ\"."
+            )
+        ) { description, partialXml, expectedError ->
+            When(description) {
+                val thrown = shouldThrow<SAXException> {
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildIndividXml(partialXml).toStreamSource())
+                }
+
+                Then("thrown should be as expected") {
+                    thrown.message shouldBe expectedError
+                }
+            }
+        }
     }
 }) {
     companion object {
-        private fun buildFlyttingXml(startTag: String) = buildKostraXml(
-            startTag +
-                    "<ArsakFra Kode=\"1.1.1\" />" +
-                    "<FlyttingTil Kode=\"1\" />" +
-                    "</Flytting>"
-        )
+        private fun buildFlyttingXml(startTag: String) = buildIndividXml(buildFlyttingPartialXml(startTag))
+
+        private fun buildFlyttingPartialXml(startTag: String) = startTag +
+                "<ArsakFra Kode=\"1.1.1\" />" +
+                "<FlyttingTil Kode=\"1\" />" +
+                "</Flytting>"
     }
 }

@@ -11,26 +11,26 @@ import javax.xml.validation.Validator
 
 object KostraValidationUtils {
 
-    const val KOSTRA_BARNEVERN_XSD_RESOURCE = "KostraBarnevern.xsd"
-    const val KOSTRA_AVGIVER_XSD_RESOURCE = "Avgiver.xsd"
-    const val KOSTRA_INDIVID_XSD_RESOURCE = "Individ.xsd"
+    private const val KOSTRA_BARNEVERN_XSD_RESOURCE = "KostraBarnevern.xsd"
+    const val AVGIVER_XSD_RESOURCE = "Avgiver.xsd"
+    const val INDIVID_XSD_RESOURCE = "Individ.xsd"
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic
     fun validate(xml: String): Boolean = validate(StringReader(xml))
 
     @JvmStatic
-    fun validate(xmlReader: Reader, xsdResourceName: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Boolean = try {
-        getSchemaValidator(xsdResourceName).validate(StreamSource(xmlReader))
+    fun validate(xmlReader: Reader): Boolean = try {
+        getSchemaValidator().validate(StreamSource(xmlReader))
         true
     } catch (thrown: SAXParseException) {
         false
     }
 
     @JvmStatic
-    fun getSchemaValidator(xsdResourceName: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Validator = SchemaFactory
+    fun getSchemaValidator(xsdResource: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Validator = SchemaFactory
         .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
         .apply { setFeature(DISALLOW_DOCTYPE_DECL, true) }
-        .newSchema(javaClass.classLoader.getResource(xsdResourceName))
+        .newSchema(javaClass.classLoader.getResource(xsdResource))
         .newValidator()
 }

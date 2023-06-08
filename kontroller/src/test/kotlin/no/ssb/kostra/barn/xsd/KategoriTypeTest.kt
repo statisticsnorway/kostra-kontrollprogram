@@ -1,4 +1,4 @@
-package no.ssb.kostra.barn.xsd
+package no.ssb.kostra.xsd
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
@@ -6,11 +6,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.getSchemaValidator
-import no.ssb.kostra.barn.xsd.XsdTestUtils.EMPTY_PRESISERING_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.LOVHJEMMEL_XML
-import no.ssb.kostra.barn.xsd.XsdTestUtils.TOO_LONG_PRESISERING_ERROR
-import no.ssb.kostra.barn.xsd.XsdTestUtils.buildKostraXml
+import no.ssb.kostra.xsd.XsdTestUtils.EMPTY_PRESISERING_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.LOVHJEMMEL_XML
+import no.ssb.kostra.xsd.XsdTestUtils.TOO_LONG_PRESISERING_ERROR
+import no.ssb.kostra.xsd.XsdTestUtils.buildIndividXml
 import org.xml.sax.SAXException
 
 class KategoriTypeTest : BehaviorSpec({
@@ -65,7 +66,7 @@ class KategoriTypeTest : BehaviorSpec({
         ) { description, partialXml, expectedError ->
             When(description) {
                 val thrown = shouldThrow<SAXException> {
-                    getSchemaValidator().validate(buildXmlInTest(partialXml).toStreamSource())
+                    getSchemaValidator(INDIVID_XSD_RESOURCE).validate(buildXmlInTest(partialXml).toStreamSource())
                 }
 
                 Then("thrown should be as expected") {
@@ -76,7 +77,7 @@ class KategoriTypeTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun buildXmlInTest(kategoriXml: String) = buildKostraXml(
+        private fun buildXmlInTest(kategoriXml: String) = buildIndividXml(
             "<Tiltak Id=\"42\" StartDato=\"2022-11-14\">" +
                     LOVHJEMMEL_XML +
                     kategoriXml +

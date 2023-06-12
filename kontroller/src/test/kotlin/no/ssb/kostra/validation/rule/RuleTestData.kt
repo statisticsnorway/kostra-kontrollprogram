@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.barnevern
+package no.ssb.kostra.validation.rule
 
 import no.ssb.kostra.program.KotlinArguments
 import java.time.Year

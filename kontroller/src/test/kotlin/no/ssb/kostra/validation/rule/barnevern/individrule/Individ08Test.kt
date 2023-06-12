@@ -8,8 +8,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomSSN
-import no.ssb.kostra.validation.rule.barnevern.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
 import java.time.LocalDate

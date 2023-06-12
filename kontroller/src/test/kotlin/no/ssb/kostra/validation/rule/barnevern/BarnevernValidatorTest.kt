@@ -14,7 +14,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.mapToValidationReportEntries
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
-import no.ssb.kostra.validation.rule.barnevern.RandomUtils.generateRandomDuf
+import no.ssb.kostra.validation.rule.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import java.time.Year

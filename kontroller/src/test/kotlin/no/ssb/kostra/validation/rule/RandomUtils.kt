@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.barnevern
+package no.ssb.kostra.validation.rule
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

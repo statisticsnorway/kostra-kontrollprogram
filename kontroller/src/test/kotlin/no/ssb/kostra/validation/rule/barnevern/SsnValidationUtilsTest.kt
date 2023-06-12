@@ -4,10 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.extractBirthDateFromSocialSecurityId
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.isModulo11Valid
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.isValidSocialSecurityIdOrDnr
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.validateDUF
+import no.ssb.kostra.validation.util.SsnValidationUtils.extractBirthDateFromSocialSecurityId
+import no.ssb.kostra.validation.util.SsnValidationUtils.isModulo11Valid
+import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
+import no.ssb.kostra.validation.util.SsnValidationUtils.validateDUF
 import java.time.LocalDate
 
 class SsnValidationUtilsTest : BehaviorSpec({

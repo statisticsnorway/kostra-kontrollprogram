@@ -4,8 +4,8 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.isValidSocialSecurityIdOrDnr
-import no.ssb.kostra.validation.rule.barnevern.SsnValidationUtils.validateDUF
+import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
+import no.ssb.kostra.validation.util.SsnValidationUtils.validateDUF
 
 class Individ03 : AbstractRule<KostraIndividType>(
     ruleName = IndividRuleId.INDIVID_03.title,

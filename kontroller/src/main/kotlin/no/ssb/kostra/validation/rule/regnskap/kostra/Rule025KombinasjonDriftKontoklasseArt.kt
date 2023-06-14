@@ -20,7 +20,8 @@ class Rule025KombinasjonDriftKontoklasseArt(
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' i driftsregnskapet til en gyldig art i driftsregnskapet eller overfør posteringen til investeringsregnskapet.",
+                messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' i driftsregnskapet " +
+                        "til en gyldig art i driftsregnskapet eller overfør posteringen til investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

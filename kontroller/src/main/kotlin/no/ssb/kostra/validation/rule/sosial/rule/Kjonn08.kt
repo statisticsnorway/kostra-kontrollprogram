@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.GENDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.kvalifisering.codeListToDelimitedString
+import no.ssb.kostra.area.sosial.kvalifisering.codeListToString
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
 import no.ssb.kostra.area.sosial.kvalifisering.getCodes
 import no.ssb.kostra.program.KostraRecord
@@ -23,7 +23,7 @@ class Kjonn08 : AbstractRule<KostraRecord>(
             .takeIf { it.isEmpty() || it !in fieldDefinition.getCodes() }
             ?.let { gender ->
                 createSingleReportEntryList(
-                    "Korrigér kjønn. Fant '$gender', forventet én av ${fieldDefinition.codeListToDelimitedString()}." +
+                    "Korrigér kjønn. Fant '$gender', forventet én av ${fieldDefinition.codeListToString()}." +
                     " Mottakerens kjønn er ikke fylt ut, eller feil kode er benyttet. Feltet er obligatorisk å fylle ut."
                 )
             }

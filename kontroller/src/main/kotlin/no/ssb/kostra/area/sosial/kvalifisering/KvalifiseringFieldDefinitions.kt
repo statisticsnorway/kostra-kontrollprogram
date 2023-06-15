@@ -1,8 +1,10 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CASE_WORKER_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.GENDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.JOURNAL_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MARITAL_STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
 import no.ssb.kostra.program.*
 
@@ -62,7 +64,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            7, "KJONN",
+            7, GENDER_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             30, 30,
@@ -74,7 +76,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            8, "EKTSTAT",
+            8, MARITAL_STATUS_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             31, 31,

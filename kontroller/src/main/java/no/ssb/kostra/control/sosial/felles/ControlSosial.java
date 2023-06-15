@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
+@Deprecated
 public class ControlSosial {
 
     public static LocalDate assignDateFromString(final String date, final String format) {

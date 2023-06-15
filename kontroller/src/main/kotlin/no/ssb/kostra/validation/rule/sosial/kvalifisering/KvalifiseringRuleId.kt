@@ -9,6 +9,7 @@ enum class KvalifiseringRuleId(val title: String) {
     ALDER_ER_96_AAR_ELLER_OVER_07("07AlderEr96AarEllerOver"),
     KJONN_08("08Kjonn"),
     SIVILSTAND_09("09Sivilstand"),
+
     BU_18_10("10Bu18"),
     BU_18_ANT_BU_18_11("11Bu18AntBu18"),
     ANT_BU_18_BU_18_12("12AntBu18Bu18"),

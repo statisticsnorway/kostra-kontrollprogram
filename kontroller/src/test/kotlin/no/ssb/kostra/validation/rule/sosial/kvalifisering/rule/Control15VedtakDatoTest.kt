@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
@@ -8,6 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
@@ -15,14 +16,14 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class OppgaveAar04Test : BehaviorSpec({
-    val sut = OppgaveAar04()
+class Control15VedtakDatoTest : BehaviorSpec({
+    val sut = Control15VedtakDato()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid aargang",
-                kostraRecordInTest(argumentsInTest.aargang)
+                "reportingYear = currentYear, valid date",
+                kostraRecordInTest(22, "010122")
             )
         ) { description, currentContext ->
 
@@ -39,13 +40,21 @@ class OppgaveAar04Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid aargang",
-                kostraRecordInTest("2042")
+                "4 year diff between reportingYear and vedtakDato",
+                22,
+                "010116"
+            ),
+            row(
+                "invalid vedtakDato",
+                22,
+                "a".repeat(6)
             )
-        ) { description, currentContext ->
+        ) { description, reportingYear, vedtakDate ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(
+                    kostraRecordInTest(reportingYear, vedtakDate), argumentsInTest
+                )
 
                 Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
@@ -53,7 +62,10 @@ class OppgaveAar04Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér årgang. Fant 2042, forventet ${argumentsInTest.aargang}"
+                        it.messageText shouldBe "Feltet for 'Hvilken dato det ble fattet vedtak om " +
+                                "program? (søknad innvilget)' med verdien ($vedtakDate) enten mangler utfylling, " +
+                                "har ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret (22). " +
+                                "Feltet er obligatorisk å fylle ut."
                     }
                 }
             }
@@ -61,11 +73,16 @@ class OppgaveAar04Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(version: String) = KostraRecord(
+        private fun kostraRecordInTest(
+            reportingYear: Int,
+            vedtakDateString: String
+        ) = KostraRecord(
             1,
             mapOf(
                 MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                VERSION_COL_NAME to version
+                VERSION_COL_NAME to reportingYear.toString(),
+                VEDTAK_DATO_COL_NAME to vedtakDateString
+
             ),
             KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
         )

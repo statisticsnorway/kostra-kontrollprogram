@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
@@ -7,21 +7,31 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class Kommunenummer03Test : BehaviorSpec({
-    val sut = Kommunenummer03()
+class Control11Bu18AntBu18Test : BehaviorSpec({
+    val sut = Control11Bu18AntBu18()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid kommunenummer",
-                kostraRecordInTest(argumentsInTest.region.municipalityIdFromRegion())
+                "bu18Code = 0, numberOfChildren = 0",
+                kostraRecordInTest(0, 0)
+            ),
+            row(
+                "bu18Code = 1, numberOfChildren = 1",
+                kostraRecordInTest(1, 1)
+            ),
+            row(
+                "bu18Code = 0, numberOfChildren = 1",
+                kostraRecordInTest(0, 1)
             )
         ) { description, currentContext ->
 
@@ -38,8 +48,8 @@ class Kommunenummer03Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid kommunenummer",
-                kostraRecordInTest("4242")
+                "bu18Code = 1, numberOfChildren = 0",
+                kostraRecordInTest(1, 0)
             )
         ) { description, currentContext ->
 
@@ -52,8 +62,10 @@ class Kommunenummer03Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér kommunenummeret. Fant 4242, forventet " +
-                                argumentsInTest.region.municipalityIdFromRegion()
+                        it.messageText shouldBe "Det er krysset av for at det bor barn under 18 år i husholdningen " +
+                                "som mottaker eller ektefelle/samboer har forsørgerplikt for, men det er ikke " +
+                                "oppgitt hvor mange barn '(0)' som bor i husholdningen. Feltet er obligatorisk å " +
+                                "fylle ut når det er oppgitt at det bor barn under 18 år i husholdningen."
                     }
                 }
             }
@@ -61,15 +73,16 @@ class Kommunenummer03Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(municipalityId: String) = KostraRecord(
+        private fun kostraRecordInTest(
+            bu18Code: Int,
+            numberOfChildren: Int
+        ) = KostraRecord(
             1,
             mapOf(
-                KvalifiseringColumnNames.CASE_WORKER_COL_NAME to "Sara Sak",
-                KvalifiseringColumnNames.JOURNAL_ID_COL_NAME to "123",
-                KvalifiseringColumnNames.INDIVID_ID_COL_NAME to "19096632188",
-                KvalifiseringColumnNames.STATUS_COL_NAME to "1",
-                KvalifiseringColumnNames.END_DATE_COL_NAME to "010120",
-                KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to municipalityId
+                MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                BU18_COL_NAME to bu18Code.toString(),
+                ANT_BU18_COL_NAME to numberOfChildren.toString()
+
             ),
             KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
         )

@@ -103,6 +103,7 @@ public class Main {
             control07AlderEr68AarEllerOver(errorReport, r);
             control08Kjonn(errorReport, r);
             control09Sivilstand(errorReport, r);
+
             control10Bu18(errorReport, r);
             control11Bu18AntBu18(errorReport, r);
             control12AntBu18Bu18(errorReport, r);
@@ -229,6 +230,7 @@ public class Main {
         return errorReport;
     }
 
+    @Deprecated
     public static boolean control10Bu18(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -251,6 +253,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control11Bu18AntBu18(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -275,6 +278,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control12AntBu18Bu18(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -300,6 +304,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control13AntBu18(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -319,6 +324,7 @@ public class Main {
                 , 13);
     }
 
+    @Deprecated
     public static boolean control14RegDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -361,6 +367,7 @@ public class Main {
         return false;
     }
 
+    @Deprecated
     public static boolean control15VedtakDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -402,6 +409,7 @@ public class Main {
         return false;
     }
 
+    @Deprecated
     public static boolean control16BegyntDato(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -445,6 +453,7 @@ public class Main {
         return false;
     }
 
+    @Deprecated
     public static boolean control19KvalifiseringsprogramIAnnenKommune(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -466,6 +475,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control20KvalifiseringsprogramIAnnenKommuneKommunenummer(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -508,6 +518,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control20AFraKvalifiseringsprogramIAnnenBydelIOslo(
             ErrorReport errorReport, KostraRecord record) {
 

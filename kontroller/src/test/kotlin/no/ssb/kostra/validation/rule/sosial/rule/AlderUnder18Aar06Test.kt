@@ -47,7 +47,7 @@ class AlderUnder18Aar06Test : BehaviorSpec({
             When(description) {
                 val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
-                Then("expect null") {
+                Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
                     reportEntryList.size shouldBe 1
 

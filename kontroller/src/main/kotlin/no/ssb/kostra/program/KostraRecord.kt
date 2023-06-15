@@ -14,7 +14,7 @@ data class KostraRecord(
         throw NoSuchFieldException("getFieldAsString(): $field is missing")
     }
 
-    fun getFieldAsTrimmedString(field: String) = getFieldAsString(field).trim { it <= ' ' }
+    fun getFieldAsTrimmedString(field: String): String = getFieldAsString(field).trim { it <= ' ' }
 
     fun getFieldAsInteger(field: String): Int? = getFieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
 

@@ -25,11 +25,13 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        qualifyingFields.all {
-            fieldDefinitions.findByColumnName(it).codeIsMissing(
-                context.getFieldAsString(it)
-            )
-        }.takeIf { !it && context.getFieldAsString(STATUS_COL_NAME) == "3" }?.let {
+        context.getFieldAsString(STATUS_COL_NAME).takeIf {
+            it == "3" && !qualifyingFields.all { colName ->
+                fieldDefinitions.findByColumnName(colName).codeIsMissing(
+                    context.getFieldAsString(colName)
+                )
+            }
+        }?.let {
             createSingleReportEntryList(
                 "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – " +
                         "hva var deltakerens situasjon umiddelbart etter avslutningen'? Må fylles ut dersom det er " +

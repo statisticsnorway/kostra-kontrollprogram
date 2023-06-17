@@ -45,7 +45,7 @@ class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "status = 3, no income defined",
+                "status = 3, no income code defined",
                 kostraRecordInTest("3", "  ")
             )
         ) { description, kostraRecord ->

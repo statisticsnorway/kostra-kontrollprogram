@@ -8,7 +8,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
@@ -16,18 +15,15 @@ class Control20AFraKvalifiseringsprogramIAnnenBydelIOslo : AbstractRule<KostraRe
     KvalifiseringRuleId.FRA_KVALIFISERINGSPROGRAM_I_ANNEN_BYDEL_I_OSLO_20A.title,
     Severity.WARNING
 ) {
-    override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val kommunenummer = context.getFieldAsString(KOMMUNE_NR_COL_NAME)
-
-        return if (kommunenummer == "0301"
-            && fieldDefinitions
+    override fun validate(context: KostraRecord, arguments: KotlinArguments) =
+        context.getFieldAsString(KOMMUNE_NR_COL_NAME).takeIf {
+            it == "0301" && fieldDefinitions
                 .findByColumnName(KVP_OSLO_COL_NAME)
                 .codeIsMissing(context.getFieldAsString(KVP_OSLO_COL_NAME))
-        ) {
+        }?.let {
             createSingleReportEntryList(
                 "Manglende/ugyldig utfylling for om deltakeren kommer fra kvalifiseringsprogram i " +
                         "annen bydel (). Feltet er obligatorisk å fylle ut for Oslo."
             )
-        } else null
-    }
+        }
 }

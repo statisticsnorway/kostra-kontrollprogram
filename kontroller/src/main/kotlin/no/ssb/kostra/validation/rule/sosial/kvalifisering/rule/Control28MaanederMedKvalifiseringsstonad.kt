@@ -1,7 +1,9 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -15,12 +17,21 @@ class Control28MaanederMedKvalifiseringsstonad : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val fieldDefinition = fieldDefinitions.findByColumnName(KVP_STONAD_COL_NAME)
-        val value = context.getFieldAsInteger(KVP_STONAD_COL_NAME)
+        val varighetMissing = (1..12).any { monthId ->
+            fieldDefinitions.findByColumnName("$MONTH_PREFIX$monthId").codeIsMissing(
+                context.getFieldAsString("$MONTH_PREFIX$monthId")
+            )
+        }
 
-        return createSingleReportEntryList(
-            "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt " +
-                    "kvalifiseringsstønad ($value) i løpet av rapporteringsåret. Feltet er obligatorisk å fylle ut."
-        )
+        return if (varighetMissing || context.getFieldAsString(STATUS_COL_NAME) != "2")
+            createSingleReportEntryList(
+                "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt " +
+                        "kvalifiseringsstønad (${fieldDefinitions.findByColumnName(KVP_STONAD_COL_NAME)}) i løpet " +
+                        "av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+            ) else null
+    }
+
+    companion object {
+        internal const val MONTH_PREFIX = "STMND_"
     }
 }

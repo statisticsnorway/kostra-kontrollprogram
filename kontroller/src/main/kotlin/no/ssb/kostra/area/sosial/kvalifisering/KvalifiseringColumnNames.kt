@@ -7,7 +7,7 @@ object KvalifiseringColumnNames {
     const val INDIVID_ID_COL_NAME = "PERSON_FODSELSNR"
 
     const val MUNICIPALITY_ID_COL_NAME = "KOMMUNE_NR"
-    const val DISTRICT_ID_COL_NAME = "BYDELSNR"
+    const val CITY_PART_ID_COL_NAME = "BYDELSNR"
     const val VERSION_COL_NAME = "VERSION"
 
     const val AGE_COL_NAME = "ALDER"
@@ -34,4 +34,8 @@ object KvalifiseringColumnNames {
     const val KVP_MED_SOSHJ_SUP_COL_NAME = "KVP_MED_SOSHJ_SUP"
 
     const val KVP_OSLO_COL_NAME = "KVP_OSLO"
+
+    const val YTELSE_SOSHJELP_COL_NAME = "YTELSE_SOSHJELP"
+    const val YTELSE_TYPE_SOSHJ_COL_NAME = "YTELSE_TYPE_SOSHJ"
+
 }

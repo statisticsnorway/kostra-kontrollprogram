@@ -1,11 +1,24 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CASE_WORKER_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CITY_PART_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.GENDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.JOURNAL_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MARITAL_STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.REG_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.program.*
 
 object KvalifiseringFieldDefinitions {
@@ -22,7 +35,7 @@ object KvalifiseringFieldDefinitions {
         ),
         FieldDefinition(
             number = 2,
-            name = "VERSION",
+            name = VERSION_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 5, to = 6, codeList = listOf(),
@@ -31,7 +44,7 @@ object KvalifiseringFieldDefinitions {
         ),
         FieldDefinition(
             3,
-            "BYDELSNR",
+            CITY_PART_ID_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             7, 8, listOf(),
@@ -91,7 +104,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            91, "BU18",
+            91, BU18_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             32, 32,
@@ -103,7 +116,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            92, "ANTBU18",
+            92, ANT_BU18_COL_NAME,
             INTEGER_TYPE,
             TEXTBOX_VIEWTYPE,
             33, 34, listOf(),
@@ -111,7 +124,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            10, "REG_DATO",
+            10, REG_DATO_COL_NAME,
             DATE_TYPE,
             TEXTBOX_VIEWTYPE,
             35, 40, listOf(),
@@ -119,7 +132,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            11, "VEDTAK_DATO",
+            11, VEDTAK_DATO_COL_NAME,
             DATE_TYPE,
             TEXTBOX_VIEWTYPE,
             41, 46, listOf(),
@@ -127,7 +140,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            12, "BEGYNT_DATO",
+            12, BEGYNT_DATO_COL_NAME,
             DATE_TYPE,
             TEXTBOX_VIEWTYPE,
             47, 52, listOf(),
@@ -135,7 +148,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            141, "KVP_KOMM",
+            141, KVP_KOMM_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             53, 53,
@@ -147,7 +160,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            142, "KOMMNR_KVP_KOMM",
+            142, KOMMNR_KVP_KOMM_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             54, 57,  // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
@@ -513,7 +526,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            143, "KVP_OSLO",
+            143, KVP_OSLO_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             58, 58,
@@ -525,7 +538,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            151, "YTELSE_SOSHJELP",
+            151, YTELSE_SOSHJELP_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             59, 59,
@@ -536,7 +549,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            152, "YTELSE_TYPE_SOSHJ",
+            152, YTELSE_TYPE_SOSHJ_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             60, 60,
@@ -581,7 +594,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            201, "KVP_MED_ASTONAD",
+            201, KVP_MED_ASTONAD_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             64, 64,

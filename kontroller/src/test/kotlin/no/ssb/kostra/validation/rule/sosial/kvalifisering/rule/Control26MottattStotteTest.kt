@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
@@ -7,23 +7,26 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CITY_PART_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.sosial.extension.districtIdFromRegion
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class Bydelsnummer03Test : BehaviorSpec({
-    val sut = Bydelsnummer03()
+class Control26MottattStotteTest : BehaviorSpec({
+    val sut = Control26MottattStotte()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid bydel",
-                kostraRecordInTest(argumentsInTest.region.districtIdFromRegion())
+                "valid kvpMedAStonad, 1",
+                kostraRecordInTest(1)
+            ),
+            row(
+                "valid kvpMedAStonad, 2",
+                kostraRecordInTest(2)
             )
         ) { description, currentContext ->
 
@@ -40,13 +43,13 @@ class Bydelsnummer03Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid bydel",
-                kostraRecordInTest("42")
+                "invalid kvpMedAStonad",
+                42
             )
-        ) { description, currentContext ->
+        ) { description, kvpMedAStonad ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(kostraRecordInTest(kvpMedAStonad), argumentsInTest)
 
                 Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
@@ -54,8 +57,10 @@ class Bydelsnummer03Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér bydel. Fant 42, forventet " +
-                                argumentsInTest.region.districtIdFromRegion()
+                        it.messageText shouldBe "Feltet for 'Har deltakeren i 2022 i løpet av perioden med " +
+                                "kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, kommunal bostøtte eller " +
+                                "Husbankens bostøtte?', er ikke utfylt eller feil kode (42) er benyttet. Feltet er " +
+                                "obligatorisk å fylle ut."
                     }
                 }
             }
@@ -63,11 +68,11 @@ class Bydelsnummer03Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(districtId: String) = KostraRecord(
+        private fun kostraRecordInTest(kvpMedAStonad: Int) = KostraRecord(
             1,
             mapOf(
                 MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                CITY_PART_ID_COL_NAME to districtId
+                KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString()
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

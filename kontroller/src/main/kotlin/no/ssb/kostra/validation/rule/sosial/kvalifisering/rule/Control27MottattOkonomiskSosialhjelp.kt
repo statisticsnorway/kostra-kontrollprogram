@@ -6,7 +6,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -20,23 +21,46 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val fieldDefinition = KvalifiseringFieldDefinitions.fieldDefinitions.findByColumnName(KVP_MED_ASTONAD_COL_NAME)
-        val value = context.getFieldAsString(KVP_MED_ASTONAD_COL_NAME)
+        val values = fieldsToCheck.associateWith { context.getFieldAsString(it) }
 
-        val fields = listOf(
+        return when (context.getFieldAsString(KVP_MED_ASTONAD_COL_NAME)) {
+            "1" -> {
+                fieldsToCheck.filter {
+                    fieldDefinitions.findByColumnName(it).codeIsMissing(context.getFieldAsString(it))
+                }.takeIf { it.isNotEmpty() }?.let {
+                    createSingleReportEntryList(
+                        "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av perioden " +
+                                "med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
+                                "bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values"
+                    )
+                }
+            }
+
+            "2" -> {
+                fieldsToCheck
+                    .filter { context.getFieldAsString(it) !in setOf(" ", "0") }
+                    .takeIf { it.isNotEmpty() }
+                    ?.let {
+                        createSingleReportEntryList(
+                            "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av " +
+                                    "perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte " +
+                                    "eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. " +
+                                    "Det er IKKE mottatt støtte. $values"
+                        )
+                    }
+            }
+
+            else -> null
+        }
+    }
+
+    companion object {
+        val fieldsToCheck = setOf(
             KVP_MED_KOMMBOS_COL_NAME,
             KVP_MED_HUSBANK_COL_NAME,
             KVP_MED_SOSHJ_ENGANG_COL_NAME,
             KVP_MED_SOSHJ_PGM_COL_NAME,
             KVP_MED_SOSHJ_SUP_COL_NAME
-        );
-
-        val values = fields.associateWith { context.getFieldAsString(it) }
-
-        return createSingleReportEntryList(
-            "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av perioden " +
-                    "med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
-                    "bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values"
         )
     }
 }

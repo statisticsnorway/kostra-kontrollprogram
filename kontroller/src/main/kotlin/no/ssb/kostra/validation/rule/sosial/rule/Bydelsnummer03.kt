@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.DISTRICT_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CITY_PART_ID_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -15,7 +15,7 @@ class Bydelsnummer03 : AbstractRule<KostraRecord>(
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
 
-        val districtId = context.getFieldAsTrimmedString(DISTRICT_ID_COL_NAME)
+        val districtId = context.getFieldAsTrimmedString(CITY_PART_ID_COL_NAME)
         val districtIdFromRegion = arguments.region.districtIdFromRegion()
 
         return if (districtId != districtIdFromRegion) {

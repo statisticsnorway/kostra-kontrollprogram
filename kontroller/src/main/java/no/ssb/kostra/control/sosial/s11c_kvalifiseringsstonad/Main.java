@@ -542,6 +542,7 @@ public class Main {
         );
     }
 
+    @Deprecated
     public static boolean control21Ytelser(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -565,6 +566,7 @@ public class Main {
                 , record.getFieldDefinitionByName(YTELSE_TYPE_SOSHJ).getCodeList().stream().map(Code::getCode).toList());
     }
 
+    @Deprecated
     public static boolean control26MottattStotte(ErrorReport errorReport, KostraRecord record) {
         errorReport.incrementCount();
 
@@ -586,6 +588,7 @@ public class Main {
                 , record.getFieldDefinitionByName(KVP_MED_ASTONAD).getCodeList().stream().map(Code::getCode).toList());
     }
 
+    @Deprecated
     public static boolean control27MottattOkonomiskSosialhjelp(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -638,6 +641,7 @@ public class Main {
         return hasErrors;
     }
 
+    @Deprecated
     // Kontrollene 28-33 sjekker at koblingen mellom én av flere stønadsmåneder (som skal være utfylt) og stønadssumfelt
     public static boolean control28MaanederMedKvalifiseringsstonad(
             ErrorReport errorReport, KostraRecord record) {

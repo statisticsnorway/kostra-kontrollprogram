@@ -8,7 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -72,7 +72,7 @@ class Control19KvalifiseringsprogramIAnnenKommuneTest : BehaviorSpec({
         private fun kostraRecordInTest(code: Int) = KostraRecord(
             1,
             mapOf(
-                MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                 KVP_KOMM_COL_NAME to code.toString()
 
             ),

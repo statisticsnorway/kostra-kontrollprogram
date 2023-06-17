@@ -8,8 +8,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -67,8 +67,8 @@ class Fodselsnummer05Test : BehaviorSpec({
         private fun kostraRecordInTest(individId: String) = KostraRecord(
             1,
             mapOf(
-                MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                INDIVID_ID_COL_NAME to individId
+                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                PERSON_FODSELSNR_COL_NAME to individId
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

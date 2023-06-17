@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
@@ -17,7 +17,7 @@ class Control20AFraKvalifiseringsprogramIAnnenBydelIOslo : AbstractRule<KostraRe
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val kommunenummer = context.getFieldAsString(MUNICIPALITY_ID_COL_NAME)
+        val kommunenummer = context.getFieldAsString(KOMMUNE_NR_COL_NAME)
 
         return if (kommunenummer == "0301"
             && fieldDefinitions

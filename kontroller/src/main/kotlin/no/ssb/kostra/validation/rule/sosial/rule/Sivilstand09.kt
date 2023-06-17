@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MARITAL_STATUS_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.EKTSTAT_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.codeListToString
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
@@ -17,9 +17,9 @@ class Sivilstand09 : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val fieldDefinition = fieldDefinitions.findByColumnName(MARITAL_STATUS_COL_NAME)
+        val fieldDefinition = fieldDefinitions.findByColumnName(EKTSTAT_COL_NAME)
 
-        return context.getFieldAsTrimmedString(MARITAL_STATUS_COL_NAME)
+        return context.getFieldAsTrimmedString(EKTSTAT_COL_NAME)
             .takeIf { it.isEmpty() || it !in fieldDefinition.getCodes() }
             ?.let { maritalStatus ->
                 createSingleReportEntryList(

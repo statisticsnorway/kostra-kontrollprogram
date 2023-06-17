@@ -1,14 +1,26 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ARBLONNSTILS_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ARBMARK_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_OK_AVKLAR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ORDINAERTARB_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_SKOLE_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UFORE_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UKJENT_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UTEN_OK_AVKLAR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_VIKTIGSTE_INNTEKT_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CASE_WORKER_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CITY_PART_ID_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.GENDER_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.JOURNAL_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.DISTRIKTSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.EKTSTAT_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KJONN_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
@@ -18,12 +30,16 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MARITAL_STATUS_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.REG_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_FOLKETRYGDL_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_INDIVIDSTONAD_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_INTRO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.program.*
@@ -33,7 +49,7 @@ object KvalifiseringFieldDefinitions {
     val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
             number = 1,
-            name = MUNICIPALITY_ID_COL_NAME,
+            name = KOMMUNE_NR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 1, to = 4, codeList = listOf(),
@@ -51,7 +67,7 @@ object KvalifiseringFieldDefinitions {
         ),
         FieldDefinition(
             3,
-            CITY_PART_ID_COL_NAME,
+            BYDELSNR_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             7, 8, listOf(),
@@ -60,7 +76,7 @@ object KvalifiseringFieldDefinitions {
         ),
         FieldDefinition(
             4,
-            "DISTRIKTSNR",
+            DISTRIKTSNR_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             9, 10, listOf(),
@@ -68,7 +84,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            5, JOURNAL_ID_COL_NAME,
+            5, PERSON_JOURNALNR_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             11, 18, listOf(),
@@ -76,7 +92,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            6, INDIVID_ID_COL_NAME,
+            6, PERSON_FODSELSNR_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             19, 29, listOf(),
@@ -84,7 +100,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            7, GENDER_COL_NAME,
+            7, KJONN_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             30, 30,
@@ -96,7 +112,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            8, MARITAL_STATUS_COL_NAME,
+            8, EKTSTAT_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             31, 31,
@@ -568,7 +584,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            153, "YTELSE_INTRO",
+            153, YTELSE_INTRO_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             61, 61,
@@ -579,7 +595,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            154, "YTELSE_INDIVIDSTONAD",
+            154, YTELSE_INDIVIDSTONAD_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             62, 62,
@@ -590,7 +606,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            155, "YTELSE_FOLKETRYGDL",
+            155, YTELSE_FOLKETRYGDL_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             63, 63,
@@ -833,7 +849,7 @@ object KvalifiseringFieldDefinitions {
             true
         ),
         FieldDefinition(
-            25, "AVSL_DATO",
+            25, AVSL_DATO_COL_NAME,
             DATE_TYPE,
             TEXTBOX_VIEWTYPE,
             102, 107, listOf(),
@@ -841,7 +857,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            261, "AVSL_ORDINAERTARB",
+            261, AVSL_ORDINAERTARB_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             108, 109,
@@ -852,7 +868,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            262, "AVSL_ARBLONNSTILS",
+            262, AVSL_ARBLONNSTILS_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             110, 111,
@@ -866,7 +882,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            263, "AVSL_ARBMARK",
+            263, AVSL_ARBMARK_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             112, 113,
@@ -877,7 +893,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            264, "AVSL_SKOLE",
+            264, AVSL_SKOLE_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             114, 115,
@@ -888,7 +904,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            265, "AVSL_UFORE",
+            265, AVSL_UFORE_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             116, 117,
@@ -899,7 +915,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            266, "AVSL_AAP",
+            266, AVSL_AAP_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             118, 119,
@@ -910,7 +926,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            267, "AVSL_OK_AVKLAR",
+            267, AVSL_OK_AVKLAR_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             120, 121,
@@ -921,7 +937,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            268, "AVSL_UTEN_OK_AVKLAR",
+            268, AVSL_UTEN_OK_AVKLAR_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             122, 123,
@@ -932,7 +948,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            269, "AVSL_ANNET",
+            269, AVSL_ANNET_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             124, 125,
@@ -943,7 +959,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            2611, "AVSL_UKJENT",
+            2611, AVSL_UKJENT_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             126, 127,
@@ -954,7 +970,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            2612, "AVSL_VIKTIGSTE_INNTEKT",
+            2612, AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             128, 129,
@@ -980,7 +996,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            27, CASE_WORKER_COL_NAME,
+            27, SAKSBEHANDLER_COL_NAME,
             STRING_TYPE,
             TEXTBOX_VIEWTYPE,
             130, 139, listOf(),

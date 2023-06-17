@@ -64,12 +64,12 @@ class Kommunenummer03Test : BehaviorSpec({
         private fun kostraRecordInTest(municipalityId: String) = KostraRecord(
             1,
             mapOf(
-                KvalifiseringColumnNames.CASE_WORKER_COL_NAME to "Sara Sak",
-                KvalifiseringColumnNames.JOURNAL_ID_COL_NAME to "123",
-                KvalifiseringColumnNames.INDIVID_ID_COL_NAME to "19096632188",
+                KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Sak",
+                KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to "123",
+                KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to "19096632188",
                 KvalifiseringColumnNames.STATUS_COL_NAME to "1",
                 KvalifiseringColumnNames.AVSL_DATO_COL_NAME to "010120",
-                KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to municipalityId
+                KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME to municipalityId
             ),
             KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
         )

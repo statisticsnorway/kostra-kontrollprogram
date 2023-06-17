@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.CASE_WORKER_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.JOURNAL_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -29,9 +29,9 @@ object KvalifiseringsStonadValidator {
                     .flatten()
                     .map { reportEntry ->
                         reportEntry.copy(
-                            caseworker = record.getFieldAsString(CASE_WORKER_COL_NAME),
-                            journalId = record.getFieldAsString(JOURNAL_ID_COL_NAME),
-                            individId = record.getFieldAsString(INDIVID_ID_COL_NAME)
+                            caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
+                            journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
+                            individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME)
                         )
                     }
             }.filter { it.any() }.flatten().toList().ifEmpty { null }

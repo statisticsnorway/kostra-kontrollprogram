@@ -7,8 +7,8 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AGE_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -64,8 +64,8 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
         private fun kostraRecordInTest(age: Int) = KostraRecord(
             1,
             mapOf(
-                MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                AGE_COL_NAME to age.toString()
+                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                ALDER_COL_NAME to age.toString()
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

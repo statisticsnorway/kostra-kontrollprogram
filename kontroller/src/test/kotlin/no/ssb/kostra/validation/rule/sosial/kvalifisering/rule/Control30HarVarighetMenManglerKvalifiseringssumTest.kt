@@ -8,7 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -29,7 +29,7 @@ class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
                 "without months, without amount",
                 validKostraRecordInTest.copy(
                     valuesByName =  mapOf(
-                        MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                        KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                         KVP_STONAD_COL_NAME to " ",
                         *((1..12).map {
                             "${MONTH_PREFIX}$it" to "  "
@@ -55,7 +55,7 @@ class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
                 "with months, without amount",
                 validKostraRecordInTest.copy(
                     valuesByName =  mapOf(
-                        MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                        KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                         KVP_STONAD_COL_NAME to " ",
                         *((1..12).map {
                             "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
@@ -87,7 +87,7 @@ class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
         private val validKostraRecordInTest = KostraRecord(
             index = 1,
             valuesByName = mapOf(
-                MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                 KVP_STONAD_COL_NAME to "2",
                 *((1..12).map {
                     "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')

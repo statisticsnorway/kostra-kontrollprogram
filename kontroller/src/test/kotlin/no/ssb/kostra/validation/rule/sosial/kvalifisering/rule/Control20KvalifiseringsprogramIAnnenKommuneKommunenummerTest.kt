@@ -86,7 +86,7 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
         ) = KostraRecord(
             1,
             mapOf(
-                KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
+                KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
                 KVP_KOMM_COL_NAME to kvpKomm.toString(),
                 KOMMNR_KVP_KOMM_COL_NAME to kommnrKvpKomm
             ),

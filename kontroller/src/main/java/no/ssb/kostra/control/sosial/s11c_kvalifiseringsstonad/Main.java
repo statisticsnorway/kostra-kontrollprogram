@@ -862,6 +862,7 @@ public class Main {
         }
     }
 
+    @Deprecated
     public static boolean control38FullforteAvsluttedeProgramSituasjon(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -893,6 +894,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control39FullforteAvsluttedeProgramInntektkilde(
             ErrorReport errorReport, KostraRecord record) {
 

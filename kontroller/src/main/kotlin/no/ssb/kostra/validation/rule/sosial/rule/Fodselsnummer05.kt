@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.INDIVID_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -14,7 +14,7 @@ class Fodselsnummer05 : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? =
-        if (!isValidSocialSecurityIdOrDnr(context.getFieldAsTrimmedString(INDIVID_ID_COL_NAME))) {
+        if (!isValidSocialSecurityIdOrDnr(context.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))) {
             createSingleReportEntryList(
                 "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret " +
                         "inneholder feil. Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt " +

@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AGE_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -13,7 +13,7 @@ class AlderEr68AarEllerOver07 : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? =
-        context.getFieldAsInteger(AGE_COL_NAME)
+        context.getFieldAsInteger(ALDER_COL_NAME)
             ?.takeIf { ageInYears -> ageInYears > 67 }
             ?.let {
                 createSingleReportEntryList(

@@ -8,7 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -78,11 +78,11 @@ class Control20AFraKvalifiseringsprogramIAnnenBydelIOsloTest : BehaviorSpec({
             1,
             when (kvpOslo) {
                 null -> mapOf(
-                    MUNICIPALITY_ID_COL_NAME to kommunenummer
+                    KOMMUNE_NR_COL_NAME to kommunenummer
                 )
 
                 else -> mapOf(
-                    MUNICIPALITY_ID_COL_NAME to kommunenummer,
+                    KOMMUNE_NR_COL_NAME to kommunenummer,
                     KVP_OSLO_COL_NAME to kvpOslo
                 )
             },

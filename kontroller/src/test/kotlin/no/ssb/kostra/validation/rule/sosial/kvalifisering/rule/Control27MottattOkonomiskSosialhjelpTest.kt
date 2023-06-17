@@ -34,6 +34,10 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 "valid kvpMedAStonad, 2",
                 kostraRecordInTest(2, 0, true)
             ),
+            row(
+                "kvpMedAStonad = 3",
+                kostraRecordInTest(3, 0, true)
+            )
         ) { description, currentContext ->
 
             When(description) {
@@ -48,16 +52,14 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
 
     Given("invalid context") {
         forAll(
-/*
             row(
-                "invalid kvpMedAStonad", 1, 1, true,
+                "invalid kvpMedAStonad, kvpMedAStonad = 1", 1, 1, true,
                 "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med kvalifiseringsstønad " +
                         "mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige " +
                         "koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte."
             ),
-*/
             row(
-                "invalid kvpMedAStonad", 2, 1, false,
+                "invalid kvpMedAStonad, kvpMedAStonad = 2", 2, 1, false,
                 "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med kvalifiseringsstønad " +
                         "mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige " +
                         "koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte."

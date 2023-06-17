@@ -23,9 +23,21 @@ class Control28MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
     Given("valid context") {
         forAll(
             row(
-                "valid kvpMedAStonad, 1",
+                "permisjon",
                 validKostraRecordInTest
             ),
+            row(
+                "status != permisjon",
+                validKostraRecordInTest.copy(
+                    valuesByName = mapOf(
+                        MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                        STATUS_COL_NAME to "1",
+                        *((1..12).map {
+                            "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
+                        }).toTypedArray()
+                    )
+                )
+            )
         ) { description, currentContext ->
 
             When(description) {
@@ -40,18 +52,6 @@ class Control28MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
 
     Given("invalid context") {
         forAll(
-            row(
-                "invalid status",
-                validKostraRecordInTest.copy(
-                    valuesByName = mapOf(
-                        MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                        STATUS_COL_NAME to "1",
-                        *((1..12).map {
-                            "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
-                        }).toTypedArray()
-                    )
-                )
-            ),
             row(
                 "january missing",
                 validKostraRecordInTest.copy(

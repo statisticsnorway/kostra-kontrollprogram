@@ -2,6 +2,8 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
+import no.ssb.kostra.area.sosial.kvalifisering.codeListToString
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -18,9 +20,11 @@ class Control36StatusForDeltakelseIKvalifiseringsprogram : AbstractRule<KostraRe
         val fieldDefinition = fieldDefinitions.findByColumnName(STATUS_COL_NAME)
         val value = context.getFieldAsTrimmedString(STATUS_COL_NAME)
 
-        return createSingleReportEntryList(
-            "Korrigér status. Fant '$value', forventet én av " +
-                    "'${fieldDefinition.codeList.map { it.toString() }}'. Feltet er obligatorisk å fylle ut."
-        )
+        return if (fieldDefinition.codeIsMissing(value))
+            createSingleReportEntryList(
+                "Korrigér status. Fant '$value', forventet én av " +
+                        "'${fieldDefinition.codeListToString()}'. Feltet er obligatorisk å fylle ut."
+            )
+        else null
     }
 }

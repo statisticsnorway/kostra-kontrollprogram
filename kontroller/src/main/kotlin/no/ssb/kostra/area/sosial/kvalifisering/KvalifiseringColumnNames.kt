@@ -13,7 +13,7 @@ object KvalifiseringColumnNames {
     const val AGE_COL_NAME = "ALDER"
     const val GENDER_COL_NAME = "KJONN"
     const val STATUS_COL_NAME = "STATUS"
-    const val END_DATE_COL_NAME = "AVSL_DATO"
+    const val AVSL_DATO_COL_NAME = "AVSL_DATO"
     const val MARITAL_STATUS_COL_NAME = "EKTSTAT"
 
     const val BU18_COL_NAME = "BU18"

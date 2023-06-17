@@ -789,6 +789,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control36StatusForDeltakelseIKvalifiseringsprogram(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -810,6 +811,7 @@ public class Main {
                 , record.getFieldDefinitionByName(STATUS).getCodeList().stream().map(Code::getCode).toList());
     }
 
+    @Deprecated
     public static boolean control37DatoForAvsluttetProgram(ErrorReport errorReport, KostraRecord record) {
 
         errorReport.incrementCount();

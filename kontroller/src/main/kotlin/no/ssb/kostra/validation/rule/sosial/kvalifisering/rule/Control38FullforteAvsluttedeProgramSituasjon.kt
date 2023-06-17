@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.END_DATE_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
@@ -17,7 +17,7 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
         val fieldDefinition = KvalifiseringFieldDefinitions.fieldDefinitions.findByColumnName(STATUS_COL_NAME)
-        val value = context.getFieldAsTrimmedString(END_DATE_COL_NAME)
+        val value = context.getFieldAsTrimmedString(AVSL_DATO_COL_NAME)
 
         return createSingleReportEntryList(
             "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – " +

@@ -68,7 +68,7 @@ class Kommunenummer03Test : BehaviorSpec({
                 KvalifiseringColumnNames.JOURNAL_ID_COL_NAME to "123",
                 KvalifiseringColumnNames.INDIVID_ID_COL_NAME to "19096632188",
                 KvalifiseringColumnNames.STATUS_COL_NAME to "1",
-                KvalifiseringColumnNames.END_DATE_COL_NAME to "010120",
+                KvalifiseringColumnNames.AVSL_DATO_COL_NAME to "010120",
                 KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to municipalityId
             ),
             KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }

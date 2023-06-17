@@ -7,32 +7,26 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
+import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control32KvalifiseringssumOverMaksimum.Companion.STONAD_SUM_MAX
 
-class Control32KvalifiseringssumOverMaksimumTest : BehaviorSpec({
-    val sut = Control32KvalifiseringssumOverMaksimum()
+class Control36StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
+    val sut = Control36StatusForDeltakelseIKvalifiseringsprogram()
 
     Given("valid context") {
         forAll(
-            row(
-                "empty amount",
-                kostraRecordInTest(" ")
-            ),
-            row(
-                "valid amount",
-                kostraRecordInTest("42")
-            ),
-            row(
-                "max amount",
-                kostraRecordInTest(STONAD_SUM_MAX.toString())
-            )
+            *(1..6).map {
+                row(
+                    "valid status, $it",
+                    kostraRecordInTest(it.toString())
+                )
+            }.toTypedArray()
         ) { description, currentContext ->
 
             When(description) {
@@ -48,8 +42,8 @@ class Control32KvalifiseringssumOverMaksimumTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "amount too high",
-                kostraRecordInTest((STONAD_SUM_MAX + 1).toString())
+                "invalid status",
+                kostraRecordInTest("7")
             )
         ) { description, kostraRecord ->
 
@@ -61,9 +55,8 @@ class Control32KvalifiseringssumOverMaksimumTest : BehaviorSpec({
                     reportEntryList.size shouldBe 1
 
                     assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.messageText shouldBe "Kvalifiseringsstønaden (600001) som deltakeren har fått i løpet av " +
-                                "rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på NOK 600000,-."
+                        it.severity shouldBe Severity.ERROR
+                        it.messageText shouldStartWith  "Korrigér status. Fant '7', forventet én av"
                     }
                 }
             }
@@ -71,11 +64,11 @@ class Control32KvalifiseringssumOverMaksimumTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(amount: String) = KostraRecord(
+        private fun kostraRecordInTest(status: String) = KostraRecord(
             index = 1,
             valuesByName = mapOf(
                 MUNICIPALITY_ID_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                KVP_STONAD_COL_NAME to amount,
+                STATUS_COL_NAME to status,
             ),
             fieldDefinitionByName = fieldDefinitions.associate { with(it) { name to it } }
         )

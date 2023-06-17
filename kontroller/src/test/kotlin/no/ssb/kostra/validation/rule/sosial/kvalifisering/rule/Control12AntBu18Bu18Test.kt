@@ -7,8 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData
@@ -77,12 +79,12 @@ class Control12AntBu18Bu18Test : BehaviorSpec({
         ) = KostraRecord(
             1,
             mapOf(
-                KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
-                KvalifiseringColumnNames.BU18_COL_NAME to bu18Code.toString(),
-                KvalifiseringColumnNames.ANT_BU18_COL_NAME to numberOfChildren.toString()
+                MUNICIPALITY_ID_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
+                BU18_COL_NAME to bu18Code.toString(),
+                ANT_BU18_COL_NAME to numberOfChildren.toString()
 
             ),
-            KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
+            fieldDefinitions.associate { with(it) { name to it } }
         )
     }
 }

@@ -8,6 +8,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -25,7 +27,7 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
             ),
             row(
                 "valid kvpKomm and kommnrKvpKomm #2",
-                kostraRecordInTest(0, "1106")
+                kostraRecordInTest(2, "1106")
             ),
         ) { description, currentContext ->
 
@@ -42,11 +44,22 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
     Given("invalid context") {
         forAll(
             row(
-                "invalid kvpKomm and kommnrKvpKomm",
+                "invalid kommnrKvpKomm",
                 1,
-                "4242"
-            )
-        ) { description, kvpKomm, kommnrKvpKomm ->
+                "4242",
+                "Det er svart '1=Ja' på om deltakeren kommer fra " +
+                        "kvalifiseringsprogram i annen kommune, men kommunenummer ('4242') mangler eller " +
+                        "er ugyldig. Feltet er obligatorisk å fylle ut."
+            ),
+            row(
+                "empty kommnrKvpKomm",
+                1,
+                " ",
+                "Det er svart '1=Ja' på om deltakeren kommer fra " +
+                        "kvalifiseringsprogram i annen kommune, men kommunenummer (' ') mangler eller " +
+                        "er ugyldig. Feltet er obligatorisk å fylle ut."
+            ),
+        ) { description, kvpKomm, kommnrKvpKomm, expectedError ->
 
             When(description) {
                 val reportEntryList = sut.validate(
@@ -59,9 +72,7 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Det er svart ' =Uoppgitt' på om deltakeren kommer fra " +
-                                "kvalifiseringsprogram i annen kommune, men kommunenummer ('$kommnrKvpKomm') mangler eller " +
-                                "er ugyldig. Feltet er obligatorisk å fylle ut."
+                        it.messageText shouldBe expectedError
                     }
                 }
             }
@@ -76,9 +87,8 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
             1,
             mapOf(
                 KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
-                KvalifiseringColumnNames.KVP_KOMM_COL_NAME to kvpKomm.toString(),
-                KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME to kommnrKvpKomm
-
+                KVP_KOMM_COL_NAME to kvpKomm.toString(),
+                KOMMNR_KVP_KOMM_COL_NAME to kommnrKvpKomm
             ),
             KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
         )

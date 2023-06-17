@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.regnskap
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule

@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
-import no.ssb.kostra.validation.rule.regnskap.isBevilgningDriftRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 
 class Rule030KombinasjonDriftKontoklasseArt(
     private val illogicalDriftArtList: List<String>
@@ -20,11 +20,10 @@ class Rule030KombinasjonDriftKontoklasseArt(
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = "Kun advarsel, hindrer ikke innsending: ('${
-                    kostraRecord.getFieldAsString(
-                        RegnskapConstants.FIELD_ART
-                    )
-                }') regnes å være ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om posteringen hører til i investeringsregnskapet.",
+                messageText = "Kun advarsel, hindrer ikke innsending: (" +
+                        "'${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART)}') regnes å være " +
+                        "ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om " +
+                        "posteringen hører til i investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

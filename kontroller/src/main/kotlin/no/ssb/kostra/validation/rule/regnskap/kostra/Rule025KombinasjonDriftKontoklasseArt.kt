@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
-import no.ssb.kostra.validation.rule.regnskap.isBevilgningDriftRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 
 class Rule025KombinasjonDriftKontoklasseArt(
     private val invalidDriftArtList: List<String>

@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
-import no.ssb.kostra.validation.rule.regnskap.isBevilgningInvesteringRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 
 class Rule045KombinasjonInvesteringKontoklasseFunksjon(
     private val illogicalInvesteringFunksjonArtList: List<String>
@@ -16,11 +16,11 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjon(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in illogicalInvesteringFunksjonArtList
+                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) in illogicalInvesteringFunksjonArtList
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = "Kun advarsel, hindrer ikke innsending: (${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART)}) regnes å være ulogisk funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon eller om posteringen hører til i driftsregnskapet.",
+                messageText = "Kun advarsel, hindrer ikke innsending: (${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON)}) regnes å være ulogisk funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon eller om posteringen hører til i driftsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

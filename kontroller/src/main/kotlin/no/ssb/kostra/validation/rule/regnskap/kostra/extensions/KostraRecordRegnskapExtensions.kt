@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.regnskap
+package no.ssb.kostra.validation.rule.regnskap.kostra.extensions
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
@@ -9,6 +9,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNT_TYPE_DRIFT
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNT_TYPE_INVESTERING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.KostraRecord
 
@@ -45,4 +46,8 @@ fun KostraRecord.isInntekt() =
     getFieldAsIntegerDefaultEquals0(FIELD_ART) in 600..999
 
 fun KostraRecord.isOslo() =
-    getFieldAsIntegerDefaultEquals0(FIELD_ART) in 600..999
+    getFieldAsString(FIELD_REGION) == "030100"
+
+fun KostraRecord.isOsloBydel() =
+    getFieldAsString(FIELD_REGION).substring(0, 4) == "0301"
+            && getFieldAsString(FIELD_REGION).substring(4, 6) != "00"

@@ -12,40 +12,34 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 
-class Rule085SummeringInvesteringUtgiftsposteringerTest : BehaviorSpec({
+class Rule090SummeringInvesteringInntektsposteringerTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule085SummeringInvesteringUtgiftsposteringer()
+        val sut = Rule090SummeringInvesteringInntektsposteringer()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
         forAll(
-            row("0A", "0", "590", "0", true),
-            row("0C", "0", "590", "0", true),
-            row("0M", "4", "590", "0", true),
-            row("0P", "4", "590", "0", true),
+            row("0A", "0", "600", "-1", false),
+            row("0A", "0", "990", "-1", false),
+            row("0A", "0", "990", "0", true),
+            row("0C", "0", "600", "-1", false),
+            row("0C", "0", "990", "-1", false),
+            row("0C", "0", "990", "0", true),
+            row("0I", "4", "600", "-1", false),
+            row("0I", "4", "990", "-1", false),
+            row("0I", "4", "990", "0", false),
+            row("0K", "4", "600", "-1", false),
+            row("0K", "4", "990", "-1", false),
+            row("0K", "4", "990", "0", false),
+            row("0M", "4", "600", "-1", false),
+            row("0M", "4", "990", "-1", false),
+            row("0M", "4", "990", "0", true),
+            row("0P", "4", "600", "-1", false),
+            row("0P", "4", "990", "-1", false),
+            row("0P", "4", "990", "0", true),
 
-            row("0A", "0", "600", "0", true),
-            row("0C", "0", "600", "0", true),
-            row("0M", "4", "600", "0", true),
-            row("0P", "4", "600", "0", true),
-
-            row("0A", "0", "010", "1", false),
-            row("0A", "0", "590", "1", false),
-            row("0C", "0", "010", "1", false),
-            row("0C", "0", "590", "1", false),
-            row("0I", "4", "010", "1", false),
-            row("0I", "4", "590", "1", false),
-            row("0I", "4", "590", "0", false),
-            row("0K", "4", "010", "1", false),
-            row("0K", "4", "590", "1", false),
-            row("0K", "4", "590", "0", false),
-            row("0M", "4", "010", "1", false),
-            row("0M", "4", "590", "1", false),
-            row("0P", "4", "010", "1", false),
-            row("0P", "4", "590", "1", false)
-
-        ) { skjema, kontoklasse, art, belop, expectError ->
-            When("Expenses is zero for $skjema, $kontoklasse, $art, $belop") {
+            ) { skjema, kontoklasse, art, belop, expectError ->
+            When("Income is zero for $skjema, $kontoklasse, $art, $belop") {
                 val kostraRecordList = listOf(
                     KostraRecord(
                         index = 0,

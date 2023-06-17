@@ -10,11 +10,11 @@ import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
-class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
+class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
 
     Given("context") {
-        val sut = Rule020KombinasjonDriftKontoklasseFunksjon(
-            listOf("841 ")
+        val sut = Rule045KombinasjonInvesteringKontoklasseFunksjon(
+            listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
         )
         val fieldDefinitionsByName = listOf(
             FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
@@ -23,19 +23,30 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
         ).associateBy { it.name }
 
         forAll(
-
-            row("0A", "1", "100 ", false),
-            row("0A", "1", "841 ", true),
-            row("0C", "1", "100 ", false),
-            row("0C", "1", "841 ", true),
-            row("0I", "3", "100 ", false),
-            row("0I", "3", "841 ", true),
-            row("0K", "3", "100 ", false),
-            row("0K", "3", "841 ", true),
-            row("0M", "3", "100 ", false),
-            row("0M", "3", "841 ", true),
-            row("0P", "3", "100 ", false),
-            row("0P", "3", "841 ", true),
+            row("0A", "0", "100 ", true),
+            row("0A", "0", "400 ", true),
+            row("0A", "0", "201 ", false),
+            row("0A", "0", "510 ", false),
+            row("0C", "0", "100 ", true),
+            row("0C", "0", "400 ", true),
+            row("0C", "0", "201 ", false),
+            row("0C", "0", "510 ", false),
+            row("0I", "4", "100 ", true),
+            row("0I", "4", "400 ", true),
+            row("0I", "4", "201 ", false),
+            row("0I", "4", "510 ", false),
+            row("0K", "4", "100 ", true),
+            row("0K", "4", "400 ", true),
+            row("0K", "4", "201 ", false),
+            row("0K", "4", "510 ", false),
+            row("0M", "4", "100 ", true),
+            row("0M", "4", "400 ", true),
+            row("0M", "4", "201 ", false),
+            row("0M", "4", "510 ", false),
+            row("0P", "4", "100 ", true),
+            row("0P", "4", "400 ", true),
+            row("0P", "4", "201 ", false),
+            row("0P", "4", "510 ", false),
         ) { skjema, kontoklasse, funksjon, expectedResult ->
             When("For $skjema, $kontoklasse, $funksjon -> $expectedResult") {
                 val kostraRecordList = listOf(
@@ -57,11 +68,11 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
                     result?.shouldBeEqual(expectedResult)
 
                     if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
+                        validationReportEntries[0].severity.shouldBeEqual(Severity.INFO)
                         validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér ugyldig funksjon '${funksjon}' i driftsregnskapet " +
-                                    "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
-                                    "investeringsregnskapet."
+                            "Kun advarsel, hindrer ikke innsending: (${funksjon}) regnes å være ulogisk " +
+                                    "funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon " +
+                                    "eller om posteringen hører til i driftsregnskapet."
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

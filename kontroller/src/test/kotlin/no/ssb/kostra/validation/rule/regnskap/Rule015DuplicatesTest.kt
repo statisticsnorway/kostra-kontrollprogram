@@ -11,7 +11,7 @@ import no.ssb.kostra.program.KostraRecord
 class Rule015DuplicatesTest : BehaviorSpec({
     Given("valid context") {
         val sut = Rule015Duplicates(
-            listOf("a", "a") to  listOf("A", "B")
+            listOf("a", "a") to listOf("A", "B")
         )
         val fieldDefinitionsByName = listOf(
             FieldDefinition(from = 1, to = 1, name = "a"),

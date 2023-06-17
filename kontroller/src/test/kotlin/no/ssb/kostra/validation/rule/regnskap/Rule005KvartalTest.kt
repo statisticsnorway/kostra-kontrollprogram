@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.toKostraRecord
 
 class Rule005KvartalTest : BehaviorSpec({

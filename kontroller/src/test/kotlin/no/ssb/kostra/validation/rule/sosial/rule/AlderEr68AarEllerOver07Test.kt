@@ -22,7 +22,11 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
         forAll(
             row(
                 "record with valid age",
-                kostraRecordInTest(67)
+                kostraRecordInTest("67")
+            ),
+            row(
+                "record with empty age",
+                kostraRecordInTest("  ")
             )
         ) { description, currentContext ->
 
@@ -40,7 +44,7 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
         forAll(
             row(
                 "record with invalid age",
-                kostraRecordInTest(68)
+                kostraRecordInTest("68")
             )
         ) { description, currentContext ->
 
@@ -61,11 +65,11 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(age: Int) = KostraRecord(
+        private fun kostraRecordInTest(age: String) = KostraRecord(
             1,
             mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                ALDER_COL_NAME to age.toString()
+                ALDER_COL_NAME to age
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

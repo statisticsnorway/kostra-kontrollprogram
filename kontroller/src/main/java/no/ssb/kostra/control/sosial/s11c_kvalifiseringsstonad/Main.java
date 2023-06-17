@@ -674,6 +674,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control29KvalifiseringssumMangler(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -698,6 +699,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control30HarVarighetMenManglerKvalifiseringssum(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -729,6 +731,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control31HarKvalifiseringssumMenManglerVarighet(
             ErrorReport errorReport, KostraRecord record) {
 
@@ -760,6 +763,7 @@ public class Main {
         return true;
     }
 
+    @Deprecated
     public static boolean control32KvalifiseringssumOverMaksimum(
             ErrorReport errorReport, KostraRecord record) {
 

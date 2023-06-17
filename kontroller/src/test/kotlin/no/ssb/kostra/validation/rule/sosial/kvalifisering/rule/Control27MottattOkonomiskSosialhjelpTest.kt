@@ -64,7 +64,6 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                         "mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige " +
                         "koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte."
             )
-
         ) { description, kvpMedAStonad, kvpMedKommBos, useEmptyValues, expectedError ->
 
             When(description) {

@@ -11,10 +11,17 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.JOURNAL_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MARITAL_STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.MUNICIPALITY_ID_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.REG_DATO_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
@@ -606,7 +613,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            202, "KVP_MED_KOMMBOS",
+            202, KVP_MED_KOMMBOS_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             65, 65,
@@ -617,7 +624,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            203, "KVP_MED_HUSBANK",
+            203, KVP_MED_HUSBANK_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             66, 66,
@@ -628,7 +635,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            204, "KVP_MED_SOSHJ_ENGANG",
+            204, KVP_MED_SOSHJ_ENGANG_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             67, 67,
@@ -639,7 +646,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            205, "KVP_MED_SOSHJ_PGM",
+            205, KVP_MED_SOSHJ_PGM_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             68, 68,
@@ -653,7 +660,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            206, "KVP_MED_SOSHJ_SUP",
+            206, KVP_MED_SOSHJ_SUP_COL_NAME,
             STRING_TYPE,
             CHECKBOX_VIEWTYPE,
             69, 69,
@@ -799,7 +806,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            22, "KVP_STONAD",
+            22, KVP_STONAD_COL_NAME,
             INTEGER_TYPE,
             TEXTBOX_VIEWTYPE,
             94, 100, listOf(),
@@ -807,7 +814,7 @@ object KvalifiseringFieldDefinitions {
             false
         ),
         FieldDefinition(
-            24, "STATUS",
+            24, STATUS_COL_NAME,
             STRING_TYPE,
             DROPDOWNLIST_VIEWTYPE,
             101, 101,

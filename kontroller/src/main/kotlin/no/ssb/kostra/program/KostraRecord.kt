@@ -27,14 +27,14 @@ data class KostraRecord(
         defaultValue
     }
 
-    fun getFieldDefinitionByName(name: String): FieldDefinition? =
+    fun getFieldDefinitionByName(name: String): FieldDefinition =
         fieldDefinitionByName.getOrElse(name) {
             throw NoSuchFieldException("getFieldDefinitionByName(): $name is missing")
         }
 
     fun getFieldAsLocalDate(field: String): LocalDate? {
         val definition = getFieldDefinitionByName(field)
-        val pattern = definition?.datePattern?.trim() ?: ""
+        val pattern = definition.datePattern.trim()
         val value = getFieldAsString(field)
 
         if (pattern.length != value.length)

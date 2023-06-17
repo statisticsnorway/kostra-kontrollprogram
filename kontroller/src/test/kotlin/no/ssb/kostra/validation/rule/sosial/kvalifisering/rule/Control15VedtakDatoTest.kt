@@ -40,14 +40,14 @@ class Control15VedtakDatoTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "4 year diff between reportingYear and vedtakDato",
-                22,
-                "010116"
-            ),
-            row(
                 "invalid vedtakDato",
                 22,
                 "a".repeat(6)
+            ),
+            row(
+                "4 year diff between reportingYear and vedtakDato",
+                22,
+                "010116"
             )
         ) { description, reportingYear, vedtakDate ->
 

@@ -40,7 +40,7 @@ class Control14RegDatoTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "4 year diff between reportingYear and regDato",
+                "6 year diff between reportingYear and regDato",
                 22,
                 "010116"
             ),

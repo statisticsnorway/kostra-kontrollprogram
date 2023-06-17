@@ -16,14 +16,16 @@ class Control39FullforteAvsluttedeProgramInntektkilde : AbstractRule<KostraRecor
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        if (context.getFieldAsString(STATUS_COL_NAME) == "3"
-            && fieldDefinitions.findByColumnName(AVSL_VIKTIGSTE_INNTEKT_COL_NAME).codeIsMissing(
+        context.getFieldAsString(STATUS_COL_NAME).takeIf {
+            it == "3" && fieldDefinitions.findByColumnName(AVSL_VIKTIGSTE_INNTEKT_COL_NAME).codeIsMissing(
                 context.getFieldAsString(AVSL_VIKTIGSTE_INNTEKT_COL_NAME)
             )
-        ) createSingleReportEntryList(
-            "Feltet 'Hva var deltakerens <b>viktigste</b> inntektskilde umiddelbart etter avslutningen? " +
-                    "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført program " +
-                    "eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for 'Hva er status " +
-                    "for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
-        ) else null
+        }?.let {
+            createSingleReportEntryList(
+                "Feltet 'Hva var deltakerens <b>viktigste</b> inntektskilde umiddelbart etter avslutningen? " +
+                        "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført program " +
+                        "eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for 'Hva er status " +
+                        "for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+            )
+        }
 }

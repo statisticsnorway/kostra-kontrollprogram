@@ -19,7 +19,7 @@ class Control28MaanederMedKvalifiseringsstonad : AbstractRule<KostraRecord>(
         context.getFieldAsString(STATUS_COL_NAME)
             .takeUnless { it == "2" }
             ?.takeIf {
-                (1..12).any { monthId ->
+                (1..12).all { monthId ->
                     fieldDefinitions.findByColumnName("$MONTH_PREFIX$monthId").codeIsMissing(
                         context.getFieldAsString("$MONTH_PREFIX$monthId")
                     )

@@ -4,33 +4,17 @@ import no.ssb.kostra.control.felles.ControlFelt1Boolsk;
 import no.ssb.kostra.control.felles.ControlFelt1InneholderKodeFraKodeliste;
 import no.ssb.kostra.control.felles.ControlFodselsnummer;
 import no.ssb.kostra.control.sosial.Definitions;
-import no.ssb.kostra.felles.Code;
-import no.ssb.kostra.felles.Constants;
-import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.felles.ErrorReportEntry;
-import no.ssb.kostra.felles.KostraRecord;
+import no.ssb.kostra.felles.*;
 import no.ssb.kostra.utils.Fnr;
 import no.ssb.kostra.utils.Format;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-@Deprecated
 public class ControlSosial {
-
-    public static LocalDate assignDateFromString(final String date, final String format) {
-        if (date != null && format != null
-                && date.length() == format.length()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-            return LocalDate.parse(date, formatter);
-        }
-        return null;
-    }
 
     public static String dnr2fnr(final String dnr) {
         var day = Format.parseInt(dnr.substring(0, 2));
@@ -131,7 +115,7 @@ public class ControlSosial {
                 .filter(p -> 1 < p.getValue().size())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (0 >= dubletter.size()) {
+        if (0 == dubletter.size()) {
             return false;
         }
 
@@ -162,7 +146,7 @@ public class ControlSosial {
                 .filter(r -> r.getValue().size() > 1)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (0 >= dubletter.size()) {
+        if (0 == dubletter.size()) {
             return false;
         }
 
@@ -198,29 +182,6 @@ public class ControlSosial {
                     , record.getFieldAsInteger("ALDER")
                     , ">="
                     , 18);
-        }
-        return false;
-    }
-
-    public static boolean control07AlderEr96AarEllerOver(
-            final ErrorReport errorReport, final KostraRecord record) {
-
-        errorReport.incrementCount();
-
-        if (record.getFieldAsInteger("FNR_OK") == 1) {
-            return ControlFelt1Boolsk.doControl(
-                    errorReport
-                    , new ErrorReportEntry(
-                            record.getFieldAsString("SAKSBEHANDLER")
-                            , record.getFieldAsString("PERSON_JOURNALNR")
-                            , record.getFieldAsString("PERSON_FODSELSNR")
-                            , " "
-                            , "Kontroll 07 Alder er 96 år eller over"
-                            , "Deltakeren (" + record.getFieldAsTrimmedString("ALDER") + " år) er 96 år eller eldre."
-                            , Constants.NORMAL_ERROR)
-                    , record.getFieldAsInteger("ALDER")
-                    , "<"
-                    , 96);
         }
         return false;
     }

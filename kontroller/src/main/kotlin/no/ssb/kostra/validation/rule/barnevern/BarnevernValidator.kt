@@ -14,6 +14,8 @@ import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
+import no.ssb.kostra.validation.rule.sosial.extension.addKeyOrAddValueIfKeyIsPresent
+import no.ssb.kostra.validation.rule.sosial.extension.mapToValidationReportEntries
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
@@ -32,6 +34,7 @@ object BarnevernValidator {
 
         arguments.inputFileStream.use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
+
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
@@ -56,13 +59,8 @@ object BarnevernValidator {
                                     xmlStreamReader,
                                     arguments
                                 ) { journalnummer: String, fodselsnummer: String ->
-                                    if (seenFodselsnummer.containsKey(fodselsnummer)) {
-                                        seenFodselsnummer[fodselsnummer]!!.add(journalnummer)
-                                    } else seenFodselsnummer[fodselsnummer] = mutableListOf()
-
-                                    if (seenJournalNummer.containsKey(journalnummer)) {
-                                        seenJournalNummer[journalnummer]!!.add(fodselsnummer)
-                                    } else seenJournalNummer[journalnummer] = mutableListOf()
+                                    seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
+                                    seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
                                 }
                             )
                         }
@@ -160,17 +158,6 @@ object BarnevernValidator {
         } catch (thrown: Throwable) {
             add(individFileError)
         }
-    }
-
-    internal fun Map<String, Collection<String>>.mapToValidationReportEntries(
-        ruleName: String,
-        messageText: String,
-    ) = this.filterValues { it.any() }.map { entry ->
-        ValidationReportEntry(
-            severity = Severity.ERROR,
-            ruleName = ruleName,
-            messageText = "$messageText (${entry.value.joinToString(", ")})"
-        )
     }
 
     private val avgiverFileError = ValidationReportEntry(

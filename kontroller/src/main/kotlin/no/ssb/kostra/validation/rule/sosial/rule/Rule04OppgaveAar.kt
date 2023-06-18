@@ -6,10 +6,10 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
+import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 
 class Rule04OppgaveAar : AbstractRule<KostraRecord>(
-    KvalifiseringRuleId.OPPGAVE_AAR_04.title,
+    SosialRuleId.OPPGAVE_AAR_04.title,
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {

@@ -64,11 +64,6 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
-        if (!errorReport.getArgs().getRegion().substring(0, 4).equalsIgnoreCase("0301")) {
-            control05AFodselsnummerDubletter(errorReport, records);
-            control05BJournalnummerDubletter(errorReport, records);
-        }
-
         if (errorReport.isEmpty()) {
             validateKvalifisering(fromArguments(arguments)).stream()
                     .map(ConversionUtils::toErrorReportEntry)

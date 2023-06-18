@@ -5,11 +5,11 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
+import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 
 class Rule05Fodselsnummer : AbstractRule<KostraRecord>(
-    KvalifiseringRuleId.FODSELSNUMMER_05.title,
+    SosialRuleId.FODSELSNUMMER_05.title,
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =

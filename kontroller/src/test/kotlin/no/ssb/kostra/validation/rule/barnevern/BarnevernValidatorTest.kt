@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
@@ -12,9 +11,8 @@ import no.ssb.kostra.barn.xsd.KostraBarnevernType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.mapToValidationReportEntries
-import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
 import no.ssb.kostra.validation.rule.RandomUtils.generateRandomDuf
+import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import java.time.Year
@@ -133,46 +131,6 @@ class BarnevernValidatorTest : BehaviorSpec({
 
                 Then("result should be as expected") {
                     reportEntries shouldContain expectedResult
-                }
-            }
-        }
-    }
-
-    Given("Map<String, Collection<String>>.mapToValidationReportEntries") {
-
-        forAll(
-            row(
-                "empty map",
-                emptyMap(),
-                emptyList()
-            ),
-            row(
-                "map with single entry that maps to empty list",
-                mapOf<String, Collection<String>>("~entry~" to emptyList()),
-                emptyList()
-            ),
-            row(
-                "map with single entry that maps to list with one item",
-                mapOf<String, Collection<String>>("~entry~" to listOf("~listItem~")),
-                listOf(
-                    ValidationReportEntry(
-                        severity = Severity.ERROR,
-                        ruleName = IndividRuleId.INDIVID_04.title,
-                        messageText = "~messageText~ (~listItem~)"
-                    )
-                )
-            )
-        ) { description, sut, expectedResult ->
-
-            When(description) {
-
-                val reportEntries = sut.mapToValidationReportEntries(
-                    IndividRuleId.INDIVID_04.title,
-                    "~messageText~"
-                )
-
-                Then("result should be as expected") {
-                    reportEntries shouldBe expectedResult
                 }
             }
         }

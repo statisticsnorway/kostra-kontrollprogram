@@ -103,6 +103,7 @@ public class Main {
             control05Fodselsnummer(errorReport, currentRecord);
             control08Kjonn(errorReport, currentRecord);
             control09Sivilstand(errorReport, currentRecord);
+
             control10ForsorgerpliktForBarnUnder18Aar(errorReport, currentRecord);
             control11AntallBarnIHusholdningenMangler(errorReport, currentRecord);
             control12AntallBarnIHusholdningen(errorReport, currentRecord);

@@ -65,6 +65,7 @@ public class Main {
         ControlFilbeskrivelse.doControl(records, errorReport);
 
         if (errorReport.isEmpty()) {
+
             validateKvalifisering(fromArguments(arguments)).stream()
                     .map(ConversionUtils::toErrorReportEntry)
                     .forEach(errorReport::addEntry);

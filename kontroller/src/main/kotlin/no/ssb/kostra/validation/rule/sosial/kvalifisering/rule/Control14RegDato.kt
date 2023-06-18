@@ -17,7 +17,7 @@ class Control14RegDato : AbstractRule<KostraRecord>(
         val regDato = context.getFieldAsLocalDate(REG_DATO_COL_NAME)
         val reportingYear = context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME)
 
-        return if (regDato == null || (2000 + reportingYear - regDato.year) > 4) {
+        return if (regDato == null || (2_000 + reportingYear - regDato.year) > 4) {
             createSingleReportEntryList(
                 "Feltet for 'Hvilken dato ble søknaden registrert ved NAV-kontoret?' med verdien " +
                         "(${context.getFieldAsString(REG_DATO_COL_NAME)}) enten mangler utfylling, har ugyldig dato " +

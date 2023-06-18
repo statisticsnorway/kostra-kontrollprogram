@@ -4,6 +4,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_F
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.toKostraRecord
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -16,39 +17,49 @@ import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.kva
 object KvalifiseringValidator {
 
     @JvmStatic
-    fun validateKvalifisering(arguments: KotlinArguments): List<ValidationReportEntry> {
+    fun validateKvalifisering(
+        arguments: KotlinArguments
+    ): List<ValidationReportEntry> {
+        return validateKvalifiseringInternal(
+            kostraRecords = arguments
+                .getInputContentAsStringList()
+                .withIndex()
+                .map { (index, recordString) ->
+                    recordString.toKostraRecord(
+                        index = index + 1,
+                        fieldDefinitions = fieldDefinitions
+                    )
+                },
+            arguments = arguments
+        )
+    }
+
+    internal fun validateKvalifiseringInternal(
+        kostraRecords: Collection<KostraRecord>,
+        arguments: KotlinArguments
+    ): List<ValidationReportEntry> {
 
         val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
         val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
-        val reportEntries = arguments
-            .getInputContentAsStringList()
-            .asSequence()
-            .withIndex()
-            .map { (index, recordString) ->
-                recordString.toKostraRecord(
-                    index = index + 1,
-                    fieldDefinitions = fieldDefinitions
-                )
-            }.onEach { record ->
-                val fodselsnummer = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME)
-                val journalnummer = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME)
+        val reportEntries = kostraRecords.asSequence().onEach { record ->
+            val fodselsnummer = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME)
+            val journalnummer = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME)
 
-                seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
-                seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
-            }
-            .map { record ->
-                (sosialRules + kvalifiseringRules)
-                    .mapNotNull { it.validate(record, arguments) }
-                    .flatten()
-                    .map { reportEntry ->
-                        reportEntry.copy(
-                            caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
-                            journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
-                            individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME)
-                        )
-                    }
-            }.filter { it.any() }.flatten().toList()
+            seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
+            seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
+        }.map { record ->
+            (sosialRules + kvalifiseringRules)
+                .mapNotNull { it.validate(record, arguments) }
+                .flatten()
+                .map { reportEntry ->
+                    reportEntry.copy(
+                        caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
+                        journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
+                        individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME)
+                    )
+                }
+        }.filter { it.any() }.flatten().toList()
 
         return reportEntries + seenFodselsnummer.mapToValidationReportEntries(
             SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,

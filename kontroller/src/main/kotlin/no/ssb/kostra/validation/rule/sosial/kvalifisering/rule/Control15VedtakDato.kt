@@ -17,7 +17,7 @@ class Control15VedtakDato : AbstractRule<KostraRecord>(
         val reportingYear = context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME)
         val vedtakDato = context.getFieldAsLocalDate(VEDTAK_DATO_COL_NAME)
 
-        return if (vedtakDato == null || (2000 + reportingYear - vedtakDato.year) > 4) {
+        return if (vedtakDato == null || (2_000 + reportingYear - vedtakDato.year) > 4) {
             createSingleReportEntryList(
                 "Feltet for 'Hvilken dato det ble fattet vedtak om program? (søknad innvilget)' med " +
                         "verdien (${context.getFieldAsString(VEDTAK_DATO_COL_NAME)}) enten mangler utfylling, " +

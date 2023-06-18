@@ -7,6 +7,7 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
@@ -22,7 +23,7 @@ class Rule04OppgaveAarTest : BehaviorSpec({
         forAll(
             row(
                 "record with valid aargang",
-                kostraRecordInTest(argumentsInTest.aargang)
+                kostraRecordInTest((argumentsInTest.aargang.toInt() - 2_000).toString())
             )
         ) { description, currentContext ->
 
@@ -39,13 +40,17 @@ class Rule04OppgaveAarTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
+                "record with non-numeric aargang",
+                "ab"
+            ),
+            row(
                 "record with invalid aargang",
-                kostraRecordInTest("2042")
+                "42"
             )
-        ) { description, currentContext ->
+        ) { description, aargang ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(kostraRecordInTest(aargang), argumentsInTest)
 
                 Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
@@ -53,7 +58,7 @@ class Rule04OppgaveAarTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér årgang. Fant 2042, forventet ${argumentsInTest.aargang}"
+                        it.messageText shouldStartWith  "Korrigér årgang. Fant $aargang, forventet"
                     }
                 }
             }

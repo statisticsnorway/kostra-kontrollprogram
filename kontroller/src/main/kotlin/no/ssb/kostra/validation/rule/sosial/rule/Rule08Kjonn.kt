@@ -2,9 +2,9 @@ package no.ssb.kostra.validation.rule.sosial.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KJONN_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
 import no.ssb.kostra.area.sosial.kvalifisering.codeListToString
 import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
-import no.ssb.kostra.area.sosial.kvalifisering.getCodes
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class Kjonn08 : AbstractRule<KostraRecord>(
+class Rule08Kjonn : AbstractRule<KostraRecord>(
     KvalifiseringRuleId.KJONN_08.title,
     Severity.ERROR
 ) {
@@ -20,7 +20,7 @@ class Kjonn08 : AbstractRule<KostraRecord>(
         val fieldDefinition = fieldDefinitions.findByColumnName(KJONN_COL_NAME)
 
         return context.getFieldAsTrimmedString(KJONN_COL_NAME)
-            .takeIf { it.isEmpty() || it !in fieldDefinition.getCodes() }
+            .takeIf { fieldDefinition.codeIsMissing(it) }
             ?.let { gender ->
                 createSingleReportEntryList(
                     "Korrigér kjønn. Fant '$gender', forventet én av ${fieldDefinition.codeListToString()}." +

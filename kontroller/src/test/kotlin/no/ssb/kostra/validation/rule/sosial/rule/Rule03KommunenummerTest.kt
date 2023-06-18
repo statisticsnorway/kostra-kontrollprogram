@@ -7,25 +7,21 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
-import java.time.LocalDate
 
-class Fodselsnummer05Test : BehaviorSpec({
-    val sut = Fodselsnummer05()
+class Rule03KommunenummerTest : BehaviorSpec({
+    val sut = Rule03Kommunenummer()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid fodselsnummer",
-                kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now()))
+                "record with valid kommunenummer",
+                kostraRecordInTest(argumentsInTest.region.municipalityIdFromRegion())
             )
         ) { description, currentContext ->
 
@@ -42,8 +38,8 @@ class Fodselsnummer05Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid fodselsnummer",
-                kostraRecordInTest("42")
+                "record with invalid kommunenummer",
+                kostraRecordInTest("4242")
             )
         ) { description, currentContext ->
 
@@ -55,8 +51,9 @@ class Fodselsnummer05Test : BehaviorSpec({
                     reportEntryList.size shouldBe 1
 
                     assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.messageText shouldStartWith  "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren"
+                        it.severity shouldBe Severity.ERROR
+                        it.messageText shouldBe "Korrigér kommunenummeret. Fant 4242, forventet " +
+                                argumentsInTest.region.municipalityIdFromRegion()
                     }
                 }
             }
@@ -64,13 +61,17 @@ class Fodselsnummer05Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(individId: String) = KostraRecord(
+        private fun kostraRecordInTest(municipalityId: String) = KostraRecord(
             1,
             mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                PERSON_FODSELSNR_COL_NAME to individId
+                KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Sak",
+                KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to "123",
+                KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to "19096632188",
+                KvalifiseringColumnNames.STATUS_COL_NAME to "1",
+                KvalifiseringColumnNames.AVSL_DATO_COL_NAME to "010120",
+                KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME to municipalityId
             ),
-            fieldDefinitions.associate { with(it) { name to it } }
+            KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
         )
     }
 }

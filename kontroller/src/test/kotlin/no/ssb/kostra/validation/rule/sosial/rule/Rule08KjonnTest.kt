@@ -7,7 +7,8 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
+import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KJONN_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
@@ -15,18 +16,26 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class AlderUnder18Aar06Test : BehaviorSpec({
-    val sut = AlderUnder18Aar06()
+class Rule08KjonnTest : BehaviorSpec({
+    val sut = Rule08Kjonn()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid age",
-                kostraRecordInTest("18")
+                "record with kjonn = MANN",
+                kostraRecordInTest("1")
             ),
             row(
-                "record with blank age",
-                kostraRecordInTest("  ")
+                "record with kjonn = MANN #2",
+                kostraRecordInTest(" 1 ")
+            ),
+            row(
+                "record with kjonn = KVINNE",
+                kostraRecordInTest("2")
+            ),
+            row(
+                "record with kjonn = KVINNE #2",
+                kostraRecordInTest(" 2 ")
             )
         ) { description, currentContext ->
 
@@ -43,21 +52,25 @@ class AlderUnder18Aar06Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid age",
-                kostraRecordInTest("17")
+                "record with empty kjonn",
+                ""
+            ),
+            row(
+                "record with invalid kjonn",
+                "42"
             )
-        ) { description, currentContext ->
+        ) { description, gender ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(kostraRecordInTest(gender), argumentsInTest)
 
                 Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
                     reportEntryList.size shouldBe 1
 
                     assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.messageText shouldBe "Deltakeren (17 år) er under 18 år."
+                        it.severity shouldBe Severity.ERROR
+                        it.messageText shouldStartWith  "Korrigér kjønn. Fant '$gender', forventet én av"
                     }
                 }
             }
@@ -65,11 +78,11 @@ class AlderUnder18Aar06Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(age: String) = KostraRecord(
+        private fun kostraRecordInTest(genderId: String) = KostraRecord(
             1,
             mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                ALDER_COL_NAME to age
+                KJONN_COL_NAME to genderId
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

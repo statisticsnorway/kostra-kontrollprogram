@@ -7,23 +7,25 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
+import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.sosial.extension.districtIdFromRegion
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
+import java.time.LocalDate
 
-class Bydelsnummer03Test : BehaviorSpec({
-    val sut = Bydelsnummer03()
+class Rule05FodselsnummerTest : BehaviorSpec({
+    val sut = Rule05Fodselsnummer()
 
     Given("valid context") {
         forAll(
             row(
-                "record with valid bydel",
-                kostraRecordInTest(argumentsInTest.region.districtIdFromRegion())
+                "record with valid fodselsnummer",
+                kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now()))
             )
         ) { description, currentContext ->
 
@@ -40,7 +42,7 @@ class Bydelsnummer03Test : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid bydel",
+                "record with invalid fodselsnummer",
                 kostraRecordInTest("42")
             )
         ) { description, currentContext ->
@@ -53,9 +55,8 @@ class Bydelsnummer03Test : BehaviorSpec({
                     reportEntryList.size shouldBe 1
 
                     assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér bydel. Fant 42, forventet " +
-                                argumentsInTest.region.districtIdFromRegion()
+                        it.severity shouldBe Severity.WARNING
+                        it.messageText shouldStartWith  "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren"
                     }
                 }
             }
@@ -63,11 +64,11 @@ class Bydelsnummer03Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(districtId: String) = KostraRecord(
+        private fun kostraRecordInTest(individId: String) = KostraRecord(
             1,
             mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                BYDELSNR_COL_NAME to districtId
+                PERSON_FODSELSNR_COL_NAME to individId
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

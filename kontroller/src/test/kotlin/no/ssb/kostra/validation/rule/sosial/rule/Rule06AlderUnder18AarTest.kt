@@ -15,17 +15,17 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class AlderEr68AarEllerOver07Test : BehaviorSpec({
-    val sut = AlderEr68AarEllerOver07()
+class Rule06AlderUnder18AarTest : BehaviorSpec({
+    val sut = Rule06AlderUnder18Aar()
 
     Given("valid context") {
         forAll(
             row(
                 "record with valid age",
-                kostraRecordInTest("67")
+                kostraRecordInTest("18")
             ),
             row(
-                "record with empty age",
+                "record with blank age",
                 kostraRecordInTest("  ")
             )
         ) { description, currentContext ->
@@ -44,7 +44,7 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
         forAll(
             row(
                 "record with invalid age",
-                kostraRecordInTest("68")
+                kostraRecordInTest("17")
             )
         ) { description, currentContext ->
 
@@ -57,7 +57,7 @@ class AlderEr68AarEllerOver07Test : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
-                        it.messageText shouldBe "Deltakeren (68 år) er 68 år eller eldre."
+                        it.messageText shouldBe "Deltakeren (17 år) er under 18 år."
                     }
                 }
             }

@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class Kommunenummer03 : AbstractRule<KostraRecord>(
+class Rule03Kommunenummer : AbstractRule<KostraRecord>(
     KvalifiseringRuleId.KOMMUNENUMMER_03.title,
     Severity.ERROR
 ) {

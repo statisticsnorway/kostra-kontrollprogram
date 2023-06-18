@@ -8,7 +8,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class OppgaveAar04 : AbstractRule<KostraRecord>(
+class Rule04OppgaveAar : AbstractRule<KostraRecord>(
     KvalifiseringRuleId.OPPGAVE_AAR_04.title,
     Severity.ERROR
 ) {

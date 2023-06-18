@@ -14,7 +14,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
+import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 
 class Control15VedtakDatoTest : BehaviorSpec({
     val sut = Control15VedtakDato()

@@ -1,5 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
+import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
+import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
@@ -10,8 +12,6 @@ import no.ssb.kostra.program.toKostraRecord
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.sosial.SosialCommonRules.sosialRules
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
-import no.ssb.kostra.validation.rule.sosial.extension.addKeyOrAddValueIfKeyIsPresent
-import no.ssb.kostra.validation.rule.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.kvalifiseringRules
 
 object KvalifiseringValidator {

@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.extension
+package no.ssb.kostra.area.sosial.extension
 
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry

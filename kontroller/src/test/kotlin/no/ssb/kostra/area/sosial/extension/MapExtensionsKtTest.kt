@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.extension
+package no.ssb.kostra.area.sosial.extension
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll

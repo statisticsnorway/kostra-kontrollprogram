@@ -14,8 +14,8 @@ import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
-import no.ssb.kostra.validation.rule.sosial.extension.addKeyOrAddValueIfKeyIsPresent
-import no.ssb.kostra.validation.rule.sosial.extension.mapToValidationReportEntries
+import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
+import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants

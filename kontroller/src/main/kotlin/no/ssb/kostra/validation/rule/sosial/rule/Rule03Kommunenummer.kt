@@ -7,7 +7,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
-import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
+import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 
 class Rule03Kommunenummer : AbstractRule<KostraRecord>(
     SosialRuleId.KOMMUNENUMMER_03.title,

@@ -16,7 +16,7 @@ import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.extension.districtIdFromRegion
 import no.ssb.kostra.validation.rule.sosial.extension.municipalityIdFromRegion
 
-class RuleBydelsnummerTest : BehaviorSpec({
+class Rule03BydelsnummerTest : BehaviorSpec({
     val sut = Rule03Bydelsnummer()
 
     Given("valid context") {

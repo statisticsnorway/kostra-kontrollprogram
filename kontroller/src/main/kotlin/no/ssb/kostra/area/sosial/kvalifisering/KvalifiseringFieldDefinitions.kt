@@ -68,7 +68,7 @@ object KvalifiseringFieldDefinitions {
             name = BYDELSNR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
-            from = 7, to = 8,
+            from = 7, to = 8
         ),
         FieldDefinition(
             number = 4,
@@ -781,7 +781,7 @@ object KvalifiseringFieldDefinitions {
             number = 22, name = KVP_STONAD_COL_NAME,
             dataType = INTEGER_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
-            from = 94, to = 100,
+            from = 94, to = 100
         ),
         FieldDefinition(
             number = 24, name = STATUS_COL_NAME,

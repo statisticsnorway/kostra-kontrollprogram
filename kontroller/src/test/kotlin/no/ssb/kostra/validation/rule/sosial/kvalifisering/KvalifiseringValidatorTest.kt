@@ -3,8 +3,7 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldContainAll
 import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
@@ -39,6 +38,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifiseringInternal
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 import java.time.LocalDate
@@ -50,20 +50,44 @@ class KvalifiseringValidatorTest : BehaviorSpec({
         forAll(
             row(
                 "row with validation issues",
-                kostraRecordsInTests(),
-                ValidationReportEntry(
-                    caseworker = "Sara Saksbehandler",
-                    journalId = "~journalNummer~",
-                    individId = fodselsnummer,
-                    severity = Severity.ERROR,
-                    ruleName = KvalifiseringRuleId.MOTTATT_OKONOMISK_SOSIALHJELP_27.title,
-                    messageText = "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med " +
-                            "kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller " +
-                            "Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er " +
-                            "mottatt støtte. {KVP_MED_KOMMBOS=1, KVP_MED_HUSBANK=5, KVP_MED_SOSHJ_ENGANG=9, " +
-                            "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}"
+                listOf(kostraRecordsInTests()),
+                listOf(
+                    ValidationReportEntry(
+                        caseworker = "Sara Saksbehandler",
+                        journalId = "~journalNummer~",
+                        individId = fodselsnummer,
+                        severity = Severity.ERROR,
+                        ruleName = KvalifiseringRuleId.MOTTATT_OKONOMISK_SOSIALHJELP_27.title,
+                        messageText = "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med " +
+                                "kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller " +
+                                "Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er " +
+                                "mottatt støtte. {KVP_MED_KOMMBOS=1, KVP_MED_HUSBANK=5, KVP_MED_SOSHJ_ENGANG=9, " +
+                                "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}"
+                    )
                 )
             ),
+            row(
+                "two identical rows",
+                listOf(kostraRecordsInTests(), kostraRecordsInTests()),
+                listOf(
+                    ValidationReportEntry(
+                        caseworker = "",
+                        journalId = "",
+                        individId = "",
+                        severity = Severity.ERROR,
+                        ruleName = SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,
+                        messageText = "Dublett for fødselsnummer for journalnummer (~journalNummer~)"
+                    ),
+                    ValidationReportEntry(
+                        caseworker = "",
+                        journalId = "",
+                        individId = "",
+                        severity = Severity.ERROR,
+                        ruleName = SosialRuleId.JOURNALNUMMER_DUBLETTER_05B.title,
+                        messageText = "Dublett for journalnummer for fødselsnummer ($fodselsnummer)"
+                    )
+                )
+            )
         ) { description, kostraRecordsInTests, expectedResult ->
 
             When(description) {
@@ -73,8 +97,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 )
 
                 Then("result should be as expected") {
-                    reportEntries.size shouldBe 1
-                    reportEntries shouldContain expectedResult
+                    reportEntries shouldContainAll expectedResult
                 }
             }
         }
@@ -87,7 +110,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
             LocalDate.now()
         )
 
-        private fun kostraRecordsInTests() = listOf(KostraRecord(
+        private fun kostraRecordsInTests() = KostraRecord(
             1,
             mapOf(
                 SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
@@ -125,6 +148,6 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 }).toTypedArray()
             ),
             fieldDefinitions.associate { with(it) { name to it } }
-        ))
+        )
     }
 }

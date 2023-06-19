@@ -303,8 +303,6 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                     )
                 ), true
             ),
-
-
             ) { recordList, expectedResult ->
             When("List is $recordList") {
                 val kostraRecordList = recordList
@@ -318,9 +316,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                 val driftUtgifter = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
                 val driftInntekter = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
                 val driftDifferanse = kostraRecordList.sumOf {
-                    it.getFieldAsIntegerDefaultEquals0(
-                        FIELD_BELOP
-                    )
+                    it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
                 }
 
                 val validationReportEntries = sut.validate(kostraRecordList)

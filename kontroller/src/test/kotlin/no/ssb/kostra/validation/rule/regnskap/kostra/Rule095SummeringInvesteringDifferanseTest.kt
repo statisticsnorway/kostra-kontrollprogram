@@ -314,7 +314,9 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                     }
                 val investeringUtgifter = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
                 val investeringInntekter = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val investeringDifferanse = kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                val investeringDifferanse = kostraRecordList.sumOf {
+                    it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                }
 
                 val validationReportEntries = sut.validate(kostraRecordList)
                 val result = validationReportEntries?.any()

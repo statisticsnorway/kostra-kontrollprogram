@@ -432,8 +432,30 @@ class KommuneKostra(
         Rule070KombinasjonBevilgningFunksjonArt(),
         Rule075KombinasjonBevilgningFunksjonArt(),
         Rule080KombinasjonBevilgningFunksjonArt(),
-
-
+        Rule085SummeringInvesteringUtgiftsposteringer(),
+        Rule090SummeringInvesteringInntektsposteringer(),
+        Rule095SummeringInvesteringDifferanse(),
+        Rule100SummeringDriftUtgiftsposteringer(),
+        Rule105SummeringDriftInntektsposteringer(),
+        Rule110SummeringDriftDifferanse(),
+        Rule115SummeringBalanseAktiva(),
+        Rule120SummeringBalansePassiva(),
+        Rule125SummeringBalanseDifferanse(),
+        Rule126SummeringDriftOsloInternDifferanse(),
+        Rule127SummeringInvesteringOsloInternDifferanse(),
+        Rule130SkatteInntekter(),
+        Rule135Rammetilskudd(),
+        Rule140OverforingerDriftInvestering(),
+        Rule145AvskrivningerMotpostAvskrivninger(),
+        Rule150Avskrivninger(),
+        Rule155AvskrivningerDifferanse(),
+        Rule160AvskrivningerAndreFunksjoner(),
+        Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner(),
+        Rule170Funksjon290Investering(),
+        Rule175Funksjon290Drift(),
+        Rule180Funksjon465Investering(),
+        Rule185Funksjon465Drift(),
+        Rule190Memoriakonti(),
     )
 
     fun validate(): ValidationReport {

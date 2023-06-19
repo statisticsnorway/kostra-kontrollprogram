@@ -17,7 +17,7 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractRecordRule(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { it.isOsloInternRegnskap() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) in listOf("298", "798")}
+        ?.filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) in listOf("298", "798") }
         ?.partition { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
             art298Posteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to

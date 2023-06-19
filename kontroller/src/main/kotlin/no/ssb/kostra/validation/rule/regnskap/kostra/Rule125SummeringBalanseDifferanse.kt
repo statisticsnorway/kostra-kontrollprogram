@@ -1,29 +1,26 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.*
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isAktiva
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
 class Rule125SummeringBalanseDifferanse : AbstractRecordRule(
-    "Kontroll 0125 : Summeringskontroller balanseregnskapet, differanse i balanseregnskapet",
+    "Kontroll 125 : Summeringskontroller balanseregnskapet, differanse i balanseregnskapet",
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { it.isBalanseRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isAktiva() }
-        ?.let { (aktivaPosteringer,
-                    passivaPosteringer) ->
-            (
-                    aktivaPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
-                            to
-                            passivaPosteringer
-                                .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
-                    )
+        ?.let { (aktivaPosteringer, passivaPosteringer) ->
+            aktivaPosteringer
+                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                    passivaPosteringer
+                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
         }
         ?.takeUnless { (aktiva, passiva) ->
             0 < aktiva

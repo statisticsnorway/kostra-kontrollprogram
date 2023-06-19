@@ -65,3 +65,9 @@ fun KostraRecord.isPassiva() =
 fun KostraRecord.isOsloInternRegnskap() =
     this.isOslo()
             && getFieldAsString(FIELD_SKJEMA) in listOf("0A", "0M")
+
+fun KostraRecord.isKommuneRegnskap() =
+    getFieldAsString(FIELD_SKJEMA) in listOf("0A", "0B", "0M", "0N")
+
+fun KostraRecord.isFylkeRegnskap() =
+    getFieldAsString(FIELD_SKJEMA) in listOf("0C", "0D", "0P", "0Q")

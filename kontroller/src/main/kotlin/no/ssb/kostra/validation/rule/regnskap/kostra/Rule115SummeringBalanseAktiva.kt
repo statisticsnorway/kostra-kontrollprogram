@@ -20,7 +20,8 @@ class Rule115SummeringBalanseAktiva : AbstractRecordRule(
         ?.takeUnless { 0 < it }
         ?.let { sumAktiva ->
             createSingleReportEntryList(
-                messageText = "Korrigér slik at fila inneholder registrering av aktiva/eiendeler ($sumAktiva), sum sektor 000-990 for kapittel 10-29 i balanse."
+                messageText = "Korrigér slik at fila inneholder registrering av aktiva/eiendeler " +
+                        "($sumAktiva), sum sektor 000-990 for kapittel 10-29 i balanse."
             )
         }
 }

@@ -53,4 +53,16 @@ open class AbstractRule<in T : Any>(
             messageText = messageText
         )
     )
+
+    protected fun createSingleReportEntryList(
+        messageText: String,
+        severity: Severity
+    ) = listOf(
+        ValidationReportEntry(
+            ruleName = ruleName,
+            severity = severity,
+            messageText = messageText
+        )
+    )
+
 }

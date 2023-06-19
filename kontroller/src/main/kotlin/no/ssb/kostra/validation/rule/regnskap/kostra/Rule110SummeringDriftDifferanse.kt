@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -17,15 +17,11 @@ class Rule110SummeringDriftDifferanse : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
-        ?.let { (driftUtgifterPosteringer,
-                    driftInntekterPosteringer) ->
-            (
-                    driftUtgifterPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
-                            to
-                            driftInntekterPosteringer
-                                .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
-                    )
+        ?.let { (driftUtgifterPosteringer, driftInntekterPosteringer) ->
+            driftUtgifterPosteringer
+                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                    driftInntekterPosteringer
+                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
         }
         ?.takeUnless { (driftUtgifter, driftInntekter) ->
             0 < driftUtgifter
@@ -33,9 +29,8 @@ class Rule110SummeringDriftDifferanse : AbstractRecordRule(
                     && driftUtgifter + driftInntekter in -30..30
         }
         ?.let { (driftUtgifter, driftInntekter) ->
-            val driftDifferanse = driftUtgifter + driftInntekter
             createSingleReportEntryList(
-                messageText = "Korrigér differansen ($driftDifferanse) mellom inntekter " +
+                messageText = "Korrigér differansen (${driftUtgifter + driftInntekter}) mellom inntekter " +
                         "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
             )
         }

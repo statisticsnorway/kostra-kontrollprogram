@@ -303,7 +303,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                     )
                 ), true
             ),
-            ) { recordList, expectedResult ->
+        ) { recordList, expectedResult ->
             When("List is $recordList") {
                 val kostraRecordList = recordList
                     .mapIndexed { index, record ->

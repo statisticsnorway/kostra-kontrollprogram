@@ -20,8 +20,8 @@ class Rule065KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
                             kostraRecord.getFieldAsString(FIELD_FUNKSJON) == "899 "
                                     && kostraRecord.getFieldAsString(FIELD_ART) !in listOf("589", "980", "989")
                             ) || (
-                            kostraRecord.getFieldAsString(FIELD_FUNKSJON) in listOf("589", "980", "989")
-                                    && kostraRecord.getFieldAsString(FIELD_ART) != "899 "
+                            kostraRecord.getFieldAsString(FIELD_ART) in listOf("589", "980", "989")
+                                    && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "899 "
                             )
                     )
         }

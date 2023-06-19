@@ -8,14 +8,15 @@ import io.kotest.matchers.nulls.shouldBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
-class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
+class Rule190MemoriakontiTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule125SummeringBalanseDifferanse()
+        val sut = Rule190Memoriakonti()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
@@ -25,14 +26,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0B",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0B",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -41,13 +44,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0B",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0B",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -57,14 +62,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0D",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0D",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -73,13 +80,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0D",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0D",
                         FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -89,14 +98,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0J",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0J",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -105,13 +116,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0J",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0J",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -121,14 +134,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0L",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0L",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -137,13 +152,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0L",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0L",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -153,14 +170,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0N",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0N",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -169,13 +188,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0N",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0N",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -185,14 +206,16 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0Q",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0Q",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
+                        FIELD_BELOP to "-1"
                     )
                 ), false
             ),
@@ -201,13 +224,15 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     mapOf(
                         FIELD_SKJEMA to "0Q",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                        FIELD_KAPITTEL to "9100",
+                        FIELD_SEKTOR to "000",
+                        FIELD_BELOP to "1"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0Q",
                         FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
+                        FIELD_KAPITTEL to "9999",
+                        FIELD_SEKTOR to "990",
                         FIELD_BELOP to "-1000"
                     )
                 ), true
@@ -222,11 +247,10 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                             valuesByName = record
                         )
                     }
-                val aktiva = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val passiva =
+                val memoriakonti =
+                    kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                val motpostMemoriakonti =
                     kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val balanseDifferanse =
-                    kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
 
                 val validationReportEntries = sut.validate(kostraRecordList)
                 val result = validationReportEntries?.any()
@@ -235,10 +259,11 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     result?.shouldBeEqual(expectedResult)
 
                     if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
+                        validationReportEntries[0].severity.shouldBeEqual(Severity.WARNING)
                         validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér differansen ($balanseDifferanse) mellom eiendeler ($aktiva) og gjeld " +
-                                    "og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)"
+                            "Korrigér i fila slik at differansen (${memoriakonti + motpostMemoriakonti}) " +
+                                    "mellom memoriakontiene ($memoriakonti) og motkonto for memoriakontiene " +
+                                    "($motpostMemoriakonti) går i 0. (margin på +/- 10')"
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

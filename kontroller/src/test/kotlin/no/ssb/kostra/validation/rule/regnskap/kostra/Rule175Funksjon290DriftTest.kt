@@ -15,27 +15,26 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
-class Rule130SkatteInntekterTest : BehaviorSpec({
+class Rule175Funksjon290DriftTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule130SkatteInntekter()
+        val sut = Rule175Funksjon290Drift()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
         forAll(
-            row("420400", "0A", "1", "800 ", "870", "-1", false),
-            row("420400", "0A", "1", "800 ", "870", "0", true),
-            row("030101", "0A", "1", "800 ", "870", "0", false),
-            row("211100", "0A", "1", "800 ", "870", "0", false),
-            row("420400", "0C", "1", "800 ", "870", "-1", false),
-            row("420400", "0C", "1", "800 ", "870", "0", true),
-            row("420400", "0I", "3", "800 ", "870", "-1", false),
-            row("420400", "0I", "3", "800 ", "870", "0", false),
-            row("420400", "0K", "3", "800 ", "870", "-1", false),
-            row("420400", "0K", "3", "800 ", "870", "0", false),
-            row("420400", "0M", "3", "800 ", "870", "-1", false),
-            row("420400", "0M", "3", "800 ", "870", "0", true),
-            row("420400", "0P", "3", "800 ", "870", "-1", false),
-            row("420400", "0P", "3", "800 ", "870", "0", true),
+            row("420400", "0A", "1", "290 ", "010", "31", true),
+            row("420400", "0A", "1", "290 ", "010", "30", false),
+            row("030101", "0A", "1", "290 ", "010", "31", false),
+            row("420400", "0C", "1", "290 ", "010", "31", false),
+            row("420400", "0C", "1", "290 ", "010", "30", false),
+            row("420400", "0I", "3", "290 ", "010", "31", false),
+            row("420400", "0I", "3", "290 ", "010", "30", false),
+            row("420400", "0K", "3", "290 ", "010", "31", false),
+            row("420400", "0K", "3", "290 ", "010", "30", false),
+            row("420400", "0M", "3", "290 ", "010", "31", true),
+            row("420400", "0M", "3", "290 ", "010", "30", false),
+            row("420400", "0P", "3", "290 ", "010", "31", false),
+            row("420400", "0P", "3", "290 ", "010", "30", false),
         ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
             When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectedResult") {
                 val kostraRecordList = listOf(
@@ -62,7 +61,8 @@ class Rule130SkatteInntekterTest : BehaviorSpec({
                     if (result == true) {
                         validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
                         validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér slik at fila inneholder skatteinntekter ($belop)."
+                            "Korrigér i fila slik at differanse ($belop) på funksjon " +
+                                    "290 interkommunale samarbeid går i 0 i driftsregnskapet. (margin på +/- 30')"
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

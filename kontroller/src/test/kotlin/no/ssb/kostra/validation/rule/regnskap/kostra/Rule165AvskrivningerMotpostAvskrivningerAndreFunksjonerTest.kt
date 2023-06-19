@@ -10,43 +10,38 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
-class Rule120SummeringBalansePassivaTest : BehaviorSpec({
+class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule120SummeringBalansePassiva()
+        val sut = Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
         forAll(
-            row("0B", "2", "31  ", "010", "1", false),
-            row("0B", "2", "31  ", "590", "1", false),
-            row("0B", "2", "31  ", "590", "0", true),
-            row("0D", "2", "31  ", "010", "1", false),
-            row("0D", "2", "31  ", "590", "1", false),
-            row("0D", "2", "31  ", "590", "0", true),
-            row("0J", "5", "31  ", "010", "1", false),
-            row("0J", "5", "31  ", "590", "1", false),
-            row("0J", "5", "31  ", "590", "0", true),
-            row("0L", "5", "31  ", "010", "1", false),
-            row("0L", "5", "31  ", "590", "1", false),
-            row("0L", "5", "31  ", "590", "0", true),
-            row("0N", "5", "31  ", "010", "1", false),
-            row("0N", "5", "31  ", "590", "1", false),
-            row("0N", "5", "31  ", "590", "0", true),
-            row("0Q", "5", "31  ", "010", "1", false),
-            row("0Q", "5", "31  ", "590", "1", false),
-            row("0Q", "5", "31  ", "590", "0", true),
-
-            ) { skjema, kontoklasse, kapittel, sektor, belop, expectedResult ->
-            When("Activa is zero for $skjema, $kontoklasse, $kapittel, $sektor, $belop") {
+            row("420400", "0A", "1", "100 ", "990", "1", true),
+            row("420400", "0A", "1", "100 ", "990", "0", false),
+            row("030101", "0A", "1", "100 ", "990", "1", false),
+            row("420400", "0C", "1", "100 ", "990", "1", true),
+            row("420400", "0C", "1", "100 ", "990", "0", false),
+            row("420400", "0I", "3", "100 ", "990", "1", true),
+            row("420400", "0I", "3", "100 ", "990", "0", false),
+            row("420400", "0K", "3", "100 ", "990", "1", true),
+            row("420400", "0K", "3", "100 ", "990", "0", false),
+            row("420400", "0M", "3", "100 ", "990", "1", true),
+            row("420400", "0M", "3", "100 ", "990", "0", false),
+            row("420400", "0P", "3", "100 ", "990", "1", true),
+            row("420400", "0P", "3", "100 ", "990", "0", false),
+        ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
+            When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
                         index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
+                            RegnskapConstants.FIELD_REGION to region,
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                            RegnskapConstants.FIELD_FUNKSJON to kapittel,
-                            RegnskapConstants.FIELD_SEKTOR to sektor,
+                            RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                            RegnskapConstants.FIELD_ART to art,
                             RegnskapConstants.FIELD_BELOP to belop
                         )
                     )
@@ -61,8 +56,8 @@ class Rule120SummeringBalansePassivaTest : BehaviorSpec({
                     if (result == true) {
                         validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
                         validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital " +
-                                    "($belop), sum sektor 000-990 for kapittel 31-5990 i balanse."
+                            "Korrigér i fila slik at motpost avskrivninger ($belop) kun er " +
+                                    "ført på funksjon 860, art 990 og ikke på funksjonene ([${funksjon.trim()}])"
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

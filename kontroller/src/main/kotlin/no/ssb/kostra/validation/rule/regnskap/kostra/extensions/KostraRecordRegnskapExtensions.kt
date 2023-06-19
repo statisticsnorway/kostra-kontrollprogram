@@ -8,6 +8,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_RESULTAT
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNT_TYPE_DRIFT
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNT_TYPE_INVESTERING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
@@ -51,3 +52,9 @@ fun KostraRecord.isOslo() =
 fun KostraRecord.isOsloBydel() =
     getFieldAsString(FIELD_REGION).substring(0, 4) == "0301"
             && getFieldAsString(FIELD_REGION).substring(4, 6) != "00"
+
+fun KostraRecord.isAktiva() =
+    getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) in 10..29
+
+fun KostraRecord.isPassiva() =
+    getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) in 30..5999

@@ -5,7 +5,6 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -16,33 +15,35 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
-class Rule085SummeringInvesteringUtgiftsposteringerTest : BehaviorSpec({
+class Rule105SummeringDriftInntektsposteringerTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule085SummeringInvesteringUtgiftsposteringer()
+        val sut = Rule105SummeringDriftInntektsposteringer()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
         forAll(
-            row("420400", "0A", "0", "100 ", "010", "1", false),
-            row("420400", "0A", "0", "100 ", "590", "1", false),
-            row("420400", "0A", "0", "100 ", "590", "0", true),
-            row("030101", "0A", "0", "100 ", "590", "0", false),
-            row("420400", "0C", "0", "100 ", "010", "1", false),
-            row("420400", "0C", "0", "100 ", "590", "1", false),
-            row("420400", "0C", "0", "100 ", "590", "0", true),
-            row("420400", "0I", "4", "100 ", "010", "1", false),
-            row("420400", "0I", "4", "100 ", "590", "1", false),
-            row("420400", "0I", "4", "100 ", "590", "0", false),
-            row("420400", "0K", "4", "100 ", "010", "1", false),
-            row("420400", "0K", "4", "100 ", "590", "1", false),
-            row("420400", "0K", "4", "100 ", "590", "0", false),
-            row("420400", "0M", "4", "100 ", "010", "1", false),
-            row("420400", "0M", "4", "100 ", "590", "1", false),
-            row("420400", "0M", "4", "100 ", "590", "0", true),
-            row("420400", "0P", "4", "100 ", "010", "1", false),
-            row("420400", "0P", "4", "100 ", "590", "1", false),
-            row("420400", "0P", "4", "100 ", "590", "0", true),
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
+            row("420400", "0A", "1", "100 ", "600", "-1", false),
+            row("420400", "0A", "1", "100 ", "990", "-1", false),
+            row("420400", "0A", "1", "100 ", "990", "0", true),
+            row("030101", "0A", "1", "100 ", "990", "0", false),
+            row("420400", "0C", "1", "100 ", "600", "-1", false),
+            row("420400", "0C", "1", "100 ", "990", "-1", false),
+            row("420400", "0C", "1", "100 ", "990", "0", true),
+            row("420400", "0I", "3", "100 ", "600", "-1", false),
+            row("420400", "0I", "3", "100 ", "990", "-1", false),
+            row("420400", "0I", "3", "100 ", "990", "0", true),
+            row("420400", "0K", "3", "100 ", "600", "-1", false),
+            row("420400", "0K", "3", "100 ", "990", "-1", false),
+            row("420400", "0K", "3", "100 ", "990", "0", false),
+            row("420400", "0M", "3", "100 ", "600", "-1", false),
+            row("420400", "0M", "3", "100 ", "990", "-1", false),
+            row("420400", "0M", "3", "100 ", "990", "0", true),
+            row("420400", "0P", "3", "100 ", "600", "-1", false),
+            row("420400", "0P", "3", "100 ", "990", "-1", false),
+            row("420400", "0P", "3", "100 ", "990", "0", true),
+
+
+            ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
             When("Expenses is zero for $region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -68,8 +69,8 @@ class Rule085SummeringInvesteringUtgiftsposteringerTest : BehaviorSpec({
                     if (result == true) {
                         validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
                         validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér slik at fila inneholder utgiftsposteringene " +
-                                    "($belop) i investeringsregnskapet"
+                            "Korrigér slik at fila inneholder inntektsposteringene " +
+                                    "($belop) i driftsregnskapet"
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

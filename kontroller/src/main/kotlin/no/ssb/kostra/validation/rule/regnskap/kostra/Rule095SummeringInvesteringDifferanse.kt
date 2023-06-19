@@ -28,7 +28,9 @@ class Rule095SummeringInvesteringDifferanse : AbstractRecordRule(
                     )
         }
         ?.takeUnless { (investeringUtgifter, investeringInntekter) ->
-            investeringUtgifter + investeringInntekter in -30..30
+            0 < investeringUtgifter
+                    && investeringInntekter < 0
+                    && investeringUtgifter + investeringInntekter in -30..30
         }
         ?.let { (investeringUtgifter, investeringInntekter) ->
             val investeringDifferanse = investeringUtgifter + investeringInntekter

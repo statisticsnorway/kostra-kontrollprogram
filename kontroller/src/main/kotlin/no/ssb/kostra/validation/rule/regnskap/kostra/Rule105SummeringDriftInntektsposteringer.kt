@@ -5,25 +5,25 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRecordRule
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isInntekt
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isRegional
 
-class Rule090SummeringInvesteringInntektsposteringer : AbstractRecordRule(
-    "Kontroll 090 : Summeringskontroller investeringsregnskapet, inntektsposteringer i investeringsregnskapet",
+class Rule105SummeringDriftInntektsposteringer : AbstractRecordRule(
+    "Kontroll 105 : Summeringskontroller driftsregnskapet, inntektsposteringer i driftsregnskapet",
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
-        .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningInvesteringRegnskap() }
+        .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
         ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 > it }
-        ?.let { sumInvesteringsInntekter ->
+        ?.let { sumDriftsInntekter ->
             createSingleReportEntryList(
                 messageText = "Korrigér slik at fila inneholder inntektsposteringene " +
-                        "($sumInvesteringsInntekter) i investeringsregnskapet"
+                        "($sumDriftsInntekter) i driftsregnskapet"
             )
         }
 }

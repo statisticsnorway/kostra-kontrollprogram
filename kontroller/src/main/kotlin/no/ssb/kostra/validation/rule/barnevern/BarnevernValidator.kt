@@ -1,5 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern
 
+import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
+import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.barn.KostraValidationUtils.AVGIVER_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.KostraValidationUtils.validate
@@ -14,8 +16,6 @@ import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
 import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
-import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
-import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
@@ -70,14 +70,14 @@ object BarnevernValidator {
                 reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
                         IndividRuleId.INDIVID_04.title,
-                        "Dublett for fødselsnummer for journalnummer"
+                        messageTemplateFunc = { key, values -> "Dublett for fødselsnummer ($key) for journalnummer ($values)" }
                     )
                 )
 
                 reportEntries.addAll(
                     seenJournalNummer.mapToValidationReportEntries(
                         IndividRuleId.INDIVID_05.title,
-                        "Dublett for journalnummer for fødselsnummer"
+                        messageTemplateFunc = { key, values -> "Dublett for journalnummer ($key) for fødselsnummer ($values)" }
                     )
                 )
             } catch (thrown: Throwable) {

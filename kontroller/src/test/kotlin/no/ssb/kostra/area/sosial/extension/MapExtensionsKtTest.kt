@@ -29,7 +29,7 @@ class MapExtensionsKtTest : BehaviorSpec({
                     ValidationReportEntry(
                         severity = Severity.ERROR,
                         ruleName = "~someTitle~",
-                        messageText = "~messageText~ (~listItem~)"
+                        messageText = "Dublett for fødselsnummer (~entry~) for journalnummer (~listItem~)"
                     )
                 )
             )
@@ -39,7 +39,7 @@ class MapExtensionsKtTest : BehaviorSpec({
 
                 val reportEntries = sut.mapToValidationReportEntries(
                     "~someTitle~",
-                    "~messageText~"
+                    messageTemplateFunc = { key, values -> "Dublett for fødselsnummer ($key) for journalnummer ($values)" }
                 )
 
                 Then("result should be as expected") {

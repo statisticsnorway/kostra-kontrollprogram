@@ -63,10 +63,10 @@ object KvalifiseringValidator {
 
         return reportEntries + seenFodselsnummer.mapToValidationReportEntries(
             SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,
-            "Dublett for fødselsnummer for journalnummer"
+            messageTemplateFunc = { key, values -> "Dublett for fødselsnummer ($key) for journalnummer ($values)" }
         ) + seenJournalNummer.mapToValidationReportEntries(
             SosialRuleId.JOURNALNUMMER_DUBLETTER_05B.title,
-            "Dublett for journalnummer for fødselsnummer"
+            messageTemplateFunc = { key, values -> "Dublett for journalnummer ($key) for fødselsnummer ($values)" }
         )
     }
 }

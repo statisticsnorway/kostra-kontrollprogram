@@ -12,11 +12,11 @@ fun MutableMap<String, MutableList<String>>.addKeyOrAddValueIfKeyIsPresent(key: 
 
 fun Map<String, Collection<String>>.mapToValidationReportEntries(
     ruleName: String,
-    messageText: String,
+    messageTemplateFunc: (key: String, values: String) -> String
 ) = this.filterValues { it.any() }.map { entry ->
     ValidationReportEntry(
         severity = Severity.ERROR,
         ruleName = ruleName,
-        messageText = "$messageText (${entry.value.joinToString(", ")})"
+        messageText = messageTemplateFunc(entry.key, entry.value.joinToString(", "))
     )
 }

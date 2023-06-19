@@ -67,7 +67,8 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_04.title,
-                    messageText = "Dublett for fødselsnummer for journalnummer (${kostraIndividInTest.journalnummer})"
+                    messageText = "Dublett for fødselsnummer (${kostraIndividInTest.fodselsnummer}) for " +
+                            "journalnummer (${kostraIndividInTest.journalnummer})"
                 )
             ),
             row(
@@ -78,7 +79,8 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_05.title,
-                    messageText = "Dublett for journalnummer for fødselsnummer (${kostraIndividInTest.fodselsnummer})"
+                    messageText = "Dublett for journalnummer (${kostraIndividInTest.journalnummer}) for " +
+                            "fødselsnummer (${kostraIndividInTest.fodselsnummer})"
                 )
             ),
             row(

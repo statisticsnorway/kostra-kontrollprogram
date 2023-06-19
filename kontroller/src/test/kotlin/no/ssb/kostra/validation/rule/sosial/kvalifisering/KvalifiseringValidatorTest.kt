@@ -71,20 +71,14 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 listOf(kostraRecordsInTests(), kostraRecordsInTests()),
                 listOf(
                     ValidationReportEntry(
-                        caseworker = "",
-                        journalId = "",
-                        individId = "",
                         severity = Severity.ERROR,
                         ruleName = SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,
-                        messageText = "Dublett for fødselsnummer for journalnummer (~journalNummer~)"
+                        messageText = "Dublett for fødselsnummer ($fodselsnummer) for journalnummer (~journalNummer~)"
                     ),
                     ValidationReportEntry(
-                        caseworker = "",
-                        journalId = "",
-                        individId = "",
                         severity = Severity.ERROR,
                         ruleName = SosialRuleId.JOURNALNUMMER_DUBLETTER_05B.title,
-                        messageText = "Dublett for journalnummer for fødselsnummer ($fodselsnummer)"
+                        messageText = "Dublett for journalnummer (~journalNummer~) for fødselsnummer ($fodselsnummer)"
                     )
                 )
             )

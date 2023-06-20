@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
+import no.ssb.kostra.area.sosial.extension.toFourDigitYear
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -12,12 +13,11 @@ class Rule04OppgaveAar : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).takeIf {
-            it != arguments.aargang.toInt() - 2_000
-        }?.let {
-            createSingleReportEntryList(
-                "Korrigér årgang. Fant ${context.getFieldAsString(VERSION_COL_NAME)}, forventet " +
-                        "${arguments.aargang.toInt() - 2_000}"
-            )
-        }
+        context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).toFourDigitYear()
+            .takeIf { it != arguments.aargang.toInt() }?.let {
+                createSingleReportEntryList(
+                    "Korrigér årgang. Fant ${context.getFieldAsString(VERSION_COL_NAME)}, forventet " +
+                            "${arguments.aargang.toInt() - 2_000}"
+                )
+            }
 }

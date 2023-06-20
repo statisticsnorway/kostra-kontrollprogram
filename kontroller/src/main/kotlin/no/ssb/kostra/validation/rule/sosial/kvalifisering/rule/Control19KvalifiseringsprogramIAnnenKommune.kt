@@ -19,8 +19,8 @@ class Control19KvalifiseringsprogramIAnnenKommune : AbstractRule<KostraRecord>(
             .takeIf { fieldDefinitions.findByColumnName(KVP_KOMM_COL_NAME).codeIsMissing(it) }
             ?.let {
                 createSingleReportEntryList(
-                    "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke fylt ut, " +
-                            "eller feil kode er benyttet ($it). Feltet er obligatorisk å fylle ut."
+                    "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke " +
+                            "fylt ut, eller feil kode er benyttet ($it). Feltet er obligatorisk å fylle ut."
                 )
             }
 }

@@ -7,6 +7,7 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
@@ -14,7 +15,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 
 class Control15VedtakDatoTest : BehaviorSpec({
     val sut = Control15VedtakDato()
@@ -64,7 +64,7 @@ class Control15VedtakDatoTest : BehaviorSpec({
                         it.severity shouldBe Severity.ERROR
                         it.messageText shouldBe "Feltet for 'Hvilken dato det ble fattet vedtak om " +
                                 "program? (søknad innvilget)' med verdien ($vedtakDate) enten mangler utfylling, " +
-                                "har ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret (22). " +
+                                "har ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret (2022). " +
                                 "Feltet er obligatorisk å fylle ut."
                     }
                 }

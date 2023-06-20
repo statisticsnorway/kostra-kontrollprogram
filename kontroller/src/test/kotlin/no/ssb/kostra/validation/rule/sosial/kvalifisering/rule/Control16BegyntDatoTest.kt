@@ -64,7 +64,7 @@ class Control16BegyntDatoTest : BehaviorSpec({
                         it.severity shouldBe Severity.ERROR
                         it.messageText shouldBe "Feltet for 'Hvilken dato begynte deltakeren i program? " +
                                 "(iverksettelse)' med verdien ($vedtakDate) enten mangler utfylling, har ugyldig dato " +
-                                "eller dato som er eldre enn 4 år fra rapporteringsåret (22). Feltet er " +
+                                "eller dato som er eldre enn 4 år fra rapporteringsåret (2022). Feltet er " +
                                 "obligatorisk å fylle ut."
                     }
                 }

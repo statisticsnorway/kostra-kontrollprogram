@@ -20,8 +20,9 @@ class Control26MottattStotte : AbstractRule<KostraRecord>(
             ?.let { value ->
                 createSingleReportEntryList(
                     "Feltet for 'Har deltakeren i ${arguments.aargang} i løpet av perioden med " +
-                            "kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
-                            "bostøtte?', er ikke utfylt eller feil kode ($value) er benyttet. Feltet er obligatorisk å fylle ut."
+                            "kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, kommunal bostøtte eller " +
+                            "Husbankens bostøtte?', er ikke utfylt eller feil kode ($value) er benyttet. " +
+                            "Feltet er obligatorisk å fylle ut."
                 )
             }
 }

@@ -29,9 +29,10 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
                     fieldDefinitions.findByColumnName(it).codeIsMissing(context.getFieldAsString(it))
                 }.takeIf { it.isNotEmpty() }?.let {
                     createSingleReportEntryList(
-                        "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av perioden " +
-                                "med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
-                                "bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values"
+                        "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av " +
+                                "perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte " +
+                                "eller Husbankens bostøtte?\" har ugyldige koder. " +
+                                "Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values"
                     )
                 }
             }
@@ -42,10 +43,10 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
                     .takeIf { it.isNotEmpty() }
                     ?.let {
                         createSingleReportEntryList(
-                            "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av " +
-                                    "perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte " +
-                                    "eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. " +
-                                    "Det er IKKE mottatt støtte. $values"
+                            "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet " +
+                                    "av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                                    "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. " +
+                                    "Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte. $values"
                         )
                     }
             }

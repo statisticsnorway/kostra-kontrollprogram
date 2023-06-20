@@ -5,10 +5,78 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.BarnevernTestData.dateInTest
+import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.MEASURE_CATEGORY_CODE_8_2
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraKategoriTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
 import java.time.LocalDate
 
 class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
+
+    Given("erPlasseringsTiltak") {
+        forAll(
+            row(
+                "kategori#kode not matching, expect false",
+                kostraTiltakTypeInTest,
+                false
+            ),
+            row(
+                "kategori#kode 1.1, expect true",
+                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = "1.1")),
+                true
+            ),
+            row(
+                "kategori#kode 2.1, expect true",
+                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = "2.1")),
+                true
+            ),
+            row(
+                "kategori#kode 8.2, expect true",
+                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = MEASURE_CATEGORY_CODE_8_2)),
+                true
+            )
+        ) { description, measure, expected ->
+
+            When(description) {
+                val result = measure.erPlasseringsTiltak()
+
+                Then("result should be as expected") {
+                    result shouldBe expected
+                }
+            }
+        }
+    }
+
+    Given("LocalDate.maxDate") {
+        forAll(
+            row(
+                "first date before second, expect second",
+                dateInTest,
+                dateInTest.plusDays(1),
+                dateInTest.plusDays(1)
+            ),
+            row(
+                "dates are equal, expect either",
+                dateInTest,
+                dateInTest,
+                dateInTest
+            ),
+            row(
+                "first date after second, expect first",
+                dateInTest.plusDays(1),
+                dateInTest,
+                dateInTest.plusDays(1)
+            )
+        ) { description, firstDate, secondDate, expected ->
+
+            When(description) {
+                val result = firstDate.maxDate(secondDate)
+
+                Then("result should be as expected") {
+                    result shouldBe expected
+                }
+            }
+        }
+    }
 
     Given("isOverlapWithAtLeastThreeMonthsOf") {
         val sut = kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1))

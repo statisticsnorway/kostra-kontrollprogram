@@ -18,7 +18,8 @@ class Control21Ytelser : AbstractRule<KostraRecord>(
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
         context.getFieldAsString(YTELSE_SOSHJELP_COL_NAME)
             .takeIf { value ->
-                value == "1" && fieldDefinitions.findByColumnName(YTELSE_TYPE_SOSHJ_COL_NAME)
+                value == "1" && fieldDefinitions
+                    .findByColumnName(YTELSE_TYPE_SOSHJ_COL_NAME)
                     .codeIsMissing(context.getFieldAsString(YTELSE_TYPE_SOSHJ_COL_NAME))
             }?.let {
                 createSingleReportEntryList(

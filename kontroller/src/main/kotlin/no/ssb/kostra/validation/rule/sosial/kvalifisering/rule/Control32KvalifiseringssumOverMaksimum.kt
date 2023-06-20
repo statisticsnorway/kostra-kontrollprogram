@@ -13,7 +13,7 @@ class Control32KvalifiseringssumOverMaksimum : AbstractRule<KostraRecord>(
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
         context.getFieldAsInteger(KVP_STONAD_COL_NAME)
-            .takeIf { it != null && it > STONAD_SUM_MAX }
+            ?.takeIf { it > STONAD_SUM_MAX }
             ?.let { belop ->
                 createSingleReportEntryList(
                     "Kvalifiseringsstønaden ($belop) " +

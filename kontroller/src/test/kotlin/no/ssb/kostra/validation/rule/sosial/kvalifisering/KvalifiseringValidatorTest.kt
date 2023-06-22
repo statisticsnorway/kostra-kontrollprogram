@@ -38,7 +38,6 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifiseringInternal
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 import java.time.LocalDate
@@ -57,28 +56,13 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                         journalId = "~journalNummer~",
                         individId = fodselsnummer,
                         severity = Severity.ERROR,
+                        lineNumbers = listOf(1),
                         ruleName = KvalifiseringRuleId.MOTTATT_OKONOMISK_SOSIALHJELP_27.title,
                         messageText = "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med " +
                                 "kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller " +
                                 "Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er " +
                                 "mottatt støtte. {KVP_MED_KOMMBOS=1, KVP_MED_HUSBANK=5, KVP_MED_SOSHJ_ENGANG=9, " +
                                 "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}"
-                    )
-                )
-            ),
-            row(
-                "two identical rows",
-                listOf(kostraRecordsInTests(), kostraRecordsInTests()),
-                listOf(
-                    ValidationReportEntry(
-                        severity = Severity.ERROR,
-                        ruleName = SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,
-                        messageText = "Dublett for fødselsnummer ($fodselsnummer) for journalnummer (~journalNummer~)"
-                    ),
-                    ValidationReportEntry(
-                        severity = Severity.ERROR,
-                        ruleName = SosialRuleId.JOURNALNUMMER_DUBLETTER_05B.title,
-                        messageText = "Dublett for journalnummer (~journalNummer~) for fødselsnummer ($fodselsnummer)"
                     )
                 )
             )

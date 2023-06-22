@@ -1,10 +1,20 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.*
+import no.ssb.kostra.validation.rule.sosial.rule.*
 
 object KvalifiseringRules {
 
     val kvalifiseringRules = listOf(
+        Rule03Kommunenummer(),
+        Rule03Bydelsnummer(),
+        Rule04OppgaveAar(),
+        Rule05Fodselsnummer(),
+        Rule06AlderUnder18Aar(),
+        Rule07AlderEr68AarEllerOver(),
+        Rule08Kjonn(),
+        Rule09Sivilstand(),
+
         Control10Bu18(),
         Control11Bu18AntBu18(),
         Control12AntBu18Bu18(),

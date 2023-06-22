@@ -15,18 +15,22 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRecordRule(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
-        .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
-        .filter { kostraRecord ->
-            kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_FUNKSJON) in 800..899
-                    && kostraRecord.getFieldAsString(FIELD_ART) == "590"
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) > 0
+        .filter {
+            !it.isOsloBydel()
+                    && it.isBevilgningDriftRegnskap()
+                    && it.getFieldAsIntegerDefaultEquals0(FIELD_FUNKSJON) in 800..899
+                    && it.getFieldAsString(FIELD_ART) == "590"
         }
-        .takeIf { it.any() }
+        .takeIf {
+            it.any()
+        }
         ?.let { kostraRecordList ->
             kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
                     kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
         }
-        ?.takeUnless { (avskrivninger, funksjoner) -> 0 < avskrivninger }
+        ?.takeUnless { (avskrivninger, _) ->
+            avskrivninger == 0
+        }
         ?.let { (avskrivninger, funksjoner) ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +

@@ -50,7 +50,7 @@ class Rule05aFoedselsnummerDubletterTest : BehaviorSpec({
             When(description) {
                 val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
-                Then("expect empty lsit") {
+                Then("expect empty list") {
                     reportEntryList.shouldBeNull()
                 }
             }
@@ -63,7 +63,7 @@ class Rule05aFoedselsnummerDubletterTest : BehaviorSpec({
                 "two records with same fødselsnummer",
                 listOf(
                     kostraRecordInTest(),
-                    kostraRecordInTest()
+                    kostraRecordInTest(journalId = "~journalId2~")
                 )
             )
         ) { description, context ->
@@ -90,12 +90,15 @@ class Rule05aFoedselsnummerDubletterTest : BehaviorSpec({
             LocalDate.now()
         )
 
-        private fun kostraRecordInTest(foedselsnummer: String = fodselsnummerInTest) = KostraRecord(
+        private fun kostraRecordInTest(
+            foedselsnummer: String = fodselsnummerInTest,
+            journalId: String = "~journalId~"
+        ) = KostraRecord(
             1,
             mapOf(
                 SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                PERSON_JOURNALNR_COL_NAME to "~journalNummer~",
+                PERSON_JOURNALNR_COL_NAME to journalId,
                 PERSON_FODSELSNR_COL_NAME to foedselsnummer
             ),
             fieldDefinitions.associate { with(it) { name to it } }

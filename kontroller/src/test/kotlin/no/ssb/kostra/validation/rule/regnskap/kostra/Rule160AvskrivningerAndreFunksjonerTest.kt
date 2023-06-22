@@ -62,7 +62,7 @@ class Rule160AvskrivningerAndreFunksjonerTest : BehaviorSpec({
                         validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
                         validationReportEntries[0].messageText.shouldBeEqual(
                             "Korrigér i fila slik at avskrivningene ($belop) føres på " +
-                                    "tjenestefunksjon og ikke på funksjonene ($funksjon)"
+                                    "tjenestefunksjon og ikke på funksjonene ([${funksjon.trim()}])"
                         )
                     } else {
                         validationReportEntries.shouldBeNull()

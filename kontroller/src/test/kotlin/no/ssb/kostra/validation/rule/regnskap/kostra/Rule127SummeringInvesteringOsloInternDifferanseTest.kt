@@ -30,7 +30,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "298",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "0"
                     ),
                     mapOf(
                         FIELD_REGION to "030100",
@@ -50,7 +50,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "298",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030100",
@@ -58,7 +58,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "798",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -70,7 +70,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "298",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "0"
                     ),
                     mapOf(
                         FIELD_REGION to "030101",

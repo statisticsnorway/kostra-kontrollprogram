@@ -30,7 +30,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -38,7 +38,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -50,7 +50,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -70,7 +70,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030101",
@@ -90,7 +90,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -98,7 +98,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -110,7 +110,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -130,7 +130,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -138,7 +138,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -150,7 +150,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -170,7 +170,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -178,7 +178,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -190,7 +190,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -210,7 +210,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -218,7 +218,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -230,7 +230,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -250,7 +250,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -258,7 +258,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "860 ",
                         FIELD_ART to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -270,7 +270,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",

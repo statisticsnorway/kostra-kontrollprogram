@@ -30,7 +30,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -38,7 +38,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -50,7 +50,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -70,7 +70,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030100",
@@ -90,7 +90,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030101",
@@ -110,7 +110,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -118,7 +118,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -130,7 +130,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "0",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -150,7 +150,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -158,7 +158,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -170,7 +170,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -190,7 +190,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -198,7 +198,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -210,7 +210,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -230,7 +230,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -238,7 +238,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -250,7 +250,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -270,7 +270,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -278,7 +278,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -290,7 +290,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "4",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",

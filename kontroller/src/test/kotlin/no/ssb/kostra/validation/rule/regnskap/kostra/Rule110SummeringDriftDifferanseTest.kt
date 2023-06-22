@@ -31,7 +31,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -39,7 +39,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -51,7 +51,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -71,7 +71,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030100",
@@ -91,7 +91,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "030101",
@@ -111,7 +111,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -119,7 +119,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -131,7 +131,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "1",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -151,7 +151,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -159,7 +159,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -171,7 +171,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -191,7 +191,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -199,7 +199,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -211,7 +211,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -231,7 +231,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -239,7 +239,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -251,7 +251,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -271,7 +271,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",
@@ -279,7 +279,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "600",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -291,7 +291,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "3",
                         FIELD_FUNKSJON to "100 ",
                         FIELD_ART to "590",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_REGION to "420400",

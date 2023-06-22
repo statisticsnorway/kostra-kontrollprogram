@@ -28,14 +28,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0B",
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -46,7 +46,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0B",
@@ -64,14 +64,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0D",
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -82,7 +82,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "2",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0D",
@@ -100,14 +100,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0J",
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -118,7 +118,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0J",
@@ -136,14 +136,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0L",
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -154,7 +154,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0L",
@@ -172,14 +172,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0N",
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -190,7 +190,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0N",
@@ -208,14 +208,14 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0Q",
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9999",
                         FIELD_SEKTOR to "990",
-                        FIELD_BELOP to "-1"
+                        FIELD_BELOP to "-100"
                     )
                 ), false
             ),
@@ -226,7 +226,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                         FIELD_KONTOKLASSE to "5",
                         FIELD_KAPITTEL to "9100",
                         FIELD_SEKTOR to "000",
-                        FIELD_BELOP to "1"
+                        FIELD_BELOP to "100"
                     ),
                     mapOf(
                         FIELD_SKJEMA to "0Q",

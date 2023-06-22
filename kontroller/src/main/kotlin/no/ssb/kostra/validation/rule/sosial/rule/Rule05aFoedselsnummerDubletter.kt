@@ -17,18 +17,18 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
         context.takeIf { it.size > 1 }?.let {
             it.filter { kostraRecord ->
-                    isValidSocialSecurityIdOrDnr(kostraRecord.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))
-                }
+                isValidSocialSecurityIdOrDnr(kostraRecord.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))
+            }
                 .groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (foedselsnummer, group) ->
                     group.map { kostraRecord ->
                         val journalId = kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME)
+
                         val otherJournalIds = group
-                            .filter { filterRecord -> filterRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) != foedselsnummer }
-                            .joinToString(", ") { joinRecord ->
-                                joinRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME)
-                            }
+                            .map { innerRecord -> innerRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
+                            .filter { innerJournalId -> innerJournalId != journalId }
+                            .joinToString(", ")
 
                         createValidationReportEntry(
                             "Fødselsnummeret i journalnummer $journalId fins også i journalene $otherJournalIds",

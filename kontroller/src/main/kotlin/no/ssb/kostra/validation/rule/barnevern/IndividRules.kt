@@ -1,8 +1,9 @@
-package no.ssb.kostra.validation.rule.barnevern.individrule
+package no.ssb.kostra.validation.rule.barnevern
 
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.barnevern.individrule.*
 
 class IndividRules {
 

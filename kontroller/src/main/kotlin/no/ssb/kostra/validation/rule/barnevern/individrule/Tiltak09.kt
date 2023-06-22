@@ -5,6 +5,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.barnevern.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.extension.erPlasseringsTiltak
 import no.ssb.kostra.validation.rule.barnevern.extension.isOverlapWithAtLeastThreeMonthsOf
 import java.time.LocalDate

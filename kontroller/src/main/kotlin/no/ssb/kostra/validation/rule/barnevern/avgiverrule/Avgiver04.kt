@@ -4,6 +4,7 @@ import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.barnevern.AvgiverRuleId
 
 class Avgiver04 : AbstractRule<KostraAvgiverType>(
     AvgiverRuleId.AVGIVER_04.title,

@@ -12,10 +12,6 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRuleId
-import no.ssb.kostra.validation.rule.barnevern.avgiverrule.AvgiverRules
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleId
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRules
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
@@ -38,6 +34,9 @@ object BarnevernValidator {
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
+            var seenAvgivere = 0
+            var seenIndivider = 0
+
             try {
                 val xmlStreamReader: XMLStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(fileStream)
 
@@ -49,11 +48,14 @@ object BarnevernValidator {
                     when (xmlStreamReader.localName) {
                         /** process  avgiver */
                         AVGIVER_XML_TAG -> {
+                            seenAvgivere++
                             reportEntries.addAll(processAvgiver(xmlStreamReader, arguments))
                         }
 
                         /** process individ */
                         INDIVID_XML_TAG -> {
+                            seenIndivider++
+
                             reportEntries.addAll(
                                 processIndivid(
                                     xmlStreamReader,
@@ -65,6 +67,26 @@ object BarnevernValidator {
                             )
                         }
                     }
+                }
+
+                if (seenAvgivere != 1) {
+                    reportEntries.add(
+                        ValidationReportEntry(
+                            severity = Severity.ERROR,
+                            ruleName = AvgiverRuleId.AVGIVER_00.title,
+                            messageText = "Antall avgivere skal være 1, fant $seenAvgivere"
+                        )
+                    )
+                }
+
+                if (seenIndivider < 1) {
+                    reportEntries.add(
+                        ValidationReportEntry(
+                            severity = Severity.ERROR,
+                            ruleName = IndividRuleId.INDIVID_00.title,
+                            messageText = "Filen mangler individer"
+                        )
+                    )
                 }
 
                 reportEntries.addAll(

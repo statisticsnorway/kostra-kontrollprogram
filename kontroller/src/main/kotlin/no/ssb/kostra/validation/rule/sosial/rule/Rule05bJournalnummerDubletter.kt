@@ -15,14 +15,13 @@ class Rule05bJournalnummerDubletter : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
         context.takeIf { it.size > 1 }?.let {
             context
-                .mapIndexed { index, kostraRecord -> kostraRecord to index + 1 }
-                .groupBy { (kostraRecord, _) -> kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
+                .groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (journalId, group) ->
-                    group.map { (kostraRecord, lineNumber) ->
+                    group.map { kostraRecord ->
                         createValidationReportEntry(
                             "Journalnummer $journalId forekommer ${group.size} ganger",
-                            lineNumbers = listOf(lineNumber)
+                            lineNumbers = listOf(kostraRecord.index)
                         ).copy(
                             caseworker = kostraRecord.getFieldAsString(KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME),
                             journalId = journalId,

@@ -34,7 +34,7 @@ object KvalifiseringValidator {
         kostraRecords: List<KostraRecord>,
         arguments: KotlinArguments
     ): List<ValidationReportEntry> {
-        val reportEntries = kostraRecords.asSequence().mapIndexed { index, record ->
+        val reportEntries = kostraRecords.asSequence().map { record ->
             kvalifiseringRules
                 .mapNotNull { it.validate(record, arguments) }
                 .flatten()
@@ -43,7 +43,7 @@ object KvalifiseringValidator {
                         caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
                         journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
                         individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME),
-                        lineNumbers = listOf(index + 1)
+                        lineNumbers = listOf(record.index)
                     )
                 }
         }.filter { it.any() }.flatten().toList()

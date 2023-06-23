@@ -20,9 +20,23 @@ class Rule001RecordLengthTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
+                "record length is OK, but it starts with tab char, expect error",
+                2,
+                listOf("\tK"),
+                1,
+                listOf(1)
+            ),
+            row(
                 "record length is OK, but it ends with tab char, expect error",
                 2,
-                listOf("O\\t"),
+                listOf("O\t"),
+                1,
+                listOf(1)
+            ),
+            row(
+                "record length is OK, but it contains tab char, expect error",
+                3,
+                listOf("O\tK"),
                 1,
                 listOf(1)
             ),

@@ -65,21 +65,6 @@ class Rule001RecordLengthTest : BehaviorSpec({
             }
         }
     }
-
-    Given("String.containsTabChars") {
-        forAll(
-            row("\tK", true),
-            row("O\t", true),
-            row("O\tK", true),
-            row("\t".repeat(3), true),
-            row("42", false),
-        ) { sut, expected ->
-
-            When("$sut $expected") {
-                sut.containsTabChars().shouldBe(expected)
-            }
-        }
-    }
 }) {
     companion object {
         private const val OK_STRING = "OK"

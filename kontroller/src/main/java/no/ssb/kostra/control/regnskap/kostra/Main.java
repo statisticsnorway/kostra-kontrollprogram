@@ -240,9 +240,7 @@ public class Main {
                 result.addAll(konserninterneArter);
             }
 
-            case "0B", "0D", "0J", "0L", "0N", "0Q" -> {
-                result.addAll(basisSektorer);
-            }
+            case "0B", "0D", "0J", "0L", "0N", "0Q" -> result.addAll(basisSektorer);
         }
 
         return result.stream()

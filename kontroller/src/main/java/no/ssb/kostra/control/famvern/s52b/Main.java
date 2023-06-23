@@ -178,7 +178,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("STRUKTUR_GR_B"),
-                    currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("STRUKTUR_GR_B").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -194,7 +194,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("HOVEDI_GR_B"),
-                    currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("HOVEDI_GR_B").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1Boolsk.doControl(
                     errorReport
@@ -329,7 +329,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("TOLK_B"),
-                    currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("TOLK_B").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -345,7 +345,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("STATUS_ARETSSL_B"),
-                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_B").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                     errorReport

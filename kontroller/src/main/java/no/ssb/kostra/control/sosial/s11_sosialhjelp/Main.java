@@ -261,7 +261,7 @@ public class Main {
                         , Constants.CRITICAL_ERROR
                 ),
                 record.getFieldAsString("BU18"),
-                record.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("BU18").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control11AntallBarnIHusholdningenMangler(
@@ -350,7 +350,7 @@ public class Main {
                         , Constants.CRITICAL_ERROR
                 )
                 , record.getFieldAsString(VKLO)
-                , record.getFieldDefinitionByName(VKLO).getCodeList().stream().map(Code::getCode).toList()
+                , record.getFieldDefinitionByName(VKLO).getCodeList().stream().map(Code::code).toList()
         );
     }
 
@@ -367,11 +367,11 @@ public class Main {
                         , record.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 15 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("1"))).map(Code::value).collect(Collectors.joining("")) + "."
                         , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("1"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("1"))).map(Code::value).collect(Collectors.joining("")) + ". "
                         + "Arbeidssituasjonen er '" + record.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
-                        + record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("01", "02"))).map(Code::toString).toList()
+                        + record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("01", "02"))).map(Code::toString).toList()
                         + "'. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR
                 )
@@ -388,13 +388,13 @@ public class Main {
 
         errorReport.incrementCount();
         final var vklo = record.getFieldDefinitionByName(VKLO).getCodeList().stream()
-                .filter(c -> Comparator.isCodeInCodeList(c.getCode(), vkloCodeList))
-                .map(Code::getValue)
+                .filter(c -> Comparator.isCodeInCodeList(c.code(), vkloCodeList))
+                .map(Code::value)
                 .collect(Collectors.joining(""));
 
         final var arbsit = record.getFieldAsTrimmedString(ARBSIT);
         final var arbsitList = record.getFieldDefinitionByName(ARBSIT).getCodeList().stream()
-                .filter(c -> Comparator.isCodeInCodeList(c.getCode(), arbsitCodeList))
+                .filter(c -> Comparator.isCodeInCodeList(c.code(), arbsitCodeList))
                 .map(Code::toString)
                 .toList()
                 .toString();
@@ -478,9 +478,9 @@ public class Main {
                         , record.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 20 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("3"))).map(Code::value).collect(Collectors.joining("")) + "."
                         , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("3"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("3"))).map(Code::value).collect(Collectors.joining("")) + ". "
                         + "Arbeidssituasjonen er '" + record.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
                         + record.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().map(Code::toString).toList()
                         + "'. Feltet er obligatorisk å fylle ut."
@@ -507,9 +507,9 @@ public class Main {
                         , record.getFieldAsString(PERSON_FODSELSNR)
                         , " "
                         , "Kontroll 21 Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("5"))).map(Code::getValue).collect(Collectors.joining("")) + "."
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("5"))).map(Code::value).collect(Collectors.joining("")) + "."
                         , "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er "
-                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.getCode(), List.of("5"))).map(Code::getValue).collect(Collectors.joining("")) + ". "
+                        + record.getFieldDefinitionByName(VKLO).getCodeList().stream().filter(c -> Comparator.isCodeInCodeList(c.code(), List.of("5"))).map(Code::value).collect(Collectors.joining("")) + ". "
                         + "Arbeidssituasjonen er '" + record.getFieldAsTrimmedString(ARBSIT) + "', forventet én av '"
                         + record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::toString).toList()
                         + "'. Feltet er obligatorisk å fylle ut."
@@ -573,10 +573,10 @@ public class Main {
 
         errorReport.incrementCount();
 
-        final var trygdeSituasjon = record.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString(TRYGDESIT))).toList();
+        final var trygdeSituasjon = record.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.code().equalsIgnoreCase(record.getFieldAsString(TRYGDESIT))).toList();
         final var t = (!trygdeSituasjon.isEmpty()) ? trygdeSituasjon.get(0) : new Code(UOPPGITT, UOPPGITT);
 
-        final var arbeidSituasjon = record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString(ARBSIT))).toList();
+        final var arbeidSituasjon = record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> c.code().equalsIgnoreCase(record.getFieldAsString(ARBSIT))).toList();
         final var a = (!arbeidSituasjon.isEmpty()) ? arbeidSituasjon.get(0) : new Code(UOPPGITT, UOPPGITT);
 
         return ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
@@ -593,7 +593,7 @@ public class Main {
                 , record.getFieldAsString(TRYGDESIT)
                 , List.of("04", "07")
                 , record.getFieldAsString(ARBSIT)
-                , record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::getCode).filter(c -> Comparator.isCodeInCodeList(c, List.of("02", "04", "07"))).toList()
+                , record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::code).filter(c -> Comparator.isCodeInCodeList(c, List.of("02", "04", "07"))).toList()
         );
     }
 
@@ -602,10 +602,10 @@ public class Main {
 
         errorReport.incrementCount();
 
-        final var trygdeSituasjon = record.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString(TRYGDESIT))).toList();
+        final var trygdeSituasjon = record.getFieldDefinitionByName(TRYGDESIT).getCodeList().stream().filter(c -> c.code().equalsIgnoreCase(record.getFieldAsString(TRYGDESIT))).toList();
         final var t = (!trygdeSituasjon.isEmpty()) ? trygdeSituasjon.get(0) : new Code(UOPPGITT, UOPPGITT);
 
-        final var arbeidSituasjon = record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> c.getCode().equalsIgnoreCase(record.getFieldAsString(ARBSIT))).toList();
+        final var arbeidSituasjon = record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().filter(c -> c.code().equalsIgnoreCase(record.getFieldAsString(ARBSIT))).toList();
         final var a = (!arbeidSituasjon.isEmpty()) ? arbeidSituasjon.get(0) : new Code(UOPPGITT, UOPPGITT);
 
         if (!(record.getFieldAsString(VKLO).equalsIgnoreCase("3")
@@ -645,7 +645,7 @@ public class Main {
                         , Constants.CRITICAL_ERROR
                 )
                 , record.getFieldAsString(ARBSIT)
-                , record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName(ARBSIT).getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control26StonadsmaanederGyldigeKoder(
@@ -658,7 +658,7 @@ public class Main {
                 .anyMatch(field -> record.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
-                        .map(Code::getCode)
+                        .map(Code::code)
                         .toList()
                         .contains(record.getFieldAsString(field))
                 );
@@ -722,7 +722,7 @@ public class Main {
                 .anyMatch(field -> record.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
-                        .map(Code::getCode)
+                        .map(Code::code)
                         .toList()
                         .contains(record.getFieldAsString(field))
                 );
@@ -759,7 +759,7 @@ public class Main {
                 .anyMatch(field -> record.getFieldDefinitionByName(field)
                         .getCodeList()
                         .stream()
-                        .map(Code::getCode)
+                        .map(Code::code)
                         .toList()
                         .contains(record.getFieldAsString(field))
                 );
@@ -869,7 +869,7 @@ public class Main {
                         + "Utfylt verdi er '" + record.getFieldAsString(GITT_OKONOMIRAD) + "'. Feltet er obligatorisk å fylle ut."
                         , Constants.CRITICAL_ERROR)
                 , record.getFieldAsString(GITT_OKONOMIRAD)
-                , record.getFieldDefinitionByName(GITT_OKONOMIRAD).getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName(GITT_OKONOMIRAD).getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control33UtarbeidelseAvIndividuellPlan(
@@ -889,7 +889,7 @@ public class Main {
                         + "Utfylt verdi er '" + record.getFieldAsString(FAAT_INDIVIDUELL_PLAN) + "'. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR)
                 , record.getFieldAsString(FAAT_INDIVIDUELL_PLAN)
-                , record.getFieldDefinitionByName(FAAT_INDIVIDUELL_PLAN).getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName(FAAT_INDIVIDUELL_PLAN).getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control35Boligsituasjon(
@@ -909,7 +909,7 @@ public class Main {
                         + "Utfylt verdi er '" + record.getFieldAsString(BOSIT) + "'. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR)
                 , record.getFieldAsString(BOSIT)
-                , record.getFieldDefinitionByName(BOSIT).getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName(BOSIT).getCodeList().stream().map(Code::code).toList());
     }
 
 
@@ -1010,7 +1010,7 @@ public class Main {
                         + "Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR)
                 , record.getFieldAsString(VILKARSOSLOV)
-                , record.getFieldDefinitionByName(VILKARSOSLOV).getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName(VILKARSOSLOV).getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control40ForsteVilkarIAaretSambo(
@@ -1030,7 +1030,7 @@ public class Main {
                         + "Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
                         , Constants.CRITICAL_ERROR)
                 , record.getFieldAsString("VILKARSAMEKT")
-                , record.getFieldDefinitionByName("VILKARSAMEKT").getCodeList().stream().map(Code::getCode).toList());
+                , record.getFieldDefinitionByName("VILKARSAMEKT").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control41DatoForUtbetalingsvedtak(
@@ -1093,7 +1093,7 @@ public class Main {
                         record.getFieldDefinitionByName(field)
                                 .getCodeList()
                                 .stream()
-                                .map(Code::getCode)
+                                .map(Code::code)
                                 .toList()));
 
         if (!(vilkar.equalsIgnoreCase("1") && isNoneFilledIn)) {

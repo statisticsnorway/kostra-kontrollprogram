@@ -10,7 +10,7 @@ import java.time.Year
 object BarnevernTestData {
 
     val dateInTest: LocalDate = LocalDate.now()
-    const val KOSTRA_IS_CLOSED_FALSE = "2"
+    private const val KOSTRA_IS_CLOSED_FALSE = "2"
 
     val kostraAvgiverTypeInTest = KostraAvgiverType(
         organisasjonsnummer = "123456789",

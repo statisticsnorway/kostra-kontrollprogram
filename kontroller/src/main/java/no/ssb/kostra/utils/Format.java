@@ -445,8 +445,7 @@ public class Format {
     public static int parseInt(String s) {
         String xstr = stripNumStr(s);
         try {
-            int ival = Integer.parseInt(xstr);
-            return (ival);
+            return Integer.parseInt(xstr);
         } catch (Exception e) {
             //System.out.println(e.toString());
             return (0);
@@ -610,7 +609,7 @@ public class Format {
             long l = (long) (factor * fr + 0.5);
 
             z = leading_zeroes + l;
-            z = z.substring(z.length() - precision, z.length());
+            z = z.substring(z.length() - precision);
         }
 
 
@@ -661,7 +660,7 @@ public class Format {
             p = p + (-e);
         }
 
-        return f + p.substring(p.length() - 3, p.length());
+        return f + p.substring(p.length() - 3);
     }
 
     private int width;

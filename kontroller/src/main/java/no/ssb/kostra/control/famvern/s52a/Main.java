@@ -61,10 +61,6 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
-//        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-//            return er;
-//        }
-
         records.forEach(currentRecord -> {
             kontroll03Regionsnummer(errorReport, currentRecord);
             kontroll04Kontornummer(errorReport, currentRecord);
@@ -97,7 +93,7 @@ public class Main {
                                 "TEMA_KULTUR_A", "TEMA_TVANG_A", "TEMA_RUS_A", "TEMA_SYKD_A",
                                 "TEMA_VOLD_A", "TEMA_ALVH_A")
                         .noneMatch(field -> currentRecord.getFieldDefinitionByName(field).getCodeList().stream()
-                                .map(Code::getCode)
+                                .map(Code::code)
                                 .toList()
                                 .contains(currentRecord.getFieldAsString(field)))) {
                     errorReport.addEntry(
@@ -130,7 +126,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     )
                     , currentRecord.getFieldAsString("HOVEDF_BEHAND_A")
-                    , currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::getCode).toList()
+                    , currentRecord.getFieldDefinitionByName("HOVEDF_BEHAND_A").getCodeList().stream().map(Code::code).toList()
             );
 
             List.of(
@@ -156,7 +152,7 @@ public class Main {
                                     , Constants.NORMAL_ERROR
                             ),
                             currentRecord.getFieldAsString(fieldPair.get(1)),
-                            currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::getCode).toList()));
+                            currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().map(Code::code).toList()));
 
             if (Stream.of(
                             "SAMT_PRIMK_A", "SAMT_PARTNER_A", "SAMT_EKSPART_A", "SAMT_BARNU18_A", "SAMT_BARNO18_A",
@@ -210,7 +206,7 @@ public class Main {
                                         , Constants.NORMAL_ERROR
                                 ),
                                 currentRecord.getFieldAsString(fieldPair.get(1)),
-                                currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.getValue().equalsIgnoreCase("Ja")).map(Code::getCode).toList(),
+                                currentRecord.getFieldDefinitionByName(fieldPair.get(1)).getCodeList().stream().filter(c -> c.value().equalsIgnoreCase("Ja")).map(Code::code).toList(),
                                 currentRecord.getFieldAsIntegerDefaultEquals0(fieldPair.get(2)),
                                 ">",
                                 0
@@ -343,7 +339,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("STATUS_ARETSSL_A"),
-                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("STATUS_ARETSSL_A").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste.doControl(
                     errorReport
@@ -361,7 +357,7 @@ public class Main {
                     , currentRecord.getFieldAsString("STATUS_ARETSSL_A")
                     , List.of("1", "2")
                     , currentRecord.getFieldAsString("HOVEDTEMA_A")
-                    , currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::getCode).toList());
+                    , currentRecord.getFieldDefinitionByName("HOVEDTEMA_A").getCodeList().stream().map(Code::code).toList());
 
             ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato.doControl(
                     errorReport
@@ -413,7 +409,7 @@ public class Main {
                             , Constants.NORMAL_ERROR
                     ),
                     currentRecord.getFieldAsString("BEKYMR_MELD_A"),
-                    currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::getCode).toList());
+                    currentRecord.getFieldDefinitionByName("BEKYMR_MELD_A").getCodeList().stream().map(Code::code).toList());
         });
 
         return errorReport;
@@ -565,7 +561,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("KONTAKT_TIDL_A"),
-                record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("KONTAKT_TIDL_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll11HenvendelsesBegrunnelse(
@@ -589,7 +585,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("HENV_GRUNN_A"),
-                record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("HENV_GRUNN_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll13Kjonn(
@@ -613,7 +609,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("PRIMK_KJONN_A"),
-                record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("PRIMK_KJONN_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll14Fodselsaar(
@@ -635,9 +631,6 @@ public class Main {
 //
         // Kontroll 14 Primærklientens fødselsår
         errorReport.incrementCount();
-
-//        System.out.println(record.getFieldAsString("PRIMK_FODT_A"));
-//        System.out.println(errorReport.getArgs().getAargang());
 
         Integer primk_fodt_a = record.getFieldAsInteger("PRIMK_FODT_A");
 
@@ -668,7 +661,7 @@ public class Main {
                     ));
             return true;
         }
-        Integer alder = Integer.parseInt(errorReport.getArgs().getAargang()) - primk_fodt_a;
+        int alder = Integer.parseInt(errorReport.getArgs().getAargang()) - primk_fodt_a;
 
         if (outsideOf(alder, 0, 100)) {
             errorReport.addEntry(
@@ -708,7 +701,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("PRIMK_SIVILS_A"),
-                record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("PRIMK_SIVILS_A").getCodeList().stream().map(Code::code).toList());
     }
 
 
@@ -734,7 +727,7 @@ public class Main {
                 record.getFieldAsString("PRIMK_SIVILS_A"),
                 List.of("3", "4"),
                 record.getFieldAsString("FORMELL_SIVILS_A"),
-                record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("FORMELL_SIVILS_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll17Bosituasjon(
@@ -758,7 +751,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("PRIMK_SAMBO_A"),
-                record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("PRIMK_SAMBO_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll18Arbeidsosituasjon(
@@ -782,7 +775,7 @@ public class Main {
                         , Constants.NORMAL_ERROR
                 ),
                 record.getFieldAsString("PRIMK_ARBSIT_A"),
-                record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("PRIMK_ARBSIT_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll19AVarighetSamtalepartner(
@@ -807,7 +800,7 @@ public class Main {
                 record.getFieldAsString("PRIMK_VSRELASJ_A"),
                 List.of("1"),
                 record.getFieldAsString("PART_LENGDE_A"),
-                record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("PART_LENGDE_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll19B1VarighetSidenBrudd(
@@ -832,7 +825,7 @@ public class Main {
                 record.getFieldAsString("PRIMK_VSRELASJ_A"),
                 List.of("2"),
                 record.getFieldAsString("EKSPART_LENGDE_A"),
-                record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("EKSPART_LENGDE_A").getCodeList().stream().map(Code::code).toList());
     }
 
 
@@ -858,7 +851,7 @@ public class Main {
                 record.getFieldAsString("PRIMK_VSRELASJ_A"),
                 List.of("2"),
                 record.getFieldAsString("EKSPART_VARIGH_A"),
-                record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("EKSPART_VARIGH_A").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean kontroll20DatoForsteBehandlingssamtale(

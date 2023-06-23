@@ -21,7 +21,7 @@ class Control37DatoForAvsluttetProgram : AbstractRule<KostraRecord>(
 
         return when {
             status in codesThatRequiresDate && endDate == null -> createSingleReportEntryList(
-                "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant ($endDate), må fylles " +
+                "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
                         "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for 'Hva er status for " +
                         "deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
             )

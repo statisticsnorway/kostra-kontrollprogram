@@ -24,7 +24,7 @@ public class ControlRecordLengde {
             }
         }
 
-        if (0 >= recordLengdeFeil.size()) {
+        if (0 == recordLengdeFeil.size()) {
             return false;
         }
 

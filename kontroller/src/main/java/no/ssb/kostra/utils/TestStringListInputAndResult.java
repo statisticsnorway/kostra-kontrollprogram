@@ -2,22 +2,7 @@ package no.ssb.kostra.utils;
 
 import java.util.List;
 
-public class TestStringListInputAndResult {
-    private final List<String> stringList;
-    private final boolean result;
-
-    public TestStringListInputAndResult(List<String> stringList, boolean result) {
-        this.stringList = stringList;
-        this.result = result;
-    }
-
-    public List<String> getStringList() {
-        return stringList;
-    }
-
-    public boolean isResult() {
-        return result;
-    }
+public record TestStringListInputAndResult(List<String> stringList, boolean result) {
 
     @Override
     public String toString() {

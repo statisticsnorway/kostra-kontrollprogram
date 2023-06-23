@@ -72,7 +72,7 @@ public class Definitions {
 
         switch (skjema) {
             // Funksjoner
-            case "0A":
+            case "0A" -> {
                 if ("030100".equals(region)) {
                     result.addAll(osloFunksjoner);
                     result.addAll(fylkeskommunaleFunksjoner);
@@ -82,19 +82,17 @@ public class Definitions {
                     result.addAll(kommunaleFunkjoner);
                     result.addAll(finansielleFunksjoner);
                 }
-                break;
-
-            case "0C":
+            }
+            case "0C" -> {
                 result.addAll(fylkeskommunaleFunksjoner);
                 result.addAll(finansielleFunksjoner);
-                break;
+            }
 
             // Kapitler
-            case "0B":
-            case "0D":
+            case "0B", "0D" -> {
                 result.addAll(basisKapitler);
                 result.addAll(regionaleKapitler);
-                break;
+            }
         }
 
         return result.stream()

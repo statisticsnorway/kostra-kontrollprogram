@@ -72,7 +72,7 @@ public class ControlFilbeskrivelse {
                             // verdi fins
                             // kontrollerer mot eventuell kodeliste
                             if (hasCodeList
-                                    && codeList.stream().noneMatch(code -> code.getCode().equalsIgnoreCase(stringValue))) {
+                                    && codeList.stream().noneMatch(code -> code.code().equalsIgnoreCase(stringValue))) {
 
                                 errorReport.addEntry(
                                         new ErrorReportEntry(
@@ -90,7 +90,7 @@ public class ControlFilbeskrivelse {
                             }
 
                             switch (dataType) {
-                                case "Integer":
+                                case "Integer" -> {
                                     if (!hasIntegerValue) {
                                         errorReport.addEntry(
                                                 new ErrorReportEntry(
@@ -106,12 +106,10 @@ public class ControlFilbeskrivelse {
                                         );
                                         hasErrors.set(true);
                                     }
-                                    break;
-
-                                case "Date":
+                                }
+                                case "Date" -> {
                                     final var dateTimeFormatter = DateTimeFormatter.ofPattern(datePattern);
                                     final var defaultDate = "0".repeat(datePattern.length());
-
                                     try {
                                         if (!stringValue.equalsIgnoreCase(defaultDate)) {
                                             LocalDate.parse(stringValue, dateTimeFormatter);
@@ -131,7 +129,7 @@ public class ControlFilbeskrivelse {
                                         );
                                         hasErrors.set(true);
                                     }
-                                    break;
+                                }
                             }
                         } else {
                             if (mandatory) {

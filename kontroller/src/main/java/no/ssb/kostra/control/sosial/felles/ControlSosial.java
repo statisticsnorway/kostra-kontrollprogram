@@ -227,7 +227,7 @@ public class ControlSosial {
                         , Constants.CRITICAL_ERROR
                 ),
                 record.getFieldAsString("KJONN"),
-                record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("KJONN").getCodeList().stream().map(Code::code).toList());
     }
 
     public static boolean control09Sivilstand(final ErrorReport errorReport, final KostraRecord record) {
@@ -247,6 +247,6 @@ public class ControlSosial {
                         , Constants.CRITICAL_ERROR
                 ),
                 record.getFieldAsString("EKTSTAT"),
-                record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::getCode).toList());
+                record.getFieldDefinitionByName("EKTSTAT").getCodeList().stream().map(Code::code).toList());
     }
 }

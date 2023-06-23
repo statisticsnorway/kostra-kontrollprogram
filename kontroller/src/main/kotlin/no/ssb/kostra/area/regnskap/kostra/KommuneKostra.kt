@@ -4,8 +4,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.DERIVED_ACCOUNTING_TYPE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.DERIVED_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
@@ -23,14 +21,11 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldLength
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.plus
 import no.ssb.kostra.program.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReport
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*

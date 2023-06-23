@@ -1,10 +1,6 @@
 package no.ssb.kostra.control.regnskap.kirkekostra;
 
-import no.ssb.kostra.control.felles.Comparator;
-import no.ssb.kostra.control.felles.ControlDubletter;
-import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
-import no.ssb.kostra.control.felles.ControlRecordLengde;
-import no.ssb.kostra.control.felles.Utils;
+import no.ssb.kostra.control.felles.*;
 import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
@@ -17,17 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static no.ssb.kostra.control.felles.Comparator.between;
-import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
-import static no.ssb.kostra.control.felles.Comparator.outsideOf;
-import static no.ssb.kostra.control.felles.Comparator.removeCodesFromCodeList;
+import static no.ssb.kostra.control.felles.Comparator.*;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.controlKombinasjonFunksjonArt;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.controlKombinasjonKontoklasseArt;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumAktiva;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumInntekter;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumPassiva;
-import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.getSumUtgifter;
+import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 
 
 @SuppressWarnings("SpellCheckingInspection")

@@ -13,10 +13,10 @@ object IndividRuleTestData {
     val dateInTest: LocalDate = LocalDate.now()
     private const val individKostraId = "C1"
 
-    const val KOSTRA_TILTAK_ID = "~tiltak~"
-    const val KOSTRA_MELDING_ID = "~melding~"
-    const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
-    const val KOSTRA_PLAN_ID = "~plan~"
+    private const val KOSTRA_TILTAK_ID = "~tiltak~"
+    private const val KOSTRA_MELDING_ID = "~melding~"
+    private const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
+    private const val KOSTRA_PLAN_ID = "~plan~"
 
     /** START sub-types */
 

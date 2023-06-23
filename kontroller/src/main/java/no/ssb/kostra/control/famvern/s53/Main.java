@@ -45,10 +45,6 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
-//        if (er.getErrorType() == Constants.CRITICAL_ERROR) {
-//            return er;
-//        }
-
         records.forEach(currentRecord -> {
             // Kontroll 3: Fylkesnummer
             if (!Definitions.isFylkeValid(currentRecord.getFieldAsString("FYLKE_NR"))) {

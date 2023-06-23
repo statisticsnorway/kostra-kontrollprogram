@@ -149,5 +149,27 @@ class BarnevernValidatorTest : BehaviorSpec({
                 }
             }
         }
+
+        When("avgiver missing") {
+            val validationResult = validateBarnevern(
+                arguments = KotlinArguments(
+                    skjema = "15F",
+                    aargang = (Year.now().value - 1).toString(),
+                    region = "1234",
+                    inputFileStream = marshallInstance(kostraIndividInTest).byteInputStream()
+                )
+            )
+
+            Then("result should be as expected") {
+                assertSoftly(validationResult) {
+                    reportEntries shouldContain ValidationReportEntry(
+                        severity = Severity.ERROR,
+                        ruleName = AvgiverRuleId.AVGIVER_00.title,
+                        messageText = "Antall avgivere skal være 1, fant 0"
+                    )
+                    numberOfControls shouldBe 54
+                }
+            }
+        }
     }
 })

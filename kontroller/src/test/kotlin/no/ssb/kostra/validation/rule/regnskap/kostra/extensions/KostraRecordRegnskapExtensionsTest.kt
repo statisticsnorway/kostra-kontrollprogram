@@ -364,12 +364,8 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                 )
             )
 
-            When("isOsloBydel $region") {
-                val isOsloBydel = sut.isOsloBydel()
-
-                Then("expected result should be equal to $expectedResult") {
-                    isOsloBydel shouldBe expectedResult
-                }
+            When("isOsloBydel $region, expect $expectedResult") {
+                sut.isOsloBydel().shouldBe(expectedResult)
             }
         }
     }

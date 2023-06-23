@@ -5,15 +5,18 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 
 class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
     Given("isBevilgningRegnskap()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
         ).associateBy { it.name }
 
         forAll(
@@ -39,7 +42,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema
+                        FIELD_SKJEMA to skjema
                     )
                 )
 
@@ -52,8 +55,8 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isBevilgningDriftRegnskap()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
-            FieldDefinition(from = 3, to = 3, name = RegnskapConstants.FIELD_KONTOKLASSE)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
+            FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
         ).associateBy { it.name }
 
         forAll(
@@ -86,8 +89,8 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema,
-                        RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse
+                        FIELD_SKJEMA to skjema,
+                        FIELD_KONTOKLASSE to kontoklasse
                     )
                 )
 
@@ -100,8 +103,8 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isBevilgningInvesteringRegnskap()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
-            FieldDefinition(from = 3, to = 3, name = RegnskapConstants.FIELD_KONTOKLASSE)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
+            FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
         ).associateBy { it.name }
 
         forAll(
@@ -134,8 +137,8 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema,
-                        RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse
+                        FIELD_SKJEMA to skjema,
+                        FIELD_KONTOKLASSE to kontoklasse
                     )
                 )
 
@@ -148,7 +151,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isBalanseRegnskap()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
         ).associateBy { it.name }
 
         forAll(
@@ -174,7 +177,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema
+                        FIELD_SKJEMA to skjema
                     )
                 )
 
@@ -187,7 +190,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isResultatRegnskap()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
         ).associateBy { it.name }
 
         forAll(
@@ -213,7 +216,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema
+                        FIELD_SKJEMA to skjema
                     )
                 )
 
@@ -226,7 +229,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isRegional()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA)
+            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
         ).associateBy { it.name }
 
         forAll(
@@ -252,7 +255,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema
+                        FIELD_SKJEMA to skjema
                     )
                 )
 
@@ -319,7 +322,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isOslo()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = RegnskapConstants.FIELD_FUNKSJON)
+            FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)
         ).associateBy { it.name }
 
         forAll(
@@ -333,7 +336,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
-                        RegnskapConstants.FIELD_REGION to region
+                        FIELD_REGION to region
                     )
                 )
 
@@ -346,7 +349,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isOsloBydel()") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = RegnskapConstants.FIELD_FUNKSJON)
+            FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)
         ).associateBy { it.name }
 
         forAll(
@@ -360,7 +363,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                 index = 0,
                 fieldDefinitionByName = fieldDefinitionsByName,
                 valuesByName = mapOf(
-                    RegnskapConstants.FIELD_REGION to region
+                    FIELD_REGION to region
                 )
             )
 

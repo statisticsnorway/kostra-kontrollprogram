@@ -38,6 +38,10 @@ public class ErrorReport {
         count++;
     }
 
+    public void setCount(long count) {
+        this.count = count;
+    }
+
     public boolean addEntry(final ErrorReportEntry errorReportEntry) {
         // Avklare status
         if (this.errorType < errorReportEntry.getErrorType()) {

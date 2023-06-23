@@ -15,10 +15,13 @@ public final class Main {
     public static ErrorReport doControls(final Arguments args) {
         final var errorReport = new ErrorReport(args);
 
-        validateBarnevern(fromArguments(args)).stream()
+        var result = validateBarnevern(fromArguments(args));
+
+        result.getReportEntries().stream()
                 .map(ConversionUtils::toErrorReportEntry)
                 .forEach(errorReport::addEntry);
 
+        errorReport.setCount(result.getNumberOfControls());
         return errorReport;
     }
 }

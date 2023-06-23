@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.shouldBe
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
@@ -32,7 +33,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_06.title,
                     messageText = "Individet har ingen meldinger, planer eller tiltak i løpet av året"
-                )
+                ), 108
             ),
             row(
                 "invalid avgiver",
@@ -43,7 +44,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = AvgiverRuleId.AVGIVER_01.title,
                     messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
-                )
+                ), 108
             ),
             row(
                 "invalid individ",
@@ -54,7 +55,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_01.title,
                     messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
-                )
+                ), 108
             ),
             row(
                 "duplicate individ",
@@ -66,7 +67,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     ruleName = IndividRuleId.INDIVID_04.title,
                     messageText = "Dublett for fødselsnummer (${kostraIndividInTest.fodselsnummer}) for " +
                             "journalnummer (${kostraIndividInTest.journalnummer})"
-                )
+                ), 162
             ),
             row(
                 "duplicate individ #2",
@@ -78,7 +79,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     ruleName = IndividRuleId.INDIVID_05.title,
                     messageText = "Dublett for journalnummer (${kostraIndividInTest.journalnummer}) for " +
                             "fødselsnummer (${kostraIndividInTest.fodselsnummer})"
-                )
+                ), 162
             ),
             row(
                 "invalid XML",
@@ -89,7 +90,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     messageText = "Klarer ikke å lese fil. Får feilmeldingen: Unexpected character 'e' " +
                             "(code 101) in prolog; expected '<'\n at [row,col {unknown-source}]: [1,1]"
-                )
+                ), 0
             ),
             row(
                 "individ fodselsnummer = null",
@@ -109,12 +110,12 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.WARNING,
                     ruleName = IndividRuleId.INDIVID_11.title,
                     messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
-                )
+                ), 108
             )
-        ) { description, avgiver, individList, destroyXml, expectedResult ->
+        ) { description, avgiver, individList, destroyXml, expectedResult, expectedNumberOfControls ->
 
             When(description) {
-                val reportEntries = validateBarnevern(
+                val validationResult = validateBarnevern(
                     arguments = KotlinArguments(
                         skjema = "15F",
                         aargang = (Year.now().value - 1).toString(),
@@ -129,7 +130,8 @@ class BarnevernValidatorTest : BehaviorSpec({
                 )
 
                 Then("result should be as expected") {
-                    reportEntries shouldContain expectedResult
+                    validationResult.reportEntries shouldContain expectedResult
+                    validationResult.numberOfControls shouldBe expectedNumberOfControls
                 }
             }
         }

@@ -38,4 +38,6 @@ object KvalifiseringRules {
         Control38FullforteAvsluttedeProgramSituasjon(),
         Control39FullforteAvsluttedeProgramInntektkilde()
     )
+
+    val duplicateRules = listOf(Rule05aFoedselsnummerDubletter(), Rule05bJournalnummerDubletter())
 }

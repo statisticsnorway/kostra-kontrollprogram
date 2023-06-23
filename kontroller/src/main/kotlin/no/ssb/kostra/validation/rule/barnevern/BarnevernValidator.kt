@@ -12,6 +12,9 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.ValidationResult
+import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
+import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
 import java.io.StringReader
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
@@ -22,11 +25,8 @@ object BarnevernValidator {
     private const val AVGIVER_XML_TAG = "Avgiver"
     private const val INDIVID_XML_TAG = "Individ"
 
-    private val avgiverRules = AvgiverRules()
-    private val individRules = IndividRules()
-
     @JvmStatic
-    fun validateBarnevern(arguments: KotlinArguments): List<ValidationReportEntry> {
+    fun validateBarnevern(arguments: KotlinArguments): ValidationResult {
 
         arguments.inputFileStream.use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
@@ -69,25 +69,8 @@ object BarnevernValidator {
                     }
                 }
 
-                if (seenAvgivere != 1) {
-                    reportEntries.add(
-                        ValidationReportEntry(
-                            severity = Severity.ERROR,
-                            ruleName = AvgiverRuleId.AVGIVER_00.title,
-                            messageText = "Antall avgivere skal være 1, fant $seenAvgivere"
-                        )
-                    )
-                }
-
-                if (seenIndivider < 1) {
-                    reportEntries.add(
-                        ValidationReportEntry(
-                            severity = Severity.ERROR,
-                            ruleName = IndividRuleId.INDIVID_00.title,
-                            messageText = "Filen mangler individer"
-                        )
-                    )
-                }
+                if (seenAvgivere != 1) reportEntries.add(singleAvgiverError(seenAvgivere))
+                if (seenIndivider < 1) reportEntries.add(individMissingError)
 
                 reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
@@ -111,7 +94,10 @@ object BarnevernValidator {
                 )
             }
 
-            return reportEntries
+            return ValidationResult(
+                reportEntries = reportEntries,
+                numberOfControls = (seenAvgivere + seenIndivider) * (avgiverRules.size + individRules.size)
+            )
         }
     }
 
@@ -130,12 +116,7 @@ object BarnevernValidator {
                     xsdResource = AVGIVER_XSD_RESOURCE
                 )
             ) {
-                addAll(
-                    avgiverRules.validate(
-                        context = avgiverType,
-                        arguments = arguments
-                    )
-                )
+                addAll(avgiverRules.mapNotNull { it.validate(avgiverType, arguments) }.flatten())
             } else add(avgiverFileError)
         } catch (thrown: Throwable) {
             add(avgiverFileError)
@@ -157,17 +138,13 @@ object BarnevernValidator {
                     xsdResource = INDIVID_XSD_RESOURCE
                 )
             ) {
-                addAll(
-                    individRules.validate(
-                        context = individType,
-                        arguments = arguments
-                    ).map { reportEntry ->
-                        reportEntry.copy(
-                            caseworker = individType.saksbehandler,
-                            journalId = individType.journalnummer,
-                            individId = individType.id
-                        )
-                    }
+                addAll(individRules.mapNotNull { it.validate(individType, arguments) }.flatten().map { reportEntry ->
+                    reportEntry.copy(
+                        caseworker = individType.saksbehandler,
+                        journalId = individType.journalnummer,
+                        individId = individType.id
+                    )
+                }
                 )
 
                 if (!individType.fodselsnummer.isNullOrBlank()) {
@@ -192,5 +169,17 @@ object BarnevernValidator {
         severity = Severity.ERROR,
         ruleName = IndividRuleId.INDIVID_01.title,
         messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+    )
+
+    private fun singleAvgiverError(found: Int) = ValidationReportEntry(
+        severity = Severity.ERROR,
+        ruleName = AvgiverRuleId.AVGIVER_00.title,
+        messageText = "Antall avgivere skal være 1, fant $found"
+    )
+
+    private val individMissingError = ValidationReportEntry(
+        severity = Severity.ERROR,
+        ruleName = IndividRuleId.INDIVID_00.title,
+        messageText = "Filen mangler individer"
     )
 }

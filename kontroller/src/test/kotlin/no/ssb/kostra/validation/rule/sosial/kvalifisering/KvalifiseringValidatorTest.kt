@@ -69,13 +69,13 @@ class KvalifiseringValidatorTest : BehaviorSpec({
         ) { description, kostraRecordsInTests, expectedResult ->
 
             When(description) {
-                val reportEntries = validateKvalifiseringInternal(
+                val validationResult = validateKvalifiseringInternal(
                     kostraRecords = kostraRecordsInTests,
                     arguments = argumentsInTest
                 )
 
                 Then("result should be as expected") {
-                    reportEntries shouldContainAll expectedResult
+                    validationResult.reportEntries shouldContainAll expectedResult
                 }
             }
         }

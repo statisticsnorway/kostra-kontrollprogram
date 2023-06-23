@@ -366,7 +366,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     FIELD_REGION to region
                 )
             )
-
+            
             When("isOsloBydel $region, expect $expectedResult") {
                 sut.isOsloBydel().shouldBe(expectedResult)
             }

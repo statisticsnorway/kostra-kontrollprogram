@@ -14,8 +14,7 @@ class Rule05bJournalnummerDubletter : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
         context.takeIf { it.size > 1 }?.let {
-            context
-                .groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
+            it.groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (journalId, group) ->
                     group.map { kostraRecord ->

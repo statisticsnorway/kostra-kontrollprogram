@@ -11,7 +11,7 @@ import no.ssb.kostra.utils.Fnr;
 
 import java.util.List;
 
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.*;
+import static no.ssb.kostra.control.sosial.felles.ControlSosial.dnr2fnr;
 import static no.ssb.kostra.program.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
@@ -58,17 +58,19 @@ public class Main {
                         record.setFieldAsInteger(ALDER, -1);
                         record.setFieldAsInteger(FNR_OK, 0);
                     }
-                })
-                .toList();
+                }).toList();
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
         if (errorReport.isEmpty()) {
+            var validationResult = validateKvalifisering(fromArguments(arguments));
 
-            validateKvalifisering(fromArguments(arguments)).stream()
+            validationResult.getReportEntries().stream()
                     .map(ConversionUtils::toErrorReportEntry)
                     .forEach(errorReport::addEntry);
+
+            errorReport.setCount(validationResult.getNumberOfControls());
         }
 
         // Kontroller ferdig

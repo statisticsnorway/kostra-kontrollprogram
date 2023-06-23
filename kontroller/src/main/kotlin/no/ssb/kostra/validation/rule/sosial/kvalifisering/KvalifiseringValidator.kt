@@ -7,17 +7,16 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fie
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.toKostraRecord
-import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.ValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.duplicateRules
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.kvalifiseringRules
-import no.ssb.kostra.validation.rule.sosial.rule.Rule05aFoedselsnummerDubletter
-import no.ssb.kostra.validation.rule.sosial.rule.Rule05bJournalnummerDubletter
 
 object KvalifiseringValidator {
 
     @JvmStatic
     fun validateKvalifisering(
         arguments: KotlinArguments
-    ): List<ValidationReportEntry> = validateKvalifiseringInternal(
+    ): ValidationResult = validateKvalifiseringInternal(
         kostraRecords = arguments
             .getInputContentAsStringList()
             .withIndex()
@@ -33,7 +32,7 @@ object KvalifiseringValidator {
     internal fun validateKvalifiseringInternal(
         kostraRecords: List<KostraRecord>,
         arguments: KotlinArguments
-    ): List<ValidationReportEntry> {
+    ): ValidationResult {
         val reportEntries = kostraRecords.asSequence().map { record ->
             kvalifiseringRules
                 .mapNotNull { it.validate(record, arguments) }
@@ -48,10 +47,13 @@ object KvalifiseringValidator {
                 }
         }.filter { it.any() }.flatten().toList()
 
-        val duplicateValidationErrors = setOf(Rule05aFoedselsnummerDubletter(), Rule05bJournalnummerDubletter())
+        val duplicateValidationErrors = duplicateRules
             .mapNotNull { it.validate(kostraRecords, arguments) }
             .flatten()
 
-        return reportEntries + duplicateValidationErrors
+        return ValidationResult(
+            reportEntries = reportEntries + duplicateValidationErrors,
+            numberOfControls = kostraRecords.size * (kvalifiseringRules.size + duplicateRules.size)
+        )
     }
 }

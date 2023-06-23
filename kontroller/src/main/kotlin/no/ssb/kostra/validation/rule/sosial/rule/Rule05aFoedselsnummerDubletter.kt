@@ -18,8 +18,7 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
         context.takeIf { it.size > 1 }?.let {
             it.filter { kostraRecord ->
                 isValidSocialSecurityIdOrDnr(kostraRecord.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))
-            }
-                .groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) }
+            }.groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (foedselsnummer, group) ->
                     group.map { kostraRecord ->

@@ -1,10 +1,13 @@
 package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -16,46 +19,44 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 
 class Rule113SummeringTilskuddTest : BehaviorSpec({
+    val sut = Rule113SummeringTilskudd()
+
     Given("context") {
-        val sut = Rule113SummeringTilskudd()
         val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
             .associateBy { it.name }
 
         forAll(
             row("420400", "0F", "3", "041 ", "830", "1", false),
-            row("420400", "0F", "3", "041 ", "590", "0", true),
+            row("420400", "0F", "3", "041 ", "590", "0", true)
+        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
 
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
-            When("$region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
-                val kostraRecordList = listOf(
-                    KostraRecord(
-                        index = 0,
-                        fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf(
-                            FIELD_REGION to region,
-                            FIELD_SKJEMA to skjema,
-                            FIELD_KONTOKLASSE to kontoklasse,
-                            FIELD_FUNKSJON to funksjon,
-                            FIELD_ART to art,
-                            FIELD_BELOP to belop
-                        )
+            val kostraRecordList = listOf(
+                KostraRecord(
+                    index = 0,
+                    fieldDefinitionByName = fieldDefinitionsByName,
+                    valuesByName = mapOf(
+                        FIELD_REGION to region,
+                        FIELD_SKJEMA to skjema,
+                        FIELD_KONTOKLASSE to kontoklasse,
+                        FIELD_FUNKSJON to funksjon,
+                        FIELD_ART to art,
+                        FIELD_BELOP to belop
                     )
                 )
+            )
 
+            When("$region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
                 val validationReportEntries = sut.validate(kostraRecordList)
-                val result = validationReportEntries?.any()
 
-                Then("expected result should be equal to $expectedResult") {
-                    result?.shouldBeEqual(expectedResult)
+                Then("expected result should be equal to $expectError") {
+                    if (expectError) {
+                        validationReportEntries.shouldNotBeNull()
 
-                    if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
-                        validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér slik at fila inneholder tilskudd ($belop) fra kommunen"
-                        )
-                    } else {
-                        validationReportEntries.shouldBeNull()
-                    }
+                        assertSoftly(validationReportEntries.first()) {
+                            severity.shouldBeEqual(Severity.ERROR)
+                            messageText shouldBe "Korrigér slik at fila inneholder tilskudd ($belop) fra kommunen"
+                        }
+                    } else validationReportEntries.shouldBeNull()
                 }
             }
         }

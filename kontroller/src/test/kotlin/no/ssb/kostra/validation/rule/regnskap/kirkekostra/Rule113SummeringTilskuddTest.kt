@@ -22,18 +22,16 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
     val sut = Rule113SummeringTilskudd()
 
     Given("context") {
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
-            .associateBy { it.name }
-
         forAll(
-            row("420400", "0F", "3", "041 ", "830", "1", false),
-            row("420400", "0F", "3", "041 ", "590", "0", true)
+            row("420400", "0F", "3", "041 ", "590", "0", true),
+            row("420400", "0F", "3", "041 ", "830", "0", true),
+            row("420400", "0F", "3", "041 ", "830", "1", false)
         ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
 
             val kostraRecordList = listOf(
                 KostraRecord(
                     index = 0,
-                    fieldDefinitionByName = fieldDefinitionsByName,
+                    fieldDefinitionByName = RegnskapFieldDefinitions.getFieldDefinitions().associateBy { it.name },
                     valuesByName = mapOf(
                         FIELD_REGION to region,
                         FIELD_SKJEMA to skjema,

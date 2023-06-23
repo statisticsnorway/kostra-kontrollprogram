@@ -1,12 +1,10 @@
 package no.ssb.kostra.program
 
-import no.ssb.kostra.validation.report.ValidationReport
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class ControlDispatcher {
     companion object {
-        fun doControls(arguments: KotlinArguments): ValidationReport {
-            var validationReportEntries: List<ValidationReportEntry>? = emptyList()
+        fun doControls(arguments: KotlinArguments): List<ValidationReportEntry> {
 /*
             if (Comparator.isCodeInCodeList(
                     arguments.skjema, listOf(
@@ -56,7 +54,7 @@ class ControlDispatcher {
                 )
             }
 */
-            return ValidationReport(arguments, validationReportEntries)
+            return emptyList()
         }
     }
 }

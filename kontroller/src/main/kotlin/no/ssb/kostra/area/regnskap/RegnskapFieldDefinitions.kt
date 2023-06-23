@@ -11,8 +11,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.INTEGER_TYPE
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.STRING_TYPE
 
 object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
@@ -98,4 +100,24 @@ object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
             mandatory = true
         )
     )
+
+    fun getFieldDefinitionsMergedWithKotlinArguments(args: KotlinArguments): List<FieldDefinition> =
+        getFieldDefinitions()
+            .map { fieldDefinition ->
+                when (fieldDefinition.name.lowercase()) {
+                    "skjema" -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))
+                    "aargang" -> fieldDefinition.codeList = listOf(Code(code = args.aargang, "Årgang"))
+                    "region" -> fieldDefinition.codeList = listOf(Code(code = args.region, "Region"))
+                    "orgnr" -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                        .map { code: String -> Code(code, "Organisasjonsnummer") }
+                        .ifEmpty { emptyList() }
+                    "foretaksnr" -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                        .map { code: String -> Code(code, "Foretaksnummer") }
+                        .ifEmpty { emptyList() }
+
+                    else -> fieldDefinition
+                }
+
+            }
+            .toList() as List<FieldDefinition>
 }

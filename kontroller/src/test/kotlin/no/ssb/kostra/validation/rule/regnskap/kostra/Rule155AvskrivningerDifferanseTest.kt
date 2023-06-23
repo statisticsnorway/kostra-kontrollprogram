@@ -23,6 +23,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
 
         forAll(
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -42,47 +43,32 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                     )
                 ), false
             ),
+            /** TODO Jon Ole: What are we testing here,  */
+            *(setOf("420400", "030101").map { regionId ->
+                row(
+                    "TODO: Description",
+                    listOf(
+                        mapOf(
+                            FIELD_REGION to regionId,
+                            FIELD_SKJEMA to "0A",
+                            FIELD_KONTOKLASSE to "1",
+                            FIELD_FUNKSJON to "100 ",
+                            FIELD_ART to "590",
+                            FIELD_BELOP to "100"
+                        ),
+                        mapOf(
+                            FIELD_REGION to regionId,
+                            FIELD_SKJEMA to "0A",
+                            FIELD_KONTOKLASSE to "1",
+                            FIELD_FUNKSJON to "860 ",
+                            FIELD_ART to "990",
+                            FIELD_BELOP to "-1000"
+                        )
+                    ), true
+                )
+            }.toTypedArray()),
             row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "1",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "1",
-                        FIELD_FUNKSJON to "860 ",
-                        FIELD_ART to "990",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "030101",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "1",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "030101",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "1",
-                        FIELD_FUNKSJON to "860 ",
-                        FIELD_ART to "990",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), false
-            ),
-            row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -103,6 +89,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), false
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -123,6 +110,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), true
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -143,6 +131,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), false
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -163,6 +152,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), true
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -183,6 +173,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), false
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -203,6 +194,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), true
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -223,6 +215,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), false
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -243,6 +236,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), true
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -263,6 +257,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                 ), false
             ),
             row(
+                "TODO: Description",
                 listOf(
                     mapOf(
                         FIELD_REGION to "420400",
@@ -282,8 +277,8 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                     )
                 ), true
             ),
-        ) { recordList, expectedResult ->
-            When("List is $recordList") {
+        ) { description, recordList, expectedResult ->
+            When("$description $recordList") {
                 val kostraRecordList = recordList
                     .mapIndexed { index, record ->
                         KostraRecord(

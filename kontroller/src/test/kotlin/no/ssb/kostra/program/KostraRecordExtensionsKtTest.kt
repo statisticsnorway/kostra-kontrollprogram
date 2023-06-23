@@ -1,29 +1,45 @@
 package no.ssb.kostra.program
 
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
     Given("KostraRecord#toRecordString") {
-        val sut = KostraRecord(
-            index = 0,
-            valuesByName = mapOf(
-                "Field001" to "",
-                "Field012" to " ".repeat(3),
-                "Field123" to "12",
-                "Field456" to "456",
-                "Field789" to "789",
-                "Field012" to "-1"
+
+        forAll(
+            row(
+                "empty fieldDefinitions",
+                emptyMap(),
+                ""
             ),
-            fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
-        )
+            row(
+                "non-empty fieldDefinitions",
+                fieldDefinitions.associateBy { it.name },
+                "12 456789 -1"
+            )
+        ) { description, fieldDefinitions, expectedRecordString ->
+            val sut = KostraRecord(
+                index = 0,
+                valuesByName = mapOf(
+                    "Field001" to "",
+                    "Field012" to " ".repeat(3),
+                    "Field123" to "12",
+                    "Field456" to "456",
+                    "Field789" to "789",
+                    "Field012" to "-1"
+                ),
+                fieldDefinitionByName = fieldDefinitions
+            )
 
-        When("toRecordString") {
-            val recordString = sut.toRecordString()
+            When("toRecordString, $description") {
+                val recordString = sut.toRecordString()
 
-            Then("the result should be a concatenated string of all the values") {
-                recordString shouldBe "12 456789 -1"
+                Then("the result should be a concatenated string of all the values") {
+                    recordString shouldBe expectedRecordString
+                }
             }
         }
     }

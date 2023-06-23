@@ -20,6 +20,13 @@ class Rule001RecordLengthTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
+                "record length is OK, but it ends with tab char, expect error",
+                2,
+                listOf("O\\t"),
+                1,
+                listOf(1)
+            ),
+            row(
                 "Ok, Fail -> 1 Error @ line #2",
                 2,
                 listOf("OK", "FAIL"),

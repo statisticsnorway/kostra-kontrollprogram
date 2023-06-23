@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.equals.shouldBeEqual
+import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.program.FieldDefinition
@@ -354,17 +355,20 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("030000", false),
             row("420400", false),
         ) { region, expectedResult ->
-            When("For $region") {
-                val kostraRecord = KostraRecord(
-                    index = 0,
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        RegnskapConstants.FIELD_REGION to region
-                    )
+
+            val sut = KostraRecord(
+                index = 0,
+                fieldDefinitionByName = fieldDefinitionsByName,
+                valuesByName = mapOf(
+                    RegnskapConstants.FIELD_REGION to region
                 )
+            )
+
+            When("isOsloBydel $region") {
+                val isOsloBydel = sut.isOsloBydel()
 
                 Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isOsloBydel().shouldBeEqual(expectedResult)
+                    isOsloBydel shouldBe expectedResult
                 }
             }
         }

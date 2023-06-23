@@ -68,12 +68,13 @@ public class GetOptTest extends TestCase {
             throw new IllegalArgumentException(
                     "Unexpected empty map");
         }
+        int errs = 0;
         for (var o : map.keySet()) {
             String key = (String) o;
             char c = key.charAt(0);
             String val = (String) map.get(key);
             switch (c) {
-                case '?' ->
+                case '?' -> errs++;
                 case 'o' -> assertEquals(val, "outfile");
                 case 'f', 'h', '1' -> assertNull(val);
                 default -> throw new IllegalArgumentException(

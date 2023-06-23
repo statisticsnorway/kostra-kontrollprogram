@@ -1,5 +1,6 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
+import no.ssb.kostra.area.regnskap.kostra.KommuneKostra;
 import no.ssb.kostra.control.felles.ControlDubletter;
 import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
@@ -10,6 +11,7 @@ import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.felles.KostraRecord;
+import no.ssb.kostra.program.ConversionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Map;
 import static no.ssb.kostra.control.felles.Comparator.*;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
+import static no.ssb.kostra.program.ConversionUtils.fromArguments;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
@@ -310,6 +313,20 @@ public class Main {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controls
     public static ErrorReport doControls(final Arguments arguments) {
+        final var errorReport = new ErrorReport(arguments);
+        final var regnskap = new KommuneKostra(fromArguments(arguments));
+
+        regnskap.validate().stream()
+                .map(ConversionUtils::toErrorReportEntry)
+                .forEach(errorReport::addEntry);
+
+        errorReport.incrementCount();
+
+        return errorReport;
+    }
+
+
+    public static ErrorReport doControlsTOBEDELETED(final Arguments arguments) {
         final var errorReport = new ErrorReport(arguments);
         final var list1 = arguments.getInputContentAsStringList();
 

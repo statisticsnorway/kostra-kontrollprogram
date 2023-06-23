@@ -23,8 +23,9 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldLength
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.plus
 import no.ssb.kostra.program.toKostraRecord
@@ -37,8 +38,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostra(
-    private val arguments: KotlinArguments,
-    private val fieldDefinitionList: List<FieldDefinition>
+    private val arguments: KotlinArguments
 ) {
     private val osloKommuner = listOf(
         // @formatter:off
@@ -241,8 +241,6 @@ class KommuneKostra(
     }
 
 
-
-
     // Kapitler
     private fun getKapittelAsList(): List<String> {
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
@@ -402,7 +400,7 @@ class KommuneKostra(
         }
 
     private val fatalRules = listOf(
-        Rule001RecordLength(RegnskapFieldDefinitions.getFieldLength())
+        Rule001RecordLength(getFieldLength())
     )
 
     private val validationRules = listOf(
@@ -458,7 +456,7 @@ class KommuneKostra(
         Rule190Memoriakonti(),
     )
 
-    fun validate(): ValidationReport {
+    fun validate(): List<ValidationReportEntry> {
         val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
             .mapNotNull { it.validate(arguments.getInputContentAsStringList()) }
             .flatten()
@@ -468,44 +466,20 @@ class KommuneKostra(
             .maxByOrNull { it.ordinal } ?: Severity.OK
 
         if (fatalSeverity == Severity.FATAL)
-            return ValidationReport(
-                arguments = arguments,
-                validationEntries = fatalValidationReportEntries
-            )
+            return fatalValidationReportEntries
 
         val derivedKostraRecords = arguments
             .getInputContentAsStringList()
             .withIndex()
             .map { (index, recordString) ->
-                val kostraRecord = recordString.toKostraRecord(
+                recordString.toKostraRecord(
                     index = index + 1,
-                    fieldDefinitions = fieldDefinitionList
+                    fieldDefinitions = getFieldDefinitionsMergedWithKotlinArguments(arguments)
                 )
-
-                return@map kostraRecord
-                    .plus(
-                        DERIVED_ACCOUNTING_TYPE
-                                to RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).joinToString(",")
-                    )
-                    .plus(
-                        DERIVED_KONTOKLASSE
-                                to
-                                RegnskapConstants.getKontoTypeBySkjemaAndKontoklasse(
-                                    arguments.skjema, kostraRecord.getFieldAsString(FIELD_KONTOKLASSE)
-                                )
-                    )
             }
 
-
-        val validationReportEntries: List<ValidationReportEntry> = validationRules
+        return validationRules
             .mapNotNull { it.validate(derivedKostraRecords) }
             .flatten()
-
-        return ValidationReport(
-            arguments = arguments,
-            validationEntries = validationReportEntries
-        )
-
-
     }
 }

@@ -1,11 +1,13 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
 import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
@@ -40,6 +42,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifiseringInternal
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 import java.time.LocalDate
@@ -47,6 +50,21 @@ import java.time.LocalDate
 class KvalifiseringValidatorTest : BehaviorSpec({
 
     Given("validateKvalifisering") {
+
+        When("validating a random string") {
+            val thrown = shouldThrow<NoSuchFieldException> {
+                validateKvalifisering(
+                    argumentsInTest.copy(inputFileContent = "a".repeat(200))
+                )
+            }
+
+            Then("exception should be as expected") {
+                thrown.message shouldNotBe "ALDER is missing"
+            }
+        }
+    }
+
+    Given("validateKvalifiseringInternal") {
 
         forAll(
             row(

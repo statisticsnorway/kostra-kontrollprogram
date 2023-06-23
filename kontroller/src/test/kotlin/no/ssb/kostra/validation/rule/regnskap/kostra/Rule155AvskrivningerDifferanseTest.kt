@@ -311,4 +311,29 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
             }
         }
     }
-})
+}) {
+    companion object {
+        private fun createTestData(
+            kontoKlasse: Int = 1
+        ): List<Map<String, String>> {
+            return listOf(
+                mapOf(
+                    FIELD_REGION to "420400",
+                    FIELD_SKJEMA to "0C",
+                    FIELD_KONTOKLASSE to kontoKlasse.toString(),
+                    FIELD_FUNKSJON to "100 ",
+                    FIELD_ART to "590",
+                    FIELD_BELOP to "100"
+                ),
+                mapOf(
+                    FIELD_REGION to "420400",
+                    FIELD_SKJEMA to "0C",
+                    FIELD_KONTOKLASSE to kontoKlasse.toString(),
+                    FIELD_FUNKSJON to "860 ",
+                    FIELD_ART to "990",
+                    FIELD_BELOP to "-100"
+                )
+            )
+        }
+    }
+}

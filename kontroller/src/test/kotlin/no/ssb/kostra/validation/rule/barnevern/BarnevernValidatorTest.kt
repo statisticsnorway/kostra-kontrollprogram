@@ -22,6 +22,17 @@ class BarnevernValidatorTest : BehaviorSpec({
     Given("validateBarnevern") {
         forAll(
             row(
+                "no individ",
+                kostraAvgiverTypeInTest,
+                mutableListOf(),
+                false,
+                ValidationReportEntry(
+                    severity = Severity.ERROR,
+                    ruleName = IndividRuleId.INDIVID_00.title,
+                    messageText = "Filen mangler individer"
+                ), 54
+            ),
+            row(
                 "empty individ",
                 kostraAvgiverTypeInTest,
                 mutableListOf(kostraIndividInTest),

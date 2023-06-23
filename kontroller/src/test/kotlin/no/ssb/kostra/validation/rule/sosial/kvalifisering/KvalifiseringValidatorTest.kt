@@ -1,9 +1,11 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
@@ -48,6 +50,12 @@ class KvalifiseringValidatorTest : BehaviorSpec({
 
         forAll(
             row(
+                "empty list of records",
+                emptyList(),
+                emptyList(),
+                0
+            ),
+            row(
                 "row with validation issues",
                 listOf(kostraRecordsInTests()),
                 listOf(
@@ -64,9 +72,9 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                                 "mottatt støtte. {KVP_MED_KOMMBOS=1, KVP_MED_HUSBANK=5, KVP_MED_SOSHJ_ENGANG=9, " +
                                 "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}"
                     )
-                )
+                ), 32
             )
-        ) { description, kostraRecordsInTests, expectedResult ->
+        ) { description, kostraRecordsInTests, expectedResult, expectedNumberOfControls ->
 
             When(description) {
                 val validationResult = validateKvalifiseringInternal(
@@ -75,7 +83,10 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 )
 
                 Then("result should be as expected") {
-                    validationResult.reportEntries shouldContainAll expectedResult
+                    assertSoftly(validationResult) {
+                        reportEntries shouldContainAll expectedResult
+                        numberOfControls shouldBe expectedNumberOfControls
+                    }
                 }
             }
         }

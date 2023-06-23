@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -130,8 +131,10 @@ class BarnevernValidatorTest : BehaviorSpec({
                 )
 
                 Then("result should be as expected") {
-                    validationResult.reportEntries shouldContain expectedResult
-                    validationResult.numberOfControls shouldBe expectedNumberOfControls
+                    assertSoftly(validationResult) {
+                        reportEntries shouldContain expectedResult
+                        numberOfControls shouldBe expectedNumberOfControls
+                    }
                 }
             }
         }

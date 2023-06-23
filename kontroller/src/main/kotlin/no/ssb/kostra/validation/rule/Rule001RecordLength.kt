@@ -9,10 +9,8 @@ class Rule001RecordLength(
 ) : AbstractStringRule("Kontroll 001 : Recordlengde", Severity.FATAL) {
     override fun validate(context: List<String>): List<ValidationReportEntry>? = context
         .withIndex()
-        .filter {
-            it.value.length != length
-                    || Pattern.matches("^.*\\t.*$", it.value)
-        }.map {
+        .filter { it.value.length != length || it.value.containsTabChars() }
+        .map {
             createValidationReportEntry(
                 messageText = """Korrigér filen slik at alle records er på $length tegn.<br/>
                             Mellomrom brukes for alle blanke posisjoner og avslutter med linjeskift.<br/>
@@ -21,3 +19,7 @@ class Rule001RecordLength(
             )
         }.ifEmpty { null }
 }
+
+internal fun String.containsTabChars() = Pattern.matches("^.*\\t.*$", this)
+
+

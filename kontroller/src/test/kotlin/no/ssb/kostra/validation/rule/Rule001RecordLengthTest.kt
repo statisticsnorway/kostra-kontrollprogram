@@ -7,12 +7,15 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class Rule001RecordLengthTest : BehaviorSpec({
+
     Given("valid context") {
+        val sut = Rule001RecordLength(OK_STRING.length)
+
         When("valid list of strings") {
-            val sut = Rule001RecordLength("OK".length)
+            val result = sut.validate(listOf(OK_STRING, OK_STRING))
 
             Then("validation should pass with no errors") {
-                sut.validate(listOf("OK", "OK")).shouldBeNull()
+                result.shouldBeNull()
             }
         }
     }
@@ -20,44 +23,30 @@ class Rule001RecordLengthTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record length is OK, but it starts with tab char, expect error",
-                2,
-                listOf("\tK"),
-                1,
-                listOf(1)
-            ),
-            row(
-                "record length is OK, but it ends with tab char, expect error",
+                "record length is valid, but it ends with tab char, expect error",
                 2,
                 listOf("O\t"),
                 1,
                 listOf(1)
             ),
             row(
-                "record length is OK, but it contains tab char, expect error",
-                3,
-                listOf("O\tK"),
-                1,
-                listOf(1)
-            ),
-            row(
                 "Ok, Fail -> 1 Error @ line #2",
-                2,
-                listOf("OK", "FAIL"),
+                OK_STRING.length,
+                listOf(OK_STRING, FAIL_STRING),
                 1,
                 listOf(2)
             ),
             row(
                 "Ok, Fail, Ok, Fail -> 2 Errors @ line #2, #4",
-                2,
-                listOf("OK", "FAIL", "OK", "FAIL"),
+                OK_STRING.length,
+                listOf(OK_STRING, FAIL_STRING, OK_STRING, FAIL_STRING),
                 2,
                 listOf(2, 4)
             ),
             row(
                 "Ok, Fail, Ok, Tab -> 2 Errors @ line #2, #4",
-                2,
-                listOf("OK", "FAIL", "OK", "TAB\t"),
+                OK_STRING.length,
+                listOf(OK_STRING, FAIL_STRING, OK_STRING, "TAB\t"),
                 2,
                 listOf(2, 4)
             )
@@ -70,10 +59,30 @@ class Rule001RecordLengthTest : BehaviorSpec({
                     errors?.size shouldBe expectedErrorCount
                 }
 
-                Then("errors should be at the expected linenumbers") {
+                Then("errors should be at the expected lineNumbers") {
                     errors?.flatMap { it.lineNumbers } shouldBe lineNumberOfErrors
                 }
             }
         }
     }
-})
+
+    Given("String.containsTabChars") {
+        forAll(
+            row("\tK", true),
+            row("O\t", true),
+            row("O\tK", true),
+            row("\t".repeat(3), true),
+            row("42", false),
+        ) { sut, expected ->
+
+            When("$sut $expected") {
+                sut.containsTabChars().shouldBe(expected)
+            }
+        }
+    }
+}) {
+    companion object {
+        private const val OK_STRING = "OK"
+        private const val FAIL_STRING = "FAIL"
+    }
+}

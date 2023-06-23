@@ -19,31 +19,31 @@ class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
             .associateBy { it.name }
 
         forAll(
-            row("0A", "0", "010", false),
-            row("0A", "0", "620", true),
-            row("0A", "0", "650", true),
-            row("0A", "0", "900", true),
-            row("0C", "0", "010", false),
-            row("0C", "0", "620", true),
-            row("0C", "0", "650", true),
-            row("0C", "0", "900", true),
-            row("0I", "4", "010", false),
-            row("0I", "4", "620", true),
-            row("0I", "4", "650", true),
-            row("0I", "4", "900", true),
-            row("0K", "4", "010", false),
-            row("0K", "4", "620", true),
-            row("0K", "4", "650", true),
-            row("0K", "4", "900", true),
-            row("0M", "4", "010", false),
-            row("0M", "4", "620", true),
-            row("0M", "4", "650", true),
-            row("0M", "4", "900", true),
-            row("0P", "4", "010", false),
-            row("0P", "4", "620", true),
-            row("0P", "4", "650", true),
-            row("0P", "4", "900", true),
-        ) { skjema, kontoklasse, art, expectedResult ->
+            row("0A", "0", "010", "1", false),
+            row("0A", "0", "620", "1", true),
+            row("0A", "0", "650", "1", true),
+            row("0A", "0", "900", "1", true),
+            row("0C", "0", "010", "1", false),
+            row("0C", "0", "620", "1", true),
+            row("0C", "0", "650", "1", true),
+            row("0C", "0", "900", "1", true),
+            row("0I", "4", "010", "1", false),
+            row("0I", "4", "620", "1", true),
+            row("0I", "4", "650", "1", true),
+            row("0I", "4", "900", "1", true),
+            row("0K", "4", "010", "1", false),
+            row("0K", "4", "620", "1", true),
+            row("0K", "4", "650", "1", true),
+            row("0K", "4", "900", "1", true),
+            row("0M", "4", "010", "1", false),
+            row("0M", "4", "620", "1", true),
+            row("0M", "4", "650", "1", true),
+            row("0M", "4", "900", "1", true),
+            row("0P", "4", "010", "1", false),
+            row("0P", "4", "620", "1", true),
+            row("0P", "4", "650", "1", true),
+            row("0P", "4", "900", "1", true),
+        ) { skjema, kontoklasse, art, belop, expectedResult ->
             When("For $skjema, $kontoklasse, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -53,6 +53,7 @@ class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
                             RegnskapConstants.FIELD_ART to art,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

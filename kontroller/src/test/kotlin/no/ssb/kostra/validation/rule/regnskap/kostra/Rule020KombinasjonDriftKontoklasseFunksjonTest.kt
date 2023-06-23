@@ -24,19 +24,19 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
 
         forAll(
 
-            row("0A", "1", "100 ", false),
-            row("0A", "1", "841 ", true),
-            row("0C", "1", "100 ", false),
-            row("0C", "1", "841 ", true),
-            row("0I", "3", "100 ", false),
-            row("0I", "3", "841 ", true),
-            row("0K", "3", "100 ", false),
-            row("0K", "3", "841 ", true),
-            row("0M", "3", "100 ", false),
-            row("0M", "3", "841 ", true),
-            row("0P", "3", "100 ", false),
-            row("0P", "3", "841 ", true),
-        ) { skjema, kontoklasse, funksjon, expectedResult ->
+            row("0A", "1", "100 ", "1", false),
+            row("0A", "1", "841 ", "1", true),
+            row("0C", "1", "100 ", "1", false),
+            row("0C", "1", "841 ", "1", true),
+            row("0I", "3", "100 ", "1", false),
+            row("0I", "3", "841 ", "1", true),
+            row("0K", "3", "100 ", "1", false),
+            row("0K", "3", "841 ", "1", true),
+            row("0M", "3", "100 ", "1", false),
+            row("0M", "3", "841 ", "1", true),
+            row("0P", "3", "100 ", "1", false),
+            row("0P", "3", "841 ", "1", true),
+        ) { skjema, kontoklasse, funksjon, belop, expectedResult ->
             When("For $skjema, $kontoklasse, $funksjon -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -46,6 +46,7 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
                             RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

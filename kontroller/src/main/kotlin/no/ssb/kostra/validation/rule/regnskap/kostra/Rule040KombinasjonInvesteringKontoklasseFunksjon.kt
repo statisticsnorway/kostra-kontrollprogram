@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -16,12 +17,13 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjon(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) in invalidInvesteringFunksjonList
+                    && kostraRecord.getFieldAsString(FIELD_FUNKSJON) in invalidInvesteringFunksjonList
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Korrigér ugyldig funksjon " +
-                        "'${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON)}' i " +
+                        "'${kostraRecord.getFieldAsString(FIELD_FUNKSJON)}' i " +
                         "investeringsregnskapet til en gyldig funksjon i investeringsregnskapet eller overfør " +
                         "posteringen til driftsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)

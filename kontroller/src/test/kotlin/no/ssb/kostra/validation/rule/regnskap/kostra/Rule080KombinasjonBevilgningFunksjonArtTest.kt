@@ -17,26 +17,26 @@ class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
             .associateBy { it.name }
 
         forAll(
-            row("0A", "840 ", "010", false),
-            row("0A", "840 ", "800", false),
-            row("0A", "100 ", "800", true),
-            row("0C", "840 ", "010", false),
-            row("0C", "840 ", "800", false),
-            row("0C", "100 ", "800", true),
-            row("0I", "840 ", "010", false),
-            row("0I", "840 ", "800", false),
-            row("0I", "100 ", "800", true),
-            row("0K", "840 ", "010", false),
-            row("0K", "840 ", "800", false),
-            row("0K", "100 ", "800", true),
-            row("0M", "840 ", "010", false),
-            row("0M", "840 ", "800", false),
-            row("0M", "100 ", "800", true),
-            row("0P", "840 ", "010", false),
-            row("0P", "840 ", "800", false),
-            row("0P", "100 ", "800", true),
+            row("0A", "840 ", "010", "1", false),
+            row("0A", "840 ", "800", "1", false),
+            row("0A", "100 ", "800", "1", true),
+            row("0C", "840 ", "010", "1", false),
+            row("0C", "840 ", "800", "1", false),
+            row("0C", "100 ", "800", "1", true),
+            row("0I", "840 ", "010", "1", false),
+            row("0I", "840 ", "800", "1", false),
+            row("0I", "100 ", "800", "1", true),
+            row("0K", "840 ", "010", "1", false),
+            row("0K", "840 ", "800", "1", false),
+            row("0K", "100 ", "800", "1", true),
+            row("0M", "840 ", "010", "1", false),
+            row("0M", "840 ", "800", "1", false),
+            row("0M", "100 ", "800", "1", true),
+            row("0P", "840 ", "010", "1", false),
+            row("0P", "840 ", "800", "1", false),
+            row("0P", "100 ", "800", "1", true),
 
-            ) { skjema, funksjon, art, expectedResult ->
+            ) { skjema, funksjon, art, belop, expectedResult ->
             When("For $skjema, $funksjon, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -46,6 +46,7 @@ class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_FUNKSJON to funksjon,
                             RegnskapConstants.FIELD_ART to art,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

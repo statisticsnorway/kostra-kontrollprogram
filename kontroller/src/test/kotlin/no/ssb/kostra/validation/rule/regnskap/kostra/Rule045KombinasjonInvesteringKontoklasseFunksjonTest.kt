@@ -23,31 +23,31 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
         ).associateBy { it.name }
 
         forAll(
-            row("0A", "0", "100 ", true),
-            row("0A", "0", "400 ", true),
-            row("0A", "0", "201 ", false),
-            row("0A", "0", "510 ", false),
-            row("0C", "0", "100 ", true),
-            row("0C", "0", "400 ", true),
-            row("0C", "0", "201 ", false),
-            row("0C", "0", "510 ", false),
-            row("0I", "4", "100 ", true),
-            row("0I", "4", "400 ", true),
-            row("0I", "4", "201 ", false),
-            row("0I", "4", "510 ", false),
-            row("0K", "4", "100 ", true),
-            row("0K", "4", "400 ", true),
-            row("0K", "4", "201 ", false),
-            row("0K", "4", "510 ", false),
-            row("0M", "4", "100 ", true),
-            row("0M", "4", "400 ", true),
-            row("0M", "4", "201 ", false),
-            row("0M", "4", "510 ", false),
-            row("0P", "4", "100 ", true),
-            row("0P", "4", "400 ", true),
-            row("0P", "4", "201 ", false),
-            row("0P", "4", "510 ", false),
-        ) { skjema, kontoklasse, funksjon, expectedResult ->
+            row("0A", "0", "100 ", "1", true),
+            row("0A", "0", "400 ", "1", true),
+            row("0A", "0", "201 ", "1", false),
+            row("0A", "0", "510 ", "1", false),
+            row("0C", "0", "100 ", "1", true),
+            row("0C", "0", "400 ", "1", true),
+            row("0C", "0", "201 ", "1", false),
+            row("0C", "0", "510 ", "1", false),
+            row("0I", "4", "100 ", "1", true),
+            row("0I", "4", "400 ", "1", true),
+            row("0I", "4", "201 ", "1", false),
+            row("0I", "4", "510 ", "1", false),
+            row("0K", "4", "100 ", "1", true),
+            row("0K", "4", "400 ", "1", true),
+            row("0K", "4", "201 ", "1", false),
+            row("0K", "4", "510 ", "1", false),
+            row("0M", "4", "100 ", "1", true),
+            row("0M", "4", "400 ", "1", true),
+            row("0M", "4", "201 ", "1", false),
+            row("0M", "4", "510 ", "1", false),
+            row("0P", "4", "100 ", "1", true),
+            row("0P", "4", "400 ", "1", true),
+            row("0P", "4", "201 ", "1", false),
+            row("0P", "4", "510 ", "1", false),
+        ) { skjema, kontoklasse, funksjon, belop, expectedResult ->
             When("For $skjema, $kontoklasse, $funksjon -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -57,6 +57,7 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
                             RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

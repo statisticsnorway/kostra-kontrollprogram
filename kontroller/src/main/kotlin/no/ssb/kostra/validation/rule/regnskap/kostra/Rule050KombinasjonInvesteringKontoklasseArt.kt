@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -16,11 +17,14 @@ class Rule050KombinasjonInvesteringKontoklasseArt(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in invalidInvesteringArtList
+                    && kostraRecord.getFieldAsString(FIELD_ART) in invalidInvesteringArtList
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART)}' i investeringsregnskapet til en gyldig art i investeringsregnskapet eller overfør posteringen til driftsregnskapet.",
+                messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' " +
+                        "i investeringsregnskapet til en gyldig art i investeringsregnskapet eller overfør " +
+                        "posteringen til driftsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

@@ -19,25 +19,25 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             .associateBy { it.name }
 
         forAll(
-            row("0A", "1", "100", false),
-            row("0A", "1", "520", true),
-            row("0A", "1", "920", true),
-            row("0C", "1", "100", false),
-            row("0C", "1", "520", true),
-            row("0C", "1", "920", true),
-            row("0I", "3", "100", false),
-            row("0I", "3", "520", true),
-            row("0I", "3", "920", true),
-            row("0K", "3", "100", false),
-            row("0K", "3", "520", true),
-            row("0K", "3", "920", true),
-            row("0M", "3", "100", false),
-            row("0M", "3", "520", true),
-            row("0M", "3", "920", true),
-            row("0P", "3", "100", false),
-            row("0P", "3", "520", true),
-            row("0P", "3", "920", true),
-        ) { skjema, kontoklasse, art, expectedResult ->
+            row("0A", "1", "100", "1", false),
+            row("0A", "1", "520", "1", true),
+            row("0A", "1", "920", "1", true),
+            row("0C", "1", "100", "1", false),
+            row("0C", "1", "520", "1", true),
+            row("0C", "1", "920", "1", true),
+            row("0I", "3", "100", "1", false),
+            row("0I", "3", "520", "1", true),
+            row("0I", "3", "920", "1", true),
+            row("0K", "3", "100", "1", false),
+            row("0K", "3", "520", "1", true),
+            row("0K", "3", "920", "1", true),
+            row("0M", "3", "100", "1", false),
+            row("0M", "3", "520", "1", true),
+            row("0M", "3", "920", "1", true),
+            row("0P", "3", "100", "1", false),
+            row("0P", "3", "520", "1", true),
+            row("0P", "3", "920", "1", true),
+        ) { skjema, kontoklasse, art, belop, expectedResult ->
             When("For $skjema, $kontoklasse, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -47,6 +47,7 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
                             RegnskapConstants.FIELD_ART to art,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

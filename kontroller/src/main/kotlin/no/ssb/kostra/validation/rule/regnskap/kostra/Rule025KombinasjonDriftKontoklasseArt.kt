@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -17,6 +18,7 @@ class Rule025KombinasjonDriftKontoklasseArt(
         .filter { kostraRecord ->
             kostraRecord.isBevilgningDriftRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_ART) in invalidDriftArtList
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

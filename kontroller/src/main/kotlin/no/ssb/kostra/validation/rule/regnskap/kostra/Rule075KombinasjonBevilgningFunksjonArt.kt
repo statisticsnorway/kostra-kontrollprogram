@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -17,6 +18,7 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
             kostraRecord.isBevilgningRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_ART) in listOf("870", "871", "872", "873", "875", "876")
                     && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "800 "
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

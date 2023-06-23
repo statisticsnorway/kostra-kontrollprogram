@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -14,12 +16,14 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArt : AbstractRecordRule(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) == "729"
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) != "841 "
+                    && kostraRecord.getFieldAsString(FIELD_ART) == "729"
+                    && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "841 "
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(
-                messageText = "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
+                messageText = "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun " +
+                        "gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.index)
             )
         }

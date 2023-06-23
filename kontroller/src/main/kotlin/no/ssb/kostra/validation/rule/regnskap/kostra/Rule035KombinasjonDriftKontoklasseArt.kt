@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -16,13 +17,14 @@ class Rule035KombinasjonDriftKontoklasseArt(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter { kostraRecord ->
             kostraRecord.isBevilgningDriftRegnskap()
-                    && kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in illogicalDriftArtList
+                    && kostraRecord.getFieldAsString(FIELD_ART) in illogicalDriftArtList
+                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Kun advarsel, hindrer ikke innsending: (${
                     kostraRecord.getFieldAsString(
-                        RegnskapConstants.FIELD_ART
+                        FIELD_ART
                     )
                 }) regnes å være ulogisk i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
                 lineNumbers = listOf(kostraRecord.index)

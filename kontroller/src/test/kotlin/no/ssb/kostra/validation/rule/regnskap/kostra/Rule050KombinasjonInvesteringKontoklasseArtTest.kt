@@ -22,25 +22,25 @@ class Rule050KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
             .associateBy { it.name }
 
         forAll(
-            row("0A", "0", "010", false),
-            row("0A", "0", "070", true),
-            row("0A", "0", "990", true),
-            row("0C", "0", "010", false),
-            row("0C", "0", "070", true),
-            row("0C", "0", "990", true),
-            row("0I", "4", "010", false),
-            row("0I", "4", "070", true),
-            row("0I", "4", "990", true),
-            row("0K", "4", "010", false),
-            row("0K", "4", "070", true),
-            row("0K", "4", "990", true),
-            row("0M", "4", "010", false),
-            row("0M", "4", "070", true),
-            row("0M", "4", "990", true),
-            row("0P", "4", "010", false),
-            row("0P", "4", "070", true),
-            row("0P", "4", "990", true),
-        ) { skjema, kontoklasse, art, expectedResult ->
+            row("0A", "0", "010", "1", false),
+            row("0A", "0", "070", "1", true),
+            row("0A", "0", "990", "1", true),
+            row("0C", "0", "010", "1", false),
+            row("0C", "0", "070", "1", true),
+            row("0C", "0", "990", "1", true),
+            row("0I", "4", "010", "1", false),
+            row("0I", "4", "070", "1", true),
+            row("0I", "4", "990", "1", true),
+            row("0K", "4", "010", "1", false),
+            row("0K", "4", "070", "1", true),
+            row("0K", "4", "990", "1", true),
+            row("0M", "4", "010", "1", false),
+            row("0M", "4", "070", "1", true),
+            row("0M", "4", "990", "1", true),
+            row("0P", "4", "010", "1", false),
+            row("0P", "4", "070", "1", true),
+            row("0P", "4", "990", "1", true),
+        ) { skjema, kontoklasse, art, belop, expectedResult ->
             When("For $skjema, $kontoklasse, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
@@ -50,6 +50,7 @@ class Rule050KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
                             RegnskapConstants.FIELD_SKJEMA to skjema,
                             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
                             RegnskapConstants.FIELD_ART to art,
+                            RegnskapConstants.FIELD_BELOP to belop,
                         )
                     )
                 )

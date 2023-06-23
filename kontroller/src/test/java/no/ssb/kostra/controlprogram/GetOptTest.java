@@ -7,20 +7,17 @@ import junit.framework.*;
 
 public class GetOptTest extends TestCase {
 
-    private final String goodArgChars = "o:h";
     private final String[] goodArgs = {
             "-h", "-o", "outfile", "infile"
     };
     private final String[] goodLongArgs = {
             "-help", "-output-file", "outfile", "infile"
     };
-    private final char[] goodArgsExpectChars = {'h', 'o'};
 
     private final String badArgChars = "f1o";
     private final String[] badArgs = {
             "-h", "-o", "outfile", "infile"
     };
-    private final char[] badArgsExpectChars = {'?', 'o'};
 
     private final GetOptDesc[] options = {
             new GetOptDesc('o', "output-file", true),
@@ -38,17 +35,18 @@ public class GetOptTest extends TestCase {
     }
 
     public void testOldwayGood() {
-        process1(goodArgChars, goodArgs, false);
+        String goodArgChars = "o:h";
+        process1(goodArgChars, goodArgs);
         process2(goodArgChars, goodArgs, false);
     }
 
     public void testOldwayBadCharsGoodArgs() {
-        process1(badArgChars, goodArgs, true);
+        process1(badArgChars, goodArgs);
         process2(badArgChars, goodArgs, true);
     }
 
     public void testOldwayBadCharsBadArgs() {
-        process1(badArgChars, badArgs, true);
+        process1(badArgChars, badArgs);
         process2(badArgChars, badArgs, true);
     }
 
@@ -70,13 +68,12 @@ public class GetOptTest extends TestCase {
             throw new IllegalArgumentException(
                     "Unexpected empty map");
         }
-        int errs = 0;
         for (var o : map.keySet()) {
             String key = (String) o;
             char c = key.charAt(0);
             String val = (String) map.get(key);
             switch (c) {
-                case '?' -> errs++;
+                case '?' ->
                 case 'o' -> assertEquals(val, "outfile");
                 case 'f', 'h', '1' -> assertNull(val);
                 default -> throw new IllegalArgumentException(
@@ -87,19 +84,16 @@ public class GetOptTest extends TestCase {
         assertEquals("infile", go.getFilenameList().get(0));
     }
 
-    void process1(String argChars, String[] args, boolean shouldFail) {
+    void process1(String argChars, String[] args) {
 
         System.out.println("** START ** " + argChars);
 
         GetOpt go = new GetOpt(argChars);
 
-        int errs = 0, ix = 0;
-
         char c;
         while ((c = go.getopt(args)) != 0) {
             if (c == '?') {
                 System.out.print("Bad option");
-                ++errs;
             } else {
                 System.out.print("Found " + c);
                 if (go.optarg() != null)

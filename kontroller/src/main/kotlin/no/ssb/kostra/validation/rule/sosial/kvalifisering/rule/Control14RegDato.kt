@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import no.ssb.kostra.area.sosial.extension.toFourDigitYear
+import no.ssb.kostra.area.sosial.extension.toYearWithCentury
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.REG_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.program.KostraRecord
@@ -14,7 +14,7 @@ class Control14RegDato : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        (context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).toFourDigitYear() to
+        (context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).toYearWithCentury() to
                 context.getFieldAsLocalDate(REG_DATO_COL_NAME))
             .takeIf { (reportingYear, regDato) ->
                 regDato == null || reportingYear.minus(regDato.year) > 4

@@ -3,7 +3,7 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
+import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity

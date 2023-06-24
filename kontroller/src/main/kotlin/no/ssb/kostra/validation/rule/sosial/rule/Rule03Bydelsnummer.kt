@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.extension.districtIdFromRegion
+import no.ssb.kostra.program.extension.districtIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments

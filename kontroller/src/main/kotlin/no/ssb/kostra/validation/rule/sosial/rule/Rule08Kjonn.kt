@@ -2,9 +2,9 @@ package no.ssb.kostra.validation.rule.sosial.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KJONN_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.kvalifisering.codeIsMissing
-import no.ssb.kostra.area.sosial.kvalifisering.codeListToString
-import no.ssb.kostra.area.sosial.kvalifisering.findByColumnName
+import no.ssb.kostra.program.extension.codeIsMissing
+import no.ssb.kostra.program.extension.codeListToString
+import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity

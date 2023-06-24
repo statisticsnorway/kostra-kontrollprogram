@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
-import no.ssb.kostra.area.sosial.extension.toYearWithCentury
+import no.ssb.kostra.program.extension.toYearWithCentury
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments

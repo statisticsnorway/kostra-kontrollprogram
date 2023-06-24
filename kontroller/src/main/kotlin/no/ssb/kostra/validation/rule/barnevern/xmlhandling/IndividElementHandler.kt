@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.xmlhandling
 
 import no.ssb.kostra.barn.KostraValidationUtils
-import no.ssb.kostra.barn.KostraValidationUtils.validate
+import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.XML_MAPPER
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
 import no.ssb.kostra.barn.xsd.KostraIndividType
@@ -20,9 +20,9 @@ object IndividElementHandler : XmlElementHandler<KostraIndividType> {
         xmlStreamReader,
         KostraIndividType::class.java
     ).let { individType ->
-        if (validate(
+        if (KostraValidationUtils.validate(
                 xmlReader = StringReader(marshallInstance(individType)),
-                xsdResource = KostraValidationUtils.INDIVID_XSD_RESOURCE
+                xsdResource = INDIVID_XSD_RESOURCE
             )
         ) individRules.mapNotNull { it.validate(individType, arguments) }.flatten().map { reportEntry ->
             reportEntry.copy(

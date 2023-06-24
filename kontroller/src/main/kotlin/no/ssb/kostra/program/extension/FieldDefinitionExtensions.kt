@@ -1,4 +1,4 @@
-package no.ssb.kostra.area.sosial.kvalifisering
+package no.ssb.kostra.program.extension
 
 import no.ssb.kostra.program.FieldDefinition
 

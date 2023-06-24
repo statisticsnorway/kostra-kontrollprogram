@@ -13,7 +13,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fie
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 
 class Control19KvalifiseringsprogramIAnnenKommuneTest : BehaviorSpec({
     val sut = Control19KvalifiseringsprogramIAnnenKommune()

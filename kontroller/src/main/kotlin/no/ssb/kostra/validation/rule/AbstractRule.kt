@@ -8,10 +8,11 @@ open class AbstractRule<in T : Any>(
     private val ruleName: String,
     private val severity: Severity
 ) {
-    open fun validate(context: List<T>): List<ValidationReportEntry>? = null
+    open fun validate(context: T): List<ValidationReportEntry>? = null
 
     open fun validate(context: T, arguments: KotlinArguments): List<ValidationReportEntry>? = null
 
+    /** used by record-based rules */
     protected fun createValidationReportEntry(
         messageText: String,
         lineNumbers: List<Int>
@@ -22,6 +23,7 @@ open class AbstractRule<in T : Any>(
         lineNumbers = lineNumbers
     )
 
+    /** used by barnevern */
     protected fun createValidationReportEntry(
         contextId: String,
         messageText: String,
@@ -32,6 +34,7 @@ open class AbstractRule<in T : Any>(
         messageText = messageText
     )
 
+    /** used by barnevern */
     protected fun createSingleReportEntryList(
         contextId: String,
         messageText: String,
@@ -44,6 +47,7 @@ open class AbstractRule<in T : Any>(
         )
     )
 
+    /** used by record-based rules */
     protected fun createSingleReportEntryList(
         messageText: String
     ) = listOf(

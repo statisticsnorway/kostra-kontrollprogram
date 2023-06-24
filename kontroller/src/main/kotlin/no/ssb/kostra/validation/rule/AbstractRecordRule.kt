@@ -6,4 +6,4 @@ import no.ssb.kostra.validation.report.Severity
 abstract class AbstractRecordRule(
     ruleName: String,
     severity: Severity
-) : AbstractRule<KostraRecord>(ruleName, severity)
+) : AbstractRule<List<KostraRecord>>(ruleName, severity)

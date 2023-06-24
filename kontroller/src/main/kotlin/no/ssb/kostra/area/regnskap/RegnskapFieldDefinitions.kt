@@ -1,6 +1,6 @@
 package no.ssb.kostra.area.regnskap
 
-import no.ssb.kostra.area.AbstractFieldDefinitions
+import no.ssb.kostra.area.FieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_AARGANG
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
@@ -13,7 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.*
 
-object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
+object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
             number = 1,
@@ -114,6 +114,5 @@ object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
                     else -> fieldDefinition
                 }
 
-            }
-            .toList() as List<FieldDefinition>
+            }.toList() as List<FieldDefinition> // looks suspicious
 }

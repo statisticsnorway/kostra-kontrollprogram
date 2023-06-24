@@ -29,7 +29,7 @@
         <sonar.exclusions>
             **/Application.kt,
             **/node_modules/**/*,
-            **/Familievern52a.kt
+            **/Familievern52a.kt,
             **/FamilievernFieldDefinitions.kt,
             **/KirkeKostra.kt,
             **/KommuneKostra.kt,

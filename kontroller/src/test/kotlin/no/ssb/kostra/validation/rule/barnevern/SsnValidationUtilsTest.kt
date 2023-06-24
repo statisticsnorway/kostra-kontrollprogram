@@ -1,10 +1,11 @@
 package no.ssb.kostra.validation.rule.barnevern
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.validation.util.SsnValidationUtils.extractBirthDateFromSocialSecurityId
+import no.ssb.kostra.validation.util.SsnValidationUtils
 import no.ssb.kostra.validation.util.SsnValidationUtils.isModulo11Valid
 import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.util.SsnValidationUtils.validateDUF
@@ -12,8 +13,56 @@ import java.time.LocalDate
 
 class SsnValidationUtilsTest : BehaviorSpec({
 
-    Given("isValidSocialSecurityIdOrDnr") {
+    Given("extractBirthDateFromSocialSecurityId") {
+        forAll(
+            row("123", "N/A", null),
+            row("05011399292", "fnr", LocalDate.of(2013, 1, 5)),
+            row("41011088188", "dnr", LocalDate.of(2010, 1, 1))
+        ) { socialSecurityId, type, expectedDate ->
+            When("$socialSecurityId $type") {
 
+                val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId)
+
+                Then("dateOfBirth should be as expected") {
+                    dateOfBirth shouldBe expectedDate
+                }
+            }
+        }
+    }
+
+    Given("getAgeFromSocialSecurityId") {
+        forAll(
+            row("invalid fødselsnummer, expect null", "123", null),
+            row("valid fødselsnummer, expect age", "05011399292",9),
+            row("valid D-nr, expect age", "41011088188",12)
+        ) { description, socialSecurityId, expectedAge ->
+            When(description) {
+                val ageInYears = SsnValidationUtils.getAgeFromSocialSecurityId(
+                    socialSecurityId = socialSecurityId,
+                    reportingYearAsString = "2022"
+                )
+
+                Then("ageInYears should be as expected") {
+                    ageInYears shouldBe expectedAge
+                }
+            }
+        }
+
+        When("invalid registrationYear") {
+            val thrown = shouldThrow<NumberFormatException> {
+                SsnValidationUtils.getAgeFromSocialSecurityId(
+                    socialSecurityId = "41011088188",
+                    reportingYearAsString = "abc"
+                )
+            }
+
+            Then("thrown should be as expected") {
+                thrown.message shouldBe "For input string: \"abc\""
+            }
+        }
+    }
+
+    Given("isValidSocialSecurityIdOrDnr") {
         forAll(
             row("ssn does not match regex", "abc", false),
             row("valid ssn", "05011399292", true),
@@ -32,26 +81,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
         }
     }
 
-    Given("extractBirthDateFromSocialSecurityId") {
-
-        forAll(
-            row("123", "N/A", null),
-            row("05011399292", "fnr", LocalDate.of(2013, 1, 5)),
-            row("41011088188", "dnr", LocalDate.of(2010, 1, 1))
-        ) { socialSecurityId, type, expectedDate ->
-            When("$socialSecurityId $type") {
-
-                val dateOfBirth = extractBirthDateFromSocialSecurityId(socialSecurityId)
-
-                Then("dateOfBirth should be as expected") {
-                    dateOfBirth shouldBe expectedDate
-                }
-            }
-        }
-    }
-
     Given("isModulo11Valid") {
-
         forAll(
             row("05011399292", "fnr", true),
             row("41011088188", "dnr", true),
@@ -72,7 +102,6 @@ class SsnValidationUtilsTest : BehaviorSpec({
     }
 
     Given("validateDUF") {
-
         forAll(
             row("201017238203", true),
             row("200816832910", true),

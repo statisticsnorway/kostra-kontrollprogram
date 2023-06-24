@@ -28,12 +28,18 @@ object SsnValidationUtils {
         null
     }
 
+    fun getAgeFromSocialSecurityId(socialSecurityId: String, reportingYearAsString: String): Int? =
+        extractBirthDateFromSocialSecurityId(socialSecurityId)?.let { birthDate ->
+            reportingYearAsString.toInt() - birthDate.year
+        }
+
     private fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate =
         LocalDate.parse(socialSecurityId, LOCAL_DATE_FORMATTER).let {
             /** unborn will have date of birth in the future, do not subtract a century for those */
             if (it.isAfter(LocalDate.now().plusYears(1))) it.minusYears(CENTURY)
             else it
         }
+
 
     fun isValidSocialSecurityId(personId: String) = SSN_PATTERN.matcher(personId).matches() && isModulo11Valid(personId)
 

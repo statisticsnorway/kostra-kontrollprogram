@@ -8,12 +8,14 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSsn
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.util.SsnValidationUtils.getAgeFromSocialSecurityId
 
 class Rule06AlderUnder18AarTest : BehaviorSpec({
     val sut = Rule06AlderUnder18Aar()
@@ -22,11 +24,11 @@ class Rule06AlderUnder18AarTest : BehaviorSpec({
         forAll(
             row(
                 "record with valid age",
-                kostraRecordInTest("18")
+                kostraRecordInTest(generateRandomSsn(19))
             ),
             row(
-                "record with blank age",
-                kostraRecordInTest("  ")
+                "record with blank fødselsnummer",
+                kostraRecordInTest(" ".repeat(11))
             )
         ) { description, currentContext ->
 
@@ -44,20 +46,22 @@ class Rule06AlderUnder18AarTest : BehaviorSpec({
         forAll(
             row(
                 "record with invalid age",
-                kostraRecordInTest("17")
+                generateRandomSsn(17)
             )
-        ) { description, currentContext ->
+        ) { description, foedselsnummer ->
 
             When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
+                val reportEntryList = sut.validate(kostraRecordInTest(foedselsnummer), argumentsInTest)
 
                 Then("expect non-null result") {
                     reportEntryList.shouldNotBeNull()
                     reportEntryList.size shouldBe 1
 
+                    val actualAge = getAgeFromSocialSecurityId(foedselsnummer, argumentsInTest.aargang)
+
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING
-                        it.messageText shouldBe "Deltakeren (17 år) er under 18 år."
+                        it.messageText shouldBe "Deltakeren ($actualAge år) er under 18 år."
                     }
                 }
             }
@@ -65,11 +69,11 @@ class Rule06AlderUnder18AarTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(age: String) = KostraRecord(
+        private fun kostraRecordInTest(foedselsnummer: String) = KostraRecord(
             1,
             mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                ALDER_COL_NAME to age
+                PERSON_FODSELSNR_COL_NAME to foedselsnummer
             ),
             fieldDefinitions.associate { with(it) { name to it } }
         )

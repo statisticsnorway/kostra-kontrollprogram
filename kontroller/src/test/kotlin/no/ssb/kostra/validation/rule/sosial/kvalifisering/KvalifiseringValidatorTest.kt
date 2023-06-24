@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -9,7 +8,6 @@ import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ALDER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
@@ -51,15 +49,20 @@ class KvalifiseringValidatorTest : BehaviorSpec({
 
     Given("validateKvalifisering") {
 
-        When("validating a random string") {
-            val thrown = shouldThrow<NoSuchFieldException> {
-                validateKvalifisering(
-                    argumentsInTest.copy(inputFileContent = "a".repeat(200))
+        When("validating an empty record string") {
+            val validationResult = validateKvalifisering(
+                argumentsInTest.copy(
+                    inputFileContent = " ".repeat(fieldDefinitions.last().to)
                 )
-            }
+            )
 
-            Then("exception should be as expected") {
-                thrown.message shouldNotBe "ALDER is missing"
+            Then("validationResult should be as expected") {
+                validationResult shouldNotBe null
+
+                assertSoftly(validationResult){
+                    numberOfControls shouldBe 32
+                    reportEntries.size shouldBe 15
+                }
             }
         }
     }
@@ -126,7 +129,6 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 VERSION_COL_NAME to "22",
                 PERSON_JOURNALNR_COL_NAME to "~journalNummer~",
                 PERSON_FODSELSNR_COL_NAME to fodselsnummer,
-                ALDER_COL_NAME to "19",
                 KJONN_COL_NAME to "1",
                 STATUS_COL_NAME to "1",
                 EKTSTAT_COL_NAME to "1",

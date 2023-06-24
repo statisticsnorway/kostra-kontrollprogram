@@ -1,10 +1,16 @@
 package no.ssb.kostra.validation.rule
 
 import java.time.LocalDate
+import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 object RandomUtils {
+
+    fun generateRandomSsn(age: Int):String = generateRandomSSN(
+        Year.now().minusYears(age.toLong()).atDay(1),
+        Year.now().minusYears(age - 1L).atDay(1).minusDays(1)
+    )
 
     fun generateRandomSSN(
         startInclusive: LocalDate,
@@ -47,6 +53,7 @@ object RandomUtils {
                 .padStart(2, '0'))
         }
     }
+
     private val dufControlDigits = listOf(4, 6, 3, 2, 4, 6, 3, 2, 7, 5)
 
     private val controlSumDigits1 = listOf(3, 7, 6, 1, 8, 9, 4, 5, 2, 1)

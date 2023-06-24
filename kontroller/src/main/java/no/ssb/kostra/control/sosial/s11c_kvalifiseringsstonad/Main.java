@@ -7,11 +7,9 @@ import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
 import no.ssb.kostra.program.ConversionUtils;
-import no.ssb.kostra.utils.Fnr;
 
 import java.util.List;
 
-import static no.ssb.kostra.control.sosial.felles.ControlSosial.dnr2fnr;
 import static no.ssb.kostra.program.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
@@ -19,7 +17,6 @@ import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringVa
 public class Main {
     // Konstanter
     private static final String ALDER = "ALDER";
-    private static final String FNR = "PERSON_FODSELSNR";
     private static final String FNR_OK = "FNR_OK";
     private static final String KVP_STONAD = "KVP_STONAD";
     private static final List<String> STMND = List.of("STMND_1", "STMND_2", "STMND_3", "STMND_4", "STMND_5", "STMND_6", "STMND_7", "STMND_8", "STMND_9", "STMND_10", "STMND_11", "STMND_12");
@@ -48,17 +45,7 @@ public class Main {
         final var fieldDefinitions = FieldDefinitions.getFieldDefinitions();
         final var records = inputFileContent.stream()
                 .map(p -> new KostraRecord(p, fieldDefinitions))
-                // utled ALDER og sett flagget FNR_OK i forhold til om ALDER lot seg utlede
-                .peek(record -> {
-                    try {
-                        record.setFieldAsInteger(ALDER, Fnr.getAlderFromFnr(dnr2fnr(record.getFieldAsString(FNR)), arguments.getAargang()));
-                        record.setFieldAsInteger(FNR_OK, 1);
-
-                    } catch (Exception e) {
-                        record.setFieldAsInteger(ALDER, -1);
-                        record.setFieldAsInteger(FNR_OK, 0);
-                    }
-                }).toList();
+                .toList();
 
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);

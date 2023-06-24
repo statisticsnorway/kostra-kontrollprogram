@@ -38,7 +38,7 @@ class Rule011KapittelTest : BehaviorSpec({
 
     Given("no context") {
         val sut = Rule011Kapittel(
-            kapittelList = listOf()
+            kapittelList = emptyList()
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KAPITTEL, from = 1, to = 4))
 

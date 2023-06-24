@@ -38,7 +38,7 @@ class Rule013SektorTest : BehaviorSpec({
 
     Given("no context") {
         val sut = Rule013Sektor(
-            sektorList = listOf()
+            sektorList = emptyList()
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, to = 3))
 

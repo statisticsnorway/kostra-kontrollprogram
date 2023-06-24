@@ -38,7 +38,7 @@ class Rule012ArtTest : BehaviorSpec({
 
     Given("no context") {
         val sut = Rule012Art(
-            artList = listOf()
+            artList = emptyList()
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ART, from = 1, to = 3))
 

@@ -29,8 +29,8 @@ class FieldDefinitionTest : BehaviorSpec({
 
     Given("viewType context") {
         forAll(
-            row("default for $INPUTBOX_VIEWTYPE", INPUTBOX_VIEWTYPE, listOf(), 0),
-            row("default for $CHECKBOX_VIEWTYPE", CHECKBOX_VIEWTYPE, listOf(), 3),
+            row("default for $INPUTBOX_VIEWTYPE", INPUTBOX_VIEWTYPE, emptyList(), 0),
+            row("default for $CHECKBOX_VIEWTYPE", CHECKBOX_VIEWTYPE, emptyList(), 3),
             row("CodeList with 2 items for $CHECKBOX_VIEWTYPE", CHECKBOX_VIEWTYPE, listOf(Code("1", "1"), Code("2", "2")), 2),
 
             ){ description, viewType, codeList, expectedResultCodeListLength ->

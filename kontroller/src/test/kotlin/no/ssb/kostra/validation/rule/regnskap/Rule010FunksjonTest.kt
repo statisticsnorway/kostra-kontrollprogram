@@ -38,7 +38,7 @@ class Rule010FunksjonTest : BehaviorSpec({
 
     Given("no context") {
         val sut = Rule010Funksjon(
-            funksjonList = listOf()
+            funksjonList = emptyList()
         )
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FUNKSJON, from = 1, to = 4))
 

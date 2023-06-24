@@ -9,25 +9,25 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.AvgiverElementHandler
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernStreamHandler
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultStreamHandler
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.IndividElementHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.avgiverXmlElementHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.individElementHandler
 
 object BarnevernValidator {
 
     @JvmStatic
     fun validateBarnevern(arguments: KotlinArguments) = validateBarnevern(
         arguments = arguments,
-        streamHandler = DefaultStreamHandler(
-            AvgiverElementHandler,
-            IndividElementHandler,
+        streamHandler = DefaultXmlStreamHandler(
+            avgiverXmlElementHandler,
+            individElementHandler
         )
     )
 
     fun validateBarnevern(
         arguments: KotlinArguments,
-        streamHandler: BarnevernStreamHandler
+        streamHandler: BarnevernXmlStreamHandler
     ): ValidationResult {
         var seenAvgivere = 0
         var seenIndivider = 0

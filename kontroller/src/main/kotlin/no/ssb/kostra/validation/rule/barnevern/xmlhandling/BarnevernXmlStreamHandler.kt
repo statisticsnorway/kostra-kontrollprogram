@@ -6,7 +6,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import java.io.InputStream
 
-fun interface BarnevernStreamHandler {
+fun interface BarnevernXmlStreamHandler {
 
     fun handleStream(
         fileStream: InputStream,

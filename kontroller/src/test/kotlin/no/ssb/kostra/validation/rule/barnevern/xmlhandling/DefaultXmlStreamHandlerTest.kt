@@ -14,21 +14,21 @@ import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultStreamHandler.Companion.avgiverFileError
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultStreamHandler.Companion.individFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler.Companion.avgiverFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler.Companion.individFileError
 
-class DefaultStreamHandlerTest : BehaviorSpec({
+class DefaultXmlStreamHandlerTest : BehaviorSpec({
 
-    Given("DefaultStreamHandler") {
+    Given("DefaultXmlStreamHandler") {
 
         lateinit var avgiverXmlElementHandler: XmlElementHandler<KostraAvgiverType>
         lateinit var individXmlElementHandler: XmlElementHandler<KostraIndividType>
-        lateinit var sut: DefaultStreamHandler
+        lateinit var sut: DefaultXmlStreamHandler
 
         beforeContainer {
             avgiverXmlElementHandler = mockk()
             individXmlElementHandler = mockk()
-            sut = DefaultStreamHandler(
+            sut = DefaultXmlStreamHandler(
                 avgiverXmlElementHandler = avgiverXmlElementHandler,
                 individXmlElementHandler = individXmlElementHandler
             )

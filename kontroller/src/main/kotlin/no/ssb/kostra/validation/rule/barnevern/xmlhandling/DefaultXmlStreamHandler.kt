@@ -12,10 +12,10 @@ import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
 import javax.xml.stream.XMLStreamReader
 
-class DefaultStreamHandler(
+class DefaultXmlStreamHandler(
     private val avgiverXmlElementHandler: XmlElementHandler<KostraAvgiverType>,
     private val individXmlElementHandler: XmlElementHandler<KostraIndividType>,
-) : BarnevernStreamHandler {
+) : BarnevernXmlStreamHandler {
 
     override fun handleStream(
         fileStream: InputStream,

@@ -21,7 +21,7 @@ class Rule135Rammetilskudd : AbstractRecordRule(
             it.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) == "840 "
                     && it.getFieldAsString(RegnskapConstants.FIELD_ART) == "800"
         }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { rammeTilskudd -> rammeTilskudd < 0 }
         ?.let { rammeTilskudd ->
             createSingleReportEntryList(

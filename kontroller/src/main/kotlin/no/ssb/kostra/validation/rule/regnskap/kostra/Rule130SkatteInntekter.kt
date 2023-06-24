@@ -20,7 +20,7 @@ class Rule130SkatteInntekter : AbstractRecordRule(
         .filter { !it.isOsloBydel() && !it.isLongyearbyen() && it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.getFieldAsString(FIELD_FUNKSJON) == "800 " && it.getFieldAsString(FIELD_ART) == "870" }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { skatteInntekter -> skatteInntekter < 0 }
         ?.let { skatteInntekter ->
             createSingleReportEntryList(

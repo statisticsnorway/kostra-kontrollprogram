@@ -19,9 +19,9 @@ class Rule110SummeringDriftDifferanse : AbstractRecordRule(
         ?.partition { it.isUtgift() }
         ?.let { (driftUtgifterPosteringer, driftInntekterPosteringer) ->
             driftUtgifterPosteringer
-                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     driftInntekterPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (driftUtgifter, driftInntekter) ->
             0 < driftUtgifter

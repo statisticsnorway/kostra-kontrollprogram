@@ -293,11 +293,11 @@ class Rule140OverforingerDriftInvesteringTest : BehaviorSpec({
                         )
                     }
                 val driftOverforinger =
-                    kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                    kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val investeringOverforinger =
-                    kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                    kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val overforingDifferanse =
-                    kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                    kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
 
                 val validationReportEntries = sut.validate(kostraRecordList)
                 val result = validationReportEntries?.any()

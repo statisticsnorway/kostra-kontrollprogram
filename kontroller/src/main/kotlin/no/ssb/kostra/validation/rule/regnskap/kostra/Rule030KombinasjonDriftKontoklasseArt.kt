@@ -18,7 +18,7 @@ class Rule030KombinasjonDriftKontoklasseArt(
         .filter { kostraRecord ->
             kostraRecord.isBevilgningDriftRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_ART) in illogicalDriftArtList
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
+                    && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

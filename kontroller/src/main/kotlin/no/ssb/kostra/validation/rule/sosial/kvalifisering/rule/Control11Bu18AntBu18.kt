@@ -14,7 +14,7 @@ class Control11Bu18AntBu18 : AbstractRule<KostraRecord>(
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
         context.getFieldAsString(BU18_COL_NAME).takeIf { it == "1" }
-            ?.let { context.getFieldAsIntegerDefaultEquals0(ANT_BU18_COL_NAME) }
+            ?.let { context.getFieldAsIntegerOrDefault(ANT_BU18_COL_NAME) }
             ?.takeIf { it < 1 }
             ?.let { numberOfChildren ->
                 createSingleReportEntryList(

@@ -12,7 +12,7 @@ class Control13AntBu18 : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsIntegerDefaultEquals0(ANT_BU18_COL_NAME)
+        context.getFieldAsIntegerOrDefault(ANT_BU18_COL_NAME)
             .takeIf { it >= CHILD_COUNT_THRESHOLD }
             ?.let { numberOfChildren ->
                 createSingleReportEntryList(

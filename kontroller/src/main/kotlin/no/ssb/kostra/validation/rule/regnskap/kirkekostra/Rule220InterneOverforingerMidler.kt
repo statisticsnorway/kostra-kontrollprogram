@@ -26,8 +26,8 @@ class Rule220InterneOverforingerMidler : AbstractRecordRule(
             it.getFieldAsString(FIELD_ART) == "465"
         }
         ?.let { (overforingerPosteringer, innsamledeMidlerPosteringer) ->
-            overforingerPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
-                    innsamledeMidlerPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+            overforingerPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                    innsamledeMidlerPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (overforinger, innsamledeMidler) ->
             (overforinger + innsamledeMidler) in -30..30

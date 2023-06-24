@@ -72,8 +72,8 @@ class Rule143AvskrivningerTest : BehaviorSpec({
                             valuesByName = record
                         )
                     }
-                val avskrivninger = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val motpostAvskrivninger = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                val avskrivninger = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
+                val motpostAvskrivninger = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val differanse = avskrivninger + motpostAvskrivninger
 
                 val validationReportEntries = sut.validate(kostraRecordList)

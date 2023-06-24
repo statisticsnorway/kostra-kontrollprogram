@@ -16,7 +16,7 @@ class Rule115SummeringBalanseAktiva : AbstractRecordRule(
         .filter { it.isBalanseRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isAktiva() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumAktiva ->
             createSingleReportEntryList(

@@ -26,8 +26,8 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractReco
             it.getFieldAsString(FIELD_ART) == "390"
         }
         ?.let { (utgifterPosteringer, inntekterPosteringer) ->
-            utgifterPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
-                    inntekterPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+            utgifterPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                    inntekterPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
             (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30

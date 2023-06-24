@@ -17,9 +17,9 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractRecordRule(
             it.isBevilgningRegnskap()
                     && it.getFieldAsString(FIELD_FUNKSJON) == "089 "
                     && !(
-                    it.getFieldAsIntegerDefaultEquals0(FIELD_ART) in 500..580
-                            || it.getFieldAsIntegerDefaultEquals0(FIELD_ART) == 830
-                            || it.getFieldAsIntegerDefaultEquals0(FIELD_ART) in 900..980
+                    it.getFieldAsIntegerOrDefault(FIELD_ART) in 500..580
+                            || it.getFieldAsIntegerOrDefault(FIELD_ART) == 830
+                            || it.getFieldAsIntegerOrDefault(FIELD_ART) in 900..980
                     )
         }
         .map {

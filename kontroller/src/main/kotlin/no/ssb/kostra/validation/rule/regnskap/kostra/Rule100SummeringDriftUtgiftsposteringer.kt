@@ -17,7 +17,7 @@ class Rule100SummeringDriftUtgiftsposteringer : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isUtgift() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumDriftsUtgifter ->
             createSingleReportEntryList(

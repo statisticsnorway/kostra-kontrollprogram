@@ -19,11 +19,11 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRecordRu
             !it.isOsloBydel() && it.isBevilgningDriftRegnskap()
                     && it.getFieldAsString(FIELD_FUNKSJON) != "860 "
                     && it.getFieldAsString(FIELD_ART) == "990"
-                    && it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) > 0
+                    && it.getFieldAsIntegerOrDefault(FIELD_BELOP) > 0
         }
         .takeIf { it.any() }
         ?.let { kostraRecordList ->
-            kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+            kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
         }
         ?.takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }

@@ -25,7 +25,7 @@ class Rule065KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
                                     && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "899 "
                             )
                     )
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
+                    && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

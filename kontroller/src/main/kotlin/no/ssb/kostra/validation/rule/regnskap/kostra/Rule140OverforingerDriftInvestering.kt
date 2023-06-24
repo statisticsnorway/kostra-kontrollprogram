@@ -21,10 +21,10 @@ class Rule140OverforingerDriftInvestering : AbstractRecordRule(
         ?.let { (driftPosteringer, investeringPosteringer) ->
             driftPosteringer
                 .filter { it.getFieldAsString(FIELD_ART) == "570" }
-                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     investeringPosteringer
                         .filter { it.getFieldAsString(FIELD_ART) == "970" }
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (driftOverforinger, investeringOverforinger) ->
             driftOverforinger + investeringOverforinger in -30..30

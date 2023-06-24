@@ -21,10 +21,10 @@ class Rule095SummeringInvesteringDifferanse : AbstractRecordRule(
                     investeringInntekterPosteringer) ->
             (
                     investeringUtgifterPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
                             to
                             investeringInntekterPosteringer
-                                .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+                                .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
                     )
         }
         ?.takeUnless { (investeringUtgifter, investeringInntekter) ->

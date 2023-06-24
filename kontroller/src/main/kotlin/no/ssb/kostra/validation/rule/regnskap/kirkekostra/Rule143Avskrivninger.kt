@@ -21,15 +21,15 @@ class Rule143Avskrivninger : AbstractRecordRule(
             it.any()
         }
         ?.filter {
-            it.getFieldAsIntegerDefaultEquals0(FIELD_FUNKSJON) in 41..45
+            it.getFieldAsIntegerOrDefault(FIELD_FUNKSJON) in 41..45
         }
         ?.let { driftPosteringer ->
             driftPosteringer
                 .filter { it.getFieldAsString(FIELD_ART) == "590" }
-                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     driftPosteringer
                         .filter { it.getFieldAsString(FIELD_ART) == "990" }
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
 
         }
         ?.takeUnless { (avskrivninger, motpostAvskrivninger) ->

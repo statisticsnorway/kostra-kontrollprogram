@@ -18,13 +18,13 @@ class Rule150Avskrivninger : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {
-            it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_FUNKSJON) in 100..799
+            it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
                     && it.getFieldAsString(RegnskapConstants.FIELD_ART) == "590"
         }
         ?.let { avskrivningPosteringer ->
             avskrivningPosteringer[0].getFieldAsString(RegnskapConstants.FIELD_SKJEMA) to
                     avskrivningPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         }
         ?.takeUnless { (_, avskrivninger) -> avskrivninger != 0 }
         ?.let { (skjema, avskrivninger) ->

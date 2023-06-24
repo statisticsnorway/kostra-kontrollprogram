@@ -63,8 +63,8 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
                             valuesByName = record
                         )
                     }
-                val kalkulatoriskeUtgifter = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP)
-                val kalkulatoriskeInntekter = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP)
+                val kalkulatoriskeUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
+                val kalkulatoriskeInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
                 val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
 
                 val validationReportEntries = sut.validate(kostraRecordList)

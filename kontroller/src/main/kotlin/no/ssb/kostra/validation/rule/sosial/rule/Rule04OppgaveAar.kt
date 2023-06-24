@@ -13,7 +13,7 @@ class Rule04OppgaveAar : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).toYearWithCentury()
+        context.getFieldAsIntegerOrDefault(VERSION_COL_NAME).toYearWithCentury()
             .takeIf { it != arguments.aargang.toInt() }?.let {
                 createSingleReportEntryList(
                     "Korrigér årgang. Fant ${context.getFieldAsString(VERSION_COL_NAME)}, forventet " +

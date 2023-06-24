@@ -19,8 +19,8 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRecordRule(
         ?.filter { kostraRecord -> kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in listOf("298", "798") }
         ?.partition { kostraRecord -> kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
-            art298Posteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) } to
-                    art798Posteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+            art298Posteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) } to
+                    art798Posteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         }
         ?.takeUnless { (sumArt298Investering, sumArt798Investering) ->
             sumArt298Investering + sumArt798Investering in -10..10

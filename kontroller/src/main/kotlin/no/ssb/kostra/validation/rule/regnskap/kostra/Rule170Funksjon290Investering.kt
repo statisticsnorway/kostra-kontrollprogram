@@ -22,7 +22,7 @@ class Rule170Funksjon290Investering : AbstractRecordRule(
                     && it.getFieldAsString(FIELD_FUNKSJON) == "290 "
         }
         .takeIf { it.any() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         ?.takeUnless { funksjon290Investering -> funksjon290Investering in -30..30 }
         ?.let { funksjon290Investering ->
             createSingleReportEntryList(

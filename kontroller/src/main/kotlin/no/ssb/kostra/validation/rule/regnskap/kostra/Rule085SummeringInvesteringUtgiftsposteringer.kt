@@ -18,7 +18,7 @@ class Rule085SummeringInvesteringUtgiftsposteringer : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isUtgift() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumInvesteringsUtgifter ->
             createSingleReportEntryList(

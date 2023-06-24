@@ -20,8 +20,8 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractRecordRule(
         ?.filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) in listOf("298", "798") }
         ?.partition { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
-            art298Posteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
-                    art798Posteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+            art298Posteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                    art798Posteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
         ?.let { (sumArt298Drift, sumArt798Drift) ->

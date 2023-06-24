@@ -18,7 +18,7 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArt : AbstractRecordRule(
             kostraRecord.isBevilgningInvesteringRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_ART) == "729"
                     && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "841 "
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
+                    && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

@@ -18,7 +18,7 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjon(
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_FUNKSJON) in invalidInvesteringFunksjonList
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
+                    && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

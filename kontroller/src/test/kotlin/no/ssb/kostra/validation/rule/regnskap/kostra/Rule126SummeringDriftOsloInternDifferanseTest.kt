@@ -172,10 +172,10 @@ class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
                             valuesByName = record
                         )
                     }
-                val sumArt298Drift = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val sumArt798Drift = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                val sumArt298Drift = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
+                val sumArt798Drift = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val sumOslointerneDrift = kostraRecordList.sumOf {
-                    it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                    it.getFieldAsIntegerOrDefault(FIELD_BELOP)
                 }
 
                 val validationReportEntries = sut.validate(kostraRecordList)

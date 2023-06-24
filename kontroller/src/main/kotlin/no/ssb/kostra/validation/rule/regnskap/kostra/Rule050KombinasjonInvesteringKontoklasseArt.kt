@@ -18,7 +18,7 @@ class Rule050KombinasjonInvesteringKontoklasseArt(
         .filter { kostraRecord ->
             kostraRecord.isBevilgningInvesteringRegnskap()
                     && kostraRecord.getFieldAsString(FIELD_ART) in invalidInvesteringArtList
-                    && kostraRecord.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) != 0
+                    && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .map { kostraRecord ->
             createValidationReportEntry(

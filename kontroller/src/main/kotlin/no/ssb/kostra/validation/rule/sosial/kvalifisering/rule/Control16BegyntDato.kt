@@ -14,7 +14,7 @@ class Control16BegyntDato : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        (context.getFieldAsIntegerDefaultEquals0(VERSION_COL_NAME).toYearWithCentury() to
+        (context.getFieldAsIntegerOrDefault(VERSION_COL_NAME).toYearWithCentury() to
                 context.getFieldAsLocalDate(BEGYNT_DATO_COL_NAME))
             .takeIf { (reportingYear, begyntDate) ->
                 begyntDate == null || reportingYear.minus(begyntDate.year) > 4

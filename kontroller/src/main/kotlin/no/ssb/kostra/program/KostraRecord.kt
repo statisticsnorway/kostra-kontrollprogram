@@ -18,12 +18,12 @@ data class KostraRecord(
 
     fun getFieldAsInteger(field: String): Int? = getFieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
 
-    fun getFieldAsIntegerDefaultEquals0(
+    fun getFieldAsIntegerOrDefault(
         field: String,
         defaultValue: Int = 0
     ): Int = try {
         getFieldAsTrimmedString(field).toInt()
-    } catch (e: NumberFormatException) {
+    } catch (thrown: NumberFormatException) {
         defaultValue
     }
 
@@ -41,14 +41,11 @@ data class KostraRecord(
             throw IndexOutOfBoundsException("getFieldAsLocalDate(): value and datePattern have different lengths")
 
         return try {
-            val formatter = DateTimeFormatter.ofPattern(pattern)
-            LocalDate.from(formatter.parse(value))
+            DateTimeFormatter.ofPattern(pattern).let { LocalDate.from(it.parse(value)) }
         } catch (e: DateTimeParseException) {
             null
         }
     }
-
-    fun getFieldAsList(field: String) = getFieldAsString(field).split(",")
 
     override fun toString(): String = "$valuesByName\n$fieldDefinitionByName"
 

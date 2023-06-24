@@ -18,7 +18,7 @@ class Rule105SummeringDriftInntektsposteringer : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 > it }
         ?.let { sumDriftsInntekter ->
             createSingleReportEntryList(

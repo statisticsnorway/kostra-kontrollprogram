@@ -18,14 +18,14 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRecordRule(
         .filter {
             !it.isOsloBydel()
                     && it.isBevilgningDriftRegnskap()
-                    && it.getFieldAsIntegerDefaultEquals0(FIELD_FUNKSJON) in 800..899
+                    && it.getFieldAsIntegerOrDefault(FIELD_FUNKSJON) in 800..899
                     && it.getFieldAsString(FIELD_ART) == "590"
         }
         .takeIf {
             it.any()
         }
         ?.let { kostraRecordList ->
-            kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+            kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
         }
         ?.takeUnless { (avskrivninger, _) ->

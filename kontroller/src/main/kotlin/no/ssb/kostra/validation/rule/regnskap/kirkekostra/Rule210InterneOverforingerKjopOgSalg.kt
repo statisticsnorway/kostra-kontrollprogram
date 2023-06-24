@@ -26,8 +26,8 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRecordRule(
             it.getFieldAsString(FIELD_ART) == "380"
         }
         ?.let { (internKjopPosteringer, internSalgPosteringer) ->
-            internKjopPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) } to
-                    internSalgPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+            internKjopPosteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) } to
+                    internSalgPosteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         }
         ?.takeUnless { (internKjop, internSalg) ->
             (internKjop + internSalg) in -30..30

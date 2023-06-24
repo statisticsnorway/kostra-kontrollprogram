@@ -27,7 +27,7 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRecordRule(
         ?.let { avskrivningPosteringer ->
             avskrivningPosteringer[0].getFieldAsString(FIELD_SKJEMA) to
                     avskrivningPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (_, motpostAvskrivninger) -> motpostAvskrivninger != 0 }
         ?.let { (skjema, motpostAvskrivninger) ->

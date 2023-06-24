@@ -18,9 +18,9 @@ class Rule125SummeringBalanseDifferanse : AbstractRecordRule(
         ?.partition { it.isAktiva() }
         ?.let { (aktivaPosteringer, passivaPosteringer) ->
             aktivaPosteringer
-                .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
+                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     passivaPosteringer
-                        .sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (aktiva, passiva) ->
             0 < aktiva

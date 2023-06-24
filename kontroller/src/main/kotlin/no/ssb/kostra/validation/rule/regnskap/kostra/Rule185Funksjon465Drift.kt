@@ -22,7 +22,7 @@ class Rule185Funksjon465Drift : AbstractRecordRule(
                     && it.getFieldAsString(FIELD_FUNKSJON) == "465 "
         }
         .takeIf { it.any() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         ?.takeUnless { funksjon465Drift -> funksjon465Drift in -30..30 }
         ?.let { funksjon465Drift ->
             createSingleReportEntryList(

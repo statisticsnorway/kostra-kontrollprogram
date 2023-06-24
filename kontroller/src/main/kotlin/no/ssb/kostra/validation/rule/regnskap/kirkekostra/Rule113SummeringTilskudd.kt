@@ -16,7 +16,7 @@ class Rule113SummeringTilskudd : AbstractRecordRule(
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.getFieldAsString(FIELD_ART) == "830" }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { tilskudd ->
             createSingleReportEntryList(

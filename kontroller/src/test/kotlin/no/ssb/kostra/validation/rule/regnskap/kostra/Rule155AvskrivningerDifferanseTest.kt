@@ -288,9 +288,9 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                         )
                     }
                 val avskrivninger =
-                    kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                    kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val motpostAvskrivninger =
-                    kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                    kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
 
                 val validationReportEntries = sut.validate(kostraRecordList)
                 val result = validationReportEntries?.any()

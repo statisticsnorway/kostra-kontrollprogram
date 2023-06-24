@@ -67,8 +67,8 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
                             valuesByName = record
                         )
                     }
-                val overforinger = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val innsamledeMidler = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                val overforinger = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
+                val innsamledeMidler = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val midlerDifferanse = overforinger + innsamledeMidler
 
                 val validationReportEntries = sut.validate(kostraRecordList)

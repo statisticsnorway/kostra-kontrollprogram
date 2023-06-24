@@ -67,8 +67,8 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
                             valuesByName = record
                         )
                     }
-                val internKjop = kostraRecordList[0].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
-                val internSalg = kostraRecordList[1].getFieldAsIntegerDefaultEquals0(FIELD_BELOP)
+                val internKjop = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
+                val internSalg = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
                 val internDifferanse = internKjop + internSalg
 
                 val validationReportEntries = sut.validate(kostraRecordList)

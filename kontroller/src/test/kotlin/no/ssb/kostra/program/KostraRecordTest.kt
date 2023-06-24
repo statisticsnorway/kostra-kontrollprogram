@@ -39,7 +39,7 @@ class KostraRecordTest : BehaviorSpec({
 
             Then("getFieldAsIntegerDefaultEquals0(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldAsIntegerDefaultEquals0(field)
+                    kostraRecord.getFieldAsIntegerOrDefault(field)
                 }
             }
         }
@@ -95,7 +95,7 @@ class KostraRecordTest : BehaviorSpec({
                 }
 
                 Then("getFieldAsIntegerDefaultEquals0") {
-                    kostraRecord.getFieldAsIntegerDefaultEquals0("Field") shouldBe defaultIntValue
+                    kostraRecord.getFieldAsIntegerOrDefault("Field") shouldBe defaultIntValue
                 }
             }
         }

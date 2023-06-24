@@ -15,13 +15,13 @@ class Rule190Memoriakonti : AbstractRecordRule(
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
         .filter {
             it.isBalanseRegnskap()
-                    && it.getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) in 9100..9999
+                    && it.getFieldAsIntegerOrDefault(FIELD_KAPITTEL) in 9100..9999
         }
         .takeIf { it.any() }
-        ?.partition { it.getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) == 9999 }
+        ?.partition { it.getFieldAsIntegerOrDefault(FIELD_KAPITTEL) == 9999 }
         ?.let { (motpostMemoriakontiPosteringer, memoriakontiPosteringer) ->
-            motpostMemoriakontiPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
-                    memoriakontiPosteringer.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) }
+            motpostMemoriakontiPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                    memoriakontiPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (motpostMemoriakonti, memoriakonti) ->
             memoriakonti + motpostMemoriakonti in -30..30

@@ -41,10 +41,10 @@ fun KostraRecord.isRegional() =
     ACCOUNTING_TYPE_REGIONALE in RegnskapConstants.getRegnskapTypeBySkjema(getFieldAsString(FIELD_SKJEMA))
 
 fun KostraRecord.isUtgift() =
-    getFieldAsIntegerDefaultEquals0(FIELD_ART) in 10..599
+    getFieldAsIntegerOrDefault(FIELD_ART) in 10..599
 
 fun KostraRecord.isInntekt() =
-    getFieldAsIntegerDefaultEquals0(FIELD_ART) in 600..999
+    getFieldAsIntegerOrDefault(FIELD_ART) in 600..999
 
 fun KostraRecord.isOslo() =
     getFieldAsString(FIELD_REGION) == "030100"
@@ -57,10 +57,10 @@ fun KostraRecord.isLongyearbyen() =
     getFieldAsString(FIELD_REGION) == "211100"
 
 fun KostraRecord.isAktiva() =
-    getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) in 10..29
+    getFieldAsIntegerOrDefault(FIELD_KAPITTEL) in 10..29
 
 fun KostraRecord.isPassiva() =
-    getFieldAsIntegerDefaultEquals0(FIELD_KAPITTEL) in 30..5999
+    getFieldAsIntegerOrDefault(FIELD_KAPITTEL) in 30..5999
 
 fun KostraRecord.isOsloInternRegnskap() =
     this.isOslo()

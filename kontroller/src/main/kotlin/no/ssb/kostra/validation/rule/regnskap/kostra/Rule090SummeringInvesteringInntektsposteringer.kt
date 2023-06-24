@@ -18,7 +18,7 @@ class Rule090SummeringInvesteringInntektsposteringer : AbstractRecordRule(
         .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
-        ?.sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 > it }
         ?.let { sumInvesteringsInntekter ->
             createSingleReportEntryList(

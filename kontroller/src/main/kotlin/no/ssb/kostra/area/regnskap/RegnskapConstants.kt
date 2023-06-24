@@ -16,26 +16,26 @@ object RegnskapConstants {
     const val FIELD_SEKTOR = FIELD_ART_SEKTOR
     const val FIELD_BELOP = "belop"
 
-    const val DERIVED_ACCOUNTING_TYPE = "utledet_regnskapstype"
-    const val DERIVED_KONTOKLASSE = "utledet_kontoklasse"
+//    const val DERIVED_ACCOUNTING_TYPE = "utledet_regnskapstype"
+//    const val DERIVED_KONTOKLASSE = "utledet_kontoklasse"
 
-    const val TITLE_SKJEMA = "Skjema"
-    const val TITLE_AARGANG = "Årgang"
-    const val TITLE_KVARTAL = "Kvartal"
-    const val TITLE_REGION = "Region"
-    const val TITLE_ORGNR = "Organisasjonsnummer"
-    const val TITLE_FORETAKSNR = "Foretaksnummer"
+//    const val TITLE_SKJEMA = "Skjema"
+//    const val TITLE_AARGANG = "Årgang"
+//    const val TITLE_KVARTAL = "Kvartal"
+//    const val TITLE_REGION = "Region"
+//    const val TITLE_ORGNR = "Organisasjonsnummer"
+//    const val TITLE_FORETAKSNR = "Foretaksnummer"
     const val TITLE_KONTOKLASSE = "Kontoklasse"
-    const val TITLE_FUNKSJON_KAPITTEL = "Funksjon/Kapittel"
+//    const val TITLE_FUNKSJON_KAPITTEL = "Funksjon/Kapittel"
     const val TITLE_FUNKSJON = "Funksjon"
     const val TITLE_KAPITTEL = "Kapittel"
-    const val TITLE_ART_SEKTOR = "Art/Sektor"
+//    const val TITLE_ART_SEKTOR = "Art/Sektor"
     const val TITLE_ART = "Art"
     const val TITLE_SEKTOR = "Sektor"
-    const val TITLE_BELOP = "belop"
+//    const val TITLE_BELOP = "belop"
 
-    const val TITLE_DERIVED_ACCOUNTING_TYPE = "Utledet regnskapstype"
-    const val TITLE_DERIVED_KONTOKLASSE = "Utledet kontoklasse"
+//    const val TITLE_DERIVED_ACCOUNTING_TYPE = "Utledet regnskapstype"
+//    const val TITLE_DERIVED_KONTOKLASSE = "Utledet kontoklasse"
 
     const val ACCOUNTING_TYPE_BALANSE = "BAL"
     const val ACCOUNTING_TYPE_BEVILGNING = "BEV"
@@ -98,7 +98,7 @@ object RegnskapConstants {
         Mapping(ACCOUNTING_TYPE_RESULTAT, "0X", ACCOUNT_TYPE_RESULTAT, " "),
         Mapping(ACCOUNTING_TYPE_BALANSE, "0Y", ACCOUNT_TYPE_BALANSE, " "),
 
-    )
+        )
 
     fun getRegnskapTypeBySkjema(skjema: String): List<String> =
         mappingBasis()
@@ -106,39 +106,49 @@ object RegnskapConstants {
             .map { it.regnskapType }
 
 
+/*
     private fun getSkjemaListByRegnskapType(regnskapType: String): List<String> =
         mappingBasis()
             .filter { it.regnskapType == regnskapType }
             .map { it.skjema }
+*/
 
     fun getKontoklasseBySkjema(skjema: String): List<String> =
         mappingBasis()
             .filter { it.skjema == skjema }
             .map { it.kontoklasse }
 
+/*
     fun getDriftKontoklasse(skjema: String): String =
         mappingBasis()
             .filter { it.skjema == skjema && it.kontoType == ACCOUNT_TYPE_DRIFT }
             .map { it.kontoklasse }
             .first()
+*/
 
+/*
     fun getInvesteringKontoklasse(skjema: String): String =
         mappingBasis()
             .filter { it.skjema == skjema && it.kontoType == ACCOUNT_TYPE_INVESTERING }
             .map { it.kontoklasse }
             .first()
+*/
 
+/*
     fun getBalanseKontoklasse(skjema: String): String =
         mappingBasis()
             .filter { it.skjema == skjema && it.kontoType == ACCOUNT_TYPE_BALANSE }
             .map { it.kontoklasse }
             .first()
+*/
 
 
+/*
     private fun getKontoTypeToKontoklasseBySkjema(skjema: String): Map<String, String> =
         mappingBasis()
             .filter { it.skjema == skjema }
             .associate { it.kontoType to it.kontoklasse }
+*/
 
     fun getKontoTypeBySkjemaAndKontoklasse(skjema: String, kontoklasse: String): String =
         mappingBasis()

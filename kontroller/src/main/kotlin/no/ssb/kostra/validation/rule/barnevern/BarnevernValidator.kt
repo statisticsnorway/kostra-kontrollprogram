@@ -2,17 +2,28 @@ package no.ssb.kostra.validation.rule.barnevern
 
 import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
 import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
+import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.AvgiverElementHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.IndividElementHandler
 
 object BarnevernValidator {
 
     @JvmStatic
-    fun validateBarnevern(arguments: KotlinArguments) = validateBarnevern(arguments, DefaultStreamHandler)
+    fun validateBarnevern(arguments: KotlinArguments) = validateBarnevern(
+        arguments = arguments,
+        streamHandler = DefaultStreamHandler(
+            AvgiverElementHandler,
+            IndividElementHandler,
+        )
+    )
 
     fun validateBarnevern(
         arguments: KotlinArguments,
@@ -25,24 +36,29 @@ object BarnevernValidator {
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
             val seenJournalNummer = mutableMapOf<String, MutableList<String>>()
 
-            var seenAvgivere = 0
-            var seenIndivider = 0
-
             try {
                 reportEntries.addAll(
                     streamHandler.handleStream(
                         fileStream = fileStream!!,
                         arguments = arguments,
-                        incrementAvgiverCount = { seenAvgivere++ },
-                        incrementIndividCount = { seenIndivider++ }
-                    ) { journalnummer: String, fodselsnummer: String ->
-                        seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
-                        seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
+                    ) { kostraIndivid: KostraIndividType ->
+                        kostraIndivid.fodselsnummer?.also {
+                            seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(
+                                kostraIndivid.fodselsnummer,
+                                kostraIndivid.journalnummer
+                            )
+                            seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(
+                                kostraIndivid.journalnummer,
+                                kostraIndivid.fodselsnummer
+                            )
+                        }
                     }
                 )
 
-                if (seenAvgivere != 1) reportEntries.add(singleAvgiverError(seenAvgivere))
-                if (seenIndivider < 1) reportEntries.add(individMissingError)
+                if (streamHandler.seenAvgivere != 1) reportEntries.add(
+                    singleAvgiverError(streamHandler.seenAvgivere)
+                )
+                if (streamHandler.seenIndivider < 1) reportEntries.add(individMissingError)
 
                 reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
@@ -68,7 +84,8 @@ object BarnevernValidator {
 
             return ValidationResult(
                 reportEntries = reportEntries,
-                numberOfControls = seenAvgivere * avgiverRules.size + seenIndivider * individRules.size
+                numberOfControls = streamHandler.seenAvgivere * avgiverRules.size +
+                        streamHandler.seenIndivider * individRules.size
             )
         }
     }

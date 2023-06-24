@@ -14,13 +14,12 @@ import javax.xml.stream.XMLStreamConstants
 class DefaultStreamHandler(
     private val avgiverXmlElementHandler: XmlElementHandler<KostraAvgiverType>,
     private val individXmlElementHandler: XmlElementHandler<KostraIndividType>,
-    override var seenAvgivere: Int = 0,
-    override var seenIndivider: Int = 0,
 ) : BarnevernStreamHandler {
 
     override fun handleStream(
         fileStream: InputStream,
         arguments: KotlinArguments,
+        avgiverCallbackFunc: (KostraAvgiverType) -> Unit,
         individCallbackFunc: (KostraIndividType) -> Unit
     ): List<ValidationReportEntry> = mutableListOf<ValidationReportEntry>().apply {
         XMLInputFactory.newInstance().createXMLStreamReader(fileStream).let { xmlStreamReader ->
@@ -33,13 +32,16 @@ class DefaultStreamHandler(
                     /** process  avgiver */
                     AVGIVER_XML_TAG -> {
                         try {
-                            addAll(
-                                avgiverXmlElementHandler.handleXmlElement(
-                                    xmlStreamReader = xmlStreamReader,
-                                    arguments = arguments
-                                ).first
+                            val (validationErrors, avgiver) = avgiverXmlElementHandler.handleXmlElement(
+                                xmlStreamReader = xmlStreamReader,
+                                arguments = arguments
                             )
-                            seenAvgivere++
+
+                            addAll(validationErrors)
+
+                            if (avgiver != null) {
+                                avgiverCallbackFunc(avgiver)
+                            }
                         } catch (thrown: Throwable) {
                             add(avgiverFileError)
                         }
@@ -58,8 +60,6 @@ class DefaultStreamHandler(
                             if (individ != null) {
                                 individCallbackFunc(individ)
                             }
-
-                            seenIndivider++
                         } catch (thrown: Throwable) {
                             add(individFileError)
                         }

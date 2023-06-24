@@ -12,14 +12,15 @@ import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
 import no.ssb.kostra.barn.xsd.KostraBarnevernType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
+import java.time.Year
 
 class BarnevernValidatorTest : BehaviorSpec({
 
     Given("validateBarnevern") {
         forAll(
-/*
             row(
                 "no individ",
                 kostraAvgiverTypeInTest,
@@ -31,7 +32,6 @@ class BarnevernValidatorTest : BehaviorSpec({
                     messageText = "Filen mangler individer"
                 ), 4
             ),
-*/
             row(
                 "empty individ",
                 kostraAvgiverTypeInTest,
@@ -47,7 +47,6 @@ class BarnevernValidatorTest : BehaviorSpec({
                     messageText = "Individet har ingen meldinger, planer eller tiltak i løpet av året"
                 ), 54
             ),
-/*
             row(
                 "invalid avgiver",
                 kostraAvgiverTypeInTest.copy(versjon = 42),
@@ -57,7 +56,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = AvgiverRuleId.AVGIVER_01.title,
                     messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
-                ), 54
+                ), 50
             ),
             row(
                 "invalid individ",
@@ -68,7 +67,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_01.title,
                     messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
-                ), 54
+                ), 4
             ),
             row(
                 "duplicate individ",
@@ -125,7 +124,6 @@ class BarnevernValidatorTest : BehaviorSpec({
                     messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                 ), 54
             )
-*/
         ) { description, avgiver, individList, destroyXml, expectedResult, expectedNumberOfControls ->
 
             When(description) {
@@ -149,7 +147,6 @@ class BarnevernValidatorTest : BehaviorSpec({
             }
         }
 
-/*
         When("avgiver missing") {
             val validationResult = validateBarnevern(
                 argumentsInTest.copy(inputFileStream = marshallInstance(kostraIndividInTest).byteInputStream())
@@ -166,26 +163,5 @@ class BarnevernValidatorTest : BehaviorSpec({
                 }
             }
         }
-
-        When("stream handler throws exception") {
-            val validationResult = validateBarnevern(
-                argumentsInTest.copy(inputFileStream = marshallInstance(kostraIndividInTest).byteInputStream()),
-                streamHandler = DefaultStreamHandler(
-                    AvgiverElementHandler,
-                    IndividElementHandler,
-                )
-            )
-
-            Then("result should be as expected") {
-                assertSoftly(validationResult) {
-                    reportEntries shouldContain ValidationReportEntry(
-                        severity = Severity.ERROR,
-                        messageText = "Klarer ikke å lese fil. Får feilmeldingen: null"
-                    )
-                    numberOfControls shouldBe 0
-                }
-            }
-        }
-*/
     }
 })

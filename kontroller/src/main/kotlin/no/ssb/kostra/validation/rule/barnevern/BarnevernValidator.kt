@@ -29,6 +29,8 @@ object BarnevernValidator {
         arguments: KotlinArguments,
         streamHandler: BarnevernStreamHandler
     ): ValidationResult {
+        var seenAvgivere = 0
+        var seenIndivider = 0
 
         arguments.inputFileStream.use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
@@ -41,7 +43,10 @@ object BarnevernValidator {
                     streamHandler.handleStream(
                         fileStream = fileStream!!,
                         arguments = arguments,
+                        { _ -> seenAvgivere++ }
                     ) { kostraIndivid: KostraIndividType ->
+                        seenIndivider++
+
                         kostraIndivid.fodselsnummer?.also {
                             seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(
                                 kostraIndivid.fodselsnummer,
@@ -55,10 +60,8 @@ object BarnevernValidator {
                     }
                 )
 
-                if (streamHandler.seenAvgivere != 1) reportEntries.add(
-                    singleAvgiverError(streamHandler.seenAvgivere)
-                )
-                if (streamHandler.seenIndivider < 1) reportEntries.add(individMissingError)
+                if (seenAvgivere != 1) reportEntries.add(singleAvgiverError(seenAvgivere))
+                if (seenIndivider < 1) reportEntries.add(individMissingError)
 
                 reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
@@ -84,8 +87,7 @@ object BarnevernValidator {
 
             return ValidationResult(
                 reportEntries = reportEntries,
-                numberOfControls = streamHandler.seenAvgivere * avgiverRules.size +
-                        streamHandler.seenIndivider * individRules.size
+                numberOfControls = seenAvgivere * avgiverRules.size + seenIndivider * individRules.size
             )
         }
     }

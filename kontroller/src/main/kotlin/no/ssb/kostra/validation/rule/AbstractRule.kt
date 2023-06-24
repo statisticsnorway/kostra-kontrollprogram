@@ -15,45 +15,24 @@ open class AbstractRule<in T : Any>(
     /** used by record-based rules */
     protected fun createValidationReportEntry(
         messageText: String,
-        lineNumbers: List<Int>
+        lineNumbers: List<Int> = emptyList(),
+        contextId: String = "",
     ) = ValidationReportEntry(
         severity = severity,
         ruleName = ruleName,
         messageText = messageText,
-        lineNumbers = lineNumbers
-    )
-
-    /** used by barnevern */
-    protected fun createValidationReportEntry(
-        contextId: String,
-        messageText: String,
-    ) = ValidationReportEntry(
-        ruleName = ruleName,
-        severity = severity,
+        lineNumbers = lineNumbers,
         contextId = contextId,
-        messageText = messageText
     )
 
-    /** used by barnevern */
     protected fun createSingleReportEntryList(
-        contextId: String,
         messageText: String,
+        contextId: String = ""
     ) = listOf(
         ValidationReportEntry(
             ruleName = ruleName,
             severity = severity,
             contextId = contextId,
-            messageText = messageText
-        )
-    )
-
-    /** used by record-based rules */
-    protected fun createSingleReportEntryList(
-        messageText: String
-    ) = listOf(
-        ValidationReportEntry(
-            ruleName = ruleName,
-            severity = severity,
             messageText = messageText
         )
     )

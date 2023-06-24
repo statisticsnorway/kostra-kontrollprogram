@@ -11,7 +11,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.program.*
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.INTEGER_TYPE
+import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.STRING_TYPE
 
 object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
@@ -97,22 +100,27 @@ object RegnskapFieldDefinitions : FieldDefinitions {
         )
     )
 
+    /** TODO: This code will not work */
     fun getFieldDefinitionsMergedWithKotlinArguments(args: KotlinArguments): List<FieldDefinition> =
         fieldDefinitions
             .map { fieldDefinition ->
                 when (fieldDefinition.name.lowercase()) {
-                    "skjema" -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))
-                    "aargang" -> fieldDefinition.codeList = listOf(Code(code = args.aargang, "Årgang"))
-                    "region" -> fieldDefinition.codeList = listOf(Code(code = args.region, "Region"))
-                    "orgnr" -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
-                        .map { code: String -> Code(code, "Organisasjonsnummer") }
-                        .ifEmpty { emptyList() }
-                    "foretaksnr" -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
-                        .map { code: String -> Code(code, "Foretaksnummer") }
-                        .ifEmpty { emptyList() }
+                    /*
+                                        FIELD_SKJEMA -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))
+                                        FIELD_AARGANG -> fieldDefinition.codeList = listOf(Code(code = args.aargang, "Årgang"))
+                                        FIELD_REGION -> fieldDefinition.codeList = listOf(Code(code = args.region, "Region"))
+
+                                        FIELD_ORGNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                                            .map { code: String -> Code(code, "Organisasjonsnummer") }
+                                            .ifEmpty { emptyList() }
+
+                                        FIELD_FORETAKSNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                                            .map { code: String -> Code(code, "Foretaksnummer") }
+                                            .ifEmpty { emptyList() }
+                    */
 
                     else -> fieldDefinition
                 }
 
-            }.toList() as List<FieldDefinition> // looks suspicious
+            }.toList() // as List<FieldDefinition> // looks suspicious
 }

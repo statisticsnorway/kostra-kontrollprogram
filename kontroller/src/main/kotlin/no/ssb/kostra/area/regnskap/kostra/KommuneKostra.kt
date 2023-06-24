@@ -21,8 +21,8 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldLength
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -395,7 +395,7 @@ class KommuneKostra(
         }
 
     private val fatalRules = listOf(
-        Rule001RecordLength(getFieldLength())
+        Rule001RecordLength(fieldLength)
     )
 
     private val validationRules = listOf(

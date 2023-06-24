@@ -53,7 +53,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
         When("validating an empty record string") {
             val validationResult = validateKvalifisering(
                 argumentsInTest.copy(
-                    inputFileContent = " ".repeat(KvalifiseringFieldDefinitions.getFieldLength())
+                    inputFileContent = " ".repeat(KvalifiseringFieldDefinitions.fieldLength)
                 )
             )
 

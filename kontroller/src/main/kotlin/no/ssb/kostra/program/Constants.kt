@@ -15,4 +15,4 @@ const val DROPDOWNLIST_VIEWTYPE = "dropDownList"
 // Constants for date patterns
 const val DATE6_PATTERN = "ddMMyy"
 const val DATE8_PATTERN = "ddMMyyyy"
-const val DATE_ISO_PATTERN = "yyyy-MM-dd"
+//const val DATE_ISO_PATTERN = "yyyy-MM-dd"

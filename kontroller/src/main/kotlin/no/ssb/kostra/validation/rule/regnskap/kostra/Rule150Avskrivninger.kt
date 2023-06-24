@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.getRegnskapTypeBySkjema
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -24,11 +26,10 @@ class Rule150Avskrivninger : AbstractRecordRule(
                     avskrivningPosteringer
                         .sumOf { it.getFieldAsIntegerDefaultEquals0(RegnskapConstants.FIELD_BELOP) }
         }
-        ?.takeUnless { (skjema, avskrivninger) -> avskrivninger != 0 }
+        ?.takeUnless { (_, avskrivninger) -> avskrivninger != 0 }
         ?.let { (skjema, avskrivninger) ->
-            val severity = if (
-                RegnskapConstants.ACCOUNTING_TYPE_REGIONALE in RegnskapConstants.getRegnskapTypeBySkjema(skjema)
-            ) Severity.ERROR else Severity.INFO
+            val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
+            else Severity.INFO
 
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at den inneholder avskrivninger " +

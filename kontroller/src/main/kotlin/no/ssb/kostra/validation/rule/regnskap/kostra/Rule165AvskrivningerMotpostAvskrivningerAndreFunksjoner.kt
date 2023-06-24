@@ -26,7 +26,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRecordRu
             kostraRecordList.sumOf { it.getFieldAsIntegerDefaultEquals0(FIELD_BELOP) } to
                     kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
         }
-        ?.takeUnless { (motpostAvskrivninger, funksjoner) -> motpostAvskrivninger == 0 }
+        ?.takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }
         ?.let { (motpostAvskrivninger, funksjoner) ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at motpost avskrivninger ($motpostAvskrivninger) kun er " +

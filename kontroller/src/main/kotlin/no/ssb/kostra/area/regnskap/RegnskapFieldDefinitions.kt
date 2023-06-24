@@ -100,27 +100,30 @@ object RegnskapFieldDefinitions : FieldDefinitions {
         )
     )
 
+    /** temp replacement until code below is fixed */
+    fun getFieldDefinitionsMergedWithKotlinArguments(args: KotlinArguments) = fieldDefinitions
+
     /** TODO: This code will not work */
+/*
     fun getFieldDefinitionsMergedWithKotlinArguments(args: KotlinArguments): List<FieldDefinition> =
         fieldDefinitions
             .map { fieldDefinition ->
                 when (fieldDefinition.name.lowercase()) {
-                    /*
-                                        FIELD_SKJEMA -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))
-                                        FIELD_AARGANG -> fieldDefinition.codeList = listOf(Code(code = args.aargang, "Årgang"))
-                                        FIELD_REGION -> fieldDefinition.codeList = listOf(Code(code = args.region, "Region"))
+                    FIELD_SKJEMA -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))
+                    FIELD_AARGANG -> fieldDefinition.codeList = listOf(Code(code = args.aargang, "Årgang"))
+                    FIELD_REGION -> fieldDefinition.codeList = listOf(Code(code = args.region, "Region"))
 
-                                        FIELD_ORGNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
-                                            .map { code: String -> Code(code, "Organisasjonsnummer") }
-                                            .ifEmpty { emptyList() }
+                    FIELD_ORGNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                        .map { code: String -> Code(code, "Organisasjonsnummer") }
+                        .ifEmpty { emptyList() }
 
-                                        FIELD_FORETAKSNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
-                                            .map { code: String -> Code(code, "Foretaksnummer") }
-                                            .ifEmpty { emptyList() }
-                    */
+                    FIELD_FORETAKSNR -> fieldDefinition.codeList = args.orgnr.split(",".toRegex())
+                        .map { code: String -> Code(code, "Foretaksnummer") }
+                        .ifEmpty { emptyList() }
 
                     else -> fieldDefinition
                 }
 
             }.toList() // as List<FieldDefinition> // looks suspicious
+*/
 }

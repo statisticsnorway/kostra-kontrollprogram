@@ -2,31 +2,22 @@ package no.ssb.kostra.validation.rule.barnevern
 
 import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
 import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
-import no.ssb.kostra.barn.KostraValidationUtils.AVGIVER_XSD_RESOURCE
-import no.ssb.kostra.barn.KostraValidationUtils.INDIVID_XSD_RESOURCE
-import no.ssb.kostra.barn.KostraValidationUtils.validate
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
-import java.io.StringReader
-import javax.xml.stream.XMLInputFactory
-import javax.xml.stream.XMLStreamConstants
-import javax.xml.stream.XMLStreamReader
 
 object BarnevernValidator {
 
-    private const val AVGIVER_XML_TAG = "Avgiver"
-    private const val INDIVID_XML_TAG = "Individ"
-
     @JvmStatic
-    fun validateBarnevern(arguments: KotlinArguments): ValidationResult {
+    fun validateBarnevern(arguments: KotlinArguments) = validateBarnevern(arguments, DefaultStreamHandler)
+
+    fun validateBarnevern(
+        arguments: KotlinArguments,
+        streamHandler: BarnevernStreamHandler
+    ): ValidationResult {
 
         arguments.inputFileStream.use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
@@ -38,36 +29,17 @@ object BarnevernValidator {
             var seenIndivider = 0
 
             try {
-                val xmlStreamReader: XMLStreamReader = XMLInputFactory.newInstance().createXMLStreamReader(fileStream)
-
-                while (xmlStreamReader.hasNext()) {
-                    xmlStreamReader.next()
-
-                    if (xmlStreamReader.eventType != XMLStreamConstants.START_ELEMENT) continue
-
-                    when (xmlStreamReader.localName) {
-                        /** process  avgiver */
-                        AVGIVER_XML_TAG -> {
-                            seenAvgivere++
-                            reportEntries.addAll(processAvgiver(xmlStreamReader, arguments))
-                        }
-
-                        /** process individ */
-                        INDIVID_XML_TAG -> {
-                            seenIndivider++
-
-                            reportEntries.addAll(
-                                processIndivid(
-                                    xmlStreamReader,
-                                    arguments
-                                ) { journalnummer: String, fodselsnummer: String ->
-                                    seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
-                                    seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
-                                }
-                            )
-                        }
+                reportEntries.addAll(
+                    streamHandler.handleStream(
+                        fileStream = fileStream!!,
+                        arguments = arguments,
+                        incrementAvgiverCount = { seenAvgivere++ },
+                        incrementIndividCount = { seenIndivider++ }
+                    ) { journalnummer: String, fodselsnummer: String ->
+                        seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(fodselsnummer, journalnummer)
+                        seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(journalnummer, fodselsnummer)
                     }
-                }
+                )
 
                 if (seenAvgivere != 1) reportEntries.add(singleAvgiverError(seenAvgivere))
                 if (seenIndivider < 1) reportEntries.add(individMissingError)
@@ -96,80 +68,10 @@ object BarnevernValidator {
 
             return ValidationResult(
                 reportEntries = reportEntries,
-                numberOfControls = (seenAvgivere + seenIndivider) * (avgiverRules.size + individRules.size)
+                numberOfControls = seenAvgivere * avgiverRules.size + seenIndivider * individRules.size
             )
         }
     }
-
-    private fun processAvgiver(
-        xmlStreamReader: XMLStreamReader,
-        arguments: KotlinArguments
-    ) = mutableListOf<ValidationReportEntry>().apply {
-        try {
-            val avgiverType = KostraBarnevernConverter.XML_MAPPER.readValue(
-                xmlStreamReader,
-                KostraAvgiverType::class.java
-            )
-
-            if (validate(
-                    xmlReader = StringReader(marshallInstance(avgiverType)),
-                    xsdResource = AVGIVER_XSD_RESOURCE
-                )
-            ) {
-                addAll(avgiverRules.mapNotNull { it.validate(avgiverType, arguments) }.flatten())
-            } else add(avgiverFileError)
-        } catch (thrown: Throwable) {
-            add(avgiverFileError)
-        }
-    }
-
-    private fun processIndivid(
-        xmlStreamReader: XMLStreamReader,
-        arguments: KotlinArguments,
-        fodselsnummerAndJournalIdFunc: (String, String) -> Unit
-    ) = mutableListOf<ValidationReportEntry>().apply {
-        try {
-            val individType = KostraBarnevernConverter.XML_MAPPER.readValue(
-                xmlStreamReader, KostraIndividType::class.java
-            )
-
-            if (validate(
-                    xmlReader = StringReader(marshallInstance(individType)),
-                    xsdResource = INDIVID_XSD_RESOURCE
-                )
-            ) {
-                addAll(individRules.mapNotNull { it.validate(individType, arguments) }.flatten().map { reportEntry ->
-                    reportEntry.copy(
-                        caseworker = individType.saksbehandler,
-                        journalId = individType.journalnummer,
-                        individId = individType.id
-                    )
-                }
-                )
-
-                if (!individType.fodselsnummer.isNullOrBlank()) {
-                    fodselsnummerAndJournalIdFunc(
-                        individType.journalnummer,
-                        individType.fodselsnummer
-                    )
-                }
-            } else add(individFileError)
-        } catch (thrown: Throwable) {
-            add(individFileError)
-        }
-    }
-
-    private val avgiverFileError = ValidationReportEntry(
-        severity = Severity.ERROR,
-        ruleName = AvgiverRuleId.AVGIVER_01.title,
-        messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
-    )
-
-    private val individFileError = ValidationReportEntry(
-        severity = Severity.ERROR,
-        ruleName = IndividRuleId.INDIVID_01.title,
-        messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
-    )
 
     private fun singleAvgiverError(found: Int) = ValidationReportEntry(
         severity = Severity.ERROR,

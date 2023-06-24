@@ -17,7 +17,7 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
 
     Given("context") {
         val sut = Rule200Funksjon089Finansieringstransaksjoner()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule175Funksjon290DriftTest : BehaviorSpec({
     Given("context") {
         val sut = Rule175Funksjon290Drift()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

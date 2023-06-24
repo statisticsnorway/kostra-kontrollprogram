@@ -32,7 +32,7 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
             val kostraRecordList = listOf(
                 KostraRecord(
                     index = 0,
-                    fieldDefinitionByName = RegnskapFieldDefinitions.getFieldDefinitions().associateBy { it.name },
+                    fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
                     valuesByName = mapOf(
                         FIELD_REGION to region,
                         FIELD_SKJEMA to skjema,

@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule143AvskrivningerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule143Avskrivninger()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

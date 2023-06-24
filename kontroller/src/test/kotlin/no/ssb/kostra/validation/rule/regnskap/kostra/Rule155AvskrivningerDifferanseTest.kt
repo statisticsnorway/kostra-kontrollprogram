@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
     Given("context") {
         val sut = Rule155AvskrivningerDifferanse()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

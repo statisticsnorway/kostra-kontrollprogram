@@ -1,5 +1,6 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
+import no.ssb.kostra.area.AbstractFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
@@ -44,9 +45,9 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_S
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.program.*
 
-object KvalifiseringFieldDefinitions {
+object KvalifiseringFieldDefinitions : AbstractFieldDefinitions() {
 
-    val fieldDefinitions: List<FieldDefinition> = listOf(
+    override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
             number = 1,
             name = KOMMUNE_NR_COL_NAME,

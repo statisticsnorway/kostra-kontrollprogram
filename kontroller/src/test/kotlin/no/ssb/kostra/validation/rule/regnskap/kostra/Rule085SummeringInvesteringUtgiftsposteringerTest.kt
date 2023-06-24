@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule085SummeringInvesteringUtgiftsposteringerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule085SummeringInvesteringUtgiftsposteringer()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

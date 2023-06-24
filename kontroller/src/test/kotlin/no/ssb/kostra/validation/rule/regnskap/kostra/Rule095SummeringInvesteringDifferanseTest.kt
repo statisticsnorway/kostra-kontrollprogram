@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
     Given("context") {
         val sut = Rule095SummeringInvesteringDifferanse()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

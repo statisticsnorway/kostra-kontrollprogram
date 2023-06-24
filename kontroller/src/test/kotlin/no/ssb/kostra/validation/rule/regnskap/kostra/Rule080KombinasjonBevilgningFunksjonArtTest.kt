@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
     Given("context") {
         val sut = Rule080KombinasjonBevilgningFunksjonArt()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

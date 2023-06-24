@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : BehaviorSpec({
     Given("context") {
         val sut = Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

@@ -14,7 +14,7 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArtTest : BehaviorSpec({
     Given("context") {
         val sut = Rule060KombinasjonInvesteringKontoklasseFunksjonArt()
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

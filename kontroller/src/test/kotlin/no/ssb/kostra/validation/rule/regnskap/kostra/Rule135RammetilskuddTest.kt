@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule135RammetilskuddTest : BehaviorSpec({
     Given("context") {
         val sut = Rule135Rammetilskudd()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

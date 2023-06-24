@@ -34,6 +34,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_D
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -52,7 +53,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
         When("validating an empty record string") {
             val validationResult = validateKvalifisering(
                 argumentsInTest.copy(
-                    inputFileContent = " ".repeat(fieldDefinitions.last().to)
+                    inputFileContent = " ".repeat(KvalifiseringFieldDefinitions.getFieldLength())
                 )
             )
 

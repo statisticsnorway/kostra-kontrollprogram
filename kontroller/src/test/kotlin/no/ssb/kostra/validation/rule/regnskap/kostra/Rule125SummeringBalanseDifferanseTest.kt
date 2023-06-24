@@ -16,7 +16,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
     Given("context") {
         val sut = Rule125SummeringBalanseDifferanse()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

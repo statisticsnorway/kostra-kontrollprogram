@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule180Funksjon465InvesteringTest : BehaviorSpec({
     Given("context") {
         val sut = Rule180Funksjon465Investering()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

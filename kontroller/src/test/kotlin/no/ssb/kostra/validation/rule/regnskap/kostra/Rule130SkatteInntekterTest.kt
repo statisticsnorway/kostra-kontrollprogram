@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule130SkatteInntekterTest : BehaviorSpec({
     Given("context") {
         val sut = Rule130SkatteInntekter()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

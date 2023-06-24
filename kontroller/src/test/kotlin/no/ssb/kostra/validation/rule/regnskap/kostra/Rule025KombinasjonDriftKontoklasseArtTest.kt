@@ -17,7 +17,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             listOf("280", "512", "521", "522", "529", "670", "910", "911", "912", "921", "922", "929", "970")
         val sut = Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList)
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(
@@ -93,7 +93,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             listOf("280", "512", "521", "522", "529", "670", "910", "911", "912", "922", "929", "970")
         val sut = Rule025KombinasjonDriftKontoklasseArt(invalidLanefondDriftArtList)
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

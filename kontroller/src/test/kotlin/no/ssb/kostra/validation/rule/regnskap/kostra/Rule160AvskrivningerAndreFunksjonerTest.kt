@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule160AvskrivningerAndreFunksjonerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule160AvskrivningerAndreFunksjoner()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

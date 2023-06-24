@@ -18,7 +18,7 @@ import no.ssb.kostra.validation.report.Severity
 class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
     Given("context") {
         val sut = Rule127SummeringInvesteringOsloInternDifferanse()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

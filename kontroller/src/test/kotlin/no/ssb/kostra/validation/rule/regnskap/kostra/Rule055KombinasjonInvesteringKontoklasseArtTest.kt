@@ -15,7 +15,7 @@ class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
         val illogicalInvesteringArtList = listOf("620", "650", "900")
         val sut = Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList)
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

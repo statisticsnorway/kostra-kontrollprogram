@@ -11,14 +11,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.program.Code
-import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.INTEGER_TYPE
-import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.STRING_TYPE
+import no.ssb.kostra.program.*
 
 object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
-    override fun getFieldDefinitions(): List<FieldDefinition> = listOf(
+    override val fieldDefinitions = listOf(
         FieldDefinition(
             number = 1,
             from = 1,
@@ -102,7 +98,7 @@ object RegnskapFieldDefinitions : AbstractFieldDefinitions() {
     )
 
     fun getFieldDefinitionsMergedWithKotlinArguments(args: KotlinArguments): List<FieldDefinition> =
-        getFieldDefinitions()
+        fieldDefinitions
             .map { fieldDefinition ->
                 when (fieldDefinition.name.lowercase()) {
                     "skjema" -> fieldDefinition.codeList = listOf(Code(code = args.skjema, "Skjematype"))

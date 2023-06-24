@@ -15,7 +15,7 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
         val illogicalDriftArtList = listOf("520", "920")
         val sut = Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList)
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.getFieldDefinitions()
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
             .associateBy { it.name }
 
         forAll(

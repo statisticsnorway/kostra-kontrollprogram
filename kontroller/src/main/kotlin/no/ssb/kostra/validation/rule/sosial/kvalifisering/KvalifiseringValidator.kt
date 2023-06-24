@@ -42,7 +42,7 @@ object KvalifiseringValidator {
                         caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
                         journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
                         individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME),
-                        lineNumbers = listOf(record.index)
+                        lineNumbers = listOf(record.lineNumber)
                     )
                 }
         }.filter { it.any() }.flatten().toList()

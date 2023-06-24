@@ -27,7 +27,7 @@ class Rule035KombinasjonDriftKontoklasseArt(
                         FIELD_ART
                     )
                 }) regnes å være ulogisk i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

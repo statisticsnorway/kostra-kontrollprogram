@@ -24,7 +24,7 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArt : AbstractRecordRule(
             createValidationReportEntry(
                 messageText = "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun " +
                         "gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

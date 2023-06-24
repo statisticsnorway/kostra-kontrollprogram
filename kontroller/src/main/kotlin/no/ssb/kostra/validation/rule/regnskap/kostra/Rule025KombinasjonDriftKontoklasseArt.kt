@@ -24,7 +24,7 @@ class Rule025KombinasjonDriftKontoklasseArt(
             createValidationReportEntry(
                 messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' i driftsregnskapet " +
                         "til en gyldig art i driftsregnskapet eller overfør posteringen til investeringsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

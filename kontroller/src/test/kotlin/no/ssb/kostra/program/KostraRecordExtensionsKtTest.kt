@@ -22,7 +22,6 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
             )
         ) { description, fieldDefinitions, expectedRecordString ->
             val sut = KostraRecord(
-                index = 0,
                 valuesByName = mapOf(
                     "Field001" to "",
                     "Field012" to " ".repeat(3),
@@ -46,7 +45,6 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
 
     Given("KostraRecord#plus") {
         val sut = KostraRecord(
-            index = 0,
             valuesByName = mapOf(
                 "Field123" to "12",
                 "Field456" to "456",

@@ -34,7 +34,6 @@ class Rule145AvskrivningerMotpostAvskrivningerTest : BehaviorSpec({
             When("$region, $skjema, $kontoklasse, $funksjon, $art, $belop, $expectedResult, $expectedSeverity") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             RegnskapConstants.FIELD_REGION to region,

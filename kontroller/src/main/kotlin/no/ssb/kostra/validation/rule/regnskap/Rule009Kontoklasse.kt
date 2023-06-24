@@ -15,7 +15,7 @@ class Rule009Kontoklasse(
             createValidationReportEntry(
                 messageText = "Fant ugyldig kontoklasse '${kostraRecord.getFieldAsString(FIELD_KONTOKLASSE)}'. " +
                         "Korrigér kontoklasse til en av '${kontoklasseList.joinToString(", ")}'".trimMargin(),
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

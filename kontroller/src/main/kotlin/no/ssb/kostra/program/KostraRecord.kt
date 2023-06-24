@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException
 import java.util.Objects
 
 data class KostraRecord(
-    val index: Int = 0,
+    val lineNumber: Int = 1,
     val valuesByName: Map<String, String> = emptyMap(),
     val fieldDefinitionByName: Map<String, FieldDefinition> = emptyMap()
 ) {
@@ -52,8 +52,8 @@ data class KostraRecord(
     override fun equals(other: Any?): Boolean = when {
         other == null || other !is KostraRecord -> false
         this === other -> true
-        else -> this.index == other.index && valuesByName == other.valuesByName
+        else -> this.lineNumber == other.lineNumber && valuesByName == other.valuesByName
     }
 
-    override fun hashCode() = Objects.hash(index, valuesByName)
+    override fun hashCode() = Objects.hash(lineNumber, valuesByName)
 }

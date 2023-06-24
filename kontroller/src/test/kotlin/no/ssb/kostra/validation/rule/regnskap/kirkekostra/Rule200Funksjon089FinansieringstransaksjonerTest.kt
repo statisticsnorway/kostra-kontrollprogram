@@ -27,7 +27,6 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
             When("For $skjema, $kontoklasse, $funksjon, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             FIELD_SKJEMA to skjema,

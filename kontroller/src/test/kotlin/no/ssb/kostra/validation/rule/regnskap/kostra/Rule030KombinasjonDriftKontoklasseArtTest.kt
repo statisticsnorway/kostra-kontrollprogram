@@ -41,7 +41,6 @@ class Rule030KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             When("For $skjema, $kontoklasse, $art, $belop -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             RegnskapConstants.FIELD_SKJEMA to skjema,

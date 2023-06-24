@@ -39,7 +39,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, expectedResult ->
             When("For $skjema") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema
@@ -86,7 +85,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, kontoklasse, expectedResult ->
             When("For skjema $skjema, kontoklasse $kontoklasse") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema,
@@ -134,7 +132,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, kontoklasse, expectedResult ->
             When("For skjema $skjema, kontoklasse $kontoklasse") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema,
@@ -174,7 +171,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, expectedResult ->
             When("For $skjema") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema
@@ -213,7 +209,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, expectedResult ->
             When("For $skjema") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema
@@ -252,7 +247,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { skjema, expectedResult ->
             When("For $skjema") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_SKJEMA to skjema
@@ -279,7 +273,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { art, expectedResult ->
             When("For $art") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_ART to art
@@ -306,7 +299,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { art, expectedResult ->
             When("For $art") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_ART to art
@@ -333,7 +325,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { region, expectedResult ->
             When("For $region") {
                 val kostraRecord = KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = fieldDefinitionsByName,
                     valuesByName = mapOf(
                         FIELD_REGION to region
@@ -360,7 +351,6 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         ) { region, expectedResult ->
 
             val sut = KostraRecord(
-                index = 0,
                 fieldDefinitionByName = fieldDefinitionsByName,
                 valuesByName = mapOf(
                     FIELD_REGION to region

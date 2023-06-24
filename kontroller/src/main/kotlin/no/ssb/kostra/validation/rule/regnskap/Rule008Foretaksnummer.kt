@@ -15,7 +15,7 @@ class Rule008Foretaksnummer(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig foretaksnummer '${kostraRecord.getFieldAsString(FIELD_FORETAKSNR)}'. Korrigér skjema til '${arguments.foretaknr}'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

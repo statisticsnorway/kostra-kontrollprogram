@@ -91,7 +91,6 @@ class Control37DatoForAvsluttetProgramTest : BehaviorSpec({
             status: String,
             endDate: String
         ) = KostraRecord(
-            index = 1,
             valuesByName = mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                 STATUS_COL_NAME to status,

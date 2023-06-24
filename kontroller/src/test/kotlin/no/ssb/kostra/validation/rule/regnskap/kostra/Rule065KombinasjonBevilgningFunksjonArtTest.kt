@@ -63,7 +63,6 @@ class Rule065KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
             When("For $skjema, $art -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             RegnskapConstants.FIELD_SKJEMA to skjema,

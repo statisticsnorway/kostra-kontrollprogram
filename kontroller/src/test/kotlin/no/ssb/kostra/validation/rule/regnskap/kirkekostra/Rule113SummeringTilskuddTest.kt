@@ -31,7 +31,6 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
 
             val kostraRecordList = listOf(
                 KostraRecord(
-                    index = 0,
                     fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
                     valuesByName = mapOf(
                         FIELD_REGION to region,

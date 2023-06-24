@@ -20,7 +20,7 @@ class Rule05bJournalnummerDubletter : AbstractRule<List<KostraRecord>>(
                     group.map { kostraRecord ->
                         createValidationReportEntry(
                             "Journalnummer $journalId forekommer ${group.size} ganger",
-                            lineNumbers = listOf(kostraRecord.index)
+                            lineNumbers = listOf(kostraRecord.lineNumber)
                         ).copy(
                             caseworker = kostraRecord.getFieldAsString(KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME),
                             journalId = journalId,

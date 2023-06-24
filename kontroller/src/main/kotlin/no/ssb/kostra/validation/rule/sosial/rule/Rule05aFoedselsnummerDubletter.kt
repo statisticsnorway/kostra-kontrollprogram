@@ -31,7 +31,7 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
 
                         createValidationReportEntry(
                             "Fødselsnummeret i journalnummer $journalId fins også i journalene $otherJournalIds",
-                            lineNumbers = listOf(kostraRecord.index)
+                            lineNumbers = listOf(kostraRecord.lineNumber)
                         ).copy(
                             caseworker = kostraRecord.getFieldAsString(SAKSBEHANDLER_COL_NAME),
                             journalId = journalId,

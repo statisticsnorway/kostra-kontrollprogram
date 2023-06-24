@@ -23,12 +23,10 @@ class Rule015DuplicatesTest : BehaviorSpec({
                 "No duplicates",
                 listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf("a" to "1", "b" to "2")
                     ),
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf("a" to "2", "b" to "1")
                     )
@@ -47,12 +45,10 @@ class Rule015DuplicatesTest : BehaviorSpec({
                 "Has duplicates",
                 listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf("a" to "1", "b" to "2")
                     ),
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf("a" to "1", "b" to "2")
                     )

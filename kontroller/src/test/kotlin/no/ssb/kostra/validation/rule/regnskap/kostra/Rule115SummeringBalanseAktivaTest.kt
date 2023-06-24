@@ -44,7 +44,6 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
             When("Activa is zero for $skjema, $kontoklasse, $kapittel, $sektor, $belop") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             FIELD_SKJEMA to skjema,

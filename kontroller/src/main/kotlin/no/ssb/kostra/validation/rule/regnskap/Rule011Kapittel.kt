@@ -17,7 +17,7 @@ class Rule011Kapittel(
                 createValidationReportEntry(
                     messageText = """Fant ugyldig kapittel '${kostraRecord.getFieldAsString(FIELD_KAPITTEL)}'. 
                                 Korrigér kapittel til en av '${kapittelList.joinToString(", ")}'""".trimMargin(),
-                    lineNumbers = listOf(kostraRecord.index)
+                    lineNumbers = listOf(kostraRecord.lineNumber)
                 )
             }
             .ifEmpty { null }

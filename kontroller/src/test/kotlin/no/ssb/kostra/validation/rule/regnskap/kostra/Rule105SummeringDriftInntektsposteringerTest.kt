@@ -47,7 +47,6 @@ class Rule105SummeringDriftInntektsposteringerTest : BehaviorSpec({
             When("Expenses is zero for $region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             FIELD_REGION to region,

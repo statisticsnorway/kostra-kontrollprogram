@@ -19,7 +19,7 @@ class Rule007Organisasjonsnummer(
                         ","
                     )
                 }'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

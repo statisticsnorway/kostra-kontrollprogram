@@ -26,7 +26,7 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractRecordRule(
             createValidationReportEntry(
                 messageText = "Korrigér i fila slik at art (${it.getFieldAsString(FIELD_ART)}) " +
                         "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
-                lineNumbers = listOf(it.index)
+                lineNumbers = listOf(it.lineNumber)
             )
         }
         .ifEmpty { null }

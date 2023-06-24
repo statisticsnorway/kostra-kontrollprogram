@@ -23,7 +23,7 @@ fun KostraRecord.toRecordString(): String {
 
 fun KostraRecord.plus(pair: Pair<String, String>): KostraRecord =
     KostraRecord(
-        index = this.index,
+        lineNumber = this.lineNumber,
         valuesByName = this.valuesByName.toMutableMap().plus(pair).toMap(),
         fieldDefinitionByName = this.fieldDefinitionByName
     )

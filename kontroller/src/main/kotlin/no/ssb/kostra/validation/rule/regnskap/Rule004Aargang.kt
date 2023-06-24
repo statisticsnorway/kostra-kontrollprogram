@@ -15,7 +15,7 @@ class Rule004Aargang(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig aargang '${kostraRecord.getFieldAsString(FIELD_AARGANG)}'. Korrigér aargang til '${arguments.aargang}'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

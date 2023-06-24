@@ -307,7 +307,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                 val kostraRecordList = recordList
                     .mapIndexed { index, record ->
                         KostraRecord(
-                            index = index + 1,
+                            lineNumber = index + 1,
                             fieldDefinitionByName = fieldDefinitionsByName,
                             valuesByName = record
                         )

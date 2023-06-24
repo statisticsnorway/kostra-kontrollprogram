@@ -17,7 +17,7 @@ class Rule012Art(
                 createValidationReportEntry(
                     messageText = """Fant ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}'. 
                                 Korrigér art til en av '${artList.joinToString(", ")}'""".trimMargin(),
-                    lineNumbers = listOf(kostraRecord.index)
+                    lineNumbers = listOf(kostraRecord.lineNumber)
                 )
             }
             .ifEmpty { null }

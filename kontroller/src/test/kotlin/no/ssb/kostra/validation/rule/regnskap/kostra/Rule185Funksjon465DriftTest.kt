@@ -39,7 +39,6 @@ class Rule185Funksjon465DriftTest : BehaviorSpec({
             When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectedResult") {
                 val kostraRecordList = listOf(
                     KostraRecord(
-                        index = 0,
                         fieldDefinitionByName = fieldDefinitionsByName,
                         valuesByName = mapOf(
                             FIELD_REGION to region,

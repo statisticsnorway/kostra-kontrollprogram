@@ -15,7 +15,7 @@ class Rule005Kvartal(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig kvartal '${kostraRecord.getFieldAsString(FIELD_KVARTAL)}'. Korrigér kvartal til '${arguments.kvartal}'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

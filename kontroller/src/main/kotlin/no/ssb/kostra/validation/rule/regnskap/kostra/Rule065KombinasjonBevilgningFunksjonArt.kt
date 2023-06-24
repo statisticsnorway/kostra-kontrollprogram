@@ -31,7 +31,7 @@ class Rule065KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
             createValidationReportEntry(
                 messageText = "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. " +
                         "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

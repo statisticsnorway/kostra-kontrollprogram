@@ -26,7 +26,7 @@ class Rule030KombinasjonDriftKontoklasseArt(
                         "'${kostraRecord.getFieldAsString(FIELD_ART)}') regnes å være " +
                         "ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om " +
                         "posteringen hører til i investeringsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

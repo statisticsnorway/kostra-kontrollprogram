@@ -26,7 +26,7 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjon(
                         "(${kostraRecord.getFieldAsString(FIELD_FUNKSJON)}) regnes å være " +
                         "ulogisk funksjon i investeringsregnskapet. Vennligst vurder å postere på annen " +
                         "funksjon eller om posteringen hører til i driftsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

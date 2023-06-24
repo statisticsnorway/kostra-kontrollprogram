@@ -19,7 +19,7 @@ class Rule014Belop : AbstractRecordRule("Kontroll 014 : Beløp", Severity.ERROR)
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig beløp '${kostraRecord.getFieldAsString(FIELD_BELOP)}'. Korrigér beløp",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

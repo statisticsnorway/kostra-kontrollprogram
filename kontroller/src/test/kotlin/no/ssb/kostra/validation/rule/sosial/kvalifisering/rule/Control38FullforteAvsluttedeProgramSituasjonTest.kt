@@ -8,6 +8,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ORDINAERTARB_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
@@ -15,7 +16,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fie
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.area.sosial.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control38FullforteAvsluttedeProgramSituasjon.Companion.qualifyingFields
 
 class Control38FullforteAvsluttedeProgramSituasjonTest : BehaviorSpec({
@@ -77,7 +77,6 @@ class Control38FullforteAvsluttedeProgramSituasjonTest : BehaviorSpec({
             status: String,
             avslOrdinaertarb: String
         ) = KostraRecord(
-            index = 1,
             valuesByName = mapOf(
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                 STATUS_COL_NAME to status,

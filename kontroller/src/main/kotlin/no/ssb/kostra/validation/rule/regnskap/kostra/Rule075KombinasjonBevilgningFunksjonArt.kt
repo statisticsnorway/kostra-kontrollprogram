@@ -23,7 +23,7 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRecordRule(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Artene 870, 871, 872, 873, 875 og 876 er kun tillat brukt i kombinasjon med funksjon 800.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

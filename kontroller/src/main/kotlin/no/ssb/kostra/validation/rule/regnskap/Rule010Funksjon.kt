@@ -17,7 +17,7 @@ class Rule010Funksjon(
                 createValidationReportEntry(
                     messageText = """Fant ugyldig funksjon '${kostraRecord.getFieldAsString(FIELD_FUNKSJON)}'. 
                                 Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
-                    lineNumbers = listOf(kostraRecord.index)
+                    lineNumbers = listOf(kostraRecord.lineNumber)
                 )
             }
             .ifEmpty { null }

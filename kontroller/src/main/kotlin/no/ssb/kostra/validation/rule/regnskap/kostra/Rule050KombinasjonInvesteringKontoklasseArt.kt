@@ -25,7 +25,7 @@ class Rule050KombinasjonInvesteringKontoklasseArt(
                 messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' " +
                         "i investeringsregnskapet til en gyldig art i investeringsregnskapet eller overfør " +
                         "posteringen til driftsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

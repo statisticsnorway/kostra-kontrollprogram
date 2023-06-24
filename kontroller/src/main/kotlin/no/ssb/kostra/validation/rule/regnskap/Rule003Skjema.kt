@@ -15,7 +15,7 @@ class Rule003Skjema(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig skjema '${kostraRecord.getFieldAsString(FIELD_SKJEMA)}'. Korrigér skjema til '${arguments.skjema}'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

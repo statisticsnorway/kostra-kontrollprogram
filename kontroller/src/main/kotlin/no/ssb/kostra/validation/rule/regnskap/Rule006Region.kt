@@ -15,7 +15,7 @@ class Rule006Region(
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig region '${kostraRecord.getFieldAsString(FIELD_REGION)}'. Korrigér region til '${arguments.region}'",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

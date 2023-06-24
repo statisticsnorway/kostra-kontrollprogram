@@ -26,7 +26,7 @@ class Rule020KombinasjonDriftKontoklasseFunksjon(
                         "'${kostraRecord.getFieldAsString(FIELD_FUNKSJON)}' i driftsregnskapet " +
                         "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
                         "investeringsregnskapet.",
-                lineNumbers = listOf(kostraRecord.index)
+                lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }
         .ifEmpty { null }

@@ -15,29 +15,35 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 class ConversionUtilsTest : BehaviorSpec({
 
     Given("ValidationReportEntry with all props set") {
-        val validationReportEntry = ValidationReportEntry(
-            severity = Severity.WARNING,
-            caseworker = "~caseworker~",
-            journalId = "~journalId~",
-            individId = "~individId~",
-            contextId = "~contextId~",
-            ruleName = "~ruleName~",
-            messageText = "~messageText~",
-            lineNumbers = listOf(1, 2, 3)
-        )
+        forAll(
+            row("with line numbers", listOf(1, 2, 3), " (linje(r): 1, 2, 3)"),
+            row("without line numbers", emptyList(), "")
+        ) { description, lineNumbers, expectedLineNumbersText ->
 
-        When("toErrorReportEntry") {
-            val errorReportEntry = toErrorReportEntry(validationReportEntry)
+            val validationReportEntry = ValidationReportEntry(
+                severity = Severity.WARNING,
+                caseworker = "~caseworker~",
+                journalId = "~journalId~",
+                individId = "~individId~",
+                contextId = "~contextId~",
+                ruleName = "~ruleName~",
+                messageText = "~messageText~",
+                lineNumbers = lineNumbers
+            )
 
-            Then("errorReportEntry should be as expected") {
-                assertSoftly(errorReportEntry) {
-                    saksbehandler shouldBe validationReportEntry.caseworker
-                    journalnummer shouldBe validationReportEntry.journalId
-                    individId shouldBe validationReportEntry.individId
-                    refNr shouldBe ""
-                    kontrollNr shouldBe validationReportEntry.ruleName
-                    errorText shouldBe validationReportEntry.messageText
-                    errorType shouldBe validationReportEntry.severity.toInt()
+            When("toErrorReportEntry $description") {
+                val errorReportEntry = toErrorReportEntry(validationReportEntry)
+
+                Then("errorReportEntry should be as expected") {
+                    assertSoftly(errorReportEntry) {
+                        saksbehandler shouldBe validationReportEntry.caseworker
+                        journalnummer shouldBe validationReportEntry.journalId
+                        individId shouldBe validationReportEntry.individId
+                        refNr shouldBe ""
+                        kontrollNr shouldBe validationReportEntry.ruleName
+                        errorText shouldBe validationReportEntry.messageText + expectedLineNumbersText
+                        errorType shouldBe validationReportEntry.severity.toInt()
+                    }
                 }
             }
         }

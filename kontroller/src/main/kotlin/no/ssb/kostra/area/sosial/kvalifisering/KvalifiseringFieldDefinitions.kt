@@ -79,14 +79,16 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             from = 9, to = 10
         ),
         FieldDefinition(
-            number = 5, name = PERSON_JOURNALNR_COL_NAME,
+            number = 5,
+            name = PERSON_JOURNALNR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 11, to = 18,
             mandatory = true
         ),
         FieldDefinition(
-            number = 6, name = PERSON_FODSELSNR_COL_NAME,
+            number = 6,
+            name = PERSON_FODSELSNR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 19, to = 29,
@@ -119,7 +121,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 91, name = BU18_COL_NAME,
+            number = 91,
+            name = BU18_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
             from = 32, to = 32,
@@ -175,11 +178,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            142, KOMMNR_KVP_KOMM_COL_NAME,
-            STRING_TYPE,
-            TEXTBOX_VIEWTYPE,
-            54, 57,  // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
-            listOf(
+            number = 142,
+            name = KOMMNR_KVP_KOMM_COL_NAME,
+            dataType = STRING_TYPE,
+            viewType = TEXTBOX_VIEWTYPE,
+            from = 54, to = 57,  // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
+            codeList = listOf(
                 Code("0301", "Oslo"),
                 Code("1101", "Eigersund"),
                 Code("1103", "Stavanger"),
@@ -698,7 +702,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 214, name = "STMND_4",
+            number = 214,
+            name = "STMND_4",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 76, to = 77,
@@ -707,7 +712,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 215, name = "STMND_5",
+            number = 215,
+            name = "STMND_5",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 78, to = 79,
@@ -716,7 +722,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 216, name = "STMND_6",
+            number = 216,
+            name = "STMND_6",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 80, to = 81,
@@ -725,7 +732,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 217, name = "STMND_7",
+            number = 217,
+            name = "STMND_7",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 82, to = 83,
@@ -734,7 +742,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 218, name = "STMND_8",
+            number = 218,
+            name = "STMND_8",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 84, to = 85,
@@ -743,7 +752,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 219, name = "STMND_9",
+            number = 219,
+            name = "STMND_9",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 86, to = 87,
@@ -752,7 +762,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2110, name = "STMND_10",
+            number = 2110,
+            name = "STMND_10",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 88, to = 89,
@@ -761,7 +772,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2111, name = "STMND_11",
+            number = 2111,
+            name = "STMND_11",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 90, to = 91,
@@ -770,7 +782,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2112, name = "STMND_12",
+            number = 2112,
+            name = "STMND_12",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 92, to = 93,
@@ -779,13 +792,15 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 22, name = KVP_STONAD_COL_NAME,
+            number = 22,
+            name = KVP_STONAD_COL_NAME,
             dataType = INTEGER_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 94, to = 100
         ),
         FieldDefinition(
-            number = 24, name = STATUS_COL_NAME,
+            number = 24,
+            name = STATUS_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
             from = 101, to = 101,
@@ -803,14 +818,16 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 25, name = AVSL_DATO_COL_NAME,
+            number = 25,
+            name = AVSL_DATO_COL_NAME,
             dataType = DATE_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 102, to = 107,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
-            number = 261, name = AVSL_ORDINAERTARB_COL_NAME,
+            number = 261,
+            name = AVSL_ORDINAERTARB_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 108, to = 109,
@@ -819,7 +836,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 262, name = AVSL_ARBLONNSTILS_COL_NAME,
+            number = 262,
+            name = AVSL_ARBLONNSTILS_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 110, to = 111,
@@ -831,7 +849,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 263, name = AVSL_ARBMARK_COL_NAME,
+            number = 263,
+            name = AVSL_ARBMARK_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 112, to = 113,
@@ -840,7 +859,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 264, name = AVSL_SKOLE_COL_NAME,
+            number = 264,
+            name = AVSL_SKOLE_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 114, to = 115,
@@ -849,7 +869,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 265, name = AVSL_UFORE_COL_NAME,
+            number = 265,
+            name = AVSL_UFORE_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 116, to = 117,
@@ -858,7 +879,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 266, name = AVSL_AAP_COL_NAME,
+            number = 266,
+            name = AVSL_AAP_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 118, to = 119,
@@ -867,7 +889,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 267, name = AVSL_OK_AVKLAR_COL_NAME,
+            number = 267,
+            name = AVSL_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 120, to = 121,
@@ -876,7 +899,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 268, name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
+            number = 268,
+            name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 122, to = 123,
@@ -885,7 +909,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 269, name = AVSL_ANNET_COL_NAME,
+            number = 269,
+            name = AVSL_ANNET_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 124, to = 125,
@@ -894,7 +919,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2611, name = AVSL_UKJENT_COL_NAME,
+            number = 2611,
+            name = AVSL_UKJENT_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 126, to = 127,
@@ -903,7 +929,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2612, name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
+            number = 2612,
+            name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
             from = 128, to = 129,
@@ -927,7 +954,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 27, name = SAKSBEHANDLER_COL_NAME,
+            number = 27,
+            name = SAKSBEHANDLER_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 130, to = 139

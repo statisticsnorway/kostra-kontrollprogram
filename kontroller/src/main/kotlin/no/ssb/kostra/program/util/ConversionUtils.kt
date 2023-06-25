@@ -9,13 +9,16 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 object ConversionUtils {
 
     @JvmStatic
-    fun toErrorReportEntry(reportEntry: ValidationReportEntry) = ErrorReportEntry(
+    fun toErrorReportEntry(reportEntry: ValidationReportEntry): ErrorReportEntry = ErrorReportEntry(
         reportEntry.caseworker,
         reportEntry.journalId,
         reportEntry.individId,
         " ",
         reportEntry.ruleName,
-        reportEntry.messageText,
+        when (reportEntry.lineNumbers.any()) {
+            true -> "${reportEntry.messageText} (linje(r): ${reportEntry.lineNumbers.joinToString(", ")})"
+            false -> reportEntry.messageText
+        },
         reportEntry.severity.toInt()
     )
 

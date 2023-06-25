@@ -2,8 +2,6 @@ package no.ssb.kostra.program
 
 import java.io.InputStream
 
-private const val BLANK_CHAR = " "
-
 data class KotlinArguments(
     val skjema: String,
     val aargang: String,
@@ -34,6 +32,7 @@ data class KotlinArguments(
     fun getInputContentAsInputStream(): InputStream = inputFileContent.byteInputStream(Charsets.ISO_8859_1)
 
     companion object {
+        private const val BLANK_CHAR = " "
         internal const val DEFAULT_LINEBREAK_CHAR = "\n"
     }
 }

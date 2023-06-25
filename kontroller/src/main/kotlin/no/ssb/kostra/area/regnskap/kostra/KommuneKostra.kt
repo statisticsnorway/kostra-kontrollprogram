@@ -64,7 +64,7 @@ class KommuneKostra(
     fun getRegionType(): List<String> {
         val regionTypelist: MutableList<String> = mutableListOf()
 
-        if (arguments.orgnr.trim().isNotEmpty()) {
+        if (arguments.orgnr.isNotBlank()) {
             if (arguments.orgnr in orgnrSpesial)
                 regionTypelist.add(REGION_LANEFOND)
             else

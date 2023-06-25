@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule
+package no.ssb.kostra.testutil
 
 import java.time.LocalDate
 import java.time.Year

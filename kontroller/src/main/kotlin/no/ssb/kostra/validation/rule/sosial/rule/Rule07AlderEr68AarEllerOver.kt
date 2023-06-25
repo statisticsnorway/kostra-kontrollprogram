@@ -6,7 +6,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
-import no.ssb.kostra.validation.util.SsnValidationUtils.getAgeFromSocialSecurityId
+import no.ssb.kostra.program.util.SsnValidationUtils.getAgeFromSocialSecurityId
 
 class Rule07AlderEr68AarEllerOver : AbstractRule<KostraRecord>(
     SosialRuleId.ALDER_ER_96_AAR_ELLER_OVER_07.title,

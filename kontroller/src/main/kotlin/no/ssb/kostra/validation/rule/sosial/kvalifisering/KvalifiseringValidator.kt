@@ -6,7 +6,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHA
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.toKostraRecord
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.duplicateRules
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRules.kvalifiseringRules

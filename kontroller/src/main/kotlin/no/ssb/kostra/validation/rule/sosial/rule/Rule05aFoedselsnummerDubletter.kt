@@ -8,7 +8,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
-import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
+import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 
 class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
     SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,

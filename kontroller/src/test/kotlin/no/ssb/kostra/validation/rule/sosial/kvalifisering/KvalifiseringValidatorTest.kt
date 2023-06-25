@@ -7,7 +7,6 @@ import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
@@ -37,9 +36,10 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_T
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
+import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifiseringInternal

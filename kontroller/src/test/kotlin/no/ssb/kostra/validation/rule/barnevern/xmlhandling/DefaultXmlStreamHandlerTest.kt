@@ -14,8 +14,8 @@ import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler.Companion.avgiverFileError
-import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler.Companion.individFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.individFileError
 
 class DefaultXmlStreamHandlerTest : BehaviorSpec({
 

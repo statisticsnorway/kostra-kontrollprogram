@@ -5,21 +5,26 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
 import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
 import no.ssb.kostra.barn.xsd.KostraBarnevernType
+import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors
 import java.time.Year
 
 class BarnevernValidatorTest : BehaviorSpec({
 
-    Given("validateBarnevern") {
+    Given("BarnevernValidator") {
         forAll(
             row(
                 "no individ",
@@ -160,6 +165,24 @@ class BarnevernValidatorTest : BehaviorSpec({
                         messageText = "Antall avgivere skal være 1, fant 0"
                     )
                     numberOfControls shouldBe 50
+                }
+            }
+        }
+    }
+
+    Given("BarnevernValidator with streamHandler that throws exception") {
+        val streamHandler: BarnevernXmlStreamHandler = mockk()
+        every { streamHandler.handleStream(any(), any(), any(), any()) } answers { throw NullPointerException() }
+
+        When("streamHandler throws exception") {
+            val result = validateBarnevern(argumentsInTest, streamHandler)
+
+            Then("reportEntries should be as expected, and numberOfControls should be 0") {
+                result.shouldNotBeNull()
+                assertSoftly(result) {
+                    it.reportEntries.size.shouldBe(1)
+                    it.reportEntries.shouldContain(FixedValidationErrors.xmlFileError(null))
+                    it.numberOfControls.shouldBe(0)
                 }
             }
         }

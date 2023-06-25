@@ -3,10 +3,9 @@ package no.ssb.kostra.validation.rule.barnevern.xmlhandling
 import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.barnevern.AvgiverRuleId
-import no.ssb.kostra.validation.rule.barnevern.IndividRuleId
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.individFileError
 import java.io.InputStream
 import javax.xml.stream.XMLInputFactory
 import javax.xml.stream.XMLStreamConstants
@@ -86,17 +85,5 @@ class DefaultXmlStreamHandler(
     companion object {
         private const val AVGIVER_XML_TAG = "Avgiver"
         private const val INDIVID_XML_TAG = "Individ"
-
-        val avgiverFileError = ValidationReportEntry(
-            severity = Severity.ERROR,
-            ruleName = AvgiverRuleId.AVGIVER_01.title,
-            messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
-        )
-
-        val individFileError = ValidationReportEntry(
-            severity = Severity.ERROR,
-            ruleName = IndividRuleId.INDIVID_01.title,
-            messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
-        )
     }
 }

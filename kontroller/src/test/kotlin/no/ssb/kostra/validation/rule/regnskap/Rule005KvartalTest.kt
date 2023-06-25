@@ -6,7 +6,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.toKostraRecord
+import no.ssb.kostra.program.extension.toKostraRecord
 
 class Rule005KvartalTest : BehaviorSpec({
     Given("context") {

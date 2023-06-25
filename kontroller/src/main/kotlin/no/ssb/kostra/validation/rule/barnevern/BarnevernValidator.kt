@@ -4,13 +4,15 @@ import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
 import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.individMissingError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.singleAvgiverError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.xmlFileError
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.avgiverXmlElementHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.individElementHandler
 
@@ -29,8 +31,8 @@ object BarnevernValidator {
         arguments: KotlinArguments,
         streamHandler: BarnevernXmlStreamHandler
     ): ValidationResult {
-        var seenAvgivere = 0
-        var seenIndivider = 0
+        var avgiverCount = 0
+        var individCount = 0
 
         arguments.inputFileStream.use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
@@ -43,9 +45,9 @@ object BarnevernValidator {
                     streamHandler.handleStream(
                         fileStream = fileStream!!,
                         arguments = arguments,
-                        { _ -> seenAvgivere++ }
+                        { _ -> avgiverCount++ }
                     ) { kostraIndivid: KostraIndividType ->
-                        seenIndivider++
+                        individCount++
 
                         kostraIndivid.fodselsnummer?.also {
                             seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(
@@ -60,8 +62,8 @@ object BarnevernValidator {
                     }
                 )
 
-                if (seenAvgivere != 1) reportEntries.add(singleAvgiverError(seenAvgivere))
-                if (seenIndivider < 1) reportEntries.add(individMissingError)
+                if (avgiverCount != 1) reportEntries.add(singleAvgiverError(avgiverCount))
+                if (individCount < 1) reportEntries.add(individMissingError)
 
                 reportEntries.addAll(
                     seenFodselsnummer.mapToValidationReportEntries(
@@ -77,30 +79,13 @@ object BarnevernValidator {
                     )
                 )
             } catch (thrown: Throwable) {
-                reportEntries.add(
-                    ValidationReportEntry(
-                        severity = Severity.ERROR,
-                        messageText = "Klarer ikke å lese fil. Får feilmeldingen: ${thrown.message}"
-                    )
-                )
+                reportEntries.add(xmlFileError(thrown.message))
             }
 
             return ValidationResult(
                 reportEntries = reportEntries,
-                numberOfControls = seenAvgivere * avgiverRules.size + seenIndivider * individRules.size
+                numberOfControls = avgiverCount * avgiverRules.size + individCount * individRules.size
             )
         }
     }
-
-    private fun singleAvgiverError(found: Int) = ValidationReportEntry(
-        severity = Severity.ERROR,
-        ruleName = AvgiverRuleId.AVGIVER_00.title,
-        messageText = "Antall avgivere skal være 1, fant $found"
-    )
-
-    private val individMissingError = ValidationReportEntry(
-        severity = Severity.ERROR,
-        ruleName = IndividRuleId.INDIVID_00.title,
-        messageText = "Filen mangler individer"
-    )
 }

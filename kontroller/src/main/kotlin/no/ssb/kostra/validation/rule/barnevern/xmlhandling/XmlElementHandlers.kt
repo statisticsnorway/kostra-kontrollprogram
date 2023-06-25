@@ -7,6 +7,8 @@ import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.individFileError
 import java.io.StringReader
 
 object XmlElementHandlers {
@@ -28,7 +30,7 @@ object XmlElementHandlers {
                         individId = individType.id
                     )
                 } to individType
-            else listOf(DefaultXmlStreamHandler.individFileError) to null
+            else listOf(individFileError) to null
         }
     }
 
@@ -42,7 +44,7 @@ object XmlElementHandlers {
                     xsdResource = KostraValidationUtils.AVGIVER_XSD_RESOURCE
                 )
             ) AvgiverRules.avgiverRules.mapNotNull { it.validate(avgiverType, arguments) }.flatten() to avgiverType
-            else listOf(DefaultXmlStreamHandler.avgiverFileError) to null
+            else listOf(avgiverFileError) to null
         }
     }
 }

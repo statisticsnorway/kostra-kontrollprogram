@@ -1,4 +1,8 @@
-package no.ssb.kostra.program
+package no.ssb.kostra.program.extension
+
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.INTEGER_TYPE
+import no.ssb.kostra.program.KostraRecord
 
 fun KostraRecord.toRecordString(): String {
     val fieldDefinitions = fieldDefinitionByName.values.sortedBy { it.to }

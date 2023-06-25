@@ -6,11 +6,11 @@ import no.ssb.kostra.control.felles.ControlHarVedlegg;
 import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.*;
-import no.ssb.kostra.program.ConversionUtils;
+import no.ssb.kostra.program.util.ConversionUtils;
 
 import java.util.List;
 
-import static no.ssb.kostra.program.ConversionUtils.fromArguments;
+import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
 @SuppressWarnings("SpellCheckingInspection")

@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.barnevern.IndividRuleId
-import no.ssb.kostra.validation.util.SsnValidationUtils.isValidSocialSecurityId
+import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityId
 
 class Individ11 : AbstractRule<KostraIndividType>(
     ruleName = IndividRuleId.INDIVID_11.title,

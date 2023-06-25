@@ -1,9 +1,10 @@
-package no.ssb.kostra.program
+package no.ssb.kostra.program.extension
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.program.*
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 

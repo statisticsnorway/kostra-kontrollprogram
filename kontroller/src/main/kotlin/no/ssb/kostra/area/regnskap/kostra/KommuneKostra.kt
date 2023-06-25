@@ -24,7 +24,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.toKostraRecord
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.Rule001RecordLength

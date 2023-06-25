@@ -1,7 +1,8 @@
-package no.ssb.kostra.program
+package no.ssb.kostra.program.util
 
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.ErrorReportEntry
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 

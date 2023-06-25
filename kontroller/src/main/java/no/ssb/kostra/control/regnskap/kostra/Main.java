@@ -11,7 +11,7 @@ import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.felles.KostraRecord;
-import no.ssb.kostra.program.ConversionUtils;
+import no.ssb.kostra.program.util.ConversionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Map;
 import static no.ssb.kostra.control.felles.Comparator.*;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
-import static no.ssb.kostra.program.ConversionUtils.fromArguments;
+import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {

@@ -3,7 +3,7 @@ package no.ssb.kostra
 import no.ssb.kostra.barn.xsd.KostraAvgiverType
 import no.ssb.kostra.barn.xsd.KostraBarnevernType
 import no.ssb.kostra.barn.xsd.KostraIndividType
-import no.ssb.kostra.validation.rule.RandomUtils
+import no.ssb.kostra.testutil.RandomUtils
 import java.time.LocalDate
 import java.time.Year
 

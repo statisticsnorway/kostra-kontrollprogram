@@ -13,7 +13,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSSN
+import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import java.time.LocalDate

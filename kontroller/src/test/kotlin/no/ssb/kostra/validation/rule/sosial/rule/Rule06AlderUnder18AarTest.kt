@@ -13,9 +13,9 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_F
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RandomUtils.generateRandomSsn
+import no.ssb.kostra.testutil.RandomUtils.generateRandomSsn
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.util.SsnValidationUtils.getAgeFromSocialSecurityId
+import no.ssb.kostra.program.util.SsnValidationUtils.getAgeFromSocialSecurityId
 
 class Rule06AlderUnder18AarTest : BehaviorSpec({
     val sut = Rule06AlderUnder18Aar()

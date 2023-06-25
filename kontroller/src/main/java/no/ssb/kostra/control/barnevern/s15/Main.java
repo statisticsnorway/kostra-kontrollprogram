@@ -2,9 +2,9 @@ package no.ssb.kostra.control.barnevern.s15;
 
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.ErrorReport;
-import no.ssb.kostra.program.ConversionUtils;
+import no.ssb.kostra.program.util.ConversionUtils;
 
-import static no.ssb.kostra.program.ConversionUtils.fromArguments;
+import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern;
 
 public final class Main {

@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.util
+package no.ssb.kostra.program.util
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

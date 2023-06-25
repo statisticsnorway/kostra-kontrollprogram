@@ -13,7 +13,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RandomUtils
+import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.rule.RuleTestData
 import java.time.LocalDate
 

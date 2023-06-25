@@ -7,15 +7,15 @@ import no.ssb.kostra.program.util.ConversionUtils;
 import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern;
 
-public final class Main {
-    private Main() {
+public final class BarnevernMain {
+    private BarnevernMain() {
         throw new IllegalStateException("Static processing class");
     }
 
-    public static ErrorReport doControls(final Arguments args) {
-        final var errorReport = new ErrorReport(args);
+    public static ErrorReport doControls(final Arguments arguments) {
+        final var errorReport = new ErrorReport(arguments);
 
-        var result = validateBarnevern(fromArguments(args));
+        var result = validateBarnevern(fromArguments(arguments, false));
 
         result.getReportEntries().stream()
                 .map(ConversionUtils::toErrorReportEntry)

@@ -312,7 +312,7 @@ public class Main {
     // Controls
     public static ErrorReport doControls(final Arguments arguments) {
         final var errorReport = new ErrorReport(arguments);
-        final var regnskap = new KommuneKostra(fromArguments(arguments));
+        final var regnskap = new KommuneKostra(fromArguments(arguments, true));
 
         regnskap.validate().stream()
                 .map(ConversionUtils::toErrorReportEntry)

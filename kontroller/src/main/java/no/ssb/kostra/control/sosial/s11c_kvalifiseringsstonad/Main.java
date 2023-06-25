@@ -51,7 +51,7 @@ public class Main {
         ControlFilbeskrivelse.doControl(records, errorReport);
 
         if (errorReport.isEmpty()) {
-            var validationResult = validateKvalifisering(fromArguments(arguments));
+            var validationResult = validateKvalifisering(fromArguments(arguments, true));
 
             validationResult.getReportEntries().stream()
                     .map(ConversionUtils::toErrorReportEntry)

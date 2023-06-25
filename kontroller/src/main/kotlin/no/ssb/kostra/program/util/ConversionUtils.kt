@@ -3,16 +3,10 @@ package no.ssb.kostra.program.util
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.ErrorReportEntry
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.program.extension.toInt
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 object ConversionUtils {
-
-    internal fun Severity.toInt() = when (this) {
-        Severity.WARNING -> 1
-        Severity.ERROR -> 2
-        else -> 0
-    }
 
     @JvmStatic
     fun toErrorReportEntry(reportEntry: ValidationReportEntry) = ErrorReportEntry(
@@ -26,14 +20,20 @@ object ConversionUtils {
     )
 
     @JvmStatic
-    fun fromArguments(args: Arguments) = KotlinArguments(
-        skjema = args.skjema,
-        aargang = args.aargang,
-        kvartal = args.kvartal,
-        region = args.region,
-        navn = args.navn,
-        orgnr = args.orgnr,
-        foretaknr = args.foretaknr,
-        inputFileStream = args.inputContentAsInputStream
+    fun fromArguments(
+        arguments: Arguments,
+        contentAsString: Boolean
+    ) = KotlinArguments(
+        skjema = arguments.skjema,
+        aargang = arguments.aargang,
+        kvartal = arguments.kvartal,
+        region = arguments.region,
+        navn = arguments.navn,
+        orgnr = arguments.orgnr,
+        foretaknr = arguments.foretaknr,
+        harVedlegg = arguments.harVedlegg(),
+        isRunAsExternalProcess = arguments.isRunAsExternalProcess,
+        inputFileContent = if (contentAsString) arguments.inputContentAsStringList.joinToString("\n") else "",
+        inputFileStream = if (contentAsString) null else arguments.inputContentAsInputStream
     )
 }

@@ -1,6 +1,7 @@
 package no.ssb.kostra.controlprogram;
 
 import lombok.experimental.UtilityClass;
+import no.ssb.kostra.control.barnevern.s15.BarnevernMain;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
@@ -44,7 +45,7 @@ public class ControlDispatcher {
             errorReport = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("15F"))) {
-            errorReport = no.ssb.kostra.control.barnevern.s15.Main.doControls(arguments);
+            errorReport = BarnevernMain.doControls(arguments);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("52AF"))) {
             errorReport = no.ssb.kostra.control.famvern.s52a.Main.doControls(arguments);

@@ -115,7 +115,7 @@ public class MainITest {
         var byteArrayInputStream = new ByteArrayInputStream(inputFileContent.getBytes(StandardCharsets.ISO_8859_1));
         var arguments = new Arguments(cliArgs, byteArrayInputStream);
 
-        var errorReport = Main.doControls(arguments);
+        var errorReport = BarnevernMain.doControls(arguments);
 
         if (Constants.DEBUG) {
             System.out.print(errorReport.generateReport());

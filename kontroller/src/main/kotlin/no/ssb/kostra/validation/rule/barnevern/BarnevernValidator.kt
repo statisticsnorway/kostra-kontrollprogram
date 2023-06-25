@@ -1,13 +1,13 @@
 package no.ssb.kostra.validation.rule.barnevern
 
-import no.ssb.kostra.area.sosial.extension.addKeyOrAddValueIfKeyIsPresent
-import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
+import no.ssb.kostra.validation.rule.barnevern.extension.addKeyOrAddValueIfKeyIsPresent
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.individMissingError
@@ -65,18 +65,32 @@ object BarnevernValidator {
                 if (avgiverCount != 1) reportEntries.add(singleAvgiverError(avgiverCount))
                 if (individCount < 1) reportEntries.add(individMissingError)
 
-                reportEntries.addAll(
-                    seenFodselsnummer.mapToValidationReportEntries(
-                        IndividRuleId.INDIVID_04.title,
-                        messageTemplateFunc = { key, values -> "Dublett for fødselsnummer ($key) for journalnummer ($values)" }
-                    )
+                reportEntries.addAll(seenFodselsnummer
+                    .filterValues { it.size > 1 }
+                    .flatMap { entry ->
+                        entry.value.map { currentJournalId ->
+                            ValidationReportEntry(
+                                severity = Severity.ERROR,
+                                ruleName = IndividRuleId.INDIVID_04.title,
+                                journalId = currentJournalId,
+                                messageText = "Fødselsnummeret i journalnummer $currentJournalId fins også i " +
+                                        "journalene ${
+                                            entry.value.filter { it != currentJournalId }.joinToString(", ")
+                                        }."
+                            )
+                        }
+                    }
                 )
 
-                reportEntries.addAll(
-                    seenJournalNummer.mapToValidationReportEntries(
-                        IndividRuleId.INDIVID_05.title,
-                        messageTemplateFunc = { key, values -> "Dublett for journalnummer ($key) for fødselsnummer ($values)" }
-                    )
+                reportEntries.addAll(seenJournalNummer
+                    .filterValues { it.size > 1 }
+                    .map { entry ->
+                        ValidationReportEntry(
+                            severity = Severity.ERROR,
+                            ruleName = IndividRuleId.INDIVID_05.title,
+                            messageText = "Journalnummer ${entry.key} forekommer ${entry.value.size} ganger."
+                        )
+                    }
                 )
             } catch (thrown: Throwable) {
                 reportEntries.add(xmlFileError(thrown.message))

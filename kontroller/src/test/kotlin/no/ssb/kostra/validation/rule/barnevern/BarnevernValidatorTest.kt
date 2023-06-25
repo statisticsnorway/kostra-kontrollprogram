@@ -77,13 +77,13 @@ class BarnevernValidatorTest : BehaviorSpec({
             row(
                 "duplicate individ",
                 kostraAvgiverTypeInTest,
-                mutableListOf(kostraIndividInTest, kostraIndividInTest),
+                mutableListOf(kostraIndividInTest, kostraIndividInTest.copy(journalnummer = "~journalnummer2~")),
                 false,
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_04.title,
-                    messageText = "Dublett for fødselsnummer (${kostraIndividInTest.fodselsnummer}) for " +
-                            "journalnummer (${kostraIndividInTest.journalnummer})"
+                    journalId = "~journalnummer~",
+                    messageText = "Fødselsnummeret i journalnummer ~journalnummer~ fins også i journalene ~journalnummer2~."
                 ), 104
             ),
             row(
@@ -94,8 +94,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_05.title,
-                    messageText = "Dublett for journalnummer (${kostraIndividInTest.journalnummer}) for " +
-                            "fødselsnummer (${kostraIndividInTest.fodselsnummer})"
+                    messageText = "Journalnummer ~journalnummer~ forekommer 2 ganger."
                 ), 104
             ),
             row(

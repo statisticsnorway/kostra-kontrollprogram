@@ -92,7 +92,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                                 "kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller " +
                                 "Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er " +
                                 "mottatt støtte. {KVP_MED_KOMMBOS=1, KVP_MED_HUSBANK=5, KVP_MED_SOSHJ_ENGANG=9, " +
-                                "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}"
+                                "KVP_MED_SOSHJ_PGM=8, KVP_MED_SOSHJ_SUP=7}."
                     )
                 ), 32
             )

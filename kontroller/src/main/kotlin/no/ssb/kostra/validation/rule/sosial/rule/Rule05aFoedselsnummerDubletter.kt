@@ -5,10 +5,10 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_J
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
-import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 
 class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
     SosialRuleId.FODSELSNUMMER_DUBLETTER_05A.title,
@@ -30,7 +30,7 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
                             .joinToString(", ")
 
                         createValidationReportEntry(
-                            "Fødselsnummeret i journalnummer $journalId fins også i journalene $otherJournalIds",
+                            "Fødselsnummeret i journalnummer $journalId fins også i journalene $otherJournalIds.",
                             lineNumbers = listOf(kostraRecord.lineNumber)
                         ).copy(
                             caseworker = kostraRecord.getFieldAsString(SAKSBEHANDLER_COL_NAME),

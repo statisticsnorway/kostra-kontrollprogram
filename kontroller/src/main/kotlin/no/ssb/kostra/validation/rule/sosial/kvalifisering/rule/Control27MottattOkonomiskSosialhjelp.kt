@@ -7,10 +7,10 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.codeIsMissing
+import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -32,7 +32,7 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
                         "Svaralternativer for feltet \"Har deltakeren i ${arguments.aargang} i løpet av " +
                                 "perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte " +
                                 "eller Husbankens bostøtte?\" har ugyldige koder. " +
-                                "Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values"
+                                "Feltet er obligatorisk å fylle ut. Det er mottatt støtte. $values."
                     )
                 }
             }

@@ -16,7 +16,7 @@ class ConversionUtilsTest : BehaviorSpec({
 
     Given("ValidationReportEntry with all props set") {
         forAll(
-            row("with line numbers", listOf(1, 2, 3), " (linje(r): 1, 2, 3)"),
+            row("with line numbers", listOf(1, 2, 3), " Gjelder linjenr: 1, 2, 3"),
             row("without line numbers", emptyList(), "")
         ) { description, lineNumbers, expectedLineNumbersText ->
 

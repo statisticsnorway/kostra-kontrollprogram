@@ -16,7 +16,7 @@ object ConversionUtils {
         " ",
         reportEntry.ruleName,
         when (reportEntry.lineNumbers.any()) {
-            true -> "${reportEntry.messageText} (linje(r): ${reportEntry.lineNumbers.joinToString(", ")})"
+            true -> "${reportEntry.messageText} Gjelder linjenr: ${reportEntry.lineNumbers.joinToString(", ")}"
             false -> reportEntry.messageText
         },
         reportEntry.severity.toInt()

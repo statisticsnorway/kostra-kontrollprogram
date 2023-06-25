@@ -7,10 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
@@ -52,8 +52,8 @@ class Rule03KommunenummerTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér kommunenummeret. Fant 4242, forventet " +
-                                argumentsInTest.region.municipalityIdFromRegion()
+                        it.messageText shouldBe "Korrigér kommunenummeret. Fant 4242, " +
+                                "forventet ${argumentsInTest.region.municipalityIdFromRegion()}."
                     }
                 }
             }

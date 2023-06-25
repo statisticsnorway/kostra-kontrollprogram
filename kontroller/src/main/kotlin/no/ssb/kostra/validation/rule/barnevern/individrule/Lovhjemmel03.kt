@@ -2,11 +2,11 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.ageInYears
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.barnevern.IndividRuleId
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.AGE_SEVENTEEN
-import no.ssb.kostra.validation.rule.barnevern.extension.ageInYears
 import no.ssb.kostra.validation.rule.barnevern.extension.erOmsorgsTiltak
 
 class Lovhjemmel03 : AbstractRule<KostraIndividType>(

@@ -7,15 +7,15 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.program.extension.ageInYears
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSsn
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.program.util.SsnValidationUtils.getAgeFromSocialSecurityId
 
 class Rule07AlderEr68AarEllerOverTest : BehaviorSpec({
     val sut = Rule07AlderEr68AarEllerOver()
@@ -57,7 +57,7 @@ class Rule07AlderEr68AarEllerOverTest : BehaviorSpec({
                     reportEntryList.shouldNotBeNull()
                     reportEntryList.size shouldBe 1
 
-                    val actualAge = getAgeFromSocialSecurityId(foedselsnummer, argumentsInTest.aargang)
+                    val actualAge = foedselsnummer.ageInYears(argumentsInTest.aargang.toInt())
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.WARNING

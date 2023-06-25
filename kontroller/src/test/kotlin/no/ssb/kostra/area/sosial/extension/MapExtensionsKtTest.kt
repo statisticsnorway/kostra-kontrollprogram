@@ -1,10 +1,9 @@
-package no.ssb.kostra.program.extension
+package no.ssb.kostra.area.sosial.extension
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.extension.mapToValidationReportEntries
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 

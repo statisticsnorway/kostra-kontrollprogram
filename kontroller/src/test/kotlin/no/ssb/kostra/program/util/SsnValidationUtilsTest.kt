@@ -1,6 +1,5 @@
 package no.ssb.kostra.program.util
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -25,38 +24,6 @@ class SsnValidationUtilsTest : BehaviorSpec({
                 Then("dateOfBirth should be as expected") {
                     dateOfBirth shouldBe expectedDate
                 }
-            }
-        }
-    }
-
-    Given("getAgeFromSocialSecurityId") {
-        forAll(
-            row("invalid fødselsnummer, expect null", "123", null),
-            row("valid fødselsnummer, expect age", "05011399292",9),
-            row("valid D-nr, expect age", "41011088188",12)
-        ) { description, socialSecurityId, expectedAge ->
-            When(description) {
-                val ageInYears = SsnValidationUtils.getAgeFromSocialSecurityId(
-                    socialSecurityId = socialSecurityId,
-                    reportingYearAsString = "2022"
-                )
-
-                Then("ageInYears should be as expected") {
-                    ageInYears shouldBe expectedAge
-                }
-            }
-        }
-
-        When("invalid registrationYear") {
-            val thrown = shouldThrow<NumberFormatException> {
-                SsnValidationUtils.getAgeFromSocialSecurityId(
-                    socialSecurityId = "41011088188",
-                    reportingYearAsString = "abc"
-                )
-            }
-
-            Then("thrown should be as expected") {
-                thrown.message shouldBe "For input string: \"abc\""
             }
         }
     }

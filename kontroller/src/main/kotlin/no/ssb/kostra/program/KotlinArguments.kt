@@ -2,17 +2,19 @@ package no.ssb.kostra.program
 
 import java.io.InputStream
 
+private const val BLANK_CHAR = " "
+
 data class KotlinArguments(
-    val skjema: String = " ",
-    val aargang: String = "    ",
-    val kvartal: String = " ",
-    val region: String = "      ",
+    val skjema: String,
+    val aargang: String,
+    val region: String,
+    val kvartal: String = BLANK_CHAR,
     val navn: String = "Uoppgitt",
-    val orgnr: String = "         ",
-    val foretaknr: String = "         ",
+    val orgnr: String = BLANK_CHAR.repeat(9),
+    val foretaknr: String = BLANK_CHAR.repeat(9),
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
-    val inputFileContent: String = " ",
+    val inputFileContent: String = BLANK_CHAR,
     val inputFileStream: InputStream? = null
 ) {
     init {

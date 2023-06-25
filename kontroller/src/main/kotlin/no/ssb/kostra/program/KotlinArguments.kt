@@ -7,8 +7,8 @@ private const val BLANK_CHAR = " "
 data class KotlinArguments(
     val skjema: String,
     val aargang: String,
-    val region: String,
     val kvartal: String = BLANK_CHAR,
+    val region: String,
     val navn: String = "Uoppgitt",
     val orgnr: String = BLANK_CHAR.repeat(9),
     val foretaknr: String = BLANK_CHAR.repeat(9),

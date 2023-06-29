@@ -5,10 +5,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 
-class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRecordRule(
+class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRule<List<KostraRecord>>(
     "Kontroll 215 : Interne overføringer, kalkulatoriske utgifter og inntekter",
     Severity.ERROR
 ) {

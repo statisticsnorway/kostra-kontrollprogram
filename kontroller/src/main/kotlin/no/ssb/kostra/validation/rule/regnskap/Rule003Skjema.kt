@@ -5,12 +5,10 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule003Skjema(
-    val arguments: KotlinArguments
-) : AbstractRecordRule("Kontroll 003 : Skjema", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+class Rule003Skjema : AbstractRule<List<KostraRecord>>("Kontroll 003 : Skjema", Severity.ERROR) {
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments): List<ValidationReportEntry>? = context
         .filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_SKJEMA) != arguments.skjema }
         .map { kostraRecord ->
             createValidationReportEntry(

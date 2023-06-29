@@ -5,12 +5,10 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule006Region(
-    val arguments: KotlinArguments
-) : AbstractRecordRule("Kontroll 006 : Region", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+class Rule006Region : AbstractRule<List<KostraRecord>>("Kontroll 006 : Region", Severity.ERROR) {
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments): List<ValidationReportEntry>? = context
         .filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_REGION) != arguments.region }
         .map { kostraRecord ->
             createValidationReportEntry(

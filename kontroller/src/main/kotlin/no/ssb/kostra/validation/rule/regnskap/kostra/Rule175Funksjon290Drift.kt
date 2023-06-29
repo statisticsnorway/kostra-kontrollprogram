@@ -5,12 +5,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isKommuneRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
-class Rule175Funksjon290Drift : AbstractRecordRule(
+class Rule175Funksjon290Drift : AbstractRule<List<KostraRecord>>(
     "Kontroll 175 : Funksjon 290, driftsregnskapet",
     Severity.ERROR
 ) {

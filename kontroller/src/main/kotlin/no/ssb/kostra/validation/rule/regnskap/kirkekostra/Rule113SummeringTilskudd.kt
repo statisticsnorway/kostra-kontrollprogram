@@ -5,10 +5,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 
-class Rule113SummeringTilskudd : AbstractRecordRule(
+class Rule113SummeringTilskudd : AbstractRule<List<KostraRecord>>(
     "Kontroll 113 : Summeringskontroller driftsregnskapet, tilskudd",
     Severity.ERROR
 ) {

@@ -5,10 +5,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 
-class Rule210InterneOverforingerKjopOgSalg : AbstractRecordRule(
+class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
     "Kontroll 210 : Interne overføringer, kjøp og salg",
     Severity.ERROR
 ) {

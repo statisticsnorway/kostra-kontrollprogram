@@ -5,12 +5,10 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule005Kvartal(
-    val arguments: KotlinArguments
-) : AbstractRecordRule("Kontroll 005 : Kvartal", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+class Rule005Kvartal : AbstractRule<List<KostraRecord>>("Kontroll 005 : Kvartal", Severity.ERROR) {
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments): List<ValidationReportEntry>? = context
         .filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_KVARTAL) != arguments.kvartal }
         .map { kostraRecord ->
             createValidationReportEntry(

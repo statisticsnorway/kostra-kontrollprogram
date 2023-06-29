@@ -5,12 +5,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
-class Rule140OverforingerDriftInvestering : AbstractRecordRule(
+class Rule140OverforingerDriftInvestering : AbstractRule<List<KostraRecord>>(
     "Kontroll 140 : Overføring mellom drifts- og investeringsregnskap",
     Severity.ERROR
 ) {

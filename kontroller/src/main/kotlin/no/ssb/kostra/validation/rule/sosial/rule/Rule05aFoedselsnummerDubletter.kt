@@ -15,8 +15,7 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
-        context.takeIf { it.size > 1 }?.let {
-            it.filter { kostraRecord ->
+        context.filter { kostraRecord ->
                 isValidSocialSecurityIdOrDnr(kostraRecord.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))
             }.groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
@@ -40,4 +39,3 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
                     }
                 }.ifEmpty { null }
         }
-}

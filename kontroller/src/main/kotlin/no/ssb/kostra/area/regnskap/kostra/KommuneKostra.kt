@@ -399,12 +399,12 @@ class KommuneKostra(
     )
 
     private val validationRules = listOf(
-        Rule003Skjema(arguments = arguments),
-        Rule004Aargang(arguments = arguments),
-        Rule005Kvartal(arguments = arguments),
-        Rule006Region(arguments = arguments),
-        Rule007Organisasjonsnummer(arguments = arguments),
-        Rule008Foretaksnummer(arguments = arguments),
+        Rule003Skjema(),
+        Rule004Aargang(),
+        Rule005Kvartal(),
+        Rule006Region(),
+        Rule007Organisasjonsnummer(),
+        Rule008Foretaksnummer(),
         Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
         Rule010Funksjon(funksjonList = getFunksjonAsList()),
         Rule011Kapittel(kapittelList = getKapittelAsList()),

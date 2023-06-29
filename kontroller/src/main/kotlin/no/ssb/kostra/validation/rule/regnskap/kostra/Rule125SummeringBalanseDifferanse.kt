@@ -4,11 +4,11 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isAktiva
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
-class Rule125SummeringBalanseDifferanse : AbstractRecordRule(
+class Rule125SummeringBalanseDifferanse : AbstractRule<List<KostraRecord>>(
     "Kontroll 125 : Summeringskontroller balanseregnskapet, differanse i balanseregnskapet",
     Severity.ERROR
 ) {

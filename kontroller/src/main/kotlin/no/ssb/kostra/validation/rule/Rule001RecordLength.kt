@@ -5,7 +5,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class Rule001RecordLength(
     val length: Int
-) : AbstractStringRule("Kontroll 001 : Recordlengde", Severity.FATAL) {
+) : AbstractRule<List<String>>("Kontroll 001 : Recordlengde", Severity.FATAL) {
     override fun validate(context: List<String>): List<ValidationReportEntry>? = context
         .withIndex()
         .filter { it.value.length != length || it.value.contains("\t") }

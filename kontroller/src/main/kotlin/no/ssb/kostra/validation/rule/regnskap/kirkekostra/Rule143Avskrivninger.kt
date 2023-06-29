@@ -6,10 +6,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 
-class Rule143Avskrivninger : AbstractRecordRule(
+class Rule143Avskrivninger : AbstractRule<List<KostraRecord>>(
     "Kontroll 143 : Avskrivninger",
     Severity.ERROR
 ) {

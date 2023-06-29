@@ -4,12 +4,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isUtgift
 
-class Rule110SummeringDriftDifferanse : AbstractRecordRule(
+class Rule110SummeringDriftDifferanse : AbstractRule<List<KostraRecord>>(
     "Kontroll 110 : Summeringskontroller driftsregnskapet, differanse i driftsregnskapet",
     Severity.ERROR
 ) {

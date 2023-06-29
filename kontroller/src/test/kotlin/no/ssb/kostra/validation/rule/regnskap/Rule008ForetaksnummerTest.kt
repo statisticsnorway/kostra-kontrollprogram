@@ -10,10 +10,9 @@ import no.ssb.kostra.program.extension.toKostraRecord
 
 class Rule008ForetaksnummerTest : BehaviorSpec({
     Given("context") {
-        val sut = Rule008Foretaksnummer(
-            arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234", foretaknr = "987654321")
-        )
+        val sut = Rule008Foretaksnummer()
         val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FORETAKSNR, from = 1, to = 9))
+        val arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234", foretaknr = "987654321")
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(
@@ -21,7 +20,7 @@ class Rule008ForetaksnummerTest : BehaviorSpec({
             )
 
             Then("validation should pass with no errors") {
-                sut.validate(kostraRecordList).shouldBeNull()
+                sut.validate(kostraRecordList, arguments).shouldBeNull()
             }
         }
 
@@ -31,7 +30,7 @@ class Rule008ForetaksnummerTest : BehaviorSpec({
             )
 
             Then("validation should result in errors") {
-                sut.validate(kostraRecordList).shouldNotBeNull()
+                sut.validate(kostraRecordList, arguments).shouldNotBeNull()
             }
         }
     }

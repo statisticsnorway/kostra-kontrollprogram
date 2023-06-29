@@ -3,30 +3,27 @@ package no.ssb.kostra.validation.rule.regnskap
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule015Duplicates(
     private val fieldNameTitlePairList: Pair<List<String>, List<String>>
-) : AbstractRecordRule("Kontroll 015 : Dubletter", Severity.WARNING) {
+) : AbstractRule<List<KostraRecord>>("Kontroll 015 : Dubletter", Severity.WARNING) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
-        .map { kostraRecord ->
+        .groupBy { kostraRecord ->
             fieldNameTitlePairList.first.joinToString(" * ") { fieldName ->
                 kostraRecord.getFieldAsTrimmedString(fieldName)
             }
         }
-        .groupingBy { it }
-        .eachCount()
-        .filter { it.value > 1 }
-        .map { it.key }
-        .sorted()
+        .filter { (_, group) -> group.size > 1 }
         .takeIf { it.any() }
-        ?.let {
+        ?.flatMap { (key, group) ->
             createSingleReportEntryList(
                 messageText = """Det er oppgitt flere beløp på samme kombinasjon av 
-                    (${fieldNameTitlePairList.second.joinToString(" * ")}).<br/>
+                    (${fieldNameTitlePairList.second.joinToString(" * ")} - $key).<br/>
                  Hvis dette er riktig, kan du sende inn filen, og beløpene summeres hos SSB. 
-                 Dersom dette er feil må recordene korrigeres før innsending til SSB.   
-                """.trimIndent()
+                 Dersom dette er feil må recordene korrigeres før innsending til SSB. 
+                """.trimIndent(),
+                lineNumbers = group.map { kostraRecord -> kostraRecord.lineNumber }
             )
         }
 }

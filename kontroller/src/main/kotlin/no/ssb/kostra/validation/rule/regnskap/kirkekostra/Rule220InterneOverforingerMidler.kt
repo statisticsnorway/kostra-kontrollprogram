@@ -5,10 +5,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 
-class Rule220InterneOverforingerMidler : AbstractRecordRule(
+class Rule220InterneOverforingerMidler : AbstractRule<List<KostraRecord>>(
     "Kontroll 220 : Interne overføringer, midler",
     Severity.ERROR
 ) {

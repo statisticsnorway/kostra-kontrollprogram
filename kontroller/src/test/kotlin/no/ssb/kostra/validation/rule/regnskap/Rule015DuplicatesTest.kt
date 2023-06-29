@@ -11,7 +11,7 @@ import no.ssb.kostra.program.KostraRecord
 class Rule015DuplicatesTest : BehaviorSpec({
     Given("valid context") {
         val sut = Rule015Duplicates(
-            listOf("a", "a") to listOf("A", "B")
+            listOf("a", "b") to listOf("A", "B")
         )
         val fieldDefinitionsByName = listOf(
             FieldDefinition(from = 1, to = 1, name = "a"),
@@ -24,11 +24,13 @@ class Rule015DuplicatesTest : BehaviorSpec({
                 listOf(
                     KostraRecord(
                         fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf("a" to "1", "b" to "2")
+                        valuesByName = mapOf("a" to "1", "b" to "2"),
+                        lineNumber = 1
                     ),
                     KostraRecord(
                         fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf("a" to "2", "b" to "1")
+                        valuesByName = mapOf("a" to "2", "b" to "1"),
+                        lineNumber = 2
                     )
                 )
             )
@@ -46,18 +48,32 @@ class Rule015DuplicatesTest : BehaviorSpec({
                 listOf(
                     KostraRecord(
                         fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf("a" to "1", "b" to "2")
+                        valuesByName = mapOf("a" to "1", "b" to "2"),
+                        lineNumber = 1
                     ),
                     KostraRecord(
                         fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf("a" to "1", "b" to "2")
+                        valuesByName = mapOf("a" to "1", "b" to "2"),
+                        lineNumber = 2
+                    ),
+                    KostraRecord(
+                        fieldDefinitionByName = fieldDefinitionsByName,
+                        valuesByName = mapOf("a" to "3", "b" to "4"),
+                        lineNumber = 3
+                    ),
+                    KostraRecord(
+                        fieldDefinitionByName = fieldDefinitionsByName,
+                        valuesByName = mapOf("a" to "3", "b" to "4"),
+                        lineNumber = 4
                     )
                 )
             )
         ) { description, kostraRecordList ->
             When(description) {
+                val validationReportEntries = sut.validate(kostraRecordList)
                 Then("validation should result in errors") {
-                    sut.validate(kostraRecordList).shouldNotBeNull()
+                    validationReportEntries.shouldNotBeNull()
+                    println(validationReportEntries)
                 }
             }
         }

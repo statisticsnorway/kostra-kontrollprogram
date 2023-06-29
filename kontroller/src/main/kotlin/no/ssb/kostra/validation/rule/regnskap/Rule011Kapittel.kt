@@ -4,11 +4,11 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRecordRule
+import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule011Kapittel(
     val kapittelList: List<String>
-) : AbstractRecordRule("Kontroll 011 : Kapittel", Severity.ERROR) {
+) : AbstractRule<List<KostraRecord>>("Kontroll 011 : Kapittel", Severity.ERROR) {
     override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? =
         if (kapittelList.isEmpty()) null
         else context

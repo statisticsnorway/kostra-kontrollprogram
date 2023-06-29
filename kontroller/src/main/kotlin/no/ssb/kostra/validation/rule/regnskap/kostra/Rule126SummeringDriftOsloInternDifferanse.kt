@@ -4,7 +4,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloInternRegnskap
@@ -14,7 +13,7 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractRule<List<KostraRecord
             "differanse i driftsregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { it.isOsloInternRegnskap() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) in listOf("298", "798") }

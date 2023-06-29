@@ -8,7 +8,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapConstants.getRegnskapTypeBySkjema
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
@@ -17,7 +16,7 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>
     "Kontroll 145 : Avskrivninger, motpost avskrivninger",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {

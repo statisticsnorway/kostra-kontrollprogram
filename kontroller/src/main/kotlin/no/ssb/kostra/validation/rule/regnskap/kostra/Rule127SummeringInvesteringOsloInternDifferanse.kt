@@ -3,7 +3,6 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloInternRegnskap
@@ -13,7 +12,7 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRule<List<Kostra
             "differanse i investeringsregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { it.isOsloInternRegnskap() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in listOf("298", "798") }

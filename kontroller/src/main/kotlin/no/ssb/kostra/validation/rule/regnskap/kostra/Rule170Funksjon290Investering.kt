@@ -4,7 +4,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isKommuneRegnskap
@@ -14,7 +13,7 @@ class Rule170Funksjon290Investering : AbstractRule<List<KostraRecord>>(
     "Kontroll 170 : Funksjon 290, investeringsregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             !it.isOsloBydel()
                     && it.isKommuneRegnskap()

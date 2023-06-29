@@ -2,13 +2,12 @@ package no.ssb.kostra.validation.rule.regnskap
 
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule015Duplicates(
     private val fieldNameTitlePairList: Pair<List<String>, List<String>>
 ) : AbstractRule<List<KostraRecord>>("Kontroll 015 : Dubletter", Severity.WARNING) {
-    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>) = context
         .groupBy { kostraRecord ->
             fieldNameTitlePairList.first.joinToString(" * ") { fieldName ->
                 kostraRecord.getFieldAsTrimmedString(fieldName)

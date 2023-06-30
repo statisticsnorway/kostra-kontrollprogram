@@ -26,7 +26,7 @@
         <kotestVersion>5.6.2</kotestVersion>
         <reactorCoreVersion>3.5.7</reactorCoreVersion>
         <jackson.version>2.15.2</jackson.version>
-        <swagger.version>2.2.12</swagger.version>
+        <swagger.version>2.2.14</swagger.version>
         <micronaut.openapi.version>4.8.7</micronaut.openapi.version>
         <slf4j.version>2.0.7</slf4j.version>
         <logback.version>1.4.8</logback.version>
@@ -101,7 +101,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-coroutines-core-jvm</artifactId>
-                <version>1.7.1</version>
+                <version>1.7.2</version>
             </dependency>
             <dependency>
                 <groupId>io.kotest</groupId>
@@ -336,7 +336,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.12.1</version>
+                <version>1.13.3</version>
 
                 <configuration>
                     <workingDirectory>src/main/vite-project</workingDirectory>

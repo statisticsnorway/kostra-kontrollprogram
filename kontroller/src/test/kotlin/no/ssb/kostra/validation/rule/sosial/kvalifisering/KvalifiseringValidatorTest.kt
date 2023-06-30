@@ -62,7 +62,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
 
                 assertSoftly(validationResult){
                     numberOfControls shouldBe 32
-                    reportEntries.size shouldBe 15
+                    reportEntries.size shouldBe 14
                 }
             }
         }

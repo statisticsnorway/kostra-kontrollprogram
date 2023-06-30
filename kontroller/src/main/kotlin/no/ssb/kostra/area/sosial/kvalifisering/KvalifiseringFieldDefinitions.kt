@@ -29,7 +29,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_OSLO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
@@ -542,23 +541,23 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("5444", "Sør-Varanger")
             )
         ),
-        FieldDefinition(
-            number = 143,
-            name = KVP_OSLO_COL_NAME,
-            dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
-            from = 58, to = 58,
-            codeList = listOf(
-                Code("1", "Ja"),
-                Code("2", "Nei")
-            )
-        ),
+        /*        FieldDefinition(
+                    number = 143,
+                    name = KVP_OSLO_COL_NAME,
+                    dataType = STRING_TYPE,
+                    viewType = DROPDOWNLIST_VIEWTYPE,
+                    from = 58, to = 58,
+                    codeList = listOf(
+                        Code("1", "Ja"),
+                        Code("2", "Nei")
+                    )
+                ),*/
         FieldDefinition(
             number = 151,
             name = YTELSE_SOSHJELP_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 59, to = 59,
+            from = 58, to = 58,
             codeList = listOf(
                 Code("1", "Sosialhjelp")
             )
@@ -568,7 +567,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
-            from = 60, to = 60,
+            from = 59, to = 59,
             codeList = listOf(
                 Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                 Code("3", "Supplerende sosialhjelp")
@@ -579,7 +578,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = YTELSE_INTRO_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 61, to = 61,
+            from = 60, to = 60,
             codeList = listOf(
                 Code("4", "Introduksjonsstønad")
             )
@@ -589,7 +588,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = YTELSE_INDIVIDSTONAD_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 62, to = 62,
+            from = 61, to = 61,
             codeList = listOf(
                 Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")
             )
@@ -599,7 +598,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = YTELSE_FOLKETRYGDL_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 63, to = 63,
+            from = 62, to = 62,
             codeList = listOf(
                 Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")
             )
@@ -609,7 +608,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_ASTONAD_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
-            from = 64, to = 64,
+            from = 63, to = 63,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
@@ -620,7 +619,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_KOMMBOS_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 65, to = 65,
+            from = 64, to = 64,
             codeList = listOf(
                 Code("4", "Kommunal bostøtte")
             )
@@ -630,7 +629,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_HUSBANK_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 66, to = 66,
+            from = 65, to = 65,
             codeList = listOf(
                 Code("5", "Husbankens bostøtte")
             )
@@ -640,7 +639,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_SOSHJ_ENGANG_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 67, to = 67,
+            from = 66, to = 66,
             codeList = listOf(
                 Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")
             )
@@ -650,7 +649,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_SOSHJ_PGM_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 68, to = 68,
+            from = 67, to = 67,
             codeList = listOf(
                 Code(
                     "8",
@@ -663,7 +662,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_MED_SOSHJ_SUP_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 69, to = 69,
+            from = 68, to = 68,
             codeList = listOf(
                 Code(
                     "7",
@@ -676,7 +675,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_1",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 70, to = 71,
+            from = 69, to = 70,
             codeList = listOf(
                 Code("01", "Januar")
             )
@@ -686,7 +685,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_2",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 72, to = 73,
+            from = 71, to = 72,
             codeList = listOf(
                 Code("02", "Februar")
             )
@@ -696,7 +695,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_3",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 74, to = 75,
+            from = 73, to = 74,
             codeList = listOf(
                 Code("03", "Mars")
             )
@@ -706,7 +705,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_4",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 76, to = 77,
+            from = 75, to = 76,
             codeList = listOf(
                 Code("04", "April")
             )
@@ -716,7 +715,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_5",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 78, to = 79,
+            from = 77, to = 78,
             codeList = listOf(
                 Code("05", "Mai")
             )
@@ -726,7 +725,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_6",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 80, to = 81,
+            from = 79, to = 80,
             codeList = listOf(
                 Code("06", "Juni")
             )
@@ -736,7 +735,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_7",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 82, to = 83,
+            from = 81, to = 82,
             codeList = listOf(
                 Code("07", "Juli")
             )
@@ -746,7 +745,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_8",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 84, to = 85,
+            from = 83, to = 84,
             codeList = listOf(
                 Code("08", "August")
             )
@@ -756,7 +755,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_9",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 86, to = 87,
+            from = 85, to = 86,
             codeList = listOf(
                 Code("09", "September")
             )
@@ -766,7 +765,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_10",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 88, to = 89,
+            from = 87, to = 88,
             codeList = listOf(
                 Code("10", "Oktober")
             )
@@ -776,7 +775,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_11",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 90, to = 91,
+            from = 89, to = 90,
             codeList = listOf(
                 Code("11", "November")
             )
@@ -786,7 +785,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = "STMND_12",
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 92, to = 93,
+            from = 91, to = 92,
             codeList = listOf(
                 Code("12", "Desember")
             )
@@ -796,14 +795,14 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = KVP_STONAD_COL_NAME,
             dataType = INTEGER_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
-            from = 94, to = 100
+            from = 93, to = 99
         ),
         FieldDefinition(
             number = 24,
             name = STATUS_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
-            from = 101, to = 101,
+            from = 100, to = 100,
             codeList = listOf(
                 Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                 Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
@@ -822,7 +821,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_DATO_COL_NAME,
             dataType = DATE_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
-            from = 102, to = 107,
+            from = 101, to = 106,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
@@ -830,7 +829,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_ORDINAERTARB_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 108, to = 109,
+            from = 107, to = 108,
             codeList = listOf(
                 Code("01", "Ordinært arbeid (heltid/deltid)")
             )
@@ -840,7 +839,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_ARBLONNSTILS_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 110, to = 111,
+            from = 109, to = 110,
             codeList = listOf(
                 Code(
                     "11",
@@ -853,7 +852,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_ARBMARK_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 112, to = 113,
+            from = 111, to = 112,
             codeList = listOf(
                 Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
             )
@@ -863,7 +862,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_SKOLE_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 114, to = 115,
+            from = 113, to = 114,
             codeList = listOf(
                 Code("04", "Skole/utdanning")
             )
@@ -873,7 +872,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_UFORE_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 116, to = 117,
+            from = 115, to = 116,
             codeList = listOf(
                 Code("13", "Uføretrygd")
             )
@@ -883,7 +882,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_AAP_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 118, to = 119,
+            from = 117, to = 118,
             codeList = listOf(
                 Code("14", "Arbeidsavklaringspenger")
             )
@@ -893,7 +892,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 120, to = 121,
+            from = 119, to = 120,
             codeList = listOf(
                 Code("15", "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP")
             )
@@ -903,7 +902,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 122, to = 123,
+            from = 121, to = 122,
             codeList = listOf(
                 Code("16", "Økonomisk sosialhjelp uten slik avklaring")
             )
@@ -913,7 +912,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_ANNET_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 124, to = 125,
+            from = 123, to = 124,
             codeList = listOf(
                 Code("10", "Annet")
             )
@@ -923,7 +922,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_UKJENT_COL_NAME,
             dataType = STRING_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
-            from = 126, to = 127,
+            from = 125, to = 126,
             codeList = listOf(
                 Code("17", "Ukjent")
             )
@@ -933,7 +932,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
-            from = 128, to = 129,
+            from = 127, to = 128,
             codeList = listOf(
                 Code("01", "Ordinært arbeid (heltid/deltid)"),
                 Code(
@@ -958,7 +957,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = SAKSBEHANDLER_COL_NAME,
             dataType = STRING_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
-            from = 130, to = 139
+            from = 129, to = 138
         )
     )
 }

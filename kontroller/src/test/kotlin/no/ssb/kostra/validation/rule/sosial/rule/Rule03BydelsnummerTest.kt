@@ -12,7 +12,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.districtIdFromRegion
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
@@ -22,9 +21,14 @@ class Rule03BydelsnummerTest : BehaviorSpec({
     Given("valid context") {
         forAll(
             row(
-                "record with valid bydel",
-                kostraRecordInTest(argumentsInTest.region.districtIdFromRegion())
+                "record with Oslo municipality and valid bydel",
+                kostraRecordInTest(municipalityId = "0301", districtId = "01")
+            ),
+            row(
+                "record not with Oslo municipality and blank bydel",
+                kostraRecordInTest(municipalityId = "1234", districtId = "  ")
             )
+
         ) { description, currentContext ->
 
             When(description) {
@@ -40,8 +44,12 @@ class Rule03BydelsnummerTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with invalid bydel",
-                kostraRecordInTest("42")
+                "record with Oslo municipality and invalid bydel",
+                kostraRecordInTest(municipalityId = "0301", districtId = "42")
+            ),
+            row(
+                "record not with Oslo municipality and invalid bydel",
+                kostraRecordInTest(municipalityId = "1234", districtId = "42")
             )
         ) { description, currentContext ->
 
@@ -54,8 +62,6 @@ class Rule03BydelsnummerTest : BehaviorSpec({
 
                     assertSoftly(reportEntryList.first()) {
                         it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Korrigér bydel. Fant 42, " +
-                                "forventet ${argumentsInTest.region.districtIdFromRegion()}."
                     }
                 }
             }
@@ -63,13 +69,13 @@ class Rule03BydelsnummerTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(districtId: String) = KostraRecord(
+        private fun kostraRecordInTest(municipalityId: String, districtId: String) = KostraRecord(
             1,
             mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+                KOMMUNE_NR_COL_NAME to municipalityId,
                 BYDELSNR_COL_NAME to districtId
             ),
-            fieldDefinitions.associate { with(it) { name to it } }
+            fieldDefinitions.associateBy { it.name }
         )
     }
 }

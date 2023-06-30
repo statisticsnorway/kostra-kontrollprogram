@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra.extensions
 
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
@@ -50,7 +51,7 @@ fun KostraRecord.isOslo() =
     getFieldAsString(FIELD_REGION) == "030100"
 
 fun KostraRecord.isOsloBydel() =
-    getFieldAsString(FIELD_REGION).substring(0, 4) == "0301"
+    getFieldAsString(FIELD_REGION).substring(0, 4) == OSLO_MUNICIPALITY_ID
             && getFieldAsString(FIELD_REGION).substring(4, 6) != "00"
 
 fun KostraRecord.isLongyearbyen() =

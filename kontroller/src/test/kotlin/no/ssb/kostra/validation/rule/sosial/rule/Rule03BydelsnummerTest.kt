@@ -7,11 +7,11 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.districtIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
@@ -22,15 +22,13 @@ class Rule03BydelsnummerTest : BehaviorSpec({
         forAll(
             row(
                 "record with Oslo municipality and valid bydel",
-                kostraRecordInTest(municipalityId = "0301", districtId = "01")
+                kostraRecordInTest(municipalityId = OSLO_MUNICIPALITY_ID, districtId = "01")
             ),
             row(
                 "record not with Oslo municipality and blank bydel",
                 kostraRecordInTest(municipalityId = "1234", districtId = "  ")
             )
-
         ) { description, currentContext ->
-
             When(description) {
                 val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
@@ -44,15 +42,18 @@ class Rule03BydelsnummerTest : BehaviorSpec({
     Given("invalid context") {
         forAll(
             row(
-                "record with Oslo municipality and invalid bydel",
-                kostraRecordInTest(municipalityId = "0301", districtId = "42")
+                "record with Oslo municipality and blank bydel",
+                kostraRecordInTest(municipalityId = OSLO_MUNICIPALITY_ID, districtId = "  ")
             ),
             row(
-                "record not with Oslo municipality and invalid bydel",
+                "record with Oslo municipality and invalid bydel",
+                kostraRecordInTest(municipalityId = OSLO_MUNICIPALITY_ID, districtId = "42")
+            ),
+            row(
+                "record not with Oslo municipality and with bydel",
                 kostraRecordInTest(municipalityId = "1234", districtId = "42")
             )
         ) { description, currentContext ->
-
             When(description) {
                 val reportEntryList = sut.validate(currentContext, argumentsInTest)
 

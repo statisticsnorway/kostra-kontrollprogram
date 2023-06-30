@@ -1,5 +1,6 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.area.FieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
@@ -183,7 +184,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             viewType = TEXTBOX_VIEWTYPE,
             from = 54, to = 57,  // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
             codeList = listOf(
-                Code("0301", "Oslo"),
+                Code(OSLO_MUNICIPALITY_ID, "Oslo"),
                 Code("1101", "Eigersund"),
                 Code("1103", "Stavanger"),
                 Code("1106", "Haugesund"),

@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -11,7 +12,7 @@ class Individ10 : AbstractRule<KostraIndividType>(
     severity = Severity.ERROR
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
-        if (arguments.region.startsWith("0301") && context.bydelsnavn == null) {
+        if (arguments.region.startsWith(OSLO_MUNICIPALITY_ID) && context.bydelsnavn == null) {
             createSingleReportEntryList(
                 contextId = context.id,
                 messageText = "Filen mangler bydelsnavn."

@@ -3,12 +3,11 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.nulls.shouldBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
 
@@ -47,37 +46,28 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             row("0P", "4", "400 ", "1", true),
             row("0P", "4", "201 ", "1", false),
             row("0P", "4", "510 ", "1", false),
-        ) { skjema, kontoklasse, funksjon, belop, expectedResult ->
-            When("For $skjema, $kontoklasse, $funksjon -> $expectedResult") {
-                val kostraRecordList = listOf(
-                    KostraRecord(
-                        fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf(
-                            RegnskapConstants.FIELD_SKJEMA to skjema,
-                            RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                            RegnskapConstants.FIELD_FUNKSJON to funksjon,
-                            RegnskapConstants.FIELD_BELOP to belop,
-                        )
+        ) { skjema, kontoklasse, funksjon, belop, expectError ->
+            val kostraRecordList = listOf(
+                KostraRecord(
+                    fieldDefinitionByName = fieldDefinitionsByName,
+                    valuesByName = mapOf(
+                        RegnskapConstants.FIELD_SKJEMA to skjema,
+                        RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
+                        RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                        RegnskapConstants.FIELD_BELOP to belop,
                     )
                 )
+            )
 
-                val validationReportEntries = sut.validate(kostraRecordList)
-                val result = validationReportEntries?.any()
-
-                Then("expected result should be equal to $expectedResult") {
-                    result?.shouldBeEqual(expectedResult)
-
-                    if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.INFO)
-                        validationReportEntries[0].messageText.shouldBeEqual(
-                            "Kun advarsel, hindrer ikke innsending: (${funksjon}) regnes å være ulogisk " +
-                                    "funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon " +
-                                    "eller om posteringen hører til i driftsregnskapet."
-                        )
-                    } else {
-                        validationReportEntries.shouldBeNull()
-                    }
-                }
+            When("For $skjema, $kontoklasse, $funksjon -> $expectError") {
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(kostraRecordList),
+                    expectError = expectError,
+                    expectedSeverity = Severity.INFO,
+                    "Kun advarsel, hindrer ikke innsending: (${funksjon}) regnes å være ulogisk " +
+                            "funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon " +
+                            "eller om posteringen hører til i driftsregnskapet."
+                )
             }
         }
     }

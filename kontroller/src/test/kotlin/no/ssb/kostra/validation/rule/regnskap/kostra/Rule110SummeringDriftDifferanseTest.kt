@@ -3,8 +3,6 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.nulls.shouldBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -14,13 +12,13 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 
 class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
     Given("context") {
         val sut = Rule110SummeringDriftDifferanse()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
-            .associateBy { it.name }
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row(
@@ -302,39 +300,28 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         FIELD_BELOP to "-1000"
                     )
                 ), true
-            ),
-        ) { recordList, expectedResult ->
+            )
+        ) { recordList, expectError ->
+            val kostraRecordList = recordList
+                .mapIndexed { index, record ->
+                    KostraRecord(
+                        lineNumber = index + 1,
+                        fieldDefinitionByName = fieldDefinitionsByName,
+                        valuesByName = record
+                    )
+                }
+            val driftUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val driftInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val driftDifferanse = kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+
             When("List is $recordList") {
-                val kostraRecordList = recordList
-                    .mapIndexed { index, record ->
-                        KostraRecord(
-                            lineNumber = index + 1,
-                            fieldDefinitionByName = fieldDefinitionsByName,
-                            valuesByName = record
-                        )
-                    }
-                val driftUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-                val driftInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
-                val driftDifferanse = kostraRecordList.sumOf {
-                    it.getFieldAsIntegerOrDefault(FIELD_BELOP)
-                }
-
-                val validationReportEntries = sut.validate(kostraRecordList)
-                val result = validationReportEntries?.any()
-
-                Then("expected result should be equal to $expectedResult") {
-                    result?.shouldBeEqual(expectedResult)
-
-                    if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
-                        validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér differansen ($driftDifferanse) mellom inntekter " +
-                                    "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
-                        )
-                    } else {
-                        validationReportEntries.shouldBeNull()
-                    }
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(kostraRecordList),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Korrigér differansen ($driftDifferanse) mellom inntekter " +
+                            "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
+                )
             }
         }
     }

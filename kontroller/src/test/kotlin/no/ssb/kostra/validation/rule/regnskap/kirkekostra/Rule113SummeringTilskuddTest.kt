@@ -1,13 +1,8 @@
 package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -17,6 +12,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule113SummeringTilskuddTest : BehaviorSpec({
     val sut = Rule113SummeringTilskudd()
@@ -28,7 +24,6 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
             row("420400", "0F", "3", "041 ", "830", "1", false), // belop OK
             row("420400", "42", "3", "041 ", "830", "0", false), // skjema mismatch
         ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
-
             val kostraRecordList = listOf(
                 KostraRecord(
                     fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
@@ -44,18 +39,11 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
             )
 
             When("$region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
-                val validationReportEntries = sut.validate(kostraRecordList)
-
-                Then("expected result should be equal to $expectError") {
-                    if (expectError) {
-                        validationReportEntries.shouldNotBeNull()
-
-                        assertSoftly(validationReportEntries.first()) {
-                            severity.shouldBeEqual(Severity.ERROR)
-                            messageText shouldBe "Korrigér slik at fila inneholder tilskudd ($belop) fra kommunen"
-                        }
-                    } else validationReportEntries.shouldBeNull()
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(kostraRecordList),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Korrigér slik at fila inneholder tilskudd ($belop) fra kommunen"                )
             }
         }
     }

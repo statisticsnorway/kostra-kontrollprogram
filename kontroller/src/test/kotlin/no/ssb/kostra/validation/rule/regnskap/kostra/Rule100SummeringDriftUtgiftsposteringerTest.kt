@@ -3,8 +3,6 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.nulls.shouldBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -14,12 +12,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule100SummeringDriftUtgiftsposteringer()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
-            .associateBy { it.name }
+        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row("420400", "0A", "1", "100 ", "010", "1", false),
@@ -40,40 +38,29 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             row("420400", "0M", "3", "100 ", "590", "0", true),
             row("420400", "0P", "3", "100 ", "010", "1", false),
             row("420400", "0P", "3", "100 ", "590", "1", false),
-            row("420400", "0P", "3", "100 ", "590", "0", true),
-
-            ) { region, skjema, kontoklasse, funksjon, art, belop, expectedResult ->
-            When("Expenses is zero for $region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
-                val kostraRecordList = listOf(
-                    KostraRecord(
-                        fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = mapOf(
-                            FIELD_REGION to region,
-                            FIELD_SKJEMA to skjema,
-                            FIELD_KONTOKLASSE to kontoklasse,
-                            FIELD_FUNKSJON to funksjon,
-                            FIELD_ART to art,
-                            FIELD_BELOP to belop
-                        )
+            row("420400", "0P", "3", "100 ", "590", "0", true)
+        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
+            val kostraRecordList = listOf(
+                KostraRecord(
+                    fieldDefinitionByName = fieldDefinitionsByName,
+                    valuesByName = mapOf(
+                        FIELD_REGION to region,
+                        FIELD_SKJEMA to skjema,
+                        FIELD_KONTOKLASSE to kontoklasse,
+                        FIELD_FUNKSJON to funksjon,
+                        FIELD_ART to art,
+                        FIELD_BELOP to belop
                     )
                 )
+            )
 
-                val validationReportEntries = sut.validate(kostraRecordList)
-                val result = validationReportEntries?.any()
-
-                Then("expected result should be equal to $expectedResult") {
-                    result?.shouldBeEqual(expectedResult)
-
-                    if (result == true) {
-                        validationReportEntries[0].severity.shouldBeEqual(Severity.ERROR)
-                        validationReportEntries[0].messageText.shouldBeEqual(
-                            "Korrigér slik at fila inneholder utgiftsposteringene " +
-                                    "($belop) i driftsregnskapet"
-                        )
-                    } else {
-                        validationReportEntries.shouldBeNull()
-                    }
-                }
+            When("Expenses is zero for $region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(kostraRecordList),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Korrigér slik at fila inneholder utgiftsposteringene ($belop) i driftsregnskapet"
+                )
             }
         }
     }

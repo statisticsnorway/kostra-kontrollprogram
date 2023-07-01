@@ -15,7 +15,7 @@ class Avgiver04 : AbstractRule<KostraAvgiverType>(
         ?.let {
             createSingleReportEntryList(
                 messageText = "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema og " +
-                        "filuttrekk.${context.kommunenummer} : ${arguments.region.substring(0, 4)}"
+                        "filuttrekk. ${context.kommunenummer} : ${arguments.region.substring(0, 4)}"
             )
         }
 }

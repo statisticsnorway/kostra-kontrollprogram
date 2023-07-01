@@ -9,28 +9,28 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraOpphevelseTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.opphevelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Tiltak08Test : BehaviorSpec({
     val sut = Tiltak08()
 
     Given("valid context") {
         forAll(
-            row("individ without tiltak", kostraIndividInTest),
+            row("individ without tiltak", individInTest),
             row(
                 "individ with opphevelse that does not require presisering",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(kostraTiltakTypeInTest.copy(opphevelse = kostraOpphevelseTypeInTest))
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest.copy(opphevelse = opphevelseTypeInTest))
                 )
             ),
             row(
                 "individ with opphevelse with presisering",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            opphevelse = kostraOpphevelseTypeInTest.copy(kode = "4")
+                        tiltakTypeInTest.copy(
+                            opphevelse = opphevelseTypeInTest.copy(kode = "4")
                         )
                     )
                 )
@@ -51,10 +51,10 @@ class Tiltak08Test : BehaviorSpec({
         forAll(
             row(
                 "individ with opphevelse without presisering",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            opphevelse = kostraOpphevelseTypeInTest.copy(
+                        tiltakTypeInTest.copy(
+                            opphevelse = opphevelseTypeInTest.copy(
                                 kode = "4",
                                 presisering = null
                             )

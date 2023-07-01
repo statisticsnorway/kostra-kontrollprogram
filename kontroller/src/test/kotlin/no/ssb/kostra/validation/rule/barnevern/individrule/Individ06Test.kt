@@ -4,10 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.planTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Individ06Test : BehaviorSpec({
     include(
@@ -16,29 +16,29 @@ class Individ06Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with melding",
-                    kostraIndividInTest.copy(melding = mutableListOf(kostraMeldingTypeInTest)),
+                    individInTest.copy(melding = mutableListOf(meldingTypeInTest)),
                     false
                 ),
                 ForAllRowItem(
                     "individ with plan",
-                    kostraIndividInTest.copy(plan = mutableListOf(kostraPlanTypeInTest)),
+                    individInTest.copy(plan = mutableListOf(planTypeInTest)),
                     false
                 ),
                 ForAllRowItem(
                     "individ with tiltak",
-                    kostraIndividInTest.copy(tiltak = mutableListOf(kostraTiltakTypeInTest)),
+                    individInTest.copy(tiltak = mutableListOf(tiltakTypeInTest)),
                     false
                 ),
 
                 ForAllRowItem(
                     "individ with without content",
-                    kostraIndividInTest,
+                    individInTest,
                     true
                 )
             ),
             expectedSeverity = Severity.ERROR,
             expectedErrorMessage = "Individet har ingen meldinger, planer eller tiltak i løpet av året",
-            expectedContextId = kostraIndividInTest.id
+            expectedContextId = individInTest.id
         )
     )
 })

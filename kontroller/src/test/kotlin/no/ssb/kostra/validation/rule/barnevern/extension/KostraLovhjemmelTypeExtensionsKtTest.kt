@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.xsd.KostraLovhjemmelType
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL2021
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraLovhjemmelTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.lovhjemmelTypeInTest
 
 class KostraLovhjemmelTypeExtensionsKtTest : BehaviorSpec({
     Given("KostraLovhjemmelType.matches") {
@@ -186,26 +186,26 @@ class KostraLovhjemmelTypeExtensionsKtTest : BehaviorSpec({
         forAll(
             row(
                 "instances are equal",
-                kostraLovhjemmelTypeInTest,
-                kostraLovhjemmelTypeInTest,
+                lovhjemmelTypeInTest,
+                lovhjemmelTypeInTest,
                 true
             ),
             row(
                 "instances are different, lov",
-                kostraLovhjemmelTypeInTest,
-                kostraLovhjemmelTypeInTest.copy(lov = BVL2021),
+                lovhjemmelTypeInTest,
+                lovhjemmelTypeInTest.copy(lov = BVL2021),
                 false
             ),
             row(
                 "instances are different, kapittel",
-                kostraLovhjemmelTypeInTest,
-                kostraLovhjemmelTypeInTest.copy(kapittel = "~som value~"),
+                lovhjemmelTypeInTest,
+                lovhjemmelTypeInTest.copy(kapittel = "~som value~"),
                 false
             ),
             row(
                 "instances are different, paragraf",
-                kostraLovhjemmelTypeInTest,
-                kostraLovhjemmelTypeInTest.copy(paragraf = "~som value~"),
+                lovhjemmelTypeInTest,
+                lovhjemmelTypeInTest.copy(paragraf = "~som value~"),
                 false
             )
         ) { description, thisCollection, otherCollection, expectedResult ->

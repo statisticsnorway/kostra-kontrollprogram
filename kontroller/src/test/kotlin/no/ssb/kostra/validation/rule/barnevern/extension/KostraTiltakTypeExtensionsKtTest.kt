@@ -6,8 +6,8 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.BarnevernTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.MEASURE_CATEGORY_CODE_8_2
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraKategoriTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 import java.time.LocalDate
 
 class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
@@ -16,22 +16,22 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
         forAll(
             row(
                 "kategori#kode not matching, expect false",
-                kostraTiltakTypeInTest,
+                tiltakTypeInTest,
                 false
             ),
             row(
                 "kategori#kode 1.1, expect true",
-                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = "1.1")),
+                tiltakTypeInTest.copy(kategori = kategoriTypeInTest.copy(kode = "1.1")),
                 true
             ),
             row(
                 "kategori#kode 2.1, expect true",
-                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = "2.1")),
+                tiltakTypeInTest.copy(kategori = kategoriTypeInTest.copy(kode = "2.1")),
                 true
             ),
             row(
                 "kategori#kode 8.2, expect true",
-                kostraTiltakTypeInTest.copy(kategori = kostraKategoriTypeInTest.copy(kode = MEASURE_CATEGORY_CODE_8_2)),
+                tiltakTypeInTest.copy(kategori = kategoriTypeInTest.copy(kode = MEASURE_CATEGORY_CODE_8_2)),
                 true
             )
         ) { description, measure, expected ->
@@ -79,30 +79,30 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
     }
 
     Given("isOverlapWithAtLeastThreeMonthsOf") {
-        val sut = kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1))
+        val sut = tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1))
 
         forAll(
             row(
                 "other with concluded date, is not overlapping",
-                kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS - 1)),
+                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS - 1)),
                 dateInTest.plusDays(MIN_OVERLAP_IN_DAYS - 1),
                 false
             ),
             row(
                 "other without concluded date, is not overlapping",
-                kostraTiltakTypeInTest,
+                tiltakTypeInTest,
                 dateInTest.plusDays(MIN_OVERLAP_IN_DAYS - 1),
                 false
             ),
             row(
                 "other with concluded date, is overlapping",
-                kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1)),
+                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1)),
                 dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1),
                 true
             ),
             row(
                 "other without concluded date, is overlapping",
-                kostraTiltakTypeInTest,
+                tiltakTypeInTest,
                 dateInTest.plusDays(MIN_OVERLAP_IN_DAYS + 1),
                 true
             )
@@ -126,12 +126,12 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
         forAll(
             row(
                 "tiltak with sluttDato",
-                kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(2)),
+                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(2)),
                 dateInTest.plusDays(3)
             ),
             row(
                 "tiltak without sluttDato",
-                kostraTiltakTypeInTest,
+                tiltakTypeInTest,
                 dateInTest.plusDays(3)
             )
         ) { description, sut, fallbackDate ->

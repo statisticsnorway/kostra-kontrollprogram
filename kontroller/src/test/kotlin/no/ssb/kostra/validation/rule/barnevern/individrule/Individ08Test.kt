@@ -5,8 +5,8 @@ import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 import java.time.LocalDate
 
 class Individ08Test : BehaviorSpec({
@@ -16,18 +16,18 @@ class Individ08Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without fodselsnummer",
-                    kostraIndividInTest.copy(fodselsnummer = null),
+                    individInTest.copy(fodselsnummer = null),
                     false
                 ),
 
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
-                    kostraIndividInTest.copy(fodselsnummer = "12345612345"),
+                    individInTest.copy(fodselsnummer = "12345612345"),
                     false
                 ),
                 ForAllRowItem(
                     "individ with fodselsnummer, age below 18",
-                    kostraIndividInTest.copy(
+                    individInTest.copy(
                         fodselsnummer = generateRandomSSN(
                             LocalDate.now().minusYears(17),
                             LocalDate.now().minusYears(16)
@@ -37,8 +37,8 @@ class Individ08Test : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "individ with fodselsnummer, age above 18 with measure",
-                    kostraIndividInTest.copy(
-                        tiltak = mutableListOf(kostraTiltakTypeInTest),
+                    individInTest.copy(
+                        tiltak = mutableListOf(tiltakTypeInTest),
                         fodselsnummer = generateRandomSSN(
                             LocalDate.now().minusYears(20),
                             LocalDate.now().minusYears(19)
@@ -49,7 +49,7 @@ class Individ08Test : BehaviorSpec({
 
                 ForAllRowItem(
                     "individ with fodselsnummer, age above 18 without measure",
-                    kostraIndividInTest.copy(
+                    individInTest.copy(
                         fodselsnummer = generateRandomSSN(
                             LocalDate.now().minusYears(20),
                             LocalDate.now().minusYears(19)
@@ -60,7 +60,7 @@ class Individ08Test : BehaviorSpec({
             ),
             expectedSeverity = Severity.WARNING,
             expectedErrorMessage = "Individet er over 18 år og skal dermed ha tiltak",
-            expectedContextId = kostraIndividInTest.id
+            expectedContextId = individInTest.id
         )
     )
 })

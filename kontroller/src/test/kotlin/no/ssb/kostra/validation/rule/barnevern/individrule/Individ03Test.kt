@@ -5,7 +5,7 @@ import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import java.time.Year
 
 class Individ03Test : BehaviorSpec({
@@ -15,11 +15,11 @@ class Individ03Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with valid fodselsnummer",
-                    kostraIndividInTest,
+                    individInTest,
                     false
                 ),
                 ForAllRowItem(
-                    "individ with valid DUF-nummer", kostraIndividInTest.copy(
+                    "individ with valid DUF-nummer", individInTest.copy(
                         fodselsnummer = null,
                         duFnummer = generateRandomDuf(Year.now().value - 1, Year.now().value - 1)
                     ),
@@ -28,13 +28,13 @@ class Individ03Test : BehaviorSpec({
 
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
-                    kostraIndividInTest.copy(fodselsnummer = "~fodselsnummer~"),
+                    individInTest.copy(fodselsnummer = "~fodselsnummer~"),
                     true,
                     "Feil i fødselsnummer. Kan ikke identifisere individet."
                 ),
                 ForAllRowItem(
                     "individ with invalid DUF-nummer",
-                    kostraIndividInTest.copy(
+                    individInTest.copy(
                         fodselsnummer = null,
                         duFnummer = "~duFnummer~"
                     ),
@@ -43,7 +43,7 @@ class Individ03Test : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "individ with neither SSN nor DUF-nummer",
-                    kostraIndividInTest.copy(
+                    individInTest.copy(
                         fodselsnummer = null,
                         duFnummer = null
                     ),
@@ -53,7 +53,7 @@ class Individ03Test : BehaviorSpec({
             ),
             expectedSeverity = Severity.ERROR,
             expectedErrorMessage = "N/A",
-            expectedContextId = kostraIndividInTest.id
+            expectedContextId = individInTest.id
         )
     )
 })

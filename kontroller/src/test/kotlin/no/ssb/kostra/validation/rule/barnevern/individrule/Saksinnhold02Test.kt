@@ -1,105 +1,80 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraSaksinnholdTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.saksinnholdTypeInTest
 
 class Saksinnhold02Test : BehaviorSpec({
-    val sut = Saksinnhold02()
-
-    Given("valid context") {
-        forAll(
-            row("individ without melding", kostraIndividInTest),
-            row(
-                "melding without saksinnhold",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
-                )
-            ),
-            row(
-                "melding with saksinnhold, kode does not require presisering",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "1",
-                            saksinnhold = mutableListOf(kostraSaksinnholdTypeInTest)
+    include(
+        barnevernValidationRuleTest(
+            sut = Saksinnhold02(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "individ without melding",
+                    individInTest,
+                    false
+                ),
+                ForAllRowItem(
+                    "melding without saksinnhold",
+                    individInTest.copy(
+                        melding = mutableListOf(meldingTypeInTest)
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with saksinnhold, kode does not require presisering",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "1",
+                                saksinnhold = mutableListOf(saksinnholdTypeInTest)
+                            )
                         )
-                    )
-                )
-            ),
-            row(
-                "melding with saksinnhold, kode does require presisering",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "1",
-                            saksinnhold = mutableListOf(kostraSaksinnholdTypeInTest.copy(kode = "18"))
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with saksinnhold, kode does require presisering",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "1",
+                                saksinnhold = mutableListOf(saksinnholdTypeInTest.copy(kode = "18"))
+                            )
                         )
-                    )
-                )
-            )
-        ) { description, currentContext ->
+                    ),
+                    false
+                ),
 
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
-            row(
-                "melding with saksinnhold, kode does require presisering",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "1",
-                            saksinnhold = mutableListOf(
-                                kostraSaksinnholdTypeInTest.copy(
-                                    kode = "18",
-                                    presisering = null
+                ForAllRowItem(
+                    "melding with saksinnhold, kode does require presisering",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "1",
+                                saksinnhold = mutableListOf(
+                                    saksinnholdTypeInTest.copy(
+                                        kode = "18",
+                                        presisering = null
+                                    )
                                 )
                             )
                         )
-                    )
+                    ),
+                    true
                 )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-
-                        with(currentContext.melding.first()) {
-                            it.contextId shouldBe id
-                            it.messageText shouldBe "Saksinnhold med kode (${saksinnhold.first().kode}) mangler presisering"
-                        }
-                    }
-                }
-            }
-        }
-    }
+            ),
+            expectedSeverity = Severity.ERROR,
+            expectedErrorMessage = "Saksinnhold med kode (18) mangler presisering",
+            expectedContextId = meldingTypeInTest.id
+        )
+    )
 })

@@ -12,27 +12,27 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraKategoriTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Tiltak05Test : BehaviorSpec({
     val sut = Tiltak05()
 
     Given("valid context") {
         forAll(
-            row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
+            row("individ without fodselsnummer", individInTest.copy(fodselsnummer = null)),
             row(
                 "individ with invalid fodselsnummer",
-                kostraIndividInTest.copy(fodselsnummer = "12345612345")
+                individInTest.copy(fodselsnummer = "12345612345")
             ),
             row(
                 "individ with fodselsnummer, age below 7",
-                kostraIndividInTest.copy(fodselsnummer = generateRandomSSN(dateInTest, dateInTest.plusYears(1)))
+                individInTest.copy(fodselsnummer = generateRandomSSN(dateInTest, dateInTest.plusYears(1)))
             ),
             row(
                 "individ with fodselsnummer, age above 7, no tiltak",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     fodselsnummer = generateRandomSSN(
                         dateInTest.minusYears(9),
                         dateInTest.minusYears(8)
@@ -41,12 +41,12 @@ class Tiltak05Test : BehaviorSpec({
             ),
             row(
                 "individ with fodselsnummer, age above 7, tiltak with kategori#kode different from 4.1",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     fodselsnummer = generateRandomSSN(
                         dateInTest.minusYears(9),
                         dateInTest.minusYears(8)
                     ),
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                    tiltak = mutableListOf(tiltakTypeInTest)
                 )
             )
         ) { description, currentContext ->
@@ -65,13 +65,13 @@ class Tiltak05Test : BehaviorSpec({
         forAll(
             row(
                 "individ with fodselsnummer, age above 7, tiltak with kategori#kode different from 4.1",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     fodselsnummer = generateRandomSSN(
                         dateInTest.minusYears(9),
                         dateInTest.minusYears(8)
                     ),
-                    tiltak = mutableListOf(kostraTiltakTypeInTest.copy(
-                        kategori = kostraKategoriTypeInTest.copy(kode = "4.1")
+                    tiltak = mutableListOf(tiltakTypeInTest.copy(
+                        kategori = kategoriTypeInTest.copy(kode = "4.1")
                     ))
                 )
             )

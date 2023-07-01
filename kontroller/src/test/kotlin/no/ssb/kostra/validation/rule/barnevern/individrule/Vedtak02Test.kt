@@ -10,41 +10,41 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.xsd.KostraUndersokelseType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraUndersokelseTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraVedtaksgrunnlagTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.vedtaksgrunnlagTypeInTest
 
 class Vedtak02Test : BehaviorSpec({
     val sut = Vedtak02()
 
     Given("valid context") {
         forAll(
-            row("individ without melding", kostraIndividInTest),
+            row("individ without melding", individInTest),
             row(
                 "melding without undersokelse",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                individInTest.copy(
+                    melding = mutableListOf(meldingTypeInTest)
                 )
             ),
             row(
                 "undersokelse without vedtaksgrunnlag",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest
                         )
                     )
                 )
             ),
             row(
                 "undersokelse with vedtaksgrunnlag, unrelated kode",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 vedtaksgrunnlag = mutableListOf(
-                                    kostraVedtaksgrunnlagTypeInTest.copy(presisering = null)
+                                    vedtaksgrunnlagTypeInTest.copy(presisering = null)
                                 )
                             )
                         )
@@ -53,12 +53,12 @@ class Vedtak02Test : BehaviorSpec({
             ),
             row(
                 "undersokelse with vedtaksgrunnlag with presisering-",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 vedtaksgrunnlag = mutableListOf(
-                                    kostraVedtaksgrunnlagTypeInTest.copy(kode = "18")
+                                    vedtaksgrunnlagTypeInTest.copy(kode = "18")
                                 )
                             )
                         )
@@ -81,12 +81,12 @@ class Vedtak02Test : BehaviorSpec({
         forAll(
             row(
                 "undersokelse with vedtaksgrunnlag without presisering, kode = 18",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 vedtaksgrunnlag = mutableListOf(
-                                    kostraVedtaksgrunnlagTypeInTest.copy(
+                                    vedtaksgrunnlagTypeInTest.copy(
                                         kode = "18",
                                         presisering = null
                                     )
@@ -98,12 +98,12 @@ class Vedtak02Test : BehaviorSpec({
             ),
             row(
                 "undersokelse with vedtaksgrunnlag without presisering, kode = 19",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 vedtaksgrunnlag = mutableListOf(
-                                    kostraVedtaksgrunnlagTypeInTest.copy(
+                                    vedtaksgrunnlagTypeInTest.copy(
                                         kode = "19",
                                         presisering = null
                                     )

@@ -10,9 +10,9 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.xsd.KostraUndersokelseType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraUndersokelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
 import java.time.LocalDate
 
 class Undersokelse08Test : BehaviorSpec({
@@ -20,19 +20,19 @@ class Undersokelse08Test : BehaviorSpec({
 
     Given("valid context") {
         forAll(
-            row("individ without melding", kostraIndividInTest),
+            row("individ without melding", individInTest),
             row(
                 "melding without undersokelse",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                individInTest.copy(
+                    melding = mutableListOf(meldingTypeInTest)
                 )
             ),
             row(
                 "undersokelse with startDato before June with sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 startDato = LocalDate.of(argumentsInTest.aargang.toInt(), 5, 1),
                                 sluttDato = LocalDate.of(argumentsInTest.aargang.toInt(), 8, 1)
                             )
@@ -42,10 +42,10 @@ class Undersokelse08Test : BehaviorSpec({
             ),
             row(
                 "undersokelse with startDato after June, without sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 startDato = LocalDate.of(argumentsInTest.aargang.toInt(), 7, 1)
                             )
                         )
@@ -68,10 +68,10 @@ class Undersokelse08Test : BehaviorSpec({
         forAll(
             row(
                 "undersokelse with startDato before June without sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 startDato = LocalDate.of(argumentsInTest.aargang.toInt(), 5, 1)
                             )
                         )

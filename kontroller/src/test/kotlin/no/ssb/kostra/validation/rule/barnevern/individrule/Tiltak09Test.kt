@@ -10,45 +10,45 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraKategoriTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Tiltak09Test : BehaviorSpec({
     val sut = Tiltak09()
 
     Given("valid context") {
         forAll(
-            row("individ without tiltak", kostraIndividInTest),
+            row("individ without tiltak", individInTest),
             row(
                 "individ with single tiltak",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest)
                 )
             ),
             row(
                 "individ with single plasseringstiltak",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            kategori = kostraKategoriTypeInTest.copy(kode = "1.1")
+                        tiltakTypeInTest.copy(
+                            kategori = kategoriTypeInTest.copy(kode = "1.1")
                         )
                     )
                 )
             ),
             row(
                 "two overlapping plasseringstiltak, less than 90 days",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             startDato = dateInTest.minusYears(1),
                             sluttDato = null,
-                            kategori = kostraKategoriTypeInTest.copy(kode = "1.1")
+                            kategori = kategoriTypeInTest.copy(kode = "1.1")
                         ),
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             startDato = dateInTest.minusYears(1),
                             sluttDato = dateInTest.minusYears(1).plusDays(89),
-                            kategori = kostraKategoriTypeInTest.copy(kode = "1.2")
+                            kategori = kategoriTypeInTest.copy(kode = "1.2")
                         )
                     )
                 )
@@ -69,17 +69,17 @@ class Tiltak09Test : BehaviorSpec({
         forAll(
             row(
                 "two overlapping plasseringstiltak, less than 90 days",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             startDato = dateInTest.minusYears(1),
                             sluttDato = null,
-                            kategori = kostraKategoriTypeInTest.copy(kode = "1.1")
+                            kategori = kategoriTypeInTest.copy(kode = "1.1")
                         ),
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             startDato = dateInTest.minusYears(1),
                             sluttDato = dateInTest.minusYears(1).plusDays(100),
-                            kategori = kostraKategoriTypeInTest.copy(kode = "1.2")
+                            kategori = kategoriTypeInTest.copy(kode = "1.2")
                         )
                     )
                 )

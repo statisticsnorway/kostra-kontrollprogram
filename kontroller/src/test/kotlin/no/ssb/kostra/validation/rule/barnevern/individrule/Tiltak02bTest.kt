@@ -10,8 +10,8 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest as kostraIndividInTest1
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest as kostraIndividInTest1
 
 class Tiltak02bTest : BehaviorSpec({
     val sut = Tiltak02b()
@@ -21,13 +21,13 @@ class Tiltak02bTest : BehaviorSpec({
             row("individ without tiltak", kostraIndividInTest1),
             row(
                 "tiltak without sluttDato",
-                kostraIndividInTest1.copy(tiltak = mutableListOf(kostraTiltakTypeInTest))
+                kostraIndividInTest1.copy(tiltak = mutableListOf(tiltakTypeInTest))
             ),
             row(
                 "tiltak with sluttDato in reporting year",
                 kostraIndividInTest1.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
                     )
                 )
             )
@@ -49,7 +49,7 @@ class Tiltak02bTest : BehaviorSpec({
                 "tiltak with sluttDato before startDato",
                 kostraIndividInTest1.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
                     )
                 )
             )

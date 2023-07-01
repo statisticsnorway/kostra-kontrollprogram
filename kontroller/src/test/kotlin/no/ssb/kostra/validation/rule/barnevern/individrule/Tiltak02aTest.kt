@@ -10,24 +10,24 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Tiltak02aTest : BehaviorSpec({
     val sut = Tiltak02a()
 
     Given("valid context") {
         forAll(
-            row("individ without tiltak", kostraIndividInTest),
+            row("individ without tiltak", individInTest),
             row(
                 "tiltak without sluttDato",
-                kostraIndividInTest.copy(tiltak = mutableListOf(kostraTiltakTypeInTest))
+                individInTest.copy(tiltak = mutableListOf(tiltakTypeInTest))
             ),
             row(
                 "tiltak with sluttDato after startDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(1))
                     )
                 )
             )
@@ -47,9 +47,9 @@ class Tiltak02aTest : BehaviorSpec({
         forAll(
             row(
                 "tiltak with sluttDato before startDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
                     )
                 )
             )

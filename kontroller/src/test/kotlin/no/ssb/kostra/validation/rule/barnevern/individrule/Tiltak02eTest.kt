@@ -10,19 +10,19 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 
 class Tiltak02eTest : BehaviorSpec({
     val sut = Tiltak02e()
 
     Given("valid context") {
         forAll(
-            row("individ without tiltak", kostraIndividInTest),
+            row("individ without tiltak", individInTest),
             row(
                 "tiltak with startDato equal to individ startDato",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest)
                 )
             )
         ) { description, currentContext ->
@@ -41,9 +41,9 @@ class Tiltak02eTest : BehaviorSpec({
         forAll(
             row(
                 "plan with startDato before individ startDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(startDato = dateInTest.minusDays(1))
+                        tiltakTypeInTest.copy(startDato = dateInTest.minusDays(1))
                     )
                 )
             )

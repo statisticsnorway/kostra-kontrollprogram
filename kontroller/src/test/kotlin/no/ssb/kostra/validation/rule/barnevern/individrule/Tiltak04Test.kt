@@ -10,10 +10,10 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraLovhjemmelTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraOpphevelseTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.lovhjemmelTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.opphevelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
 
 class Tiltak04Test : BehaviorSpec({
@@ -21,32 +21,32 @@ class Tiltak04Test : BehaviorSpec({
 
     Given("valid context") {
         forAll(
-            row("individ without tiltak", kostraIndividInTest),
+            row("individ without tiltak", individInTest),
             row(
                 "tiltak without sluttdato",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest)
                 )
             ),
             row(
                 "tiltak with sluttdato, not omsorgstiltak",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             sluttDato = dateInTest.plusDays(1),
-                            lovhjemmel = kostraLovhjemmelTypeInTest
+                            lovhjemmel = lovhjemmelTypeInTest
                         )
                     )
                 )
             ),
             row(
                 "tiltak with sluttdato, omsorgstiltak",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             sluttDato = dateInTest.plusDays(1),
                             lovhjemmel = omsorgLovhjemmelTypeInTest,
-                            opphevelse = kostraOpphevelseTypeInTest
+                            opphevelse = opphevelseTypeInTest
                         )
                     )
                 )
@@ -67,9 +67,9 @@ class Tiltak04Test : BehaviorSpec({
         forAll(
             row(
                 "tiltak with sluttdato, omsorgstiltak, opphevelse missing",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
+                        tiltakTypeInTest.copy(
                             sluttDato = dateInTest.plusDays(1),
                             lovhjemmel = omsorgLovhjemmelTypeInTest,
                             opphevelse = null

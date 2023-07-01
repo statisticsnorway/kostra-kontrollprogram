@@ -1,98 +1,75 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraOpphevelseTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.opphevelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
 
 class Lovhjemmel02Test : BehaviorSpec({
-    val sut = Lovhjemmel02()
+    include(
+        barnevernValidationRuleTest(
+            sut = Lovhjemmel02(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "individ without tiltak",
+                    individInTest,
+                    false
+                ),
+                ForAllRowItem(
+                    "individ with tiltak, erOmsorgstiltak = false",
+                    individInTest.copy(
+                        tiltak = mutableListOf(tiltakTypeInTest)
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "individ with tiltak, erOmsorgstiltak = true, sluttDato = null",
+                    individInTest.copy(
+                        tiltak = mutableListOf(
+                            tiltakTypeInTest.copy(
+                                sluttDato = null,
+                                lovhjemmel = omsorgLovhjemmelTypeInTest
+                            )
+                        )
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
+                    individInTest.copy(
+                        tiltak = mutableListOf(
+                            tiltakTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                lovhjemmel = omsorgLovhjemmelTypeInTest,
+                                opphevelse = opphevelseTypeInTest
+                            )
+                        )
+                    ),
+                    false
+                ),
 
-    Given("valid context") {
-        forAll(
-            row("individ without tiltak", kostraIndividInTest),
-            row(
-                "individ with tiltak, erOmsorgstiltak = false",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(kostraTiltakTypeInTest)
+                ForAllRowItem(
+                    "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse = null",
+                    individInTest.copy(
+                        tiltak = mutableListOf(
+                            tiltakTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                lovhjemmel = omsorgLovhjemmelTypeInTest,
+                                opphevelse = null
+                            )
+                        )
+                    ),
+                    true
                 )
             ),
-            row(
-                "individ with tiltak, erOmsorgstiltak = true, sluttDato = null",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            sluttDato = null,
-                            lovhjemmel = omsorgLovhjemmelTypeInTest
-                        )
-                    )
-                )
-            ),
-            row(
-                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            lovhjemmel = omsorgLovhjemmelTypeInTest,
-                            opphevelse = kostraOpphevelseTypeInTest
-                        )
-                    )
-                )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
-            row(
-                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse = null",
-                kostraIndividInTest.copy(
-                    tiltak = mutableListOf(
-                        kostraTiltakTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            lovhjemmel = omsorgLovhjemmelTypeInTest,
-                            opphevelse = null
-                        )
-                    )
-                )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.contextId shouldBe currentContext.tiltak.first().id
-                        it.messageText shouldBe
-                                "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"
-                    }
-                }
-            }
-        }
-    }
+            expectedSeverity = Severity.WARNING,
+            expectedErrorMessage = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse",
+            expectedContextId = tiltakTypeInTest.id
+        )
+    )
 })

@@ -11,38 +11,38 @@ import no.ssb.kostra.barn.xsd.KostraUndersokelseType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraUndersokelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
 
 class Undersokelse02bTest : BehaviorSpec({
     val sut = Undersokelse02b()
 
     Given("valid context") {
         forAll(
-            row("individ without undersokelse", kostraIndividInTest),
+            row("individ without undersokelse", individInTest),
             row(
                 "melding without undersokelse",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                individInTest.copy(
+                    melding = mutableListOf(meldingTypeInTest)
                 )
             ),
             row(
                 "undersokelse without sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest
                         )
                     )
                 )
             ),
             row(
                 "undersokelse with sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 startDato = dateInTest.minusYears(1),
                                 sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
@@ -66,10 +66,10 @@ class Undersokelse02bTest : BehaviorSpec({
         forAll(
             row(
                 "undersokelse with sluttDato after reporting year",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 startDato = dateInTest.minusYears(1),
                                 sluttDato = dateInTest
                             )

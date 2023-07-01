@@ -12,36 +12,36 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraUndersokelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
 
 class Undersokelse02dTest : BehaviorSpec({
     val sut = Undersokelse02d()
 
     Given("valid context") {
         forAll(
-            row("individ with avslutta3112 = '2'", kostraIndividInTest),
+            row("individ with avslutta3112 = '2'", individInTest),
             row(
                 "avslutta3112 = '1', no melding",
-                kostraIndividInTest.copy(avslutta3112 = KOSTRA_IS_CLOSED_TRUE)
+                individInTest.copy(avslutta3112 = KOSTRA_IS_CLOSED_TRUE)
             ),
             row(
                 "avslutta3112 = '1', melding without undersokelse",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = dateInTest.minusYears(1).plusDays(1),
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                    melding = mutableListOf(meldingTypeInTest)
                 )
             ),
             row(
                 "avslutta3112 = '1', melding with undersokelse with valid sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = dateInTest.minusYears(1).plusDays(1),
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
                         )
@@ -64,12 +64,12 @@ class Undersokelse02dTest : BehaviorSpec({
         forAll(
             row(
                 "avslutta3112 = '1', undersokelse without sluttdato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = dateInTest.minusYears(1).plusDays(1),
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 sluttDato = null
                             )
                         )
@@ -78,12 +78,12 @@ class Undersokelse02dTest : BehaviorSpec({
             ),
             row(
                 "avslutta3112 = '1', undersokelse with valid sluttDato, context without sluttDato",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = null,
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
                         )
@@ -92,12 +92,12 @@ class Undersokelse02dTest : BehaviorSpec({
             ),
             row(
                 "avslutta3112 = '1', undersokelse with sluttDato after reporting year",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
                     sluttDato = dateInTest.minusYears(1).plusDays(1),
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 sluttDato = dateInTest
                             )
                         )

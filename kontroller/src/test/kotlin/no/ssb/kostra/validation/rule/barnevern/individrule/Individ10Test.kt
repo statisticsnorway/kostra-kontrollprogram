@@ -6,7 +6,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 
 class Individ10Test : BehaviorSpec({
     include(
@@ -15,26 +15,26 @@ class Individ10Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     description = "individ without bydelsnavn",
-                    kostraIndividInTest.copy(bydelsnavn = null),
+                    individInTest.copy(bydelsnavn = null),
                     expectError = false,
                     arguments = argumentsInTest.copy(region = "123400")
                 ),
                 ForAllRowItem(
                     description = "individ with bydelsnavn, Oslo",
-                    context = kostraIndividInTest,
+                    context = individInTest,
                     expectError = false,
                     arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
                 ),
                 ForAllRowItem(
                     description = "individ without bydelsnavn, Oslo",
-                    context = kostraIndividInTest.copy(bydelsnavn = null),
+                    context = individInTest.copy(bydelsnavn = null),
                     expectError = true,
                     arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
                 ),
             ),
             expectedSeverity = Severity.ERROR,
             expectedErrorMessage = "Filen mangler bydelsnavn.",
-            expectedContextId = kostraIndividInTest.id
+            expectedContextId = individInTest.id
         )
     )
 })

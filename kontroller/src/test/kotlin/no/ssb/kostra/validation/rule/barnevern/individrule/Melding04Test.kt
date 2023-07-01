@@ -1,110 +1,89 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMelderTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.melderTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
 
 class Melding04Test : BehaviorSpec({
-    val sut = Melding04()
-
-    Given("valid context") {
-        forAll(
-            row("individ without melding", kostraIndividInTest),
-            row(
-                "melding without sluttDato",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
-                )
-            ),
-            row(
-                "melding with sluttDato in reporting year",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest.minusYears(1)))
-                )
-            ),
-            row(
-                "melding with sluttDato after reporting year, no konklusjon",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest.copy(sluttDato = dateInTest))
-                )
-            ),
-            row(
-                "melding with sluttDato after reporting year, with konklusjon '42'",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "42"
+    include(
+        barnevernValidationRuleTest(
+            sut = Melding04(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "individ without melding",
+                    individInTest,
+                    false
+                ),
+                ForAllRowItem(
+                    "melding without sluttDato",
+                    individInTest.copy(
+                        melding = mutableListOf(meldingTypeInTest)
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with sluttDato in reporting year",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
                         )
-                    )
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, no konklusjon",
+                    individInTest.copy(
+                        melding = mutableListOf(meldingTypeInTest.copy(sluttDato = dateInTest))
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, with konklusjon '42'",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "42"
+                            )
+                        )
+                    ),
+                    false
+                ),
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, with konklusjon '1'",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "1",
+                                melder = mutableListOf(melderTypeInTest)
+                            )
+                        )
+                    ),
+                    false
+                ),
+
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, with konklusjon '2'",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "2"
+                            )
+                        )
+                    ),
+                    true
                 )
             ),
-            row(
-                "melding with sluttDato after reporting year, with konklusjon '1'",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "1",
-                            melder = mutableListOf(kostraMelderTypeInTest)
-                        )
-                    )
-                )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
-            row(
-                "melding with sluttDato after reporting year, with konklusjon '2'",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "2"
-                        )
-                    )
-                )
-            ),
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-
-                        with(currentContext.melding.first()) {
-                            it.contextId shouldBe id
-                            it.messageText shouldBe "Melding ($id). Konkludert melding mangler melder(e)."
-                        }
-                    }
-                }
-            }
-        }
-    }
+            expectedSeverity = Severity.ERROR,
+            expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Konkludert melding mangler melder(e).",
+            expectedContextId = meldingTypeInTest.id
+        )
+    )
 })

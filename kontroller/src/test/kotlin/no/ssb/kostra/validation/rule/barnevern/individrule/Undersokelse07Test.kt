@@ -10,51 +10,51 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.barn.xsd.KostraUndersokelseType
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraUndersokelseTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraVedtaksgrunnlagTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.vedtaksgrunnlagTypeInTest
 
 class Undersokelse07Test : BehaviorSpec({
     val sut = Undersokelse07()
 
     Given("valid context") {
         forAll(
-            row("individ without melding", kostraIndividInTest),
+            row("individ without melding", individInTest),
             row(
                 "melding without undersokelse",
-                kostraIndividInTest.copy(
-                    melding = mutableListOf(kostraMeldingTypeInTest)
+                individInTest.copy(
+                    melding = mutableListOf(meldingTypeInTest)
                 )
             ),
             row(
                 "undersokelse without konklusjon",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest
                         )
                     )
                 )
             ),
             row(
                 "undersokelse with unrelated konklusjon",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(konklusjon = "~konklusjon~")
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(konklusjon = "~konklusjon~")
                         )
                     )
                 )
             ),
             row(
                 "undersokelse with konklusjon and vedtaksgrunnlag",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 konklusjon = "1",
-                                vedtaksgrunnlag = mutableListOf(kostraVedtaksgrunnlagTypeInTest)
+                                vedtaksgrunnlag = mutableListOf(vedtaksgrunnlagTypeInTest)
                             )
                         )
                     )
@@ -76,10 +76,10 @@ class Undersokelse07Test : BehaviorSpec({
         forAll(
             row(
                 "undersokelse with konklusjon without vedtaksgrunnlag, konklusjon = 1",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 konklusjon = "1"
                             )
                         )
@@ -88,10 +88,10 @@ class Undersokelse07Test : BehaviorSpec({
             ),
             row(
                 "undersokelse with konklusjon without vedtaksgrunnlag, konklusjon = 2",
-                kostraIndividInTest.copy(
+                individInTest.copy(
                     melding = mutableListOf(
-                        kostraMeldingTypeInTest.copy(
-                            undersokelse = kostraUndersokelseTypeInTest.copy(
+                        meldingTypeInTest.copy(
+                            undersokelse = undersokelseTypeInTest.copy(
                                 konklusjon = "2"
                             )
                         )

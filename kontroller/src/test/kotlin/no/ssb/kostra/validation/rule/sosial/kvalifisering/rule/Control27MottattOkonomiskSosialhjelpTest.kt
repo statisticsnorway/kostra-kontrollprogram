@@ -1,89 +1,68 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
     val sut = Control27MottattOkonomiskSosialhjelp()
 
-    Given("valid context") {
+    Given("context") {
         forAll(
             row(
                 "valid kvpMedAStonad, 1",
-                kostraRecordInTest(1, 4, false)
+                1,4,false,"N/A", false
             ),
             row(
                 "valid kvpMedAStonad, 2",
-                kostraRecordInTest(2, 0, true)
+                2,0,true,"N/A", false
             ),
             row(
                 "kvpMedAStonad = 3",
-                kostraRecordInTest(3, 0, true)
-            )
-        ) { description, currentContext ->
+                3,0,true,"N/A", false
+            ),
 
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
             row(
                 "invalid kvpMedAStonad, kvpMedAStonad = 1", 1, 1, true,
                 "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med kvalifiseringsstønad " +
                         "mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige " +
-                        "koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte."
+                        "koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte.",
+                true
             ),
             row(
                 "invalid kvpMedAStonad, kvpMedAStonad = 2", 2, 1, false,
                 "Svaralternativer for feltet \"Har deltakeren i 2022 i løpet av perioden med kvalifiseringsstønad " +
                         "mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?\" har ugyldige " +
-                        "koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte."
+                        "koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte.",
+                true
             )
-        ) { description, kvpMedAStonad, kvpMedKommBos, useEmptyValues, expectedError ->
+        ) { description, kvpMedAStonad, kvpMedKommBos, useEmptyValues, expectedErrorMsg, expectError ->
+            val context = kostraRecordInTest(
+                kvpMedAStonad,
+                kvpMedKommBos,
+                useEmptyValues
+            )
 
             When(description) {
-                val reportEntryList = sut.validate(
-                    kostraRecordInTest(
-                        kvpMedAStonad,
-                        kvpMedKommBos,
-                        useEmptyValues
-                    ), argumentsInTest
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(context, argumentsInTest),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    expectedErrorMsg
                 )
-
-                Then("expect non-null result") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-                        it.messageText shouldStartWith  expectedError
-                    }
-                }
             }
         }
     }

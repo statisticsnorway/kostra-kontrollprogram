@@ -49,7 +49,6 @@ import java.time.LocalDate
 class KvalifiseringValidatorTest : BehaviorSpec({
 
     Given("validateKvalifisering") {
-
         When("validating an empty record string") {
             val validationResult = validateKvalifisering(
                 argumentsInTest.copy(
@@ -69,7 +68,6 @@ class KvalifiseringValidatorTest : BehaviorSpec({
     }
 
     Given("validateKvalifiseringInternal") {
-
         forAll(
             row(
                 "empty list of records",
@@ -97,7 +95,6 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 ), 32
             )
         ) { description, kostraRecordsInTests, expectedResult, expectedNumberOfControls ->
-
             When(description) {
                 val validationResult = validateKvalifiseringInternal(
                     kostraRecords = kostraRecordsInTests,

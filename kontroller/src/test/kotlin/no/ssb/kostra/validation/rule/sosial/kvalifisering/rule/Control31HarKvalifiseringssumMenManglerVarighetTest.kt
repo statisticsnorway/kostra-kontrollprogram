@@ -1,84 +1,62 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 
 class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
     val sut = Control31HarKvalifiseringssumMenManglerVarighet()
 
-    Given("valid context") {
+    Given("context") {
         forAll(
             row(
                 "with months and amount",
-                validKostraRecordInTest
+                validKostraRecordInTest,
+                false
             ),
             row(
                 "without months, without amount",
                 validKostraRecordInTest.copy(
-                    valuesByName =  mapOf(
+                    valuesByName = mapOf(
                         KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                         KVP_STONAD_COL_NAME to " ",
                         *((1..12).map {
                             "${MONTH_PREFIX}$it" to "  "
                         }).toTypedArray()
                     )
-                )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
+                ), false
+            ),
             row(
                 "without months, with amount",
                 validKostraRecordInTest.copy(
-                    valuesByName =  mapOf(
+                    valuesByName = mapOf(
                         KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                         KVP_STONAD_COL_NAME to "1",
                         *((1..12).map {
                             "$MONTH_PREFIX$it" to "  "
                         }).toTypedArray()
                     )
-                )
+                ), true
             )
-        ) { description, kostraRecord ->
-
+        ) { description, context, expectError ->
             When(description) {
-                val reportEntryList = sut.validate(kostraRecord, argumentsInTest)
-
-                Then("expect non-null result") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.messageText shouldBe "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
-                                "men mangler utfylling for hvilke måneder stønaden gjelder. " +
-                                "Feltet er obligatorisk å fylle ut."
-                    }
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(context, argumentsInTest),
+                    expectError = expectError,
+                    expectedSeverity = Severity.WARNING,
+                    "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
+                            "men mangler utfylling for hvilke måneder stønaden gjelder. " +
+                            "Feltet er obligatorisk å fylle ut."
+                )
             }
         }
     }

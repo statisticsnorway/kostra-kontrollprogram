@@ -1,72 +1,51 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Control21YtelserTest : BehaviorSpec({
     val sut = Control21Ytelser()
 
-    Given("valid context") {
+    Given("context") {
         forAll(
             row(
                 "ytelseSosialHjelp not checked, random ytelseType",
-                kostraRecordInTest(0, 42)
+                0, 42, false
             ),
             row(
                 "ytelseSosialHjelp checked, valid ytelseType, 2",
-                kostraRecordInTest(1, 2)
+                1, 2, false
             ),
             row(
                 "ytelseSosialHjelp checked, valid ytelseType, 3",
-                kostraRecordInTest(1, 3)
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
+                1, 3, false
+            ),
             row(
                 "ytelseSosialHjelp checked, invalid ytelseType",
-                1, 42
+                1, 42, true
             )
-        ) { description, ytelseSosialHjelp, ytelseType ->
+        ) { description, ytelseSosialHjelp, ytelseType, expectError ->
+            val context = kostraRecordInTest(ytelseSosialHjelp, ytelseType)
 
             When(description) {
-                val reportEntryList = sut.validate(kostraRecordInTest(ytelseSosialHjelp, ytelseType), argumentsInTest)
-
-                Then("expect non-null result") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-                        it.messageText shouldBe "Feltet for 'Hadde deltakeren i løpet av de siste to månedene før " +
-                                "registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?' " +
-                                "inneholder ugyldige verdier."
-                    }
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(context, argumentsInTest),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Feltet for 'Hadde deltakeren i løpet av de siste to månedene før " +
+                            "registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?' " +
+                            "inneholder ugyldige verdier."
+                )
             }
         }
     }

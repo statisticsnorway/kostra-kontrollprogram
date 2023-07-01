@@ -4,6 +4,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
@@ -20,7 +21,7 @@ object TestUtils {
 
             assertSoftly(validationReportEntries.first()) {
                 severity.shouldBe(expectedSeverity)
-                messageText.shouldBe(expectedErrorText)
+                messageText.shouldStartWith(expectedErrorText)
             }
         } else validationReportEntries.shouldBeNull()
     }

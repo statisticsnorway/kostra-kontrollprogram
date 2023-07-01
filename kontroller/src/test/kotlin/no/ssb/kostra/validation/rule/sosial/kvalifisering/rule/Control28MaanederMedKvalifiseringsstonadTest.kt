@@ -1,30 +1,27 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 
 class Control28MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
     val sut = Control28MaanederMedKvalifiseringsstonad()
 
-    Given("valid context") {
+    Given("context") {
         forAll(
             row(
                 "permisjon",
-                validKostraRecordInTest
+                validKostraRecordInTest,
+                false
             ),
             row(
                 "status != permisjon, all months present",
@@ -36,22 +33,9 @@ class Control28MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
                             "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
                         }).toTypedArray()
                     )
-                )
-            )
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
+                ),
+                false
+            ),
             row(
                 "all months missing",
                 validKostraRecordInTest.copy(
@@ -62,23 +46,17 @@ class Control28MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
                             "$MONTH_PREFIX$it" to " "
                         }).toTypedArray()
                     )
-                )
+                ), true
             )
-        ) { description, kostraRecord ->
-
+        ) { description, context, expectError ->
             When(description) {
-                val reportEntryList = sut.validate(kostraRecord, argumentsInTest)
-
-                Then("expect non-null result") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.messageText shouldStartWith "Det er ikke krysset av for hvilke måneder deltakeren har " +
-                                "fått utbetalt kvalifiseringsstønad"
-                    }
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(context, argumentsInTest),
+                    expectError = expectError,
+                    expectedSeverity = Severity.WARNING,
+                    "Det er ikke krysset av for hvilke måneder deltakeren har " +
+                            "fått utbetalt kvalifiseringsstønad"
+                )
             }
         }
     }

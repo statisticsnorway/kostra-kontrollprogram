@@ -1,64 +1,42 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Control36StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
     val sut = Control36StatusForDeltakelseIKvalifiseringsprogram()
 
-    Given("valid context") {
+    Given("context") {
         forAll(
             *(1..6).map {
                 row(
                     "valid status, $it",
-                    kostraRecordInTest(it.toString())
+                    kostraRecordInTest(it.toString()),
+                    false
                 )
-            }.toTypedArray()
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
+            }.toTypedArray(),
             row(
                 "invalid status",
-                kostraRecordInTest("7")
+                kostraRecordInTest("7"),
+                true
             )
-        ) { description, kostraRecord ->
-
+        ) { description, context, expectError ->
             When(description) {
-                val reportEntryList = sut.validate(kostraRecord, argumentsInTest)
-
-                Then("expect non-null result") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.ERROR
-                        it.messageText shouldStartWith  "Korrigér status. Fant '7', forventet én av"
-                    }
-                }
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(context, argumentsInTest),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Korrigér status. Fant '7', forventet én av"
+                )
             }
         }
     }

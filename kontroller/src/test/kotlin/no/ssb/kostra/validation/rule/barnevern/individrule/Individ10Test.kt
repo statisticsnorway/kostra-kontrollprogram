@@ -1,60 +1,40 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 
 class Individ10Test : BehaviorSpec({
-    val sut = Individ10()
-
-    Given("valid context") {
-        forAll(
-            row(
-                "individ without bydelsnavn",
-                kostraIndividInTest.copy(bydelsnavn = null),
-                argumentsInTest.copy(region = "123400")
+    include(
+        barnevernValidationRuleTest(
+            sut = Individ10(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    description = "individ without bydelsnavn",
+                    kostraIndividInTest.copy(bydelsnavn = null),
+                    expectError = false,
+                    arguments = argumentsInTest.copy(region = "123400")
+                ),
+                ForAllRowItem(
+                    description = "individ with bydelsnavn, Oslo",
+                    context = kostraIndividInTest,
+                    expectError = false,
+                    arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
+                ),
+                ForAllRowItem(
+                    description = "individ without bydelsnavn, Oslo",
+                    context = kostraIndividInTest.copy(bydelsnavn = null),
+                    expectError = true,
+                    arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
+                ),
             ),
-            row(
-                "individ with bydelsnavn, Oslo",
-                kostraIndividInTest,
-                argumentsInTest
-            ),
-        ) { description, currentContext, arguments ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, arguments)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        val invalidContext = kostraIndividInTest.copy(bydelsnavn = null)
-        val argumentsInTest = argumentsInTest.copy(region = "030114")
-
-        When("validate") {
-            val reportEntryList = sut.validate(invalidContext, argumentsInTest)
-
-            Then("expect non-null result") {
-                reportEntryList.shouldNotBeNull()
-                reportEntryList.size shouldBe 1
-
-                assertSoftly(reportEntryList.first()) {
-                    it.severity shouldBe Severity.ERROR
-                    it.contextId shouldBe invalidContext.id
-                    it.messageText shouldBe  "Filen mangler bydelsnavn."
-                }
-            }
-        }
-    }
+            expectedSeverity = Severity.ERROR,
+            expectedErrorMessage = "Filen mangler bydelsnavn.",
+            expectedContextId = kostraIndividInTest.id
+        )
+    )
 })

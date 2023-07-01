@@ -1,55 +1,44 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraMeldingTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraPlanTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraTiltakTypeInTest
 
 class Individ06Test : BehaviorSpec({
-    val sut = Individ06()
+    include(
+        barnevernValidationRuleTest(
+            sut = Individ06(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "individ with melding",
+                    kostraIndividInTest.copy(melding = mutableListOf(kostraMeldingTypeInTest)),
+                    false
+                ),
+                ForAllRowItem(
+                    "individ with plan",
+                    kostraIndividInTest.copy(plan = mutableListOf(kostraPlanTypeInTest)),
+                    false
+                ),
+                ForAllRowItem(
+                    "individ with tiltak",
+                    kostraIndividInTest.copy(tiltak = mutableListOf(kostraTiltakTypeInTest)),
+                    false
+                ),
 
-    Given("valid context") {
-        forAll(
-            row("individ with melding", kostraIndividInTest.copy(melding = mutableListOf(kostraMeldingTypeInTest))),
-            row("individ with plan", kostraIndividInTest.copy(plan = mutableListOf(kostraPlanTypeInTest))),
-            row("individ with tiltak", kostraIndividInTest.copy(tiltak = mutableListOf(kostraTiltakTypeInTest))),
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        val invalidContext = kostraIndividInTest
-
-        When("validate") {
-            val reportEntryList = sut.validate(invalidContext, argumentsInTest)
-
-            Then("expect non-null result") {
-                reportEntryList.shouldNotBeNull()
-                reportEntryList.size shouldBe 1
-
-                assertSoftly(reportEntryList.first()) {
-                    it.severity shouldBe Severity.ERROR
-                    it.contextId shouldBe invalidContext.id
-                    it.messageText shouldBe "Individet har ingen meldinger, planer eller tiltak i løpet av året"
-                }
-            }
-        }
-    }
+                ForAllRowItem(
+                    "individ with without content",
+                    kostraIndividInTest,
+                    true
+                )
+            ),
+            expectedSeverity = Severity.ERROR,
+            expectedErrorMessage = "Individet har ingen meldinger, planer eller tiltak i løpet av året",
+            expectedContextId = kostraIndividInTest.id
+        )
+    )
 })

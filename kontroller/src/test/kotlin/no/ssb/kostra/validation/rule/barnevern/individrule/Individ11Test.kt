@@ -1,56 +1,45 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 
 class Individ11Test : BehaviorSpec({
-    val sut = Individ11()
-
-    Given("valid context") {
-        forAll(
-            row("individ with normal fodselsnummer", kostraIndividInTest),
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldBeNull()
-                }
-            }
-        }
-    }
-
-    Given("invalid context") {
-        forAll(
-            row("individ without fodselsnummer", kostraIndividInTest.copy(fodselsnummer = null)),
-            row("individ with empty fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "")),
-            row("individ with blank fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "  ")),
-            row("individ with invalid fodselsnummer", kostraIndividInTest.copy(fodselsnummer = "12345612345")),
-        ) { description, currentContext ->
-
-            When(description) {
-                val reportEntryList = sut.validate(currentContext, argumentsInTest)
-
-                Then("expect null") {
-                    reportEntryList.shouldNotBeNull()
-                    reportEntryList.size shouldBe 1
-
-                    assertSoftly(reportEntryList.first()) {
-                        it.severity shouldBe Severity.WARNING
-                        it.contextId shouldBe currentContext.id
-                        it.messageText shouldBe "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
-                    }
-                }
-            }
-        }
-    }
+    include(
+        BarnevernTestFactory.barnevernValidationRuleTest(
+            sut = Individ11(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "individ with normal fodselsnummer",
+                    kostraIndividInTest,
+                    false
+                ),
+                ForAllRowItem(
+                    "individ without fodselsnummer",
+                    kostraIndividInTest.copy(fodselsnummer = null),
+                    true
+                ),
+                ForAllRowItem(
+                    "individ with empty fodselsnummer",
+                    kostraIndividInTest.copy(fodselsnummer = ""),
+                    true
+                ),
+                ForAllRowItem(
+                    "individ with blank fodselsnummer",
+                    kostraIndividInTest.copy(fodselsnummer = " ".repeat(11)),
+                    true
+                ),
+                ForAllRowItem(
+                    "individ with invalid fodselsnummer",
+                    kostraIndividInTest.copy(fodselsnummer = "12345612345"),
+                    true
+                )
+            ),
+            expectedSeverity = Severity.WARNING,
+            expectedErrorMessage = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.",
+            expectedContextId = kostraIndividInTest.id
+        )
+    )
 })

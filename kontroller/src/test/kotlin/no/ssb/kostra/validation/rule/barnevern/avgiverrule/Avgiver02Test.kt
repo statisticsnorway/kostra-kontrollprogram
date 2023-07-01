@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import java.time.Year
 
 class Avgiver02Test : BehaviorSpec({
@@ -11,12 +12,12 @@ class Avgiver02Test : BehaviorSpec({
         barnevernValidationRuleTest(
             sut = Avgiver02(),
             forAllRows = listOf(
-                Triple(
+                ForAllRowItem(
                     "avgiver with valid version",
                     kostraAvgiverTypeInTest,
                     false
                 ),
-                Triple(
+                ForAllRowItem(
                     "avgiver with invalid version",
                     kostraAvgiverTypeInTest.copy(versjon = Year.now().value),
                     true

@@ -2,26 +2,27 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory
+import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
+import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kostraIndividInTest
 
 class Individ02aTest : BehaviorSpec({
     include(
-        BarnevernTestFactory.barnevernValidationRuleTest(
+        barnevernValidationRuleTest(
             sut = Individ02a(),
             forAllRows = listOf(
-                Triple(
+                ForAllRowItem(
                     "individ without endDate",
                     kostraIndividInTest,
                     false
                 ),
-                Triple(
+                ForAllRowItem(
                     "individ with valid endDate",
                     kostraIndividInTest.copy(sluttDato = dateInTest.plusDays(1)),
                     false
                 ),
-                Triple(
+                ForAllRowItem(
                     "individ with invalid startdato",
                     kostraIndividInTest.copy(sluttDato = dateInTest.minusDays(1)),
                     true
@@ -29,7 +30,8 @@ class Individ02aTest : BehaviorSpec({
             ),
             expectedSeverity = Severity.ERROR,
             expectedErrorMessage = "Individets startdato ($dateInTest) er etter " +
-                    "sluttdato (${dateInTest.minusDays(1)})"
+                    "sluttdato (${dateInTest.minusDays(1)})",
+            expectedContextId = kostraIndividInTest.id
         )
     )
 })

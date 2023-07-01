@@ -8,12 +8,12 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData
 import java.time.LocalDate
 
@@ -38,7 +38,6 @@ class Rule05bJournalnummerDubletterTest : BehaviorSpec({
                 )
             )
         ) { description, currentContext ->
-
             When(description) {
                 val reportEntryList = sut.validate(currentContext, RuleTestData.argumentsInTest)
 
@@ -59,7 +58,6 @@ class Rule05bJournalnummerDubletterTest : BehaviorSpec({
                 )
             )
         ) { description, context ->
-
             When(description) {
                 val reportEntryList = sut.validate(context, RuleTestData.argumentsInTest)
 

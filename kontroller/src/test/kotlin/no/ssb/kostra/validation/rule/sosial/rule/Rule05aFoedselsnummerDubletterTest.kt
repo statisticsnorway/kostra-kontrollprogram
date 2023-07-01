@@ -8,15 +8,15 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import java.time.LocalDate
 
@@ -46,7 +46,6 @@ class Rule05aFoedselsnummerDubletterTest : BehaviorSpec({
                 )
             )
         ) { description, currentContext ->
-
             When(description) {
                 val reportEntryList = sut.validate(currentContext, argumentsInTest)
 
@@ -67,7 +66,6 @@ class Rule05aFoedselsnummerDubletterTest : BehaviorSpec({
                 )
             )
         ) { description, context ->
-
             When(description) {
                 val reportEntryList = sut.validate(context, argumentsInTest)
 

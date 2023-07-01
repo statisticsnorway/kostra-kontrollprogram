@@ -32,6 +32,11 @@ class Control12AntBu18Bu18Test : BehaviorSpec({
                 "bu18Code = 1, numberOfChildren = 0",
                 kostraRecordInTest(1, 0),
                 false
+            ),
+            row(
+                "bu18Code = 0, numberOfChildren = 1",
+                kostraRecordInTest(0, 1),
+                true
             )
         ) { description, currentContext, expectError ->
             When(description) {

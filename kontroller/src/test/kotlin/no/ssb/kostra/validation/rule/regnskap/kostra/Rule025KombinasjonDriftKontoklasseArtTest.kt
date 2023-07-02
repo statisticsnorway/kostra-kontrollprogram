@@ -76,37 +76,46 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
         }
     }
 
-    /** TODO: Jon Ole, her er det ingen av casene som gir valideringsfeil */
     Given("context lånefond") {
         val invalidLanefondDriftArtList =
             listOf("280", "512", "521", "522", "529", "670", "910", "911", "912", "922", "929", "970")
+
         val sut = Rule025KombinasjonDriftKontoklasseArt(invalidLanefondDriftArtList)
 
         forAll(
-            row("0A", "420400", "         ", "1", "921", false),
-            row("0C", "420400", "         ", "1", "921", false),
-            row("0I", "420400", "999999999", "3", "921", false),
-            row("0I", "030101", "958935420", "3", "921", false),
-            row("0K", "420400", "999999999", "3", "921", false),
-            row("0K", "030101", "958935420", "3", "921", false),
-            row("0M", "420400", "999999999", "3", "921", false),
-            row("0M", "030101", "958935420", "3", "921", false),
-            row("0P", "420400", "999999999", "3", "921", false),
-            row("0P", "030101", "958935420", "3", "921", false),
-        ) { skjema, region, orgnr, kontoklasse, art, expectError ->
+            *invalidLanefondDriftArtList.map {
+                row(
+                    "bevilgningregnskap = true, art, funksjon, belop matcher, art = $it",
+                    "0A", "100 ", it, "1", true
+                )
+            }.toTypedArray(),
+            row(
+                "bevilgningregnskap = false",
+                "0X", "100 ", "280", "1", false
+            ),
+            row(
+                "bevilgningregnskap = true, art is not matching",
+                "0A", "100 ", "199", "1", false
+            ),
+            row(
+                "bevilgningregnskap = true, art is matching, belop is not matching",
+                "0A", "100 ", "280", "0", false
+            )
+        ) { description, skjema, funksjon, art, belop, expectError ->
             val kostraRecordList = listOf(
                 KostraRecord(
                     fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
                     valuesByName = mapOf(
                         RegnskapConstants.FIELD_SKJEMA to skjema,
-                        RegnskapConstants.FIELD_REGION to region,
-                        RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
+                        RegnskapConstants.FIELD_FUNKSJON to funksjon,
                         RegnskapConstants.FIELD_ART to art,
+                        RegnskapConstants.FIELD_BELOP to belop,
+                        RegnskapConstants.FIELD_KONTOKLASSE to "1",
                     )
                 )
             )
 
-            When("For $skjema, $region, $orgnr, $kontoklasse, $art -> $expectError") {
+            When("$description For $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

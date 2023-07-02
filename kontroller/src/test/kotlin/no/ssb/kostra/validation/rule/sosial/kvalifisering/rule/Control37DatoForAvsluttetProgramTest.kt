@@ -6,7 +6,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_C
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.twoDigitReportingYear
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control37DatoForAvsluttetProgram.Companion.codesThatRequiresDate
@@ -35,7 +35,7 @@ class Control37DatoForAvsluttetProgramTest : BehaviorSpec({
                                 "avsluttet program etter avtale (gjelder ikke flytting), 4=Deltakerens program er varig " +
                                 "avbrutt på grunn av uteblivelse (gjelder ikke flytting), 5=Deltakerens program ble " +
                                 "avbrutt på grunn av flytting til annen kommune] under feltet for 'Hva er status for " +
-                                "deltakelsen i kvalifiseringsprogrammet per 31.12.${fourDigitReportingYear}'?",
+                                "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                     )
                 }.toTypedArray(),
                 ForAllRowItem(
@@ -47,7 +47,7 @@ class Control37DatoForAvsluttetProgramTest : BehaviorSpec({
                             "permisjon fra program (skjemaet er ferdig utfylt), 6=Kun for Oslos bydeler: " +
                             "Deltakeren flyttet til annen bydel før programperioden var over] under feltet for " +
                             "'Hva er status for deltakelsen i kvalifiseringsprogrammet " +
-                            "per 31.12.$fourDigitReportingYear'?"
+                            "per 31.12.${argumentsInTest.aargang}'?"
                 )
             ),
             expectedSeverity = Severity.ERROR

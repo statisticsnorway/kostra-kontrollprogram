@@ -5,7 +5,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control26MottattStotteTest : BehaviorSpec({
@@ -24,7 +24,7 @@ class Control26MottattStotteTest : BehaviorSpec({
                 ForAllRowItem(
                     "invalid kvpMedAStonad",
                     kostraRecordInTest(42),
-                    "Feltet for 'Har deltakeren i $fourDigitReportingYear i løpet av perioden med " +
+                    "Feltet for 'Har deltakeren i ${argumentsInTest.aargang} i løpet av perioden med " +
                             "kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, kommunal bostøtte eller " +
                             "Husbankens bostøtte?', er ikke utfylt eller feil kode (42) er benyttet. Feltet er " +
                             "obligatorisk å fylle ut."

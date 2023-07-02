@@ -6,8 +6,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_C
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
 
 class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
     include(
@@ -29,7 +29,7 @@ class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
                             "umiddelbart etter avslutningen? Må fylles ut dersom det er krysset av for " +
                             "svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter " +
                             "avtale (gjelder ikke flytting) under feltet for 'Hva er status for deltakelsen i " +
-                            "kvalifiseringsprogrammet per 31.12.${fourDigitReportingYear}'?"
+                            "kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?"
                 )
             ),
             expectedSeverity = Severity.ERROR

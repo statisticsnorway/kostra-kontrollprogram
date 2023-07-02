@@ -10,8 +10,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
 
 class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
     include(
@@ -34,16 +34,18 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 ForAllRowItem(
                     "invalid kvpMedAStonad, kvpMedAStonad = 1",
                     kostraRecordInTest(1, 1, true),
-                    "Svaralternativer for feltet \"Har deltakeren i $fourDigitReportingYear i løpet av perioden " +
-                            "med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
-                            "bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er mottatt støtte."
+                    "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
+                            "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                            "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
+                            "fylle ut. Det er mottatt støtte."
                 ),
                 ForAllRowItem(
                     "invalid kvpMedAStonad, kvpMedAStonad = 2",
                     kostraRecordInTest(2, 1, false),
-                    "Svaralternativer for feltet \"Har deltakeren i $fourDigitReportingYear i løpet av perioden " +
-                            "med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens " +
-                            "bostøtte?\" har ugyldige koder. Feltet er obligatorisk å fylle ut. Det er IKKE mottatt støtte."
+                    "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} i " +
+                            "løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                            "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
+                            "fylle ut. Det er IKKE mottatt støtte."
                 )
             ),
             expectedSeverity = Severity.ERROR

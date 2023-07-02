@@ -19,6 +19,5 @@ object KvalifiseringTestUtils {
         fieldDefinitionByName = KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
     )
 
-    val fourDigitReportingYear = Year.now().value - 1
-    val twoDigitReportingYear = fourDigitReportingYear % 1000
+    val twoDigitReportingYear = (Year.now().value - 1) % 1000
 }

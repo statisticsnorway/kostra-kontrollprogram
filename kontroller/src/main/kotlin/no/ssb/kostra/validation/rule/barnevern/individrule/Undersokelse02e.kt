@@ -17,7 +17,7 @@ class Undersokelse02e : AbstractRule<KostraIndividType>(
             createValidationReportEntry(
                 contextId = undersokelse.id,
                 messageText = "Undersøkelse (${undersokelse.id}). StartDato (${undersokelse.startDato}) skal " +
-                        "være lik eller etter StartDatoen (${context.startDato}) på individet"
+                        "være lik eller etter startdato (${context.startDato}) på individet"
             )
         }.ifEmpty { null }
 }

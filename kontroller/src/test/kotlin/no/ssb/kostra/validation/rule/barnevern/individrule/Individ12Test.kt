@@ -13,28 +13,25 @@ class Individ12Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with valid fodselsnummer",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with 99999 fodselsnummer",
-                    individInTest.copy(fodselsnummer = "02011099999"),
-                    false
+                    individInTest.copy(fodselsnummer = "02011099999")
                 ),
 
                 ForAllRowItem(
                     "individ without fodselsnummer",
                     individInTest.copy(fodselsnummer = null),
-                    true
+                    expectedErrorMessage = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                 ),
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
                     individInTest.copy(fodselsnummer = "12345612345"),
-                    true
+                    expectedErrorMessage = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                 )
             ),
             expectedSeverity = Severity.WARNING,
-            expectedErrorMessage = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer.",
             expectedContextId = individInTest.id
         )
     )

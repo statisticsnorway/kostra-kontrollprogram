@@ -15,7 +15,6 @@ import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 data class ForAllRowItem<T : Any>(
     val description: String,
     val context: T,
-    val expectError: Boolean,
     val expectedErrorMessage: String? = null,
     val arguments: KotlinArguments = argumentsInTest
 )
@@ -26,31 +25,30 @@ object BarnevernTestFactory {
         sut: AbstractRule<T>,
         forAllRows: Collection<ForAllRowItem<T>>,
         expectedSeverity: Severity,
-        expectedErrorMessage: String,
         expectedContextId: String? = null
     ) = behaviorSpec {
         Given("context") {
             forAll(
-                *(forAllRows.map { (description, avgiver, expectError, expectedErrorMessage, arguments) ->
-                    row(description, avgiver, expectError, expectedErrorMessage, arguments)
+                *(forAllRows.map { (description, context, expectedErrorMessage, arguments) ->
+                    row(description, context, expectedErrorMessage, arguments)
                 }).toTypedArray()
-            ) { description, context, expectError,innerExpectedErrorMessage, arguments ->
+            ) { description, context, expectedErrorMessage, arguments ->
                 When(description) {
                     val validationReportEntries = sut.validate(context, arguments)
 
                     Then("result should be as expected") {
                         verifyValidationResult(
                             validationReportEntries = validationReportEntries,
-                            expectError = expectError,
+                            expectError = !expectedErrorMessage.isNullOrEmpty(),
                             expectedSeverity = expectedSeverity,
-                            expectedErrorText = innerExpectedErrorMessage ?: expectedErrorMessage
+                            expectedErrorText = expectedErrorMessage ?:"N/A"
                         )
                     }
 
                     And("if expectedContextId is present") {
-                        if (expectError
+                        if (context is KostraIndividType
+                            && !expectedErrorMessage.isNullOrEmpty()
                             && expectedContextId != null
-                            && context is KostraIndividType
                         ) {
                             validationReportEntries.shouldNotBeNull()
                             validationReportEntries.first().contextId.shouldBe(expectedContextId)

@@ -14,23 +14,21 @@ class Individ02bTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without sluttDato",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with valid sluttDato",
-                    individInTest.copy(sluttDato = dateInTest.plusDays(1)),
-                    false
+                    individInTest.copy(sluttDato = dateInTest.plusDays(1))
                 ),
+
                 ForAllRowItem(
                     "individ with invalid sluttDato",
                     individInTest.copy(sluttDato = dateInTest.minusYears(2)),
-                    true
+                    expectedErrorMessage = "Individets sluttdato (${dateInTest.minusYears(2)}) er " +
+                            "før forrige telletidspunkt"
                 ),
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Individets sluttdato (${dateInTest.minusYears(2)}) er " +
-                    "før forrige telletidspunkt",
             expectedContextId = individInTest.id
         )
     )

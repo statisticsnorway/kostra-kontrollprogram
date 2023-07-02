@@ -18,18 +18,15 @@ class Lovhjemmel03Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without fodselsnummer",
-                    individInTest.copy(fodselsnummer = null),
-                    false
+                    individInTest.copy(fodselsnummer = null)
                 ),
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
-                    individInTest.copy(fodselsnummer = "12345612345"),
-                    false
+                    individInTest.copy(fodselsnummer = "12345612345")
                 ),
                 ForAllRowItem(
                     "individ with fodselsnummer, age below eighteen, no tiltak",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "age above eighteen, with omsorgstiltak",
@@ -39,8 +36,7 @@ class Lovhjemmel03Test : BehaviorSpec({
                             LocalDate.now().minusYears(19)
                         ),
                         tiltak = mutableListOf(tiltakTypeInTest.copy(lovhjemmel = lovhjemmelTypeInTest))
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -52,12 +48,11 @@ class Lovhjemmel03Test : BehaviorSpec({
                         ),
                         tiltak = mutableListOf(tiltakTypeInTest)
                     ),
-                    true
+                    expectedErrorMessage = "Tiltak (${tiltakTypeInTest.id}). Individet er 19 år og skal dermed ikke " +
+                            "ha omsorgstiltak"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Tiltak (${tiltakTypeInTest.id}). Individet er 19 år og skal dermed ikke " +
-                    "ha omsorgstiltak",
             expectedContextId = tiltakTypeInTest.id
         )
     )

@@ -16,24 +16,22 @@ class Individ10Test : BehaviorSpec({
                 ForAllRowItem(
                     description = "individ without bydelsnavn",
                     individInTest.copy(bydelsnavn = null),
-                    expectError = false,
                     arguments = argumentsInTest.copy(region = "123400")
                 ),
                 ForAllRowItem(
                     description = "individ with bydelsnavn, Oslo",
                     context = individInTest,
-                    expectError = false,
                     arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
                 ),
+
                 ForAllRowItem(
                     description = "individ without bydelsnavn, Oslo",
                     context = individInTest.copy(bydelsnavn = null),
-                    expectError = true,
+                    expectedErrorMessage = "Filen mangler bydelsnavn.",
                     arguments = argumentsInTest.copy(region = "${OSLO_MUNICIPALITY_ID}14")
                 ),
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Filen mangler bydelsnavn.",
             expectedContextId = individInTest.id
         )
     )

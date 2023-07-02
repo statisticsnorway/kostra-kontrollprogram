@@ -13,18 +13,17 @@ class Avgiver04Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "avgiver with valid kommunenummer",
-                    kostraAvgiverTypeInTest,
-                    false
+                    kostraAvgiverTypeInTest
                 ),
+
                 ForAllRowItem(
                     "avgiver with wrong kommunenummer",
                     kostraAvgiverTypeInTest.copy(kommunenummer = "4321"),
-                    true
+                    expectedErrorMessage = "Filen inneholder feil kommunenummer. Forskjellig kommunenummer " +
+                            "i skjema og filuttrekk. 4321 : ${kostraAvgiverTypeInTest.kommunenummer}"
                 )
             ),
-            expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Filen inneholder feil kommunenummer. Forskjellig kommunenummer " +
-                    "i skjema og filuttrekk. 4321 : ${kostraAvgiverTypeInTest.kommunenummer}"
+            expectedSeverity = Severity.ERROR
         )
     )
 })

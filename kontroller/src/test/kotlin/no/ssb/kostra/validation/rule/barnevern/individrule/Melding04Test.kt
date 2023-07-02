@@ -16,15 +16,13 @@ class Melding04Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without melding",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "melding without sluttDato",
                     individInTest.copy(
                         melding = mutableListOf(meldingTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato in reporting year",
@@ -32,15 +30,13 @@ class Melding04Test : BehaviorSpec({
                         melding = mutableListOf(
                             meldingTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato after reporting year, no konklusjon",
                     individInTest.copy(
                         melding = mutableListOf(meldingTypeInTest.copy(sluttDato = dateInTest))
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato after reporting year, with konklusjon '42'",
@@ -51,8 +47,7 @@ class Melding04Test : BehaviorSpec({
                                 konklusjon = "42"
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato after reporting year, with konklusjon '1'",
@@ -64,8 +59,7 @@ class Melding04Test : BehaviorSpec({
                                 melder = mutableListOf(melderTypeInTest)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -78,11 +72,10 @@ class Melding04Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Konkludert melding mangler melder(e)."
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Konkludert melding mangler melder(e).",
             expectedContextId = meldingTypeInTest.id
         )
     )

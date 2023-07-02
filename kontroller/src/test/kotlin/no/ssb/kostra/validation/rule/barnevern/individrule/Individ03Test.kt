@@ -15,22 +15,19 @@ class Individ03Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with valid fodselsnummer",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with valid DUF-nummer", individInTest.copy(
                         fodselsnummer = null,
                         duFnummer = generateRandomDuf(Year.now().value - 1, Year.now().value - 1)
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
                     individInTest.copy(fodselsnummer = "~fodselsnummer~"),
-                    true,
-                    "Feil i fødselsnummer. Kan ikke identifisere individet."
+                    expectedErrorMessage = "Feil i fødselsnummer. Kan ikke identifisere individet."
                 ),
                 ForAllRowItem(
                     "individ with invalid DUF-nummer",
@@ -38,8 +35,7 @@ class Individ03Test : BehaviorSpec({
                         fodselsnummer = null,
                         duFnummer = "~duFnummer~"
                     ),
-                    true,
-                    "DUF-nummer mangler. Kan ikke identifisere individet."
+                    expectedErrorMessage = "DUF-nummer mangler. Kan ikke identifisere individet."
                 ),
                 ForAllRowItem(
                     "individ with neither SSN nor DUF-nummer",
@@ -47,12 +43,10 @@ class Individ03Test : BehaviorSpec({
                         fodselsnummer = null,
                         duFnummer = null
                     ),
-                    true,
-                    "Fødselsnummer og DUF-nummer mangler. Kan ikke identifisere individet."
+                    expectedErrorMessage = "Fødselsnummer og DUF-nummer mangler. Kan ikke identifisere individet."
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "N/A",
             expectedContextId = individInTest.id
         )
     )

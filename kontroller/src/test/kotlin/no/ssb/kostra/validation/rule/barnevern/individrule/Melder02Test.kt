@@ -16,13 +16,11 @@ class Melder02Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without melding",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with melding without melder",
-                    individInTest.copy(melding = mutableListOf(meldingTypeInTest)),
-                    false
+                    individInTest.copy(melding = mutableListOf(meldingTypeInTest))
                 ),
                 ForAllRowItem(
                     "individ with melding with melder, kode different from 22",
@@ -32,8 +30,7 @@ class Melder02Test : BehaviorSpec({
                                 melder = mutableListOf(melderTypeInTest)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "individ with melding with melder, kode = 22",
@@ -45,8 +42,7 @@ class Melder02Test : BehaviorSpec({
                                 )
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -63,7 +59,7 @@ class Melder02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Melder med kode ($ANDRE_OFFENTLIGE_INSTANSER) mangler presisering"
                 ),
                 ForAllRowItem(
                     "individ with melding with melder, kode = 22, presisering empty",
@@ -79,11 +75,10 @@ class Melder02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Melder med kode ($ANDRE_OFFENTLIGE_INSTANSER) mangler presisering"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Melder med kode ($ANDRE_OFFENTLIGE_INSTANSER) mangler presisering",
             expectedContextId = meldingTypeInTest.id
         )
     )

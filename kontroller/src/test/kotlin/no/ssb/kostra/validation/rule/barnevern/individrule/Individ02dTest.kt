@@ -16,34 +16,31 @@ class Individ02dTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without sluttDato",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with sluttDato, avslutta3112 = 2",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1),
                         avslutta3112 = KOSTRA_IS_CLOSED_FALSE
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "individ with sluttDato, avslutta3112 = 1",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1),
                         avslutta3112 = KOSTRA_IS_CLOSED_TRUE
-                    ),
-                    false
+                    )
                 ),
+
                 ForAllRowItem(
                     "individ with without sluttDato, avslutta3112 = 1 ",
                     individInTest.copy(avslutta3112 = KOSTRA_IS_CLOSED_TRUE),
-                    true
+                    expectedErrorMessage = "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. " +
+                            "Sluttdato er ${null}. Kode for avsluttet er '$KOSTRA_IS_CLOSED_TRUE'."
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. " +
-                    "Sluttdato er ${null}. Kode for avsluttet er '$KOSTRA_IS_CLOSED_TRUE'.",
             expectedContextId = individInTest.id
         )
     )

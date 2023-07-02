@@ -16,14 +16,12 @@ class Plan02dTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with avslutta3112 = '2'",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "avslutta3112 = '1', no plan", individInTest.copy(
                         avslutta3112 = KOSTRA_IS_CLOSED_TRUE
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "avslutta3112 = '1', plan with sluttDato",
@@ -35,8 +33,7 @@ class Plan02dTest : BehaviorSpec({
                                 sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -50,7 +47,6 @@ class Plan02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Plan (${planTypeInTest.id}). Individet er avsluttet hos barnevernet og " +
                             "dets planer skal dermed være avsluttet. Sluttdato er uoppgitt"
                 ),
@@ -65,7 +61,6 @@ class Plan02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Plan (${planTypeInTest.id}). Individet er avsluttet hos barnevernet og " +
                             "dets planer skal dermed være avsluttet. " +
                             "Sluttdato er ${dateInTest.minusYears(1).plusDays(1)}"
@@ -81,13 +76,11 @@ class Plan02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Plan (${planTypeInTest.id}). Individet er avsluttet hos barnevernet og " +
                             "dets planer skal dermed være avsluttet. Sluttdato er $dateInTest"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "N/A",
             expectedContextId = planTypeInTest.id
         )
     )

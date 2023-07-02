@@ -15,23 +15,20 @@ class Plan02cTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without sluttDato",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with sluttDato, without plan",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "plan without sluttDato",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1),
                         plan = mutableListOf(planTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "plan with sluttDato equal to individ",
@@ -42,8 +39,7 @@ class Plan02cTest : BehaviorSpec({
                                 sluttDato = dateInTest.plusDays(1)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -56,13 +52,12 @@ class Plan02cTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Plan (${planTypeInTest.id}). Planens sluttdato " +
+                            "(${dateInTest.plusDays(2)}) er etter individets sluttdato " +
+                            "(${dateInTest.plusDays(1)})"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Plan (${planTypeInTest.id}). Planens sluttdato " +
-                    "(${dateInTest.plusDays(2)}) er etter individets sluttdato " +
-                    "(${dateInTest.plusDays(1)})",
             expectedContextId = planTypeInTest.id
         )
     )

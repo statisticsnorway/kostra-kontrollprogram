@@ -6,9 +6,9 @@ import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernVal
 import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.opphevelseTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
 
 class Lovhjemmel02Test : BehaviorSpec({
     include(
@@ -17,15 +17,13 @@ class Lovhjemmel02Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without tiltak",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with tiltak, erOmsorgstiltak = false",
                     individInTest.copy(
                         tiltak = mutableListOf(tiltakTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "individ with tiltak, erOmsorgstiltak = true, sluttDato = null",
@@ -36,8 +34,7 @@ class Lovhjemmel02Test : BehaviorSpec({
                                 lovhjemmel = omsorgLovhjemmelTypeInTest
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
@@ -49,8 +46,7 @@ class Lovhjemmel02Test : BehaviorSpec({
                                 opphevelse = opphevelseTypeInTest
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -64,11 +60,11 @@ class Lovhjemmel02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato " +
+                            "krever årsak til opphevelse"
                 )
             ),
             expectedSeverity = Severity.WARNING,
-            expectedErrorMessage = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse",
             expectedContextId = tiltakTypeInTest.id
         )
     )

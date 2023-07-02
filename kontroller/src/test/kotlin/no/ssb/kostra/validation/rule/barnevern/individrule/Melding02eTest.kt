@@ -14,15 +14,14 @@ class Melding02eTest : BehaviorSpec({
             sut = Melding02e(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "individ without melding", individInTest,
-                    false
+                    "individ without melding",
+                    individInTest
                 ),
                 ForAllRowItem(
                     "melding with startDato equal to individ startDato",
                     individInTest.copy(
                         melding = mutableListOf(meldingTypeInTest)
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -32,13 +31,12 @@ class Melding02eTest : BehaviorSpec({
                             meldingTypeInTest.copy(startDato = dateInTest.minusDays(1))
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Startdato " +
+                            "(${dateInTest.minusDays(1)}) skal være lik eller etter individets startdato " +
+                            "(${individInTest.startDato})"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Startdato " +
-                    "(${dateInTest.minusDays(1)}) skal være lik eller etter individets startdato " +
-                    "(${individInTest.startDato})",
             expectedContextId = meldingTypeInTest.id
         )
     )

@@ -15,15 +15,13 @@ class Melding03Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without melding",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "melding without sluttDato",
                     individInTest.copy(
                         melding = mutableListOf(meldingTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato less than 8 days from startDato",
@@ -31,8 +29,7 @@ class Melding03Test : BehaviorSpec({
                         melding = mutableListOf(
                             meldingTypeInTest.copy(sluttDato = dateInTest.plusDays(4))
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -42,12 +39,11 @@ class Melding03Test : BehaviorSpec({
                             meldingTypeInTest.copy(sluttDato = dateInTest.plusDays(14))
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Fristoverskridelse på behandlingstid " +
+                            "for melding, (${meldingTypeInTest.startDato} -> ${dateInTest.plusDays(14)})"
                 )
             ),
             expectedSeverity = Severity.WARNING,
-            expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Fristoverskridelse på behandlingstid " +
-                    "for melding, (${meldingTypeInTest.startDato} -> ${dateInTest.plusDays(14)})",
             expectedContextId = meldingTypeInTest.id
         )
     )

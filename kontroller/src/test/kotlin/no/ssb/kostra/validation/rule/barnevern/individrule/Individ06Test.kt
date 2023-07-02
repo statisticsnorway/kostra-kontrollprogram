@@ -16,28 +16,24 @@ class Individ06Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with melding",
-                    individInTest.copy(melding = mutableListOf(meldingTypeInTest)),
-                    false
+                    individInTest.copy(melding = mutableListOf(meldingTypeInTest))
                 ),
                 ForAllRowItem(
                     "individ with plan",
-                    individInTest.copy(plan = mutableListOf(planTypeInTest)),
-                    false
+                    individInTest.copy(plan = mutableListOf(planTypeInTest))
                 ),
                 ForAllRowItem(
                     "individ with tiltak",
-                    individInTest.copy(tiltak = mutableListOf(tiltakTypeInTest)),
-                    false
+                    individInTest.copy(tiltak = mutableListOf(tiltakTypeInTest))
                 ),
 
                 ForAllRowItem(
                     "individ with without content",
                     individInTest,
-                    true
+                    expectedErrorMessage = "Individet har ingen meldinger, planer eller tiltak i løpet av året"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Individet har ingen meldinger, planer eller tiltak i løpet av året",
             expectedContextId = individInTest.id
         )
     )

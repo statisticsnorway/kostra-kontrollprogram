@@ -16,15 +16,13 @@ class Saksinnhold02Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without melding",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "melding without saksinnhold",
                     individInTest.copy(
                         melding = mutableListOf(meldingTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with saksinnhold, kode does not require presisering",
@@ -36,11 +34,10 @@ class Saksinnhold02Test : BehaviorSpec({
                                 saksinnhold = mutableListOf(saksinnholdTypeInTest)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
-                    "melding with saksinnhold, kode does require presisering",
+                    "melding with saksinnhold with presisering, kode requires presisering",
                     individInTest.copy(
                         melding = mutableListOf(
                             meldingTypeInTest.copy(
@@ -49,12 +46,11 @@ class Saksinnhold02Test : BehaviorSpec({
                                 saksinnhold = mutableListOf(saksinnholdTypeInTest.copy(kode = "18"))
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
-                    "melding with saksinnhold, kode does require presisering",
+                    "melding with saksinnhold without presisering, kode requires presisering",
                     individInTest.copy(
                         melding = mutableListOf(
                             meldingTypeInTest.copy(
@@ -69,11 +65,10 @@ class Saksinnhold02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Saksinnhold med kode (18) mangler presisering"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Saksinnhold med kode (18) mangler presisering",
             expectedContextId = meldingTypeInTest.id
         )
     )

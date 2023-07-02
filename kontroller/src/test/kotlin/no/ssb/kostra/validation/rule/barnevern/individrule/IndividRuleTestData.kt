@@ -18,7 +18,7 @@ object IndividRuleTestData {
     private const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
     private const val KOSTRA_PLAN_ID = "~plan~"
 
-    /** START sub-types */
+    /** START subtypes */
 
     val saksinnholdTypeInTest = KostraSaksinnholdType(
         kode = "~kode~",

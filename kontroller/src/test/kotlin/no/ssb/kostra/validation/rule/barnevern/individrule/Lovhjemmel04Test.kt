@@ -14,15 +14,14 @@ class Lovhjemmel04Test : BehaviorSpec({
             sut = Lovhjemmel04(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "individ without tiltak", individInTest,
-                    false
+                    "individ without tiltak",
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with tiltak with valid lovhjemmel",
                     individInTest.copy(
                         tiltak = mutableListOf(tiltakTypeInTest)
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -34,7 +33,6 @@ class Lovhjemmel04Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Tiltak (${tiltakTypeInTest.id}). Kapittel " +
                             "(0) eller paragraf (${lovhjemmelTypeInTest.paragraf}) " +
                             "er rapportert med den ugyldige koden 0"
@@ -48,14 +46,12 @@ class Lovhjemmel04Test : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Tiltak (${tiltakTypeInTest.id}). Kapittel " +
                             "(${lovhjemmelTypeInTest.kapittel}) eller paragraf (0) " +
                             "er rapportert med den ugyldige koden 0"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "N/A",
             expectedContextId = tiltakTypeInTest.id
         )
     )

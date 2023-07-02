@@ -16,13 +16,11 @@ class Plan02bTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without plan",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "plan without sluttDato",
-                    individInTest.copy(plan = mutableListOf(planTypeInTest)),
-                    false
+                    individInTest.copy(plan = mutableListOf(planTypeInTest))
                 ),
                 ForAllRowItem(
                     "plan with sluttDato in reporting year",
@@ -30,8 +28,7 @@ class Plan02bTest : BehaviorSpec({
                         plan = mutableListOf(
                             planTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -41,13 +38,12 @@ class Plan02bTest : BehaviorSpec({
                             planTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Plan (${planTypeInTest.id}). Planens sluttdato " +
+                            "(${dateInTest.minusDays(1)}) er ikke i rapporteringsåret " +
+                            "(${argumentsInTest.aargang})"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Plan (${planTypeInTest.id}). Planens sluttdato " +
-                    "(${dateInTest.minusDays(1)}) er ikke i rapporteringsåret " +
-                    "(${argumentsInTest.aargang})",
             expectedContextId = planTypeInTest.id
         )
     )

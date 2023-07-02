@@ -13,22 +13,21 @@ class Avgiver03Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "avgiver with organisasjonsnummer",
-                    kostraAvgiverTypeInTest,
-                    false
+                    kostraAvgiverTypeInTest
                 ),
+
                 ForAllRowItem(
                     "avgiver with empty organisasjonsnummer",
                     kostraAvgiverTypeInTest.copy(organisasjonsnummer = ""),
-                    true
+                    expectedErrorMessage = "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er"
                 ),
                 ForAllRowItem(
                     "avgiver with blank organisasjonsnummer",
                     kostraAvgiverTypeInTest.copy(organisasjonsnummer = "  "),
-                    true
+                    expectedErrorMessage = "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er"
                 ),
             ),
-            expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er"
+            expectedSeverity = Severity.ERROR
         )
     )
 })

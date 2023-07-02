@@ -19,7 +19,7 @@ class Tiltak02c : AbstractRule<KostraIndividType>(
             }.map { tiltak ->
                 createValidationReportEntry(
                     contextId = tiltak.id,
-                    messageText = "Tiltak (${tiltak.id}). Sluttdato (${tiltak.startDato}) er " +
+                    messageText = "Tiltak (${tiltak.id}). Sluttdato (${tiltak.sluttDato}) er " +
                             "etter individets sluttdato (${context.sluttDato})"
                 )
             }.ifEmpty { null }

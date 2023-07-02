@@ -16,23 +16,20 @@ class Melding02cTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without sluttDato",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with sluttDato, without melding",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding without sluttDato",
                     individInTest.copy(
                         sluttDato = dateInTest.plusDays(1),
                         melding = mutableListOf(meldingTypeInTest)
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato equal to individ",
@@ -41,8 +38,7 @@ class Melding02cTest : BehaviorSpec({
                         melding = mutableListOf(
                             meldingTypeInTest.copy(sluttDato = dateInTest.plusDays(1))
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "melding with sluttDato  after individ sluttDato, henlagt",
@@ -54,8 +50,7 @@ class Melding02cTest : BehaviorSpec({
                                 konklusjon = HENLAGT
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -64,13 +59,12 @@ class Melding02cTest : BehaviorSpec({
                         sluttDato = dateInTest.plusDays(1),
                         melding = mutableListOf(meldingTypeInTest.copy(sluttDato = dateInTest.plusDays(2)))
                     ),
-                    true
+                    expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Meldingens sluttdato " +
+                            "(${dateInTest.plusDays(2)}) er etter individets sluttdato " +
+                            "(${dateInTest.plusDays(1)})"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Meldingens sluttdato " +
-                    "(${dateInTest.plusDays(2)}) er etter individets sluttdato " +
-                    "(${dateInTest.plusDays(1)})",
             expectedContextId = meldingTypeInTest.id
         )
     )

@@ -15,15 +15,13 @@ class Plan02eTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without plan",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "plan with startDato equal to individ startDato",
                     individInTest.copy(
                         plan = mutableListOf(planTypeInTest)
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -33,12 +31,12 @@ class Plan02eTest : BehaviorSpec({
                             planTypeInTest.copy(startDato = dateInTest.minusDays(1))
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Plan (${planTypeInTest.id}). StartDato " +
+                            "(${dateInTest.minusDays(1)}) skal være lik eller etter individets " +
+                            "startdato (${individInTest.startDato})"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Plan (${planTypeInTest.id}). StartDato (${dateInTest.minusDays(1)}) " +
-                    "skal være lik eller etter individets startdato (${individInTest.startDato})",
             expectedContextId = planTypeInTest.id
         )
     )

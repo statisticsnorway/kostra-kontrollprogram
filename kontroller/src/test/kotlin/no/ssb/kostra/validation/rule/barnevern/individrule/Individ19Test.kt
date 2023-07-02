@@ -15,15 +15,13 @@ class Individ19Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without DUF-nummer",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "individ with valid DUF-nummer", individInTest.copy(
                         fodselsnummer = null,
                         duFnummer = generateRandomDuf(Year.now().value - 1, Year.now().value - 1)
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -31,11 +29,10 @@ class Individ19Test : BehaviorSpec({
                         fodselsnummer = null,
                         duFnummer = generateRandomDuf(Year.now().value - 1, Year.now().value - 1).take(10)
                     ),
-                    true
+                    expectedErrorMessage = "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."
                 )
             ),
             expectedSeverity = Severity.WARNING,
-            expectedErrorMessage = "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer.",
             expectedContextId = individInTest.id
         )
     )

@@ -16,14 +16,12 @@ class Individ08Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ without fodselsnummer",
-                    individInTest.copy(fodselsnummer = null),
-                    false
+                    individInTest.copy(fodselsnummer = null)
                 ),
 
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
-                    individInTest.copy(fodselsnummer = "12345612345"),
-                    false
+                    individInTest.copy(fodselsnummer = "12345612345")
                 ),
                 ForAllRowItem(
                     "individ with fodselsnummer, age below 18",
@@ -32,8 +30,7 @@ class Individ08Test : BehaviorSpec({
                             LocalDate.now().minusYears(17),
                             LocalDate.now().minusYears(16)
                         )
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "individ with fodselsnummer, age above 18 with measure",
@@ -43,8 +40,7 @@ class Individ08Test : BehaviorSpec({
                             LocalDate.now().minusYears(20),
                             LocalDate.now().minusYears(19)
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -55,11 +51,10 @@ class Individ08Test : BehaviorSpec({
                             LocalDate.now().minusYears(19)
                         )
                     ),
-                    true
+                    expectedErrorMessage = "Individet er over 18 år og skal dermed ha tiltak"
                 )
             ),
             expectedSeverity = Severity.WARNING,
-            expectedErrorMessage = "Individet er over 18 år og skal dermed ha tiltak",
             expectedContextId = individInTest.id
         )
     )

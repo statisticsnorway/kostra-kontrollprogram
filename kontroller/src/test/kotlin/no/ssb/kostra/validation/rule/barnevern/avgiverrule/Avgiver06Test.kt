@@ -13,22 +13,21 @@ class Avgiver06Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "avgiver with kommunenavn",
-                    kostraAvgiverTypeInTest,
-                    false
+                    kostraAvgiverTypeInTest
                 ),
+
                 ForAllRowItem(
                     "avgiver with empty kommunenavn",
                     kostraAvgiverTypeInTest.copy(kommunenavn = ""),
-                    true
+                    expectedErrorMessage = "Filen mangler kommunenavn."
                 ),
                 ForAllRowItem(
                     "avgiver with blank kommunenavn",
                     kostraAvgiverTypeInTest.copy(kommunenavn = "   "),
-                    true
+                    expectedErrorMessage = "Filen mangler kommunenavn."
                 )
             ),
-            expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Filen mangler kommunenavn."
+            expectedSeverity = Severity.ERROR
         )
     )
 })

@@ -14,18 +14,17 @@ class Avgiver02Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "avgiver with valid version",
-                    kostraAvgiverTypeInTest,
-                    false
+                    kostraAvgiverTypeInTest
                 ),
+
                 ForAllRowItem(
                     "avgiver with invalid version",
                     kostraAvgiverTypeInTest.copy(versjon = Year.now().value),
-                    true
+                    expectedErrorMessage = "Filen inneholder feil rapporteringsår (${Year.now().value}), " +
+                            "forventet ${Year.now().value - 1}."
                 ),
             ),
-            expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "Filen inneholder feil rapporteringsår (${Year.now().value}), " +
-                    "forventet ${Year.now().value - 1}."
+            expectedSeverity = Severity.ERROR
         )
     )
 })

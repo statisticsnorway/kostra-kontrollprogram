@@ -16,15 +16,13 @@ class Melding02dTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "individ with avslutta3112 = '2'",
-                    individInTest,
-                    false
+                    individInTest
                 ),
                 ForAllRowItem(
                     "avslutta3112 = '1', no melding",
                     individInTest.copy(
                         avslutta3112 = KOSTRA_IS_CLOSED_TRUE
-                    ),
-                    false
+                    )
                 ),
                 ForAllRowItem(
                     "avslutta3112 = '1', melding with sluttDato",
@@ -36,8 +34,7 @@ class Melding02dTest : BehaviorSpec({
                                 sluttDato = dateInTest.minusYears(1).plusDays(1)
                             )
                         )
-                    ),
-                    false
+                    )
                 ),
 
                 ForAllRowItem(
@@ -51,7 +48,6 @@ class Melding02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Individet er avsluttet hos " +
                             "barnevernet og dets meldinger skal dermed være avsluttet. " +
                             "Sluttdato er uoppgitt"
@@ -67,7 +63,6 @@ class Melding02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Individet er avsluttet hos " +
                             "barnevernet og dets meldinger skal dermed være avsluttet. " +
                             "Sluttdato er ${dateInTest.minusYears(1).plusDays(1)}"
@@ -83,14 +78,12 @@ class Melding02dTest : BehaviorSpec({
                             )
                         )
                     ),
-                    true,
                     expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Individet er avsluttet hos " +
                             "barnevernet og dets meldinger skal dermed være avsluttet. " +
                             "Sluttdato er $dateInTest"
                 )
             ),
             expectedSeverity = Severity.ERROR,
-            expectedErrorMessage = "N/A",
             expectedContextId = meldingTypeInTest.id
         )
     )

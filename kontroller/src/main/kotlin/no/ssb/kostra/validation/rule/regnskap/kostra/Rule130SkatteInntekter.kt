@@ -16,9 +16,10 @@ class Rule130SkatteInntekter : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && !it.isLongyearbyen() && it.isRegional() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
+        .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsString(FIELD_FUNKSJON) == "800 " && it.getFieldAsString(FIELD_ART) == "870" }
+        ?.filter { it.getFieldAsTrimmedString(FIELD_FUNKSJON) == "800" && it.getFieldAsString(FIELD_ART) == "870" }
         ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { skatteInntekter -> skatteInntekter < 0 }
         ?.let { skatteInntekter ->

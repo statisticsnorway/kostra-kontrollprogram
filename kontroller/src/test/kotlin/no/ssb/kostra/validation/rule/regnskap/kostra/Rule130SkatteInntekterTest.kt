@@ -19,21 +19,39 @@ class Rule130SkatteInntekterTest : BehaviorSpec({
         val sut = Rule130SkatteInntekter()
 
         forAll(
-            row("420400", "0A", "1", "800 ", "870", "-1", false),
-            row("420400", "0A", "1", "800 ", "870", "0", true),
-            row("030101", "0A", "1", "800 ", "870", "0", false),
-            row("211100", "0A", "1", "800 ", "870", "0", false),
-            row("420400", "0C", "1", "800 ", "870", "-1", false),
-            row("420400", "0C", "1", "800 ", "870", "0", true),
-            row("420400", "0I", "3", "800 ", "870", "-1", false),
-            row("420400", "0I", "3", "800 ", "870", "0", false),
-            row("420400", "0K", "3", "800 ", "870", "-1", false),
-            row("420400", "0K", "3", "800 ", "870", "0", false),
-            row("420400", "0M", "3", "800 ", "870", "-1", false),
-            row("420400", "0M", "3", "800 ", "870", "0", true),
-            row("420400", "0P", "3", "800 ", "870", "-1", false),
-            row("420400", "0P", "3", "800 ", "870", "0", true),
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
+            row(
+                "matches !(isOsloBydel || it.isLongyearbyen), isRegional, isBevilgningDriftRegnskap, funksjon = 800, art = 870",
+                "420400", "0A", "1", "800 ", "870", "0", true
+            ),
+            row(
+                "does not match region, Oslo",
+                "030101", "0A", "1", "800 ", "870", "0", false
+            ),
+            row(
+                "does not match region, Longyearbyen",
+                "211100", "0A", "1", "800 ", "870", "0", false
+            ),
+            row(
+                "does not match isRegional",
+                "420400", "0I", "1", "800 ", "870", "0", false
+            ),
+            row(
+                "does not match isBevilgningDriftRegnskap",
+                "420400", "0A", "0", "800 ", "870", "0", false
+            ),
+            row(
+                "does not match funksjon",
+                "420400", "0A", "1", "801 ", "870", "0", true
+            ),
+            row(
+                "does not match art",
+                "420400", "0A", "1", "800 ", "871", "0", true
+            ),
+            row(
+                "does not match belop",
+                "420400", "0A", "1", "800 ", "870", "-1", false
+            )
+        ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_REGION to region,
                 FIELD_SKJEMA to skjema,
@@ -43,7 +61,7 @@ class Rule130SkatteInntekterTest : BehaviorSpec({
                 FIELD_BELOP to belop
             ).toKostraRecord().asList()
 
-            When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
+            When("$description for $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

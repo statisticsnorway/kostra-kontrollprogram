@@ -19,20 +19,31 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
         val sut = Rule170Funksjon290Investering()
 
         forAll(
-            row("420400", "0A", "0", "290 ", "010", "31", true),
-            row("420400", "0A", "0", "290 ", "010", "30", false),
-            row("030101", "0A", "0", "290 ", "010", "31", false),
-            row("420400", "0C", "0", "290 ", "010", "31", false),
-            row("420400", "0C", "0", "290 ", "010", "30", false),
-            row("420400", "0I", "4", "290 ", "010", "31", false),
-            row("420400", "0I", "4", "290 ", "010", "30", false),
-            row("420400", "0K", "4", "290 ", "010", "31", false),
-            row("420400", "0K", "4", "290 ", "010", "30", false),
-            row("420400", "0M", "4", "290 ", "010", "31", true),
-            row("420400", "0M", "4", "290 ", "010", "30", false),
-            row("420400", "0P", "4", "290 ", "010", "31", false),
-            row("420400", "0P", "4", "290 ", "010", "30", false)
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
+            row(
+                "matches !it.isOsloBydel, isKommuneRegnskap, isBevilgningInvesteringRegnskap, funksjon, funksjon290Investering",
+                "420400", "0A", "0", "290 ", "010", "31", true
+            ),
+            row(
+                "does not match !it.isOsloBydel",
+                "030101", "0A", "0", "290 ", "010", "31", false
+            ),
+            row(
+                "does not match isKommuneRegnskap",
+                "420400", "0X", "0", "290 ", "010", "31", false
+            ),
+            row(
+                "does not match isBevilgningInvesteringRegnskap",
+                "420400", "0A", "1", "290 ", "010", "31", false
+            ),
+            row(
+                "does not match funksjon",
+                "420400", "0A", "0", "291 ", "010", "31", false
+            ),
+            row(
+                "does not match funksjon290Investering",
+                "420400", "0A", "0", "290 ", "010", "30", false
+            )
+        ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_REGION to region,
                 FIELD_SKJEMA to skjema,
@@ -42,7 +53,7 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
                 FIELD_BELOP to belop
             ).toKostraRecord().asList()
 
-            When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
+            When("$description for $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

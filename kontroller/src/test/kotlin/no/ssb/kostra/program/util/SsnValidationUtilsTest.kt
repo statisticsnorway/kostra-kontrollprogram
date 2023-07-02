@@ -5,6 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.util.SsnValidationUtils.isModulo11Valid
+import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityId
 import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.program.util.SsnValidationUtils.validateDUF
 import java.time.LocalDate
@@ -23,6 +24,23 @@ class SsnValidationUtilsTest : BehaviorSpec({
 
                 Then("dateOfBirth should be as expected") {
                     dateOfBirth shouldBe expectedDate
+                }
+            }
+        }
+    }
+
+    Given("isValidSocialSecurityId") {
+        forAll(
+            row("socialSecurityId does not match regex", "abc", false),
+            row("socialSecurityId does matches regex", "12345612345", false),
+            row("invalid date of birth in socialSecurityId", "01840612345", false),
+            row("valid FREG socialSecurityId", "31925298037", true),
+        ) { description, socialSecurityId, expectedResult ->
+            When(description) {
+                val isValidSocialSecurityId = isValidSocialSecurityId(socialSecurityId)
+
+                Then("isValidSocialSecurityId should be expectedResult") {
+                    isValidSocialSecurityId shouldBe expectedResult
                 }
             }
         }

@@ -170,7 +170,8 @@ class KostraRecordTest : BehaviorSpec({
             row("instances are context equal", kostraRecord1a, kostraRecord1b, true),
             row("other instance is null", kostraRecord1a, null, false),
             row("other is of different type", kostraRecord1a, "Hello World", false),
-            row("instances have different content", kostraRecord1a, kostraRecord2, false),
+            row("instances have different lineNumber", kostraRecord1a, kostraRecord1a.copy(lineNumber = 2), false),
+            row("instances have different valuesByName", kostraRecord1a, kostraRecord2, false),
         ) { description, thisInstance, otherInstance, expectedResult ->
             When(description) {
                 val testResult = thisInstance == otherInstance

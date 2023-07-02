@@ -2,8 +2,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.t
 
 class Lovhjemmel02Test : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Lovhjemmel02(),
             forAllRows = listOf(
                 ForAllRowItem(

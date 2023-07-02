@@ -2,8 +2,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.u
 
 class Undersokelse02dTest : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Undersokelse02d(),
             forAllRows = listOf(
                 ForAllRowItem("individ with avslutta3112 = '2'", individInTest),

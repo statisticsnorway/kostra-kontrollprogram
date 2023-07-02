@@ -1,52 +1,40 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control32KvalifiseringssumOverMaksimum.Companion.STONAD_SUM_MAX
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control32KvalifiseringssumOverMaksimum.Companion.STONAD_SUM_MAX
 
 class Control32KvalifiseringssumOverMaksimumTest : BehaviorSpec({
-    val sut = Control32KvalifiseringssumOverMaksimum()
-
-    Given("context") {
-        forAll(
-            row(
-                "empty amount",
-                kostraRecordInTest(" "),
-                false
-            ),
-            row(
-                "valid amount",
-                kostraRecordInTest("42"),
-                false
-            ),
-            row(
-                "max amount",
-                kostraRecordInTest(STONAD_SUM_MAX.toString()),
-                false
-            ),
-            row(
-                "amount too high",
-                kostraRecordInTest((STONAD_SUM_MAX + 1).toString()),
-                true
-            )
-        ) { description, context, expectError ->
-            When(description) {
-                verifyValidationResult(
-                    validationReportEntries = sut.validate(context, argumentsInTest),
-                    expectError = expectError,
-                    expectedSeverity = Severity.WARNING,
+    include(
+        validationRuleTest(
+            sut = Control32KvalifiseringssumOverMaksimum(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "empty amount",
+                    kostraRecordInTest(" ")
+                ),
+                ForAllRowItem(
+                    "valid amount",
+                    kostraRecordInTest("42")
+                ),
+                ForAllRowItem(
+                    "max amount",
+                    kostraRecordInTest(STONAD_SUM_MAX.toString())
+                ),
+                ForAllRowItem(
+                    "amount too high",
+                    kostraRecordInTest((STONAD_SUM_MAX + 1).toString()),
                     "Kvalifiseringsstønaden (600001) som deltakeren har fått i løpet av " +
                             "rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på NOK 600000,-."
                 )
-            }
-        }
-    }
+            ),
+            expectedSeverity = Severity.WARNING
+        )
+    )
 }) {
     companion object {
         private fun kostraRecordInTest(amount: String) =

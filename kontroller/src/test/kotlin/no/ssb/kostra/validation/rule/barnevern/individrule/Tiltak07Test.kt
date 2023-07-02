@@ -2,15 +2,15 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest as kostraKategoriTypeInTest1
 
 class Tiltak07Test : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Tiltak07(),
             forAllRows = listOf(
                 ForAllRowItem(

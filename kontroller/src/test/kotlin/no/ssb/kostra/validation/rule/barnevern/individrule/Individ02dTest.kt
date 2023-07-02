@@ -2,8 +2,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
@@ -11,7 +11,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.i
 
 class Individ02dTest : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Individ02d(),
             forAllRows = listOf(
                 ForAllRowItem(

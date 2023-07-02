@@ -3,8 +3,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.u
 
 class Undersokelse02bTest : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Undersokelse02b(),
             forAllRows = listOf(
                 ForAllRowItem("individ without undersokelse", individInTest),

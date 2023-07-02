@@ -3,14 +3,14 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.barnevern.BarnevernTestFactory.barnevernValidationRuleTest
-import no.ssb.kostra.validation.rule.barnevern.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import java.time.Year
 
 class Individ03Test : BehaviorSpec({
     include(
-        barnevernValidationRuleTest(
+        validationRuleTest(
             sut = Individ03(),
             forAllRows = listOf(
                 ForAllRowItem(

@@ -1,52 +1,43 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.twoDigitReportingYear
 
 class Control16BegyntDatoTest : BehaviorSpec({
-    val sut = Control16BegyntDato()
-
-    Given("context") {
-        forAll(
-            row(
-                "reportingYear = currentYear, valid date",
-                "0101$twoDigitReportingYear",
-                false
-            ),
-            row(
-                "5 year diff between reportingYear and vedtakDato",
-                "0101${twoDigitReportingYear - 5}",
-                true
-            ),
-            row(
-                "invalid begyntDato",
-                "a".repeat(6),
-                true
-            )
-        ) { description, begyntDato, expectError ->
-            val context = kostraRecordInTest(begyntDato)
-
-            When(description) {
-                verifyValidationResult(
-                    validationReportEntries = sut.validate(context, argumentsInTest),
-                    expectError = expectError,
-                    expectedSeverity = Severity.ERROR,
-                    "Feltet for 'Hvilken dato begynte deltakeren i program? " +
-                            "(iverksettelse)' med verdien ($begyntDato) enten mangler utfylling, har ugyldig dato " +
-                            "eller dato som er eldre enn 4 år fra rapporteringsåret ($fourDigitReportingYear). " +
-                            "Feltet er obligatorisk å fylle ut."
+    include(
+        validationRuleTest(
+            sut = Control16BegyntDato(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "reportingYear = currentYear, valid date",
+                    kostraRecordInTest("0101$twoDigitReportingYear")
+                ),
+                ForAllRowItem(
+                    "5 year diff between reportingYear and vedtakDato",
+                    kostraRecordInTest("0101${twoDigitReportingYear - 5}"),
+                    expectedErrorMessage = "Feltet for 'Hvilken dato begynte deltakeren i program? " +
+                            "(iverksettelse)' med verdien (${"0101${twoDigitReportingYear - 5}"}) enten mangler " +
+                            "utfylling, har ugyldig dato eller dato som er eldre enn 4 år fra " +
+                            "rapporteringsåret ($fourDigitReportingYear). Feltet er obligatorisk å fylle ut."
+                ),
+                ForAllRowItem(
+                    "invalid begyntDato",
+                    kostraRecordInTest("a".repeat(6)),
+                    expectedErrorMessage = "Feltet for 'Hvilken dato begynte deltakeren i program? " +
+                            "(iverksettelse)' med verdien (${"a".repeat(6)}) enten mangler utfylling, har " +
+                            "ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret " +
+                            "($fourDigitReportingYear). Feltet er obligatorisk å fylle ut."
                 )
-            }
-        }
-    }
+            ),
+            expectedSeverity = Severity.ERROR
+        )
+    )
 }) {
     companion object {
         private fun kostraRecordInTest(begyntDateString: String) = kvalifiseringKostraRecordInTest(

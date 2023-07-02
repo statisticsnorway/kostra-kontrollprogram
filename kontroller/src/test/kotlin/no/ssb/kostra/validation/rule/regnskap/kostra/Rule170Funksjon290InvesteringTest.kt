@@ -39,10 +39,12 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
                 "does not match funksjon",
                 "420400", "0A", "0", "291 ", "010", "31", false
             ),
-            row(
-                "does not match funksjon290Investering",
-                "420400", "0A", "0", "290 ", "010", "30", false
-            )
+            *(-30..30).map {
+                row(
+                    "does not match funksjon290Investering $it",
+                    "420400", "0A", "0", "290 ", "010", "$it", false
+                )
+            }.toTypedArray()
         ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_REGION to region,

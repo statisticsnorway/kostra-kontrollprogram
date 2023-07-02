@@ -85,7 +85,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
         forAll(
             *invalidLanefondDriftArtList.map {
                 row(
-                    "bevilgningregnskap = true, art, funksjon, belop matcher, art = $it",
+                    "bevilgningregnskap = true, art and belop are matching, art = $it",
                     "0A", "100 ", it, "1", true
                 )
             }.toTypedArray(),

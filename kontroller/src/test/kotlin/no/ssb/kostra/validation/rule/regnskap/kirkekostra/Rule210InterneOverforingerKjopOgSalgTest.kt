@@ -18,24 +18,7 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
 
         forAll(
             row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "380",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "045 ",
-                        FIELD_ART to "780",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
+                "matches isBevilgningRegnskap, art, internKjop + internSalg",
                 listOf(
                     mapOf(
                         FIELD_SKJEMA to "0F",
@@ -52,14 +35,71 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
                         FIELD_BELOP to "-1000"
                     )
                 ), true
+            ),
+            row(
+                "does not match isBevilgningRegnskap",
+                listOf(
+                    mapOf(
+                        FIELD_SKJEMA to "0X",
+                        FIELD_KONTOKLASSE to "3",
+                        FIELD_FUNKSJON to "041 ",
+                        FIELD_ART to "100",
+                        FIELD_BELOP to "0"
+                    ),
+                    mapOf(
+                        FIELD_SKJEMA to "0X",
+                        FIELD_KONTOKLASSE to "4",
+                        FIELD_FUNKSJON to "045 ",
+                        FIELD_ART to "780",
+                        FIELD_BELOP to "-1000"
+                    )
+                ), false
+            ),
+            row(
+                "does not match art",
+                listOf(
+                    mapOf(
+                        FIELD_SKJEMA to "0F",
+                        FIELD_KONTOKLASSE to "3",
+                        FIELD_FUNKSJON to "041 ",
+                        FIELD_ART to "100",
+                        FIELD_BELOP to "0"
+                    ),
+                    mapOf(
+                        FIELD_SKJEMA to "0F",
+                        FIELD_KONTOKLASSE to "4",
+                        FIELD_FUNKSJON to "045 ",
+                        FIELD_ART to "100",
+                        FIELD_BELOP to "-1000"
+                    )
+                ), false
+            ),
+            row(
+                "does not match internKjop + internSalg",
+                listOf(
+                    mapOf(
+                        FIELD_SKJEMA to "0F",
+                        FIELD_KONTOKLASSE to "3",
+                        FIELD_FUNKSJON to "041 ",
+                        FIELD_ART to "100",
+                        FIELD_BELOP to "0"
+                    ),
+                    mapOf(
+                        FIELD_SKJEMA to "0F",
+                        FIELD_KONTOKLASSE to "4",
+                        FIELD_FUNKSJON to "045 ",
+                        FIELD_ART to "780",
+                        FIELD_BELOP to "0"
+                    )
+                ), false
             )
-        ) { recordList, expectError ->
+        ) { description, recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
             val internKjop = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
             val internSalg = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
             val internDifferanse = internKjop + internSalg
 
-            When("List is $recordList") {
+            When("$description $recordList") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

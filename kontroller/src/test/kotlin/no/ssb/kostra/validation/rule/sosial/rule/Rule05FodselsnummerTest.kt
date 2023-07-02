@@ -8,7 +8,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_F
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
-import no.ssb.kostra.testutil.RandomUtils
+import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
@@ -21,7 +21,7 @@ class Rule05FodselsnummerTest : BehaviorSpec({
         forAll(
             row(
                 "record with valid fodselsnummer",
-                kostraRecordInTest(RandomUtils.generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now())),
+                kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now())),
                 false
             ),
             row(

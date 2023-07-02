@@ -5,13 +5,12 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
     val sut = Control30HarVarighetMenManglerKvalifiseringssum()
@@ -62,15 +61,13 @@ class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private val validKostraRecordInTest = KostraRecord(
-            valuesByName = mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+        private val validKostraRecordInTest = kvalifiseringKostraRecordInTest(
+            mapOf(
                 KVP_STONAD_COL_NAME to "2",
                 *((1..12).map {
                     "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
                 }).toTypedArray()
-            ),
-            fieldDefinitionByName = fieldDefinitions.associate { with(it) { name to it } }
+            )
         )
     }
 }

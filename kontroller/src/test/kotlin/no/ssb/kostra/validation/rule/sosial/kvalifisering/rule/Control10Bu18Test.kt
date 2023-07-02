@@ -4,13 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control10Bu18Test : BehaviorSpec({
     val sut = Control10Bu18()
@@ -48,13 +45,8 @@ class Control10Bu18Test : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(code: Int) = KostraRecord(
-            1,
-            mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                BU18_COL_NAME to code.toString()
-            ),
-            KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
+        private fun kostraRecordInTest(code: Int) = kvalifiseringKostraRecordInTest(
+            mapOf(BU18_COL_NAME to code.toString())
         )
     }
 }

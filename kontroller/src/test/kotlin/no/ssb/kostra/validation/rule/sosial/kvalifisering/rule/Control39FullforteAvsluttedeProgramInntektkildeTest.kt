@@ -4,14 +4,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_VIKTIGSTE_INNTEKT_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.fourDigitReportingYear
 
 class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
     val sut = Control39FullforteAvsluttedeProgramInntektkilde()
@@ -43,7 +41,7 @@ class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
                             "umiddelbart etter avslutningen? Må fylles ut dersom det er krysset av for " +
                             "svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter " +
                             "avtale (gjelder ikke flytting) under feltet for 'Hva er status for deltakelsen i " +
-                            "kvalifiseringsprogrammet per 31.12.2022'?"
+                            "kvalifiseringsprogrammet per 31.12.${fourDigitReportingYear}'?"
                 )
             }
         }
@@ -53,13 +51,11 @@ class Control39FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
         private fun kostraRecordInTest(
             status: String,
             inntekt: String
-        ) = KostraRecord(
-            valuesByName = mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
+        ) = KvalifiseringTestUtils.kvalifiseringKostraRecordInTest(
+            mapOf(
                 STATUS_COL_NAME to status,
                 AVSL_VIKTIGSTE_INNTEKT_COL_NAME to inntekt,
-            ),
-            fieldDefinitionByName = fieldDefinitions.associate { with(it) { name to it } }
+            )
         )
     }
 }

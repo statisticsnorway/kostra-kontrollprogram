@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
-data class ForAllRowItem<T : Any>(
+data class ForAllRowItem<out T : Any>(
     val description: String,
     val context: T,
     val expectedErrorMessage: String? = null,

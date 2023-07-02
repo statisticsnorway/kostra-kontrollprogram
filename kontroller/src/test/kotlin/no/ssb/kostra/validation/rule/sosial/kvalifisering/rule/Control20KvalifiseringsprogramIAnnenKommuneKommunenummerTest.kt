@@ -3,15 +3,12 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpec({
     val sut = Control20KvalifiseringsprogramIAnnenKommuneKommunenummer()
@@ -68,14 +65,11 @@ class Control20KvalifiseringsprogramIAnnenKommuneKommunenummerTest : BehaviorSpe
         private fun kostraRecordInTest(
             kvpKomm: Int,
             kommnrKvpKomm: String
-        ) = KostraRecord(
-            1,
+        ) = kvalifiseringKostraRecordInTest(
             mapOf(
-                KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
                 KVP_KOMM_COL_NAME to kvpKomm.toString(),
                 KOMMNR_KVP_KOMM_COL_NAME to kommnrKvpKomm
-            ),
-            KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
+            )
         )
     }
 }

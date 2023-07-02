@@ -5,13 +5,10 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control12AntBu18Bu18Test : BehaviorSpec({
     val sut = Control12AntBu18Bu18()
@@ -57,15 +54,11 @@ class Control12AntBu18Bu18Test : BehaviorSpec({
         private fun kostraRecordInTest(
             bu18Code: Int,
             numberOfChildren: Int
-        ) = KostraRecord(
-            1,
+        ) = kvalifiseringKostraRecordInTest(
             mapOf(
-                KOMMUNE_NR_COL_NAME to RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
                 BU18_COL_NAME to bu18Code.toString(),
                 ANT_BU18_COL_NAME to numberOfChildren.toString()
-
-            ),
-            fieldDefinitions.associate { with(it) { name to it } }
+            )
         )
     }
 }

@@ -18,7 +18,6 @@ class Individ08Test : BehaviorSpec({
                     "individ without fodselsnummer",
                     individInTest.copy(fodselsnummer = null)
                 ),
-
                 ForAllRowItem(
                     "individ with invalid fodselsnummer",
                     individInTest.copy(fodselsnummer = "12345612345")

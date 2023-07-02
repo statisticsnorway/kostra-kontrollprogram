@@ -3,14 +3,11 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control36StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
     val sut = Control36StatusForDeltakelseIKvalifiseringsprogram()
@@ -42,12 +39,7 @@ class Control36StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(status: String) = KostraRecord(
-            valuesByName = mapOf(
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                STATUS_COL_NAME to status,
-            ),
-            fieldDefinitionByName = fieldDefinitions.associate { with(it) { name to it } }
-        )
+        private fun kostraRecordInTest(status: String) =
+            kvalifiseringKostraRecordInTest(mapOf(STATUS_COL_NAME to status))
     }
 }

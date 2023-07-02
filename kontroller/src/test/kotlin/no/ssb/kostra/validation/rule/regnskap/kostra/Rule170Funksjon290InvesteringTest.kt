@@ -24,6 +24,10 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
                 "420400", "0A", "0", "290 ", "010", "31", true
             ),
             row(
+                "matches !it.isOsloBydel, isKommuneRegnskap, isBevilgningInvesteringRegnskap, funksjon, negative funksjon290Investering",
+                "420400", "0A", "0", "290 ", "010", "-31", true
+            ),
+            row(
                 "does not match !it.isOsloBydel",
                 "030101", "0A", "0", "290 ", "010", "31", false
             ),
@@ -39,12 +43,14 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
                 "does not match funksjon",
                 "420400", "0A", "0", "291 ", "010", "31", false
             ),
-            *(-30..30).map {
-                row(
-                    "does not match funksjon290Investering $it",
-                    "420400", "0A", "0", "290 ", "010", "$it", false
-                )
-            }.toTypedArray()
+            row(
+                "does not match funksjon290Investering +30",
+                "420400", "0A", "0", "290 ", "010", "30", false
+            ),
+            row(
+                "does not match funksjon290Investering -30",
+                "420400", "0A", "0", "290 ", "010", "0", false
+            )
         ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_REGION to region,

@@ -42,9 +42,8 @@ object KostraTestFactory {
                             expectedSeverity = expectedSeverity,
                             expectedErrorText = expectedErrorMessage ?:"N/A"
                         )
-                    }
 
-                    And("if expectedContextId is present") {
+                        /** if expectedContextId is present */
                         if (context is KostraIndividType
                             && !expectedErrorMessage.isNullOrEmpty()
                             && expectedContextId != null

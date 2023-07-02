@@ -161,19 +161,15 @@ class KostraRecordTest : BehaviorSpec({
     }
 
     Given("testing of overridden function equals()") {
-        val fieldDefinitions = listOf(
-            FieldDefinition(1, "Field123", STRING_TYPE, INPUTBOX_VIEWTYPE, 1, 3, emptyList(), "", false)
-        )
-        val valuesByName = mapOf("Field123" to "12", "Field456" to "456", "Field789" to "789", "Field012" to "-1")
-        val recordString = "12 456789 -1"
-        val kostraRecord1a = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
-        val kostraRecord1b = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
+        val kostraRecord1a = KostraRecord()
+        val kostraRecord1b = KostraRecord()
         val kostraRecord2 = kostraRecord1a.plus("Added" to "be different")
 
         forAll(
-            row("instances are equal", kostraRecord1a, kostraRecord1b, true),
-            row("other instance is missing", kostraRecord1a, null, false),
-            row("instances are different classes", kostraRecord1a, recordString, false),
+            row("instances are equal", kostraRecord1a, kostraRecord1a, true),
+            row("instances are context equal", kostraRecord1a, kostraRecord1b, true),
+            row("other instance is null", kostraRecord1a, null, false),
+            row("other is of different type", kostraRecord1a, "Hello World", false),
             row("instances have different content", kostraRecord1a, kostraRecord2, false),
         ) { description, thisInstance, otherInstance, expectedResult ->
             When(description) {

@@ -15,35 +15,35 @@ class Rule135RammetilskuddTest : BehaviorSpec({
 
         forAll(
             row(
-                " matches region, isRegional (0A), isBevilgningDriftRegnskap (0A, 1), funksjon (840 ), art (800), belop (0)",
+                "matches region, isRegional (0A), isBevilgningDriftRegnskap (0A, 1), funksjon (840 ), art (800), belop (0)",
                 "420400", "0A", "1", "840 ", "800", "0", true
             ),
             row(
-                " region does not match, Oslo",
+                "region does not match, Oslo",
                 "030101", "0A", "1", "840 ", "800", "0", false
             ),
             row(
-                " region does not match, Longyearbyen",
+                "region does not match, Longyearbyen",
                 "211100", "0A", "1", "840 ", "800", "0", false
             ),
             row(
-                " isRegional does not match",
+                "isRegional does not match",
                 "420400", "0I", "1", "840 ", "800", "0", false
             ),
             row(
-                " isBevilgningDriftRegnskap does not match",
+                "isBevilgningDriftRegnskap does not match",
                 "420400", "0A", "0", "840 ", "800", "0", false
             ),
             row(
-                " funksjon does not match",
+                "funksjon does not match",
                 "420400", "0A", "1", "841 ", "800", "0", true
             ),
             row(
-                " art does not match",
+                "art does not match",
                 "420400", "0A", "1", "840 ", "801", "0", true
             ),
             row(
-                " belop does not match",
+                "belop does not match",
                 "420400", "0A", "1", "840 ", "800", "-1", false
             )
         ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->

@@ -14,25 +14,27 @@ class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
         val sut = Rule080KombinasjonBevilgningFunksjonArt()
 
         forAll(
-            row("0A", "840 ", "010", "1", false),
-            row("0A", "840 ", "800", "1", false),
-            row("0A", "100 ", "800", "1", true),
-            row("0C", "840 ", "010", "1", false),
-            row("0C", "840 ", "800", "1", false),
-            row("0C", "100 ", "800", "1", true),
-            row("0I", "840 ", "010", "1", false),
-            row("0I", "840 ", "800", "1", false),
-            row("0I", "100 ", "800", "1", true),
-            row("0K", "840 ", "010", "1", false),
-            row("0K", "840 ", "800", "1", false),
-            row("0K", "100 ", "800", "1", true),
-            row("0M", "840 ", "010", "1", false),
-            row("0M", "840 ", "800", "1", false),
-            row("0M", "100 ", "800", "1", true),
-            row("0P", "840 ", "010", "1", false),
-            row("0P", "840 ", "800", "1", false),
-            row("0P", "100 ", "800", "1", true)
-        ) { skjema, funksjon, art, belop, expectError ->
+            row(
+                "matches isBevilgningRegnskap, art, funksjon, belop",
+                "0A", "100 ", "800", "1", true
+            ),
+            row(
+                "does not match isBevilgningRegnskap",
+                "0X", "100 ", "800", "1", false
+            ),
+            row(
+                "does not match art",
+                "0A", "100 ", "801", "1", false
+            ),
+            row(
+                "does not match funksjon",
+                "0A", "840 ", "800", "1", false
+            ),
+            row(
+                "does not match belop",
+                "0A", "100 ", "800", "0", false
+            )
+        ) { description, skjema, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 RegnskapConstants.FIELD_SKJEMA to skjema,
                 RegnskapConstants.FIELD_FUNKSJON to funksjon,
@@ -40,7 +42,7 @@ class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                 RegnskapConstants.FIELD_BELOP to belop,
             ).toKostraRecord().asList()
 
-            When("For $skjema, $funksjon, $art -> $expectError") {
+            When("$description for $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

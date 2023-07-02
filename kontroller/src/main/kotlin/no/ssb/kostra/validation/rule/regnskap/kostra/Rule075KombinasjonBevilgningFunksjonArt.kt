@@ -14,13 +14,19 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) in listOf("870", "871", "872", "873", "875", "876")
-                && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "800 "
+                && kostraRecord.getFieldAsString(FIELD_ART) in qualifyingArtCodes
+                && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != REQUIRED_FUNCTION
                 && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Artene 870, 871, 872, 873, 875 og 876 er kun tillat brukt i kombinasjon med funksjon 800.",
+            messageText = "Artene ${qualifyingArtCodes.joinToString(", ")} er kun tillat brukt i " +
+                    "kombinasjon med funksjon 800.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )
     }.ifEmpty { null }
+
+    companion object {
+        internal val qualifyingArtCodes = setOf("870", "871", "872", "873", "875", "876")
+        internal const val REQUIRED_FUNCTION = "800 "
+    }
 }

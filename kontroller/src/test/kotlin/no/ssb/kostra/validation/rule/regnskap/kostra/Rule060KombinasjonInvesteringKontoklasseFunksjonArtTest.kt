@@ -14,31 +14,27 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArtTest : BehaviorSpec({
         val sut = Rule060KombinasjonInvesteringKontoklasseFunksjonArt()
 
         forAll(
-            row("0A", "0", "100 ", "729", "1", true),
-            row("0A", "0", "841 ", "010", "1", false),
-            row("0A", "0", "841 ", "729", "1", false),
-            row("0A", "1", "100 ", "729", "1", false),
-            row("0C", "0", "100 ", "729", "1", true),
-            row("0C", "0", "841 ", "010", "1", false),
-            row("0C", "0", "841 ", "729", "1", false),
-            row("0C", "1", "100 ", "729", "1", false),
-            row("0I", "4", "100 ", "729", "1", true),
-            row("0I", "4", "841 ", "010", "1", false),
-            row("0I", "4", "841 ", "729", "1", false),
-            row("0I", "3", "100 ", "729", "1", false),
-            row("0K", "4", "100 ", "729", "1", true),
-            row("0K", "4", "841 ", "010", "1", false),
-            row("0K", "4", "841 ", "729", "1", false),
-            row("0K", "3", "100 ", "729", "1", false),
-            row("0M", "4", "100 ", "729", "1", true),
-            row("0M", "4", "841 ", "010", "1", false),
-            row("0M", "4", "841 ", "729", "1", false),
-            row("0M", "3", "100 ", "729", "1", false),
-            row("0P", "4", "100 ", "729", "1", true),
-            row("0P", "4", "841 ", "010", "1", false),
-            row("0P", "4", "841 ", "729", "1", false),
-            row("0P", "3", "100 ", "729", "1", false)
-        ) { skjema, kontoklasse, funksjon, art, belop, expectError ->
+            row(
+                "isBevilgningInvesteringRegnskap = true, art, funksjon, belop matches",
+                "0A", "0", "100 ", "729", "1", true
+            ),
+            row(
+                "isBevilgningInvesteringRegnskap = false",
+                "0A", "1", "100 ", "729", "1", false
+            ),
+            row(
+                "art is not matching",
+                "0A", "0", "100 ", "728", "1", false
+            ),
+            row(
+                "funksjon is not matching",
+                "0A", "0", "841 ", "729", "1", false
+            ),
+            row(
+                "belop is not matching",
+                "0A", "0", "100 ", "729", "0", false
+            )
+        ) { description, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 RegnskapConstants.FIELD_SKJEMA to skjema,
                 RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
@@ -47,7 +43,7 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArtTest : BehaviorSpec({
                 RegnskapConstants.FIELD_BELOP to belop,
             ).toKostraRecord().asList()
 
-            When("For $skjema, $kontoklasse, $art -> $expectError") {
+            When("$description for $skjema, $kontoklasse, $art -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

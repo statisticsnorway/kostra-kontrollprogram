@@ -82,9 +82,6 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             listOf("280", "512", "521", "522", "529", "670", "910", "911", "912", "922", "929", "970")
         val sut = Rule025KombinasjonDriftKontoklasseArt(invalidLanefondDriftArtList)
 
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions
-            .associateBy { it.name }
-
         forAll(
             row("0A", "420400", "         ", "1", "921", false),
             row("0C", "420400", "         ", "1", "921", false),
@@ -99,7 +96,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
         ) { skjema, region, orgnr, kontoklasse, art, expectError ->
             val kostraRecordList = listOf(
                 KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
+                    fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
                     valuesByName = mapOf(
                         RegnskapConstants.FIELD_SKJEMA to skjema,
                         RegnskapConstants.FIELD_REGION to region,

@@ -12,32 +12,32 @@ import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 class Rule070KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
     Given("context") {
         val sut = Rule070KombinasjonBevilgningFunksjonArt()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
-            row("0A", "899 ", "010", "1", false), // TODO Jon Ole, denne gir ikke feil
-            row("0A", "899 ", "530", "1", true),
-            row("0A", "880 ", "530", "1", false),
-            row("0A", "899 ", "980", "1", false),
-            row("0C", "899 ", "530", "1", true),
-            row("0C", "880 ", "530", "1", false),
-            row("0C", "899 ", "980", "1", false),
-            row("0I", "899 ", "530", "1", true),
-            row("0I", "880 ", "530", "1", false),
-            row("0I", "899 ", "980", "1", false),
-            row("0K", "899 ", "530", "1", true),
-            row("0K", "880 ", "530", "1", false),
-            row("0K", "899 ", "980", "1", false),
-            row("0M", "899 ", "530", "1", true),
-            row("0M", "880 ", "530", "1", false),
-            row("0M", "899 ", "980", "1", false),
-            row("0P", "899 ", "530", "1", true),
-            row("0P", "880 ", "530", "1", false),
-            row("0P", "899 ", "980", "1", false),
-        ) { skjema, funksjon, art, belop, expectError ->
+            row(
+                "bevilgningregnskap, funksjon, art og beløp matcher",
+                "0A", "899 ", "530", "1", true
+            ),
+            row(
+                "bevilgningregnskap = false",
+                "0X", "899 ", "530", "1", false
+            ),
+            row(
+                "bevilgningregnskap = true, funksjon = 880",
+                "0X", "880 ", "530", "1", false
+            ),
+            row(
+                "bevilgningregnskap = true, funksjon matcher, art matcher ikke",
+                "0X", "899 ", "010", "1", false
+            ),
+            row(
+                "bevilgningregnskap = true, funksjon og art matcher, belop matcher ikke",
+                "0X", "899 ", "530", "0", false
+            )
+        ) { description, skjema, funksjon, art, belop, expectError ->
             val kostraRecordList = listOf(
                 KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
+                    fieldDefinitionByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name },
                     valuesByName = mapOf(
                         RegnskapConstants.FIELD_SKJEMA to skjema,
                         RegnskapConstants.FIELD_FUNKSJON to funksjon,
@@ -47,7 +47,7 @@ class Rule070KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                 )
             )
 
-            When("For $skjema, $funksjon, $art -> $expectError") {
+            When("$description, $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

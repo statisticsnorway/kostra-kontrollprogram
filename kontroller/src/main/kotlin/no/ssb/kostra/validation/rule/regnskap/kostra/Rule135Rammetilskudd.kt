@@ -14,10 +14,11 @@ class Rule135Rammetilskudd : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && !it.isLongyearbyen() && it.isRegional() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
+        .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {
-            it.getFieldAsString(RegnskapConstants.FIELD_FUNKSJON) == "840 "
+            it.getFieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "840"
                     && it.getFieldAsString(RegnskapConstants.FIELD_ART) == "800"
         }
         ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }

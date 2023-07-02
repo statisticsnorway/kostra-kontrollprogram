@@ -49,7 +49,7 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
             ),
             row(
                 "does not match funksjon290Investering -30",
-                "420400", "0A", "0", "290 ", "010", "0", false
+                "420400", "0A", "0", "290 ", "010", "-30", false
             )
         ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(

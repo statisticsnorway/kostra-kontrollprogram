@@ -15,8 +15,9 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter {
-            !it.isOsloBydel() && it.isBevilgningDriftRegnskap()
-                    && it.getFieldAsString(FIELD_FUNKSJON) != "860 "
+            !it.isOsloBydel()
+                    && it.isBevilgningDriftRegnskap()
+                    && it.getFieldAsTrimmedString(FIELD_FUNKSJON) != "860"
                     && it.getFieldAsString(FIELD_ART) == "990"
                     && it.getFieldAsIntegerOrDefault(FIELD_BELOP) > 0
         }
@@ -25,6 +26,8 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
             kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
                     kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
         }
+        /** TODO Jon Ole: Denne blir litt tricky. it.getFieldAsIntegerOrDefault(FIELD_BELOP) > 0 over gjør det
+         * umulig å kjøre inn negative beløp, og vi kommer oss derfor aldri forbi takeUnless under */
         ?.takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }
         ?.let { (motpostAvskrivninger, funksjoner) ->
             createSingleReportEntryList(

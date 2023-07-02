@@ -14,20 +14,31 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
         val sut = Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner()
 
         forAll(
-            row("420400", "0A", "1", "100 ", "990", "1", true),
-            row("420400", "0A", "1", "100 ", "990", "0", false),
-            row("030101", "0A", "1", "100 ", "990", "1", false),
-            row("420400", "0C", "1", "100 ", "990", "1", true),
-            row("420400", "0C", "1", "100 ", "990", "0", false),
-            row("420400", "0I", "3", "100 ", "990", "1", true),
-            row("420400", "0I", "3", "100 ", "990", "0", false),
-            row("420400", "0K", "3", "100 ", "990", "1", true),
-            row("420400", "0K", "3", "100 ", "990", "0", false),
-            row("420400", "0M", "3", "100 ", "990", "1", true),
-            row("420400", "0M", "3", "100 ", "990", "0", false),
-            row("420400", "0P", "3", "100 ", "990", "1", true),
-            row("420400", "0P", "3", "100 ", "990", "0", false)
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
+            row(
+                "matches !it.isOsloBydel(), isBevilgningDriftRegnskap, funksjon, art, belop",
+                "420400", "0A", "1", "100 ", "990", "1", true
+            ),
+            row(
+                "does not match !it.isOsloBydel()",
+                "030101", "0A", "1", "100 ", "990", "1", false
+            ),
+            row(
+                "does not match isBevilgningDriftRegnskap",
+                "420400", "0A", "0", "100 ", "990", "1", false
+            ),
+            row(
+                "does not match funksjon",
+                "420400", "0A", "1", "860 ", "990", "1", false
+            ),
+            row(
+                "does not match art",
+                "420400", "0A", "1", "100 ", "991", "1", false
+            ),
+            row(
+                "does not match belop",
+                "420400", "0A", "1", "100 ", "990", "0", false
+            )
+        ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(
                 RegnskapConstants.FIELD_REGION to region,
                 RegnskapConstants.FIELD_SKJEMA to skjema,
@@ -37,7 +48,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
                 RegnskapConstants.FIELD_BELOP to belop
             ).toKostraRecord().asList()
 
-            When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
+            When("$description for $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,

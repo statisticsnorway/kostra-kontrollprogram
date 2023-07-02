@@ -4,15 +4,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
 
 class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : BehaviorSpec({
     Given("context") {
         val sut = Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row(
@@ -52,14 +50,7 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
                 ), true
             )
         ) { recordList, expectError ->
-            val kostraRecordList = recordList
-                .mapIndexed { index, record ->
-                    KostraRecord(
-                        lineNumber = index + 1,
-                        fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = record
-                    )
-                }
+            val kostraRecordList = recordList.toKostraRecords()
             val kalkulatoriskeUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
             val kalkulatoriskeInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
             val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter

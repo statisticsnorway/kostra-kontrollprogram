@@ -8,15 +8,13 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
 
 class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule220InterneOverforingerMidler()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row(
@@ -56,14 +54,7 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
                 ), true
             ),
         ) { recordList, expectError ->
-            val kostraRecordList = recordList
-                .mapIndexed { index, record ->
-                    KostraRecord(
-                        lineNumber = index + 1,
-                        fieldDefinitionByName = fieldDefinitionsByName,
-                        valuesByName = record
-                    )
-                }
+            val kostraRecordList = recordList.toKostraRecords()
             val overforinger = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
             val innsamledeMidler = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
             val midlerDifferanse = overforinger + innsamledeMidler

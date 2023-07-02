@@ -8,15 +8,14 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
     Given("context") {
         val sut = Rule115SummeringBalanseAktiva()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row("0B", "2", "10  ", "010", "1", false),
@@ -38,18 +37,13 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
             row("0Q", "5", "10  ", "590", "1", false),
             row("0Q", "5", "10  ", "590", "0", true)
         ) { skjema, kontoklasse, kapittel, sektor, belop, expectError ->
-            val kostraRecordList = listOf(
-                KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema,
-                        FIELD_KONTOKLASSE to kontoklasse,
-                        FIELD_FUNKSJON to kapittel,
-                        FIELD_SEKTOR to sektor,
-                        FIELD_BELOP to belop
-                    )
-                )
-            )
+            val kostraRecordList = mapOf(
+                FIELD_SKJEMA to skjema,
+                FIELD_KONTOKLASSE to kontoklasse,
+                FIELD_FUNKSJON to kapittel,
+                FIELD_SEKTOR to sektor,
+                FIELD_BELOP to belop
+            ).toKostraRecord().asList()
 
             When("Activa is zero for $skjema, $kontoklasse, $kapittel, $sektor, $belop") {
                 verifyValidationResult(

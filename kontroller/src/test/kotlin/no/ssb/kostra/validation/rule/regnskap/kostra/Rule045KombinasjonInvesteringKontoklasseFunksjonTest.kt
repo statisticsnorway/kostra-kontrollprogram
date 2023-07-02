@@ -5,9 +5,10 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.regnskapRecordInTest
 
 class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
 
@@ -15,11 +16,6 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
         val sut = Rule045KombinasjonInvesteringKontoklasseFunksjon(
             listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
         )
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
-            FieldDefinition(from = 3, to = 3, name = RegnskapConstants.FIELD_KONTOKLASSE),
-            FieldDefinition(from = 4, to = 7, name = RegnskapConstants.FIELD_FUNKSJON),
-        ).associateBy { it.name }
 
         forAll(
             row("0A", "0", "100 ", "1", true),
@@ -47,17 +43,19 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             row("0P", "4", "201 ", "1", false),
             row("0P", "4", "510 ", "1", false),
         ) { skjema, kontoklasse, funksjon, belop, expectError ->
-            val kostraRecordList = listOf(
-                KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to skjema,
-                        RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                        RegnskapConstants.FIELD_FUNKSJON to funksjon,
-                        RegnskapConstants.FIELD_BELOP to belop,
-                    )
+            val kostraRecordList = regnskapRecordInTest(
+                fieldDefinitions = listOf(
+                    FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
+                    FieldDefinition(from = 3, to = 3, name = RegnskapConstants.FIELD_KONTOKLASSE),
+                    FieldDefinition(from = 4, to = 7, name = RegnskapConstants.FIELD_FUNKSJON),
+                ),
+                valuesByName = mapOf(
+                    RegnskapConstants.FIELD_SKJEMA to skjema,
+                    RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
+                    RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                    RegnskapConstants.FIELD_BELOP to belop,
                 )
-            )
+            ).asList()
 
             When("For $skjema, $kontoklasse, $funksjon -> $expectError") {
                 verifyValidationResult(

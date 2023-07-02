@@ -9,15 +9,14 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule185Funksjon465DriftTest : BehaviorSpec({
     Given("context") {
         val sut = Rule185Funksjon465Drift()
-        val fieldDefinitionsByName = RegnskapFieldDefinitions.fieldDefinitions.associateBy { it.name }
 
         forAll(
             row("420000", "0A", "1", "465 ", "010", "31", false),
@@ -34,19 +33,14 @@ class Rule185Funksjon465DriftTest : BehaviorSpec({
             row("420000", "0P", "3", "465 ", "010", "31", true),
             row("420000", "0P", "3", "465 ", "010", "30", false),
         ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
-            val kostraRecordList = listOf(
-                KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_REGION to region,
-                        FIELD_SKJEMA to skjema,
-                        FIELD_KONTOKLASSE to kontoklasse,
-                        FIELD_FUNKSJON to funksjon,
-                        FIELD_ART to art,
-                        FIELD_BELOP to belop
-                    )
-                )
-            )
+            val kostraRecordList = mapOf(
+                FIELD_REGION to region,
+                FIELD_SKJEMA to skjema,
+                FIELD_KONTOKLASSE to kontoklasse,
+                FIELD_FUNKSJON to funksjon,
+                FIELD_ART to art,
+                FIELD_BELOP to belop
+            ).toKostraRecord().asList()
 
             When("For $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
                 verifyValidationResult(

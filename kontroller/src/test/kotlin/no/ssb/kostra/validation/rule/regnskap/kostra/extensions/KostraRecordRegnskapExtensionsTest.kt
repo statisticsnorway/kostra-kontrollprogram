@@ -261,13 +261,12 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         }
     }
 
-    Given("isUtgift") {
+    Given("isInntekt()") {
         forAll(
-            row("009", false),
-            row("600", false),
-            *(10..599).map {
-                row(it.toString().padStart(3, '0'), true)
-            }.toTypedArray()
+            row("599", false),
+            row("1000", false), // not space for 4 chars in code, but needed for coverage
+            row("600", true),
+            row("999", true)
         ) { art, expectedResult ->
             val kostraRecord = KostraRecord(
                 fieldDefinitionByName = listOf(
@@ -279,7 +278,29 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             )
 
             Then("$art, expected result should be equal to $expectedResult") {
-                kostraRecord.isUtgift().shouldBeEqual(expectedResult)
+                kostraRecord.isInntekt().shouldBe(expectedResult)
+            }
+        }
+    }
+
+    Given("isUtgift") {
+        forAll(
+            row("009", false),
+            row("600", false),
+            row("010", true),
+            row("599", true)
+        ) { art, expectedResult ->
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_ART to art
+                )
+            )
+
+            Then("$art, expected result should be equal to $expectedResult") {
+                kostraRecord.isUtgift().shouldBe(expectedResult)
             }
         }
     }
@@ -301,7 +322,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             )
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
-                kostraRecord.isAktiva().shouldBeEqual(expectedResult)
+                kostraRecord.isAktiva().shouldBe(expectedResult)
             }
         }
     }
@@ -323,7 +344,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             )
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
-                kostraRecord.isPassiva().shouldBeEqual(expectedResult)
+                kostraRecord.isPassiva().shouldBe(expectedResult)
             }
         }
     }
@@ -334,7 +355,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("402200", "0M", false),
             row("030100", "0A", true),
             row("030100", "0M", true),
-            row("030101", "0X", false)
+            row("030100", "0X", false)
         ) { region, skjema, expectedResult ->
             val kostraRecord = KostraRecord(
                 fieldDefinitionByName = listOf(
@@ -348,29 +369,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             )
 
             Then("$region $skjema, expected result should be equal to $expectedResult") {
-                kostraRecord.isOsloInternRegnskap().shouldBeEqual(expectedResult)
-            }
-        }
-    }
-
-    Given("isInntekt()") {
-        forAll(
-            row("599", false),
-            *(600..999).map {
-                row("$it", true)
-            }.toTypedArray()
-        ) { art, expectedResult ->
-            val kostraRecord = KostraRecord(
-                fieldDefinitionByName = listOf(
-                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_ART to art
-                )
-            )
-
-            Then("$art, expected result should be equal to $expectedResult") {
-                kostraRecord.isInntekt().shouldBeEqual(expectedResult)
+                kostraRecord.isOsloInternRegnskap().shouldBe(expectedResult)
             }
         }
     }

@@ -7,6 +7,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
@@ -260,54 +261,116 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
         }
     }
 
-    Given("isUtgift()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = FIELD_ART)
-        ).associateBy { it.name }
-
+    Given("isUtgift") {
         forAll(
-            row("010", true),
-            row("590", true),
+            row("009", false),
             row("600", false),
-            row("990", false),
+            *(10..599).map {
+                row(it.toString().padStart(3, '0'), true)
+            }.toTypedArray()
         ) { art, expectedResult ->
-            When("For $art") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_ART to art
-                    )
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_ART to art
                 )
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isUtgift().shouldBeEqual(expectedResult)
-                }
+            Then("$art, expected result should be equal to $expectedResult") {
+                kostraRecord.isUtgift().shouldBeEqual(expectedResult)
+            }
+        }
+    }
+
+    Given("isAktiva") {
+        forAll(
+            row("0009", false),
+            row("0030", false),
+            row("0010", true),
+            row("0029", true)
+        ) { kapittel, expectedResult ->
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_FUNKSJON_KAPITTEL to kapittel
+                )
+            )
+
+            Then("$kapittel, expected result should be equal to $expectedResult") {
+                kostraRecord.isAktiva().shouldBeEqual(expectedResult)
+            }
+        }
+    }
+
+    Given("isPassiva") {
+        forAll(
+            row("0029", false),
+            row("6000", false),
+            row("0030", true),
+            row("5999", true)
+        ) { kapittel, expectedResult ->
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_FUNKSJON_KAPITTEL to kapittel
+                )
+            )
+
+            Then("$kapittel, expected result should be equal to $expectedResult") {
+                kostraRecord.isPassiva().shouldBeEqual(expectedResult)
+            }
+        }
+    }
+
+    Given("isOsloInternRegnskap") {
+        forAll(
+            row("402200", "0A", false),
+            row("402200", "0M", false),
+            row("030100", "0A", true),
+            row("030100", "0M", true),
+            row("030101", "0X", false)
+        ) { region, skjema, expectedResult ->
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
+                    FieldDefinition(from = 8, to = 13, name = FIELD_REGION)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_SKJEMA to skjema,
+                    FIELD_REGION to region
+                )
+            )
+
+            Then("$region $skjema, expected result should be equal to $expectedResult") {
+                kostraRecord.isOsloInternRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isInntekt()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = FIELD_ART)
-        ).associateBy { it.name }
-
         forAll(
-            row("010", false),
-            row("590", false),
-            row("600", true),
-            row("990", true),
+            row("599", false),
+            *(600..999).map {
+                row("$it", true)
+            }.toTypedArray()
         ) { art, expectedResult ->
-            When("For $art") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_ART to art
-                    )
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_ART to art
                 )
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isInntekt().shouldBeEqual(expectedResult)
-                }
+            Then("$art, expected result should be equal to $expectedResult") {
+                kostraRecord.isInntekt().shouldBeEqual(expectedResult)
             }
         }
     }
@@ -356,7 +419,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
                     FIELD_REGION to region
                 )
             )
-            
+
             When("isOsloBydel $region, expect $expectedResult") {
                 sut.isOsloBydel().shouldBe(expectedResult)
             }

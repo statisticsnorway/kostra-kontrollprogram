@@ -16,10 +16,6 @@ import no.ssb.kostra.program.KostraRecord
 
 class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
     Given("isBevilgningRegnskap()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", true),
             row("0C", true),
@@ -38,27 +34,19 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            When("For $skjema") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                1,
+                mapOf(FIELD_SKJEMA to skjema),
+                listOf(FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)).associateBy { it.name }
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isBevilgningRegnskap().shouldBeEqual(expectedResult)
-                }
+            Then("For $skjema expected result should be equal to $expectedResult") {
+                kostraRecord.isBevilgningRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isBevilgningDriftRegnskap()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
-            FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", "0", false),
             row("0A", "1", true),
@@ -84,28 +72,24 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", "5", false),
             row("0Y", " ", false)
         ) { skjema, kontoklasse, expectedResult ->
-            When("For skjema $skjema, kontoklasse $kontoklasse") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema,
-                        FIELD_KONTOKLASSE to kontoklasse
-                    )
+            val kostraRecord = KostraRecord(
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
+                    FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
+                ).associateBy { it.name },
+                valuesByName = mapOf(
+                    FIELD_SKJEMA to skjema,
+                    FIELD_KONTOKLASSE to kontoklasse
                 )
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isBevilgningDriftRegnskap().shouldBeEqual(expectedResult)
-                }
+            Then("For skjema $skjema, kontoklasse $kontoklasse expected result should be equal to $expectedResult") {
+                kostraRecord.isBevilgningDriftRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isBevilgningInvesteringRegnskap()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
-            FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", "0", true),
             row("0A", "1", false),
@@ -131,27 +115,21 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", "5", false),
             row("0Y", " ", false)
         ) { skjema, kontoklasse, expectedResult ->
-            When("For skjema $skjema, kontoklasse $kontoklasse") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema,
-                        FIELD_KONTOKLASSE to kontoklasse
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                valuesByName = mapOf(FIELD_SKJEMA to skjema, FIELD_KONTOKLASSE to kontoklasse),
+                fieldDefinitionByName = listOf(
+                    FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
+                    FieldDefinition(from = 3, to = 3, name = FIELD_KONTOKLASSE)
+                ).associateBy { it.name },
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isBevilgningInvesteringRegnskap().shouldBeEqual(expectedResult)
-                }
+            Then("For skjema $skjema, kontoklasse $kontoklasse expected result should be equal to $expectedResult") {
+                kostraRecord.isBevilgningInvesteringRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isBalanseRegnskap()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", false),
             row("0C", false),
@@ -170,26 +148,19 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", true),
             row("0Y", true)
         ) { skjema, expectedResult ->
-            When("For $skjema") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                1,
+                mapOf(FIELD_SKJEMA to skjema),
+                listOf(FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)).associateBy { it.name },
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isBalanseRegnskap().shouldBeEqual(expectedResult)
-                }
+            Then("$skjema expected result should be equal to $expectedResult") {
+                kostraRecord.isBalanseRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isResultatRegnskap()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", false),
             row("0C", false),
@@ -208,26 +179,19 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            When("For $skjema") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                1,
+                mapOf(FIELD_SKJEMA to skjema),
+                listOf(FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)).associateBy { it.name }
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isResultatRegnskap().shouldBeEqual(expectedResult)
-                }
+            Then("$skjema expected result should be equal to $expectedResult") {
+                kostraRecord.isResultatRegnskap().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isRegional()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)
-        ).associateBy { it.name }
-
         forAll(
             row("0A", true),
             row("0C", true),
@@ -246,17 +210,14 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            When("For $skjema") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_SKJEMA to skjema
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                1,
+                mapOf(FIELD_SKJEMA to skjema),
+                listOf(FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA)).associateBy { it.name },
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isRegional().shouldBeEqual(expectedResult)
-                }
+            Then("$skjema expected result should be equal to $expectedResult") {
+                kostraRecord.isRegional().shouldBeEqual(expectedResult)
             }
         }
     }
@@ -269,12 +230,9 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("999", true)
         ) { art, expectedResult ->
             val kostraRecord = KostraRecord(
-                fieldDefinitionByName = listOf(
-                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_ART to art
-                )
+                1,
+                mapOf(FIELD_ART to art),
+                listOf(FieldDefinition(from = 1, to = 3, name = FIELD_ART)).associateBy { it.name }
             )
 
             Then("$art, expected result should be equal to $expectedResult") {
@@ -291,12 +249,9 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("599", true)
         ) { art, expectedResult ->
             val kostraRecord = KostraRecord(
-                fieldDefinitionByName = listOf(
-                    FieldDefinition(from = 1, to = 3, name = FIELD_ART)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_ART to art
-                )
+                1,
+                mapOf(FIELD_ART to art),
+                listOf(FieldDefinition(from = 1, to = 3, name = FIELD_ART)).associateBy { it.name },
             )
 
             Then("$art, expected result should be equal to $expectedResult") {
@@ -313,12 +268,9 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0029", true)
         ) { kapittel, expectedResult ->
             val kostraRecord = KostraRecord(
-                fieldDefinitionByName = listOf(
-                    FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_FUNKSJON_KAPITTEL to kapittel
-                )
+                1,
+                mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel),
+                listOf(FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)).associateBy { it.name },
             )
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
@@ -335,12 +287,9 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("5999", true)
         ) { kapittel, expectedResult ->
             val kostraRecord = KostraRecord(
-                fieldDefinitionByName = listOf(
-                    FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_FUNKSJON_KAPITTEL to kapittel
-                )
+                1,
+                mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel),
+                listOf(FieldDefinition(from = 33, to = 36, name = FIELD_FUNKSJON_KAPITTEL)).associateBy { it.name },
             )
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
@@ -358,14 +307,11 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("030100", "0X", false)
         ) { region, skjema, expectedResult ->
             val kostraRecord = KostraRecord(
+                valuesByName = mapOf(FIELD_SKJEMA to skjema, FIELD_REGION to region),
                 fieldDefinitionByName = listOf(
                     FieldDefinition(from = 1, to = 2, name = FIELD_SKJEMA),
                     FieldDefinition(from = 8, to = 13, name = FIELD_REGION)
-                ).associateBy { it.name },
-                valuesByName = mapOf(
-                    FIELD_SKJEMA to skjema,
-                    FIELD_REGION to region
-                )
+                ).associateBy { it.name }
             )
 
             Then("$region $skjema, expected result should be equal to $expectedResult") {
@@ -375,48 +321,35 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
     }
 
     Given("isOslo()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)
-        ).associateBy { it.name }
-
         forAll(
             row("030100", true),
             row("030101", false),
             row("420400", false),
             row("030000", false),
         ) { region, expectedResult ->
-            When("For $region") {
-                val kostraRecord = KostraRecord(
-                    fieldDefinitionByName = fieldDefinitionsByName,
-                    valuesByName = mapOf(
-                        FIELD_REGION to region
-                    )
-                )
+            val kostraRecord = KostraRecord(
+                1,
+                mapOf(FIELD_REGION to region),
+                listOf(FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)).associateBy { it.name }
+            )
 
-                Then("expected result should be equal to $expectedResult") {
-                    kostraRecord.isOslo().shouldBeEqual(expectedResult)
-                }
+            Then("$region expected result should be equal to $expectedResult") {
+                kostraRecord.isOslo().shouldBeEqual(expectedResult)
             }
         }
     }
 
     Given("isOsloBydel()") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)
-        ).associateBy { it.name }
-
         forAll(
             row("030101", true),
             row("030100", false),
             row("030000", false),
             row("420400", false),
         ) { region, expectedResult ->
-
             val sut = KostraRecord(
-                fieldDefinitionByName = fieldDefinitionsByName,
-                valuesByName = mapOf(
-                    FIELD_REGION to region
-                )
+                1,
+                mapOf(FIELD_REGION to region),
+                listOf(FieldDefinition(from = 1, to = 3, name = FIELD_FUNKSJON)).associateBy { it.name },
             )
 
             When("isOsloBydel $region, expect $expectedResult") {

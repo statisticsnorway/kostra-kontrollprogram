@@ -91,7 +91,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér i fila slik at motpost avskrivninger (-1) kun er ført på funksjon " +
-                            "860, art 990 og ikke på funksjonene ([100, 100])"
+                            "860, art 990 og ikke på funksjonene ([100])"
                 )
             }
         }

@@ -30,7 +30,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
         ?.let { (motpostAvskrivninger, funksjoner) ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at motpost avskrivninger ($motpostAvskrivninger) kun er " +
-                        "ført på funksjon 860, art 990 og ikke på funksjonene ($funksjoner)"
+                        "ført på funksjon 860, art 990 og ikke på funksjonene (${funksjoner.distinct()})"
             )
         }
 }

@@ -11,7 +11,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
     include(
@@ -19,21 +19,35 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
             sut = Control27MottattOkonomiskSosialhjelp(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "valid kvpMedAStonad, 1",
-                    kostraRecordInTest(1, 4, false)
+                    "answer Ja, all fields blank",
+                    recordInTestAllValuesBlank(1)
                 ),
                 ForAllRowItem(
-                    "valid kvpMedAStonad, 2",
-                    kostraRecordInTest(2, 0, true)
+                    "answer Ja, all fields '0'",
+                    recordInTestAllValuesZero(1)
                 ),
                 ForAllRowItem(
-                    "kvpMedAStonad = 3",
-                    kostraRecordInTest(3, 0, true)
+                    "answer Ja, all fields populated with valid values",
+                    recordInTestAllValuesPopulated(1)
                 ),
 
                 ForAllRowItem(
-                    "invalid kvpMedAStonad, kvpMedAStonad = 1",
-                    kostraRecordInTest(1, 1, true),
+                    "answer Nei, all fields blank",
+                    recordInTestAllValuesBlank(2)
+                ),
+                ForAllRowItem(
+                    "answer Nei, all fields '0'",
+                    recordInTestAllValuesZero(2)
+                ),
+
+                ForAllRowItem(
+                    "KVP_MED_ASTONAD out of range",
+                    recordInTestAllValuesBlank(3)
+                ),
+
+                ForAllRowItem(
+                    "invalid kvpMedKommBos",
+                    recordInTestAllValuesPopulated(1, 1),
                     "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
                             "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
                             "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
@@ -41,7 +55,7 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "invalid kvpMedAStonad, kvpMedAStonad = 2",
-                    kostraRecordInTest(2, 1, false),
+                    recordInTestAllValuesPopulated(2),
                     "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} i " +
                             "løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
                             "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
@@ -53,18 +67,39 @@ class Control27MottattOkonomiskSosialhjelpTest : BehaviorSpec({
     )
 }) {
     companion object {
-        private fun kostraRecordInTest(
+        private fun recordInTestAllValuesPopulated(
             kvpMedAStonad: Int,
-            kvpMedKommBos: Int = 4,
-            useEmptyValues: Boolean
-        ) = KvalifiseringTestUtils.kvalifiseringKostraRecordInTest(
+            kvpMedKommBos: Int = 4
+        ) = kvalifiseringKostraRecordInTest(
             mapOf(
                 KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
-                KVP_MED_KOMMBOS_COL_NAME to kvpMedKommBos.toString(),
-                KVP_MED_HUSBANK_COL_NAME to if (useEmptyValues) "0" else "5",
-                KVP_MED_SOSHJ_ENGANG_COL_NAME to if (useEmptyValues) " " else "9",
-                KVP_MED_SOSHJ_PGM_COL_NAME to if (useEmptyValues) "0" else "8",
-                KVP_MED_SOSHJ_SUP_COL_NAME to if (useEmptyValues) " " else "7"
+                KVP_MED_KOMMBOS_COL_NAME to "$kvpMedKommBos",
+                KVP_MED_HUSBANK_COL_NAME to "5",
+                KVP_MED_SOSHJ_ENGANG_COL_NAME to "9",
+                KVP_MED_SOSHJ_PGM_COL_NAME to "8",
+                KVP_MED_SOSHJ_SUP_COL_NAME to "7"
+            )
+        )
+
+        private fun recordInTestAllValuesBlank(kvpMedAStonad: Int) = kvalifiseringKostraRecordInTest(
+            mapOf(
+                KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
+                KVP_MED_KOMMBOS_COL_NAME to " ",
+                KVP_MED_HUSBANK_COL_NAME to " ",
+                KVP_MED_SOSHJ_ENGANG_COL_NAME to " ",
+                KVP_MED_SOSHJ_PGM_COL_NAME to " ",
+                KVP_MED_SOSHJ_SUP_COL_NAME to " "
+            )
+        )
+
+        private fun recordInTestAllValuesZero(kvpMedAStonad: Int) = kvalifiseringKostraRecordInTest(
+            mapOf(
+                KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
+                KVP_MED_KOMMBOS_COL_NAME to "0",
+                KVP_MED_HUSBANK_COL_NAME to "0",
+                KVP_MED_SOSHJ_ENGANG_COL_NAME to "0",
+                KVP_MED_SOSHJ_PGM_COL_NAME to "0",
+                KVP_MED_SOSHJ_SUP_COL_NAME to "0"
             )
         )
     }

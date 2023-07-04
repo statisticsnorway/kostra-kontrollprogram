@@ -8,7 +8,7 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control38FullforteAvsluttedeProgramSituasjon.Companion.qualifyingFields
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control38FullforteAvsluttedeProgramSituasjon.Companion.qualifyingFieldNames
 
 class Control38FullforteAvsluttedeProgramSituasjonTest : BehaviorSpec({
     include(
@@ -16,16 +16,27 @@ class Control38FullforteAvsluttedeProgramSituasjonTest : BehaviorSpec({
             sut = Control38FullforteAvsluttedeProgramSituasjon(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "no qualifying fields matches",
-                    kostraRecordInTest("1", " ")
+                    "statusCode != 3",
+                    kostraRecordInTest(2)
                 ),
                 ForAllRowItem(
-                    "one qualifying fields matches, status != 3",
-                    kostraRecordInTest("1", "1")
+                    "statusCode = 3, one valid item selected",
+                    kostraRecordInTest(3, "01")
+                ),
+
+                ForAllRowItem(
+                    "statusCode = 3, no items selected",
+                    kostraRecordInTest(3),
+                    "Feltet 'Ved fullført program eller program avsluttet etter " +
+                            "avtale (gjelder ikke flytting) – hva var deltakerens situasjon umiddelbart etter " +
+                            "avslutningen'? Må fylles ut dersom det er krysset av for svaralternativ 3 = " +
+                            "Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke " +
+                            "flytting) under feltet for 'Hva er status for deltakelsen i " +
+                            "kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?"
                 ),
                 ForAllRowItem(
-                    "one qualifying fields matches, status = 3",
-                    kostraRecordInTest("3", "01"),
+                    "statusCode = 3, invalid items selected",
+                    kostraRecordInTest(3, "02"),
                     "Feltet 'Ved fullført program eller program avsluttet etter " +
                             "avtale (gjelder ikke flytting) – hva var deltakerens situasjon umiddelbart etter " +
                             "avslutningen'? Må fylles ut dersom det er krysset av for svaralternativ 3 = " +
@@ -40,13 +51,13 @@ class Control38FullforteAvsluttedeProgramSituasjonTest : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(
-            status: String,
-            avslOrdinaertarb: String
+            statusCode: Int,
+            avslOrdinaertarb: String = " "
         ) = kvalifiseringKostraRecordInTest(
             mapOf(
-                STATUS_COL_NAME to status,
+                STATUS_COL_NAME to "$statusCode",
                 AVSL_ORDINAERTARB_COL_NAME to avslOrdinaertarb,
-                *(qualifyingFields.filter { it != AVSL_ORDINAERTARB_COL_NAME }.map { it to " " }).toTypedArray()
+                *(qualifyingFieldNames.filter { it != AVSL_ORDINAERTARB_COL_NAME }.map { it to " " }).toTypedArray()
             )
         )
     }

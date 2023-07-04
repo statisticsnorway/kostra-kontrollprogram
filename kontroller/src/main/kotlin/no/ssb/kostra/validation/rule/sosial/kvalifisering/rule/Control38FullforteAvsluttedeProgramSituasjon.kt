@@ -12,10 +12,11 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UKJ
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UTEN_OK_AVKLAR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.codeExists
+import no.ssb.kostra.program.extension.findByColumnName
+import no.ssb.kostra.program.extension.valueOrNull
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
@@ -25,12 +26,12 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsString(STATUS_COL_NAME).takeIf {
-            it == "3" && !qualifyingFields.all { colName ->
-                fieldDefinitions.findByColumnName(colName).codeIsMissing(
-                    context.getFieldAsString(colName)
-                )
-            }
+        context.getFieldAsString(STATUS_COL_NAME).takeIf { statusCode ->
+            statusCode == "3" && (qualifyingFieldNames.mapNotNull { fieldName ->
+                context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
+            }.none { (fieldName, fieldValue) ->
+                fieldDefinitions.findByColumnName(fieldName).codeExists(fieldValue)
+            })
         }?.let {
             createSingleReportEntryList(
                 "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – " +
@@ -42,7 +43,7 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
         }
 
     companion object {
-        internal val qualifyingFields = setOf(
+        internal val qualifyingFieldNames = setOf(
             AVSL_ORDINAERTARB_COL_NAME,
             AVSL_ARBLONNSTILS_COL_NAME,
             AVSL_ARBMARK_COL_NAME,

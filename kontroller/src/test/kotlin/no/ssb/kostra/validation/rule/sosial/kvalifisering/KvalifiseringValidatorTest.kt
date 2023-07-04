@@ -35,6 +35,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_S
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitionsByName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
@@ -114,8 +115,8 @@ class KvalifiseringValidatorTest : BehaviorSpec({
     companion object {
 
         private val fodselsnummer = generateRandomSSN(
-            LocalDate.now().minusYears(1),
-            LocalDate.now()
+            LocalDate.now().minusYears(40),
+            LocalDate.now().minusYears(21)
         )
 
         private fun kostraRecordsInTests() = KostraRecord(
@@ -123,7 +124,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
             mapOf(
                 SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                 KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                BYDELSNR_COL_NAME to "14",
+                BYDELSNR_COL_NAME to "  ",
                 VERSION_COL_NAME to "22",
                 PERSON_JOURNALNR_COL_NAME to "~journalNummer~",
                 PERSON_FODSELSNR_COL_NAME to fodselsnummer,
@@ -154,7 +155,7 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                     "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
                 }).toTypedArray()
             ),
-            fieldDefinitions.associate { with(it) { name to it } }
+            fieldDefinitionsByName
         )
     }
 }

@@ -16,7 +16,8 @@ class SsnValidationUtilsTest : BehaviorSpec({
         forAll(
             row("123", "N/A", null),
             row("05011399292", "fnr", LocalDate.of(2013, 1, 5)),
-            row("41011088188", "dnr", LocalDate.of(2010, 1, 1))
+            row("41011088188", "dnr", LocalDate.of(2010, 1, 1)),
+            row("01811088188", "tnr", LocalDate.of(2010, 1, 1)),
         ) { socialSecurityId, type, expectedDate ->
             When("$socialSecurityId $type") {
 
@@ -53,7 +54,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("valid D-number", "41011088188", true),
             row("invalid date of birth in ssn", "01840612345", false),
             row("valid freg ssn", "01840699478", true),
-            row("valid unborn ssn", "05012399999", true)
+            row("valid unborn ssn", "05012399999", true),
         ) { description, socialSecurityId, expectedResult ->
             When(description) {
                 val isValidSocialSecurityIdOrDnr = isValidSocialSecurityIdOrDnr(socialSecurityId)
@@ -73,7 +74,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("ABCDEFGHIJK", "N/A", false),
             row("123456", "N/A", false),
             row("24101219220", "fnr", true),
-            row("01000000040", "fnr", false)
+            row("01000000040", "fnr", false),
         ) { fnr, type, expectedResult ->
             When("validate norwegian social security number $fnr ($type)") {
                 val isValidSocialSecurityId = isModulo11Valid(fnr)
@@ -93,7 +94,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("ABCDEFGHIJKL", false),
             row("123456", false),
             row("241012192200", false),
-            row("010000000400", false)
+            row("010000000400", false),
         ) { duf, expectedResult ->
             When("validateDUF: $duf") {
                 val isValidDuf = validateDUF(duf)

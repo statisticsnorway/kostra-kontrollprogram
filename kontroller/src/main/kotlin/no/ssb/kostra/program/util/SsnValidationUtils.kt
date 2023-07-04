@@ -22,7 +22,7 @@ object SsnValidationUtils {
     fun extractBirthDateFromSocialSecurityId(socialSecurityId: String): LocalDate? = try {
         when {
             !SSN_PATTERN.matcher(socialSecurityId).matches() -> null
-            else -> parseDateWithAutoPivotYear(convertDNumber(socialSecurityId))
+            else -> parseDateWithAutoPivotYear(convertFregMonth(convertDNumber(socialSecurityId)))
         }
     } catch (ex: DateTimeParseException) {
         null
@@ -62,6 +62,13 @@ object SsnValidationUtils {
     private fun convertDNumber(socialSecurityId: String): String =
         socialSecurityId.first().toString().toInt().let {
             (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 6))
+        }
+
+    private fun convertFregMonth(socialSecurityId: String): String =
+        socialSecurityId[2].toString().toInt().let {
+            (socialSecurityId.substring(0, 2))
+                .plus((if (it > 1) it - 8 else it).toString())
+                .plus(socialSecurityId.substring(3, 6))
         }
 
     internal fun isModulo11Valid(socialSecurityId: String): Boolean =

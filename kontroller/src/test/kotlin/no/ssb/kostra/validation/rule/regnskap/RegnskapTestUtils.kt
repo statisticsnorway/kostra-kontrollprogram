@@ -8,7 +8,10 @@ object RegnskapTestUtils {
 
     fun KostraRecord.asList() = listOf(this)
 
-    fun Map<String, String>.toKostraRecord() = regnskapRecordInTest(valuesByName = this)
+    fun Map<String, String>.toKostraRecord(lineNumber: Int = 1) = regnskapRecordInTest(
+        valuesByName = this,
+        lineNumber = lineNumber
+    )
 
     fun Collection<Map<String, String>>.toKostraRecords(): List<KostraRecord> = this.mapIndexed { index, valuesByName ->
         regnskapRecordInTest(

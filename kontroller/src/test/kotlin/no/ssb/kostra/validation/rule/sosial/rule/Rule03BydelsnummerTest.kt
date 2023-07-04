@@ -10,10 +10,9 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule03BydelsnummerTest : BehaviorSpec({
     val sut = Rule03Bydelsnummer()
@@ -70,13 +69,10 @@ class Rule03BydelsnummerTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun kostraRecordInTest(municipalityId: String, districtId: String) = KostraRecord(
-            1,
+        private fun kostraRecordInTest(municipalityId: String, districtId: String) =
             mapOf(
                 KOMMUNE_NR_COL_NAME to municipalityId,
                 BYDELSNR_COL_NAME to districtId
-            ),
-            fieldDefinitions.associateBy { it.name }
-        )
+            ).toKostraRecord()
     }
 }

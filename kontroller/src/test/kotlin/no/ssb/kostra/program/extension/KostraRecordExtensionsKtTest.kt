@@ -5,6 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.*
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
@@ -45,15 +46,12 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
     }
 
     Given("KostraRecord#plus") {
-        val sut = KostraRecord(
-            valuesByName = mapOf(
-                "Field123" to "12",
-                "Field456" to "456",
-                "Field789" to "789",
-                "Field012" to "-1"
-            ),
-            fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
-        )
+        val sut = mapOf(
+            "Field123" to "12",
+            "Field456" to "456",
+            "Field789" to "789",
+            "Field012" to "-1"
+        ).toKostraRecord()
 
         When("plus") {
             val changedByPlus = sut.plus("Added" to "911")

@@ -13,7 +13,7 @@ class Control13AntBu18 : AbstractRule<KostraRecord>(
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
         context.getFieldAsIntegerOrDefault(ANT_BU18_COL_NAME)
-            .takeIf { it >= CHILD_COUNT_THRESHOLD }
+            .takeIf { numberOfChildren -> numberOfChildren >= CHILD_COUNT_THRESHOLD }
             ?.let { numberOfChildren ->
                 createSingleReportEntryList(
                     "Antall barn ($numberOfChildren) under 18 år i husholdningen " +

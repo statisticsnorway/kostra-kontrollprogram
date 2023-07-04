@@ -6,6 +6,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.JA
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.NEI
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -25,7 +27,7 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
         val values = fieldNamesToCheck.associateWith { context.getFieldAsString(it) }
 
         return when (context.getFieldAsString(KVP_MED_ASTONAD_COL_NAME)) {
-            "1" -> {
+            JA -> {
                 fieldNamesToCheck
                     .mapNotNull { fieldName ->
                         context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
@@ -43,9 +45,9 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
                     }
             }
 
-            "2" -> {
+            NEI -> {
                 fieldNamesToCheck
-                    .filterNot { context.getFieldAsString(it).valueOrNull() == null }
+                    .filter { context.getFieldAsString(it).valueOrNull() != null }
                     .takeIf { it.isNotEmpty() }
                     ?.let {
                         createSingleReportEntryList(

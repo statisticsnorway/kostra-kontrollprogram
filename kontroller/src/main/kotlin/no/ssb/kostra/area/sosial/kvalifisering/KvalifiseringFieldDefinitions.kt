@@ -43,6 +43,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_I
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_INTRO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
 import no.ssb.kostra.program.*
 
 object KvalifiseringFieldDefinitions : FieldDefinitions {
@@ -808,7 +809,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                 Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
                 Code(
-                    "3",
+                    FULLFORT_PROGRAM,
                     "Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)"
                 ),
                 Code("4", "Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)"),

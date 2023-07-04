@@ -2,10 +2,10 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.codeIsMissing
+import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
@@ -18,9 +18,7 @@ class Control31HarKvalifiseringssumMenManglerVarighet : AbstractRule<KostraRecor
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
         (1..12).all { monthId ->
             fieldDefinitions.findByColumnName("${MONTH_PREFIX}$monthId")
-                .codeIsMissing(
-                    context.getFieldAsString("$MONTH_PREFIX$monthId")
-                )
+                .codeIsMissing(context.getFieldAsString("$MONTH_PREFIX$monthId"))
         }.takeIf { it && context.getFieldAsInteger(KVP_STONAD_COL_NAME) != null }?.let {
             createSingleReportEntryList(
                 "Deltakeren har fått kvalifiseringsstønad (${context.getFieldAsString(KVP_STONAD_COL_NAME)}) " +

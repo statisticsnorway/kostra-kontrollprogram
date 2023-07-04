@@ -11,6 +11,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UFO
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UKJENT_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UTEN_OK_AVKLAR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -26,21 +27,23 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsString(STATUS_COL_NAME).takeIf { statusCode ->
-            statusCode == "3" && (qualifyingFieldNames.mapNotNull { fieldName ->
-                context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
-            }.none { (fieldName, fieldValue) ->
-                fieldDefinitions.findByColumnName(fieldName).codeExists(fieldValue)
-            })
-        }?.let {
-            createSingleReportEntryList(
-                "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) – " +
-                        "hva var deltakerens situasjon umiddelbart etter avslutningen'? Må fylles ut dersom det er " +
-                        "krysset av for svaralternativ 3 = Deltakeren har fullført program eller avsluttet program etter " +
-                        "avtale (gjelder ikke flytting) under feltet for 'Hva er status for deltakelsen i " +
-                        "kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
-            )
-        }
+        context.getFieldAsString(STATUS_COL_NAME).takeIf { statusCode -> statusCode == FULLFORT_PROGRAM }
+            ?.takeIf {
+                qualifyingFieldNames
+                    .mapNotNull { fieldName ->
+                        context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
+                    }.none { (fieldName, fieldValue) ->
+                        fieldDefinitions.findByColumnName(fieldName).codeExists(fieldValue)
+                    }
+            }?.let {
+                createSingleReportEntryList(
+                    "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke " +
+                            "flytting) – hva var deltakerens situasjon umiddelbart etter avslutningen'? " +
+                            "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført " +
+                            "program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for " +
+                            "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+                )
+            }
 
     companion object {
         internal val qualifyingFieldNames = setOf(

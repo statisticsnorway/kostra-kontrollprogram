@@ -11,16 +11,36 @@ import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
     Given("KostraRecord#fieldAs") {
-        val sut = KostraRecord(
+        val sutWithValue = KostraRecord(
             valuesByName = mapOf(
-                "Field" to "789",
+                "Field" to "42 ",
             ),
             fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
         )
+        val sutWithoutValue = sutWithValue.copy(valuesByName = mapOf(
+            "Field" to " ",
+        ))
+
+        When("fieldAs<Int>") {
+            sutWithValue.fieldAs<Int>("Field").shouldBe(42)
+        }
+        When("fieldAs<Int?>") {
+            sutWithoutValue.fieldAs<Int?>("Field").shouldBe(null)
+        }
+
+        When("fieldAs<String>") {
+            sutWithValue.fieldAs<String>("Field").shouldBe("42")
+        }
+        When("fieldAs<String>, trim=false") {
+            sutWithValue.fieldAs<String>("Field", false).shouldBe("42 ")
+        }
+        When("fieldAs<String?>") {
+            sutWithoutValue.fieldAs<String?>("Field").shouldBe(null)
+        }
 
         When("fieldAs<Long>") {
             shouldThrow<ClassCastException> {
-                sut.fieldAs<Long>("Field")
+                sutWithValue.fieldAs<Long>("Field")
             }
         }
     }

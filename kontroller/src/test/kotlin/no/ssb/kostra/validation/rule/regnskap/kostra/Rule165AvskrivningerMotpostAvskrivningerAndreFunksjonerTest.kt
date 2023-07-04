@@ -69,8 +69,13 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
                 false
             ),
             row(
-                "sum belop != 0",
+                "sum belop = -1",
                 listOf(-2, 1),
+                true
+            ),
+            row(
+                "sum belop = 1",
+                listOf(-1, 2),
                 true
             )
         ) { description, belop, expectError ->

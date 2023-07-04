@@ -1,5 +1,6 @@
 package no.ssb.kostra.program
 
+import no.ssb.kostra.program.extension.valueOrNull
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -12,25 +13,25 @@ data class KostraRecord(
 ) {
     operator fun get(field: String) = fieldAsString(field)
 
-    inline fun <reified T:Any?> fieldAs(field: String, trim: Boolean = true): T = when (T::class) {
+    inline fun <reified T : Any?> fieldAs(field: String, trim: Boolean = true): T = when (T::class) {
         Int::class -> when {
-            null is T -> fieldAsInt(field) as T
-            else -> fieldAsIntOrDefault(field) as T
+            null is T -> fieldAsInt(field)
+            else -> fieldAsIntOrDefault(field)
         }
 
         LocalDate::class -> when {
-            null is T -> fieldAsLocalDate(field) as T
-            else -> fieldAsLocalDate(field)!! as T
+            null is T -> fieldAsLocalDate(field)
+            else -> fieldAsLocalDate(field)!!
         }
 
-        else -> when(trim){
-            true -> fieldAsTrimmedString(field) as T
-            else -> fieldAsString(field) as T
-        }
-    }
+        else -> when {
+            null is T -> fieldAsString(field).valueOrNull()
+            else -> fieldAsString(field)
+        }?.let { if (trim) it.trim() else it }
+    } as T
 
     fun fieldAsString(field: String): String = valuesByName.getOrElse(field) {
-        throw NoSuchFieldException("getFieldAsString(): $field is missing")
+        throw NoSuchFieldException("fieldAsString(): $field is missing")
     }
 
     fun fieldAsTrimmedString(field: String): String = fieldAsString(field).trim { it <= ' ' }
@@ -52,7 +53,7 @@ data class KostraRecord(
         val value = fieldAsString(field)
 
         if (pattern.length != value.length)
-            throw IndexOutOfBoundsException("getFieldAsLocalDate(): value and datePattern have different lengths")
+            throw IndexOutOfBoundsException("fieldAsLocalDate(): value and datePattern have different lengths")
 
         return try {
             DateTimeFormatter.ofPattern(pattern).let { LocalDate.from(it.parse(value)) }
@@ -63,7 +64,7 @@ data class KostraRecord(
 
     fun fieldDefinition(name: String): FieldDefinition =
         fieldDefinitionByName.getOrElse(name) {
-            throw NoSuchFieldException("getFieldDefinitionByName(): $name is missing")
+            throw NoSuchFieldException("fieldDefinitionByName(): $name is missing")
         }
 
     override fun toString(): String = "$valuesByName\n$fieldDefinitionByName"

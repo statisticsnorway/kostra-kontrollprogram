@@ -17,7 +17,6 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
-import no.ssb.kostra.program.extension.valueOrNull
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
@@ -30,7 +29,7 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
         .takeIf { statusCode -> statusCode == FULLFORT_PROGRAM }
         ?.takeIf {
             qualifyingFieldNames
-                .mapNotNull { fieldName -> context[fieldName].valueOrNull()?.let { fieldName to it } }
+                .mapNotNull { fieldName -> context.fieldAs<String?>(fieldName)?.let { fieldName to it } }
                 .none { (fieldName, fieldValue) ->
                     fieldDefinitions.byColumnName(fieldName).codeExists(fieldValue)
                 }

@@ -9,6 +9,7 @@ import no.ssb.kostra.program.extension.plus
 import java.time.LocalDate
 
 class KostraRecordTest : BehaviorSpec({
+
     Given("That data is supplied by default values") {
         val field = "field"
         val expectedMap = emptyMap<String, String>()
@@ -20,25 +21,25 @@ class KostraRecordTest : BehaviorSpec({
                 kostraRecord.valuesByName shouldBe expectedMap
             }
 
-            Then("getFieldAsString(\"$field\") should throw NoSuchFieldException") {
+            Then("fieldAsString(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
                     kostraRecord.fieldAsString(field)
                 }
             }
 
-            Then("getFieldAsTrimmedString(\"$field\") should throw NoSuchFieldException") {
+            Then("fieldAsTrimmedString(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
                     kostraRecord.fieldAsTrimmedString(field)
                 }
             }
 
-            Then("getFieldAsInteger(\"$field\") should throw NoSuchFieldException") {
+            Then("fieldAsInt(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
                     kostraRecord.fieldAsInt(field)
                 }
             }
 
-            Then("getFieldAsIntegerDefaultEquals0(\"$field\") should throw NoSuchFieldException") {
+            Then("fieldAsIntOrDefault(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
                     kostraRecord.fieldAsIntOrDefault(field)
                 }
@@ -52,19 +53,52 @@ class KostraRecordTest : BehaviorSpec({
         ).associateBy { it.name }
 
         forAll(
-            row("no data", mapOf("Field" to " ".repeat(3)), "   ", ""),
-            row("all fields filled", mapOf("Field" to "AB "), "AB ", "AB")
-        ) { description, valuesByName, string, trimmedString ->
-            When(description) {
-                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+            row(
+                "no data",
+                mapOf("Field" to " ".repeat(3)),
+                "   ",
+                "",
+                null
+            ),
+            row(
+                "all fields filled",
+                mapOf("Field" to "AB "),
+                "AB ",
+                "AB",
+                "AB"
+            ),
+            row(
+                "field with 0",
+                mapOf("Field" to "0 "),
+                "0 ",
+                "0",
+                null
+            )
+        ) { description, valuesByName, string, trimmedString, trimmedToNull ->
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-                Then("getFieldAsString") {
-                    kostraRecord.fieldAsString("Field") shouldBe string
-                }
+            When("$description, fieldAsString") {
+                kostraRecord.fieldAsString("Field").shouldBe(string)
+            }
 
-                Then("getFieldAsTrimmedString") {
-                    kostraRecord.fieldAsTrimmedString("Field") shouldBe trimmedString
-                }
+            And("$description, fieldAsTrimmedString") {
+                kostraRecord.fieldAsTrimmedString("Field").shouldBe(trimmedString)
+            }
+
+            And("$description, get") {
+                kostraRecord["Field"].shouldBe(string)
+            }
+
+            And("$description, fieldAs<String>, trim = false") {
+                kostraRecord.fieldAs<String>("Field", false).shouldBe(string)
+            }
+
+            And("$description, fieldAs<String>, trim = true") {
+                kostraRecord.fieldAs<String>("Field", true).shouldBe(trimmedString)
+            }
+
+            And("$description, fieldAs<String?>") {
+                kostraRecord.fieldAs<String?>("Field", true).shouldBe(trimmedToNull)
             }
         }
     }
@@ -78,26 +112,30 @@ class KostraRecordTest : BehaviorSpec({
             row(
                 "no data",
                 mapOf("Field" to " ".repeat(3)),
-                null,
-                0
+                null, 0
             ),
             row(
                 "all fields filled",
                 mapOf("Field" to "  1"),
-                1,
-                1
+                1, 1
             )
         ) { description, valuesByName, intValue, defaultIntValue ->
-            When(description) {
-                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-                Then("getFieldAsInteger") {
-                    kostraRecord.fieldAsInt("Field") shouldBe intValue
-                }
+            When("$description, fieldAsInt") {
+                kostraRecord.fieldAsInt("Field").shouldBe(intValue)
+            }
 
-                Then("getFieldAsIntegerDefaultEquals0") {
-                    kostraRecord.fieldAsIntOrDefault("Field") shouldBe defaultIntValue
-                }
+            And("$description, fieldAsIntOrDefault") {
+                kostraRecord.fieldAsIntOrDefault("Field") shouldBe defaultIntValue
+            }
+
+            And("$description, fieldAs<Int?>") {
+                kostraRecord.fieldAs<Int?>("Field").shouldBe(intValue)
+            }
+
+            And("$description, fieldAs<Int>") {
+                kostraRecord.fieldAs<Int>("Field").shouldBe(defaultIntValue)
             }
         }
     }
@@ -108,14 +146,34 @@ class KostraRecordTest : BehaviorSpec({
         ).associateBy { it.name }
 
         forAll(
-            row("no data", mapOf("Field" to " ".repeat(8)), null),
-            row("all fields filled", mapOf("Field" to "24122023"), LocalDate.of(2023, 12, 24))
+            row(
+                "no data",
+                mapOf("Field" to " ".repeat(8)),
+                null
+            ),
+            row(
+                "all fields filled",
+                mapOf("Field" to "24122023"),
+                LocalDate.of(2023, 12, 24)
+            )
         ) { description, valuesByName, dateValue ->
-            When(description) {
-                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-                Then("getFieldAsLocalDate") {
-                    kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
+            When("$description fieldAsLocalDate") {
+                kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
+            }
+
+            And("$description, fieldAs<LocalDate?>") {
+                kostraRecord.fieldAs<LocalDate?>("Field").shouldBe(dateValue)
+            }
+
+            And("$description, fieldAs<LocalDate?>") {
+                if (dateValue == null) {
+                    shouldThrow<NullPointerException> {
+                        kostraRecord.fieldAs<LocalDate>("Field")
+                    }
+                } else {
+                    kostraRecord.fieldAs<LocalDate>("Field").shouldBe(dateValue)
                 }
             }
         }
@@ -127,16 +185,22 @@ class KostraRecordTest : BehaviorSpec({
         ).associateBy { it.name }
 
         forAll(
-            row("no data", mapOf("Field" to " ".repeat(8)), null),
-            row("all fields filled", mapOf("Field" to "24122023"), LocalDate.of(2023, 12, 24))
+            row(
+                "no data",
+                mapOf("Field" to " ".repeat(8)),
+                null
+            ),
+            row(
+                "all fields filled",
+                mapOf("Field" to "24122023"),
+                LocalDate.of(2023, 12, 24)
+            )
         ) { description, valuesByName, dateValue ->
-            When(description) {
-                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-                Then("getFieldAsLocalDate") {
-                    shouldThrow<IndexOutOfBoundsException> {
-                        kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
-                    }
+            When(description) {
+                shouldThrow<IndexOutOfBoundsException> {
+                    kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
                 }
             }
         }

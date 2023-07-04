@@ -13,7 +13,6 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.valueOrNull
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -29,7 +28,7 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
         return when (context[KVP_MED_ASTONAD_COL_NAME]) {
             JA -> {
                 fieldNamesToCheck
-                    .mapNotNull { fieldName -> context[fieldName].valueOrNull()?.let { fieldName to it } }
+                    .mapNotNull { fieldName -> context.fieldAs<String?>(fieldName)?.let { fieldName to it } }
                     .filter { (fieldName, fieldValue) ->
                         fieldDefinitions.byColumnName(fieldName).codeIsMissing(fieldValue)
                     }
@@ -45,7 +44,7 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
 
             NEI -> {
                 fieldNamesToCheck
-                    .filter { context[it].valueOrNull() != null }
+                    .filter { context.fieldAs<String?>(it) != null }
                     .takeIf { it.isNotEmpty() }
                     ?.let {
                         createSingleReportEntryList(

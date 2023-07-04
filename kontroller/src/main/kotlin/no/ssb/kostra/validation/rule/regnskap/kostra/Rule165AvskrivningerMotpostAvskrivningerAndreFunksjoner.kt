@@ -14,12 +14,11 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
+        .filterNot { it.isOsloBydel() }
         .filter {
-            !it.isOsloBydel()
-                    && it.isBevilgningDriftRegnskap()
+            it.isBevilgningDriftRegnskap()
                     && it.getFieldAsTrimmedString(FIELD_FUNKSJON) != "860"
                     && it.getFieldAsString(FIELD_ART) == "990"
-                    && it.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .takeIf { it.any() }
         ?.let { kostraRecordList ->

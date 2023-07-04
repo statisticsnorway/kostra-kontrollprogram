@@ -7,6 +7,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.program.extension.codeListToString
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId

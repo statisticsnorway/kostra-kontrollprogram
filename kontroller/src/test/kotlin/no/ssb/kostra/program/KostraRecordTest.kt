@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.extension.plus
 import java.time.LocalDate
 
@@ -167,7 +168,7 @@ class KostraRecordTest : BehaviorSpec({
                 kostraRecord.fieldAs<LocalDate?>("Field").shouldBe(dateValue)
             }
 
-            And("$description, fieldAs<LocalDate?>") {
+            And("$description, fieldAs<LocalDate>") {
                 if (dateValue == null) {
                     shouldThrow<NullPointerException> {
                         kostraRecord.fieldAs<LocalDate>("Field")

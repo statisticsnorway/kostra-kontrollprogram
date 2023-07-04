@@ -5,6 +5,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_J
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule

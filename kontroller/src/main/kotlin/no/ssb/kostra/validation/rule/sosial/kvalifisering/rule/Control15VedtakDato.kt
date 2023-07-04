@@ -4,6 +4,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VEDTAK_D
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.extension.yearWithCentury
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule

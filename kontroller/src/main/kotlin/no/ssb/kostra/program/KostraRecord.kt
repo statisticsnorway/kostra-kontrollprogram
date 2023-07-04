@@ -1,6 +1,5 @@
 package no.ssb.kostra.program
 
-import no.ssb.kostra.program.extension.valueOrNull
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -12,23 +11,6 @@ data class KostraRecord(
     val fieldDefinitionByName: Map<String, FieldDefinition> = emptyMap()
 ) {
     operator fun get(field: String) = fieldAsString(field)
-
-    inline fun <reified T : Any?> fieldAs(field: String, trim: Boolean = true): T = when (T::class) {
-        Int::class -> when {
-            null is T -> fieldAsInt(field)
-            else -> fieldAsIntOrDefault(field)
-        }
-
-        LocalDate::class -> when {
-            null is T -> fieldAsLocalDate(field)
-            else -> fieldAsLocalDate(field)!!
-        }
-
-        else -> when {
-            null is T -> fieldAsString(field).valueOrNull()
-            else -> fieldAsString(field)
-        }?.let { if (trim) it.trim() else it }
-    } as T
 
     fun fieldAsString(field: String): String = valuesByName.getOrElse(field) {
         throw NoSuchFieldException("fieldAsString(): $field is missing")

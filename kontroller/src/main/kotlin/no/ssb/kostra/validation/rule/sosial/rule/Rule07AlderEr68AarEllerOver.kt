@@ -4,6 +4,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_F
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.ageInYears
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId

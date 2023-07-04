@@ -17,6 +17,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId

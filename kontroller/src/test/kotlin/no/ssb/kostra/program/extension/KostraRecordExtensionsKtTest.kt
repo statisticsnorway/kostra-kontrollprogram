@@ -1,5 +1,6 @@
 package no.ssb.kostra.program.extension
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -9,8 +10,23 @@ import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
-    Given("KostraRecord#toRecordString") {
+    Given("KostraRecord#fieldAs") {
+        val sut = KostraRecord(
+            valuesByName = mapOf(
+                "Field" to "789",
+            ),
+            fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
+        )
 
+        When("fieldAs<Long>") {
+            shouldThrow<ClassCastException> {
+                sut.fieldAs<Long>("Field")
+            }
+        }
+    }
+
+
+    Given("KostraRecord#toRecordString") {
         forAll(
             row(
                 "empty fieldDefinitions",

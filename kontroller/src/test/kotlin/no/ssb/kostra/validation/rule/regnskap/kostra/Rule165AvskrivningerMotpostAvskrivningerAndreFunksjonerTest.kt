@@ -62,24 +62,38 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
     }
 
     Given("two records that balances to zero amount") {
-        val kostraRecords = listOf(-1, 1).map { belop ->
-            mapOf(
-                RegnskapConstants.FIELD_REGION to "420400",
-                RegnskapConstants.FIELD_SKJEMA to "0A",
-                RegnskapConstants.FIELD_KONTOKLASSE to "1",
-                RegnskapConstants.FIELD_FUNKSJON to "100",
-                RegnskapConstants.FIELD_ART to "990",
-                RegnskapConstants.FIELD_BELOP to belop.toString()
+        forAll(
+            row(
+                "sum belop = 0",
+                listOf(-1, 1),
+                false
+            ),
+            row(
+                "sum belop != 0",
+                listOf(-2, 1),
+                true
             )
-        }.toKostraRecords()
+        ) { description, belop, expectError ->
+            val kostraRecords = belop.map {
+                mapOf(
+                    RegnskapConstants.FIELD_REGION to "420400",
+                    RegnskapConstants.FIELD_SKJEMA to "0A",
+                    RegnskapConstants.FIELD_KONTOKLASSE to "1",
+                    RegnskapConstants.FIELD_FUNKSJON to "100",
+                    RegnskapConstants.FIELD_ART to "990",
+                    RegnskapConstants.FIELD_BELOP to it.toString()
+                )
+            }.toKostraRecords()
 
-        When("two records where sum belop = 0") {
-            verifyValidationResult(
-                validationReportEntries = sut.validate(kostraRecords),
-                expectError = false,
-                expectedSeverity = Severity.ERROR,
-                "N/A"
-            )
+            When(description) {
+                verifyValidationResult(
+                    validationReportEntries = sut.validate(kostraRecords),
+                    expectError = expectError,
+                    expectedSeverity = Severity.ERROR,
+                    "Korrigér i fila slik at motpost avskrivninger (-1) kun er ført på funksjon " +
+                            "860, art 990 og ikke på funksjonene ([100, 100])"
+                )
+            }
         }
     }
 })

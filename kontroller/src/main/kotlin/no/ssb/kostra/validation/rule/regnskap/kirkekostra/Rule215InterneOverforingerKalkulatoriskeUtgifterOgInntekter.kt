@@ -14,11 +14,11 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRule
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsString(FIELD_ART) in listOf("390", "790") }
-        ?.partition { it.getFieldAsString(FIELD_ART) == "390" }
+        ?.filter { it.fieldAsString(FIELD_ART) in listOf("390", "790") }
+        ?.partition { it.fieldAsString(FIELD_ART) == "390" }
         ?.let { (utgifterPosteringer, inntekterPosteringer) ->
-            utgifterPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
-                    inntekterPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
+                    inntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
             (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
         }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->

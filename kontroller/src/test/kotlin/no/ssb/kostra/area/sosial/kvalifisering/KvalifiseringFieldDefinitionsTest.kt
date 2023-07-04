@@ -25,8 +25,8 @@ class KvalifiseringFieldDefinitionsTest : BehaviorSpec({
                 kostraRecords.size shouldBe 2
 
                 assertSoftly(kostraRecords.first()) {
-                    it.getFieldAsString(PERSON_JOURNALNR_COL_NAME) shouldStartWith "JOURNNR"
-                    it.getFieldAsString(PERSON_FODSELSNR_COL_NAME) shouldBe "02020212345"
+                    it.fieldAsString(PERSON_JOURNALNR_COL_NAME) shouldStartWith "JOURNNR"
+                    it.fieldAsString(PERSON_FODSELSNR_COL_NAME) shouldBe "02020212345"
                 }
             }
         }

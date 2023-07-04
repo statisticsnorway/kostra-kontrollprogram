@@ -15,11 +15,11 @@ class Rule025KombinasjonDriftKontoklasseArt(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningDriftRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) in invalidDriftArtList
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsString(FIELD_ART) in invalidDriftArtList
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Korrigér ugyldig art '${kostraRecord.getFieldAsString(FIELD_ART)}' i driftsregnskapet " +
+            messageText = "Korrigér ugyldig art '${kostraRecord.fieldAsString(FIELD_ART)}' i driftsregnskapet " +
                     "til en gyldig art i driftsregnskapet eller overfør posteringen til investeringsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )

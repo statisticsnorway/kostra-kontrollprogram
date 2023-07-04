@@ -12,7 +12,7 @@ class Control32KvalifiseringssumOverMaksimum : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsInteger(KVP_STONAD_COL_NAME)
+        context.fieldAs<Int?>(KVP_STONAD_COL_NAME)
             ?.takeIf { it > STONAD_SUM_MAX }
             ?.let { belop ->
                 createSingleReportEntryList(

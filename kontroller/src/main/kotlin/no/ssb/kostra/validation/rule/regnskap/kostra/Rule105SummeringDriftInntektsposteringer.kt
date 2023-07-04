@@ -17,7 +17,7 @@ class Rule105SummeringDriftInntektsposteringer : AbstractRule<List<KostraRecord>
         .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 > it }
         ?.let { sumDriftsInntekter ->
             createSingleReportEntryList(

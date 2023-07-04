@@ -14,7 +14,7 @@ class Rule05bJournalnummerDubletter : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
         context.takeIf { it.size > 1 }?.let {
-            it.groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
+            it.groupBy { kostraRecord -> kostraRecord.fieldAsString(PERSON_JOURNALNR_COL_NAME) }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (journalId, group) ->
                     group.map { kostraRecord ->
@@ -22,9 +22,9 @@ class Rule05bJournalnummerDubletter : AbstractRule<List<KostraRecord>>(
                             "Journalnummer $journalId forekommer ${group.size} ganger.",
                             lineNumbers = listOf(kostraRecord.lineNumber)
                         ).copy(
-                            caseworker = kostraRecord.getFieldAsString(KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME),
+                            caseworker = kostraRecord.fieldAsString(KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME),
                             journalId = journalId,
-                            individId = kostraRecord.getFieldAsString(KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME),
+                            individId = kostraRecord.fieldAsString(KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME),
                         )
                     }
                 }.ifEmpty { null }

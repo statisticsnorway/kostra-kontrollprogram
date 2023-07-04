@@ -301,9 +301,9 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
             )
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val driftUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val driftInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val driftDifferanse = kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            val driftUtgifter = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val driftInntekter = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
+            val driftDifferanse = kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
 
             When("List is $recordList") {
                 verifyValidationResult(

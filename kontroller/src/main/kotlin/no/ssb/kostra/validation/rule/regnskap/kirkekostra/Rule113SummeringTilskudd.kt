@@ -14,8 +14,8 @@ class Rule113SummeringTilskudd : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsString(FIELD_ART) == "830" }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+        ?.filter { it.fieldAsString(FIELD_ART) == "830" }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { tilskudd ->
             createSingleReportEntryList(

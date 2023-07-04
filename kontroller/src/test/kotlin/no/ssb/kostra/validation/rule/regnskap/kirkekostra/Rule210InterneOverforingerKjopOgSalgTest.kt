@@ -95,8 +95,8 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
             )
         ) { description, recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val internKjop = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val internSalg = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val internKjop = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val internSalg = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val internDifferanse = internKjop + internSalg
 
             When("$description $recordList") {

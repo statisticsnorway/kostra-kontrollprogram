@@ -55,8 +55,8 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
             ),
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val overforinger = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val innsamledeMidler = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val overforinger = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val innsamledeMidler = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val midlerDifferanse = overforinger + innsamledeMidler
 
             When("List is $recordList") {

@@ -300,10 +300,10 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
             ),
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val investeringUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val investeringInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val investeringUtgifter = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val investeringInntekter = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val investeringDifferanse = kostraRecordList.sumOf {
-                it.getFieldAsIntegerOrDefault(FIELD_BELOP)
+                it.fieldAsIntOrDefault(FIELD_BELOP)
             }
 
             When("List is $recordList") {

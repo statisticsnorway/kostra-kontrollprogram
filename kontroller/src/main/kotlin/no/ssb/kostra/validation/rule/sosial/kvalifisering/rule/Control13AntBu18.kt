@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -12,7 +12,7 @@ class Control13AntBu18 : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsIntegerOrDefault(ANT_BU18_COL_NAME)
+        context.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME)
             .takeIf { numberOfChildren -> numberOfChildren >= CHILD_COUNT_THRESHOLD }
             ?.let { numberOfChildren ->
                 createSingleReportEntryList(

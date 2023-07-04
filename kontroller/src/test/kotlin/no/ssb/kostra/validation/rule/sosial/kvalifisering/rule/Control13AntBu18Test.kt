@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
@@ -29,6 +29,6 @@ class Control13AntBu18Test : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(numberOfChildren: Int) =
-            kvalifiseringKostraRecordInTest(mapOf(ANT_BU18_COL_NAME to numberOfChildren.toString()))
+            kvalifiseringKostraRecordInTest(mapOf(ANT_BARN_UNDER_18_COL_NAME to numberOfChildren.toString()))
     }
 }

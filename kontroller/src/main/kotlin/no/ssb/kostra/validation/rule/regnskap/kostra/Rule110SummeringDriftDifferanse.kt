@@ -18,9 +18,9 @@ class Rule110SummeringDriftDifferanse : AbstractRule<List<KostraRecord>>(
         ?.partition { it.isUtgift() }
         ?.let { (driftUtgifterPosteringer, driftInntekterPosteringer) ->
             driftUtgifterPosteringer
-                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     driftInntekterPosteringer
-                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (driftUtgifter, driftInntekter) ->
             0 < driftUtgifter

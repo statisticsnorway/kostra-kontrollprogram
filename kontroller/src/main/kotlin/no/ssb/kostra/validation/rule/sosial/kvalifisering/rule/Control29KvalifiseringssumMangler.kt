@@ -12,10 +12,10 @@ class Control29KvalifiseringssumMangler : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        if (context.getFieldAsInteger(KVP_STONAD_COL_NAME) == null)
+        if (context.fieldAs<Int?>(KVP_STONAD_COL_NAME) == null)
             createSingleReportEntryList(
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +
-                        "(${context.getFieldAsString(KVP_STONAD_COL_NAME)}) i løpet av " +
+                        "(${context[KVP_STONAD_COL_NAME]}) i løpet av " +
                         "året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
             )
         else null

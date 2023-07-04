@@ -15,7 +15,7 @@ class Rule120SummeringBalansePassiva : AbstractRule<List<KostraRecord>>(
         .filter { it.isBalanseRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isPassiva() }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumPassiva ->
             createSingleReportEntryList(

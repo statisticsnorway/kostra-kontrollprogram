@@ -14,11 +14,11 @@ class Rule220InterneOverforingerMidler : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
-        ?.filter { kostraRecord -> kostraRecord.getFieldAsString(FIELD_ART) in listOf("465", "865") }
-        ?.partition { it.getFieldAsString(FIELD_ART) == "465" }
+        ?.filter { kostraRecord -> kostraRecord.fieldAsString(FIELD_ART) in listOf("465", "865") }
+        ?.partition { it.fieldAsString(FIELD_ART) == "465" }
         ?.let { (overforingerPosteringer, innsamledeMidlerPosteringer) ->
-            overforingerPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
-                    innsamledeMidlerPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            overforingerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
+                    innsamledeMidlerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }?.takeUnless { (overforinger, innsamledeMidler) ->
             (overforinger + innsamledeMidler) in -30..30
         }?.let { (overforinger, innsamledeMidler) ->

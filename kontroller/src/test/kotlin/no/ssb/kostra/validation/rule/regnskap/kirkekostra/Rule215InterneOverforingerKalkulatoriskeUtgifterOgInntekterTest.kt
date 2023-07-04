@@ -51,8 +51,8 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
             )
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val kalkulatoriskeUtgifter = kostraRecordList[0].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
-            val kalkulatoriskeInntekter = kostraRecordList[1].getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP)
+            val kalkulatoriskeUtgifter = kostraRecordList[0].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
+            val kalkulatoriskeInntekter = kostraRecordList[1].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
             val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
 
             When("List is $recordList") {

@@ -15,14 +15,14 @@ class Rule143Avskrivninger : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsIntegerOrDefault(FIELD_FUNKSJON) in 41..45 }
+        ?.filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
         ?.let { driftPosteringer ->
             driftPosteringer
-                .filter { it.getFieldAsString(FIELD_ART) == "590" }
-                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                .filter { it.fieldAsString(FIELD_ART) == "590" }
+                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     driftPosteringer
-                        .filter { it.getFieldAsString(FIELD_ART) == "990" }
-                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+                        .filter { it.fieldAsString(FIELD_ART) == "990" }
+                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
 
         }?.takeUnless { (avskrivninger, motpostAvskrivninger) ->
             (avskrivninger + motpostAvskrivninger) in -30..30

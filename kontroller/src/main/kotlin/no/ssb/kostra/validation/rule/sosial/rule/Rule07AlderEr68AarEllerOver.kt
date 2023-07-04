@@ -13,7 +13,7 @@ class Rule07AlderEr68AarEllerOver : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME).ageInYears(arguments.aargang.toInt())
+        context.fieldAs<String>(PERSON_FODSELSNR_COL_NAME).ageInYears(arguments.aargang.toInt())
             ?.takeIf { ageInYears -> ageInYears > 67 }?.let {
                 createSingleReportEntryList(
                     messageText = "Deltakeren ($it år) er 68 år eller eldre."

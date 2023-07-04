@@ -7,7 +7,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule014Belop : AbstractRule<List<KostraRecord>>("Kontroll 014 : Beløp", Severity.ERROR) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
-        with(kostraRecord.getFieldAsString(FIELD_BELOP)) {
+        with(kostraRecord.fieldAsString(FIELD_BELOP)) {
             split("\t".toRegex())
                 .dropLastWhile { it.isEmpty() }
                 .toTypedArray().size != 1
@@ -15,7 +15,7 @@ class Rule014Belop : AbstractRule<List<KostraRecord>>("Kontroll 014 : Beløp", S
         }
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Fant ugyldig beløp '${kostraRecord.getFieldAsString(FIELD_BELOP)}'. Korrigér beløp",
+            messageText = "Fant ugyldig beløp '${kostraRecord.fieldAsString(FIELD_BELOP)}'. Korrigér beløp",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )
     }.ifEmpty { null }

@@ -7,10 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.EKTSTAT_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KJONN_COL_NAME
@@ -34,7 +34,6 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.VERSION_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitionsByName
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
@@ -131,8 +130,8 @@ class KvalifiseringValidatorTest : BehaviorSpec({
                 KJONN_COL_NAME to "1",
                 STATUS_COL_NAME to "1",
                 EKTSTAT_COL_NAME to "1",
-                BU18_COL_NAME to "1",
-                ANT_BU18_COL_NAME to "1",
+                HAR_BARN_UNDER_18_COL_NAME to "1",
+                ANT_BARN_UNDER_18_COL_NAME to "1",
                 REG_DATO_COL_NAME to "010122",
                 VEDTAK_DATO_COL_NAME to "010122",
                 BEGYNT_DATO_COL_NAME to "010122",

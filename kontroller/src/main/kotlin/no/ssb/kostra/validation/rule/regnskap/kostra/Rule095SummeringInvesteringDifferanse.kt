@@ -20,10 +20,10 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
                     investeringInntekterPosteringer) ->
             (
                     investeringUtgifterPosteringer
-                        .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
                             to
                             investeringInntekterPosteringer
-                                .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+                                .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
                     )
         }
         ?.takeUnless { (investeringUtgifter, investeringInntekter) ->

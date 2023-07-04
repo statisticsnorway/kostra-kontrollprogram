@@ -13,7 +13,7 @@ class Rule06AlderUnder18Aar : AbstractRule<KostraRecord>(
     Severity.WARNING
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME).ageInYears(arguments.aargang.toInt())
+        context.fieldAs<String>(PERSON_FODSELSNR_COL_NAME).ageInYears(arguments.aargang.toInt())
             ?.takeIf { ageInYears -> ageInYears < 18 }
             ?.let {
                 createSingleReportEntryList(

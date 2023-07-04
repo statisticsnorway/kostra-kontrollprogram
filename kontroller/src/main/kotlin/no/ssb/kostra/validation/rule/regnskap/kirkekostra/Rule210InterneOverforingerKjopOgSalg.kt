@@ -14,11 +14,11 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsString(FIELD_ART) in listOf("380", "780") }
-        ?.partition { it.getFieldAsString(FIELD_ART) == "380" }
+        ?.filter { it.fieldAsString(FIELD_ART) in listOf("380", "780") }
+        ?.partition { it.fieldAsString(FIELD_ART) == "380" }
         ?.let { (internKjopPosteringer, internSalgPosteringer) ->
-            internKjopPosteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) } to
-                    internSalgPosteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+            internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) } to
+                    internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         }?.takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
         ?.let { (internKjop, internSalg) ->
             createSingleReportEntryList(

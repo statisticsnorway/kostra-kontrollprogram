@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
@@ -36,7 +36,7 @@ class Control10Bu18Test : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(code: Int) = kvalifiseringKostraRecordInTest(
-            mapOf(BU18_COL_NAME to code.toString())
+            mapOf(HAR_BARN_UNDER_18_COL_NAME to code.toString())
         )
     }
 }

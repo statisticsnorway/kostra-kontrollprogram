@@ -280,8 +280,8 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
             )
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val avskrivninger = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val motpostAvskrivninger = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
+            val avskrivninger = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val motpostAvskrivninger = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
 
             When("$recordList") {
                 verifyValidationResult(

@@ -19,16 +19,16 @@ class Rule155AvskrivningerDifferanse : AbstractRule<List<KostraRecord>>(
         ?.let { driftPosteringer ->
             driftPosteringer
                 .filter {
-                    it.getFieldAsIntegerOrDefault(FIELD_FUNKSJON) in 100..799
-                            && it.getFieldAsString(FIELD_ART) == "590"
+                    it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799
+                            && it.fieldAsString(FIELD_ART) == "590"
                 }
-                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     driftPosteringer
                         .filter {
-                            it.getFieldAsString(FIELD_FUNKSJON) == "860 "
-                                    && it.getFieldAsString(FIELD_ART) == "990"
+                            it.fieldAsString(FIELD_FUNKSJON) == "860 "
+                                    && it.fieldAsString(FIELD_ART) == "990"
                         }
-                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
 
         }
         ?.takeUnless { (avskrivninger, motpostAvskrivninger) ->

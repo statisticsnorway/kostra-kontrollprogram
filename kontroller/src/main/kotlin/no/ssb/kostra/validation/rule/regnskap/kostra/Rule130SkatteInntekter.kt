@@ -19,8 +19,8 @@ class Rule130SkatteInntekter : AbstractRule<List<KostraRecord>>(
         .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.getFieldAsTrimmedString(FIELD_FUNKSJON) == "800" && it.getFieldAsString(FIELD_ART) == "870" }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.filter { it.fieldAsTrimmedString(FIELD_FUNKSJON) == "800" && it.fieldAsString(FIELD_ART) == "870" }
+        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { skatteInntekter -> skatteInntekter < 0 }
         ?.let { skatteInntekter ->
             createSingleReportEntryList(

@@ -14,9 +14,9 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArt : AbstractRule<List<Ko
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningInvesteringRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) == "729"
-                && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "841 "
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsString(FIELD_ART) == "729"
+                && kostraRecord.fieldAsString(FIELD_FUNKSJON) != "841 "
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun " +

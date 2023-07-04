@@ -8,5 +8,4 @@ fun FieldDefinition.codeIsMissing(code: String) = this.codeList.none { it.code =
 
 fun FieldDefinition.codeExists(code: String) = this.codeList.any { it.code == code }
 
-fun Collection<FieldDefinition>.findByColumnName(columnName: String) = this.first { it.name == columnName }
-
+fun Collection<FieldDefinition>.byColumnName(columnName: String) = this.first { it.name == columnName }

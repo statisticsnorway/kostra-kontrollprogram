@@ -17,9 +17,9 @@ class Rule125SummeringBalanseDifferanse : AbstractRule<List<KostraRecord>>(
         ?.partition { it.isAktiva() }
         ?.let { (aktivaPosteringer, passivaPosteringer) ->
             aktivaPosteringer
-                .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     passivaPosteringer
-                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (aktiva, passiva) ->
             0 < aktiva

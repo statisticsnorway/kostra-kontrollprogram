@@ -22,25 +22,25 @@ class KostraRecordTest : BehaviorSpec({
 
             Then("getFieldAsString(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldAsString(field)
+                    kostraRecord.fieldAsString(field)
                 }
             }
 
             Then("getFieldAsTrimmedString(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldAsTrimmedString(field)
+                    kostraRecord.fieldAsTrimmedString(field)
                 }
             }
 
             Then("getFieldAsInteger(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldAsInteger(field)
+                    kostraRecord.fieldAsInt(field)
                 }
             }
 
             Then("getFieldAsIntegerDefaultEquals0(\"$field\") should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldAsIntegerOrDefault(field)
+                    kostraRecord.fieldAsIntOrDefault(field)
                 }
             }
         }
@@ -59,11 +59,11 @@ class KostraRecordTest : BehaviorSpec({
                 val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
                 Then("getFieldAsString") {
-                    kostraRecord.getFieldAsString("Field") shouldBe string
+                    kostraRecord.fieldAsString("Field") shouldBe string
                 }
 
                 Then("getFieldAsTrimmedString") {
-                    kostraRecord.getFieldAsTrimmedString("Field") shouldBe trimmedString
+                    kostraRecord.fieldAsTrimmedString("Field") shouldBe trimmedString
                 }
             }
         }
@@ -92,11 +92,11 @@ class KostraRecordTest : BehaviorSpec({
                 val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
                 Then("getFieldAsInteger") {
-                    kostraRecord.getFieldAsInteger("Field") shouldBe intValue
+                    kostraRecord.fieldAsInt("Field") shouldBe intValue
                 }
 
                 Then("getFieldAsIntegerDefaultEquals0") {
-                    kostraRecord.getFieldAsIntegerOrDefault("Field") shouldBe defaultIntValue
+                    kostraRecord.fieldAsIntOrDefault("Field") shouldBe defaultIntValue
                 }
             }
         }
@@ -115,7 +115,7 @@ class KostraRecordTest : BehaviorSpec({
                 val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
                 Then("getFieldAsLocalDate") {
-                    kostraRecord.getFieldAsLocalDate("Field") shouldBe dateValue
+                    kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
                 }
             }
         }
@@ -135,7 +135,7 @@ class KostraRecordTest : BehaviorSpec({
 
                 Then("getFieldAsLocalDate") {
                     shouldThrow<IndexOutOfBoundsException> {
-                        kostraRecord.getFieldAsLocalDate("Field") shouldBe dateValue
+                        kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
                     }
                 }
             }
@@ -154,7 +154,7 @@ class KostraRecordTest : BehaviorSpec({
 
             Then("getFieldDefinitionByName should throw NoSuchFieldException") {
                 shouldThrow<NoSuchFieldException> {
-                    kostraRecord.getFieldDefinitionByName("MissingField")
+                    kostraRecord.fieldDefinition("MissingField")
                 }
             }
         }

@@ -17,7 +17,7 @@ class Rule085SummeringInvesteringUtgiftsposteringer : AbstractRule<List<KostraRe
         .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isUtgift() }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumInvesteringsUtgifter ->
             createSingleReportEntryList(

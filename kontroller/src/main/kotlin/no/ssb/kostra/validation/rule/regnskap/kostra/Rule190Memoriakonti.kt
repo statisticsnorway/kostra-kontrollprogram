@@ -12,12 +12,12 @@ class Rule190Memoriakonti : AbstractRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isBalanseRegnskap() && it.getFieldAsIntegerOrDefault(FIELD_KAPITTEL) in 9100..9999 }
+        .filter { it.isBalanseRegnskap() && it.fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999 }
         .takeIf { it.any() }
-        ?.partition { it.getFieldAsIntegerOrDefault(FIELD_KAPITTEL) == 9999 }
+        ?.partition { it.fieldAsIntOrDefault(FIELD_KAPITTEL) == 9999 }
         ?.let { (motpostMemoriakontiPosteringer, memoriakontiPosteringer) ->
-            motpostMemoriakontiPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
-                    memoriakontiPosteringer.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            motpostMemoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
+                    memoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (motpostMemoriakonti, memoriakonti) ->
             memoriakonti + motpostMemoriakonti in -30..30

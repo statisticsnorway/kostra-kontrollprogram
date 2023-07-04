@@ -15,12 +15,12 @@ class Rule035KombinasjonDriftKontoklasseArt(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningDriftRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) in illogicalDriftArtList
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsString(FIELD_ART) in illogicalDriftArtList
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Kun advarsel, hindrer ikke innsending: (${
-                kostraRecord.getFieldAsString(
+                kostraRecord.fieldAsString(
                     FIELD_ART
                 )
             }) regnes å være ulogisk i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",

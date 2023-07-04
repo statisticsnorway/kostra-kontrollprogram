@@ -9,10 +9,10 @@ import no.ssb.kostra.validation.rule.AbstractRule
 class Rule007Organisasjonsnummer :
     AbstractRule<List<KostraRecord>>("Kontroll 007 : Organisasjonsnummer", Severity.ERROR) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
-        arguments.orgnr.split(",").none { it == kostraRecord.getFieldAsString(FIELD_ORGNR) }
+        arguments.orgnr.split(",").none { it == kostraRecord.fieldAsString(FIELD_ORGNR) }
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Fant ugyldig orgnr '${kostraRecord.getFieldAsString(FIELD_ORGNR)}'. " +
+            messageText = "Fant ugyldig orgnr '${kostraRecord.fieldAsString(FIELD_ORGNR)}'. " +
                     "Korrigér orgnr til en av '${arguments.orgnr.split(",")}'",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )

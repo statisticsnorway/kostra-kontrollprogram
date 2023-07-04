@@ -17,13 +17,13 @@ class Rule150Avskrivninger : AbstractRule<List<KostraRecord>>(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {
-            it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
-                    && it.getFieldAsString(RegnskapConstants.FIELD_ART) == "590"
+            it.fieldAsIntOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
+                    && it.fieldAsString(RegnskapConstants.FIELD_ART) == "590"
         }
         ?.let { avskrivningPosteringer ->
-            avskrivningPosteringer[0].getFieldAsString(RegnskapConstants.FIELD_SKJEMA) to
+            avskrivningPosteringer[0].fieldAsString(RegnskapConstants.FIELD_SKJEMA) to
                     avskrivningPosteringer
-                        .sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         }
         ?.takeUnless { (_, avskrivninger) -> avskrivninger != 0 }
         ?.let { (skjema, avskrivninger) ->

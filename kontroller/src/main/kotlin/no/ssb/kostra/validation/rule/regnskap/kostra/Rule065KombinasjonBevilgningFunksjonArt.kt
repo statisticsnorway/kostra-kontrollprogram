@@ -16,14 +16,14 @@ class Rule065KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
         kostraRecord.isBevilgningRegnskap()
                 && (
                 (
-                        kostraRecord.getFieldAsString(FIELD_FUNKSJON) == "899 "
-                                && kostraRecord.getFieldAsString(FIELD_ART) !in listOf("589", "980", "989")
+                        kostraRecord.fieldAsString(FIELD_FUNKSJON) == "899 "
+                                && kostraRecord.fieldAsString(FIELD_ART) !in listOf("589", "980", "989")
                         ) || (
-                        kostraRecord.getFieldAsString(FIELD_ART) in listOf("589", "980", "989")
-                                && kostraRecord.getFieldAsString(FIELD_FUNKSJON) != "899 "
+                        kostraRecord.fieldAsString(FIELD_ART) in listOf("589", "980", "989")
+                                && kostraRecord.fieldAsString(FIELD_FUNKSJON) != "899 "
                         )
                 )
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. " +

@@ -20,13 +20,13 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {
-            it.getFieldAsString(FIELD_FUNKSJON) == "860 "
-                    && it.getFieldAsString(FIELD_ART) == "990"
+            it.fieldAsString(FIELD_FUNKSJON) == "860 "
+                    && it.fieldAsString(FIELD_ART) == "990"
         }
         ?.let { avskrivningPosteringer ->
-            avskrivningPosteringer[0].getFieldAsString(FIELD_SKJEMA) to
+            avskrivningPosteringer[0].fieldAsString(FIELD_SKJEMA) to
                     avskrivningPosteringer
-                        .sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         }
         ?.takeUnless { (_, motpostAvskrivninger) -> motpostAvskrivninger != 0 }
         ?.let { (skjema, motpostAvskrivninger) ->

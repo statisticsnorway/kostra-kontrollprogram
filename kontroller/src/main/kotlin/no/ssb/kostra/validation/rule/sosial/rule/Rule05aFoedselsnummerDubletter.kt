@@ -15,16 +15,16 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
-        context.filter { kostraRecord ->
-                isValidSocialSecurityIdOrDnr(kostraRecord.getFieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME))
-            }.groupBy { kostraRecord -> kostraRecord.getFieldAsString(PERSON_FODSELSNR_COL_NAME) }
+        context.filter { record ->
+                isValidSocialSecurityIdOrDnr(record.fieldAs(PERSON_FODSELSNR_COL_NAME))
+            }.groupBy { kostraRecord -> kostraRecord[PERSON_FODSELSNR_COL_NAME] }
                 .filter { (_, group) -> group.size > 1 }
                 .flatMap { (foedselsnummer, group) ->
                     group.map { kostraRecord ->
-                        val journalId = kostraRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME)
+                        val journalId = kostraRecord[PERSON_JOURNALNR_COL_NAME]
 
                         val otherJournalIds = group
-                            .map { innerRecord -> innerRecord.getFieldAsString(PERSON_JOURNALNR_COL_NAME) }
+                            .map { innerRecord -> innerRecord[PERSON_JOURNALNR_COL_NAME] }
                             .filter { innerJournalId -> innerJournalId != journalId }
                             .joinToString(", ")
 
@@ -32,7 +32,7 @@ class Rule05aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
                             "Fødselsnummeret i journalnummer $journalId fins også i journalene $otherJournalIds.",
                             lineNumbers = listOf(kostraRecord.lineNumber)
                         ).copy(
-                            caseworker = kostraRecord.getFieldAsString(SAKSBEHANDLER_COL_NAME),
+                            caseworker = kostraRecord[SAKSBEHANDLER_COL_NAME],
                             journalId = journalId,
                             individId = foedselsnummer
                         )

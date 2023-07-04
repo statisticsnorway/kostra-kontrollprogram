@@ -16,7 +16,7 @@ class Rule100SummeringDriftUtgiftsposteringer : AbstractRule<List<KostraRecord>>
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isUtgift() }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumDriftsUtgifter ->
             createSingleReportEntryList(

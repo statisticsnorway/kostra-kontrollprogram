@@ -15,11 +15,11 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRule<List<Kostra
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isOsloInternRegnskap() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
-        ?.filter { kostraRecord -> kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) in listOf("298", "798") }
-        ?.partition { kostraRecord -> kostraRecord.getFieldAsString(RegnskapConstants.FIELD_ART) == "298" }
+        ?.filter { kostraRecord -> kostraRecord.fieldAsString(RegnskapConstants.FIELD_ART) in listOf("298", "798") }
+        ?.partition { kostraRecord -> kostraRecord.fieldAsString(RegnskapConstants.FIELD_ART) == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
-            art298Posteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) } to
-                    art798Posteringer.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+            art298Posteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) } to
+                    art798Posteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         }
         ?.takeUnless { (sumArt298Investering, sumArt798Investering) ->
             sumArt298Investering + sumArt798Investering in -10..10

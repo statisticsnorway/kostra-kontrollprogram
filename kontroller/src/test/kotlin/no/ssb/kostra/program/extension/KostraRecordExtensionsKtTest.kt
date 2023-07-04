@@ -57,7 +57,7 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
             val changedByPlus = sut.plus("Added" to "911")
 
             Then("the added should have the provided value") {
-                changedByPlus.getFieldAsString("Added") shouldBe "911"
+                changedByPlus.fieldAsString("Added") shouldBe "911"
             }
         }
     }

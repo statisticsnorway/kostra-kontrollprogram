@@ -16,8 +16,8 @@ object KvalifiseringColumnNames {
     const val AVSL_DATO_COL_NAME = "AVSL_DATO"
     const val EKTSTAT_COL_NAME = "EKTSTAT"
 
-    const val BU18_COL_NAME = "BU18"
-    const val ANT_BU18_COL_NAME = "ANTBU18"
+    const val HAR_BARN_UNDER_18_COL_NAME = "BU18"
+    const val ANT_BARN_UNDER_18_COL_NAME = "ANTBU18"
     const val REG_DATO_COL_NAME = "REG_DATO"
     const val VEDTAK_DATO_COL_NAME = "VEDTAK_DATO"
     const val BEGYNT_DATO_COL_NAME = "BEGYNT_DATO"

@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
@@ -44,8 +44,8 @@ class Control11Bu18AntBu18Test : BehaviorSpec({
             numberOfChildren: Int
         ) = kvalifiseringKostraRecordInTest(
             mapOf(
-                BU18_COL_NAME to bu18Code.toString(),
-                ANT_BU18_COL_NAME to numberOfChildren.toString()
+                HAR_BARN_UNDER_18_COL_NAME to bu18Code.toString(),
+                ANT_BARN_UNDER_18_COL_NAME to numberOfChildren.toString()
             )
         )
     }

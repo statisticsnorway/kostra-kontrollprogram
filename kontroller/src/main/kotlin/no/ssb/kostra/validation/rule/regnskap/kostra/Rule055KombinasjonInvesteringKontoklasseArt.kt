@@ -15,12 +15,12 @@ class Rule055KombinasjonInvesteringKontoklasseArt(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningInvesteringRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) in illogicalInvesteringArtList
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsString(FIELD_ART) in illogicalInvesteringArtList
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Kun advarsel, hindrer ikke innsending: " +
-                    "(${kostraRecord.getFieldAsString(FIELD_ART)}) regnes å være ulogisk art " +
+                    "(${kostraRecord.fieldAsString(FIELD_ART)}) regnes å være ulogisk art " +
                     "i investeringsregnskapet. Vennligst vurder å postere på annen art eller om posteringen " +
                     "hører til i driftsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)

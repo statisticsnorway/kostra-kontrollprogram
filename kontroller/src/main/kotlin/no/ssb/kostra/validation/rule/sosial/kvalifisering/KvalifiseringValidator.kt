@@ -39,9 +39,9 @@ object KvalifiseringValidator {
                 .flatten()
                 .map { reportEntry ->
                     reportEntry.copy(
-                        caseworker = record.getFieldAsString(SAKSBEHANDLER_COL_NAME),
-                        journalId = record.getFieldAsString(PERSON_JOURNALNR_COL_NAME),
-                        individId = record.getFieldAsString(PERSON_FODSELSNR_COL_NAME),
+                        caseworker = record[SAKSBEHANDLER_COL_NAME],
+                        journalId = record[PERSON_JOURNALNR_COL_NAME],
+                        individId = record[PERSON_FODSELSNR_COL_NAME],
                         lineNumbers = listOf(record.lineNumber)
                     )
                 }

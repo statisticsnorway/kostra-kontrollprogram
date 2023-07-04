@@ -13,7 +13,7 @@ fun KostraRecord.toRecordString(): String {
     ) { recordString: String, fieldDefinition: FieldDefinition ->
         with(fieldDefinition) {
             val fieldLength = to - from + 1
-            val value = getFieldAsString(name)
+            val value = fieldAsString(name)
             val stringValue =
                 if (dataType == INTEGER_TYPE)
                     value.trim().padStart(fieldLength, ' ')

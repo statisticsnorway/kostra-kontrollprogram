@@ -2,7 +2,7 @@ package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
 import no.ssb.kostra.area.FieldDefinitions
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ARBLONNSTILS_COL_NAME
@@ -16,7 +16,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UKJ
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_UTEN_OK_AVKLAR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_VIKTIGSTE_INNTEKT_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BU18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.DISTRIKTSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.EKTSTAT_COL_NAME
@@ -123,7 +123,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             number = 91,
-            name = BU18_COL_NAME,
+            name = HAR_BARN_UNDER_18_COL_NAME,
             dataType = STRING_TYPE,
             viewType = DROPDOWNLIST_VIEWTYPE,
             from = 32, to = 32,
@@ -135,7 +135,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             number = 92,
-            name = ANT_BU18_COL_NAME,
+            name = ANT_BARN_UNDER_18_COL_NAME,
             dataType = INTEGER_TYPE,
             viewType = TEXTBOX_VIEWTYPE,
             from = 33, to = 34

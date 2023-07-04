@@ -13,15 +13,15 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractRule<List<KostraRec
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter {
         it.isBevilgningRegnskap()
-                && it.getFieldAsString(FIELD_FUNKSJON) == "089 "
+                && it.fieldAsString(FIELD_FUNKSJON) == "089 "
                 && !(
-                it.getFieldAsIntegerOrDefault(FIELD_ART) in 500..580
-                        || it.getFieldAsIntegerOrDefault(FIELD_ART) == 830
-                        || it.getFieldAsIntegerOrDefault(FIELD_ART) in 900..980
+                it.fieldAsIntOrDefault(FIELD_ART) in 500..580
+                        || it.fieldAsIntOrDefault(FIELD_ART) == 830
+                        || it.fieldAsIntOrDefault(FIELD_ART) in 900..980
                 )
     }.map {
         createValidationReportEntry(
-            messageText = "Korrigér i fila slik at art (${it.getFieldAsString(FIELD_ART)}) " +
+            messageText = "Korrigér i fila slik at art (${it.fieldAsString(FIELD_ART)}) " +
                     "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
             lineNumbers = listOf(it.lineNumber)
         )

@@ -160,9 +160,9 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
             )
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val sumArt298Investering = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val sumArt798Investering = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val sumOslointerneInvestering = kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            val sumArt298Investering = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val sumArt798Investering = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
+            val sumOslointerneInvestering = kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
 
             When("List is $recordList") {
                 verifyValidationResult(

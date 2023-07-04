@@ -17,7 +17,7 @@ class ConversionExtensionsKtTest : BehaviorSpec({
         ) { yearWithoutCentury, expectedYearWithCentury ->
 
             When("$yearWithoutCentury $expectedYearWithCentury") {
-                yearWithoutCentury.toYearWithCentury().shouldBe(expectedYearWithCentury)
+                yearWithoutCentury.yearWithCentury().shouldBe(expectedYearWithCentury)
             }
         }
     }

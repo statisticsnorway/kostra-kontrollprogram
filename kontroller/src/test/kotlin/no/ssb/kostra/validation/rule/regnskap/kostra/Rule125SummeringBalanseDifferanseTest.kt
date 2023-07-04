@@ -210,9 +210,9 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
             )
         ) { recordList, expectError ->
             val kostraRecordList = recordList.toKostraRecords()
-            val aktiva = kostraRecordList[0].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val passiva = kostraRecordList[1].getFieldAsIntegerOrDefault(FIELD_BELOP)
-            val balanseDifferanse = kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) }
+            val aktiva = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
+            val passiva = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
+            val balanseDifferanse = kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
 
             When("List is $recordList") {
                 verifyValidationResult(

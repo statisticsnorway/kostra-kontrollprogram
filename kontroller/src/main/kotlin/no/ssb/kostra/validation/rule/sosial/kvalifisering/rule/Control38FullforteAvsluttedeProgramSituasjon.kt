@@ -15,8 +15,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_P
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
-import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.extension.valueOrNull
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -26,24 +26,23 @@ class Control38FullforteAvsluttedeProgramSituasjon : AbstractRule<KostraRecord>(
     KvalifiseringRuleId.FULLFORTE_AVSLUTTEDE_PROGRAM_SITUASJON_38.title,
     Severity.ERROR
 ) {
-    override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        context.getFieldAsString(STATUS_COL_NAME).takeIf { statusCode -> statusCode == FULLFORT_PROGRAM }
-            ?.takeIf {
-                qualifyingFieldNames
-                    .mapNotNull { fieldName ->
-                        context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
-                    }.none { (fieldName, fieldValue) ->
-                        fieldDefinitions.findByColumnName(fieldName).codeExists(fieldValue)
-                    }
-            }?.let {
-                createSingleReportEntryList(
-                    "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke " +
-                            "flytting) – hva var deltakerens situasjon umiddelbart etter avslutningen'? " +
-                            "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført " +
-                            "program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for " +
-                            "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
-                )
-            }
+    override fun validate(context: KostraRecord, arguments: KotlinArguments) = context[STATUS_COL_NAME]
+        .takeIf { statusCode -> statusCode == FULLFORT_PROGRAM }
+        ?.takeIf {
+            qualifyingFieldNames
+                .mapNotNull { fieldName -> context[fieldName].valueOrNull()?.let { fieldName to it } }
+                .none { (fieldName, fieldValue) ->
+                    fieldDefinitions.byColumnName(fieldName).codeExists(fieldValue)
+                }
+        }?.let {
+            createSingleReportEntryList(
+                "Feltet 'Ved fullført program eller program avsluttet etter avtale (gjelder ikke " +
+                        "flytting) – hva var deltakerens situasjon umiddelbart etter avslutningen'? " +
+                        "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført " +
+                        "program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for " +
+                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+            )
+        }
 
     companion object {
         internal val qualifyingFieldNames = setOf(

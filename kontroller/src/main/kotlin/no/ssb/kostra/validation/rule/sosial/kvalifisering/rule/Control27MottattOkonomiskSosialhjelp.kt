@@ -11,8 +11,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.NEI
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.findByColumnName
 import no.ssb.kostra.program.extension.valueOrNull
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -24,16 +24,14 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments): List<ValidationReportEntry>? {
-        val values = fieldNamesToCheck.associateWith { context.getFieldAsString(it) }
+        val values = fieldNamesToCheck.associateWith { context[it] }
 
-        return when (context.getFieldAsString(KVP_MED_ASTONAD_COL_NAME)) {
+        return when (context[KVP_MED_ASTONAD_COL_NAME]) {
             JA -> {
                 fieldNamesToCheck
-                    .mapNotNull { fieldName ->
-                        context.getFieldAsString(fieldName).valueOrNull()?.let { fieldName to it }
-                    }
+                    .mapNotNull { fieldName -> context[fieldName].valueOrNull()?.let { fieldName to it } }
                     .filter { (fieldName, fieldValue) ->
-                        fieldDefinitions.findByColumnName(fieldName).codeIsMissing(fieldValue)
+                        fieldDefinitions.byColumnName(fieldName).codeIsMissing(fieldValue)
                     }
                     .takeIf { it.isNotEmpty() }?.let {
                         createSingleReportEntryList(
@@ -47,7 +45,7 @@ class Control27MottattOkonomiskSosialhjelp : AbstractRule<KostraRecord>(
 
             NEI -> {
                 fieldNamesToCheck
-                    .filter { context.getFieldAsString(it).valueOrNull() != null }
+                    .filter { context[it].valueOrNull() != null }
                     .takeIf { it.isNotEmpty() }
                     ?.let {
                         createSingleReportEntryList(

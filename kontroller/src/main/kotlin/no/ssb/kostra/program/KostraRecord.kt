@@ -10,32 +10,46 @@ data class KostraRecord(
     val valuesByName: Map<String, String> = emptyMap(),
     val fieldDefinitionByName: Map<String, FieldDefinition> = emptyMap()
 ) {
-    fun getFieldAsString(field: String): String = valuesByName.getOrElse(field) {
+    operator fun get(field: String) = fieldAsString(field)
+
+    inline fun <reified T:Any?> fieldAs(field: String, trim: Boolean = true): T = when (T::class) {
+        Int::class -> when {
+            null is T -> fieldAsInt(field) as T
+            else -> fieldAsIntOrDefault(field) as T
+        }
+
+        LocalDate::class -> when {
+            null is T -> fieldAsLocalDate(field) as T
+            else -> fieldAsLocalDate(field)!! as T
+        }
+
+        else -> when(trim){
+            true -> fieldAsTrimmedString(field) as T
+            else -> fieldAsString(field) as T
+        }
+    }
+
+    fun fieldAsString(field: String): String = valuesByName.getOrElse(field) {
         throw NoSuchFieldException("getFieldAsString(): $field is missing")
     }
 
-    fun getFieldAsTrimmedString(field: String): String = getFieldAsString(field).trim { it <= ' ' }
+    fun fieldAsTrimmedString(field: String): String = fieldAsString(field).trim { it <= ' ' }
 
-    fun getFieldAsInteger(field: String): Int? = getFieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
+    fun fieldAsInt(field: String): Int? = fieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
 
-    fun getFieldAsIntegerOrDefault(
+    fun fieldAsIntOrDefault(
         field: String,
         defaultValue: Int = 0
     ): Int = try {
-        getFieldAsTrimmedString(field).toInt()
+        fieldAsTrimmedString(field).toInt()
     } catch (thrown: NumberFormatException) {
         defaultValue
     }
 
-    fun getFieldDefinitionByName(name: String): FieldDefinition =
-        fieldDefinitionByName.getOrElse(name) {
-            throw NoSuchFieldException("getFieldDefinitionByName(): $name is missing")
-        }
-
-    fun getFieldAsLocalDate(field: String): LocalDate? {
-        val definition = getFieldDefinitionByName(field)
+    fun fieldAsLocalDate(field: String): LocalDate? {
+        val definition = fieldDefinition(field)
         val pattern = definition.datePattern.trim()
-        val value = getFieldAsString(field)
+        val value = fieldAsString(field)
 
         if (pattern.length != value.length)
             throw IndexOutOfBoundsException("getFieldAsLocalDate(): value and datePattern have different lengths")
@@ -46,6 +60,11 @@ data class KostraRecord(
             null
         }
     }
+
+    fun fieldDefinition(name: String): FieldDefinition =
+        fieldDefinitionByName.getOrElse(name) {
+            throw NoSuchFieldException("getFieldDefinitionByName(): $name is missing")
+        }
 
     override fun toString(): String = "$valuesByName\n$fieldDefinitionByName"
 

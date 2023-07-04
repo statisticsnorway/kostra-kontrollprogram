@@ -10,7 +10,7 @@ class Rule015Duplicates(
     override fun validate(context: List<KostraRecord>) = context
         .groupBy { kostraRecord ->
             fieldNameTitlePairList.first.joinToString(" * ") { fieldName ->
-                kostraRecord.getFieldAsTrimmedString(fieldName)
+                kostraRecord.fieldAsTrimmedString(fieldName)
             }
         }
         .filter { (_, group) -> group.size > 1 }

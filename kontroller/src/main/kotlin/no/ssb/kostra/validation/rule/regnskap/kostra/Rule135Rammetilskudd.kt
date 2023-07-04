@@ -18,10 +18,10 @@ class Rule135Rammetilskudd : AbstractRule<List<KostraRecord>>(
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter {
-            it.getFieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "840"
-                    && it.getFieldAsString(RegnskapConstants.FIELD_ART) == "800"
+            it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "840"
+                    && it.fieldAsString(RegnskapConstants.FIELD_ART) == "800"
         }
-        ?.sumOf { it.getFieldAsIntegerOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { rammeTilskudd -> rammeTilskudd < 0 }
         ?.let { rammeTilskudd ->
             createSingleReportEntryList(

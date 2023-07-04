@@ -14,9 +14,9 @@ class Rule080KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningRegnskap()
-                && kostraRecord.getFieldAsString(FIELD_ART) == "800"
-                && kostraRecord.getFieldAsTrimmedString(FIELD_FUNKSJON) != "840"
-                && kostraRecord.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
+                && kostraRecord.fieldAsString(FIELD_ART) == "800"
+                && kostraRecord.fieldAsTrimmedString(FIELD_FUNKSJON) != "840"
+                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Art 800 er kun tillat brukt i kombinasjon med funksjon 840.",

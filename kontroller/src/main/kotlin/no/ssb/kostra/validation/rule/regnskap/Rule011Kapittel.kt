@@ -11,10 +11,10 @@ class Rule011Kapittel(
     override fun validate(context: List<KostraRecord>) =
         if (kapittelList.isEmpty()) null
         else context
-            .filter { kostraRecord -> kapittelList.none { it == kostraRecord.getFieldAsString(FIELD_KAPITTEL) } }
+            .filter { kostraRecord -> kapittelList.none { it == kostraRecord.fieldAsString(FIELD_KAPITTEL) } }
             .map { kostraRecord ->
                 createValidationReportEntry(
-                    messageText = """Fant ugyldig kapittel '${kostraRecord.getFieldAsString(FIELD_KAPITTEL)}'. 
+                    messageText = """Fant ugyldig kapittel '${kostraRecord.fieldAsString(FIELD_KAPITTEL)}'. 
                                 Korrigér kapittel til en av '${kapittelList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )

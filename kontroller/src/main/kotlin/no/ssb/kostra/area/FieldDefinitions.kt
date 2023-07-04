@@ -7,4 +7,7 @@ interface FieldDefinitions {
 
     val fieldLength: Int
         get() = fieldDefinitions.last().to
+
+    val fieldDefinitionsByName: Map<String, FieldDefinition>
+        get() = fieldDefinitions.associateBy { it.name }
 }

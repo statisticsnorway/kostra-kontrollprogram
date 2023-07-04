@@ -19,17 +19,18 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
             it.isBevilgningDriftRegnskap()
                     && it.getFieldAsTrimmedString(FIELD_FUNKSJON) != "860"
                     && it.getFieldAsString(FIELD_ART) == "990"
+                    && it.getFieldAsIntegerOrDefault(FIELD_BELOP) != 0
         }
         .takeIf { it.any() }
         ?.let { kostraRecordList ->
-            kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
-                    kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) }
-        }
-        ?.takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }
-        ?.let { (motpostAvskrivninger, funksjoner) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at motpost avskrivninger ($motpostAvskrivninger) kun er " +
-                        "ført på funksjon 860, art 990 og ikke på funksjonene (${funksjoner.distinct()})"
-            )
+            (kostraRecordList.sumOf { it.getFieldAsIntegerOrDefault(FIELD_BELOP) } to
+                    kostraRecordList.map { it.getFieldAsTrimmedString(FIELD_FUNKSJON) })
+                .takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }
+                ?.let { (motpostAvskrivninger, funksjoner) ->
+                    createSingleReportEntryList(
+                        messageText = "Korrigér i fila slik at motpost avskrivninger ($motpostAvskrivninger) kun er " +
+                                "ført på funksjon 860, art 990 og ikke på funksjonene (${funksjoner.distinct()})"
+                    )
+                }
         }
 }

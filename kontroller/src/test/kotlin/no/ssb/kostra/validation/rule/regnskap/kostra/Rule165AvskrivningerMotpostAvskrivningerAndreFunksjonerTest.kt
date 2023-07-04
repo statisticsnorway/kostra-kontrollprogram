@@ -95,8 +95,8 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
                     validationReportEntries = sut.validate(kostraRecords),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
-                    "Korrigér i fila slik at motpost avskrivninger (-1) kun er ført på funksjon " +
-                            "860, art 990 og ikke på funksjonene ([100])"
+                    "Korrigér i fila slik at motpost avskrivninger (${belop.sum()}) kun er ført " +
+                            "på funksjon 860, art 990 og ikke på funksjonene ([100])"
                 )
             }
         }

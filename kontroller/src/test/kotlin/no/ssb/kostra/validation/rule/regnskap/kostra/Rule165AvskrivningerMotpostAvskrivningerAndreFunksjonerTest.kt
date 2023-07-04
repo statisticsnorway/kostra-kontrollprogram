@@ -8,11 +8,12 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
 
 class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec({
-    Given("context") {
-        val sut = Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner()
+    val sut = Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner()
 
+    Given("context") {
         forAll(
             row(
                 "matches !it.isOsloBydel(), isBevilgningDriftRegnskap, funksjon, art, belop",
@@ -57,6 +58,28 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
                             "ført på funksjon 860, art 990 og ikke på funksjonene ([${funksjon.trim()}])"
                 )
             }
+        }
+    }
+
+    Given("two records that balances to zero amount") {
+        val kostraRecords = listOf(-1, 1).map { belop ->
+            mapOf(
+                RegnskapConstants.FIELD_REGION to "420400",
+                RegnskapConstants.FIELD_SKJEMA to "0A",
+                RegnskapConstants.FIELD_KONTOKLASSE to "1",
+                RegnskapConstants.FIELD_FUNKSJON to "100",
+                RegnskapConstants.FIELD_ART to "990",
+                RegnskapConstants.FIELD_BELOP to belop.toString()
+            )
+        }.toKostraRecords()
+
+        When("two records where sum belop = 0") {
+            verifyValidationResult(
+                validationReportEntries = sut.validate(kostraRecords),
+                expectError = false,
+                expectedSeverity = Severity.ERROR,
+                "N/A"
+            )
         }
     }
 })

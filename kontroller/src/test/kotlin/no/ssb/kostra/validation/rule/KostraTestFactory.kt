@@ -28,9 +28,9 @@ object KostraTestFactory {
     ) = behaviorSpec {
         Given("context") {
             forAll(
-                *(forAllRows.map { (description, context, expectedErrorMessage, arguments) ->
+                *forAllRows.map { (description, context, expectedErrorMessage, arguments) ->
                     row(description, context, expectedErrorMessage, arguments)
-                }).toTypedArray()
+                }.toTypedArray()
             ) { description, context, expectedErrorMessage, arguments ->
                 When(description) {
                     val validationReportEntries = sut.validate(context, arguments)

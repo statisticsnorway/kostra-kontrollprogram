@@ -1,72 +1,54 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.regnskapRecordInTest
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
-
-    Given("context") {
-        val sut = Rule045KombinasjonInvesteringKontoklasseFunksjon(
-            listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
-        )
-
-        forAll(
-            row("0A", "0", "100 ", "1", true),
-            row("0A", "0", "400 ", "1", true),
-            row("0A", "0", "201 ", "1", false),
-            row("0A", "0", "510 ", "1", false),
-            row("0C", "0", "100 ", "1", true),
-            row("0C", "0", "400 ", "1", true),
-            row("0C", "0", "201 ", "1", false),
-            row("0C", "0", "510 ", "1", false),
-            row("0I", "4", "100 ", "1", true),
-            row("0I", "4", "400 ", "1", true),
-            row("0I", "4", "201 ", "1", false),
-            row("0I", "4", "510 ", "1", false),
-            row("0K", "4", "100 ", "1", true),
-            row("0K", "4", "400 ", "1", true),
-            row("0K", "4", "201 ", "1", false),
-            row("0K", "4", "510 ", "1", false),
-            row("0M", "4", "100 ", "1", true),
-            row("0M", "4", "400 ", "1", true),
-            row("0M", "4", "201 ", "1", false),
-            row("0M", "4", "510 ", "1", false),
-            row("0P", "4", "100 ", "1", true),
-            row("0P", "4", "400 ", "1", true),
-            row("0P", "4", "201 ", "1", false),
-            row("0P", "4", "510 ", "1", false),
-        ) { skjema, kontoklasse, funksjon, belop, expectError ->
-            val kostraRecordList = regnskapRecordInTest(
-                fieldDefinitions = listOf(
-                    FieldDefinition(from = 1, to = 2, name = RegnskapConstants.FIELD_SKJEMA),
-                    FieldDefinition(from = 3, to = 3, name = RegnskapConstants.FIELD_KONTOKLASSE),
-                    FieldDefinition(from = 4, to = 7, name = RegnskapConstants.FIELD_FUNKSJON),
-                ),
-                valuesByName = mapOf(
-                    RegnskapConstants.FIELD_SKJEMA to skjema,
-                    RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                    RegnskapConstants.FIELD_FUNKSJON to funksjon,
-                    RegnskapConstants.FIELD_BELOP to belop,
-                )
-            ).asList()
-
-            When("For $skjema, $kontoklasse, $funksjon -> $expectError") {
-                verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
-                    expectError = expectError,
-                    expectedSeverity = Severity.INFO,
-                    "Kun advarsel, hindrer ikke innsending: (${funksjon}) regnes å være ulogisk " +
+    include(
+        KostraTestFactory.validationRuleTest(
+            sut = Rule045KombinasjonInvesteringKontoklasseFunksjon(listOf("100")),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "isBevilgningInvesteringRegnskap = true, funksjon matching, belop matching",
+                    kostraRecordsInTest("0", "100", "1"),
+                    expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: (100) regnes å være ulogisk " +
                             "funksjon i investeringsregnskapet. Vennligst vurder å postere på annen funksjon " +
                             "eller om posteringen hører til i driftsregnskapet."
+                ),
+                ForAllRowItem(
+                    "isBevilgningInvesteringRegnskap = false, funksjon matching, belop matching",
+                    kostraRecordsInTest("1", "100", "1")
+                ),
+                ForAllRowItem(
+                    "isBevilgningInvesteringRegnskap = true, funksjon not matching, belop matching",
+                    kostraRecordsInTest("0", "101", "1")
+                ),
+                ForAllRowItem(
+                    "isBevilgningInvesteringRegnskap = true, funksjon matching, belop not matching",
+                    kostraRecordsInTest("0", "100", "0")
                 )
-            }
-        }
+            ),
+            expectedSeverity = Severity.INFO,
+            useArguments = false
+        )
+    )
+}) {
+    companion object {
+        private fun kostraRecordsInTest(
+            kontoklasse: String,
+            funksjon: String,
+            belop: String
+        ): List<KostraRecord> = mapOf(
+            RegnskapConstants.FIELD_SKJEMA to "0A",
+            RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
+            RegnskapConstants.FIELD_FUNKSJON to funksjon,
+            RegnskapConstants.FIELD_BELOP to belop,
+        ).toKostraRecord().asList()
     }
-})
+}

@@ -27,11 +27,11 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "isBevilgningInvesteringRegnskap = true, funksjon not matching, belop matching",
-                    kostraRecordsInTest("1", "801", "1")
+                    kostraRecordsInTest("0", "801", "1")
                 ),
                 ForAllRowItem(
                     "isBevilgningInvesteringRegnskap = true, funksjon matching, belop not matching",
-                    kostraRecordsInTest("1", "800", "0")
+                    kostraRecordsInTest("0", "800", "0")
                 )
             ),
             expectedSeverity = Severity.ERROR,

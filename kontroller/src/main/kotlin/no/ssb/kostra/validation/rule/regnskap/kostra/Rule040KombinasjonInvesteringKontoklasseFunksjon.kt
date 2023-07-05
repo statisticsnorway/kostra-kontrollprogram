@@ -15,7 +15,7 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjon(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningInvesteringRegnskap()
-                && kostraRecord.fieldAsString(FIELD_FUNKSJON) in invalidInvesteringFunksjonList
+                && kostraRecord.fieldAsTrimmedString(FIELD_FUNKSJON) in invalidInvesteringFunksjonList.map { it.trim() }
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(

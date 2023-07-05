@@ -25,7 +25,7 @@ class KvalifiseringstonadTest {
 
     static Stream<TestStringInputAndResult> control01RecordLengdeProvider() {
         return Stream.of(
-                new TestStringInputAndResult(arguments, "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", false, Constants.NO_ERROR),
+                new TestStringInputAndResult(arguments, "1".repeat(138), false, Constants.NO_ERROR),
                 new TestStringInputAndResult(arguments, "123456789", true, Constants.CRITICAL_ERROR)
         );
     }

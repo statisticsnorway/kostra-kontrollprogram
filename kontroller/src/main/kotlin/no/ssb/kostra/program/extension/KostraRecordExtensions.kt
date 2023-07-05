@@ -6,7 +6,6 @@ import no.ssb.kostra.program.KostraRecord
 import java.time.LocalDate
 import kotlin.reflect.typeOf
 
-@SuppressWarnings("all")
 inline fun <reified T : Any?> KostraRecord.fieldAs(field: String, trim: Boolean = true): T = typeOf<T>().run {
     when (classifier) {
         Int::class -> if (isMarkedNullable) fieldAsInt(field) else fieldAsIntOrDefault(field)

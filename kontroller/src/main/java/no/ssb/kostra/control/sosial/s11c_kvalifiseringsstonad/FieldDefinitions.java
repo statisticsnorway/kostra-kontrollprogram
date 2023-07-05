@@ -498,19 +498,10 @@ public class FieldDefinitions {
                         ),
                         "",
                         false),
-                new FieldDefinition(143, "KVP_OSLO",
-                        STRING_TYPE,
-                        DROPDOWNLIST_VIEWTYPE,
-                        58, 58,
-                        List.of(
-                                new Code("1", "Ja"),
-                                new Code("2", "Nei")),
-                        "",
-                        false),
                 new FieldDefinition(151, "YTELSE_SOSHJELP",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        59, 59,
+                        58, 58,
                         List.of(
                                 new Code("1", "Sosialhjelp")),
                         "",
@@ -518,7 +509,7 @@ public class FieldDefinitions {
                 new FieldDefinition(152, "YTELSE_TYPE_SOSHJ",
                         STRING_TYPE,
                         DROPDOWNLIST_VIEWTYPE,
-                        60, 60,
+                        59, 59,
                         List.of(
                                 new Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                                 new Code("3", "Supplerende sosialhjelp")),
@@ -527,7 +518,7 @@ public class FieldDefinitions {
                 new FieldDefinition(153, "YTELSE_INTRO",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        61, 61,
+                        60, 60,
                         List.of(
                                 new Code("4", "Introduksjonsstønad")),
                         "",
@@ -535,7 +526,7 @@ public class FieldDefinitions {
                 new FieldDefinition(154, "YTELSE_INDIVIDSTONAD",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        62, 62,
+                        61, 61,
                         List.of(
                                 new Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")),
                         "",
@@ -543,7 +534,7 @@ public class FieldDefinitions {
                 new FieldDefinition(155, "YTELSE_FOLKETRYGDL",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        63, 63,
+                        62, 62,
                         List.of(
                                 new Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")),
                         "",
@@ -551,7 +542,7 @@ public class FieldDefinitions {
                 new FieldDefinition(201, "KVP_MED_ASTONAD",
                         STRING_TYPE,
                         DROPDOWNLIST_VIEWTYPE,
-                        64, 64,
+                        63, 63,
                         List.of(
                                 new Code("1", "Ja"),
                                 new Code("2", "Nei")),
@@ -560,7 +551,7 @@ public class FieldDefinitions {
                 new FieldDefinition(202, "KVP_MED_KOMMBOS",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        65, 65,
+                        64, 64,
                         List.of(
                                 new Code("4", "Kommunal bostøtte")),
                         "",
@@ -568,7 +559,7 @@ public class FieldDefinitions {
                 new FieldDefinition(203, "KVP_MED_HUSBANK",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        66, 66,
+                        65, 65,
                         List.of(
                                 new Code("5", "Husbankens bostøtte")),
                         "",
@@ -576,7 +567,7 @@ public class FieldDefinitions {
                 new FieldDefinition(204, "KVP_MED_SOSHJ_ENGANG",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        67, 67,
+                        66, 66,
                         List.of(
                                 new Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")),
                         "",
@@ -584,7 +575,7 @@ public class FieldDefinitions {
                 new FieldDefinition(205, "KVP_MED_SOSHJ_PGM",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        68, 68,
+                        67, 67,
                         List.of(
                                 new Code("8", "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet")),
                         "",
@@ -592,7 +583,7 @@ public class FieldDefinitions {
                 new FieldDefinition(206, "KVP_MED_SOSHJ_SUP",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        69, 69,
+                        68, 68,
                         List.of(
                                 new Code("7", "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter")),
                         "",
@@ -600,7 +591,7 @@ public class FieldDefinitions {
                 new FieldDefinition(211, "STMND_1",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        70, 71,
+                        69, 70,
                         List.of(
                                 new Code("01", "Januar")),
                         "",
@@ -608,7 +599,7 @@ public class FieldDefinitions {
                 new FieldDefinition(212, "STMND_2",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        72, 73,
+                        71, 72,
                         List.of(
                                 new Code("02", "Februar")),
                         "",
@@ -616,7 +607,7 @@ public class FieldDefinitions {
                 new FieldDefinition(213, "STMND_3",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        74, 75,
+                        73, 74,
                         List.of(
                                 new Code("03", "Mars")),
                         "",
@@ -624,7 +615,7 @@ public class FieldDefinitions {
                 new FieldDefinition(214, "STMND_4",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        76, 77,
+                        75, 76,
                         List.of(
                                 new Code("04", "April")),
                         "",
@@ -632,7 +623,7 @@ public class FieldDefinitions {
                 new FieldDefinition(215, "STMND_5",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        78, 79,
+                        77, 78,
                         List.of(
                                 new Code("05", "Mai")),
                         "",
@@ -640,7 +631,7 @@ public class FieldDefinitions {
                 new FieldDefinition(216, "STMND_6",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        80, 81,
+                        79, 80,
                         List.of(
                                 new Code("06", "Juni")),
                         "",
@@ -648,7 +639,7 @@ public class FieldDefinitions {
                 new FieldDefinition(217, "STMND_7",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        82, 83,
+                        81, 82,
                         List.of(
                                 new Code("07", "Juli")),
                         "",
@@ -656,7 +647,7 @@ public class FieldDefinitions {
                 new FieldDefinition(218, "STMND_8",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        84, 85,
+                        83, 84,
                         List.of(
                                 new Code("08", "August")),
                         "",
@@ -664,7 +655,7 @@ public class FieldDefinitions {
                 new FieldDefinition(219, "STMND_9",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        86, 87,
+                        85, 86,
                         List.of(
                                 new Code("09", "September")),
                         "",
@@ -672,7 +663,7 @@ public class FieldDefinitions {
                 new FieldDefinition(2110, "STMND_10",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        88, 89,
+                        87, 88,
                         List.of(
                                 new Code("10", "Oktober")),
                         "",
@@ -680,7 +671,7 @@ public class FieldDefinitions {
                 new FieldDefinition(2111, "STMND_11",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        90, 91,
+                        89, 90,
                         List.of(
                                 new Code("11", "November")),
                         "",
@@ -688,7 +679,7 @@ public class FieldDefinitions {
                 new FieldDefinition(2112, "STMND_12",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        92, 93,
+                        91, 92,
                         List.of(
                                 new Code("12", "Desember")),
                         "",
@@ -696,14 +687,14 @@ public class FieldDefinitions {
                 new FieldDefinition(22, "KVP_STONAD",
                         INTEGER_TYPE,
                         TEXTBOX_VIEWTYPE,
-                        94, 100,
+                        93, 99,
                         List.of(),
                         "",
                         false),
                 new FieldDefinition(24, "STATUS",
                         STRING_TYPE,
                         DROPDOWNLIST_VIEWTYPE,
-                        101, 101,
+                        100, 100,
                         List.of(
                                 new Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                                 new Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
@@ -716,14 +707,14 @@ public class FieldDefinitions {
                 new FieldDefinition(25, "AVSL_DATO",
                         DATE_TYPE,
                         TEXTBOX_VIEWTYPE,
-                        102, 107,
+                        101, 106,
                         List.of(),
                         DATE6_PATTERN,
                         false),
                 new FieldDefinition(261, "AVSL_ORDINAERTARB",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        108, 109,
+                        107, 108,
                         List.of(
                                 new Code("01", "Ordinært arbeid (heltid/deltid)")),
                         "",
@@ -731,7 +722,7 @@ public class FieldDefinitions {
                 new FieldDefinition(262, "AVSL_ARBLONNSTILS",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        110, 111,
+                        109, 110,
                         List.of(
                                 new Code("11", "Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)")),
                         "",
@@ -739,7 +730,7 @@ public class FieldDefinitions {
                 new FieldDefinition(263, "AVSL_ARBMARK",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        112, 113,
+                        111, 112,
                         List.of(
                                 new Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")),
                         "",
@@ -747,7 +738,7 @@ public class FieldDefinitions {
                 new FieldDefinition(264, "AVSL_SKOLE",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        114, 115,
+                        113, 114,
                         List.of(
                                 new Code("04", "Skole/utdanning")),
                         "",
@@ -755,7 +746,7 @@ public class FieldDefinitions {
                 new FieldDefinition(265, "AVSL_UFORE",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        116, 117,
+                        115, 116,
                         List.of(
                                 new Code("13", "Uføretrygd")),
                         "",
@@ -763,7 +754,7 @@ public class FieldDefinitions {
                 new FieldDefinition(266, "AVSL_AAP",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        118, 119,
+                        117, 118,
                         List.of(
                                 new Code("14", "Arbeidsavklaringspenger")),
                         "",
@@ -771,7 +762,7 @@ public class FieldDefinitions {
                 new FieldDefinition(267, "AVSL_OK_AVKLAR",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        120, 121,
+                        119, 120,
                         List.of(
                                 new Code("15", "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP")),
                         "",
@@ -779,7 +770,7 @@ public class FieldDefinitions {
                 new FieldDefinition(268, "AVSL_UTEN_OK_AVKLAR",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        122, 123,
+                        121, 122,
                         List.of(
                                 new Code("16", "Økonomisk sosialhjelp uten slik avklaring")),
                         "",
@@ -787,7 +778,7 @@ public class FieldDefinitions {
                 new FieldDefinition(269, "AVSL_ANNET",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        124, 125,
+                        123, 124,
                         List.of(
                                 new Code("10", "Annet")),
                         "",
@@ -795,7 +786,7 @@ public class FieldDefinitions {
                 new FieldDefinition(2611, "AVSL_UKJENT",
                         STRING_TYPE,
                         CHECKBOX_VIEWTYPE,
-                        126, 127,
+                        125, 126,
                         List.of(
                                 new Code("17", "Ukjent")),
                         "",
@@ -803,7 +794,7 @@ public class FieldDefinitions {
                 new FieldDefinition(2612, "AVSL_VIKTIGSTE_INNTEKT",
                         STRING_TYPE,
                         DROPDOWNLIST_VIEWTYPE,
-                        128, 129,
+                        127, 128,
                         List.of(
                                 new Code("01", "Ordinært arbeid (heltid/deltid)"),
                                 new Code("11", "Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)"),
@@ -820,7 +811,7 @@ public class FieldDefinitions {
                 new FieldDefinition(27, "SAKSBEHANDLER",
                         STRING_TYPE,
                         TEXTBOX_VIEWTYPE,
-                        130, 139,
+                        129, 138,
                         List.of(),
                         "",
                         false)

@@ -42,6 +42,10 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 900",
                     kostraRecordsInTest("0F", "089 ", "900")
+                ),
+                ForAllRowItem(
+                    "isBevilgningRegnskap = true, funksjon = 089, art = 980",
+                    kostraRecordsInTest("0F", "089 ", "980")
                 )
             ),
             expectedSeverity = Severity.ERROR,

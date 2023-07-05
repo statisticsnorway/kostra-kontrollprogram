@@ -1,8 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -10,70 +8,89 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule143AvskrivningerTest : BehaviorSpec({
-    Given("context") {
-        val sut = Rule143Avskrivninger()
-
-        forAll(
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
+    include(
+        validationRuleTest(
+            sut = Rule143Avskrivninger(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop matching #1",
+                    listOf(
+                        kostraRecordInTest("1", "041 ", "590", "100"),
+                        kostraRecordInTest("1", "045 ", "990", "-131")
                     ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "990",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "0"
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (-31) " +
+                            "mellom art 590 (100) stemmer overens med art " +
+                            "990 (-131) (margin på +/- 30')"
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop matching #2",
+                    listOf(
+                        kostraRecordInTest("1", "041 ", "590", "-100"),
+                        kostraRecordInTest("1", "045 ", "990", "131")
                     ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "990",
-                        FIELD_BELOP to "-1000"
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (31) " +
+                            "mellom art 590 (-100) stemmer overens med art " +
+                            "990 (131) (margin på +/- 30')"
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = false, funksjon matching, art matching, sum belop matching",
+                    listOf(
+                        kostraRecordInTest("0", "041 ", "590", "100"),
+                        kostraRecordInTest("0", "045 ", "990", "-131")
                     )
-                ), true
-            )
-        ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords()
-            val avskrivninger = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
-            val motpostAvskrivninger = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
-            val differanse = avskrivninger + motpostAvskrivninger
-
-            When("List is $recordList") {
-                verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
-                    expectError = expectError,
-                    expectedSeverity = Severity.ERROR,
-                    "Korrigér i fila slik at differansen ($differanse) " +
-                            "mellom art 590 ($avskrivninger) stemmer overens med art " +
-                            "990 ($motpostAvskrivninger) (margin på +/- 30')"
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon not matching, art matching, sum belop matching",
+                    listOf(
+                        kostraRecordInTest("1", "040 ", "590", "100"),
+                        kostraRecordInTest("1", "046 ", "990", "-131")
+                    )
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon matching, art not matching, sum belop matching",
+                    listOf(
+                        kostraRecordInTest("1", "041 ", "591", "100"),
+                        kostraRecordInTest("1", "045 ", "991", "-131")
+                    )
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop not matching #1",
+                    listOf(
+                        kostraRecordInTest("1", "041 ", "590", "100"),
+                        kostraRecordInTest("1", "045 ", "990", "-130")
+                    )
+                ),
+                ForAllRowItem(
+                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop not matching #2",
+                    listOf(
+                        kostraRecordInTest("1", "041 ", "590", "100"),
+                        kostraRecordInTest("1", "045 ", "990", "-70")
+                    )
                 )
-            }
-        }
+            ),
+            expectedSeverity = Severity.ERROR,
+            useArguments = false
+        )
+    )
+}) {
+    companion object {
+        private fun kostraRecordInTest(
+            kontoklasse: String,
+            funksjon: String,
+            art: String,
+            belop: String
+        ) = mapOf(
+            FIELD_REGION to "420400",
+            FIELD_SKJEMA to "0A",
+            FIELD_KONTOKLASSE to kontoklasse,
+            FIELD_FUNKSJON to funksjon,
+            FIELD_ART to art,
+            FIELD_BELOP to belop
+        ).toKostraRecord()
     }
-})
+}

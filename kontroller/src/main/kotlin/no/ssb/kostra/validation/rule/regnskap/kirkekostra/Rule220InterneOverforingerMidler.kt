@@ -17,15 +17,17 @@ class Rule220InterneOverforingerMidler : AbstractRule<List<KostraRecord>>(
         ?.filter { kostraRecord -> kostraRecord.fieldAsString(FIELD_ART) in listOf("465", "865") }
         ?.partition { it.fieldAsString(FIELD_ART) == "465" }
         ?.let { (overforingerPosteringer, innsamledeMidlerPosteringer) ->
-            overforingerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    innsamledeMidlerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }?.takeUnless { (overforinger, innsamledeMidler) ->
-            (overforinger + innsamledeMidler) in -30..30
-        }?.let { (overforinger, innsamledeMidler) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at differansen (${overforinger.plus(innsamledeMidler)}) " +
-                        "mellom overføringer av midler ($overforinger) og innsamlede midler ($innsamledeMidler) " +
-                        "stemmer overens (margin på +/- 30')"
-            )
+            Pair(
+                overforingerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                innsamledeMidlerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (overforinger, innsamledeMidler) ->
+                (overforinger + innsamledeMidler) in -30..30
+            }?.let { (overforinger, innsamledeMidler) ->
+                createSingleReportEntryList(
+                    messageText = "Korrigér i fila slik at differansen (${overforinger.plus(innsamledeMidler)}) " +
+                            "mellom overføringer av midler ($overforinger) og innsamlede midler ($innsamledeMidler) " +
+                            "stemmer overens (margin på +/- 30')"
+                )
+            }
         }
 }

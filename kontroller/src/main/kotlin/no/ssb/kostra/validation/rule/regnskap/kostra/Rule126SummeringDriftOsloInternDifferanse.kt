@@ -19,16 +19,17 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractRule<List<KostraRecord
         ?.filter { kostraRecord -> kostraRecord.fieldAsString(FIELD_ART) in listOf("298", "798") }
         ?.partition { kostraRecord -> kostraRecord.fieldAsString(FIELD_ART) == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
-            art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }
-        ?.takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
-        ?.let { (sumArt298Drift, sumArt798Drift) ->
-            val sumOslointerneDrift = sumArt298Drift + sumArt798Drift
-            createSingleReportEntryList(
-                messageText = "Korrigér differansen ($sumOslointerneDrift) mellom sum over alle funksjoner " +
-                        "for art 298 ($sumArt298Drift) og sum over alle funksjoner for art 798 " +
-                        "($sumArt798Drift) i driftsregnskapet."
-            )
+            Pair(
+                art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
+                ?.let { (sumArt298Drift, sumArt798Drift) ->
+                    val sumOslointerneDrift = sumArt298Drift + sumArt798Drift
+                    createSingleReportEntryList(
+                        messageText = "Korrigér differansen ($sumOslointerneDrift) mellom sum over alle funksjoner " +
+                                "for art 298 ($sumArt298Drift) og sum over alle funksjoner for art 798 " +
+                                "($sumArt798Drift) i driftsregnskapet."
+                    )
+                }
         }
 }

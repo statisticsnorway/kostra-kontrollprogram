@@ -18,20 +18,20 @@ class Rule140OverforingerDriftInvestering : AbstractRule<List<KostraRecord>>(
         .takeIf { it.any() }
         ?.partition { it.isBevilgningDriftRegnskap() }
         ?.let { (driftPosteringer, investeringPosteringer) ->
-            driftPosteringer
-                .filter { it.fieldAsString(FIELD_ART) == "570" }
-                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    investeringPosteringer
-                        .filter { it.fieldAsString(FIELD_ART) == "970" }
-                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }?.takeUnless { (driftOverforinger, investeringOverforinger) ->
-            driftOverforinger + investeringOverforinger in -30..30
-        }?.let { (driftOverforinger, investeringOverforinger) ->
-            val overforingDifferanse = driftOverforinger + investeringOverforinger
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at differansen ($overforingDifferanse) i " +
-                        "overføringer mellom drifts- ($driftOverforinger) og investeringsregnskapet " +
-                        "($investeringOverforinger) stemmer overens."
-            )
+            Pair(
+                driftPosteringer.filter { it.fieldAsString(FIELD_ART) == "570" }
+                    .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                investeringPosteringer.filter { it.fieldAsString(FIELD_ART) == "970" }
+                    .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (driftOverforinger, investeringOverforinger) ->
+                driftOverforinger + investeringOverforinger in -30..30
+            }?.let { (driftOverforinger, investeringOverforinger) ->
+                val overforingDifferanse = driftOverforinger + investeringOverforinger
+                createSingleReportEntryList(
+                    messageText = "Korrigér i fila slik at differansen ($overforingDifferanse) i " +
+                            "overføringer mellom drifts- ($driftOverforinger) og investeringsregnskapet " +
+                            "($investeringOverforinger) stemmer overens."
+                )
+            }
         }
 }

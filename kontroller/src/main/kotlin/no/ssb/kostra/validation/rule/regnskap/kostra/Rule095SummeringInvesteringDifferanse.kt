@@ -16,26 +16,20 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
         .filter { !it.isOsloBydel() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
-        ?.let { (investeringUtgifterPosteringer,
-                    investeringInntekterPosteringer) ->
-            (
-                    investeringUtgifterPosteringer
-                        .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
-                            to
-                            investeringInntekterPosteringer
-                                .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
-                    )
-        }
-        ?.takeUnless { (investeringUtgifter, investeringInntekter) ->
-            0 < investeringUtgifter
-                    && investeringInntekter < 0
-                    && investeringUtgifter + investeringInntekter in -30..30
-        }
-        ?.let { (investeringUtgifter, investeringInntekter) ->
-            val investeringDifferanse = investeringUtgifter + investeringInntekter
-            createSingleReportEntryList(
-                messageText = "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
-                        "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
-            )
+        ?.let { (investeringUtgifterPosteringer, investeringInntekterPosteringer) ->
+            Pair(
+                investeringUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },
+                investeringInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+            ).takeUnless { (investeringUtgifter, investeringInntekter) ->
+                0 < investeringUtgifter
+                        && investeringInntekter < 0
+                        && investeringUtgifter + investeringInntekter in -30..30
+            }?.let { (investeringUtgifter, investeringInntekter) ->
+                val investeringDifferanse = investeringUtgifter + investeringInntekter
+                createSingleReportEntryList(
+                    messageText = "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
+                            "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
+                )
+            }
         }
 }

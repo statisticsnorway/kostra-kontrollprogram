@@ -17,20 +17,18 @@ class Rule110SummeringDriftDifferanse : AbstractRule<List<KostraRecord>>(
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
         ?.let { (driftUtgifterPosteringer, driftInntekterPosteringer) ->
-            driftUtgifterPosteringer
-                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    driftInntekterPosteringer
-                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }
-        ?.takeUnless { (driftUtgifter, driftInntekter) ->
-            0 < driftUtgifter
-                    && driftInntekter < 0
-                    && driftUtgifter + driftInntekter in -30..30
-        }
-        ?.let { (driftUtgifter, driftInntekter) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér differansen (${driftUtgifter + driftInntekter}) mellom inntekter " +
-                        "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
-            )
+            Pair(
+                driftUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                driftInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (driftUtgifter, driftInntekter) ->
+                0 < driftUtgifter
+                        && driftInntekter < 0
+                        && driftUtgifter + driftInntekter in -30..30
+            }?.let { (driftUtgifter, driftInntekter) ->
+                createSingleReportEntryList(
+                    messageText = "Korrigér differansen (${driftUtgifter + driftInntekter}) mellom inntekter " +
+                            "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
+                )
+            }
         }
 }

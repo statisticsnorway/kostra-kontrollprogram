@@ -17,27 +17,20 @@ class Rule155AvskrivningerDifferanse : AbstractRule<List<KostraRecord>>(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.let { driftPosteringer ->
-            driftPosteringer
-                .filter {
-                    it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799
-                            && it.fieldAsString(FIELD_ART) == "590"
-                }
-                .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    driftPosteringer
-                        .filter {
-                            it.fieldAsString(FIELD_FUNKSJON) == "860 "
-                                    && it.fieldAsString(FIELD_ART) == "990"
-                        }
-                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-
-        }
-        ?.takeUnless { (avskrivninger, motpostAvskrivninger) ->
-            avskrivninger + motpostAvskrivninger in -30..30
-        }
-        ?.let { (avskrivninger, motpostAvskrivninger) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at avskrivninger ($avskrivninger) stemmer " +
-                        "overens med motpost avskrivninger ($motpostAvskrivninger) (margin på +/- 30')"
-            )
+            Pair(
+                driftPosteringer.filter {
+                    it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799 && it.fieldAsString(FIELD_ART) == "590"
+                }.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                driftPosteringer
+                    .filter { it.fieldAsString(FIELD_FUNKSJON) == "860 " && it.fieldAsString(FIELD_ART) == "990" }
+                    .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (avskrivninger, motpostAvskrivninger) ->
+                avskrivninger + motpostAvskrivninger in -30..30
+            }?.let { (avskrivninger, motpostAvskrivninger) ->
+                createSingleReportEntryList(
+                    messageText = "Korrigér i fila slik at avskrivninger ($avskrivninger) stemmer " +
+                            "overens med motpost avskrivninger ($motpostAvskrivninger) (margin på +/- 30')"
+                )
+            }
         }
 }

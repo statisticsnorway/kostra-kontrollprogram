@@ -18,16 +18,17 @@ class Rule190Memoriakonti : AbstractRule<List<KostraRecord>>(
         }.takeIf { it.any() }
         ?.partition { it.fieldAsIntOrDefault(FIELD_KAPITTEL) == 9999 }
         ?.let { (motpostMemoriakontiPosteringer, memoriakontiPosteringer) ->
-            (motpostMemoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    memoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) })
-                .takeUnless { (motpostMemoriakonti, memoriakonti) ->
-                    memoriakonti + motpostMemoriakonti in -30..30
-                }?.let { (motpostMemoriakonti, memoriakonti) ->
-                    createSingleReportEntryList(
-                        messageText = "Korrigér i fila slik at differansen (${memoriakonti + motpostMemoriakonti}) " +
-                                "mellom memoriakontiene ($memoriakonti) og motkonto for memoriakontiene " +
-                                "($motpostMemoriakonti) går i 0. (margin på +/- 10')"
-                    )
-                }
+            Pair(
+                motpostMemoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                memoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (motpostMemoriakonti, memoriakonti) ->
+                memoriakonti + motpostMemoriakonti in -30..30
+            }?.let { (motpostMemoriakonti, memoriakonti) ->
+                createSingleReportEntryList(
+                    messageText = "Korrigér i fila slik at differansen (${memoriakonti + motpostMemoriakonti}) " +
+                            "mellom memoriakontiene ($memoriakonti) og motkonto for memoriakontiene " +
+                            "($motpostMemoriakonti) går i 0. (margin på +/- 10')"
+                )
+            }
         }
 }

@@ -17,14 +17,16 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
         ?.filter { it.fieldAsString(FIELD_ART) in listOf("380", "780") }
         ?.partition { it.fieldAsString(FIELD_ART) == "380" }
         ?.let { (internKjopPosteringer, internSalgPosteringer) ->
-            internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) } to
-                    internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
-        }?.takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
-        ?.let { (internKjop, internSalg) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at differansen (${internKjop.plus(internSalg)}) mellom " +
-                        "internkjøp ($internKjop) og internsalg ($internSalg) stemmer overens " +
-                        "(margin på +/- 30')"
-            )
+            Pair(
+                internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },
+                internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+            ).takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
+                ?.let { (internKjop, internSalg) ->
+                    createSingleReportEntryList(
+                        messageText = "Korrigér i fila slik at differansen (${internKjop.plus(internSalg)}) mellom " +
+                                "internkjøp ($internKjop) og internsalg ($internSalg) stemmer overens " +
+                                "(margin på +/- 30')"
+                    )
+                }
         }
 }

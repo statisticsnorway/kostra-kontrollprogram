@@ -17,17 +17,19 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRule
         ?.filter { it.fieldAsString(FIELD_ART) in listOf("390", "790") }
         ?.partition { it.fieldAsString(FIELD_ART) == "390" }
         ?.let { (utgifterPosteringer, inntekterPosteringer) ->
-            utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    inntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
-            (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
-        }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
-            val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at differansen ($kalkulatoriskeDifferanse) mellom " +
-                        "kalkulatoriske utgifter ($kalkulatoriskeUtgifter) og inntekter " +
-                        "($kalkulatoriskeInntekter) ved kommunal tjenesteytelse stemmer overens " +
-                        "(margin på +/- 30')"
-            )
+            Pair(
+                utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                inntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+                (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
+            }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+                val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
+                createSingleReportEntryList(
+                    messageText = "Korrigér i fila slik at differansen ($kalkulatoriskeDifferanse) mellom " +
+                            "kalkulatoriske utgifter ($kalkulatoriskeUtgifter) og inntekter " +
+                            "($kalkulatoriskeInntekter) ved kommunal tjenesteytelse stemmer overens " +
+                            "(margin på +/- 30')"
+                )
+            }
         }
 }

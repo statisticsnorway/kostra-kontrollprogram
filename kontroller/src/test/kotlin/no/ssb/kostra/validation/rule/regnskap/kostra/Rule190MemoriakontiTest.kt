@@ -18,13 +18,22 @@ class Rule190MemoriakontiTest : BehaviorSpec({
             sut = Rule190Memoriakonti(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop matching",
+                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop matching #1",
                     listOf(
                         kostraRecordInTest("0B", "9100", "000", "100"),
-                        kostraRecordInTest("0B", "9999", "990", "-1000")
+                        kostraRecordInTest("0B", "9999", "990", "-131")
                     ),
-                    expectedErrorMessage = "Korrigér i fila slik at differansen (-900) mellom memoriakontiene (100) " +
-                            "og motkonto for memoriakontiene (-1000) går i 0. (margin på +/- 10')"
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (-31) mellom memoriakontiene (100) " +
+                            "og motkonto for memoriakontiene (-131) går i 0. (margin på +/- 10')"
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop matching #2",
+                    listOf(
+                        kostraRecordInTest("0B", "9100", "000", "-100"),
+                        kostraRecordInTest("0B", "9999", "990", "131")
+                    ),
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (31) mellom memoriakontiene (-100) " +
+                            "og motkonto for memoriakontiene (131) går i 0. (margin på +/- 10')"
                 ),
                 ForAllRowItem(
                     "isBalanseRegnskap = false, kapittel matching, kapittel #2 matching, sum belop matching",
@@ -34,19 +43,33 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel not matching, kapittel #2 matching, sum belop not matching",
+                    "isBalanseRegnskap = true, kapittel not matching #1, kapittel #2 matching, sum belop not matching",
                     listOf(
                         kostraRecordInTest("0B", "9099", "000", "100"),
-                        kostraRecordInTest("0B", "9999", "990", "-10")
+                        kostraRecordInTest("0B", "10000", "990", "-10")
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop not matching",
+                    "isBalanseRegnskap = true, kapittel not matching #2, kapittel #2 matching, sum belop not matching",
                     listOf(
-                        kostraRecordInTest("0B", "9100", "000", "100"),
+                        kostraRecordInTest("0B", "10000", "000", "100"),
+                        kostraRecordInTest("0B", "9099", "990", "-10")
+                    )
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop not matching #1",
+                    listOf(
+                        kostraRecordInTest("0B", "9100", "000", "130"),
                         kostraRecordInTest("0B", "9999", "990", "-100")
                     )
                 ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop not matching #2",
+                    listOf(
+                        kostraRecordInTest("0B", "9100", "000", "-130"),
+                        kostraRecordInTest("0B", "9999", "990", "100")
+                    )
+                )
             ),
             expectedSeverity = Severity.WARNING,
             useArguments = false

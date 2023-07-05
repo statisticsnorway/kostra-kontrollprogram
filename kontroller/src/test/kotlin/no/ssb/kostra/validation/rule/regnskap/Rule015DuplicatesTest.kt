@@ -43,7 +43,6 @@ class Rule015DuplicatesTest : BehaviorSpec({
 
                 Then("validation should result in errors") {
                     validationReportEntries.shouldNotBeNull()
-                    println(validationReportEntries)
                 }
             }
         }

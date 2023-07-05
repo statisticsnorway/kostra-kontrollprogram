@@ -19,21 +19,20 @@ class Rule150Avskrivninger : AbstractRule<List<KostraRecord>>(
         ?.filter {
             it.fieldAsIntOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
                     && it.fieldAsString(RegnskapConstants.FIELD_ART) == "590"
-        }
-        ?.let { avskrivningPosteringer ->
-            avskrivningPosteringer[0].fieldAsString(RegnskapConstants.FIELD_SKJEMA) to
+        }?.let { avskrivningPosteringer ->
+            (avskrivningPosteringer[0].fieldAsString(RegnskapConstants.FIELD_SKJEMA) to
                     avskrivningPosteringer
-                        .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
-        }
-        ?.takeUnless { (_, avskrivninger) -> avskrivninger != 0 }
-        ?.let { (skjema, avskrivninger) ->
-            val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
-            else Severity.INFO
+                        .sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) })
+                .takeUnless { (_, avskrivninger) -> avskrivninger != 0 }
+                ?.let { (skjema, avskrivninger) ->
+                    val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
+                    else Severity.INFO
 
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at den inneholder avskrivninger " +
-                        "($avskrivninger), føres på tjenestefunksjon og art 590.",
-                severity
-            )
+                    createSingleReportEntryList(
+                        messageText = "Korrigér i fila slik at den inneholder avskrivninger " +
+                                "($avskrivninger), føres på tjenestefunksjon og art 590.",
+                        severity = severity
+                    )
+                }
         }
 }

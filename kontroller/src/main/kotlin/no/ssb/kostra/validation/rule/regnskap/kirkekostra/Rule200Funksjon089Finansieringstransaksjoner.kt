@@ -12,7 +12,7 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractRule<List<KostraRec
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter {
-        it.isBevilgningRegnskap() && it.fieldAsString(FIELD_FUNKSJON) == "089 "
+        it.isBevilgningRegnskap() && it.fieldAsTrimmedString(FIELD_FUNKSJON) == "089"
     }.filterNot {
         it.fieldAsIntOrDefault(FIELD_ART) in 500..580
                 || it.fieldAsIntOrDefault(FIELD_ART) == 830

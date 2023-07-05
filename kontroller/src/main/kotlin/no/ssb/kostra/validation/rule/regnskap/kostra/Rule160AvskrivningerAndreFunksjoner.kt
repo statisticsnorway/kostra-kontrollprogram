@@ -14,20 +14,21 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
+        .filterNot { it.isOsloBydel() }
         .filter {
-            !it.isOsloBydel()
-                    && it.isBevilgningDriftRegnskap()
+            it.isBevilgningDriftRegnskap()
                     && it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 800..899
                     && it.fieldAsString(FIELD_ART) == "590"
         }.takeIf { it.any() }
         ?.let { kostraRecordList ->
-            kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    kostraRecordList.map { it.fieldAsTrimmedString(FIELD_FUNKSJON) }
-        }?.takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
-        ?.let { (avskrivninger, funksjoner) ->
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +
-                        "tjenestefunksjon og ikke på funksjonene ($funksjoner)"
-            )
+            (kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
+                    kostraRecordList.map { it.fieldAsTrimmedString(FIELD_FUNKSJON) })
+                .takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
+                ?.let { (avskrivninger, funksjoner) ->
+                    createSingleReportEntryList(
+                        messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +
+                                "tjenestefunksjon og ikke på funksjonene ($funksjoner)"
+                    )
+                }
         }
 }

@@ -15,40 +15,50 @@ class Rule150AvskrivningerTest : BehaviorSpec({
 
         forAll(
             row(
-                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art matches, belop matches",
-                kostraRecordInTest("420400", "1", "100 ", "590", "0"),
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches #1, art matches, belop matches",
+                kostraRecordInTest("420400", "0A", "1", "100 ", "590", "0"),
                 true, Severity.ERROR
             ),
             row(
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches #2, art matches, belop matches",
+                kostraRecordInTest("420400", "0A", "1", "799 ", "590", "0"),
+                true, Severity.ERROR
+            ),
+            row(
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true #2, funksjon matches #2, art matches, belop matches",
+                kostraRecordInTest("420400", "0I", "3", "799 ", "590", "0"),
+                true, Severity.INFO
+            ),
+            row(
                 "isOsloBydel = true, isBevilgningDriftRegnskap = true, funksjon matches, art matches, belop matches",
-                kostraRecordInTest("030101", "1", "100 ", "590", "0"),
+                kostraRecordInTest("030101", "0A", "1", "100 ", "590", "0"),
                 false, Severity.INFO
             ),
             row(
                 "isOsloBydel = false, isBevilgningDriftRegnskap = false, funksjon matches, art matches, belop matches",
-                kostraRecordInTest("420400", "0", "100 ", "590", "0"),
+                kostraRecordInTest("420400", "0A", "0", "100 ", "590", "0"),
                 false, Severity.ERROR
             ),
             row(
                 "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon not matching #1, art matches, belop matches",
-                kostraRecordInTest("420400", "1", "099 ", "590", "0"),
+                kostraRecordInTest("420400", "0A", "1", "099 ", "590", "0"),
                 false, Severity.ERROR
             ),
             row(
                 "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon not matching #2, art matches, belop matches",
-                kostraRecordInTest("420400", "1", "099 ", "800", "0"),
+                kostraRecordInTest("420400", "0A", "1", "800 ", "590", "0"),
                 false, Severity.ERROR
             ),
             row(
                 "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art not matching, belop matches",
-                kostraRecordInTest("420400", "1", "100 ", "591", "0"),
+                kostraRecordInTest("420400", "0A", "1", "100 ", "591", "0"),
                 false, Severity.ERROR
             ),
             row(
                 "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art matches, belop not matching",
-                kostraRecordInTest("420400", "1", "100 ", "590", "1"),
+                kostraRecordInTest("420400", "0A", "1", "100 ", "590", "1"),
                 false, Severity.ERROR
-            ),
+            )
         ) { description, kostraRecords, expectError, expectedSeverity ->
             When("testing $description") {
                 verifyValidationResult(
@@ -65,13 +75,14 @@ class Rule150AvskrivningerTest : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(
             region: String,
+            skjema: String,
             kontoklasse: String,
             funksjon: String,
             art: String,
             belop: String
         ) = mapOf(
             RegnskapConstants.FIELD_REGION to region,
-            RegnskapConstants.FIELD_SKJEMA to "0A",
+            RegnskapConstants.FIELD_SKJEMA to skjema,
             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
             RegnskapConstants.FIELD_FUNKSJON to funksjon,
             RegnskapConstants.FIELD_ART to art,

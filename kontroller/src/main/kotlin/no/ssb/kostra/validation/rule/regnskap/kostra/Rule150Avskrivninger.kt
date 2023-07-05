@@ -17,11 +17,11 @@ class Rule150Avskrivninger : AbstractRule<List<KostraRecord>>(
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .filter {
             it.fieldAsIntOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
-                    && it.fieldAsString(RegnskapConstants.FIELD_ART) == "590"
+                    && it[RegnskapConstants.FIELD_ART] == "590"
         }.takeIf { it.any() }
         ?.let { avskrivningPosteringer ->
             Pair(
-                avskrivningPosteringer[0].fieldAsString(RegnskapConstants.FIELD_SKJEMA),
+                avskrivningPosteringer.first()[RegnskapConstants.FIELD_SKJEMA],
                 avskrivningPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
             ).takeIf { (_, avskrivninger) -> avskrivninger == 0 }?.let { (skjema, avskrivninger) ->
                 createSingleReportEntryList(

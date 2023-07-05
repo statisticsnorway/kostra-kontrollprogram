@@ -20,19 +20,19 @@ class Rule070KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "bevilgningregnskap = false",
-                    kostraRecordsInTest("0X", "899", "530 ", "1")
+                    kostraRecordsInTest("0X", "899 ", "530 ", "1")
                 ),
                 ForAllRowItem(
                     "funksjon matches 880",
-                    kostraRecordsInTest("0A", "880", "530 ", "1")
+                    kostraRecordsInTest("0A", "880 ", "530 ", "1")
                 ),
                 ForAllRowItem(
                     "art not matching 530",
-                    kostraRecordsInTest("0A", "880", "529 ", "1")
+                    kostraRecordsInTest("0A", "899 ", "529 ", "1")
                 ),
                 ForAllRowItem(
                     "belop matching 0",
-                    kostraRecordsInTest("0A", "880", "530 ", "0")
+                    kostraRecordsInTest("0A", "899 ", "530 ", "0")
                 )
             ),
             expectedSeverity = Severity.ERROR,

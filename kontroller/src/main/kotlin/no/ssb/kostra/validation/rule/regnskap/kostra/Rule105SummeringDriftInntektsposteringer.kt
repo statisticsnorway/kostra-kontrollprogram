@@ -14,7 +14,9 @@ class Rule105SummeringDriftInntektsposteringer : AbstractRule<List<KostraRecord>
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isRegional() }
+        .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
         ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }

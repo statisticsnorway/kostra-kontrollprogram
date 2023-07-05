@@ -1,14 +1,10 @@
 package no.ssb.kostra.area.regnskap.kostra
 
+import no.ssb.kostra.area.AbstractValidator
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_BYDEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_FYLKE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_KOMMUNE
@@ -16,42 +12,16 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_LANEFOND
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_OSLO
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_SAERBEDRIFT
 import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_SVALBARD
-import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_ART
-import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
-import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
-import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.toKostraRecord
-import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostra(
-    private val arguments: KotlinArguments
-) {
-    private val osloKommuner = listOf(
-        // @formatter:off
-        "030100",
-        "030101", "030102", "030103", "030104", "030105",
-        "030106", "030107", "030108", "030109", "030110",
-        "030111", "030112", "030113", "030114", "030115"
-        // @formatter:on
-    )
-
-    private val osloBydeler = listOf(
-        // @formatter:off
-        "030101", "030102", "030103", "030104", "030105",
-        "030106", "030107", "030108", "030109", "030110",
-        "030111", "030112", "030113", "030114", "030115"
-        // @formatter:on
-    )
-
+    arguments: KotlinArguments
+) : AbstractValidator(arguments) {
     private val svalbard = listOf("211100")
 
     private val orgnrSpesial = listOf(
@@ -375,30 +345,11 @@ class KommuneKostra(
         // @formatter:on
     )
 
-    private fun mappingDuplicates(): Pair<List<String>, List<String>> =
-        when (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema)) {
-            listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE) ->
-                listOf(
-                    FIELD_KONTOKLASSE, FIELD_FUNKSJON, FIELD_ART
-                ) to listOf(
-                    TITLE_KONTOKLASSE, TITLE_FUNKSJON, TITLE_ART
-                )
-
-            listOf(ACCOUNTING_TYPE_BALANSE) ->
-                listOf(
-                    FIELD_KONTOKLASSE, FIELD_KAPITTEL, FIELD_SEKTOR
-                ) to listOf(
-                    TITLE_KONTOKLASSE, TITLE_KAPITTEL, TITLE_SEKTOR
-                )
-
-            else -> emptyList<String>() to emptyList()
-        }
-
-    private val fatalRules = listOf(
+    override val fatalRules = listOf(
         Rule001RecordLength(fieldLength)
     )
 
-    private val validationRules = listOf(
+    override val validationRules = listOf(
         Rule003Skjema(),
         Rule004Aargang(),
         Rule005Kvartal(),
@@ -450,31 +401,4 @@ class KommuneKostra(
         Rule185Funksjon465Drift(),
         Rule190Memoriakonti(),
     )
-
-    fun validate(): List<ValidationReportEntry> {
-        val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
-            .mapNotNull { it.validate(arguments.getInputContentAsStringList()) }
-            .flatten()
-
-        val fatalSeverity: Severity = fatalValidationReportEntries
-            .map { it.severity }
-            .maxByOrNull { it.ordinal } ?: Severity.OK
-
-        if (fatalSeverity == Severity.FATAL)
-            return fatalValidationReportEntries
-
-        val derivedKostraRecords = arguments
-            .getInputContentAsStringList()
-            .withIndex()
-            .map { (index, recordString) ->
-                recordString.toKostraRecord(
-                    index = index + 1,
-                    fieldDefinitions = getFieldDefinitionsMergedWithKotlinArguments(arguments)
-                )
-            }
-
-        return validationRules
-            .mapNotNull { it.validate(derivedKostraRecords) }
-            .flatten()
-    }
 }

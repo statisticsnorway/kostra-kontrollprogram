@@ -4,14 +4,17 @@ import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.KostraRecord
 import java.time.LocalDate
+import kotlin.reflect.typeOf
 
-inline fun <reified T : Any?> KostraRecord.fieldAs(field: String, trim: Boolean = true): T = when (T::class) {
-    Int::class -> if (null is T) fieldAsInt(field) else fieldAsIntOrDefault(field)
-    LocalDate::class -> if (null is T) fieldAsLocalDate(field) else fieldAsLocalDate(field)!!
-    String::class -> (if (null is T) fieldAsString(field).valueOrNull() else fieldAsString(field))
-        ?.let { if (trim) it.trim() else it }
+inline fun <reified T : Any?> KostraRecord.fieldAs(field: String, trim: Boolean = true): T = typeOf<T>().run {
+    when (classifier) {
+        Int::class -> if (isMarkedNullable) fieldAsInt(field) else fieldAsIntOrDefault(field)
+        LocalDate::class -> if (isMarkedNullable) fieldAsLocalDate(field) else fieldAsLocalDate(field)!!
+        String::class -> (if (isMarkedNullable) fieldAsString(field).valueOrNull() else fieldAsString(field))
+            ?.let { if (trim) it.trim() else it }
 
-    else -> throw IllegalArgumentException("fieldAs(): Unsupported type ${T::class}")
+        else -> throw IllegalArgumentException("fieldAs(): Unsupported type ${T::class}")
+    }
 } as T
 
 fun KostraRecord.toRecordString(): String {

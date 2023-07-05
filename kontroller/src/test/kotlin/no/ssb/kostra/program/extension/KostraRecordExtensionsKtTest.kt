@@ -39,8 +39,12 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
         }
 
         When("fieldAs<Long>") {
-            shouldThrow<ClassCastException> {
+            val thrown = shouldThrow<IllegalArgumentException> {
                 sutWithValue.fieldAs<Long>("Field")
+            }
+
+            Then("the exception should have the expected message") {
+                thrown.message.shouldBe("fieldAs(): Unsupported type class kotlin.Long")
             }
         }
     }

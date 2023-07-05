@@ -24,7 +24,8 @@ object KostraTestFactory {
         sut: AbstractRule<T>,
         forAllRows: Collection<ForAllRowItem<T>>,
         expectedSeverity: Severity,
-        expectedContextId: String? = null
+        expectedContextId: String? = null,
+        useArguments: Boolean = true
     ) = behaviorSpec {
         Given("context") {
             forAll(
@@ -33,14 +34,16 @@ object KostraTestFactory {
                 }.toTypedArray()
             ) { description, context, expectedErrorMessage, arguments ->
                 When(description) {
-                    val validationReportEntries = sut.validate(context, arguments)
+                    val validationReportEntries =
+                        if (useArguments) sut.validate(context, arguments)
+                        else sut.validate(context)
 
                     Then("result should be as expected") {
                         verifyValidationResult(
                             validationReportEntries = validationReportEntries,
                             expectError = !expectedErrorMessage.isNullOrEmpty(),
                             expectedSeverity = expectedSeverity,
-                            expectedErrorText = expectedErrorMessage ?:"N/A"
+                            expectedErrorText = expectedErrorMessage ?: "N/A"
                         )
 
                         /** if expectedContextId is present */

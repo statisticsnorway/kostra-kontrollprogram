@@ -14,8 +14,9 @@ class Rule530SummeringDifferanseTest : BehaviorSpec({
     Given("context") {
         forAll(
             row("0Y", "0", "0", false), // skjema mismatch -> OK
+            row("0X", "0", "1000", true), // belop mismatch -> OK
             row("0X", "0", "-1000", true), // belop mismatch -> OK
-            row("0X", "1000", "-1000", false), // skjema mismatch -> OK
+            row("0X", "1000", "-1000", false), // belop ok -> OK
         ) { skjema, belop1, belop2, expectError ->
             val kostraRecordList = listOf(
                 mapOf(

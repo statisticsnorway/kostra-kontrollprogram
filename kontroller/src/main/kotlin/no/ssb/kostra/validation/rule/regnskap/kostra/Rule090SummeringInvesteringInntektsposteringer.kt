@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -14,10 +14,11 @@ class Rule090SummeringInvesteringInntektsposteringer : AbstractRule<List<KostraR
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isRegional() && it.isBevilgningInvesteringRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isRegional() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
-        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 > it }
         ?.let { sumInvesteringsInntekter ->
             createSingleReportEntryList(

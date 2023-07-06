@@ -12,23 +12,22 @@ class Rule065KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
     "Kontroll 065 : Ugyldig kombinasjon i bevilgningsregnskapet, funksjon og art",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
-        kostraRecord.isBevilgningRegnskap()
-                && (
-                (
-                        kostraRecord.fieldAsString(FIELD_FUNKSJON) == "899 "
-                                && kostraRecord.fieldAsString(FIELD_ART) !in listOf("589", "980", "989")
-                        ) || (
-                        kostraRecord.fieldAsString(FIELD_ART) in listOf("589", "980", "989")
-                                && kostraRecord.fieldAsString(FIELD_FUNKSJON) != "899 "
-                        )
-                )
-                && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
-    }.map { kostraRecord ->
-        createValidationReportEntry(
-            messageText = "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. " +
-                    "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989.",
-            lineNumbers = listOf(kostraRecord.lineNumber)
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { it.isBevilgningRegnskap() && it.fieldAsIntOrDefault(FIELD_BELOP) != 0 }
+        .filter { kostraRecord ->
+            when (kostraRecord[FIELD_FUNKSJON].trim()) {
+                "899" -> kostraRecord[FIELD_ART] !in artList
+                else -> kostraRecord[FIELD_ART] in artList
+            }
+        }.map { kostraRecord ->
+            createValidationReportEntry(
+                messageText = "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon 899. " +
+                        "Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989.",
+                lineNumbers = listOf(kostraRecord.lineNumber)
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val artList = setOf("589", "980", "989")
+    }
 }

@@ -18,7 +18,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
             sut = Rule155AvskrivningerDifferanse(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "all conditions match",
+                    "all conditions match, negative amount",
                     listOf(
                         kostraRecordInTest("420400", 1, 100, 590, 1),
                         kostraRecordInTest("420400", 1, 860, 990, -32),
@@ -27,10 +27,19 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                             "overens med motpost avskrivninger (-32) (margin på +/- 30')"
                 ),
                 ForAllRowItem(
+                    "all conditions match, positive amount",
+                    listOf(
+                        kostraRecordInTest("420400", 1, 100, 590, 32),
+                        kostraRecordInTest("420400", 1, 860, 990, -1),
+                    ),
+                    expectedErrorMessage = "Korrigér i fila slik at avskrivninger (32) stemmer " +
+                            "overens med motpost avskrivninger (-1) (margin på +/- 30')"
+                ),
+                ForAllRowItem(
                     "!it.isOsloBydel() = false",
                     listOf(
-                        kostraRecordInTest("0301", 1, 100, 590, 1),
-                        kostraRecordInTest("0301", 1, 860, 990, -32),
+                        kostraRecordInTest("030101", 1, 100, 590, 1),
+                        kostraRecordInTest("030101", 1, 860, 990, -32),
                     )
                 ),
                 ForAllRowItem(

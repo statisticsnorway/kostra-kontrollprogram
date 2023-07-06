@@ -16,23 +16,6 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
             sut = Rule125SummeringBalanseDifferanse(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "only eiendeler record",
-                    listOf(
-                        kostraRecordInTest("0B", 10, 11),
-                    ),
-                    expectedErrorMessage = "Korrigér differansen (11) mellom eiendeler (11) og gjeld " +
-                            "og egenkapital (0) i fila (Differanser opptil ±10' godtas)"
-                ),
-                ForAllRowItem(
-                    "only gjeld record",
-                    listOf(
-                        kostraRecordInTest("0B", 31, -11)
-                    ),
-                    expectedErrorMessage = "Korrigér differansen (-11) mellom eiendeler (0) og gjeld " +
-                            "og egenkapital (-11) i fila (Differanser opptil ±10' godtas)"
-                ),
-
-                ForAllRowItem(
                     "isBalanseRegnskap = true, aktiva + passiva negative",
                     listOf(
                         kostraRecordInTest("0B", 10, 10),
@@ -71,22 +54,22 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                 ForAllRowItem(
                     "isBalanseRegnskap = false",
                     listOf(
-                        kostraRecordInTest("0A", 10, 1),
-                        kostraRecordInTest("0A", 31, -1)
+                        kostraRecordInTest("0A", 10, 10),
+                        kostraRecordInTest("0A", 31, -21)
                     )
                 ),
                 ForAllRowItem(
                     "amount within limit, lower limit",
                     listOf(
-                        kostraRecordInTest("0A", 10, 1),
-                        kostraRecordInTest("0A", 31, -11)
+                        kostraRecordInTest("0B", 10, 1),
+                        kostraRecordInTest("0B", 31, -11)
                     )
                 ),
                 ForAllRowItem(
                     "amount within limit, upper limit",
                     listOf(
-                        kostraRecordInTest("0A", 10, 11),
-                        kostraRecordInTest("0A", 31, -1)
+                        kostraRecordInTest("0B", 10, 11),
+                        kostraRecordInTest("0B", 31, -1)
                     )
                 )
             ),

@@ -31,8 +31,7 @@ class Rule125SummeringBalanseDifferanse : AbstractRule<List<KostraRecord>>(
         internal fun Pair<Int, Int>.areValidFigures() = this.let { (aktiva, passiva) ->
             aktiva > 0
                     && passiva < 0
-                    && aktiva.plus(passiva) > -11
-                    && aktiva.plus(passiva) < 11
+                    && aktiva.plus(passiva) in -10..10
         }
     }
 }

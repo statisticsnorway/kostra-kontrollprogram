@@ -5,17 +5,21 @@ import no.ssb.kostra.control.barnevern.s15.BarnevernMain;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
+import no.ssb.kostra.program.util.ConversionUtils;
+import no.ssb.kostra.validation.report.ValidationReportEntry;
 
 import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
+import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
+import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
 @UtilityClass
 public class ControlDispatcher {
 
     public static ErrorReport doControls(final Arguments arguments) {
 
-        ErrorReport errorReport;
+        ErrorReport errorReport = new ErrorReport(arguments);
 
         if (isCodeInCodeList(
                 arguments.getSkjema()
@@ -30,7 +34,16 @@ public class ControlDispatcher {
                 , List.of("0A", "0B", "0C", "0D",
                         "0I", "0J", "0K", "0L",
                         "0M", "0N", "0P", "0Q"))) {
-            errorReport = no.ssb.kostra.control.regnskap.kostra.Main.doControls(arguments);
+
+            var validator = new no.ssb.kostra.area.regnskap.kostra.KommuneKostra(fromArguments(arguments, true));
+            var validationResult = validator.validate();
+
+            validationResult.getReportEntries().stream()
+                    .map(ConversionUtils::toErrorReportEntry)
+                    .forEach(errorReport::addEntry);
+
+            errorReport.setCount(validationResult.getNumberOfControls());
+
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("0F", "0G"))) {
             errorReport = no.ssb.kostra.control.regnskap.kirkekostra.Main.doControls(arguments);

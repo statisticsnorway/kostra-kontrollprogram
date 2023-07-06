@@ -8,6 +8,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.ValidationResult
 
 abstract class AbstractValidator(
     open val arguments: KotlinArguments
@@ -24,7 +25,7 @@ abstract class AbstractValidator(
     open val fatalRules: List<AbstractRule<List<String>>> = emptyList()
     open val validationRules: List<AbstractRule<List<KostraRecord>>> = emptyList()
 
-    fun validate(): List<ValidationReportEntry> {
+    fun validate(): ValidationResult {
         val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
             .mapNotNull { it.validate(arguments.getInputContentAsStringList()) }
             .flatten()
@@ -34,7 +35,11 @@ abstract class AbstractValidator(
             .maxByOrNull { it.ordinal } ?: Severity.OK
 
         if (fatalSeverity == Severity.FATAL)
-            return fatalValidationReportEntries
+            return ValidationResult(
+                reportEntries = fatalValidationReportEntries,
+                numberOfControls = fatalValidationReportEntries.size * fatalRules.size
+            )
+
 
         val derivedKostraRecords = arguments
             .getInputContentAsStringList()
@@ -46,18 +51,28 @@ abstract class AbstractValidator(
                 )
             }
 
-        return validationRules
+        val validationReportEntries = validationRules
             .mapNotNull { it.validate(derivedKostraRecords) }
             .flatten()
+
+        return ValidationResult(
+            reportEntries = validationReportEntries,
+            numberOfControls = validationReportEntries.size * validationRules.size
+        )
+
     }
 
     open fun mappingDuplicates(): Pair<List<String>, List<String>> =
         when (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema)) {
             listOf(RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING, RegnskapConstants.ACCOUNTING_TYPE_REGIONALE) ->
                 listOf(
-                    RegnskapConstants.FIELD_KONTOKLASSE, RegnskapConstants.FIELD_FUNKSJON, RegnskapConstants.FIELD_ART
+                    RegnskapConstants.FIELD_KONTOKLASSE,
+                    RegnskapConstants.FIELD_FUNKSJON,
+                    RegnskapConstants.FIELD_ART
                 ) to listOf(
-                    RegnskapConstants.TITLE_KONTOKLASSE, RegnskapConstants.TITLE_FUNKSJON, RegnskapConstants.TITLE_ART
+                    RegnskapConstants.TITLE_KONTOKLASSE,
+                    RegnskapConstants.TITLE_FUNKSJON,
+                    RegnskapConstants.TITLE_ART
                 )
 
             listOf(RegnskapConstants.ACCOUNTING_TYPE_BALANSE) ->

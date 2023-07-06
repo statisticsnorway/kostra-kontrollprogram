@@ -19,13 +19,13 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>
     override fun validate(context: List<KostraRecord>) = context
         .filterNot { it.isOsloBydel() }
         .filter { it.isBevilgningDriftRegnskap() }
+        .filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
         .takeIf { it.any() }
-        ?.filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
         ?.let { avskrivningPosteringer ->
             Pair(
-                avskrivningPosteringer[0][FIELD_SKJEMA],
+                avskrivningPosteringer.first()[FIELD_SKJEMA],
                 avskrivningPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (_, motpostAvskrivninger) -> motpostAvskrivninger != 0 }
+            ).takeIf { (_, motpostAvskrivninger) -> motpostAvskrivninger == 0 }
                 ?.let { (skjema, motpostAvskrivninger) ->
                     val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
                     else Severity.INFO

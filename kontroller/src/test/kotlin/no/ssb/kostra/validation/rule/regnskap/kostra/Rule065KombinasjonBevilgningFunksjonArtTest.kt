@@ -32,11 +32,11 @@ class Rule065KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "funksjon/art mismath #1",
-                    kostraRecordsInTest("0A", "899 ", "589", 0)
+                    kostraRecordsInTest("0A", "899 ", "589", 1)
                 ),
                 ForAllRowItem(
                     "funksjon/art mismath #2",
-                    kostraRecordsInTest("0A", "898 ", "588", 0)
+                    kostraRecordsInTest("0A", "898 ", "588", 1)
                 ),
             ),
             expectedSeverity = Severity.ERROR,

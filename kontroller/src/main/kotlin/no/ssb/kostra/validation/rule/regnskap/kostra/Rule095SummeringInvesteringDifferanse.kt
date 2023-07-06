@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -18,8 +18,8 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
         ?.partition { it.isUtgift() }
         ?.let { (investeringUtgifterPosteringer, investeringInntekterPosteringer) ->
             Pair(
-                investeringUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },
-                investeringInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+                investeringUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                investeringInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeUnless { (investeringUtgifter, investeringInntekter) ->
                 0 < investeringUtgifter
                         && investeringInntekter < 0

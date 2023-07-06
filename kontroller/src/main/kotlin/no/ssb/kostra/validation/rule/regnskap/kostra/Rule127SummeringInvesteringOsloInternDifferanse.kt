@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -19,8 +20,8 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRule<List<Kostra
         ?.partition { kostraRecord -> kostraRecord[RegnskapConstants.FIELD_ART] == "298" }
         ?.let { (art298Posteringer, art798Posteringer) ->
             Pair(
-                art298Posteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },
-                art798Posteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+                art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeUnless { (sumArt298Investering, sumArt798Investering) ->
                 sumArt298Investering + sumArt798Investering in -10..10
             }?.let { (sumArt298Investering, sumArt798Investering) ->

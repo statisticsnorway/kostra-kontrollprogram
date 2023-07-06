@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -18,8 +18,8 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
         ?.partition { it[FIELD_ART] == "380" }
         ?.let { (internKjopPosteringer, internSalgPosteringer) ->
             Pair(
-                internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },
-                internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+                internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
                 ?.let { (internKjop, internSalg) ->
                     createSingleReportEntryList(

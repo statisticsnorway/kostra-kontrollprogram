@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -20,7 +20,7 @@ class Rule130SkatteInntekter : AbstractRule<List<KostraRecord>>(
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it[FIELD_FUNKSJON].trim() == "800" && it[FIELD_ART] == "870" }
-        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { skatteInntekter -> skatteInntekter < 0 }
         ?.let { skatteInntekter ->
             createSingleReportEntryList(

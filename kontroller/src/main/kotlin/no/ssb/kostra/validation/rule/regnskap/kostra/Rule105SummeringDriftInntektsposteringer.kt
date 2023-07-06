@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -19,7 +19,7 @@ class Rule105SummeringDriftInntektsposteringer : AbstractRule<List<KostraRecord>
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isInntekt() }
-        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 > it }
         ?.let { sumDriftsInntekter ->
             createSingleReportEntryList(

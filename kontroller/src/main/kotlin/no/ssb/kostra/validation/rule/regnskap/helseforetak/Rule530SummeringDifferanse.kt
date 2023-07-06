@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -13,10 +13,8 @@ class Rule530SummeringDifferanse : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isResultatRegnskap() }
         .takeIf { it.any() }
-        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
-        ?.takeUnless { differanse ->
-            differanse in -100..100
-        }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+        ?.takeUnless { differanse -> differanse in -100..100 }
         ?.let { differanse ->
             createSingleReportEntryList(
                 messageText = "Sjekk at sum art 300 til og med art 899 skal være 0, her ($differanse). Differanse +/- 100' kroner godtas."

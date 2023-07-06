@@ -314,9 +314,9 @@ public class Main {
         final var errorReport = new ErrorReport(arguments);
         final var regnskap = new KommuneKostra(fromArguments(arguments, true));
 
-        regnskap.validate().stream()
-                .map(ConversionUtils::toErrorReportEntry)
-                .forEach(errorReport::addEntry);
+//        regnskap.validate().stream()
+//                .map(ConversionUtils::toErrorReportEntry)
+//                .forEach(errorReport::addEntry);
 
         errorReport.incrementCount();
 

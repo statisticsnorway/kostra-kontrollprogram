@@ -16,7 +16,7 @@ class Rule510Art320(
         .filter {
             it.isResultatRegnskap()
         }.filter {
-            it.fieldAsString(RegnskapConstants.FIELD_ART)  == "320"
+            it[RegnskapConstants.FIELD_ART] == "320"
         }.filter {
             it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) !in validFunksjonList
         }.map { kostraRecord ->

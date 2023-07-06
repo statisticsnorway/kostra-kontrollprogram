@@ -19,7 +19,7 @@ class Rule135Rammetilskudd : AbstractRule<List<KostraRecord>>(
         .takeIf { it.any() }
         ?.filter {
             it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "840"
-                    && it.fieldAsString(RegnskapConstants.FIELD_ART) == "800"
+                    && it[RegnskapConstants.FIELD_ART] == "800"
         }
         ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
         ?.takeUnless { rammeTilskudd -> rammeTilskudd < 0 }

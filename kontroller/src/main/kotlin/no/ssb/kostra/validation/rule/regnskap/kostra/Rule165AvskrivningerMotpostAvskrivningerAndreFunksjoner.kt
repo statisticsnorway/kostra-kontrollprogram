@@ -18,7 +18,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
         .filter {
             it.isBevilgningDriftRegnskap()
                     && it.fieldAsTrimmedString(FIELD_FUNKSJON) != "860"
-                    && it.fieldAsString(FIELD_ART) == "990"
+                    && it[FIELD_ART] == "990"
                     && it.fieldAsIntOrDefault(FIELD_BELOP) != 0
         }
         .takeIf { it.any() }

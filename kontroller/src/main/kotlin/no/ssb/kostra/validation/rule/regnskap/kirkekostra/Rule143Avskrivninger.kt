@@ -18,10 +18,10 @@ class Rule143Avskrivninger : AbstractRule<List<KostraRecord>>(
         ?.filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
         ?.let { driftPosteringer ->
             (driftPosteringer
-                .filter { it.fieldAsString(FIELD_ART) == "590" }
+                .filter { it[FIELD_ART] == "590" }
                 .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     driftPosteringer
-                        .filter { it.fieldAsString(FIELD_ART) == "990" }
+                        .filter { it[FIELD_ART] == "990" }
                         .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
                     )
                 .takeUnless { (avskrivninger, motpostAvskrivninger) ->

@@ -18,7 +18,7 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRule<List<KostraRecord>>(
         .filter {
             it.isBevilgningDriftRegnskap()
                     && it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 800..899
-                    && it.fieldAsString(FIELD_ART) == "590"
+                    && it[FIELD_ART] == "590"
         }.takeIf { it.any() }
         ?.let { kostraRecordList ->
             (kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to

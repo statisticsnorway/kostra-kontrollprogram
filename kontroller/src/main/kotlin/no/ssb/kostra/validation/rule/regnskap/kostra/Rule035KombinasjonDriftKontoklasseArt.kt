@@ -19,11 +19,9 @@ class Rule035KombinasjonDriftKontoklasseArt(
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Kun advarsel, hindrer ikke innsending: (${
-                kostraRecord.fieldAsString(
-                    FIELD_ART
-                )
-            }) regnes å være ulogisk i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
+            messageText = "Kun advarsel, hindrer ikke innsending: (${kostraRecord[FIELD_ART]}) regnes å være " +
+                    "ulogisk i driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån eller " +
+                    "mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av driftsinntekter.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )
     }.ifEmpty { null }

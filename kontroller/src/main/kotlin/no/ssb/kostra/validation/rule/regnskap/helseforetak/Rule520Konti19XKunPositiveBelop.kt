@@ -16,7 +16,7 @@ class Rule520Konti19XKunPositiveBelop(
         .filter {
             it.isBalanseRegnskap()
         }.filter {
-            it.fieldAsString(RegnskapConstants.FIELD_ART) in validArtList
+            it[RegnskapConstants.FIELD_ART] in validArtList
         }.filterNot {
             it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) > 0
         }.map { kostraRecord ->

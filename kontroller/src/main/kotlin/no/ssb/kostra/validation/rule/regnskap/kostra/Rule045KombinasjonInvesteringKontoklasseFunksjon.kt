@@ -20,9 +20,8 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjon(
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Kun advarsel, hindrer ikke innsending: " +
-                    "(${kostraRecord.fieldAsString(FIELD_FUNKSJON)}) regnes å være " +
-                    "ulogisk funksjon i investeringsregnskapet. Vennligst vurder å postere på annen " +
-                    "funksjon eller om posteringen hører til i driftsregnskapet.",
+                    "(${kostraRecord[FIELD_FUNKSJON]}) regnes å være ulogisk funksjon i investeringsregnskapet. " +
+                    "Vennligst vurder å postere på annen funksjon eller om posteringen hører til i driftsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )
     }.ifEmpty { null }

@@ -15,7 +15,7 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractRule<List<KostraRec
         it.isBevilgningRegnskap() && it.fieldAsTrimmedString(FIELD_FUNKSJON) == "089"
     }.filterNot { it.fieldAsIntOrDefault(FIELD_ART) in artStopList }.map {
         createValidationReportEntry(
-            messageText = "Korrigér i fila slik at art (${it.fieldAsString(FIELD_ART)}) " +
+            messageText = "Korrigér i fila slik at art (${it[FIELD_ART]}) " +
                     "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
             lineNumbers = listOf(it.lineNumber)
         )

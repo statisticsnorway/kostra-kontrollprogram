@@ -16,7 +16,7 @@ class Rule03Bydelsnummer : AbstractRule<KostraRecord>(
     private val osloDistrictIds = (1..15).map { it.toString().padStart(2, '0') }
 
     override fun validate(context: KostraRecord, arguments: KotlinArguments) = context.let { kostraRecord ->
-        kostraRecord[KOMMUNE_NR_COL_NAME] to kostraRecord.fieldAsString(BYDELSNR_COL_NAME)
+        kostraRecord[KOMMUNE_NR_COL_NAME] to kostraRecord[BYDELSNR_COL_NAME]
     }.takeUnless { (municipalityId, districtId) ->
         when (municipalityId) {
             OSLO_MUNICIPALITY_ID -> districtId in osloDistrictIds

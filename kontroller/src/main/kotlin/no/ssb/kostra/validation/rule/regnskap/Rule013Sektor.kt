@@ -11,10 +11,10 @@ class Rule013Sektor(
     override fun validate(context: List<KostraRecord>) =
         if (sektorList.isEmpty()) null
         else context
-            .filter { kostraRecord -> sektorList.none { it == kostraRecord.fieldAsString(FIELD_SEKTOR) } }
+            .filter { kostraRecord -> sektorList.none { it == kostraRecord[FIELD_SEKTOR] } }
             .map { kostraRecord ->
                 createValidationReportEntry(
-                    messageText = """Fant ugyldig sektor '${kostraRecord.fieldAsString(FIELD_SEKTOR)}'. 
+                    messageText = """Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. 
                                 Korrigér sektor til en av '${sektorList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )

@@ -18,7 +18,7 @@ class Rule500Funksjon400(
         }.filter {
             it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "400"
         }.filter {
-            it.fieldAsString(RegnskapConstants.FIELD_ORGNR) !in validOrgnrList
+            it[RegnskapConstants.FIELD_ORGNR] !in validOrgnrList
         }.map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Ugyldig funksjon. Funksjonen '400' kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon.",

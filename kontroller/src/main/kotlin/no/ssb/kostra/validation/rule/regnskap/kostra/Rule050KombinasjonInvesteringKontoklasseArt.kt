@@ -19,9 +19,8 @@ class Rule050KombinasjonInvesteringKontoklasseArt(
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Korrigér ugyldig art '${kostraRecord.fieldAsString(FIELD_ART)}' " +
-                    "i investeringsregnskapet til en gyldig art i investeringsregnskapet eller overfør " +
-                    "posteringen til driftsregnskapet.",
+            messageText = "Korrigér ugyldig art '${kostraRecord[FIELD_ART]}' i investeringsregnskapet til en gyldig " +
+                    "art i investeringsregnskapet eller overfør posteringen til driftsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )
     }.ifEmpty { null }

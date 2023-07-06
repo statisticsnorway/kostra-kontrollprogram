@@ -11,10 +11,10 @@ class Rule010Funksjon(
     override fun validate(context: List<KostraRecord>) =
         if (funksjonList.isEmpty()) null
         else context
-            .filter { kostraRecord -> funksjonList.none { it == kostraRecord.fieldAsString(FIELD_FUNKSJON) } }
+            .filter { kostraRecord -> funksjonList.none { it == kostraRecord[FIELD_FUNKSJON] } }
             .map { kostraRecord ->
                 createValidationReportEntry(
-                    messageText = """Fant ugyldig funksjon '${kostraRecord.fieldAsString(FIELD_FUNKSJON)}'. 
+                    messageText = """Fant ugyldig funksjon '${kostraRecord[FIELD_FUNKSJON]}'. 
                                 Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )

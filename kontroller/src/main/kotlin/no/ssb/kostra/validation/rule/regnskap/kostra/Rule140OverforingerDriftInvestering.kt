@@ -19,9 +19,9 @@ class Rule140OverforingerDriftInvestering : AbstractRule<List<KostraRecord>>(
         ?.partition { it.isBevilgningDriftRegnskap() }
         ?.let { (driftPosteringer, investeringPosteringer) ->
             Pair(
-                driftPosteringer.filter { it.fieldAsString(FIELD_ART) == "570" }
+                driftPosteringer.filter { it[FIELD_ART] == "570" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
-                investeringPosteringer.filter { it.fieldAsString(FIELD_ART) == "970" }
+                investeringPosteringer.filter { it[FIELD_ART] == "970" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeUnless { (driftOverforinger, investeringOverforinger) ->
                 driftOverforinger + investeringOverforinger in -30..30

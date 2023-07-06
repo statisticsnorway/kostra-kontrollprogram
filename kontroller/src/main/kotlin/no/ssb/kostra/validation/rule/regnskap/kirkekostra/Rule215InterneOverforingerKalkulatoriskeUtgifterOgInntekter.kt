@@ -14,8 +14,8 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRule
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.fieldAsString(FIELD_ART) in listOf("390", "790") }
-        ?.partition { it.fieldAsString(FIELD_ART) == "390" }
+        ?.filter { it[FIELD_ART] in listOf("390", "790") }
+        ?.partition { it[FIELD_ART] == "390" }
         ?.let { (utgifterPosteringer, inntekterPosteringer) ->
             Pair(
                 utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },

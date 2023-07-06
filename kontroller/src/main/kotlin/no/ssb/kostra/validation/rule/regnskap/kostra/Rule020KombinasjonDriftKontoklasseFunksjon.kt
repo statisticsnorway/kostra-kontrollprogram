@@ -20,7 +20,7 @@ class Rule020KombinasjonDriftKontoklasseFunksjon(
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Korrigér ugyldig funksjon " +
-                    "'${kostraRecord.fieldAsString(FIELD_FUNKSJON)}' i driftsregnskapet " +
+                    "'${kostraRecord[FIELD_FUNKSJON]}' i driftsregnskapet " +
                     "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
                     "investeringsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)

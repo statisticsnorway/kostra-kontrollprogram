@@ -18,7 +18,7 @@ class Rule180Funksjon465Investering : AbstractRule<List<KostraRecord>>(
             !it.isOsloBydel()
                     && it.isFylkeRegnskap()
                     && it.isBevilgningInvesteringRegnskap()
-                    && it.fieldAsString(FIELD_FUNKSJON) == "465 "
+                    && it[FIELD_FUNKSJON] == "465 "
         }
         .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

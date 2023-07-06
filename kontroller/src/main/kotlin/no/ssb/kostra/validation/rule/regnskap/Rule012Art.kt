@@ -11,10 +11,10 @@ class Rule012Art(
     override fun validate(context: List<KostraRecord>) =
         if (artList.isEmpty()) null
         else context
-            .filter { kostraRecord -> artList.none { it == kostraRecord.fieldAsString(FIELD_ART) } }
+            .filter { kostraRecord -> artList.none { it == kostraRecord[FIELD_ART] } }
             .map { kostraRecord ->
                 createValidationReportEntry(
-                    messageText = """Fant ugyldig art '${kostraRecord.fieldAsString(FIELD_ART)}'. 
+                    messageText = """Fant ugyldig art '${kostraRecord[FIELD_ART]}'. 
                                 Korrigér art til en av '${artList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )

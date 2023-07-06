@@ -19,9 +19,8 @@ class Rule055KombinasjonInvesteringKontoklasseArt(
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Kun advarsel, hindrer ikke innsending: " +
-                    "(${kostraRecord.fieldAsString(FIELD_ART)}) regnes å være ulogisk art " +
-                    "i investeringsregnskapet. Vennligst vurder å postere på annen art eller om posteringen " +
+            messageText = "Kun advarsel, hindrer ikke innsending: (${kostraRecord[FIELD_ART]}) regnes å være ulogisk " +
+                    "art i investeringsregnskapet. Vennligst vurder å postere på annen art eller om posteringen " +
                     "hører til i driftsregnskapet.",
             lineNumbers = listOf(kostraRecord.lineNumber)
         )

@@ -14,8 +14,8 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it.fieldAsString(FIELD_ART) in listOf("380", "780") }
-        ?.partition { it.fieldAsString(FIELD_ART) == "380" }
+        ?.filter { it[FIELD_ART] in listOf("380", "780") }
+        ?.partition { it[FIELD_ART] == "380" }
         ?.let { (internKjopPosteringer, internSalgPosteringer) ->
             Pair(
                 internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) },

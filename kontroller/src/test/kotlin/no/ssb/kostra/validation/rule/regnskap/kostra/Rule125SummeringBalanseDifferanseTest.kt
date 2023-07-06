@@ -16,13 +16,22 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
             sut = Rule125SummeringBalanseDifferanse(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBalanseRegnskap = true",
+                    "isBalanseRegnskap = true, aktiva + passiva negative",
                     listOf(
                         kostraRecordInTest("0B", 10, 10),
                         kostraRecordInTest("0B", 31, -21)
                     ),
                     expectedErrorMessage = "Korrigér differansen (-11) mellom eiendeler (10) og gjeld " +
                             "og egenkapital (-21) i fila (Differanser opptil ±10' godtas)"
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, aktiva + passiva positive",
+                    listOf(
+                        kostraRecordInTest("0B", 10, 21),
+                        kostraRecordInTest("0B", 31, -10)
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (11) mellom eiendeler (21) og gjeld " +
+                            "og egenkapital (-10) i fila (Differanser opptil ±10' godtas)"
                 ),
                 ForAllRowItem(
                     "isBalanseRegnskap = true, negative aktiva",
@@ -47,7 +56,14 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                     listOf(
                         kostraRecordInTest("0A", 10, 10),
                         kostraRecordInTest("0A", 31, -11)
-                    )
+                    ),
+                ),
+                ForAllRowItem(
+                    "amount within limit",
+                    listOf(
+                        kostraRecordInTest("0A", 10, 10),
+                        kostraRecordInTest("0A", 31, -10)
+                    ),
                 )
             ),
             expectedSeverity = Severity.ERROR,

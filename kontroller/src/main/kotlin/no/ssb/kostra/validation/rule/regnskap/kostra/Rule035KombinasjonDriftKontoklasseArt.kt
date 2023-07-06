@@ -15,7 +15,7 @@ class Rule035KombinasjonDriftKontoklasseArt(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningDriftRegnskap()
-                && kostraRecord.fieldAsString(FIELD_ART) in illogicalDriftArtList
+                && kostraRecord[FIELD_ART] in illogicalDriftArtList
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(

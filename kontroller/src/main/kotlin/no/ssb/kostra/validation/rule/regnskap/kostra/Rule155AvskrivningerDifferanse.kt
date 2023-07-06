@@ -14,7 +14,8 @@ class Rule155AvskrivningerDifferanse : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.let { driftPosteringer ->
             Pair(

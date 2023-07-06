@@ -16,6 +16,23 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
             sut = Rule125SummeringBalanseDifferanse(),
             forAllRows = listOf(
                 ForAllRowItem(
+                    "only eiendeler record",
+                    listOf(
+                        kostraRecordInTest("0B", 10, 11),
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (11) mellom eiendeler (11) og gjeld " +
+                            "og egenkapital (0) i fila (Differanser opptil ±10' godtas)"
+                ),
+                ForAllRowItem(
+                    "only gjeld record",
+                    listOf(
+                        kostraRecordInTest("0B", 31, -11)
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (-11) mellom eiendeler (0) og gjeld " +
+                            "og egenkapital (-11) i fila (Differanser opptil ±10' godtas)"
+                ),
+
+                ForAllRowItem(
                     "isBalanseRegnskap = true, aktiva + passiva negative",
                     listOf(
                         kostraRecordInTest("0B", 10, 10),

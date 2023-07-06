@@ -33,7 +33,7 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
                 ),
                 ForAllRowItem(
                     "belop == 0",
-                    kostraRecordsInTest(1, 990, 0)
+                    kostraRecordsInTest(1, 841, 0)
                 )
             ),
             expectedSeverity = Severity.ERROR,

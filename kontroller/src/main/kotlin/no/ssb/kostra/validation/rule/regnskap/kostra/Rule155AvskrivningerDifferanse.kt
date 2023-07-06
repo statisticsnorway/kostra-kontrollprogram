@@ -18,11 +18,11 @@ class Rule155AvskrivningerDifferanse : AbstractRule<List<KostraRecord>>(
         .takeIf { it.any() }
         ?.let { driftPosteringer ->
             Pair(
-                driftPosteringer.filter {
-                    it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799 && it.fieldAsString(FIELD_ART) == "590"
-                }.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 driftPosteringer
-                    .filter { it.fieldAsString(FIELD_FUNKSJON) == "860 " && it.fieldAsString(FIELD_ART) == "990" }
+                    .filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799 && it[FIELD_ART] == "590" }
+                    .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                driftPosteringer
+                    .filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeUnless { (avskrivninger, motpostAvskrivninger) ->
                 avskrivninger + motpostAvskrivninger in -30..30

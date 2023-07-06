@@ -14,34 +14,49 @@ class Rule145AvskrivningerMotpostAvskrivningerTest : BehaviorSpec({
         val sut = Rule145AvskrivningerMotpostAvskrivninger()
 
         forAll(
-            row("420400", "0A", "1", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0A", "1", "860 ", "990", "0", true, Severity.ERROR),
-            row("030101", "0A", "1", "860 ", "990", "0", false, Severity.INFO),
-            row("420400", "0C", "1", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0C", "1", "860 ", "990", "0", true, Severity.ERROR),
-            row("420400", "0I", "3", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0I", "3", "860 ", "990", "0", true, Severity.INFO),
-            row("420400", "0K", "3", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0K", "3", "860 ", "990", "0", true, Severity.INFO),
-            row("420400", "0M", "3", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0M", "3", "860 ", "990", "0", true, Severity.ERROR),
-            row("420400", "0P", "3", "860 ", "990", "1", false, Severity.INFO),
-            row("420400", "0P", "3", "860 ", "990", "0", true, Severity.ERROR),
-        ) { region, skjema, kontoklasse, funksjon, art, belop, expectError, expectedSeverity ->
+            row(
+                "all conditions match, Severity.ERROR",
+                "420400","0A", 1, 860 , 990, 0, true, Severity.ERROR
+            ),
+            row(
+                "all conditions match, Severity.INFO",
+                "420400","0K", 3, 860 , 990, 0, true, Severity.INFO
+            ),
+            row(
+                "isOsloBydel = true",
+                "030101","0A", 1, 860 , 990, 0, false, null
+            ),
+            row(
+                "isBevilgningDriftRegnskap = false",
+                "420400","0A", 0, 860 , 990, 0, false, null
+            ),
+            row(
+                "funksjon != 860",
+                "420400","0A", 1, 861 , 990, 0, false, null
+            ),
+            row(
+                "art != 990",
+                "420400","0A", 1, 860 , 991, 0, false, null
+            ),
+            row(
+                "belop != 0",
+                "420400","0A", 1, 860 , 990, 1, false, null
+            )
+      ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError, expectedSeverity ->
             val kostraRecordList = mapOf(
                 RegnskapConstants.FIELD_REGION to region,
                 RegnskapConstants.FIELD_SKJEMA to skjema,
-                RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                RegnskapConstants.FIELD_FUNKSJON to funksjon,
-                RegnskapConstants.FIELD_ART to art,
-                RegnskapConstants.FIELD_BELOP to belop
+                RegnskapConstants.FIELD_KONTOKLASSE to "$kontoklasse",
+                RegnskapConstants.FIELD_FUNKSJON to "$funksjon",
+                RegnskapConstants.FIELD_ART to "$art",
+                RegnskapConstants.FIELD_BELOP to "$belop"
             ).toKostraRecord().asList()
 
-            When("$region, $skjema, $kontoklasse, $funksjon, $art, $belop, $expectError, $expectedSeverity") {
+            When(description) {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,
-                    expectedSeverity = expectedSeverity,
+                    expectedSeverity = expectedSeverity ?: Severity.INFO,
                     "Korrigér i fila slik at den inneholder motpost avskrivninger ($belop), føres " +
                             "på funksjon 860 og art 990."
                 )

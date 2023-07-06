@@ -17,26 +17,24 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter {
-            it.fieldAsString(FIELD_FUNKSJON) == "860 "
-                    && it.fieldAsString(FIELD_ART) == "990"
-        }
+        ?.filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
         ?.let { avskrivningPosteringer ->
-            avskrivningPosteringer[0].fieldAsString(FIELD_SKJEMA) to
-                    avskrivningPosteringer
-                        .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        }
-        ?.takeUnless { (_, motpostAvskrivninger) -> motpostAvskrivninger != 0 }
-        ?.let { (skjema, motpostAvskrivninger) ->
-            val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
-            else Severity.INFO
+            Pair(
+                avskrivningPosteringer[0][FIELD_SKJEMA],
+                avskrivningPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+            ).takeUnless { (_, motpostAvskrivninger) -> motpostAvskrivninger != 0 }
+                ?.let { (skjema, motpostAvskrivninger) ->
+                    val severity = if (ACCOUNTING_TYPE_REGIONALE in getRegnskapTypeBySkjema(skjema)) Severity.ERROR
+                    else Severity.INFO
 
-            createSingleReportEntryList(
-                messageText = "Korrigér i fila slik at den inneholder motpost avskrivninger " +
-                        "($motpostAvskrivninger), føres på funksjon 860 og art 990.",
-                severity
-            )
+                    createSingleReportEntryList(
+                        messageText = "Korrigér i fila slik at den inneholder motpost avskrivninger " +
+                                "($motpostAvskrivninger), føres på funksjon 860 og art 990.",
+                        severity
+                    )
+                }
         }
 }

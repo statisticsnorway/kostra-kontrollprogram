@@ -13,7 +13,8 @@ class Rule110SummeringDriftDifferanse : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
         ?.let { (driftUtgifterPosteringer, driftInntekterPosteringer) ->

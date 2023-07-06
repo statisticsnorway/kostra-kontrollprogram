@@ -15,7 +15,7 @@ class Rule050KombinasjonInvesteringKontoklasseArt(
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningInvesteringRegnskap()
-                && kostraRecord.fieldAsString(FIELD_ART) in invalidInvesteringArtList
+                && kostraRecord[FIELD_ART] in invalidInvesteringArtList
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(

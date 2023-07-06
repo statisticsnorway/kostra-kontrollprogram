@@ -1,7 +1,10 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapConstants.getRegnskapTypeBySkjema
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -15,14 +18,12 @@ class Rule150Avskrivninger : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
-        .filter {
-            it.fieldAsIntOrDefault(RegnskapConstants.FIELD_FUNKSJON) in 100..799
-                    && it[RegnskapConstants.FIELD_ART] == "590"
-        }.takeIf { it.any() }
+        .filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799 && it[FIELD_ART] == "590" }
+        .takeIf { it.any() }
         ?.let { avskrivningPosteringer ->
             Pair(
-                avskrivningPosteringer.first()[RegnskapConstants.FIELD_SKJEMA],
-                avskrivningPosteringer.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+                avskrivningPosteringer.first()[FIELD_SKJEMA],
+                avskrivningPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             ).takeIf { (_, avskrivninger) -> avskrivninger == 0 }?.let { (skjema, avskrivninger) ->
                 createSingleReportEntryList(
                     messageText = "Korrigér i fila slik at den inneholder avskrivninger " +

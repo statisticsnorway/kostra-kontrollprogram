@@ -1,7 +1,10 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -45,10 +48,10 @@ class Rule045KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             funksjon: String,
             belop: String
         ): List<KostraRecord> = mapOf(
-            RegnskapConstants.FIELD_SKJEMA to "0A",
-            RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-            RegnskapConstants.FIELD_FUNKSJON to funksjon,
-            RegnskapConstants.FIELD_BELOP to belop,
+            FIELD_SKJEMA to "0A",
+            FIELD_KONTOKLASSE to kontoklasse,
+            FIELD_FUNKSJON to funksjon,
+            FIELD_BELOP to belop,
         ).toKostraRecord().asList()
     }
 }

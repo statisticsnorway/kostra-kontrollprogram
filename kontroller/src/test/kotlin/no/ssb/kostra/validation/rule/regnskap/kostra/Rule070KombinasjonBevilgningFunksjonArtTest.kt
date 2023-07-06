@@ -1,7 +1,10 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
@@ -47,10 +50,10 @@ class Rule070KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
             art: String,
             belop: String,
         ) = mapOf(
-            RegnskapConstants.FIELD_SKJEMA to skjema,
-            RegnskapConstants.FIELD_FUNKSJON to funksjon,
-            RegnskapConstants.FIELD_ART to art,
-            RegnskapConstants.FIELD_BELOP to belop,
+            FIELD_SKJEMA to skjema,
+            FIELD_FUNKSJON to funksjon,
+            FIELD_ART to art,
+            FIELD_BELOP to belop,
         ).toKostraRecord().asList()
     }
 }

@@ -11,7 +11,7 @@ class Rule010Funksjon(
     override fun validate(context: List<KostraRecord>) =
         if (funksjonList.isEmpty()) null
         else context
-            .filter { kostraRecord -> funksjonList.none { it == kostraRecord[FIELD_FUNKSJON] } }
+            .filter { kostraRecord -> funksjonList.none { it.trim() == kostraRecord[FIELD_FUNKSJON].trim() } }
             .map { kostraRecord ->
                 createValidationReportEntry(
                     messageText = """Fant ugyldig funksjon '${kostraRecord[FIELD_FUNKSJON]}'. 

@@ -1,6 +1,17 @@
 package no.ssb.kostra.area
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
+import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
+import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -66,24 +77,24 @@ abstract class AbstractValidator(
         when (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema)) {
             listOf(RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING, RegnskapConstants.ACCOUNTING_TYPE_REGIONALE) ->
                 listOf(
-                    RegnskapConstants.FIELD_KONTOKLASSE,
-                    RegnskapConstants.FIELD_FUNKSJON,
-                    RegnskapConstants.FIELD_ART
+                    FIELD_KONTOKLASSE,
+                    FIELD_FUNKSJON,
+                    FIELD_ART
                 ) to listOf(
-                    RegnskapConstants.TITLE_KONTOKLASSE,
-                    RegnskapConstants.TITLE_FUNKSJON,
-                    RegnskapConstants.TITLE_ART
+                    TITLE_KONTOKLASSE,
+                    TITLE_FUNKSJON,
+                    TITLE_ART
                 )
 
-            listOf(RegnskapConstants.ACCOUNTING_TYPE_BALANSE) ->
+            listOf(ACCOUNTING_TYPE_BALANSE) ->
                 listOf(
-                    RegnskapConstants.FIELD_KONTOKLASSE,
-                    RegnskapConstants.FIELD_KAPITTEL,
-                    RegnskapConstants.FIELD_SEKTOR
+                    FIELD_KONTOKLASSE,
+                    FIELD_KAPITTEL,
+                    FIELD_SEKTOR
                 ) to listOf(
-                    RegnskapConstants.TITLE_KONTOKLASSE,
-                    RegnskapConstants.TITLE_KAPITTEL,
-                    RegnskapConstants.TITLE_SEKTOR
+                    TITLE_KONTOKLASSE,
+                    TITLE_KAPITTEL,
+                    TITLE_SEKTOR
                 )
 
             else -> emptyList<String>() to emptyList()

@@ -3,7 +3,12 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
@@ -20,12 +25,12 @@ class Rule500Funksjon400Test : BehaviorSpec({
             row("0X", "400 ", "928033821", false), // OK
         ) { skjema, funksjon, orgnr, expectError ->
             val kostraRecordList = mapOf(
-                RegnskapConstants.FIELD_ORGNR to orgnr,
-                RegnskapConstants.FIELD_SKJEMA to skjema,
-                RegnskapConstants.FIELD_KONTOKLASSE to " ",
-                RegnskapConstants.FIELD_FUNKSJON to funksjon,
-                RegnskapConstants.FIELD_ART to "300",
-                RegnskapConstants.FIELD_BELOP to "100"
+                FIELD_ORGNR to orgnr,
+                FIELD_SKJEMA to skjema,
+                FIELD_KONTOKLASSE to " ",
+                FIELD_FUNKSJON to funksjon,
+                FIELD_ART to "300",
+                FIELD_BELOP to "100"
             ).toKostraRecord().asList()
 
             When("$orgnr, $skjema, $funksjon") {
@@ -33,7 +38,8 @@ class Rule500Funksjon400Test : BehaviorSpec({
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,
                     expectedSeverity = Severity.WARNING,
-                    "Ugyldig funksjon. Funksjonen '400' kan kun benyttes av RHF og Nasjonale felleseide HF. Korriger funksjon."
+                    "Ugyldig funksjon. Funksjonen '400' kan kun benyttes av RHF og Nasjonale " +
+                            "felleseide HF. Korriger funksjon."
                 )
             }
         }

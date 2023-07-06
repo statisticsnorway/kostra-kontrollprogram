@@ -3,7 +3,9 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
@@ -20,9 +22,9 @@ class Rule510Art320Test : BehaviorSpec({
             row("0X", "320", "620 ", false), // OK
         ) { skjema, art, funksjon, expectError ->
             val kostraRecordList = mapOf(
-                RegnskapConstants.FIELD_SKJEMA to skjema,
-                RegnskapConstants.FIELD_ART to art,
-                RegnskapConstants.FIELD_FUNKSJON to funksjon,
+                FIELD_SKJEMA to skjema,
+                FIELD_ART to art,
+                FIELD_FUNKSJON to funksjon,
             ).toKostraRecord().asList()
 
             When("$skjema, $art, $funksjon") {
@@ -30,7 +32,8 @@ class Rule510Art320Test : BehaviorSpec({
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,
                     expectedSeverity = Severity.WARNING,
-                    "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, psykisk helsevern og rus. Korriger funksjon."
+                    "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, " +
+                            "psykisk helsevern og rus. Korriger funksjon."
                 )
             }
         }

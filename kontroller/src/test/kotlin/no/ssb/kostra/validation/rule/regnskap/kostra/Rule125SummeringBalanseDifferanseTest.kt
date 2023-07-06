@@ -34,36 +34,43 @@ class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
                             "og egenkapital (-10) i fila (Differanser opptil ±10' godtas)"
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, negative aktiva",
+                    "negative aktiva",
                     listOf(
-                        kostraRecordInTest("0B", 10, -10),
-                        kostraRecordInTest("0B", 31, -21)
+                        kostraRecordInTest("0B", 10, -1),
+                        kostraRecordInTest("0B", 31, -1)
                     ),
-                    expectedErrorMessage = "Korrigér differansen (-31) mellom eiendeler (-10) og gjeld " +
-                            "og egenkapital (-21) i fila (Differanser opptil ±10' godtas)"
+                    expectedErrorMessage = "Korrigér differansen (-2) mellom eiendeler (-1) og gjeld " +
+                            "og egenkapital (-1) i fila (Differanser opptil ±10' godtas)"
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, positive gjeld",
+                    "positive gjeld",
                     listOf(
-                        kostraRecordInTest("0B", 10, 10),
-                        kostraRecordInTest("0B", 31, 21)
+                        kostraRecordInTest("0B", 10, 1),
+                        kostraRecordInTest("0B", 31, 2)
                     ),
-                    expectedErrorMessage = "Korrigér differansen (31) mellom eiendeler (10) og gjeld " +
-                            "og egenkapital (21) i fila (Differanser opptil ±10' godtas)"
+                    expectedErrorMessage = "Korrigér differansen (3) mellom eiendeler (1) og gjeld " +
+                            "og egenkapital (2) i fila (Differanser opptil ±10' godtas)"
                 ),
                 ForAllRowItem(
                     "isBalanseRegnskap = false",
                     listOf(
-                        kostraRecordInTest("0A", 10, 10),
-                        kostraRecordInTest("0A", 31, -11)
-                    ),
+                        kostraRecordInTest("0A", 10, 1),
+                        kostraRecordInTest("0A", 31, -1)
+                    )
                 ),
                 ForAllRowItem(
-                    "amount within limit",
+                    "amount within limit, lower limit",
                     listOf(
-                        kostraRecordInTest("0A", 10, 10),
-                        kostraRecordInTest("0A", 31, -10)
-                    ),
+                        kostraRecordInTest("0A", 10, 1),
+                        kostraRecordInTest("0A", 31, -11)
+                    )
+                ),
+                ForAllRowItem(
+                    "amount within limit, upper limit",
+                    listOf(
+                        kostraRecordInTest("0A", 10, 11),
+                        kostraRecordInTest("0A", 31, -1)
+                    )
                 )
             ),
             expectedSeverity = Severity.ERROR,

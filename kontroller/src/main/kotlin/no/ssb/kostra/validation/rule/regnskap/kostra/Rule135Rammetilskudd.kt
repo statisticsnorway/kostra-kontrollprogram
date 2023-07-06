@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -17,11 +19,8 @@ class Rule135Rammetilskudd : AbstractRule<List<KostraRecord>>(
         .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter {
-            it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "840"
-                    && it[RegnskapConstants.FIELD_ART] == "800"
-        }
-        ?.sumOf { it.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) }
+        ?.filter { it[FIELD_FUNKSJON].trim() == "840" && it[FIELD_ART] == "800" }
+        ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { rammeTilskudd -> rammeTilskudd < 0 }
         ?.let { rammeTilskudd ->
             createSingleReportEntryList(

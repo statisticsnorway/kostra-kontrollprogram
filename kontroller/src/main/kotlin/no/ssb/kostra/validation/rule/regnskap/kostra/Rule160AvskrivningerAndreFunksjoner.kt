@@ -21,9 +21,10 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRule<List<KostraRecord>>(
                     && it[FIELD_ART] == "590"
         }.takeIf { it.any() }
         ?.let { kostraRecordList ->
-            (kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    kostraRecordList.map { it.fieldAsTrimmedString(FIELD_FUNKSJON) })
-                .takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
+            Pair(
+                kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
+                kostraRecordList.map { it[FIELD_FUNKSJON].trim() }
+            ).takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
                 ?.let { (avskrivninger, funksjoner) ->
                     createSingleReportEntryList(
                         messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +

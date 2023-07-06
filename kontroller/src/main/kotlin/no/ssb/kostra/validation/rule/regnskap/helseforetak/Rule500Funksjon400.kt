@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -16,7 +17,7 @@ class Rule500Funksjon400(
         .filter {
             it.isResultatRegnskap()
         }.filter {
-            it.fieldAsTrimmedString(RegnskapConstants.FIELD_FUNKSJON) == "400"
+            it[FIELD_FUNKSJON].trim() == "400"
         }.filter {
             it[RegnskapConstants.FIELD_ORGNR] !in validOrgnrList
         }.map { kostraRecord ->

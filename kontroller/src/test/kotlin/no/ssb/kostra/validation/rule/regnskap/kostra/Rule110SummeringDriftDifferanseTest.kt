@@ -71,15 +71,15 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                 ForAllRowItem(
                     "driftUtgifter + driftInntekter within range, lower bound",
                     listOf(
-                        kostraRecordInTest("420400", 0, 590, 1),
-                        kostraRecordInTest("420400", 0, 600, -31)
+                        kostraRecordInTest("420400", 1, 590, 1),
+                        kostraRecordInTest("420400", 1, 600, -31)
                     )
                 ),
                 ForAllRowItem(
                     "driftUtgifter + driftInntekter within range, upper bound",
                     listOf(
-                        kostraRecordInTest("420400", 0, 590, 31),
-                        kostraRecordInTest("420400", 0, 600, 1)
+                        kostraRecordInTest("420400", 1, 590, 31),
+                        kostraRecordInTest("420400", 1, 600, -1)
                     )
                 )
             ),

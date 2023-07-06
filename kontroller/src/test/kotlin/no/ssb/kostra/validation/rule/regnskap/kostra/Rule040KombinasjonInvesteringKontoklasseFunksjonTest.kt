@@ -15,22 +15,22 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             sut = Rule040KombinasjonInvesteringKontoklasseFunksjon(listOf("800")),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = true, funksjon matching, belop matching",
+                    "isBevilgningInvesteringRegnskap = true, funksjon match, belop match",
                     kostraRecordsInTest("0", "800", "1"),
                     expectedErrorMessage = "Korrigér ugyldig funksjon '800' i " +
                             "investeringsregnskapet til en gyldig funksjon i investeringsregnskapet eller " +
                             "overfør posteringen til driftsregnskapet."
                 ),
                 ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = false, funksjon matching, belop matching",
+                    "isBevilgningInvesteringRegnskap = false, funksjon match, belop match",
                     kostraRecordsInTest("1", "800", "1")
                 ),
                 ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = true, funksjon not matching, belop matching",
+                    "isBevilgningInvesteringRegnskap = true, funksjon mismatch, belop match",
                     kostraRecordsInTest("0", "801", "1")
                 ),
                 ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = true, funksjon matching, belop not matching",
+                    "isBevilgningInvesteringRegnskap = true, funksjon match, belop mismatch",
                     kostraRecordsInTest("0", "800", "0")
                 )
             ),

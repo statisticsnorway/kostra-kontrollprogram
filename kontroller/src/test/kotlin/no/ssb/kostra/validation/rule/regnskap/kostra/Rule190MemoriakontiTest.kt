@@ -18,7 +18,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
             sut = Rule190Memoriakonti(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop matching #1",
+                    "isBalanseRegnskap = true, kapittel match, kapittel #2 match, sum belop match #1",
                     listOf(
                         kostraRecordInTest("0B", "9100", "000", "100"),
                         kostraRecordInTest("0B", "9999", "990", "-131")
@@ -27,7 +27,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                             "og motkonto for memoriakontiene (-131) går i 0. (margin på +/- 10')"
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop matching #2",
+                    "isBalanseRegnskap = true, kapittel match, kapittel #2 match, sum belop match #2",
                     listOf(
                         kostraRecordInTest("0B", "9100", "000", "-100"),
                         kostraRecordInTest("0B", "9999", "990", "131")
@@ -36,35 +36,35 @@ class Rule190MemoriakontiTest : BehaviorSpec({
                             "og motkonto for memoriakontiene (131) går i 0. (margin på +/- 10')"
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = false, kapittel matching, kapittel #2 matching, sum belop matching",
+                    "isBalanseRegnskap = false, kapittel match, kapittel #2 match, sum belop match",
                     listOf(
                         kostraRecordInTest("0A", "9100", "000", "100"),
                         kostraRecordInTest("0A", "9999", "990", "-1000")
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel not matching #1, kapittel #2 matching, sum belop not matching",
+                    "isBalanseRegnskap = true, kapittel mismatch #1, kapittel #2 match, sum belop mismatch",
                     listOf(
                         kostraRecordInTest("0B", "9099", "000", "100"),
                         kostraRecordInTest("0B", "10000", "990", "-10")
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel not matching #2, kapittel #2 matching, sum belop not matching",
+                    "isBalanseRegnskap = true, kapittel mismatch #2, kapittel #2 match, sum belop mismatch",
                     listOf(
                         kostraRecordInTest("0B", "10000", "000", "100"),
                         kostraRecordInTest("0B", "9099", "990", "-10")
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop not matching #1",
+                    "isBalanseRegnskap = true, kapittel match, kapittel #2 match, sum belop mismatch #1",
                     listOf(
                         kostraRecordInTest("0B", "9100", "000", "130"),
                         kostraRecordInTest("0B", "9999", "990", "-100")
                     )
                 ),
                 ForAllRowItem(
-                    "isBalanseRegnskap = true, kapittel matching, kapittel #2 matching, sum belop not matching #2",
+                    "isBalanseRegnskap = true, kapittel match, kapittel #2 match, sum belop mismatch #2",
                     listOf(
                         kostraRecordInTest("0B", "9100", "000", "-130"),
                         kostraRecordInTest("0B", "9999", "990", "100")

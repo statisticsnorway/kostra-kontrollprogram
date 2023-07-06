@@ -18,55 +18,53 @@ class Rule143AvskrivningerTest : BehaviorSpec({
             sut = Rule143Avskrivninger(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop matching #1",
+                    "isBevilgningDriftRegnskap = true, funksjon match, art match, sum belop match #1",
                     listOf(
                         kostraRecordInTest("1", "041 ", "590", "100"),
                         kostraRecordInTest("1", "045 ", "990", "-131")
                     ),
-                    expectedErrorMessage = "Korrigér i fila slik at differansen (-31) " +
-                            "mellom art 590 (100) stemmer overens med art " +
-                            "990 (-131) (margin på +/- 30')"
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (-31) mellom art 590 (100) stemmer " +
+                            "overens med art 990 (-131) (margin på +/- 30')"
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop matching #2",
+                    "isBevilgningDriftRegnskap = true, funksjon match, art match, sum belop match #2",
                     listOf(
                         kostraRecordInTest("1", "041 ", "590", "-100"),
                         kostraRecordInTest("1", "045 ", "990", "131")
                     ),
-                    expectedErrorMessage = "Korrigér i fila slik at differansen (31) " +
-                            "mellom art 590 (-100) stemmer overens med art " +
-                            "990 (131) (margin på +/- 30')"
+                    expectedErrorMessage = "Korrigér i fila slik at differansen (31) mellom art 590 (-100) stemmer " +
+                            "overens med art 990 (131) (margin på +/- 30')"
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = false, funksjon matching, art matching, sum belop matching",
+                    "isBevilgningDriftRegnskap = false, funksjon match, art match, sum belop match",
                     listOf(
                         kostraRecordInTest("0", "041 ", "590", "100"),
                         kostraRecordInTest("0", "045 ", "990", "-131")
                     )
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon not matching, art matching, sum belop matching",
+                    "isBevilgningDriftRegnskap = true, funksjon mismatch, art match, sum belop match",
                     listOf(
                         kostraRecordInTest("1", "040 ", "590", "100"),
                         kostraRecordInTest("1", "046 ", "990", "-131")
                     )
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon matching, art not matching, sum belop matching",
+                    "isBevilgningDriftRegnskap = true, funksjon match, art mismatch, sum belop match",
                     listOf(
                         kostraRecordInTest("1", "041 ", "591", "100"),
                         kostraRecordInTest("1", "045 ", "991", "-131")
                     )
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop not matching #1",
+                    "isBevilgningDriftRegnskap = true, funksjon match, art match, sum belop mismatch #1",
                     listOf(
                         kostraRecordInTest("1", "041 ", "590", "100"),
                         kostraRecordInTest("1", "045 ", "990", "-130")
                     )
                 ),
                 ForAllRowItem(
-                    "isBevilgningDriftRegnskap = true, funksjon matching, art matching, sum belop not matching #2",
+                    "isBevilgningDriftRegnskap = true, funksjon match, art match, sum belop mismatch #2",
                     listOf(
                         kostraRecordInTest("1", "041 ", "590", "100"),
                         kostraRecordInTest("1", "045 ", "990", "-70")

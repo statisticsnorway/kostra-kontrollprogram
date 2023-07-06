@@ -79,7 +79,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
         forAll(
             *invalidLanefondDriftArtList.map {
                 row(
-                    "bevilgningregnskap = true, art and belop are matching, art = $it",
+                    "bevilgningregnskap = true, art and belop are match, art = $it",
                     "0A", "100 ", it, "1", true
                 )
             }.toTypedArray(),
@@ -88,11 +88,11 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                 "0X", "100 ", "280", "1", false
             ),
             row(
-                "bevilgningregnskap = true, art is not matching",
+                "bevilgningregnskap = true, art mismatch",
                 "0A", "100 ", "199", "1", false
             ),
             row(
-                "bevilgningregnskap = true, art is matching, belop is not matching",
+                "bevilgningregnskap = true, art match, belop mismatch",
                 "0A", "100 ", "280", "0", false
             )
         ) { description, skjema, funksjon, art, belop, expectError ->

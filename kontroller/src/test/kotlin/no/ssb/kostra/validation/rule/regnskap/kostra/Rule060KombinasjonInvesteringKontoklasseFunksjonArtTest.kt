@@ -23,15 +23,15 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArtTest : BehaviorSpec({
                 "0A", "1", "100 ", "729", "1", false
             ),
             row(
-                "art is not matching",
+                "art mismatch",
                 "0A", "0", "100 ", "728", "1", false
             ),
             row(
-                "funksjon is not matching",
+                "funksjon mismatch",
                 "0A", "0", "841 ", "729", "1", false
             ),
             row(
-                "belop is not matching",
+                "belop mismatch",
                 "0A", "0", "100 ", "729", "0", false
             )
         ) { description, skjema, kontoklasse, funksjon, art, belop, expectError ->

@@ -20,39 +20,39 @@ class Rule160AvskrivningerAndreFunksjonerTest : BehaviorSpec({
             sut = Rule160AvskrivningerAndreFunksjoner(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon matching #1, art matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon match #1, art match, belop match",
                     kostraRecordsInTest("420400","1", "800 ", "590", belop = "1"),
                     expectedErrorMessage = "Korrigér i fila slik at avskrivningene (1) føres på " +
                             "tjenestefunksjon og ikke på funksjonene ([800])"
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon matching #2, art matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon match #2, art match, belop match",
                     kostraRecordsInTest("420400","1", "899 ", "590", belop = "1"),
                     expectedErrorMessage = "Korrigér i fila slik at avskrivningene (1) føres på " +
                             "tjenestefunksjon og ikke på funksjonene ([899])"
                 ),
                 ForAllRowItem(
-                    "region = Oslo, isBevilgningDriftRegnskap = true, funksjon matching, art matching, belop matching",
+                    "region = Oslo, isBevilgningDriftRegnskap = true, funksjon match, art match, belop match",
                     kostraRecordsInTest("030101","1", "800 ", "590", belop = "1")
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = false, funksjon matching, art matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = false, funksjon match, art match, belop match",
                     kostraRecordsInTest("420400","0", "800 ", "590", belop = "1")
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon not matching #1, art matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon mismatch #1, art match, belop match",
                     kostraRecordsInTest("420400","1", "799 ", "590", belop = "1")
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon not matching #2, art matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon mismatch #2, art match, belop match",
                     kostraRecordsInTest("420400","1", "900 ", "590", belop = "1")
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon matching, art not matching, belop matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon match, art mismatch, belop match",
                     kostraRecordsInTest("420400","1", "800 ", "591", belop = "1")
                 ),
                 ForAllRowItem(
-                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon matching, art matching, belop not matching",
+                    "region != Oslo, isBevilgningDriftRegnskap = true, funksjon match, art match, belop mismatch",
                     kostraRecordsInTest("420400","1", "800 ", "590", belop = "0")
                 )
             ),

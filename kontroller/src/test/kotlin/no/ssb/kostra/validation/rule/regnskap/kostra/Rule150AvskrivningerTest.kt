@@ -40,22 +40,22 @@ class Rule150AvskrivningerTest : BehaviorSpec({
                 false, Severity.ERROR
             ),
             row(
-                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon not matching #1, art matches, belop matches",
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon mismatch #1, art matches, belop matches",
                 kostraRecordInTest("420400", "0A", "1", "099 ", "590", "0"),
                 false, Severity.ERROR
             ),
             row(
-                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon not matching #2, art matches, belop matches",
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon mismatch #2, art matches, belop matches",
                 kostraRecordInTest("420400", "0A", "1", "800 ", "590", "0"),
                 false, Severity.ERROR
             ),
             row(
-                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art not matching, belop matches",
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art mismatch, belop matches",
                 kostraRecordInTest("420400", "0A", "1", "100 ", "591", "0"),
                 false, Severity.ERROR
             ),
             row(
-                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art matches, belop not matching",
+                "isOsloBydel = false, isBevilgningDriftRegnskap = true, funksjon matches, art matches, belop mismatch",
                 kostraRecordInTest("420400", "0A", "1", "100 ", "590", "1"),
                 false, Severity.ERROR
             )

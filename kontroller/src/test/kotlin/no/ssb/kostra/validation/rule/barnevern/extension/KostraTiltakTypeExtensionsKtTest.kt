@@ -15,7 +15,7 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
     Given("erPlasseringsTiltak") {
         forAll(
             row(
-                "kategori#kode not matching, expect false",
+                "kategori#kode mismatch, expect false",
                 tiltakTypeInTest,
                 false
             ),

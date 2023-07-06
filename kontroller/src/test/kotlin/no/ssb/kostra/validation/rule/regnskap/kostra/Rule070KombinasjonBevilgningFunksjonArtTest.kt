@@ -27,11 +27,11 @@ class Rule070KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                     kostraRecordsInTest("0A", "880 ", "530", "1")
                 ),
                 ForAllRowItem(
-                    "art not matching 530",
+                    "art mismatch 530",
                     kostraRecordsInTest("0A", "899 ", "529", "1")
                 ),
                 ForAllRowItem(
-                    "belop matching 0",
+                    "belop mismatch",
                     kostraRecordsInTest("0A", "899 ", "530", "0")
                 )
             ),

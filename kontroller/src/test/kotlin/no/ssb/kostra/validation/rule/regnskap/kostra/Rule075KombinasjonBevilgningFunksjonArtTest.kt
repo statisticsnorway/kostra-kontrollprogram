@@ -27,15 +27,15 @@ class Rule075KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                 "0X", "100 ", "870", "1", false
             ),
             row(
-                "bevilgningregnskap = true, art is not matching",
+                "bevilgningregnskap = true, art mismatch",
                 "0A", "100 ", "877", "1", false
             ),
             row(
-                "bevilgningregnskap = true, art is matching, funksjon is not matching",
+                "bevilgningregnskap = true, art match, funksjon mismatch",
                 "0A", REQUIRED_FUNCTION, "870", "1", false
             ),
             row(
-                "bevilgningregnskap = true, art, funksjon is matching, belop is not matching",
+                "bevilgningregnskap = true, art, funksjon match, belop mismatch",
                 "0A", "100 ", "870", "0", false
             )
         ) { description, skjema, funksjon, art, belop, expectError ->

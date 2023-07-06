@@ -28,7 +28,7 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
                     kostraRecordsInTest("0X", "089 ", "499")
                 ),
                 ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon != 089, art matching",
+                    "isBevilgningRegnskap = true, funksjon != 089, art match",
                     kostraRecordsInTest("0F", "088 ", "499")
                 ),
                 ForAllRowItem(

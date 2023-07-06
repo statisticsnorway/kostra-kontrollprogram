@@ -15,22 +15,22 @@ class Rule030KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             sut = Rule030KombinasjonDriftKontoklasseArt(listOf("285")),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "isBevilgningRegnskap = true, art matching, belop matching",
+                    "isBevilgningRegnskap = true, art match, belop match",
                     kostraRecordsInTest("1", "285", "1"),
                     expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: ('285') regnes å være " +
                             "ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om " +
                             "posteringen hører til i investeringsregnskapet."
                 ),
                 ForAllRowItem(
-                    "isBevilgningRegnskap = false, art matching, belop matching",
+                    "isBevilgningRegnskap = false, art match, belop match",
                     kostraRecordsInTest("0", "285", "1")
                 ),
                 ForAllRowItem(
-                    "isBevilgningRegnskap = true, art not matching, belop matching",
+                    "isBevilgningRegnskap = true, art mismatch, belop match",
                     kostraRecordsInTest("1", "284", "1")
                 ),
                 ForAllRowItem(
-                    "isBevilgningRegnskap = true, art matching, belop not matching",
+                    "isBevilgningRegnskap = true, art match, belop mismatch",
                     kostraRecordsInTest("1", "285", "0")
                 ),
             ),

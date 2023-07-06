@@ -11,7 +11,7 @@ class Rule011Kapittel(
     override fun validate(context: List<KostraRecord>) =
         if (kapittelList.isEmpty()) null
         else context
-            .filter { kostraRecord -> kapittelList.none { it == kostraRecord[FIELD_KAPITTEL] } }
+            .filter { kostraRecord -> kapittelList.none { it == kostraRecord.fieldAsString(FIELD_KAPITTEL) } }
             .map { kostraRecord ->
                 createValidationReportEntry(
                     messageText = """Fant ugyldig kapittel '${kostraRecord[FIELD_KAPITTEL]}'. 

@@ -14,7 +14,7 @@ class Rule070KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningRegnskap()
-                && kostraRecord[FIELD_FUNKSJON].trim() != "880"
+                && kostraRecord[FIELD_FUNKSJON] != "880"
                 && kostraRecord[FIELD_ART] == "530"
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->

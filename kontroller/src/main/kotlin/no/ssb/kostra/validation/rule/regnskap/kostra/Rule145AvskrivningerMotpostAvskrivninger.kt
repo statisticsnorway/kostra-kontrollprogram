@@ -19,7 +19,7 @@ class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>
     override fun validate(context: List<KostraRecord>) = context
         .filterNot { it.isOsloBydel() }
         .filter { it.isBevilgningDriftRegnskap() }
-        .filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
+        .filter { it[FIELD_FUNKSJON] == "860" && it[FIELD_ART] == "990" }
         .takeIf { it.any() }
         ?.let { avskrivningPosteringer ->
             Pair(

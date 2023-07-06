@@ -17,14 +17,14 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractRule<Lis
         .filterNot { it.isOsloBydel() }
         .filter {
             it.isBevilgningDriftRegnskap()
-                    && it[FIELD_FUNKSJON].trim() != "860"
+                    && it[FIELD_FUNKSJON] != "860"
                     && it[FIELD_ART] == "990"
                     && it.fieldAsIntOrDefault(FIELD_BELOP) != 0
         }
         .takeIf { it.any() }
         ?.let { kostraRecordList ->
             (kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
-                    kostraRecordList.map { it[FIELD_FUNKSJON].trim() })
+                    kostraRecordList.map { it[FIELD_FUNKSJON] })
                 .takeUnless { (motpostAvskrivninger, _) -> motpostAvskrivninger == 0 }
                 ?.let { (motpostAvskrivninger, funksjoner) ->
                     createSingleReportEntryList(

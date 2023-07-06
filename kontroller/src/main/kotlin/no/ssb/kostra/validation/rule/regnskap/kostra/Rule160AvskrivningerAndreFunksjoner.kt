@@ -23,7 +23,7 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractRule<List<KostraRecord>>(
         ?.let { kostraRecordList ->
             Pair(
                 kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
-                kostraRecordList.map { it[FIELD_FUNKSJON].trim() }
+                kostraRecordList.map { it[FIELD_FUNKSJON] }
             ).takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
                 ?.let { (avskrivninger, funksjoner) ->
                     createSingleReportEntryList(

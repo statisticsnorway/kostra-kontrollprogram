@@ -19,7 +19,7 @@ class Rule135Rammetilskudd : AbstractRule<List<KostraRecord>>(
         .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
-        ?.filter { it[FIELD_FUNKSJON].trim() == "840" && it[FIELD_ART] == "800" }
+        ?.filter { it[FIELD_FUNKSJON] == "840" && it[FIELD_ART] == "800" }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { rammeTilskudd -> rammeTilskudd < 0 }
         ?.let { rammeTilskudd ->

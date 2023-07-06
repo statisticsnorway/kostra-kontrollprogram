@@ -15,7 +15,7 @@ class Rule500Funksjon400(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isResultatRegnskap() }
-        .filter { it[FIELD_FUNKSJON].trim() == "400" }
+        .filter { it[FIELD_FUNKSJON] == "400" }
         .filter { it[FIELD_ORGNR] !in validOrgnrList }
         .map { kostraRecord ->
             createValidationReportEntry(

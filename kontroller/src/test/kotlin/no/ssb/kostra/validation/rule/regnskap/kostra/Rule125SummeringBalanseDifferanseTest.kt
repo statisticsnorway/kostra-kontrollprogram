@@ -1,228 +1,70 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule125SummeringBalanseDifferanseTest : BehaviorSpec({
-    Given("context") {
-        val sut = Rule125SummeringBalanseDifferanse()
-
-        forAll(
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0B",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+    include(
+        validationRuleTest(
+            sut = Rule125SummeringBalanseDifferanse(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "isBalanseRegnskap = true",
+                    listOf(
+                        kostraRecordInTest("0B", 10, 10),
+                        kostraRecordInTest("0B", 31, -21)
                     ),
-                    mapOf(
-                        FIELD_SKJEMA to "0B",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0B",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                    expectedErrorMessage = "Korrigér differansen (-11) mellom eiendeler (10) og gjeld " +
+                            "og egenkapital (-21) i fila (Differanser opptil ±10' godtas)"
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, negative aktiva",
+                    listOf(
+                        kostraRecordInTest("0B", 10, -10),
+                        kostraRecordInTest("0B", 31, -21)
                     ),
-                    mapOf(
-                        FIELD_SKJEMA to "0B",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0D",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
+                    expectedErrorMessage = "Korrigér differansen (-31) mellom eiendeler (-10) og gjeld " +
+                            "og egenkapital (-21) i fila (Differanser opptil ±10' godtas)"
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = true, positive gjeld",
+                    listOf(
+                        kostraRecordInTest("0B", 10, 10),
+                        kostraRecordInTest("0B", 31, 21)
                     ),
-                    mapOf(
-                        FIELD_SKJEMA to "0D",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
+                    expectedErrorMessage = "Korrigér differansen (31) mellom eiendeler (10) og gjeld " +
+                            "og egenkapital (21) i fila (Differanser opptil ±10' godtas)"
+                ),
+                ForAllRowItem(
+                    "isBalanseRegnskap = false",
+                    listOf(
+                        kostraRecordInTest("0A", 10, 10),
+                        kostraRecordInTest("0A", 31, -11)
                     )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0D",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0D",
-                        FIELD_KONTOKLASSE to "2",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0J",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0J",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0J",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0J",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0L",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0L",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0L",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0L",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0N",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0N",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0N",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0N",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0Q",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0Q",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0Q",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "10  ",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0Q",
-                        FIELD_KONTOKLASSE to "5",
-                        FIELD_KAPITTEL to "31  ",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            )
-        ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords()
-            val aktiva = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
-            val passiva = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
-            val balanseDifferanse = kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-
-            When("List is $recordList") {
-                verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
-                    expectError = expectError,
-                    expectedSeverity = Severity.ERROR,
-                    "Korrigér differansen ($balanseDifferanse) mellom eiendeler ($aktiva) og gjeld " +
-                            "og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)"
                 )
-            }
-        }
+            ),
+            expectedSeverity = Severity.ERROR,
+            useArguments = false
+        )
+    )
+}) {
+    companion object {
+        private fun kostraRecordInTest(
+            skjema: String,
+            kapittel: Int,
+            belop: Int
+        ) = mapOf(
+            FIELD_SKJEMA to skjema,
+            FIELD_KONTOKLASSE to "2",
+            FIELD_KAPITTEL to "$kapittel",
+            FIELD_BELOP to "$belop"
+        ).toKostraRecord()
     }
-})
+}

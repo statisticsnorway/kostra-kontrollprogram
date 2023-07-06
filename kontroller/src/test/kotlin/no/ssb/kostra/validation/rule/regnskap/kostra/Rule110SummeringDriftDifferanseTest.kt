@@ -19,13 +19,22 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
             sut = Rule110SummeringDriftDifferanse(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "all conditions match",
+                    "all conditions match, negative amount",
                     listOf(
                         kostraRecordInTest("420400", 1, 590, 1),
                         kostraRecordInTest("420400", 1, 600, -32)
                     ),
                     expectedErrorMessage = "Korrigér differansen (-31) mellom inntekter " +
                             "(-32) og utgifter (1) i driftsregnskapet"
+                ),
+                ForAllRowItem(
+                    "all conditions match, positive amount",
+                    listOf(
+                        kostraRecordInTest("420400", 1, 590, 32),
+                        kostraRecordInTest("420400", 1, 600, -1)
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (31) mellom inntekter " +
+                            "(-1) og utgifter (32) i driftsregnskapet"
                 ),
                 ForAllRowItem(
                     "isOsloBydel = true",
@@ -60,10 +69,17 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                             "(1) og utgifter (1) i driftsregnskapet"
                 ),
                 ForAllRowItem(
-                    "driftUtgifter + driftInntekter within range",
+                    "driftUtgifter + driftInntekter within range, lower bound",
                     listOf(
                         kostraRecordInTest("420400", 0, 590, 1),
-                        kostraRecordInTest("420400", 0, 600, -3)
+                        kostraRecordInTest("420400", 0, 600, -31)
+                    )
+                ),
+                ForAllRowItem(
+                    "driftUtgifter + driftInntekter within range, upper bound",
+                    listOf(
+                        kostraRecordInTest("420400", 0, 590, 31),
+                        kostraRecordInTest("420400", 0, 600, 1)
                     )
                 )
             ),

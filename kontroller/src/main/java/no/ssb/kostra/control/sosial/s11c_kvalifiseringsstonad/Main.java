@@ -50,15 +50,13 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
-        if (errorReport.isEmpty()) {
-            var validationResult = validateKvalifisering(fromArguments(arguments, true));
+        var validationResult = validateKvalifisering(fromArguments(arguments, true));
 
-            validationResult.getReportEntries().stream()
-                    .map(ConversionUtils::toErrorReportEntry)
-                    .forEach(errorReport::addEntry);
+        validationResult.getReportEntries().stream()
+                .map(ConversionUtils::toErrorReportEntry)
+                .forEach(errorReport::addEntry);
 
-            errorReport.setCount(validationResult.getNumberOfControls());
-        }
+        errorReport.setCount(validationResult.getNumberOfControls());
 
         // Kontroller ferdig
         // Lager statistikkrapport

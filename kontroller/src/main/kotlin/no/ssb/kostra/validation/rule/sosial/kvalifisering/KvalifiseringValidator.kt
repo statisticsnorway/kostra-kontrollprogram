@@ -20,6 +20,7 @@ object KvalifiseringValidator {
         kostraRecords = arguments
             .getInputContentAsStringList()
             .withIndex()
+            .filter { (_, line) -> line.length == fieldDefinitions.last().to }
             .map { (index, recordString) ->
                 recordString.toKostraRecord(
                     index = index + 1,

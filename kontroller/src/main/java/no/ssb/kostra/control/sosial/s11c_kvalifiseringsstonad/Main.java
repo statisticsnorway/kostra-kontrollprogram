@@ -50,7 +50,7 @@ public class Main {
         // filbeskrivelsesskontroller
         ControlFilbeskrivelse.doControl(records, errorReport);
 
-        //if (errorReport.isEmpty()) {
+        if (errorReport.isEmpty()) {
             var validationResult = validateKvalifisering(fromArguments(arguments, true));
 
             validationResult.getReportEntries().stream()
@@ -58,7 +58,7 @@ public class Main {
                     .forEach(errorReport::addEntry);
 
             errorReport.setCount(validationResult.getNumberOfControls());
-        //}
+        }
 
         // Kontroller ferdig
         // Lager statistikkrapport

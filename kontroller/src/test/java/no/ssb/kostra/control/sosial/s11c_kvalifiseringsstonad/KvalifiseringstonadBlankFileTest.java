@@ -30,7 +30,7 @@ class KvalifiseringstonadBlankFileTest {
         assertEquals(Constants.CRITICAL_ERROR, errorReport.getErrorType());
     }
 
-    //@Test
+    @Test
     void testDoControlWithNoFile() {
         // Mocking a blank file
         var inputFileContent = "";
@@ -48,7 +48,7 @@ class KvalifiseringstonadBlankFileTest {
         assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
     }
 
-    //@Test
+    @Test
     void testDoControlWithBlankFile() {
         // Mocking a blank file
         var inputFileContent = " ";

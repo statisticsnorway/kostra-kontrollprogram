@@ -15,7 +15,7 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningRegnskap()
                 && kostraRecord[FIELD_ART] in qualifyingArtCodes
-                && kostraRecord[FIELD_FUNKSJON] != REQUIRED_FUNCTION
+                && kostraRecord[FIELD_FUNKSJON].trim() != REQUIRED_FUNCTION
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0
     }.map { kostraRecord ->
         createValidationReportEntry(
@@ -27,6 +27,6 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
 
     companion object {
         internal val qualifyingArtCodes = setOf("870", "871", "872", "873", "875", "876")
-        internal const val REQUIRED_FUNCTION = "800 "
+        internal const val REQUIRED_FUNCTION = "800"
     }
 }

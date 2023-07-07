@@ -6,12 +6,14 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
-import no.ssb.kostra.validation.rule.regnskap.kostra.*
+import no.ssb.kostra.validation.rule.regnskap.kostra.Rule025KombinasjonDriftKontoklasseArt
+import no.ssb.kostra.validation.rule.regnskap.kostra.Rule040KombinasjonInvesteringKontoklasseFunksjon
+import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteringKontoklasseArt
 
 class KvartalKostra(
     arguments: KotlinArguments,
 
-) : AbstractValidator(arguments) {
+    ) : AbstractValidator(arguments) {
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -51,8 +53,7 @@ class KvartalKostra(
                     RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
                 )
             }
-        )
-            return emptyList()
+        ) return emptyList()
 
         val result = ArrayList<String>()
         when (arguments.skjema) {
@@ -87,7 +88,6 @@ class KvartalKostra(
         // Kun gyldig i drift og skal fjernes fra investering
         return listOf("800 ", "840 ", "860 ")
     }
-
 
 
     // Kapitler

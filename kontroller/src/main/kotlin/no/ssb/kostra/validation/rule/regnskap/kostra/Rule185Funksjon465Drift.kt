@@ -18,7 +18,7 @@ class Rule185Funksjon465Drift : AbstractRule<List<KostraRecord>>(
             !it.isOsloBydel()
                     && it.isFylkeRegnskap()
                     && it.isBevilgningDriftRegnskap()
-                    && it[FIELD_FUNKSJON] == "465 "
+                    && it[FIELD_FUNKSJON].trim() == "465"
         }
         .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

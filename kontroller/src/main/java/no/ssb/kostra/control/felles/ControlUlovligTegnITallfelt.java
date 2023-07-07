@@ -6,6 +6,9 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 @SuppressWarnings("SpellCheckingInspection")
 public final class ControlUlovligTegnITallfelt {
 
+    private ControlUlovligTegnITallfelt() {
+    }
+
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry, final String fieldValue) {
 

@@ -20,7 +20,7 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <kotestVersion>5.6.2</kotestVersion>
         <jackson.version>2.15.2</jackson.version>
     </properties>

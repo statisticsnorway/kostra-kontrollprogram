@@ -32,44 +32,7 @@ package no.ssb.kostra.utils;
 // package corejava;
 
 public class Format {
-    /**
-     * Formats the number following printf conventions.
-     * Main limitation: Can only handle one format parameter at a time
-     * Use multiple Format objects to format more than one number
-     *
-     * @param s the format string following printf conventions
-     *          The string has a prefix, a format code and a suffix. The prefix and suffix
-     *          become part of the formatted output. The format code directs the
-     *          formatting of the (single) parameter to be formatted. The code has the
-     *          following structure
-     *          <ul>
-     *          <li> a % (required)
-     *          <li> a modifier (optional)
-     *          <dl>
-     *          <dt> + <dd> forces display of + for positive numbers
-     *          <dt> 0 <dd> show leading zeroes
-     *          <dt> - <dd> align left in the field
-     *          <dt> space <dd> prepend a space in front of positive numbers
-     *          <dt> # <dd> use "alternate" format. Add 0 or 0x for octal or hexadecimal numbers. Don't suppress trailing zeroes in general floating point format.
-     *          </dl>
-     *          <li> an integer denoting field width (optional)
-     *          <li> a period followed by an integer denoting precision (optional)
-     *          <li> a format descriptor (required)
-     *          <dl>
-     *          <dt>f <dd> floating point number in fixed format
-     *          <dt>e, E <dd> floating point number in exponential notation (scientific format). The E format results in an uppercase E for the exponent (1.14130E+003), the e format in a lowercase e.
-     *          <dt>g, G <dd> floating point number in general format (fixed format for small numbers, exponential format for large numbers). Trailing zeroes are suppressed. The G format results in an uppercase E for the exponent (if any), the g format in a lowercase e.
-     *          <dt>d, i <dd> integer in decimal
-     *          <dt>x <dd> integer in hexadecimal
-     *          <dt>o <dd> integer in octal
-     *          <dt>s <dd> string
-     *          <dt>c <dd> character
-     *          </dl>
-     *          </ul>
-     * @throws IllegalArgumentException if bad format
-     */
 
-    @SuppressWarnings("unused")
     public Format(String s) {
         width = 0;
         precision = -1;
@@ -82,7 +45,6 @@ public class Format {
         left_align = false;
         fmt = ' ';
 
-        int state = 0;
         int length = s.length();
         int parse_state = 0;
         // 0 = prefix, 1 = flags, 2 = width, 3 = precision,
@@ -145,29 +107,6 @@ public class Format {
             post = s.substring(i, length);
     }
 
-
-    /**
-     * no extra param, just returns format string ..included for uniformity
-     *
-     * @param fmt the format string
-     */
-
-    public static String sprintf(String fmt) {
-        return (fmt);
-    }
-
-    /**
-     * prints a formatted double to string according to formatting info
-     * Like C sprintf, except for only one to-print parameter
-     *
-     * @param fmt the format string
-     * @param x   the double to print
-     */
-
-    public static String sprintf(String fmt, double x) {
-        return (new Format(fmt).form(x));
-    }
-
     /**
      * prints a formatted integer to string according to formatting info
      * Like C sprintf, except for only one to-print parameter
@@ -175,33 +114,8 @@ public class Format {
      * @param fmt the format string
      * @param x   the integer to print
      */
-
     public static String sprintf(String fmt, int x) {
         return (new Format(fmt).form(x));
-    }
-
-    /**
-     * prints a formatted string to string according to formatting info
-     * Like C sprintf, except for only one to-print parameter
-     *
-     * @param fmt the format string
-     * @param s   the string to print
-     */
-
-    public static String sprintf(String fmt, String s) {
-        return (new Format(fmt).form(s));
-    }
-
-    /**
-     * prints a formatted char to string according to formatting info
-     * Like C sprintf, except for only one to-print parameter
-     *
-     * @param fmt the format string
-     * @param c   the string to print
-     */
-
-    public static String sprintf(String fmt, char c) {
-        return (new Format(fmt).form(c));
     }
 
     /**
@@ -211,7 +125,6 @@ public class Format {
      * @param fmt the format string
      * @param x   the double to print
      */
-
     public static void print(java.io.PrintStream s, String fmt, double x) {
         s.print(new Format(fmt).form(x));
     }
@@ -234,7 +147,6 @@ public class Format {
      * @param fmt the format string
      * @param x   the character to
      */
-
     public static void print(java.io.PrintStream s, String fmt, char x) {
         s.print(new Format(fmt).form(x));
     }
@@ -245,25 +157,8 @@ public class Format {
      * @param s a PrintStream, fmt the format string
      * @param x a string that represents the digits to print
      */
-
     public static void print(java.io.PrintStream s, String fmt, String x) {
         s.print(new Format(fmt).form(x));
-    }
-
-    /**
-     * Converts a string of digits (decimal, octal or hex) to an integer
-     * changed 20010109 tay: Doesn't take leading zero-numbers as octal any more
-     *
-     * @param s a string
-     * @return the numeric value of the prefix of s representing a base 10 integer
-     */
-
-    public static int atoi(String s) {
-        String ss = s.trim();
-        String st;
-        if ((ss.length() > 2) && (ss.charAt(0) == '0') && ((ss.charAt(1) == 'x') || (ss.charAt(1) == 'X'))) st = ss;
-        else st = stripNumStr(ss);
-        return (int) atol(st);
     }
 
     /**
@@ -272,18 +167,6 @@ public class Format {
      * @param s a string
      * @return the numeric value of the prefix of s representing a base 10 integer
      */
-
-    public static long atol(String s) {
-        int i = 0;
-
-        while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
-        if (i < s.length() && s.charAt(i) == '0') {
-            if (i + 1 < s.length() && (s.charAt(i + 1) == 'x' || s.charAt(i + 1) == 'X'))
-                return parseLong(s.substring(i + 2), 16);
-            else return parseLong(s, 8);
-        } else return parseLong(s, 10);
-    }
-
     private static long parseLong(String s, int base) {
         int i = 0;
         int sign = 1;
@@ -316,7 +199,6 @@ public class Format {
      *
      * @param s a string
      */
-
     @SuppressWarnings("unused")
     public static double atof(String s) {
         int i = 0;
@@ -361,7 +243,6 @@ public class Format {
      * @return the formatted string
      * @throws IllegalArgumentException if bad argument
      */
-
     public String form(double x) {
         String r;
         if (precision < 0) precision = 6;
@@ -385,7 +266,6 @@ public class Format {
      * @param x the number to format
      * @return the formatted string
      */
-
     public String form(long x) {
         String r;
         int s = 0;
@@ -553,7 +433,7 @@ public class Format {
         }
         return r;
     }
-
+k
     private String pad(String r) {
         String p = repeat(' ', width - r.length());
         if (left_align) return pre + r + p + post;

@@ -50,8 +50,6 @@ public class Main {
 
         final var clTSSSTF = List.of("TOT", "SEP", "SAM", "SAK", "TILB", "FLY");
         final var clTBE = List.of("TOT", "BEGGE", "EN");
-        final var clO = List.of("OPPM");
-        // List<String> clT = List.of("TOT"); // TODO
         final var clT12 = List.of("TOT", "1", "2");
         final var clT123 = List.of("TOT", "1", "2", "3");
         final var clT1234 = List.of("TOT", "1", "2", "3", "4");

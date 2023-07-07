@@ -18,7 +18,7 @@ class Rule170Funksjon290Investering : AbstractRule<List<KostraRecord>>(
             !it.isOsloBydel()
                     && it.isKommuneRegnskap()
                     && it.isBevilgningInvesteringRegnskap()
-                    && it[FIELD_FUNKSJON] == "290"
+                    && it[FIELD_FUNKSJON].trim() == "290"
         }
         .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

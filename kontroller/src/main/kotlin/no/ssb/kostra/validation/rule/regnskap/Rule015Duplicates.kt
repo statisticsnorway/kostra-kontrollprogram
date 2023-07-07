@@ -9,7 +9,7 @@ class Rule015Duplicates(
 ) : AbstractRule<List<KostraRecord>>("Kontroll 015 : Dubletter", Severity.WARNING) {
     override fun validate(context: List<KostraRecord>) = context
         .groupBy { kostraRecord ->
-            fieldNameTitlePairList.first.joinToString(" * ") { fieldName -> kostraRecord[fieldName] }
+            fieldNameTitlePairList.first.joinToString(" * ") { fieldName -> kostraRecord[fieldName].trim() }
         }
         .filter { (_, group) -> group.size > 1 }
         .takeIf { it.any() }

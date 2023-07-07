@@ -8,7 +8,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule005Kvartal : AbstractRule<List<KostraRecord>>("Kontroll 005 : Kvartal", Severity.ERROR) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
-        kostraRecord.fieldAsString(FIELD_KVARTAL) != arguments.kvartal
+        kostraRecord[FIELD_KVARTAL] != arguments.kvartal
     }.map { kostraRecord ->
         createValidationReportEntry(
             messageText = "Fant ugyldig kvartal '${kostraRecord[FIELD_KVARTAL]}'. " +

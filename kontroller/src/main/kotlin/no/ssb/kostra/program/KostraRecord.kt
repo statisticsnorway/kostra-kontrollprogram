@@ -10,7 +10,7 @@ data class KostraRecord(
     val valuesByName: Map<String, String> = emptyMap(),
     val fieldDefinitionByName: Map<String, FieldDefinition> = emptyMap()
 ) {
-    operator fun get(field: String) = fieldAsString(field).trim()
+    operator fun get(field: String) = fieldAsString(field)
 
     fun fieldAsString(field: String): String = valuesByName.getOrElse(field) {
         throw NoSuchFieldException("fieldAsString(): $field is missing")

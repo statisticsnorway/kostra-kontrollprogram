@@ -27,6 +27,6 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
 
     companion object {
         internal val qualifyingArtCodes = setOf("870", "871", "872", "873", "875", "876")
-        internal const val REQUIRED_FUNCTION = "800"
+        internal const val REQUIRED_FUNCTION = "800 "
     }
 }

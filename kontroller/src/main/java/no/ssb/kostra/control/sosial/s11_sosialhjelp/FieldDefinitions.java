@@ -14,7 +14,7 @@ import static no.ssb.kostra.felles.Constants.STRING_TYPE;
 import static no.ssb.kostra.felles.Constants.TEXTBOX_VIEWTYPE;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class FieldDefinitions {
+public final class FieldDefinitions {
     private FieldDefinitions(){}
 
     public static List<FieldDefinition> getFieldDefinitions() {

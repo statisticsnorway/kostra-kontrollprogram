@@ -20,7 +20,9 @@ import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+    private Main() {}
+
     private static String createLinenumber(final Integer l, final int line, final String record) {
         return "Linje " + Format.sprintf("%0" + l + "d", line) + " : <pre>" + record + "</pre>";
     }

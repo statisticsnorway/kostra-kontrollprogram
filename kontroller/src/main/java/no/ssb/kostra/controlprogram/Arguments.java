@@ -19,7 +19,7 @@ import static no.ssb.kostra.controlprogram.ArgumentConstants.UNIT_ORGNR_ABBR;
 import static no.ssb.kostra.controlprogram.ArgumentConstants.YEAR_ABBR;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Arguments {
+public final class Arguments {
     private String skjema = " ";
     private String aargang = "    ";
     private String kvartal = " ";

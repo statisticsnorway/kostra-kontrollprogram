@@ -5,7 +5,7 @@ import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlHarVedlegg {
+public final class ControlHarVedlegg {
 
     private ControlHarVedlegg() {
     }

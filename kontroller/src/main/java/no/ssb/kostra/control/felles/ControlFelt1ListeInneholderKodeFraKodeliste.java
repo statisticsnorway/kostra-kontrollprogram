@@ -11,7 +11,10 @@ import java.util.List;
 import static no.ssb.kostra.control.felles.Comparator.between;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlFelt1ListeInneholderKodeFraKodeliste {
+public final class ControlFelt1ListeInneholderKodeFraKodeliste {
+
+    private ControlFelt1ListeInneholderKodeFraKodeliste() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final String controlCategoryTitle,

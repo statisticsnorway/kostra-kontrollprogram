@@ -7,7 +7,10 @@ import no.ssb.kostra.felles.KostraRecord;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ControlFelt1LikSumAvListe {
+public final class ControlFelt1LikSumAvListe {
+
+    private ControlFelt1LikSumAvListe() {
+    }
 
     public static boolean doControl(
             final KostraRecord record, final ErrorReport errorReport,

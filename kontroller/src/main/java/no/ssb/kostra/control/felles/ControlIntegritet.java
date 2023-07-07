@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlIntegritet {
+public final class ControlIntegritet {
+
+    private ControlIntegritet() {
+    }
+
     public static boolean controlSkjema(final ErrorReport errorReport, final List<KostraRecord> regnskap) {
         return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
                 "3. Feltkontroller",

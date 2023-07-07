@@ -11,7 +11,10 @@ import java.util.Map;
 
 // TODO full gjennomgang av Definitions mot kravspek
 @SuppressWarnings("SpellCheckingInspection")
-public class Definitions {
+public final class Definitions {
+
+    private Definitions() {
+    }
 
     public static Map<String, List<String>> getKontoklasseAsMap(final String skjema) {
         final var map = new HashMap<String, List<String>>();

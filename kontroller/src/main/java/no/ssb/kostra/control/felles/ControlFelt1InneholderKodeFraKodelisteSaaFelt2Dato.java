@@ -6,7 +6,10 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato {
+public final class ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato {
+
+    private ControlFelt1InneholderKodeFraKodelisteSaaFelt2Dato() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,

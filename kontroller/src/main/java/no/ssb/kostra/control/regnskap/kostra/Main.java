@@ -23,7 +23,8 @@ import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+
     private static final String KONTOKLASSE = "kontoklasse";
     private static final String FUNKSJON_KAPITTEL = "funksjon_kapittel";
     private static final String ART_SEKTOR = "art_sektor";

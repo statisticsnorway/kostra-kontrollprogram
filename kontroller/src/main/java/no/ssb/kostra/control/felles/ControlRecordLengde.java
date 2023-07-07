@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlRecordLengde {
+public final class ControlRecordLengde {
+
+    private ControlRecordLengde() {
+    }
 
     public static boolean doControl(
             final List<String> s, final ErrorReport errorReport, final int length) {

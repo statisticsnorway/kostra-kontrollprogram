@@ -9,7 +9,10 @@ import java.util.List;
 import static no.ssb.kostra.control.felles.Comparator.between;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlFelt1ListeUlovligTegnITallfelt {
+public final class ControlFelt1ListeUlovligTegnITallfelt {
+
+    private ControlFelt1ListeUlovligTegnITallfelt() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final String title,

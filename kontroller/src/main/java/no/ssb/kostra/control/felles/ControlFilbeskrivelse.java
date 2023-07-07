@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlFilbeskrivelse {
+public final class ControlFilbeskrivelse {
+
+    private ControlFilbeskrivelse() {
+    }
 
     private static String createLinenumber(final Integer l, final int line) {
         return "Linjenummer " + Format.sprintf("%0" + l + "d", line);

@@ -2,8 +2,10 @@ package no.ssb.kostra.controlprogram;
 
 import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class ArgumentConstants {
+public final class ArgumentConstants {
+
+    private ArgumentConstants() {
+    }
 
     public static final char SCHEMA_ABBR = 's';
     public static final char YEAR_ABBR = 'y';

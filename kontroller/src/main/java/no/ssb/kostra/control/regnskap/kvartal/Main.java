@@ -17,7 +17,9 @@ import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.kvartal.Definitions.getKontoklasseAsList;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+
+    private Main() {}
 
     public static ErrorReport doControls(final Arguments args) {
 

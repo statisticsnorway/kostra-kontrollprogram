@@ -36,7 +36,8 @@ import static no.ssb.kostra.control.sosial.felles.ControlSosial.dnr2fnr;
 
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+
     private static final String ALDER = "ALDER";
     private static final String FNR_OK = "FNR_OK";
     private static final String SAKSBEHANDLER = "SAKSBEHANDLER";

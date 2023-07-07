@@ -3,7 +3,10 @@ package no.ssb.kostra.control.felles;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 
-public class ControlFelt1Boolsk {
+public final class ControlFelt1Boolsk {
+
+    private ControlFelt1Boolsk() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,

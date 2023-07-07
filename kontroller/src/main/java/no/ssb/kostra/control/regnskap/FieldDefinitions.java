@@ -9,7 +9,7 @@ import static no.ssb.kostra.felles.Constants.INTEGER_TYPE;
 import static no.ssb.kostra.felles.Constants.STRING_TYPE;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class FieldDefinitions {
+public final class FieldDefinitions {
     private FieldDefinitions() {
     }
 

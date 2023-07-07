@@ -7,7 +7,11 @@ import no.ssb.kostra.utils.Fnr;
 import static no.ssb.kostra.control.felles.Comparator.isValidDate;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlFodselsnummerDUFnummer {
+public final class ControlFodselsnummerDUFnummer {
+
+    private ControlFodselsnummerDUFnummer() {
+    }
+
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,
             final String fnr, final String duf) {

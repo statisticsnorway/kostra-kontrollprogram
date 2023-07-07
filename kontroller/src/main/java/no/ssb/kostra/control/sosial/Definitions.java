@@ -3,7 +3,7 @@ package no.ssb.kostra.control.sosial;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Definitions {
+public final class Definitions {
     private Definitions() {
     }
 

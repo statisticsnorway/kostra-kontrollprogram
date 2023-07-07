@@ -4,6 +4,7 @@ package no.ssb.kostra.controlprogram;
  * A GetOptDesc describes one argument that may be accepted by the program.
  */
 public class GetOptDesc {
+
     /**
      * The short-form option letter
      */

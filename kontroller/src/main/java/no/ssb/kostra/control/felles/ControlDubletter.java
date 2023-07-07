@@ -11,7 +11,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlDubletter {
+public final class ControlDubletter {
+
+    private ControlDubletter() {
+    }
 
     public static boolean doControl(
             final List<KostraRecord> recordList, final ErrorReport errorReport,

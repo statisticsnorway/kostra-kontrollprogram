@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-@SuppressWarnings("SpellCheckingInspection")
-public class Utils {
+public final class Utils {
+
+    private Utils() {
+    }
 
     public static String createLinenumber(final int l, final KostraRecord record) {
         return "Linje " + Format.sprintf("%0" + l + "d", record.getLine()) + " : " + record.getRecord().trim();

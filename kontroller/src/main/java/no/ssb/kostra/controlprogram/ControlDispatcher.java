@@ -1,21 +1,20 @@
 package no.ssb.kostra.controlprogram;
 
-import lombok.experimental.UtilityClass;
 import no.ssb.kostra.control.barnevern.s15.BarnevernMain;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.program.util.ConversionUtils;
-import no.ssb.kostra.validation.report.ValidationReportEntry;
 
 import java.util.List;
 
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
-import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
-@UtilityClass
-public class ControlDispatcher {
+public final class ControlDispatcher {
+
+    private ControlDispatcher() {
+    }
 
     public static ErrorReport doControls(final Arguments arguments) {
 

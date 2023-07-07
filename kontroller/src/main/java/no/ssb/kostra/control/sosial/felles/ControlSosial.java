@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlSosial {
+public final class ControlSosial {
+
+    private ControlSosial() {}
 
     public static String dnr2fnr(final String dnr) {
         var day = Format.parseInt(dnr.substring(0, 2));

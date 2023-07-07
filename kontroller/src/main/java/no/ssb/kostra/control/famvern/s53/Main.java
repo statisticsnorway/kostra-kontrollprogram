@@ -14,7 +14,9 @@ import no.ssb.kostra.felles.KostraRecord;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+    private Main() {}
+
     private static String createFylkeNr(final String fylkenr) {
         return "Fylkenummer ".concat(fylkenr);
     }

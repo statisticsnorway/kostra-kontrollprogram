@@ -22,7 +22,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+    private Main() {}
+
     private static String createKontorNr(String kontornr) {
         return "Kontornummer ".concat(kontornr);
     }

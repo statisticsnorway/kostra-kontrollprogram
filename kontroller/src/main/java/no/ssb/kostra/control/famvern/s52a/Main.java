@@ -28,10 +28,8 @@ import java.util.stream.Stream;
 import static no.ssb.kostra.control.felles.Comparator.outsideOf;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
-    private Main() {
-        throw new IllegalStateException("Static processing class");
-    }
+public final class Main {
+    private Main() {}
 
     private static String createKontorNr(String kontornr) {
         return "Kontornummer ".concat(kontornr);

@@ -12,7 +12,9 @@ import static no.ssb.kostra.control.felles.Comparator.between;
 import static no.ssb.kostra.control.felles.Comparator.isCodeInCodeList;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlRegnskap {
+public final class ControlRegnskap {
+
+    private ControlRegnskap() {}
 
     public static int getSumUtgifter(
             final Arguments arguments, final List<KostraRecord> regnskap,

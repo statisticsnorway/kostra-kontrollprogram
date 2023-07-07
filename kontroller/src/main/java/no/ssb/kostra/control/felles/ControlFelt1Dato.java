@@ -5,7 +5,10 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 
 import static no.ssb.kostra.control.felles.Comparator.isValidDate;
 
-public class ControlFelt1Dato {
+public final class ControlFelt1Dato {
+
+    private ControlFelt1Dato() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,

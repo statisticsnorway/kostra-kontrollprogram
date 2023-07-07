@@ -15,7 +15,10 @@ import no.ssb.kostra.utils.Format;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+
+    private Main() {}
+
     private static String createLinenumber(final Integer l, final int line) {
         return "Linje " + Format.sprintf("%0" + l + "d", line);
     }

@@ -19,8 +19,10 @@ import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
 
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Main {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public final class Main {
+
+    private Main() {}
+
     // Definitions
     public static Map<String, String> getKontoklasseAsMap(final String skjema) {
         return switch (skjema) {

@@ -13,8 +13,8 @@ import java.util.List;
 import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 import static no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringValidator.validateKvalifisering;
 
-@SuppressWarnings("SpellCheckingInspection")
-public class Main {
+public final class Main {
+
     // Konstanter
     private static final String ALDER = "ALDER";
     private static final String FNR_OK = "FNR_OK";

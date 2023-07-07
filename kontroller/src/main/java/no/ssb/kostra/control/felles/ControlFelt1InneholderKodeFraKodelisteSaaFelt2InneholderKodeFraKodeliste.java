@@ -5,7 +5,10 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 
 import java.util.List;
 
-public class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste {
+public final class ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste {
+
+    private ControlFelt1InneholderKodeFraKodelisteSaaFelt2InneholderKodeFraKodeliste() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,

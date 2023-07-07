@@ -8,7 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 import static no.ssb.kostra.control.felles.Comparator.isValidDate;
 
-public class ControlFelt1DatoSaaFelt2Dato {
+public final class ControlFelt1DatoSaaFelt2Dato {
+
+    private ControlFelt1DatoSaaFelt2Dato() {
+    }
 
     public static boolean doControl(
             final ErrorReport errorReport, final ErrorReportEntry errorReportEntry,

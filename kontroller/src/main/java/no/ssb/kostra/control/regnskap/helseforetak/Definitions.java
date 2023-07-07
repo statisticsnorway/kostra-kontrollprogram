@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class Definitions {
+public final class Definitions {
+
+    private Definitions() {
+    }
+
     public static List<String> getFunksjonKapittelAsList(final String skjema) {
         return switch (skjema) {
             case "0X" ->

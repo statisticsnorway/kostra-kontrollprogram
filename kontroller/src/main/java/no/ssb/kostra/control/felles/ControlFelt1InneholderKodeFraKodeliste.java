@@ -6,7 +6,11 @@ import no.ssb.kostra.felles.ErrorReportEntry;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlFelt1InneholderKodeFraKodeliste {
+public final class ControlFelt1InneholderKodeFraKodeliste {
+
+    private ControlFelt1InneholderKodeFraKodeliste() {
+    }
+
     public static boolean doControl(
             final ErrorReport errorReport,
             final ErrorReportEntry errorReportEntry,

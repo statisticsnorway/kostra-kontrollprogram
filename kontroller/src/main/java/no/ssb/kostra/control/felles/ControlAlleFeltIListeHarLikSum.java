@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ControlAlleFeltIListeHarLikSum {
+public final class ControlAlleFeltIListeHarLikSum {
+
+    private ControlAlleFeltIListeHarLikSum() {
+    }
 
     public static boolean doControl(
             final KostraRecord record, final ErrorReport errorReport,

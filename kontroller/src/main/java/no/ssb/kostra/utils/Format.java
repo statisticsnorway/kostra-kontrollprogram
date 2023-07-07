@@ -433,7 +433,7 @@ public class Format {
         }
         return r;
     }
-k
+
     private String pad(String r) {
         String p = repeat(' ', width - r.length());
         if (left_align) return pre + r + p + post;

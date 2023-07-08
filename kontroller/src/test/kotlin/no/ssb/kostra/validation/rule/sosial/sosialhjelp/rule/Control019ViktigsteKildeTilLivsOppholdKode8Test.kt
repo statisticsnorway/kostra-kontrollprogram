@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames

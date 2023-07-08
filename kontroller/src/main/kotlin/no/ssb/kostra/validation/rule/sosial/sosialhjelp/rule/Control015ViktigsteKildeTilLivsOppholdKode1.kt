@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
@@ -9,7 +9,7 @@ import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialRuleId
 
 class Control015ViktigsteKildeTilLivsOppholdKode1 : AbstractRule<List<KostraRecord>>(
     SosialRuleId.SOSIAL_K015_VKLO_ARBEIDSINNTEKT.title,

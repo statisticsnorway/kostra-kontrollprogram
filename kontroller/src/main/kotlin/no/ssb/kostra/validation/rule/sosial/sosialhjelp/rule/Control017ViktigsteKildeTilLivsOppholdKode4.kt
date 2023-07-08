@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
@@ -9,10 +9,10 @@ import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialRuleId
 
-class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.SOSIAL_K016_VKLO_KURS.title,
+class Control017ViktigsteKildeTilLivsOppholdKode4 : AbstractRule<List<KostraRecord>>(
+    SosialRuleId.SOSIAL_K017_VKLO_STIPEND.title,
     Severity.ERROR
 ) {
     override fun validate(
@@ -20,7 +20,7 @@ class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraReco
         arguments: KotlinArguments
     ): List<ValidationReportEntry>? = context
         .filter {
-            it[VKLO_COL_NAME] == "2"
+            it[VKLO_COL_NAME] == "4"
         }.filterNot {
             it[ARBSIT_COL_NAME] in validCodes
         }.takeIf {
@@ -40,6 +40,6 @@ class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraReco
         }
 
     companion object {
-        val validCodes = listOf("03", "05", "06")
+        val validCodes = listOf("03")
     }
 }

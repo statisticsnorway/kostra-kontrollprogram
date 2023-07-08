@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames
@@ -6,26 +6,28 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Control018ViktigsteKildeTilLivsOppholdKode6Test : BehaviorSpec({
+class Control020ViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleTest(
-            sut = Control018ViktigsteKildeTilLivsOppholdKode6(),
+            sut = Control020ViktigsteKildeTilLivsOppholdKode3(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "vkloCode = 0, arbsitCode = 00",
+                    "vkloCode = 0, trygdesitCode = 00",
                     kostraRecordInTest("0", "00")
                 ),
                 ForAllRowItem(
-                    "vkloCode = 6, arbsitCode = 09",
-                    kostraRecordInTest("6", "09")
+                    "vkloCode = 3, trygdesitCode = 10",
+                    kostraRecordInTest("3", "10")
                 ),
                 ForAllRowItem(
-                    "vkloCode = 6, arbsitCode = 00",
-                    kostraRecordInTest("6", "00"),
+                    "vkloCode = 3, trygdesitCode = 00",
+                    kostraRecordInTest("3", "00"),
                     expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
-                            "sosial-/NAV-kontoret er Introduksjonsstøtte. " +
+                            "sosial-/NAV-kontoret er Trygd/pensjon. " +
                             "Arbeidssituasjonen er '(00)', forventet én av '([" +
-                            "09=Introduksjonsordning" +
+                            "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, 06=Etterlattepensjon, " +
+                            "07=Alderspensjon, 09=Supplerende stønad (kort botid), 10=Annen trygd, " +
+                            "11=Arbeidsavklaringspenger" +
                             "])'. Feltet er obligatorisk å fylle ut."
                 )
             ),
@@ -36,11 +38,11 @@ class Control018ViktigsteKildeTilLivsOppholdKode6Test : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(
             vkloCode: String,
-            arbsitCode: String
+            trygdesitCode: String
         ) = SosialTestUtils.sosialKostraRecordInTest(
             mapOf(
                 SosialColumnNames.VKLO_COL_NAME to vkloCode,
-                SosialColumnNames.ARBSIT_COL_NAME to arbsitCode
+                SosialColumnNames.TRYGDESIT_COL_NAME to trygdesitCode
             )
         )
     }

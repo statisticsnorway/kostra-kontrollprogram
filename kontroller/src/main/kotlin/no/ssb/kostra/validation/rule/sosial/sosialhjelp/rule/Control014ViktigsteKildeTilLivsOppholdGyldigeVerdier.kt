@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
@@ -9,7 +9,7 @@ import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.program.extension.codeListToString
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialRuleId
 
 class Control014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractRule<List<KostraRecord>>(
     SosialRuleId.SOSIAL_K014_VKLO_GYLDIGE_VERDIER.title,

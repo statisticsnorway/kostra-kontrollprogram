@@ -52,7 +52,7 @@ abstract class AbstractValidator(
             )
 
 
-        val derivedKostraRecords = arguments
+        val kostraRecordList = arguments
             .getInputContentAsStringList()
             .withIndex()
             .map { (index, recordString) ->
@@ -63,14 +63,13 @@ abstract class AbstractValidator(
             }
 
         val validationReportEntries = validationRules
-            .mapNotNull { it.validate(derivedKostraRecords) }
+            .mapNotNull { it.validate(kostraRecordList) }
             .flatten()
 
         return ValidationResult(
             reportEntries = validationReportEntries,
             numberOfControls = validationReportEntries.size * validationRules.size
         )
-
     }
 
     open fun mappingDuplicates(): Pair<List<String>, List<String>> =

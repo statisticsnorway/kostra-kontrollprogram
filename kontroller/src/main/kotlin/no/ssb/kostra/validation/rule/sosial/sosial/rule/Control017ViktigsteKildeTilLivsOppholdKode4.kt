@@ -26,8 +26,7 @@ class Control017ViktigsteKildeTilLivsOppholdKode4 : AbstractRule<List<KostraReco
                         "er ${
                             fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
                                 .first { it.code == kostraRecord[VKLO_COL_NAME] }.value
-                        }. Arbeidssituasjonen er '(${kostraRecord[ARBSIT_COL_NAME]})', " +
-                        "forventet én av " +
+                        }. Arbeidssituasjonen er '(${kostraRecord[ARBSIT_COL_NAME]})', forventet én av " +
                         "'(${fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.filter { it.code in validCodes }})'. " +
                         "Feltet er obligatorisk å fylle ut."
             )

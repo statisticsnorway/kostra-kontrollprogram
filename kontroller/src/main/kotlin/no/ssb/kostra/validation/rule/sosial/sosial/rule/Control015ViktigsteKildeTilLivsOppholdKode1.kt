@@ -7,17 +7,19 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
 
 class Control015ViktigsteKildeTilLivsOppholdKode1 : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.K015_VKLO_ARBEIDSINNTEKT.title,
+    SosialRuleId.SOSIAL_K015_VKLO_ARBEIDSINNTEKT.title,
     Severity.ERROR
 ) {
     override fun validate(
         context: List<KostraRecord>,
         arguments: KotlinArguments
-    ) = context.filter { it[VKLO_COL_NAME] == "1" }
+    ): List<ValidationReportEntry>? = context
+        .filter { it[VKLO_COL_NAME] == "1" }
         .filterNot { it[ARBSIT_COL_NAME] in validCodes }
         .takeIf { it.any() }
         ?.map { kostraRecord ->

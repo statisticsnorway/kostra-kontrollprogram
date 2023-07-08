@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
 
 class Control014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.K014_VKLO_GYLDIGE_VERDIER.title,
+    SosialRuleId.SOSIAL_K014_VKLO_GYLDIGE_VERDIER.title,
     Severity.ERROR
 ) {
     override fun validate(

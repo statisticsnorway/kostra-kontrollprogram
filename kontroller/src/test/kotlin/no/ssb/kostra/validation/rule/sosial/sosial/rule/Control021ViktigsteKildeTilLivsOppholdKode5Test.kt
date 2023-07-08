@@ -6,30 +6,31 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Control016ViktigsteKildeTilLivsOppholdKode2Test : BehaviorSpec({
+class Control021ViktigsteKildeTilLivsOppholdKode5Test : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleTest(
-            sut = Control016ViktigsteKildeTilLivsOppholdKode2(),
+            sut = Control021ViktigsteKildeTilLivsOppholdKode5(),
             forAllRows = listOf(
                 ForAllRowItem(
                     "vkloCode = 0, arbsitCode = 00",
                     kostraRecordInTest("0", "00")
                 ),
                 ForAllRowItem(
-                    "vkloCode = 2, arbsitCode = 03",
-                    kostraRecordInTest("2", "03")
+                    "vkloCode = 5, arbsitCode = 02",
+                    kostraRecordInTest("5", "02")
                 ),
                 ForAllRowItem(
-                    "vkloCode = 2, arbsitCode = 00",
-                    kostraRecordInTest("2", "00"),
+                    "vkloCode = 5, arbsitCode = 00",
+                    kostraRecordInTest("5", "00"),
                     expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
-                            "sosial-/NAV-kontoret er Kursstønad/lønn i arbeidsmarkedstiltak. " +
+                            "sosial-/NAV-kontoret er Sosialhjelp. " +
                             "Arbeidssituasjonen er '(00)', forventet én av '([" +
-                            "03=Under utdanning, 05=Arbeidsmarkedstiltak (statlig), 06=Kommunalt tiltak" +
+                            "02=Arbeid, deltid, 04=Ikke arbeidssøker, 05=Arbeidsmarkedstiltak (statlig), " +
+                            "06=Kommunalt tiltak, 07=Registrert arbeidsledig, 08=Arbeidsledig, men ikke registrert hos NAV" +
                             "])'. Feltet er obligatorisk å fylle ut."
                 )
             ),
-            expectedSeverity = Severity.ERROR
+            expectedSeverity = Severity.WARNING
         )
     )
 }) {

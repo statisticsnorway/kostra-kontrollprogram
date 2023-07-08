@@ -24,7 +24,7 @@ class Control017ViktigsteKildeTilLivsOppholdKode4Test : BehaviorSpec({
                     kostraRecordInTest("4", "00"),
                     expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                             "sosial-/NAV-kontoret er Stipend/lån. " +
-                            "Arbeidssituasjonen er '(00)', forventet én av '(["+
+                            "Arbeidssituasjonen er '(00)', forventet én av '([" +
                             "03=Under utdanning" +
                             "])'. Feltet er obligatorisk å fylle ut."
                 )

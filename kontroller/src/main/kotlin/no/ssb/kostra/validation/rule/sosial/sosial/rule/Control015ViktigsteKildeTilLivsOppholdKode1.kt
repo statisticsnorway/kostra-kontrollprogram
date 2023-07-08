@@ -18,7 +18,8 @@ class Control015ViktigsteKildeTilLivsOppholdKode1 : AbstractRule<List<KostraReco
         context: List<KostraRecord>,
         arguments: KotlinArguments
     ) = context.filter { it[VKLO_COL_NAME] == "1" }
-        .filterNot { it[ARBSIT_COL_NAME] in validCodes }.takeIf { it.any() }
+        .filterNot { it[ARBSIT_COL_NAME] in validCodes }
+        .takeIf { it.any() }
         ?.map { kostraRecord ->
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +

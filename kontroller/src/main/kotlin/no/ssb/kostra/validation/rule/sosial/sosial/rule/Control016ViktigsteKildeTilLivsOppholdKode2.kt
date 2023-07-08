@@ -21,16 +21,16 @@ class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraReco
         .filterNot { it[ARBSIT_COL_NAME] in validCodes }
         .takeIf { it.any() }
         ?.map { kostraRecord ->
-        createValidationReportEntry(
-            "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                    "er ${
-                        fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
-                            .first { it.code == kostraRecord[VKLO_COL_NAME] }.value
-                    }. Arbeidssituasjonen er '(${kostraRecord[ARBSIT_COL_NAME]})', forventet én av " +
-                    "'(${fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.filter { it.code in validCodes }})'. " +
-                    "Feltet er obligatorisk å fylle ut."
-        )
-    }
+            createValidationReportEntry(
+                "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
+                        "er ${
+                            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
+                                .first { it.code == kostraRecord[VKLO_COL_NAME] }.value
+                        }. Arbeidssituasjonen er '(${kostraRecord[ARBSIT_COL_NAME]})', forventet én av " +
+                        "'(${fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.filter { it.code in validCodes }})'. " +
+                        "Feltet er obligatorisk å fylle ut."
+            )
+        }
 
     companion object {
         val validCodes = listOf("03", "05", "06")

@@ -1,0 +1,37 @@
+package no.ssb.kostra.validation.rule.sosial.sosial.rule
+
+import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.byColumnName
+import no.ssb.kostra.program.extension.codeIsMissing
+import no.ssb.kostra.program.extension.codeListToString
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
+
+class Control014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractRule<List<KostraRecord>>(
+    SosialRuleId.K014_VKLO_GYLDIGE_VERDIER.title,
+    Severity.ERROR
+) {
+    override fun validate(
+        context: List<KostraRecord>,
+        arguments: KotlinArguments
+    ): List<ValidationReportEntry>? = context
+        .filter {
+            fieldDefinitions
+                .byColumnName(VKLO_COL_NAME)
+                .codeIsMissing(it[VKLO_COL_NAME])
+        }.takeIf {
+            it.any()
+        }?.map {
+            createValidationReportEntry(
+                "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
+                        "skal oppgis. Fant '(${it[VKLO_COL_NAME]})', forventet én av '(${
+                            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeListToString()
+                        })'."
+            )
+        }
+}

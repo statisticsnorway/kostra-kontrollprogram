@@ -34,6 +34,6 @@ class Control015ViktigsteKildeTilLivsOppholdKode1 : AbstractRule<List<KostraReco
         }
 
     companion object {
-        val validCodes = listOf("03", "05", "06")
+        val validCodes = listOf("01", "02")
     }
 }

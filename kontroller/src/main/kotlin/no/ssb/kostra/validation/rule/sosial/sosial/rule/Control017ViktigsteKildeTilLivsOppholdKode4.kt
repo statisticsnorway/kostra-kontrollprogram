@@ -10,8 +10,8 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
 
-class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.K016_VKLO_KURS.title,
+class Control017ViktigsteKildeTilLivsOppholdKode4 : AbstractRule<List<KostraRecord>>(
+    SosialRuleId.K017_VKLO_STIPEND.title,
     Severity.ERROR
 ) {
     override fun validate(
@@ -19,7 +19,7 @@ class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraReco
         arguments: KotlinArguments
     ): List<ValidationReportEntry>? = context
         .filter {
-            it[SosialColumnNames.VKLO_COL_NAME] == "2"
+            it[SosialColumnNames.VKLO_COL_NAME] == "4"
         }.filterNot {
             it[SosialColumnNames.ARBSIT_COL_NAME] in validCodes
         }.takeIf {
@@ -39,6 +39,6 @@ class Control016ViktigsteKildeTilLivsOppholdKode2 : AbstractRule<List<KostraReco
         }
 
     companion object {
-        val validCodes = listOf("03", "05", "06")
+        val validCodes = listOf("03")
     }
 }

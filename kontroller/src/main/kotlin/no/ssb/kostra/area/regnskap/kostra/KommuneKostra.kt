@@ -31,38 +31,6 @@ class KommuneKostra(
         "964338531", // Bergen
     )
 
-    fun getRegionType(): List<String> {
-        val regionTypelist: MutableList<String> = mutableListOf()
-
-        if (arguments.orgnr.isNotBlank()) {
-            if (arguments.orgnr in orgnrSpesial)
-                regionTypelist.add(REGION_LANEFOND)
-            else
-                regionTypelist.add(REGION_SAERBEDRIFT)
-        } else {
-
-            if (arguments.region.substring(3, 2) == "00")
-                regionTypelist.add(REGION_FYLKE)
-            else if (arguments.region.substring(5, 2) != "00")
-                regionTypelist.add(REGION_BYDEL)
-            else
-                regionTypelist.add(REGION_KOMMUNE)
-
-            if (arguments.region == "030100") {
-                regionTypelist.add(REGION_FYLKE)
-                regionTypelist.add(REGION_KOMMUNE)
-                regionTypelist.add(REGION_OSLO)
-            }
-
-            if (arguments.region in svalbard) {
-                regionTypelist.add(REGION_SVALBARD)
-            }
-
-        }
-
-        return regionTypelist.distinct().toList()
-    }
-
     private val kommunenummerSpesial = listOf(
         "030100",  // Oslo
         "300500",  // Drammen
@@ -323,7 +291,7 @@ class KommuneKostra(
     }
 
     // Kun gyldig i investering og skal fjernes fra drift
-    fun getInvalidDriftArtList() =
+    private fun getInvalidDriftArtList() =
         if ((arguments.skjema in listOf("0I", "0K") && arguments.orgnr in orgnrSpesial)
             || (arguments.skjema in listOf("0M", "0P") && arguments.region in kommunenummerSpesial)
         ) {
@@ -333,7 +301,7 @@ class KommuneKostra(
         }
 
     // Kun gyldig i drift og skal fjernes fra investering
-    fun getInvalidInvesteringArtList() = listOf(
+    private fun getInvalidInvesteringArtList() = listOf(
         // @formatter:off
         "070", "080",
         "110", "114",

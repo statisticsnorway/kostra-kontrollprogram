@@ -1,44 +1,35 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames
-import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions
+import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.byColumnName
+import no.ssb.kostra.program.extension.ageInYears
+import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialRuleId
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
 class Control022TilknytningTilTrygdesystemetOgAlder : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.SOSIAL_K022_TRYGDESYSTEMET_ALDER.title,
-    Severity.WARNING
+    SosialhjelpRuleId.SOSIAL_K022_TRYGDESYSTEMET_ALDER.title,
+    Severity.ERROR
 ) {
     override fun validate(
         context: List<KostraRecord>,
         arguments: KotlinArguments
     ): List<ValidationReportEntry>? = context
         .filter {
-            it[SosialColumnNames.VKLO_COL_NAME] == "5"
+            it[TRYGDESIT_COL_NAME] == "07"
         }.filterNot {
-            it[SosialColumnNames.ARBSIT_COL_NAME] in validCodes
+            (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1) > 62
         }.takeIf {
             it.any()
-        }?.map { kostraRecord ->
+        }?.map {
             createValidationReportEntry(
-                "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${
-                            SosialFieldDefinitions.fieldDefinitions.byColumnName(SosialColumnNames.VKLO_COL_NAME).codeList
-                                .first { it.code == kostraRecord[SosialColumnNames.VKLO_COL_NAME] }.value
-                        }. Arbeidssituasjonen er '(${kostraRecord[SosialColumnNames.ARBSIT_COL_NAME]})', " +
-                        "forventet én av '(${
-                            SosialFieldDefinitions.fieldDefinitions.byColumnName(SosialColumnNames.ARBSIT_COL_NAME).codeList
-                                .filter { it.code in validCodes }
-                        })'. Feltet er obligatorisk å fylle ut."
+                "Mottakeren (${
+                    (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)
+                } år) er 62 år eller yngre og mottar alderspensjon."
             )
         }
-
-    companion object {
-        val validCodes = listOf("02", "04", "05", "06", "07", "08")
-    }
 }

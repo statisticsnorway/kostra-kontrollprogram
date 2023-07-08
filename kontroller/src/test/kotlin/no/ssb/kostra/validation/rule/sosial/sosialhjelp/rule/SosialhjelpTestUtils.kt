@@ -7,7 +7,7 @@ import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.rule.RuleTestData
 import java.time.Year
 
-object SosialTestUtils {
+object SosialhjelpTestUtils {
 
     fun sosialKostraRecordInTest(
         valuesByName: Map<String, String> = emptyMap()

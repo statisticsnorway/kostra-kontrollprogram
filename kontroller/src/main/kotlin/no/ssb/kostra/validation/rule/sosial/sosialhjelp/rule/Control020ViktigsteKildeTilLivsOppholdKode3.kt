@@ -9,10 +9,10 @@ import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialRuleId
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
 class Control020ViktigsteKildeTilLivsOppholdKode3 : AbstractRule<List<KostraRecord>>(
-    SosialRuleId.SOSIAL_K020_TRYGD.title,
+    SosialhjelpRuleId.SOSIAL_K020_TRYGD.title,
     Severity.ERROR
 ) {
     override fun validate(

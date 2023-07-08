@@ -31,7 +31,7 @@ class Control014ViktigsteKildeTilLivsOppholdGyldigeVerdierTest : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(
             vkloCode: String
-        ) = SosialTestUtils.sosialKostraRecordInTest(
+        ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
                 VKLO_COL_NAME to vkloCode
             )

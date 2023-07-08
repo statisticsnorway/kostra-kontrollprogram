@@ -37,7 +37,7 @@ class Control016ViktigsteKildeTilLivsOppholdKode2Test : BehaviorSpec({
         private fun kostraRecordInTest(
             vkloCode: String,
             arbsitCode: String
-        ) = SosialTestUtils.sosialKostraRecordInTest(
+        ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
                 SosialColumnNames.VKLO_COL_NAME to vkloCode,
                 SosialColumnNames.ARBSIT_COL_NAME to arbsitCode

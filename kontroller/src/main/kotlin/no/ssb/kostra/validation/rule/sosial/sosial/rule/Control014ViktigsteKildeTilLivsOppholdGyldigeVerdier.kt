@@ -25,9 +25,8 @@ class Control014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractRule<List<K
     }.takeIf { it.any() }?.map {
         createValidationReportEntry(
             "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                    "skal oppgis. Fant '(${it[VKLO_COL_NAME]})', forventet én av '(${
-                        fieldDefinitions.byColumnName(VKLO_COL_NAME).codeListToString()
-                    })'."
+                    "skal oppgis. Fant '(${it[VKLO_COL_NAME]})', forventet én av " +
+                    "'(${fieldDefinitions.byColumnName(VKLO_COL_NAME).codeListToString()})'."
         )
     }
 }

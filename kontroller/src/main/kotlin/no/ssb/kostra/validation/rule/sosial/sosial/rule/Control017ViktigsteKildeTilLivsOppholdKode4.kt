@@ -1,12 +1,12 @@
 package no.ssb.kostra.validation.rule.sosial.sosial.rule
 
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames
-import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions
+import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosial.SosialRuleId
 
@@ -17,24 +17,19 @@ class Control017ViktigsteKildeTilLivsOppholdKode4 : AbstractRule<List<KostraReco
     override fun validate(
         context: List<KostraRecord>,
         arguments: KotlinArguments
-    ): List<ValidationReportEntry>? = context
-        .filter {
-            it[SosialColumnNames.VKLO_COL_NAME] == "4"
-        }.filterNot {
-            it[SosialColumnNames.ARBSIT_COL_NAME] in validCodes
-        }.takeIf {
-            it.any()
-        }?.map { kostraRecord ->
+    ) = context.filter { it[VKLO_COL_NAME] == "4" }
+        .filterNot { it[ARBSIT_COL_NAME] in validCodes }
+        .takeIf { it.any() }
+        ?.map { kostraRecord ->
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
                         "er ${
-                            SosialFieldDefinitions.fieldDefinitions.byColumnName(SosialColumnNames.VKLO_COL_NAME).codeList
-                                .first { it.code == kostraRecord[SosialColumnNames.VKLO_COL_NAME] }.value
-                        }. Arbeidssituasjonen er '(${kostraRecord[SosialColumnNames.ARBSIT_COL_NAME]})', " +
-                        "forventet én av '(${
-                            SosialFieldDefinitions.fieldDefinitions.byColumnName(SosialColumnNames.ARBSIT_COL_NAME).codeList
-                                .filter { it.code in validCodes }
-                        })'. Feltet er obligatorisk å fylle ut."
+                            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
+                                .first { it.code == kostraRecord[VKLO_COL_NAME] }.value
+                        }. Arbeidssituasjonen er '(${kostraRecord[ARBSIT_COL_NAME]})', " +
+                        "forventet én av " +
+                        "'(${fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.filter { it.code in validCodes }})'. " +
+                        "Feltet er obligatorisk å fylle ut."
             )
         }
 

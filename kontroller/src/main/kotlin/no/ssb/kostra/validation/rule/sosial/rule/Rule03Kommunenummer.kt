@@ -3,7 +3,6 @@ package no.ssb.kostra.validation.rule.sosial.rule
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -14,7 +13,7 @@ class Rule03Kommunenummer : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        (arguments.region.municipalityIdFromRegion() to context.fieldAs<String>(KOMMUNE_NR_COL_NAME))
+        (arguments.region.municipalityIdFromRegion() to context[KOMMUNE_NR_COL_NAME])
             .takeIf { (municipalityIdFromRegion, municipalityId) -> municipalityId != municipalityIdFromRegion }
             ?.let { (municipalityIdFromRegion, municipalityId) ->
                 createSingleReportEntryList(

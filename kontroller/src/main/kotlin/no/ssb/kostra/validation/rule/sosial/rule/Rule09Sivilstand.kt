@@ -7,7 +7,6 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.program.extension.codeListToString
-import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
@@ -17,7 +16,7 @@ class Rule09Sivilstand : AbstractRule<KostraRecord>(
     Severity.ERROR
 ) {
     override fun validate(context: KostraRecord, arguments: KotlinArguments) =
-        (fieldDefinitions.byColumnName(EKTSTAT_COL_NAME) to context.fieldAs<String>(EKTSTAT_COL_NAME))
+        (fieldDefinitions.byColumnName(EKTSTAT_COL_NAME) to context[EKTSTAT_COL_NAME])
             .takeIf { (fieldDefinition, value) -> fieldDefinition.codeIsMissing(value) }
             ?.let { (fieldDefinition, value) ->
                 createSingleReportEntryList(

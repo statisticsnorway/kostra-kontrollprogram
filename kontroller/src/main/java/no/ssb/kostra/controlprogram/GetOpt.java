@@ -173,15 +173,6 @@ public class GetOpt {
     }
 
     /**
-     * Reset this GetOpt parser
-     */
-    public void rewind() {
-        fileNameArguments = null;
-        done = false;
-        optind = 0;
-    }
-
-    /**
      * Array used to convert a char to a String
      */
     private static final char[] strConvArray = {0};

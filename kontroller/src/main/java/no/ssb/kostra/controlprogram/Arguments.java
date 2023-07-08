@@ -33,8 +33,6 @@ public final class Arguments {
     private InputStream inputFileStream = null;
     private List<String> inputFileContent = null;
 
-    public Arguments() { }
-
     public Arguments(
             final String skjema, final String aargang, final String kvartal, final String region,
             final String navn, final String orgnr, final String foretaknr, final boolean harVedlegg,

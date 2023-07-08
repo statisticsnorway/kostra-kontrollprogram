@@ -25,11 +25,6 @@ public class ErrorReport {
     private List<String> reportHeaders = List.of("", "", "", "");
     private final List<StatsReportEntry> stats = new ArrayList<>();
 
-
-    public ErrorReport() {
-        this.args = new Arguments(new String[]{"-s", "X", "-y", "9999", "-r", "999900"});
-    }
-
     public ErrorReport(final Arguments args) {
         this.args = args;
     }
@@ -200,14 +195,6 @@ public class ErrorReport {
 
     public int getErrorType() {
         return errorType;
-    }
-
-    public boolean isEmpty() {
-        return entries.isEmpty();
-    }
-
-    public int size() {
-        return entries.size();
     }
 
     public void setReportHeaders(final List<String> stringList) {

@@ -1,17 +1,13 @@
 package no.ssb.kostra.felles;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class ErrorReportEntry {
-    String saksbehandler = "";
-    String journalnummer = "";
-    String individId = "";
-    String refNr = "";
-    String kontrollNr = "Ikke Satt";
-    String errorText = "";
-    int errorType = Constants.NO_ERROR;
-
-    public ErrorReportEntry() {
-    }
+    final String saksbehandler;
+    final String journalnummer;
+    final String individId;
+    final String refNr;
+    String kontrollNr;
+    final String errorText;
+    final int errorType;
 
     public ErrorReportEntry(
             final String saksbehandler,
@@ -35,32 +31,16 @@ public class ErrorReportEntry {
         return saksbehandler.trim();
     }
 
-    public void setSaksbehandler(final String saksbehandler) {
-        this.saksbehandler = saksbehandler;
-    }
-
     public String getJournalnummer() {
         return journalnummer.trim();
-    }
-
-    public void setJournalnummer(final String journalnummer) {
-        this.journalnummer = journalnummer;
     }
 
     public String getIndividId() {
         return individId.trim();
     }
 
-    public void setIndividId(final String individId) {
-        this.individId = individId;
-    }
-
     public String getRefNr() {
         return refNr.trim();
-    }
-
-    public void setRefNr(final String refNr) {
-        this.refNr = refNr;
     }
 
     public String getKontrollNr() {
@@ -75,15 +55,7 @@ public class ErrorReportEntry {
         return errorText;
     }
 
-    public void setErrorText(final String errorText) {
-        this.errorText = errorText;
-    }
-
     public int getErrorType() {
         return errorType;
-    }
-
-    public void setErrorType(final int errorType) {
-        this.errorType = errorType;
     }
 }

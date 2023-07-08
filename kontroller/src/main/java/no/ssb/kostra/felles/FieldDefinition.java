@@ -75,10 +75,6 @@ public class FieldDefinition {
         return dataType;
     }
 
-    public String getViewType() {
-        return viewType;
-    }
-
     public Integer getFrom() {
         return from;
     }

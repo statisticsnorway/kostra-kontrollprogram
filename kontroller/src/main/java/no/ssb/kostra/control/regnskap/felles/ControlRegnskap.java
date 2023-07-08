@@ -44,14 +44,6 @@ public final class ControlRegnskap {
         return 0;
     }
 
-    // TODO: Not in use
-    public static int getSumTilskudd(final List<KostraRecord> regnskap) {
-        return regnskap.stream()
-                .filter(p -> p.getFieldAsString("art_sektor").equalsIgnoreCase("830"))
-                .map(p -> p.getFieldAsIntegerDefaultEquals0("belop"))
-                .reduce(0, Integer::sum);
-    }
-
     public static int getSumAktiva(
             final Arguments arguments, final List<KostraRecord> regnskap,
             final List<String> regnskapList, final String kontoklasse) {
@@ -103,26 +95,6 @@ public final class ControlRegnskap {
             );
         }
         return false;
-    }
-
-    public static boolean controlKombinasjonFunksjonArt(
-            final ErrorReport errorReport, final List<KostraRecord> regnskap,
-            final List<String> funksjonList, final List<String> artList,
-            final String formattedControlText, final int errorType) {
-
-        final var filteredRegnskap = regnskap.stream()
-                .filter(record -> isCodeInCodeList(record.getFieldAsString("funksjon_kapittel"), funksjonList))
-                .toList();
-
-        return ControlFelt1ListeInneholderKodeFraKodeliste.doControl(errorReport,
-                "5. Kombinasjonskontroller",
-                "Kombinasjon funksjon og art",
-                formattedControlText,
-                "art_sektor",
-                filteredRegnskap,
-                artList,
-                errorType
-        );
     }
 }
 

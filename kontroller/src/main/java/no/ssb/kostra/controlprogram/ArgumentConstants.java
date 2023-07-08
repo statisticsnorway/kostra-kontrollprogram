@@ -1,7 +1,5 @@
 package no.ssb.kostra.controlprogram;
 
-import lombok.experimental.UtilityClass;
-
 public final class ArgumentConstants {
 
     private ArgumentConstants() {

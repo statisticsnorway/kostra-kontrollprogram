@@ -46,8 +46,4 @@ public final class Constants {
 
     // Constants for date patterns
     public static final String DATE6_PATTERN = "ddMMyy";
-
-    public static final String DATE8_PATTERN = "ddMMyyyy";
-
-    public static final String DATE_ISO_PATTERN = "yyyy-MM-dd";
 }

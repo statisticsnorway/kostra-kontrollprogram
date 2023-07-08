@@ -25,11 +25,11 @@ public class StatsReportEntry {
 
         // add content
         if (this.classification == null || this.classification.size() == 0){
-            data.forEach(d -> sb.append("<tr>").append("<td>&nbsp;</td>").append("<td style='text-align:right;'>").append(d.getValue()).append("</td>").append("</tr>").append(lf));
+            data.forEach(d -> sb.append("<tr>").append("<td>&nbsp;</td>").append("<td style='text-align:right;'>").append(d.value()).append("</td>").append("</tr>").append(lf));
         } else {
             classification.forEach(c -> {
-                StatsEntry se = data.stream().filter(e -> c.code().equalsIgnoreCase(e.getId())).findFirst().orElse(new StatsEntry(c.code(), ".."));
-                sb.append("<tr>").append("<td>").append(c.value()).append("</td>").append("<td style='text-align:right;'>").append(se.getValue()).append("</td>").append("</tr>").append(lf);
+                StatsEntry se = data.stream().filter(e -> c.code().equalsIgnoreCase(e.id())).findFirst().orElse(new StatsEntry(c.code(), ".."));
+                sb.append("<tr>").append("<td>").append(c.value()).append("</td>").append("<td style='text-align:right;'>").append(se.value()).append("</td>").append("</tr>").append(lf);
             });
         }
 

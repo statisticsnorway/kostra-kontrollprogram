@@ -1,26 +1,18 @@
 package no.ssb.kostra.control.regnskap.kostra;
 
-import no.ssb.kostra.area.regnskap.kostra.KommuneKostra;
-import no.ssb.kostra.control.felles.ControlDubletter;
-import no.ssb.kostra.control.felles.ControlFilbeskrivelse;
-import no.ssb.kostra.control.felles.ControlRecordLengde;
 import no.ssb.kostra.control.felles.Utils;
-import no.ssb.kostra.control.regnskap.FieldDefinitions;
 import no.ssb.kostra.controlprogram.Arguments;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.felles.KostraRecord;
-import no.ssb.kostra.program.util.ConversionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static no.ssb.kostra.control.felles.Comparator.*;
-import static no.ssb.kostra.control.felles.ControlIntegritet.*;
 import static no.ssb.kostra.control.regnskap.felles.ControlRegnskap.*;
-import static no.ssb.kostra.program.util.ConversionUtils.fromArguments;
 
 @SuppressWarnings("SpellCheckingInspection")
 public final class Main {
@@ -38,7 +30,6 @@ public final class Main {
     private static final String BALANSEREGNSKAP = "Balanseregnskap";
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definitions
     private static final List<String> osloKommuner = List.of(
             "030100",
@@ -91,13 +82,6 @@ public final class Main {
             return Map.of("B", "5");
         }
         return Map.of("R", " ");
-    }
-
-    public static List<String> getKontoklasseAsList(final String skjema) {
-        return getKontoklasseAsMap(skjema).values().stream()
-                .map(String::trim)
-                .sorted()
-                .toList();
     }
 
     public static List<String> getFunksjonKapittelAsList(final String skjema, final String region, final String orgnr) {
@@ -309,187 +293,7 @@ public final class Main {
         return funksjonKapittel;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controls
-    public static ErrorReport doControls(final Arguments arguments) {
-        final var errorReport = new ErrorReport(arguments);
-        final var regnskap = new KommuneKostra(fromArguments(arguments, true));
-
-//        regnskap.validate().stream()
-//                .map(ConversionUtils::toErrorReportEntry)
-//                .forEach(errorReport::addEntry);
-
-        errorReport.incrementCount();
-
-        return errorReport;
-    }
-
-
-    public static ErrorReport doControlsTOBEDELETED(final Arguments arguments) {
-        final var errorReport = new ErrorReport(arguments);
-        final var list1 = arguments.getInputContentAsStringList();
-
-        // alle records må være med korrekt lengde, ellers vil de andre kontrollene kunne feile
-        // Kontroll Recordlengde
-        ControlRecordLengde.doControl(list1, errorReport, FieldDefinitions.getFieldLength());
-
-        if (errorReport.getErrorType() == Constants.CRITICAL_ERROR) {
-            return errorReport;
-        }
-
-        final var fieldDefinitions = Utils.mergeFieldDefinitionsAndArguments(FieldDefinitions.getFieldDefinitions(), arguments);
-
-        // legger til linjenummer
-        final var regnskap1 = Utils.addLineNumbering(Utils.getValidRecords(list1, fieldDefinitions));
-
-        // filbeskrivelsesskontroller
-        ControlFilbeskrivelse.doControl(regnskap1, errorReport);
-
-        // integritetskontroller
-        controlSkjema(errorReport, regnskap1);
-        controlAargang(errorReport, regnskap1);
-        controlKvartal(errorReport, regnskap1);
-        controlRegion(errorReport, regnskap1);
-        controlOrganisasjonsnummer(errorReport, regnskap1);
-        controlForetaksnummer(errorReport, regnskap1);
-        controlKontoklasse(errorReport, regnskap1, getKontoklasseAsList(arguments.getSkjema()));
-
-        if (isCodeInCodeList(arguments.getSkjema(), getBevilgningRegnskapList())) {
-            controlFunksjon(errorReport, regnskap1, getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()));
-            controlArt(errorReport, regnskap1, getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
-        }
-
-        if (isCodeInCodeList(arguments.getSkjema(), getBalanseRegnskapList())) {
-            controlKapittel(errorReport, regnskap1, getFunksjonKapittelAsList(arguments.getSkjema(), arguments.getRegion(), arguments.getOrgnr()));
-            controlSektor(errorReport, regnskap1, getArtSektorAsList(arguments.getSkjema(), arguments.getRegion()));
-        }
-
-        controlBelop(errorReport, regnskap1);
-        controlUgyldigeBelop(errorReport, regnskap1);
-
-        // Fjerner posteringer der beløp = 0
-        final var regnskap = Utils.removeBelopEquals0(regnskap1);
-
-        // Dublett kontroll
-        if (isCodeInCodeList(arguments.getSkjema(), getBevilgningRegnskapList())) {
-            ControlDubletter.doControl(
-                    regnskap,
-                    errorReport,
-                    List.of(KONTOKLASSE, FUNKSJON_KAPITTEL, ART_SEKTOR),
-                    List.of(KONTOKLASSE, "funksjon", "art"));
-        } else if (isCodeInCodeList(arguments.getSkjema(), getBalanseRegnskapList())) {
-            ControlDubletter.doControl(
-                    regnskap,
-                    errorReport,
-                    List.of(KONTOKLASSE, FUNKSJON_KAPITTEL, ART_SEKTOR),
-                    List.of(KONTOKLASSE, "kapittel", "sektor"));
-        }
-
-        kontroll1(errorReport, regnskap);
-        kontroll5(errorReport, regnskap);
-        kontroll10(errorReport, regnskap);
-        kontroll15(errorReport, regnskap);
-
-        // Kombinasjonskontroller
-        kontroll20(errorReport, regnskap);
-        kontroll25(errorReport, regnskap);
-        kontroll30(errorReport, regnskap);
-        kontroll35(errorReport, regnskap);
-        kontroll40(errorReport, regnskap);
-        kontroll45(errorReport, regnskap);
-        kontroll50(errorReport, regnskap);
-        kontroll55(errorReport, regnskap);
-        kontroll60(errorReport, regnskap);
-
-        kontroll65(errorReport, regnskap);
-        kontroll70(errorReport, regnskap);
-        kontroll75(errorReport, regnskap);
-        kontroll80(errorReport, regnskap);
-
-        // SUMMERINGSKONTROLLER
-
-        //Kontroll Summeringskontroller bevilgningsregnskap
-        //Denne kontrollen gjelder IKKE for bydelene i Oslo
-        //D = Driftsregnskap (kontoklasse 1 / 3)
-        //I = Investeringsregnskap (kontoklasse 0 / 4)
-        // 85
-        controlSumInvesteringsUtgifter(errorReport, regnskap);
-        // 90
-        controlSumInvesteringsInntekter(errorReport, regnskap);
-        // 95
-        controlSumInvesteringsDifferanse(errorReport, regnskap);
-        // 100
-        controlSumDriftsUtgifter(errorReport, regnskap);
-        // 105
-        controlSumDriftsInntekter(errorReport, regnskap);
-        // 110
-        controlSumDriftsDifferanse(errorReport, regnskap);
-
-        //Kontroll Summeringskontroller balanseregnskap
-        //B = Driftsregnskap (kontoklasse 2 / 5)
-        // 115
-        controlSumAktiva(errorReport, regnskap);
-        // 120
-        controlSumPassiva(errorReport, regnskap);
-        // 125
-        controlSumBalanseDifferanse(errorReport, regnskap);
-
-        // Kontroll Skatteinntekter og rammetilskudd
-        //Denne kontrollen gjelder IKKE for bydelene i Oslo
-        //Denne kontrollen gjelder IKKE for Longyearbyen Lokalstyre.
-        //D = Driftsregnskap (kontoklasse 1 / 3)
-        //I = Investeringsregnskap (kontoklasse 0 / 4)
-        // 130
-        controlSkatteInntekter(errorReport, regnskap);
-        // 135
-        controlRammetilskudd(errorReport, regnskap);
-
-        // Kontroll Overføring mellom drifts- og investeringsregnskap
-        //Denne kontrollen gjelder IKKE for bydelene i Oslo
-        //D = Driftsregnskap (kontoklasse 1 / 3)
-        //I = Investeringsregnskap (kontoklasse 0 / 4)
-        // 140
-        controlOverforingMellomDriftOgInvestering(errorReport, regnskap);
-
-        // Kontroll Avskrivninger
-        //Denne kontrollen gjelder IKKE for bydelene i Oslo
-        //D = Driftsregnskap (kontoklasse 1 / 3)
-        //I = Investeringsregnskap (kontoklasse 0 / 4)
-        // 145
-        controlMotpostAvskrivninger(errorReport, regnskap);
-        // 150
-        controlAvskrivninger(errorReport, regnskap);
-        // 155
-        controlAvskrivningerDifferanse(errorReport, regnskap);
-        // 160
-        controlAvskrivningerAndreFunksjoner(errorReport, regnskap);
-        // 165
-        controlAvskrivningerMotpostAndreFunksjoner(errorReport, regnskap);
-
-        // Kontroll Funksjon 290
-        //Denne kontrollen gjelder IKKE for bydelene i Oslo
-        //D = Driftsregnskap (kontoklasse 1)
-        //I = Investeringsregnskap (kontoklasse 0)
-        // 170
-        controlFunksjon290Investering(errorReport, regnskap);
-        // 175
-        controlFunksjon290Drift(errorReport, regnskap);
-
-        // Kontroll Funksjon 465
-        //D = Driftsregnskap (kontoklasse 1)
-        //I = Investeringsregnskap (kontoklasse 0)
-        // 180
-        controlFunksjon465Investering(errorReport, regnskap);
-        // 185
-        controlFunksjon465Drift(errorReport, regnskap);
-
-        // Kontroll Memoriakonti
-        //B = Balanseregnskap (kontoklasse 2 / 5)
-        // 190
-        controlMemoriaKonti(errorReport, regnskap);
-
-        return errorReport;
-    }
 
     // Posteringskontroller
     public static boolean kontroll1(final ErrorReport errorReport, final List<KostraRecord> regnskap) {

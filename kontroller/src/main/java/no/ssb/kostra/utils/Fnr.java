@@ -76,24 +76,9 @@ public final class Fnr {
     public static boolean isValidDUFnr(final String dufnr) {
         if (dufnr == null) return false;
 
-//        @JvmStatic
-//        fun validateDUF(duf: String): Boolean =
-//                Pattern.compile("^\\d{12}$").matcher(duf).matches()
-//                        &&
-//                        duf.asSequence()
-//                                .take(10)
-//                                .map { it.toString().toInt() }
-//                    .zip(sequenceOf(4, 6, 3, 2, 4, 6, 3, 2, 7, 5)) { digit, weight -> digit * weight }
-//                    .sum()
-//                .mod(11)
-//                .let { it.toString().padStart(2, '0') } == duf.substring(10)
-
         if (!Pattern.compile("^\\d{12}$").matcher(dufnr).matches()) return false;
-//        if (dufnr.length() != 12) return false;
-//        if (dufnr.trim().length() == 0) return false;
 
         final var weights = List.of(4, 6, 3, 2, 4, 6, 3, 2, 7, 5);
-//        String dufNr = dufnr.replace(' ', '0');
         final var numbers = dufnr.chars().mapToObj(e -> (char) e).toList();
 
         try {

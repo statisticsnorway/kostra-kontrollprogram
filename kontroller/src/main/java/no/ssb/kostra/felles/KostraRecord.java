@@ -2,7 +2,6 @@ package no.ssb.kostra.felles;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,10 +106,6 @@ public class KostraRecord {
         return this.fieldDefinitionByName.get(name);
     }
 
-    public void setFieldDefinitionByName(final String name, final FieldDefinition fieldDefinition) {
-        this.fieldDefinitionByName.put(name, fieldDefinition);
-    }
-
     public LocalDate getFieldAsLocalDate(final String field) {
         try {
             final var definition = getFieldDefinitionByName(field);
@@ -123,10 +118,6 @@ public class KostraRecord {
 
     public List<FieldDefinition> getFieldDefinitions() {
         return fieldDefinitions;
-    }
-
-    public List<String> getNames() {
-        return new ArrayList<>(this.valuesByName.keySet());
     }
 
     @Override

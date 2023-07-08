@@ -122,7 +122,6 @@ public final class Main {
         return List.of("0G");
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Controls
     public static ErrorReport doControls(final Arguments args) {
         final var errorReport = new ErrorReport(args);
@@ -174,7 +173,6 @@ public final class Main {
         // Fjerner posteringer der beløp = 0
         final var regnskap = Utils.removeBelopEquals0(regnskap1);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Dublett-, kombinasjon-, summerings-,  kontroller
         if (isCodeInCodeList(args.getSkjema(), getBevilgningRegnskapList())) {
             ControlDubletter.doControl(regnskap, errorReport, List.of("kontoklasse", "funksjon_kapittel", "art_sektor"), List.of("kontoklasse", "funksjon", "art"));

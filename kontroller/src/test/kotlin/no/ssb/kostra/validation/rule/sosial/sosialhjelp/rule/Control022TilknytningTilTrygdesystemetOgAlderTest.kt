@@ -2,46 +2,44 @@ package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames
+import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.RuleTestData
 
-class Control022TilknytningTilTrygdesystemetOgAlderTest: BehaviorSpec({
+class Control022TilknytningTilTrygdesystemetOgAlderTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleTest(
-            sut = Control021ViktigsteKildeTilLivsOppholdKode5(),
+            sut = Control022TilknytningTilTrygdesystemetOgAlder(),
             forAllRows = listOf(
                 ForAllRowItem(
-                    "vkloCode = 0, arbsitCode = 00",
-                    kostraRecordInTest("0", "00")
+                    "trygdesitCode = 00, fodselsNummer = 00",
+                    kostraRecordInTest("00", 0, RuleTestData.argumentsInTest.aargang.toInt())
                 ),
                 ForAllRowItem(
-                    "vkloCode = 5, arbsitCode = 02",
-                    kostraRecordInTest("5", "02")
+                    "trygdesitCode = 07, alder = 63",
+                    kostraRecordInTest("07", 63, RuleTestData.argumentsInTest.aargang.toInt())
                 ),
                 ForAllRowItem(
-                    "vkloCode = 5, arbsitCode = 00",
-                    kostraRecordInTest("5", "00"),
-                    expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
-                            "sosial-/NAV-kontoret er Sosialhjelp. " +
-                            "Arbeidssituasjonen er '(00)', forventet én av '([" +
-                            "02=Arbeid, deltid, 04=Ikke arbeidssøker, 05=Arbeidsmarkedstiltak (statlig), " +
-                            "06=Kommunalt tiltak, 07=Registrert arbeidsledig, 08=Arbeidsledig, men ikke registrert hos NAV" +
-                            "])'. Feltet er obligatorisk å fylle ut."
+                    "trygdesitCode = 07, alder = 62",
+                    kostraRecordInTest("07", 62, RuleTestData.argumentsInTest.aargang.toInt()),
+                    expectedErrorMessage = "Mottakeren (62 år) er 62 år eller yngre og mottar alderspensjon."
                 )
             ),
-            expectedSeverity = Severity.WARNING
+            expectedSeverity = Severity.ERROR
         )
     )
 }) {
     companion object {
         private fun kostraRecordInTest(
-            vkloCode: String,
-            arbsitCode: String
+            trygdesitCode: String,
+            alder: Int,
+            year: Int
         ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
-                SosialColumnNames.VKLO_COL_NAME to vkloCode,
-                SosialColumnNames.ARBSIT_COL_NAME to arbsitCode
+                SosialColumnNames.TRYGDESIT_COL_NAME to trygdesitCode,
+                SosialColumnNames.PERSON_FODSELSNR_COL_NAME to RandomUtils.generateRandomSsn(year, alder)
             )
         )
     }

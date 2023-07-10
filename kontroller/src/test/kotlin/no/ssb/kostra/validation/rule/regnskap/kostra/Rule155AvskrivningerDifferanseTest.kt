@@ -36,7 +36,7 @@ class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
                             "overens med motpost avskrivninger (-1) (margin på +/- 30')"
                 ),
                 ForAllRowItem(
-                    "!it.isOsloBydel() = false",
+                    "not it.isOsloBydel() = false",
                     listOf(
                         kostraRecordInTest("030101", 1, 100, 590, 1),
                         kostraRecordInTest("030101", 1, 860, 990, -32),

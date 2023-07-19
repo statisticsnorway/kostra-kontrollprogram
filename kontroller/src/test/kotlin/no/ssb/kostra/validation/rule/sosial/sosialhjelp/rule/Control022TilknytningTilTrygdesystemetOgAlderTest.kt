@@ -15,17 +15,33 @@ class Control022TilknytningTilTrygdesystemetOgAlderTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "trygdesitCode = 00, fodselsNummer = 00",
-                    kostraRecordInTest("00", 0, RuleTestData.argumentsInTest.aargang.toInt())
+                    kostraRecordInTest(
+                        "00",
+                        RandomUtils.generateRandomSsn(age = 0, year = RuleTestData.argumentsInTest.aargang.toInt())
+                    )
                 ),
                 ForAllRowItem(
                     "trygdesitCode = 07, alder = 63",
-                    kostraRecordInTest("07", 63, RuleTestData.argumentsInTest.aargang.toInt())
+                    kostraRecordInTest(
+                        "07",
+                        RandomUtils.generateRandomSsn(age = 63, year = RuleTestData.argumentsInTest.aargang.toInt())
+                    )
                 ),
                 ForAllRowItem(
                     "trygdesitCode = 07, alder = 62",
-                    kostraRecordInTest("07", 62, RuleTestData.argumentsInTest.aargang.toInt()),
+                    kostraRecordInTest(
+                        "07",
+                        RandomUtils.generateRandomSsn(age = 62, year = RuleTestData.argumentsInTest.aargang.toInt())
+                    ),
                     expectedErrorMessage = "Mottakeren (62 år) er 62 år eller yngre og mottar alderspensjon."
-                )
+                ),
+                ForAllRowItem(
+                    "trygdesitCode = 07, alder = -1",
+                    kostraRecordInTest(
+                        "07", "01012388188"
+                    ),
+                    expectedErrorMessage = "Mottakeren (-1 år) er 62 år eller yngre og mottar alderspensjon."
+                ),
             ),
             expectedSeverity = Severity.ERROR
         )
@@ -34,12 +50,11 @@ class Control022TilknytningTilTrygdesystemetOgAlderTest : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(
             trygdesitCode: String,
-            alder: Int,
-            year: Int
+            fnr: String
         ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
                 SosialColumnNames.TRYGDESIT_COL_NAME to trygdesitCode,
-                SosialColumnNames.PERSON_FODSELSNR_COL_NAME to RandomUtils.generateRandomSsn(year, alder)
+                SosialColumnNames.PERSON_FODSELSNR_COL_NAME to fnr
             )
         )
     }

@@ -20,5 +20,5 @@ object SosialhjelpTestUtils {
         )
     )
 
-    private val twoDigitReportingYear = (Year.now().value) % 1000
+    private val twoDigitReportingYear = RuleTestData.argumentsInTest.aargang.toInt() % 1000
 }

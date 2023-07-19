@@ -12,7 +12,7 @@ object RandomUtils {
         Year.now().minusYears(age - 1L).atDay(1).minusDays(1)
     )
 
-    fun generateRandomSsn(year: Int, age: Int):String = generateRandomSSN(
+    fun generateRandomSsn(age: Int, year: Int):String = generateRandomSSN(
         Year.of(year).minusYears(age.toLong()).atDay(1).also { println(it) },
         Year.of(year).minusYears(age.toLong() - 1L).atDay(1).minusDays(1).also { println(it) }
     )

@@ -36,9 +36,9 @@ class Control022TilknytningTilTrygdesystemetOgAlderTest : BehaviorSpec({
                     expectedErrorMessage = "Mottakeren (62 år) er 62 år eller yngre og mottar alderspensjon."
                 ),
                 ForAllRowItem(
-                    "trygdesitCode = 07, alder = -1",
+                    "trygdesitCode = 07, alder = -1 (pga. feil dato-del i fnr)",
                     kostraRecordInTest(
-                        "07", "01012388188"
+                        "07", "32138800000"
                     ),
                     expectedErrorMessage = "Mottakeren (-1 år) er 62 år eller yngre og mottar alderspensjon."
                 ),

@@ -9,9 +9,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
 
 class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
     Given("context") {
@@ -299,7 +300,7 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                 ), true
             ),
         ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords()
+            val kostraRecordList = recordList.toKostraRecords(RegnskapFieldDefinitions.fieldDefinitions)
             val investeringUtgifter = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
             val investeringInntekter = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val investeringDifferanse = kostraRecordList.sumOf {

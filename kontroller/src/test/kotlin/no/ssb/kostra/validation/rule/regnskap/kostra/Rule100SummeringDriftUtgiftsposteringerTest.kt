@@ -7,11 +7,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
     include(
@@ -62,6 +63,6 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             FIELD_FUNKSJON to "$funksjon",
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
-        ).toKostraRecord().asList()
+        ).toKostraRecord(1, fieldDefinitions).asList()
     }
 }

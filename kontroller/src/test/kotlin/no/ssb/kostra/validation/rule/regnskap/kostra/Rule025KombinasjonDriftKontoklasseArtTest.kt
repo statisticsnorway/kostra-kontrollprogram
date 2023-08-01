@@ -9,10 +9,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
 
@@ -60,7 +62,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                 FIELD_KONTOKLASSE to kontoklasse,
                 FIELD_ART to art,
                 FIELD_BELOP to belop,
-            ).toKostraRecord().asList()
+            ).toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions).asList()
 
             When("For $skjema, $region, $orgnr, $kontoklasse, $art -> $expectError") {
                 verifyValidationResult(
@@ -107,7 +109,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                 FIELD_ART to art,
                 FIELD_BELOP to belop,
                 FIELD_KONTOKLASSE to "1",
-            ).toKostraRecord().asList()
+            ).toKostraRecord(1, fieldDefinitions).asList()
 
             When("$description For $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(

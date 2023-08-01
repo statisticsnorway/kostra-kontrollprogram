@@ -6,10 +6,11 @@ import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule510Art320Test : BehaviorSpec({
     val sut = Rule510Art320(listOf("620"))
@@ -25,7 +26,7 @@ class Rule510Art320Test : BehaviorSpec({
                 FIELD_SKJEMA to skjema,
                 FIELD_ART to art,
                 FIELD_FUNKSJON to funksjon,
-            ).toKostraRecord().asList()
+            ).toKostraRecord(1, fieldDefinitions).asList()
 
             When("$skjema, $art, $funksjon") {
                 TestUtils.verifyValidationResult(

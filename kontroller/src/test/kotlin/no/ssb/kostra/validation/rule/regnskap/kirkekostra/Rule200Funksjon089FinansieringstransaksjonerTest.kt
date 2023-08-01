@@ -5,12 +5,14 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
     include(
@@ -67,6 +69,6 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
             FIELD_KONTOKLASSE to "3",
             FIELD_FUNKSJON to funksjon,
             FIELD_ART to art
-        ).toKostraRecord().asList()
+        ).toKostraRecord(1, fieldDefinitions).asList()
     }
 }

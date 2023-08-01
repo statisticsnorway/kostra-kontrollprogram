@@ -6,19 +6,19 @@ import no.ssb.kostra.program.KostraRecord
 
 object RegnskapTestUtils {
 
-    fun KostraRecord.asList() = listOf(this)
+//    fun KostraRecord.asList() = listOf(this)
 
-    fun Map<String, String>.toKostraRecord(lineNumber: Int = 1) = regnskapRecordInTest(
-        valuesByName = this,
-        lineNumber = lineNumber
-    )
+//    fun Map<String, String>.toKostraRecord(lineNumber: Int = 1) = regnskapRecordInTest(
+//        valuesByName = this,
+//        lineNumber = lineNumber
+//    )
 
-    fun Collection<Map<String, String>>.toKostraRecords(): List<KostraRecord> = this.mapIndexed { index, valuesByName ->
-        regnskapRecordInTest(
-            valuesByName = valuesByName,
-            lineNumber = index + 1
-        )
-    }
+//    fun Collection<Map<String, String>>.toKostraRecords(fieldDefinitions: List<FieldDefinition>): List<KostraRecord> = this.mapIndexed { index, valuesByName ->
+//        regnskapRecordInTest(
+//            valuesByName = valuesByName,
+//            lineNumber = index + 1
+//        )
+//    }
 
     fun regnskapRecordInTest(
         valuesByName: Map<String, String> = emptyMap(),

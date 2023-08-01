@@ -10,7 +10,9 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecord
+
 
 class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
     Given("isBevilgningRegnskap()") {
@@ -32,7 +34,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord(1, fieldDefinitions)
 
             Then("For $skjema expected result should be equal to $expectedResult") {
                 kostraRecord.isBevilgningRegnskap().shouldBeEqual(expectedResult)
@@ -69,7 +71,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             val kostraRecord = mapOf(
                 FIELD_SKJEMA to skjema,
                 FIELD_KONTOKLASSE to kontoklasse
-            ).toKostraRecord()
+            ).toKostraRecord(1, fieldDefinitions)
 
             Then("For skjema $skjema, kontoklasse $kontoklasse expected result should be equal to $expectedResult") {
                 kostraRecord.isBevilgningDriftRegnskap().shouldBeEqual(expectedResult)
@@ -106,7 +108,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             val kostraRecord = mapOf(
                 FIELD_SKJEMA to skjema,
                 FIELD_KONTOKLASSE to kontoklasse
-            ).toKostraRecord()
+            ).toKostraRecord(1, fieldDefinitions)
 
             Then("For skjema $skjema, kontoklasse $kontoklasse expected result should be equal to $expectedResult") {
                 kostraRecord.isBevilgningInvesteringRegnskap().shouldBeEqual(expectedResult)
@@ -133,7 +135,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", true),
             row("0Y", true)
         ) { skjema, expectedResult ->
-            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord(1, fieldDefinitions)
 
             Then("$skjema expected result should be equal to $expectedResult") {
                 kostraRecord.isBalanseRegnskap().shouldBeEqual(expectedResult)
@@ -160,7 +162,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord(1, fieldDefinitions)
 
             Then("$skjema expected result should be equal to $expectedResult") {
                 kostraRecord.isResultatRegnskap().shouldBeEqual(expectedResult)
@@ -187,7 +189,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0G", false),
             row("0Y", false)
         ) { skjema, expectedResult ->
-            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_SKJEMA to skjema).toKostraRecord(1, fieldDefinitions)
 
             Then("$skjema expected result should be equal to $expectedResult") {
                 kostraRecord.isRegional().shouldBeEqual(expectedResult)
@@ -202,7 +204,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("600", true),
             row("999", true)
         ) { art, expectedResult ->
-            val kostraRecord = mapOf(FIELD_ART to art).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_ART to art).toKostraRecord(1, fieldDefinitions)
 
             Then("$art, expected result should be equal to $expectedResult") {
                 kostraRecord.isInntekt().shouldBe(expectedResult)
@@ -217,7 +219,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("010", true),
             row("599", true)
         ) { art, expectedResult ->
-            val kostraRecord = mapOf(FIELD_ART to art).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_ART to art).toKostraRecord(1, fieldDefinitions)
 
             Then("$art, expected result should be equal to $expectedResult") {
                 kostraRecord.isUtgift().shouldBe(expectedResult)
@@ -232,7 +234,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0010", true),
             row("0029", true)
         ) { kapittel, expectedResult ->
-            val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord(1, fieldDefinitions)
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
                 kostraRecord.isAktiva().shouldBe(expectedResult)
@@ -247,7 +249,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("0030", true),
             row("5999", true)
         ) { kapittel, expectedResult ->
-            val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord(1, fieldDefinitions)
 
             Then("$kapittel, expected result should be equal to $expectedResult") {
                 kostraRecord.isPassiva().shouldBe(expectedResult)
@@ -266,7 +268,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             val kostraRecord = mapOf(
                 FIELD_SKJEMA to skjema,
                 FIELD_REGION to region
-            ).toKostraRecord()
+            ).toKostraRecord(1, fieldDefinitions)
 
             Then("$region $skjema, expected result should be equal to $expectedResult") {
                 kostraRecord.isOsloInternRegnskap().shouldBe(expectedResult)
@@ -281,7 +283,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("420400", false),
             row("030000", false),
         ) { region, expectedResult ->
-            val kostraRecord = mapOf(FIELD_REGION to region).toKostraRecord()
+            val kostraRecord = mapOf(FIELD_REGION to region).toKostraRecord(1, fieldDefinitions)
 
             Then("$region expected result should be equal to $expectedResult") {
                 kostraRecord.isOslo().shouldBeEqual(expectedResult)
@@ -296,7 +298,7 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
             row("030000", false),
             row("420400", false),
         ) { region, expectedResult ->
-            val sut = mapOf(FIELD_REGION to region).toKostraRecord()
+            val sut = mapOf(FIELD_REGION to region).toKostraRecord(1, fieldDefinitions)
 
             When("isOsloBydel $region, expect $expectedResult") {
                 sut.isOsloBydel().shouldBe(expectedResult)

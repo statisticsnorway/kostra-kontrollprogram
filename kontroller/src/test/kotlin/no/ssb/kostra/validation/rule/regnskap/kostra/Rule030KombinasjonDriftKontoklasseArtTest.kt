@@ -2,12 +2,13 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule030KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
     include(
@@ -49,6 +50,6 @@ class Rule030KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
             RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
             RegnskapConstants.FIELD_ART to art,
             RegnskapConstants.FIELD_BELOP to belop,
-        ).toKostraRecord().asList()
+        ).toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions).asList()
     }
 }

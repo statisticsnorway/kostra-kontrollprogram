@@ -5,11 +5,12 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
     include(
@@ -51,6 +52,6 @@ class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
             FIELD_KONTOKLASSE to "$kontoklasse",
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
-        ).toKostraRecord().asList()
+        ).toKostraRecord(1, fieldDefinitions).asList()
     }
 }

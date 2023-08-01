@@ -9,10 +9,11 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.asList
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule500Funksjon400Test : BehaviorSpec({
     val sut = Rule500Funksjon400(listOf("928033821"))
@@ -31,7 +32,7 @@ class Rule500Funksjon400Test : BehaviorSpec({
                 FIELD_FUNKSJON to funksjon,
                 FIELD_ART to "300",
                 FIELD_BELOP to "100"
-            ).toKostraRecord().asList()
+            ).toKostraRecord(1, fieldDefinitions).asList()
 
             When("$orgnr, $skjema, $funksjon") {
                 TestUtils.verifyValidationResult(

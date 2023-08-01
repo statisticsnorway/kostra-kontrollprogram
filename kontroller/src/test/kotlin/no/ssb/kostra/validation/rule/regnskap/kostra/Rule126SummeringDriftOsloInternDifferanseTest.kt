@@ -9,9 +9,10 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecords
 
 class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
     Given("context") {
@@ -116,7 +117,8 @@ class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
                         FIELD_ART to "798",
                         FIELD_BELOP to "-100"
                     )
-                ), false /** TODO Jon Ole: Denne gir ikke feil */
+                ), false
+                /** TODO Jon Ole: Denne gir ikke feil */
             ),
             row(
                 listOf(
@@ -159,7 +161,7 @@ class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
                 ), false
             )
         ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords()
+            val kostraRecordList = recordList.toKostraRecords(RegnskapFieldDefinitions.fieldDefinitions)
             val sumArt298Drift = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
             val sumArt798Drift = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val sumOslointerneDrift = kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

@@ -6,10 +6,11 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 
 class Rule190MemoriakontiTest : BehaviorSpec({
@@ -88,6 +89,6 @@ class Rule190MemoriakontiTest : BehaviorSpec({
             FIELD_KAPITTEL to kapittel,
             FIELD_SEKTOR to sektor,
             FIELD_BELOP to belop
-        ).toKostraRecord()
+        ).toKostraRecord(1, fieldDefinitions)
     }
 }

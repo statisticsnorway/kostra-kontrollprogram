@@ -4,9 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
     val sut = Rule540EiendelerErLikEgenkaptialPlussGjeld()
@@ -26,18 +27,18 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
                     RegnskapConstants.FIELD_SKJEMA to skjema,
                     RegnskapConstants.FIELD_ART to "100",
                     RegnskapConstants.FIELD_BELOP to sumEiendeler
-                ).toKostraRecord(),
+                ),
                 mapOf(
                     RegnskapConstants.FIELD_SKJEMA to skjema,
                     RegnskapConstants.FIELD_ART to "200",
                     RegnskapConstants.FIELD_BELOP to sumEgenkapital
-                ).toKostraRecord(),
+                ),
                 mapOf(
                     RegnskapConstants.FIELD_SKJEMA to skjema,
                     RegnskapConstants.FIELD_ART to "210",
                     RegnskapConstants.FIELD_BELOP to sumGjeld
-                ).toKostraRecord(),
-            )
+                ),
+            ).toKostraRecords(fieldDefinitions)
             When("$skjema, $sumEiendeler, $sumEgenkapital, $sumGjeld") {
                 val sumBalanse = sumEiendeler.toInt() + (sumEgenkapital.toInt() + sumGjeld.toInt())
                 TestUtils.verifyValidationResult(

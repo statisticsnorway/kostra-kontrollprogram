@@ -43,3 +43,24 @@ fun String.toKostraRecord(
         fieldDefinitions.associate { with(it) { name to it } }
     )
 }
+
+fun KostraRecord.asList() = listOf(this)
+
+fun Map<String, String>.toKostraRecord(
+    lineNumber: Int = 1,
+    fieldDefinitions: List<FieldDefinition>
+) = KostraRecord(
+    lineNumber = lineNumber,
+    valuesByName = this,
+    fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
+)
+
+fun List<Map<String, String>>.toKostraRecords(
+    fieldDefinitions: List<FieldDefinition>
+) = this.mapIndexed { index, map ->
+    KostraRecord(
+        lineNumber = index + 1,
+        valuesByName = map,
+        fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
+    )
+}

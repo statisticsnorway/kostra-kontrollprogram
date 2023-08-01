@@ -5,7 +5,6 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.*
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils.toKostraRecord
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
@@ -46,11 +45,11 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
 
     Given("KostraRecord#plus") {
         val sut = mapOf(
-            "Field123" to "12",
+            "Field123" to "12 ",
             "Field456" to "456",
             "Field789" to "789",
-            "Field012" to "-1"
-        ).toKostraRecord()
+            "Field012" to " -1"
+        ).toKostraRecord(1, fieldDefinitions)
 
         When("plus") {
             val changedByPlus = sut.plus("Added" to "911")
@@ -77,6 +76,41 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
             }
         }
     }
+
+    Given("KostraRecord#asList") {
+        val sut = "12 456789 -1"
+
+        When("toKostraRecord") {
+            val kostraRecord = sut.toKostraRecord(0, fieldDefinitions)
+
+            Then("the result should be a concatenated string of all the values") {
+                kostraRecord.asList() shouldBe listOf(kostraRecord)
+            }
+        }
+    }
+
+    Given("KostraRecord#Map#toKostraRecord") {
+        val sut = mapOf(
+            "Field123" to "12 ",
+            "Field456" to "456",
+            "Field789" to "789",
+            "Field012" to " -1"
+        )
+
+        When("toKostraRecord") {
+            val kostraRecord = sut.toKostraRecord(0, fieldDefinitions)
+
+            Then("the result should be a concatenated string of all the values") {
+                kostraRecord.valuesByName shouldBe mapOf(
+                    "Field123" to "12 ",
+                    "Field456" to "456",
+                    "Field789" to "789",
+                    "Field012" to " -1"
+                )
+            }
+        }
+    }
+
 }) {
     companion object {
         private val fieldDefinitions = listOf(

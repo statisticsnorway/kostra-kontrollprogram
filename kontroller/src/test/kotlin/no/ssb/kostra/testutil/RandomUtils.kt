@@ -13,15 +13,15 @@ object RandomUtils {
     )
 
     fun generateRandomSsn(age: Int, year: Int):String = generateRandomSSN(
-        Year.of(year).minusYears(age.toLong()).atDay(1).also { println(it) },
-        Year.of(year).minusYears(age.toLong() - 1L).atDay(1).minusDays(1).also { println(it) }
+        Year.of(year).minusYears(age.toLong()).atDay(1),
+        Year.of(year).minusYears(age.toLong() - 1L).atDay(1).minusDays(1)
     )
+
 
     fun generateRandomSSN(
         startInclusive: LocalDate,
         endExclusive: LocalDate
     ): String = (startInclusive.toEpochDay() until endExclusive.toEpochDay()).random()
-        .also { println(it) }
         .let { randomDay ->
             LocalDate.ofEpochDay(randomDay).format(DATE_TIME_FORMATTER)
         }.let { birthDate123456 ->

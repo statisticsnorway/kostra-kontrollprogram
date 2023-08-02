@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.FAAT_INDIVIDUELL_PLAN_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants
+import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -26,10 +26,7 @@ class Rule033UtarbeidelseAvIndividuellPlanGyldigeKoder : AbstractRule<List<Kostr
         }.takeIf {
             it.any()
         }?.map { kostraRecord ->
-            val utfylt =
-                fieldDefinitions.byColumnName(FAAT_INDIVIDUELL_PLAN_COL_NAME).codeList.firstOrNull {
-                    it.code == kostraRecord[FAAT_INDIVIDUELL_PLAN_COL_NAME]
-                } ?: Code(kostraRecord[FAAT_INDIVIDUELL_PLAN_COL_NAME], SosialhjelpConstants.UNKNOWN)
+            val utfylt = Code(kostraRecord[FAAT_INDIVIDUELL_PLAN_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
                 "Det er ikke krysset av for om mottakeren har fått utarbeidet individuell plan. " +

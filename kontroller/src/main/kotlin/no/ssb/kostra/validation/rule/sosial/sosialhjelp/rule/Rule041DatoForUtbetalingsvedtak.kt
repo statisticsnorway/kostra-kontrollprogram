@@ -29,7 +29,7 @@ class Rule041DatoForUtbetalingsvedtak : AbstractRule<List<KostraRecord>>(
             createValidationReportEntry(
                 "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
                         "sosialtjenesteloven', så skal utbetalingsvedtakets dato (${it[UTBETDATO_COL_NAME]}) oppgis. " +
-                         "Feltet er obligatorisk å fylle ut."
+                        "Feltet er obligatorisk å fylle ut."
             )
         }
 }

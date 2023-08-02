@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants
+import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -26,7 +26,7 @@ class Rule025ArbeidssituasjonGyldigeKoder : AbstractRule<List<KostraRecord>>(
         }.takeIf {
             it.any()
         }?.map { kostraRecord ->
-            val arbeidssituasjon = Code(kostraRecord[ARBSIT_COL_NAME], SosialhjelpConstants.UNKNOWN)
+            val arbeidssituasjon = Code(kostraRecord[ARBSIT_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
                 "Mottakerens arbeidssituasjon ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, " +

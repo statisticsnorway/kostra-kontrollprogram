@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.GITT_OKONOMIRAD_COL_NAME
 import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants
+import no.ssb.kostra.area.sosial.sosial.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -26,10 +26,7 @@ class Rule032OkonomiskRaadgivningGyldigeKoder : AbstractRule<List<KostraRecord>>
         }.takeIf {
             it.any()
         }?.map { kostraRecord ->
-            val utfylt =
-                fieldDefinitions.byColumnName(GITT_OKONOMIRAD_COL_NAME).codeList.firstOrNull {
-                    it.code == kostraRecord[GITT_OKONOMIRAD_COL_NAME]
-                } ?: Code(kostraRecord[GITT_OKONOMIRAD_COL_NAME], SosialhjelpConstants.UNKNOWN)
+            val utfylt = Code(kostraRecord[GITT_OKONOMIRAD_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
                 "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med " +

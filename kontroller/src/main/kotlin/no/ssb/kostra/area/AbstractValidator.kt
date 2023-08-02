@@ -12,7 +12,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.TITLE_SEKTOR
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.toKostraRecord
@@ -35,6 +35,7 @@ abstract class AbstractValidator(
 
     open val fatalRules: List<AbstractRule<List<String>>> = emptyList()
     open val validationRules: List<AbstractRule<List<KostraRecord>>> = emptyList()
+    open val fieldDefinitions: List<FieldDefinition> = emptyList()
 
     fun validate(): ValidationResult {
         val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
@@ -58,7 +59,7 @@ abstract class AbstractValidator(
             .map { (index, recordString) ->
                 recordString.toKostraRecord(
                     index = index + 1,
-                    fieldDefinitions = RegnskapFieldDefinitions.getFieldDefinitionsMergedWithKotlinArguments(arguments)
+                    fieldDefinitions = fieldDefinitions
                 )
             }
 

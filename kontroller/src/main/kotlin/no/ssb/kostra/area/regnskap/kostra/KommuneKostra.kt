@@ -5,13 +5,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_BYDEL
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_FYLKE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_KOMMUNE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_LANEFOND
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_OSLO
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_SAERBEDRIFT
-import no.ssb.kostra.area.regnskap.RegnskapConstants.REGION_SVALBARD
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.rule.Rule001RecordLength

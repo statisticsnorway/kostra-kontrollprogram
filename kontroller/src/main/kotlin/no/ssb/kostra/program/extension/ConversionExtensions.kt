@@ -10,6 +10,7 @@ fun Int.yearWithCentury() = when (this) {
 internal fun Severity.toInt() = when (this) {
     Severity.WARNING -> 1
     Severity.ERROR -> 2
+    Severity.FATAL -> 2
     else -> 0
 }
 

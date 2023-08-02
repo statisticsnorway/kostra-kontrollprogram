@@ -26,10 +26,7 @@ class Rule025ArbeidssituasjonGyldigeKoder : AbstractRule<List<KostraRecord>>(
         }.takeIf {
             it.any()
         }?.map { kostraRecord ->
-            val arbeidssituasjon =
-                fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.firstOrNull {
-                    it.code == kostraRecord[ARBSIT_COL_NAME]
-                } ?: Code(kostraRecord[ARBSIT_COL_NAME], SosialhjelpConstants.UNKNOWN)
+            val arbeidssituasjon = Code(kostraRecord[ARBSIT_COL_NAME], SosialhjelpConstants.UNKNOWN)
 
             createValidationReportEntry(
                 "Mottakerens arbeidssituasjon ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, " +

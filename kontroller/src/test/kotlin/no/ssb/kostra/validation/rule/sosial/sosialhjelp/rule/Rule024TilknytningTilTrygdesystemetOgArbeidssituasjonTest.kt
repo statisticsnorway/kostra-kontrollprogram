@@ -18,6 +18,11 @@ class Rule024TilknytningTilTrygdesystemetOgArbeidssituasjonTest : BehaviorSpec({
                     kostraRecordInTest("00", "00")
                 ),
                 ForAllRowItem(
+                    "trygdesitCode = 04, arbsitCode = 01",
+                    kostraRecordInTest("04", "01"),
+                    expectedErrorMessage = "Mottakeren mottar trygd (04=Uføretrygd), men det er oppgitt ugyldig kode (01=Arbeid, heltid) på arbeidssituasjon."
+                ),
+                ForAllRowItem(
                     "trygdesitCode = 04, arbsitCode = 02",
                     kostraRecordInTest("04", "02")
                 ),

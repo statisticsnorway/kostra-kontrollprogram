@@ -28,9 +28,9 @@ class Rule024TilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractRule<List<
         }.takeIf {
             it.any()
         }?.map { kostraRecord ->
-            val trygdesituasjon = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.firstOrNull {
+            val trygdesituasjon = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.first {
                 it.code == kostraRecord[TRYGDESIT_COL_NAME]
-            } ?: Code(kostraRecord[TRYGDESIT_COL_NAME], UNKNOWN)
+            }
 
             val arbeidssituasjon = fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeList.firstOrNull {
                 it.code == kostraRecord[ARBSIT_COL_NAME]

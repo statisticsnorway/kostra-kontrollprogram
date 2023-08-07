@@ -1,10 +1,17 @@
 package no.ssb.kostra.controlprogram;
 
+import no.ssb.kostra.area.regnskap.helseforetak.HelseForetakMain;
+import no.ssb.kostra.area.regnskap.kostra.KirkeKostraMain;
+import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain;
+import no.ssb.kostra.area.regnskap.kostra.KvartalKostraMain;
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringMain;
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpMain;
 import no.ssb.kostra.control.barnevern.s15.BarnevernMain;
 import no.ssb.kostra.felles.Constants;
 import no.ssb.kostra.felles.ErrorReport;
 import no.ssb.kostra.felles.ErrorReportEntry;
 import no.ssb.kostra.program.util.ConversionUtils;
+import no.ssb.kostra.validation.ValidationResult;
 
 import java.util.List;
 
@@ -26,7 +33,9 @@ public final class ControlDispatcher {
                         "0BK1", "0BK2", "0BK3", "0BK4",
                         "0CK1", "0CK2", "0CK3", "0CK4",
                         "0DK1", "0DK2", "0DK3", "0DK4"))) {
-            errorReport = no.ssb.kostra.control.regnskap.kvartal.Main.doControls(arguments);
+
+            var validationResult = new KvartalKostraMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(
                 arguments.getSkjema()
@@ -34,27 +43,24 @@ public final class ControlDispatcher {
                         "0I", "0J", "0K", "0L",
                         "0M", "0N", "0P", "0Q"))) {
 
-            var validator = new no.ssb.kostra.area.regnskap.kostra.KommuneKostra(fromArguments(arguments, true));
-            var validationResult = validator.validate();
-
-            validationResult.getReportEntries().stream()
-                    .map(ConversionUtils::toErrorReportEntry)
-                    .forEach(errorReport::addEntry);
-
-            errorReport.setCount(validationResult.getNumberOfControls());
-
+            var validationResult = new KommuneKostraMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("0F", "0G"))) {
-            errorReport = no.ssb.kostra.control.regnskap.kirkekostra.Main.doControls(arguments);
+            var validationResult = new KirkeKostraMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("0X", "0Y"))) {
-            errorReport = no.ssb.kostra.control.regnskap.helseforetak.Main.doControls(arguments);
+            var validationResult = new HelseForetakMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("11F"))) {
-            errorReport = no.ssb.kostra.control.sosial.s11_sosialhjelp.Main.doControls(arguments);
+            var validationResult = new SosialhjelpMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("11CF"))) {
-            errorReport = no.ssb.kostra.control.sosial.s11c_kvalifiseringsstonad.Main.doControls(arguments);
+            var validationResult = new KvalifiseringMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("15F"))) {
             errorReport = BarnevernMain.doControls(arguments);
@@ -88,5 +94,13 @@ public final class ControlDispatcher {
             );
         }
         return errorReport;
+    }
+
+    private static void toErrorReport(ErrorReport errorReport, ValidationResult validationResult) {
+        validationResult.getReportEntries().stream()
+                .map(ConversionUtils::toErrorReportEntry)
+                .forEach(errorReport::addEntry);
+
+        errorReport.setCount(validationResult.getNumberOfControls());
     }
 }

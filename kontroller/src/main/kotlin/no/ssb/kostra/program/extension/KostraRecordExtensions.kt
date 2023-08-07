@@ -20,7 +20,7 @@ fun KostraRecord.toRecordString(): String {
                 else
                     value.padEnd(fieldLength, ' ')
 
-            recordString.replaceRange(from - 1, to, stringValue)
+            recordString.replaceRange(from - 1, to, stringValue.substring(0, fieldLength))
         }
     }
 }

@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Control28MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
+import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Rule028MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 
 class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
     include(
@@ -18,7 +18,7 @@ class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "with months and amount",
-                    validKostraRecordInTest
+                    validKostraRecordInTest,
                 ),
                 ForAllRowItem(
                     "without months, without amount",
@@ -30,7 +30,7 @@ class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
                                 "${MONTH_PREFIX}$it" to "  "
                             }).toTypedArray()
                         )
-                    )
+                    ),
                 ),
                 ForAllRowItem(
                     "without months, with amount",
@@ -45,7 +45,7 @@ class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
                     ),
                     "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
                             "men mangler utfylling for hvilke måneder stønaden gjelder. " +
-                            "Feltet er obligatorisk å fylle ut."
+                            "Feltet er obligatorisk å fylle ut.",
                 )
             ),
             expectedSeverity = Severity.WARNING

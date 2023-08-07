@@ -23,29 +23,29 @@ class Rule090SummeringInvesteringInntektsposteringerTest : BehaviorSpec({
                     "all conditions match",
                     kostraRecordsInTest("420400", "0A", 0, 100, 990, 0),
                     expectedErrorMessage = "Korrigér slik at fila inneholder " +
-                            "inntektsposteringene (0) i investeringsregnskapet"
+                            "inntektsposteringene (0) i investeringsregnskapet",
                 ),
                 ForAllRowItem(
                     "isOsloBydel = true",
-                    kostraRecordsInTest("030101", "0A", 0, 100, 990, 0)
+                    kostraRecordsInTest("030101", "0A", 0, 100, 990, 0),
                 ),
                 ForAllRowItem(
                     "isRegional = false",
-                    kostraRecordsInTest("420400", "0Y", 0, 100, 990, 0)
+                    kostraRecordsInTest("420400", "0Y", 0, 100, 990, 0),
                 ),
                 ForAllRowItem(
                     "isBevilgningInvesteringRegnskap = false",
-                    kostraRecordsInTest("420400", "0A", 1, 100, 990, 0)
+                    kostraRecordsInTest("420400", "0A", 1, 100, 990, 0),
                 ),
                 ForAllRowItem(
                     "isInntekt = false",
                     kostraRecordsInTest("420400", "0A", 0, 100, 599, -1),
                     expectedErrorMessage = "Korrigér slik at fila inneholder " +
-                            "inntektsposteringene (0) i investeringsregnskapet"
+                            "inntektsposteringene (0) i investeringsregnskapet",
                 ),
                 ForAllRowItem(
                     "belop < 0",
-                    kostraRecordsInTest("420400", "0A", 0, 100, 990, -1)
+                    kostraRecordsInTest("420400", "0A", 0, 100, 990, -1),
                 ),
             ),
             expectedSeverity = Severity.ERROR,

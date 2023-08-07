@@ -23,19 +23,19 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                     expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: (520) regnes å være ulogisk i " +
                             "driftsregnskapet, med mindre posteringen gjelder sosiale utlån og næringsutlån " +
                             "eller mottatte avdrag på sosiale utlån og næringsutlån, som finansieres av " +
-                            "driftsinntekter."
+                            "driftsinntekter.",
                 ),
                 ForAllRowItem(
                     "isBevilgningDriftRegnskap = false",
-                    kostraRecordsInTest(0, 520, 1)
+                    kostraRecordsInTest(0, 520, 1),
                 ),
                 ForAllRowItem(
                     "art != 520",
-                    kostraRecordsInTest(1, 521, 1)
+                    kostraRecordsInTest(1, 521, 1),
                 ),
                 ForAllRowItem(
                     "belop = 0",
-                    kostraRecordsInTest(1, 520, 0)
+                    kostraRecordsInTest(1, 520, 0),
                 )
             ),
             expectedSeverity = Severity.INFO,

@@ -21,19 +21,19 @@ class Rule050KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
                     "all conditions match",
                     kostraRecordsInTest(0, 990, 1),
                     expectedErrorMessage = "Korrigér ugyldig art '990' i investeringsregnskapet til en " +
-                            "gyldig art i investeringsregnskapet eller overfør posteringen til driftsregnskapet."
+                            "gyldig art i investeringsregnskapet eller overfør posteringen til driftsregnskapet.",
                 ),
                 ForAllRowItem(
                     "isBevilgningInvesteringRegnskap = false",
-                    kostraRecordsInTest(1, 990, 1)
+                    kostraRecordsInTest(1, 990, 1),
                 ),
                 ForAllRowItem(
                     "art != 990",
-                    kostraRecordsInTest(0, 991, 1)
+                    kostraRecordsInTest(0, 991, 1),
                 ),
                 ForAllRowItem(
                     "belop == 0",
-                    kostraRecordsInTest(0, 990, 0)
+                    kostraRecordsInTest(0, 990, 0),
                 )
             ),
             expectedSeverity = Severity.ERROR,

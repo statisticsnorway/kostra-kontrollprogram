@@ -22,19 +22,19 @@ class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
                     kostraRecordsInTest(0, 620, 1),
                     expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: (620) regnes å være ulogisk art i " +
                             "investeringsregnskapet. Vennligst vurder å postere på annen art eller om " +
-                            "posteringen hører til i driftsregnskapet."
+                            "posteringen hører til i driftsregnskapet.",
                 ),
                 ForAllRowItem(
                     "isBevilgningInvesteringRegnskap = false",
-                    kostraRecordsInTest(1, 620, 1)
+                    kostraRecordsInTest(1, 620, 1),
                 ),
                 ForAllRowItem(
                     "art != 620",
-                    kostraRecordsInTest(0, 621, 1)
+                    kostraRecordsInTest(0, 621, 1),
                 ),
                 ForAllRowItem(
                     "belop = 0",
-                    kostraRecordsInTest(0, 620, 0)
+                    kostraRecordsInTest(0, 620, 0),
                 )
             ),
             expectedSeverity = Severity.INFO,

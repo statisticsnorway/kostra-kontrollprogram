@@ -22,19 +22,19 @@ class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
                     kostraRecordsInTest(1, 841, 1),
                     expectedErrorMessage = "Korrigér ugyldig funksjon '841' i driftsregnskapet " +
                             "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
-                            "investeringsregnskapet."
+                            "investeringsregnskapet.",
                 ),
                 ForAllRowItem(
                     "isBevilgningDriftRegnskap = false",
-                    kostraRecordsInTest(0, 841, 1)
+                    kostraRecordsInTest(0, 841, 1),
                 ),
                 ForAllRowItem(
                     "funksjon != 841",
-                    kostraRecordsInTest(1, 842, 1)
+                    kostraRecordsInTest(1, 842, 1),
                 ),
                 ForAllRowItem(
                     "belop == 0",
-                    kostraRecordsInTest(1, 841, 0)
+                    kostraRecordsInTest(1, 841, 0),
                 )
             ),
             expectedSeverity = Severity.ERROR,

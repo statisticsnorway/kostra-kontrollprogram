@@ -21,23 +21,23 @@ class Rule065KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
                     "isBevilgningRegnskap = true",
                     kostraRecordsInTest("0A", "899 ", "010", 1),
                     expectedErrorMessage = "Artene 589, 980 og 989 er kun tillat brukt i kombinasjon med funksjon " +
-                            "899. Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989."
+                            "899. Og motsatt, funksjon 899 er kun tillat brukt i kombinasjon med artene 589, 980 og 989.",
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = false",
-                    kostraRecordsInTest("0X", "899 ", "010", 1)
+                    kostraRecordsInTest("0X", "899 ", "010", 1),
                 ),
                 ForAllRowItem(
                     "belop mismath",
-                    kostraRecordsInTest("0A", "899 ", "010", 0)
+                    kostraRecordsInTest("0A", "899 ", "010", 0),
                 ),
                 ForAllRowItem(
                     "funksjon/art mismath #1",
-                    kostraRecordsInTest("0A", "899 ", "589", 1)
+                    kostraRecordsInTest("0A", "899 ", "589", 1),
                 ),
                 ForAllRowItem(
                     "funksjon/art mismath #2",
-                    kostraRecordsInTest("0A", "898 ", "588", 1)
+                    kostraRecordsInTest("0A", "898 ", "588", 1),
                 ),
             ),
             expectedSeverity = Severity.ERROR,

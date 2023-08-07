@@ -20,19 +20,19 @@ class Rule030KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                     kostraRecordsInTest("1", "285", "1"),
                     expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: ('285') regnes å være " +
                             "ulogisk art i driftsregnskapet. Vennligst vurder å postere på annen art eller om " +
-                            "posteringen hører til i investeringsregnskapet."
+                            "posteringen hører til i investeringsregnskapet.",
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = false, art match, belop match",
-                    kostraRecordsInTest("0", "285", "1")
+                    kostraRecordsInTest("0", "285", "1"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, art mismatch, belop match",
-                    kostraRecordsInTest("1", "284", "1")
+                    kostraRecordsInTest("1", "284", "1"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, art match, belop mismatch",
-                    kostraRecordsInTest("1", "285", "0")
+                    kostraRecordsInTest("1", "285", "0"),
                 ),
             ),
             expectedSeverity = Severity.INFO,

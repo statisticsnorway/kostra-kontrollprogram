@@ -26,7 +26,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("420400", 1, 600, -32)
                     ),
                     expectedErrorMessage = "Korrigér differansen (-31) mellom inntekter " +
-                            "(-32) og utgifter (1) i driftsregnskapet"
+                            "(-32) og utgifter (1) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "all conditions match, positive amount",
@@ -35,21 +35,21 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("420400", 1, 600, -1)
                     ),
                     expectedErrorMessage = "Korrigér differansen (31) mellom inntekter " +
-                            "(-1) og utgifter (32) i driftsregnskapet"
+                            "(-1) og utgifter (32) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "isOsloBydel = true",
                     listOf(
                         kostraRecordInTest("030102", 1, 590, 1),
                         kostraRecordInTest("030102", 1, 600, -32)
-                    )
+                    ),
                 ),
                 ForAllRowItem(
                     "isBevilgningDriftRegnskap = false",
                     listOf(
                         kostraRecordInTest("420400", 0, 590, 1),
                         kostraRecordInTest("420400", 0, 600, -32)
-                    )
+                    ),
                 ),
                 ForAllRowItem(
                     "driftUtgifter < 0",
@@ -58,7 +58,7 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("420400", 1, 600, -1)
                     ),
                     expectedErrorMessage = "Korrigér differansen (-2) mellom inntekter " +
-                            "(-1) og utgifter (-1) i driftsregnskapet"
+                            "(-1) og utgifter (-1) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "driftInntekter > 0",
@@ -67,21 +67,21 @@ class Rule110SummeringDriftDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("420400", 1, 600, 1)
                     ),
                     expectedErrorMessage = "Korrigér differansen (2) mellom inntekter " +
-                            "(1) og utgifter (1) i driftsregnskapet"
+                            "(1) og utgifter (1) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "driftUtgifter + driftInntekter within range, lower bound",
                     listOf(
                         kostraRecordInTest("420400", 1, 590, 1),
                         kostraRecordInTest("420400", 1, 600, -31)
-                    )
+                    ),
                 ),
                 ForAllRowItem(
                     "driftUtgifter + driftInntekter within range, upper bound",
                     listOf(
                         kostraRecordInTest("420400", 1, 590, 31),
                         kostraRecordInTest("420400", 1, 600, -1)
-                    )
+                    ),
                 )
             ),
             expectedSeverity = Severity.ERROR,

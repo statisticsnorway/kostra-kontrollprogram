@@ -5,7 +5,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.asList
@@ -23,35 +22,35 @@ class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
                     "isBevilgningRegnskap = true, funksjon = 089, art != 500..580",
                     kostraRecordsInTest(skjema = "0F", funksjon = "089 ", art = "499"),
                     expectedErrorMessage = "Korrigér i fila slik at art (499) " +
-                            "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980."
+                            "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = false, funksjon = 089, art != 500..580",
-                    kostraRecordsInTest("0X", "089 ", "499")
+                    kostraRecordsInTest("0X", "089 ", "499"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon != 089, art match",
-                    kostraRecordsInTest("0F", "088 ", "499")
+                    kostraRecordsInTest("0F", "088 ", "499"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 500",
-                    kostraRecordsInTest("0F", "089 ", "500")
+                    kostraRecordsInTest("0F", "089 ", "500"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 580",
-                    kostraRecordsInTest("0F", "089 ", "580")
+                    kostraRecordsInTest("0F", "089 ", "580"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 830",
-                    kostraRecordsInTest("0F", "089 ", "830")
+                    kostraRecordsInTest("0F", "089 ", "830"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 900",
-                    kostraRecordsInTest("0F", "089 ", "900")
+                    kostraRecordsInTest("0F", "089 ", "900"),
                 ),
                 ForAllRowItem(
                     "isBevilgningRegnskap = true, funksjon = 089, art = 980",
-                    kostraRecordsInTest("0F", "089 ", "980")
+                    kostraRecordsInTest("0F", "089 ", "980"),
                 )
             ),
             expectedSeverity = Severity.ERROR,

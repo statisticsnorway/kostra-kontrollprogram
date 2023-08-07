@@ -23,25 +23,25 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
                     "all conditions match",
                     kostraRecordsInTest("420400", 1, 100, 590, 0),
                     expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
-                            "(0) i driftsregnskapet"
+                            "(0) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "isOsloBydel() = true",
-                    kostraRecordsInTest("030114", 1, 100, 590, 0)
+                    kostraRecordsInTest("030114", 1, 100, 590, 0),
                 ),
                 ForAllRowItem(
                     "isBevilgningDriftRegnskap = false",
-                    kostraRecordsInTest("420400", 0, 100, 590, 0)
+                    kostraRecordsInTest("420400", 0, 100, 590, 0),
                 ),
                 ForAllRowItem(
                     "isUtgift = false",
                     kostraRecordsInTest("420400", 1, 100, 600, 0),
                     expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
-                            "(0) i driftsregnskapet"
+                            "(0) i driftsregnskapet",
                 ),
                 ForAllRowItem(
                     "belop > 0",
-                    kostraRecordsInTest("420400", 1, 100, 590, 1)
+                    kostraRecordsInTest("420400", 1, 100, 590, 1),
                 ),
             ),
             expectedSeverity = Severity.ERROR,

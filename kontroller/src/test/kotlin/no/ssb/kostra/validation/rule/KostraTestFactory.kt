@@ -10,12 +10,14 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import kotlin.math.exp
 
 data class ForAllRowItem<out T : Any>(
     val description: String,
     val context: T,
     val expectedErrorMessage: String? = null,
-    val arguments: KotlinArguments = argumentsInTest
+    val arguments: KotlinArguments = argumentsInTest,
+    val expectedSize: Int = 1
 )
 
 object KostraTestFactory {
@@ -29,10 +31,10 @@ object KostraTestFactory {
     ) = behaviorSpec {
         Given("context") {
             forAll(
-                *forAllRows.map { (description, context, expectedErrorMessage, arguments) ->
-                    row(description, context, expectedErrorMessage, arguments)
+                *forAllRows.map { (description, context, expectedErrorMessage, arguments, expectedSize) ->
+                    row(description, context, expectedErrorMessage, arguments, expectedSize)
                 }.toTypedArray()
-            ) { description, context, expectedErrorMessage, arguments ->
+            ) { description, context, expectedErrorMessage, arguments, expectedSize ->
                 When(description) {
                     val validationReportEntries =
                         if (useArguments) sut.validate(context, arguments)
@@ -43,7 +45,8 @@ object KostraTestFactory {
                             validationReportEntries = validationReportEntries,
                             expectError = !expectedErrorMessage.isNullOrEmpty(),
                             expectedSeverity = expectedSeverity,
-                            expectedErrorText = expectedErrorMessage ?: "N/A"
+                            expectedErrorText = expectedErrorMessage ?: "N/A",
+                            expectedSize = expectedSize
                         )
 
                         /** if expectedContextId is present */

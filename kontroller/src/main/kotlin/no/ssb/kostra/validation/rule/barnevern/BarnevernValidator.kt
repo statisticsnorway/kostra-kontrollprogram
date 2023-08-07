@@ -4,7 +4,7 @@ import no.ssb.kostra.barn.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.ValidationResult
+import no.ssb.kostra.validation.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
 import no.ssb.kostra.validation.rule.barnevern.extension.addKeyOrAddValueIfKeyIsPresent

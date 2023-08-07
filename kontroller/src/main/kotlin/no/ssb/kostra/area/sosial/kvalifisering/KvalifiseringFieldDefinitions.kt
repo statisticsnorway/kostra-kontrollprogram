@@ -1,7 +1,7 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
-import no.ssb.kostra.area.FieldDefinitions
+import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
@@ -46,7 +46,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_T
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
 import no.ssb.kostra.program.*
 
-object KvalifiseringFieldDefinitions : FieldDefinitions {
+object KvalifiseringFieldDefinitions : FieldDefinitions() {
 
     override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(

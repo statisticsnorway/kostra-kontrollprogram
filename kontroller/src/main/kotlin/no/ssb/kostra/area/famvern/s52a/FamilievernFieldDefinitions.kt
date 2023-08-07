@@ -1,10 +1,10 @@
 package no.ssb.kostra.area.famvern.s52a
 
-import no.ssb.kostra.area.FieldDefinitions
+import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.FieldDefinition
 
-class FamilievernFieldDefinitions : FieldDefinitions {
+class FamilievernFieldDefinitions : FieldDefinitions() {
     override val fieldDefinitions = listOf(
         FieldDefinition(
             1, "REGION_NR_A",

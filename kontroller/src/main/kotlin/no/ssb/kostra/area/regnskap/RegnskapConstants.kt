@@ -1,5 +1,7 @@
 package no.ssb.kostra.area.regnskap
 
+import no.ssb.kostra.program.KotlinArguments
+
 object RegnskapConstants {
     const val FIELD_SKJEMA = "skjema"
     const val FIELD_AARGANG = "aargang"
@@ -16,11 +18,12 @@ object RegnskapConstants {
     const val FIELD_SEKTOR = FIELD_ART_SEKTOR
     const val FIELD_BELOP = "belop"
 
-    const val TITLE_KONTOKLASSE = "Kontoklasse"
-    const val TITLE_FUNKSJON = "Funksjon"
-    const val TITLE_KAPITTEL = "Kapittel"
-    const val TITLE_ART = "Art"
-    const val TITLE_SEKTOR = "Sektor"
+    private const val TITLE_ORGNR = "Organisasjonsnummer"
+    private const val TITLE_KONTOKLASSE = "Kontoklasse"
+    private const val TITLE_FUNKSJON = "Funksjon"
+    private const val TITLE_KAPITTEL = "Kapittel"
+    private const val TITLE_ART = "Art"
+    private const val TITLE_SEKTOR = "Sektor"
 
     const val ACCOUNTING_TYPE_BALANSE = "BAL"
     const val ACCOUNTING_TYPE_BEVILGNING = "BEV"
@@ -32,13 +35,14 @@ object RegnskapConstants {
     const val ACCOUNT_TYPE_INVESTERING = "I"
     private const val ACCOUNT_TYPE_RESULTAT = "R"
 
-    const val REGION_FYLKE = "FYLKE"
-    const val REGION_KOMMUNE = "KOMM"
-    const val REGION_OSLO = "OSLO"
-    const val REGION_SVALBARD = "SVALBARD"
-    const val REGION_BYDEL = "BYDEL"
-    const val REGION_SAERBEDRIFT = "IKS"
-    const val REGION_LANEFOND = "LANEFOND"
+    val osloKommuner = listOf(
+        // @formatter:off
+        "030100",
+        "030101", "030102", "030103", "030104", "030105",
+        "030106", "030107", "030108", "030109", "030110",
+        "030111", "030112", "030113", "030114", "030115"
+        // @formatter:on
+    )
 
     data class Mapping(
         val regnskapType: String,
@@ -47,13 +51,12 @@ object RegnskapConstants {
         val kontoklasse: String
     )
 
-    private val mappingBasis: List<Mapping> = listOf(
+    private val mappingBasis: List<Mapping> = sequenceOf(
         // Helse
         Mapping(ACCOUNTING_TYPE_RESULTAT, "0X", ACCOUNT_TYPE_RESULTAT, " "),
         Mapping(ACCOUNTING_TYPE_BALANSE, "0Y", ACCOUNT_TYPE_BALANSE, " "),
     )
         // Kostra og Kirke
-        .asSequence()
         .plus(
             listOf("0A", "0C")
                 .map { skjema ->
@@ -132,5 +135,46 @@ object RegnskapConstants {
             .filter { it.skjema == skjema && it.kontoklasse == kontoklasse }
             .map { it.kontoType }
             .first()
+
+    fun mappingDuplicates(arguments: KotlinArguments): Pair<List<String>, List<String>> =
+        when (getRegnskapTypeBySkjema(arguments.skjema)) {
+            listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE) ->
+                listOf(
+                    FIELD_KONTOKLASSE,
+                    FIELD_FUNKSJON,
+                    FIELD_ART
+                ) to listOf(
+                    TITLE_KONTOKLASSE,
+                    TITLE_FUNKSJON,
+                    TITLE_ART
+                )
+
+            listOf(ACCOUNTING_TYPE_BALANSE) ->
+                listOf(
+                    FIELD_KONTOKLASSE,
+                    FIELD_KAPITTEL,
+                    FIELD_SEKTOR
+                ) to listOf(
+                    TITLE_KONTOKLASSE,
+                    TITLE_KAPITTEL,
+                    TITLE_SEKTOR
+                )
+
+            listOf(ACCOUNTING_TYPE_RESULTAT) ->
+                listOf(
+                    FIELD_ORGNR,
+                    FIELD_KONTOKLASSE,
+                    FIELD_KAPITTEL,
+                    FIELD_SEKTOR
+                ) to listOf(
+                    TITLE_ORGNR,
+                    TITLE_KONTOKLASSE,
+                    TITLE_KAPITTEL,
+                    TITLE_SEKTOR
+                )
+
+            else -> emptyList<String>() to emptyList()
+        }
+
 }
 

@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.UTBETTOMDATO_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VILKARSOSLOV_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.UTBETTOMDATO_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARSOSLOV_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -15,18 +15,18 @@ class Rule042TilOgMedDatoForUtbetalingsvedtakTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "vilkar = X, utbettomdato = blank",
-                    kostraRecordInTest("X", "")
+                    kostraRecordInTest("X", ""),
                 ),
                 ForAllRowItem(
                     "vilkar = 1, utbettomdato = 0101${SosialhjelpTestUtils.twoDigitReportingYear}",
-                    kostraRecordInTest("1", "0101${SosialhjelpTestUtils.twoDigitReportingYear}")
+                    kostraRecordInTest("1", "0101${SosialhjelpTestUtils.twoDigitReportingYear}"),
                 ),
                 ForAllRowItem(
                     "vilkar = 1, utbettomdato = blank",
                     kostraRecordInTest("1", "      "),
                     expectedErrorMessage = "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
                             "sosialtjenesteloven', så skal utbetalingsvedtakets til og med dato (      ) oppgis. " +
-                            "Feltet er obligatorisk å fylle ut."
+                            "Feltet er obligatorisk å fylle ut.",
                 ),
             ),
             expectedSeverity = Severity.ERROR

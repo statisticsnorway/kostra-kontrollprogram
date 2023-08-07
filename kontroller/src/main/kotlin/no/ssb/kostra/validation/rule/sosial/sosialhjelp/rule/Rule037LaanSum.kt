@@ -1,22 +1,24 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_10_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_11_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_12_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_1_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_2_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_3_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_4_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_5_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_6_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_7_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_8_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_9_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.LAAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_10_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_11_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_12_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_1_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_2_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_3_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_4_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_5_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_6_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_7_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_8_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_9_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
@@ -24,22 +26,22 @@ class Rule037LaanSum : AbstractRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K037_LAANSUM.title,
     Severity.WARNING
 ) {
-    override fun validate(
-        context: List<KostraRecord>,
-        arguments: KotlinArguments
-    ): List<ValidationReportEntry>? = context
-        .map { kostraRecord ->
-            months.sumOf { kostraRecord.fieldAsIntOrDefault(it) } to kostraRecord.fieldAsIntOrDefault(LAAN_COL_NAME)
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .map {
+            it to months.sumOf { month -> it.fieldAsIntOrDefault(month) }
         }.filterNot {
-            it.first == it.second
-        }.takeIf {
-            it.any()
-        }?.map {
+            it.first.fieldAsIntOrDefault(LAAN_COL_NAME) == it.second
+        }.map {
             createValidationReportEntry(
-                "Det er ikke fylt ut lån (${it.first}) fordelt på måneder eller sum stemmer ikke " +
-                        "med sum lån (${it.second}) utbetalt i løpet av året."
+                "Det er ikke fylt ut lån (${it.second}) fordelt på måneder eller sum stemmer ikke " +
+                        "med sum lån (${it.first[LAAN_COL_NAME]}) utbetalt i løpet av året.",
+                lineNumbers = listOf(it.first.lineNumber)
+            ).copy(
+                caseworker = it.first[SAKSBEHANDLER_COL_NAME],
+                journalId = it.first[PERSON_JOURNALNR_COL_NAME],
+                individId = it.first[PERSON_FODSELSNR_COL_NAME],
             )
-        }
+        }.ifEmpty { null }
 
     companion object {
         val months = listOf(

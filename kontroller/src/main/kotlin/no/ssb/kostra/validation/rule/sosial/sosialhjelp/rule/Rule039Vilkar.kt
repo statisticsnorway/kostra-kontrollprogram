@@ -1,13 +1,13 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VILKARSOSLOV_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARSOSLOV_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
@@ -15,18 +15,18 @@ class Rule039Vilkar : AbstractRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K039_VILKAR.title,
     Severity.ERROR
 ) {
-    override fun validate(
-        context: List<KostraRecord>,
-        arguments: KotlinArguments
-    ): List<ValidationReportEntry>? = context
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filterNot {
             fieldDefinitions.byColumnName(VILKARSOSLOV_COL_NAME).codeExists(it[VILKARSOSLOV_COL_NAME])
-        }.takeIf {
-            it.any()
-        }?.map {
+        }.map {
             createValidationReportEntry(
                 "Det er ikke krysset av for om det stilles vilkår til mottakeren etter " +
-                        "sosialtjenesteloven. Registreres for første vilkår i kalenderåret. Feltet er obligatorisk."
+                        "sosialtjenesteloven. Registreres for første vilkår i kalenderåret. Feltet er obligatorisk.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[SosialColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
-        }
+        }.ifEmpty { null }
 }

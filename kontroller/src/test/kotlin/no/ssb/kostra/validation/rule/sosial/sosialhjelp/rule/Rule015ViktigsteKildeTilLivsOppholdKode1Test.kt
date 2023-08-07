@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ARBSIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -15,11 +15,11 @@ class Rule015ViktigsteKildeTilLivsOppholdKode1Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "vkloCode = 0, arbsitCode = 00",
-                    kostraRecordInTest("0", "00")
+                    kostraRecordInTest("0", "00"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 1, arbsitCode = 01",
-                    kostraRecordInTest("1", "01")
+                    kostraRecordInTest("1", "01"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 1, arbsitCode = 00",
@@ -28,7 +28,7 @@ class Rule015ViktigsteKildeTilLivsOppholdKode1Test : BehaviorSpec({
                             "sosial-/NAV-kontoret er Arbeidsinntekt. " +
                             "Arbeidssituasjonen er '(00)', forventet én av '([" +
                             "01=Arbeid, heltid, 02=Arbeid, deltid" +
-                            "])'. Feltet er obligatorisk å fylle ut."
+                            "])'. Feltet er obligatorisk å fylle ut.",
                 )
             ),
             expectedSeverity = Severity.ERROR

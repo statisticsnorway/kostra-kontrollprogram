@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.GITT_OKONOMIRAD_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.GITT_OKONOMIRAD_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -14,14 +14,14 @@ class Rule032OkonomiskRaadgivningGyldigeKoderTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "code = 1",
-                    kostraRecordInTest("1")
+                    kostraRecordInTest("1"),
                 ),
                 ForAllRowItem(
                     "code = X",
                     kostraRecordInTest("X"),
                     expectedErrorMessage = "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i " +
                             "forbindelse med utbetaling av økonomisk sosialhjelp. Utfylt verdi er '(X=Ukjent)'. " +
-                            "Feltet er obligatorisk å fylle ut."
+                            "Feltet er obligatorisk å fylle ut.",
                 ),
             ),
             expectedSeverity = Severity.ERROR

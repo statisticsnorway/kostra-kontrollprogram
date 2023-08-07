@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -14,7 +14,7 @@ class Rule014ViktigsteKildeTilLivsOppholdGyldigeVerdierTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "vkloCode = 1",
-                    kostraRecordInTest("1")
+                    kostraRecordInTest("1"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 0",
@@ -22,7 +22,7 @@ class Rule014ViktigsteKildeTilLivsOppholdGyldigeVerdierTest : BehaviorSpec({
                     expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                             "sosial-/NAV-kontoret skal oppgis. Fant '(0)', forventet én av '([1=Arbeidsinntekt, " +
                             "2=Kursstønad/lønn i arbeidsmarkedstiltak, 3=Trygd/pensjon, 4=Stipend/lån, 5=Sosialhjelp, " +
-                            "6=Introduksjonsstøtte, 7=Ektefelle/samboers arbeidsinntekt, 8=Kvalifiseringsstønad, 9=Annen inntekt])'."
+                            "6=Introduksjonsstøtte, 7=Ektefelle/samboers arbeidsinntekt, 8=Kvalifiseringsstønad, 9=Annen inntekt])'.",
                 )
             ),
             expectedSeverity = Severity.ERROR

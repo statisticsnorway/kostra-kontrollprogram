@@ -1,9 +1,9 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.ARBSIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.TRYGDESIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ARBSIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.TRYGDESIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -16,20 +16,20 @@ class Rule024BTilknytningTilTrygdesystemetOgArbeidssituasjonTest : BehaviorSpec(
             forAllRows = listOf(
                 ForAllRowItem(
                     "vkloCode = 0, trygdesitCode = 00, arbsitCode = 00",
-                    kostraRecordInTest("0", "00", "00")
+                    kostraRecordInTest("0", "00", "00"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 3, trygdesitCode = 01, arbsitCode = 00",
-                    kostraRecordInTest("3", "01", "00")
+                    kostraRecordInTest("3", "01", "00"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 3, trygdesitCode = 11, arbsitCode = 01",
-                    kostraRecordInTest("3", "11", "01")
+                    kostraRecordInTest("3", "11", "01"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 3, trygdesitCode = 11, arbsitCode = 08",
                     kostraRecordInTest("3", "11", "08"),
-                    expectedErrorMessage = "Mottakeren mottar trygd (11=Arbeidsavklaringspenger), men det er oppgitt ugyldig kode (08=Arbeidsledig, men ikke registrert hos NAV) på arbeidssituasjon."
+                    expectedErrorMessage = "Mottakeren mottar trygd (11=Arbeidsavklaringspenger), men det er oppgitt ugyldig kode (08=Arbeidsledig, men ikke registrert hos NAV) på arbeidssituasjon.",
                 ),
             ),
             expectedSeverity = Severity.ERROR

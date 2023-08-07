@@ -1,10 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
 enum class KvalifiseringRuleId(val title: String) {
-    BU_18_10("10Bu18"),
-    BU_18_ANT_BU_18_11("11Bu18AntBu18"),
-    ANT_BU_18_BU_18_12("12AntBu18Bu18"),
-    ANT_BU_18_13("13AntBu18"),
     REG_DATO_14("14RegDato"),
     VEDTAK_DATO_15("15VedtakDato"),
     BEGYNT_DATO_16("16BegyntDato"),

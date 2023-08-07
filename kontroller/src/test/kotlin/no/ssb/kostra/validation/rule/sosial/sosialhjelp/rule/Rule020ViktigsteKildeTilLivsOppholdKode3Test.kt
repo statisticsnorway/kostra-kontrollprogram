@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.TRYGDESIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames.VKLO_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.TRYGDESIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -15,11 +15,11 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "vkloCode = 0, trygdesitCode = 00",
-                    kostraRecordInTest("0", "00")
+                    kostraRecordInTest("0", "00"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 3, trygdesitCode = 10",
-                    kostraRecordInTest("3", "10")
+                    kostraRecordInTest("3", "10"),
                 ),
                 ForAllRowItem(
                     "vkloCode = 3, trygdesitCode = 00",
@@ -30,7 +30,7 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
                             "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, 06=Etterlattepensjon, " +
                             "07=Alderspensjon, 09=Supplerende stønad (kort botid), 10=Annen trygd, " +
                             "11=Arbeidsavklaringspenger" +
-                            "])'. Feltet er obligatorisk å fylle ut."
+                            "])'. Feltet er obligatorisk å fylle ut.",
                 )
             ),
             expectedSeverity = Severity.ERROR

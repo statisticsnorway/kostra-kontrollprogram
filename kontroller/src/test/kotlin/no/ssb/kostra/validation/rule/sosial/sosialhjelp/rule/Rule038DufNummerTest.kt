@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosial.SosialColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -16,17 +16,17 @@ class Rule038DufNummerTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "fnr = random generated, dufnr = blank",
-                    kostraRecordInTest(fnr, "")
+                    kostraRecordInTest(fnr, ""),
                 ),
                 ForAllRowItem(
                     "fnr = blank, dufnr = random generated",
-                    kostraRecordInTest("", dufnr)
+                    kostraRecordInTest("", dufnr),
                 ),
                 ForAllRowItem(
                     "fnr = blank, dufnr = blank",
                     kostraRecordInTest("", ""),
                     expectedErrorMessage = "Det er ikke oppgitt fødselsnummer/d-nummer på sosialhjelpsmottakeren eller " +
-                            "fødselsnummeret/d-nummeret inneholder feil. Oppgi ett 12-sifret DUF-nummer."
+                            "fødselsnummeret/d-nummeret inneholder feil. Oppgi ett 12-sifret DUF-nummer.",
                 ),
             ),
             expectedSeverity = Severity.WARNING

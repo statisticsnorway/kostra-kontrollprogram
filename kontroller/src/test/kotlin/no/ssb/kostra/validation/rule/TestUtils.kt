@@ -13,11 +13,12 @@ object TestUtils {
         validationReportEntries: Collection<ValidationReportEntry>?,
         expectError: Boolean,
         expectedSeverity: Severity,
-        expectedErrorText: String
+        expectedErrorText: String,
+        expectedSize: Int = 1
     ) {
         if (expectError) {
             validationReportEntries.shouldNotBeNull()
-            validationReportEntries.size.shouldBe(1)
+            validationReportEntries.size.shouldBe(expectedSize)
 
             assertSoftly(validationReportEntries.first()) {
                 severity.shouldBe(expectedSeverity)

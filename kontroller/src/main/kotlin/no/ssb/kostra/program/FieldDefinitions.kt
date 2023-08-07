@@ -1,9 +1,7 @@
-package no.ssb.kostra.area
+package no.ssb.kostra.program
 
-import no.ssb.kostra.program.FieldDefinition
-
-interface FieldDefinitions {
-    val fieldDefinitions: List<FieldDefinition>
+open class FieldDefinitions {
+    open val fieldDefinitions: List<FieldDefinition> = emptyList()
 
     val fieldLength: Int
         get() = fieldDefinitions.last().to

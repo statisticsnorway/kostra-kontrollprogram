@@ -1,19 +1,20 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.AbstractValidator
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
+import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule025KombinasjonDriftKontoklasseArt
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule040KombinasjonInvesteringKontoklasseFunksjon
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteringKontoklasseArt
 
-class KvartalKostra(
-    arguments: KotlinArguments,
-
-    ) : AbstractValidator(arguments) {
+class KvartalKostraMain(
+    arguments: KotlinArguments
+) : Validator(arguments) {
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -213,6 +214,8 @@ class KvartalKostra(
         // @formatter:on
     )
 
+    override val fieldDefinitions = RegnskapFieldDefinitions
+
     override val fatalRules = listOf(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
     )
@@ -230,7 +233,7 @@ class KvartalKostra(
         Rule012Art(artList = getArtAsList()),
         Rule013Sektor(sektorList = getSektorAsList()),
         Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates()),
+        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
         Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
         Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
         Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),

@@ -1,17 +1,18 @@
 package no.ssb.kostra.area.regnskap.helseforetak
 
-import no.ssb.kostra.area.AbstractValidator
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.helseforetak.*
 
-class HelseForetak(
+class HelseForetakMain(
     arguments: KotlinArguments,
 
-    ) : AbstractValidator(arguments) {
+    ) : Validator(arguments) {
     private val hfOrgnr = listOf(
         //@formatter:off
         "928033821",
@@ -139,6 +140,8 @@ class HelseForetak(
 
     private val artPositiveBelop = listOf("190", "192", "194", "195")
 
+    override val fieldDefinitions = RegnskapFieldDefinitions
+
     override val fatalRules = listOf(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
     )
@@ -156,7 +159,7 @@ class HelseForetak(
         Rule012Art(artList = getArtAsList()),
         Rule013Sektor(sektorList = getSektorAsList()),
         Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates()),
+        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
 
         Rule500Funksjon400(validOrgnrList = hfOrgnr),
         Rule510Art320(validFunksjonList = art320Funksjoner),

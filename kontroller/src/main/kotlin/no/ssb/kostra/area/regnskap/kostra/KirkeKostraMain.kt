@@ -1,17 +1,18 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.AbstractValidator
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kirkekostra.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
-class KirkeKostra(
+class KirkeKostraMain(
     arguments: KotlinArguments
-) : AbstractValidator(arguments) {
+) : Validator(arguments) {
 
     private val funksjoner = listOf(
         //@formatter:off
@@ -115,7 +116,7 @@ class KirkeKostra(
         Rule012Art(artList = getArtAsList()),
         Rule013Sektor(sektorList = getSektorAsList()),
         Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates()),
+        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
         Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
         Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
         Rule095SummeringInvesteringDifferanse(),

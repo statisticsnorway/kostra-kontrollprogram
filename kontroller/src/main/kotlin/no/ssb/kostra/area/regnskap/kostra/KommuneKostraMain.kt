@@ -1,20 +1,23 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.AbstractValidator
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
+import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
-class KommuneKostra(
+class KommuneKostraMain(
     arguments: KotlinArguments
-) : AbstractValidator(arguments) {
+) : Validator(arguments) {
     private val svalbard = listOf("211100")
 
     private val orgnrSpesial = listOf(
@@ -306,6 +309,8 @@ class KommuneKostra(
         // @formatter:on
     )
 
+    override val fieldDefinitions = RegnskapFieldDefinitions
+
     override val fatalRules = listOf(
         Rule001RecordLength(fieldLength)
     )
@@ -323,7 +328,7 @@ class KommuneKostra(
         Rule012Art(artList = getArtAsList()),
         Rule013Sektor(sektorList = getSektorAsList()),
         Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates()),
+        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
         Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = getInvalidDriftFunksjonList()),
         Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
         Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),

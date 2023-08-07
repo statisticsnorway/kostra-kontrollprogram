@@ -1,4 +1,4 @@
-package no.ssb.kostra.area.sosial.sosial
+package no.ssb.kostra.area.sosial.sosialhjelp
 
 object SosialColumnNames {
     const val SAKSBEHANDLER_COL_NAME = "SAKSBEHANDLER"

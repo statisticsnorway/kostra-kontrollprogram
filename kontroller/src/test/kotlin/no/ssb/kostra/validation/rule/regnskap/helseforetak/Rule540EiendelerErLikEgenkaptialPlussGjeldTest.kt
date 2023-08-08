@@ -21,6 +21,7 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
             row("0Y", "0", "0", "-500", true), // belop mismatch -> Fail
             row("0Y", "1000", "-500", "0", true), // belop mismatch -> Fail
             row("0Y", "1000", "0", "-500", true), // belop mismatch -> Fail
+            row("0Y", "0", "-500", "-500", true), // belop mismatch -> Fail
             row("0Y", "1000", "-500", "-500", false), // belop match -> OK
         ) { skjema, sumEiendeler, sumEgenkapital, sumGjeld, expectError ->
             val kostraRecordList = listOf(

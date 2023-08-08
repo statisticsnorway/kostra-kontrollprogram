@@ -15,12 +15,13 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
     Given("context") {
         forAll(
             row("0X", "0", "0", "-500", false), // skjema mismatch -> OK
+            row("0Y", "0", "0", "0", false), // belop match -> OK
             row("0Y", "1000", "0", "0", true), // belop mismatch -> Fail
             row("0Y", "0", "-500", "0", true), // belop mismatch -> Fail
             row("0Y", "0", "0", "-500", true), // belop mismatch -> Fail
             row("0Y", "1000", "-500", "0", true), // belop mismatch -> Fail
             row("0Y", "1000", "0", "-500", true), // belop mismatch -> Fail
-            row("0Y", "1000", "-500", "-500", false), // skjema mismatch -> OK
+            row("0Y", "1000", "-500", "-500", false), // belop match -> OK
         ) { skjema, sumEiendeler, sumEgenkapital, sumGjeld, expectError ->
             val kostraRecordList = listOf(
                 mapOf(

@@ -11,7 +11,7 @@ import no.ssb.kostra.validation.rule.sosial.extensions.hasVarighet
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
 
-class Control30HarVarighetMenManglerKvalifiseringssum : AbstractRule<List<KostraRecord>>(
+class Rule030HarVarighetMenManglerKvalifiseringssum : AbstractRule<List<KostraRecord>>(
     KvalifiseringRuleId.HAR_VARIGHET_MEN_MANGLER_KVALIFISERINGSSUM_30.title,
     Severity.WARNING
 ) {

@@ -11,10 +11,10 @@ import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Rule028MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 
 
-class Control30HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
+class Rule030HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
     include(
         validationRuleTest(
-            sut = Control30HarVarighetMenManglerKvalifiseringssum(),
+            sut = Rule030HarVarighetMenManglerKvalifiseringssum(),
             forAllRows = listOf(
                 ForAllRowItem(
                     "with status = on leave, months and amount",

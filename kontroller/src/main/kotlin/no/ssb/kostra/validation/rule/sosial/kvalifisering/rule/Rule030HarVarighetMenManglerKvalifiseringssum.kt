@@ -19,11 +19,7 @@ class Rule030HarVarighetMenManglerKvalifiseringssum : AbstractRule<List<KostraRe
         .filter {
             it[STATUS_COL_NAME] != PERMISJON
                     && it.hasVarighet()
-                    && (
-                    it.fieldAsTrimmedString(KVP_STONAD_COL_NAME).isBlank()
-                            ||
-                            it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) == 0
-                    )
+                    && it.fieldAsTrimmedString(KVP_STONAD_COL_NAME).isBlank()
         }.map {
             createValidationReportEntry(
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +

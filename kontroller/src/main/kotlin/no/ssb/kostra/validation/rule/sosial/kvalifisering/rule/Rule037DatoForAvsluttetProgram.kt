@@ -28,7 +28,6 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
         }.map {
             if (
                 it[STATUS_COL_NAME] in codesThatRequiresDate
-                && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
             )
                 createValidationReportEntry(
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +

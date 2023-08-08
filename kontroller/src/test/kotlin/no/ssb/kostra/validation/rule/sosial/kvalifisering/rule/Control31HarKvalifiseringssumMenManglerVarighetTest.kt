@@ -3,6 +3,8 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
+import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -17,32 +19,21 @@ class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
             sut = Control31HarKvalifiseringssumMenManglerVarighet(),
             forAllRows = listOf(
                 ForAllRowItem(
+                    "with other status, months and amount",
+                    kostraRecordInTest("X"," ", false),
+                ),
+
+                ForAllRowItem(
                     "with months and amount",
-                    validKostraRecordInTest,
+                    kostraRecordInTest("1", "2", true),
                 ),
                 ForAllRowItem(
                     "without months, without amount",
-                    validKostraRecordInTest.copy(
-                        valuesByName = mapOf(
-                            KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                            KVP_STONAD_COL_NAME to " ",
-                            *((1..12).map {
-                                "${MONTH_PREFIX}$it" to "  "
-                            }).toTypedArray()
-                        )
-                    ),
+                    kostraRecordInTest("1", " ", false),
                 ),
                 ForAllRowItem(
                     "without months, with amount",
-                    validKostraRecordInTest.copy(
-                        valuesByName = mapOf(
-                            KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                            KVP_STONAD_COL_NAME to "1",
-                            *((1..12).map {
-                                "$MONTH_PREFIX$it" to "  "
-                            }).toTypedArray()
-                        )
-                    ),
+                    kostraRecordInTest("1", "1", false),
                     "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
                             "men mangler utfylling for hvilke måneder stønaden gjelder. " +
                             "Feltet er obligatorisk å fylle ut.",
@@ -53,12 +44,15 @@ class Control31HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
     )
 }) {
     companion object {
-        private val validKostraRecordInTest = kvalifiseringKostraRecordInTest(
-            mapOf(
-                KVP_STONAD_COL_NAME to "2",
-                *((1..12).map {
-                    "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
-                }).toTypedArray()
+        private fun kostraRecordInTest(status: String, kvpStonad: String, varighet: Boolean) = listOf(
+            kvalifiseringKostraRecordInTest(
+                mapOf(
+                    STATUS_COL_NAME to status,
+                    KVP_STONAD_COL_NAME to kvpStonad,
+                    *((1..12).map {
+                        "$MONTH_PREFIX$it" to if (varighet) it.toString().padStart(2, '0') else ""
+                    }).toTypedArray()
+                )
             )
         )
     }

@@ -18,10 +18,18 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter {
-            (it[STATUS_COL_NAME] in codesThatRequiresDate && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null)
-                    || it[STATUS_COL_NAME] !in codesThatRequiresDate && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) != null
+            (
+                    it[STATUS_COL_NAME] in codesThatRequiresDate
+                            && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
+                    ) || (
+                    it[STATUS_COL_NAME] !in codesThatRequiresDate
+                            && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) != null
+                    )
         }.map {
-            if (it[STATUS_COL_NAME] in codesThatRequiresDate && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null)
+            if (
+                it[STATUS_COL_NAME] in codesThatRequiresDate
+                && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
+            )
                 createValidationReportEntry(
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
                             "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for " +
@@ -38,7 +46,7 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
 
 
     companion object {
-        internal val codesThatRequiresDate = setOf("3", "4", "5")
+        internal val codesThatRequiresDate = setOf("3", "4", "5", "7")
 
         internal val codeListThatRequiredDate = fieldDefinitions
             .byColumnName(STATUS_COL_NAME).codeList

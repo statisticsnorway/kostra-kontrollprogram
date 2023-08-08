@@ -16,12 +16,12 @@ class Rule007AlderEr68AarEllerOver : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter {
-            it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())?.let { age -> 67 < age } ?: false
+            it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())?.let { age -> 67 < age }
+                ?: false
         }.map {
+            val alder = it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())
             createValidationReportEntry(
-                messageText = "Deltakeren (${
-                    (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)
-                } år) er 68 år eller eldre.",
+                messageText = "Deltakeren ($alder år) er 68 år eller eldre.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SAKSBEHANDLER_COL_NAME],

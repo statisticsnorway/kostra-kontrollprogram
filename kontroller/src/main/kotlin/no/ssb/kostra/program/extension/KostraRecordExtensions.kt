@@ -32,6 +32,16 @@ fun KostraRecord.plus(pair: Pair<String, String>): KostraRecord =
         fieldDefinitionByName = this.fieldDefinitionByName
     )
 
+fun KostraRecord.plus(map: Map<String, String>): KostraRecord = map.entries
+    .fold(this) { kostraRecord, entry ->
+        KostraRecord(
+            lineNumber = kostraRecord.lineNumber,
+            valuesByName = kostraRecord.valuesByName.toMutableMap().plus(entry.key to entry.value).toMap(),
+            fieldDefinitionByName = kostraRecord.fieldDefinitionByName
+        )
+    }
+
+
 fun String.toKostraRecord(
     index: Int,
     fieldDefinitions: List<FieldDefinition>

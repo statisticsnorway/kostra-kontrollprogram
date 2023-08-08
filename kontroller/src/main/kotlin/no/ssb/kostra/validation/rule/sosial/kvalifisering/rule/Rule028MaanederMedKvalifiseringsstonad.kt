@@ -4,13 +4,11 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.PERMISJON
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.byColumnName
-import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.sosial.extensions.hasNotVarighet
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
 class Rule028MaanederMedKvalifiseringsstonad : AbstractRule<List<KostraRecord>>(
@@ -21,10 +19,7 @@ class Rule028MaanederMedKvalifiseringsstonad : AbstractRule<List<KostraRecord>>(
         .filterNot {
             it[STATUS_COL_NAME] == PERMISJON
         }.filter {
-            (1..12).all { monthId ->
-                fieldDefinitions.byColumnName("$MONTH_PREFIX$monthId")
-                    .codeIsMissing(it["$MONTH_PREFIX$monthId"])
-            }
+            it.hasNotVarighet()
         }.map {
             createValidationReportEntry(
                 "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt " +

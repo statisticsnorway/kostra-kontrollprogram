@@ -13,27 +13,34 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecor
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filter { it.isBalanseRegnskap() }
-        .takeIf { it.any() }
-        ?.filter {
-            it.fieldAsIntOrDefault(FIELD_ART) in 100..195
-                    || it.fieldAsIntOrDefault(FIELD_ART) in 200..299
+        .filter {
+            it.isBalanseRegnskap()
         }
-        ?.partition {
-            it.fieldAsIntOrDefault(FIELD_ART) in 100..195
+        .takeIf {
+            it.any()
         }
-        ?.let { (eiendelerPosteringer, egenkapitalOgGjeldPosteringer) ->
-            val egenkapitalOgGjeldPartionedPosteringer =
-                egenkapitalOgGjeldPosteringer.partition { it.fieldAsIntOrDefault(FIELD_ART) in 200..209 }
-
-            return@let Triple(
-                eiendelerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
-                egenkapitalOgGjeldPartionedPosteringer.first.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
-                egenkapitalOgGjeldPartionedPosteringer.second.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
+        ?.groupBy {
+            when (it.fieldAsIntOrDefault(FIELD_ART)) {
+                in 100..195 -> "eiendeler"
+                in 200..209 -> "egenkaptital"
+                in 210..299 -> "gjeld"
+                else -> "annet"
+            }
+        }
+        ?.mapValues {
+            it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) }
+        }
+        ?.let {
+            Triple(
+                it.getOrDefault("eiendeler", 0),
+                it.getOrDefault("egenkaptital", 0),
+                it.getOrDefault("gjeld", 0),
             )
-        }?.takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
+        }
+        ?.takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             (sumEiendeler + sumEgenkapital + sumGjeld) in -50..50
-        }?.let { (sumEiendeler, sumEgenkapital, sumGjeld) ->
+        }
+        ?.let { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             val sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld)
             createSingleReportEntryList(
                 messageText = "Balansen ($sumBalanse) skal balansere ved at sum eiendeler ($sumEiendeler)  = sum " +

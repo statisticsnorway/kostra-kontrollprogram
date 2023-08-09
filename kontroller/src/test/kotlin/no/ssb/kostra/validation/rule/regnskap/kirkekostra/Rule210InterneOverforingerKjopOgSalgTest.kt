@@ -30,10 +30,18 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
                 ), false
             ),
             row(
-                "riktig regnskap og art, men sum internKjop + internSalg er utenfor interval på +-30",
+                "riktig regnskap og art, men sum internKjop + internSalg er utenfor interval på -30",
                 listOf(
                     kostraRecordInTest("0F", "380", 0),
                     kostraRecordInTest("0F", "780", -1000)
+                ),
+                true
+            ),
+            row(
+                "riktig regnskap og art, men sum internKjop + internSalg er utenfor interval på +30",
+                listOf(
+                    kostraRecordInTest("0F", "380", 1000),
+                    kostraRecordInTest("0F", "780", 0)
                 ),
                 true
             ),

@@ -5,13 +5,10 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KONTOKLASSE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
-import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils
 
 class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : BehaviorSpec({
     Given("context") {
@@ -19,48 +16,40 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
 
         forAll(
             row(
+                "feil regnskap, ikke BevilgningRegnskap",
                 listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "390",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "045 ",
-                        FIELD_ART to "790",
-                        FIELD_BELOP to "-100"
-                    )
+                    kostraRecordInTest("0X", "100", 0),
+                    kostraRecordInTest("0X", "780", -1000)
                 ), false
             ),
             row(
+                "riktig regnskap, men feil art",
                 listOf(
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "3",
-                        FIELD_FUNKSJON to "041 ",
-                        FIELD_ART to "100",
-                        FIELD_BELOP to "0"
-                    ),
-                    mapOf(
-                        FIELD_SKJEMA to "0F",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "045 ",
-                        FIELD_ART to "790",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
+                    kostraRecordInTest("0F", "100", 0),
+                    kostraRecordInTest("0F", "710", -1000)
+                ), false
+            ),
+            row(
+                "riktig regnskap og art, men sum kalkulatoriskeUtgifter + kalkulatoriskeInntekter er utenfor interval på +-30",
+                listOf(
+                    kostraRecordInTest("0F", "390", 0),
+                    kostraRecordInTest("0F", "790", -1000)
+                ),
+                true
+            ),
+            row(
+                "alt riktig, differanse = 0",
+                listOf(
+                    kostraRecordInTest("0F", "390", 1000),
+                    kostraRecordInTest("0F", "790", -1000)
+                ), false
             )
-        ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords(fieldDefinitions)
+        ) { description, kostraRecordList, expectError ->
             val kalkulatoriskeUtgifter = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
             val kalkulatoriskeInntekter = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
             val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
 
-            When("List is $recordList") {
+            When(description) {
                 verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,
@@ -73,4 +62,18 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
             }
         }
     }
-})
+}) {
+    companion object {
+        private fun kostraRecordInTest(
+            skjema: String,
+            art: String,
+            belop: Int,
+        ) = RegnskapTestUtils.regnskapRecordInTest(
+            mapOf(
+                FIELD_SKJEMA to skjema,
+                FIELD_ART to art,
+                FIELD_BELOP to belop.toString()
+            )
+        )
+    }
+}

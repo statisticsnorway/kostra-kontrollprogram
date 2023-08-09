@@ -39,13 +39,21 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
                             "egenkapital (-100) + sum gjeld (-100) . Differanser +/- 50' kroner godtas"
                 ),
                 ForAllRowItem(
-                    "riktig skjema, sektor og beløp, differanse = 0",
+                    "riktig skjema, sektor og beløp, differanse = -50",
                     listOf(
                         kostraRecordInTest("0Y", "100", 1000),
                         kostraRecordInTest("0Y", "200", -500),
-                        kostraRecordInTest("0Y", "210", -500),
+                        kostraRecordInTest("0Y", "210", -550),
                     ),
                 ),
+                ForAllRowItem(
+                    "riktig skjema, sektor og beløp, differanse = +50",
+                    listOf(
+                        kostraRecordInTest("0Y", "100", 1000),
+                        kostraRecordInTest("0Y", "200", -500),
+                        kostraRecordInTest("0Y", "210", -450),
+                    ),
+                )
             ),
             expectedSeverity = Severity.WARNING
         )

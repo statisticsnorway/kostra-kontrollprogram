@@ -13,7 +13,8 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningInvesteringRegnskap() }
+        .filter { it.isBevilgningInvesteringRegnskap() }
+        .filter { !it.isOsloBydel() }
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
         ?.let { (investeringUtgifterPosteringer, investeringInntekterPosteringer) ->

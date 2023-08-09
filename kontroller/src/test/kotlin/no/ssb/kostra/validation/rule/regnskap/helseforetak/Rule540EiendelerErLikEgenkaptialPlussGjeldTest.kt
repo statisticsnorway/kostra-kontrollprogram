@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
@@ -21,12 +20,14 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
                         kostraRecordInTest("0X", "100", 0),
                     ),
                 ),
-                ForAllRowItem(
-                    "riktig skjema, men feil sektor",
-                    listOf(
-                        kostraRecordInTest("0Y", "999", 0),
-                    ),
-                ),
+                *setOf(99, 196, 199, 300).map {
+                    ForAllRowItem(
+                        "riktig skjema, men feil sektor ($it)",
+                        listOf(
+                            kostraRecordInTest("0Y", "$it", 0),
+                        ),
+                    )
+                }.toTypedArray(),
                 ForAllRowItem(
                     "riktig skjema og sektor, men feil beløp",
                     listOf(

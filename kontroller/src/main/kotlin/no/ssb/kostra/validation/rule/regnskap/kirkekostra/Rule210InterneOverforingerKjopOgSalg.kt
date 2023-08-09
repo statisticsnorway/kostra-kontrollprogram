@@ -20,13 +20,16 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractRule<List<KostraRecord>>(
             Pair(
                 internKjopPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
-                ?.let { (internKjop, internSalg) ->
-                    createSingleReportEntryList(
-                        messageText = "Korrigér i fila slik at differansen (${internKjop.plus(internSalg)}) mellom " +
-                                "internkjøp ($internKjop) og internsalg ($internSalg) stemmer overens " +
-                                "(margin på +/- 30')"
-                    )
-                }
+            )
+        }
+        ?.takeUnless { (internKjop, internSalg) ->
+            (internKjop + internSalg) in -30..30
+        }
+        ?.let { (internKjop, internSalg) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at differansen (${internKjop.plus(internSalg)}) mellom " +
+                        "internkjøp ($internKjop) og internsalg ($internSalg) stemmer overens " +
+                        "(margin på +/- 30')"
+            )
         }
 }

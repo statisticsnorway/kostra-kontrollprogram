@@ -20,16 +20,16 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractRule
             Pair(
                 utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 inntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
-                (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
-            }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
-                val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
-                createSingleReportEntryList(
-                    messageText = "Korrigér i fila slik at differansen ($kalkulatoriskeDifferanse) mellom " +
-                            "kalkulatoriske utgifter ($kalkulatoriskeUtgifter) og inntekter " +
-                            "($kalkulatoriskeInntekter) ved kommunal tjenesteytelse stemmer overens " +
-                            "(margin på +/- 30')"
-                )
-            }
+            )
+        }?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+            (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
+        }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+            val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at differansen ($kalkulatoriskeDifferanse) mellom " +
+                        "kalkulatoriske utgifter ($kalkulatoriskeUtgifter) og inntekter " +
+                        "($kalkulatoriskeInntekter) ved kommunal tjenesteytelse stemmer overens " +
+                        "(margin på +/- 30')"
+            )
         }
 }

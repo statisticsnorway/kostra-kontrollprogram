@@ -2,6 +2,9 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -28,11 +31,11 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
                     "riktig skjema og sektor, men feil beløp",
                     listOf(
                         kostraRecordInTest("0Y", "100", 1000),
-                        kostraRecordInTest("0Y", "200", 0),
-                        kostraRecordInTest("0Y", "210", 0),
+                        kostraRecordInTest("0Y", "200", -100),
+                        kostraRecordInTest("0Y", "210", -100),
                     ),
-                    expectedErrorMessage = "Balansen (1000) skal balansere ved at sum eiendeler (1000)  = sum " +
-                            "egenkapital (0) + sum gjeld (0) . Differanser +/- 50' kroner godtas"
+                    expectedErrorMessage = "Balansen (800) skal balansere ved at sum eiendeler (1000)  = sum " +
+                            "egenkapital (-100) + sum gjeld (-100) . Differanser +/- 50' kroner godtas"
                 ),
                 ForAllRowItem(
                     "riktig skjema, sektor og beløp, differanse = 0",
@@ -55,9 +58,9 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
             belop: Int
         ) = RegnskapTestUtils.regnskapRecordInTest(
             mapOf(
-                RegnskapConstants.FIELD_SKJEMA to skjema,
-                RegnskapConstants.FIELD_SEKTOR to sektor,
-                RegnskapConstants.FIELD_BELOP to belop.toString()
+                FIELD_SKJEMA to skjema,
+                FIELD_SEKTOR to sektor,
+                FIELD_BELOP to belop.toString()
             )
         )
     }

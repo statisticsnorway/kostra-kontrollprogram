@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -16,29 +16,29 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecor
         .filter {
             it.isBalanseRegnskap()
         }
-        .takeIf {
-            it.any()
-        }
-        ?.groupBy {
-            when (it.fieldAsIntOrDefault(FIELD_ART)) {
+        .groupBy {
+            when (it.fieldAsIntOrDefault(FIELD_SEKTOR)) {
                 in 100..195 -> "eiendeler"
                 in 200..209 -> "egenkaptital"
                 in 210..299 -> "gjeld"
                 else -> "annet"
             }
         }
-        ?.mapValues {
+        .mapValues {
             it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) }
         }
-        ?.let {
+        .let {
             Triple(
                 it.getOrDefault("eiendeler", 0),
                 it.getOrDefault("egenkaptital", 0),
                 it.getOrDefault("gjeld", 0),
-            )
+            ).also { that -> println(that) }
         }
-        ?.takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
-            (sumEiendeler + sumEgenkapital + sumGjeld) in -50..50
+        .takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
+            (sumEiendeler
+                    + sumEgenkapital
+                    + sumGjeld
+                    ) in -50..50
         }
         ?.let { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             val sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld)

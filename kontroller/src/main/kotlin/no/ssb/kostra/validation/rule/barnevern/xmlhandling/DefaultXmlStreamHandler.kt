@@ -73,7 +73,7 @@ class DefaultXmlStreamHandler(
         individXmlElementHandler.handleXmlElement(
             xmlStreamReader = xmlStreamReader,
             arguments = arguments
-        ).let { (validationErrors, individ)  ->
+        ).let { (validationErrors, individ) ->
             if (individ != null) individCallbackFunc(individ)
             validationErrors
         }

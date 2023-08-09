@@ -1,8 +1,8 @@
 package no.ssb.kostra.area.famvern.s52a
 
-import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.FieldDefinitions
 
 class FamilievernFieldDefinitions : FieldDefinitions() {
     override val fieldDefinitions = listOf(

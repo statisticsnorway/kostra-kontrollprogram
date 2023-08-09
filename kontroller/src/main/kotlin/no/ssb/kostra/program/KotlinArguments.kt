@@ -27,7 +27,8 @@ data class KotlinArguments(
         }
     }
 
-    fun getInputContentAsStringList(delimiter: String = DEFAULT_LINEBREAK_CHAR): List<String> = inputFileContent.split(delimiter)
+    fun getInputContentAsStringList(delimiter: String = DEFAULT_LINEBREAK_CHAR): List<String> =
+        inputFileContent.split(delimiter)
 
     fun getInputContentAsInputStream(): InputStream = inputFileContent.byteInputStream(Charsets.ISO_8859_1)
 

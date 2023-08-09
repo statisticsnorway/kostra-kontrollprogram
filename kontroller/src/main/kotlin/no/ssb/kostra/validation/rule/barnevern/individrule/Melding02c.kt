@@ -26,7 +26,7 @@ class Melding02c : AbstractRule<KostraIndividType>(
             }.ifEmpty { null }
         }
 
-        companion object{
-            const val HENLAGT = "1"
-        }
+    companion object {
+        const val HENLAGT = "1"
+    }
 }

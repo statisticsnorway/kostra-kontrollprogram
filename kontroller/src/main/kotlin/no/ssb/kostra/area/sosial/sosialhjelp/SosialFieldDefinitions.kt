@@ -1,6 +1,5 @@
 package no.ssb.kostra.area.sosial.sosialhjelp
 
-import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.BIDRAG_10_COL_NAME
@@ -123,7 +122,7 @@ object SosialFieldDefinitions : FieldDefinitions() {
             from = 11,
             to = 18,
 
-        ),
+            ),
         FieldDefinition(
             number = 6,
             name = PERSON_FODSELSNR_COL_NAME,
@@ -244,7 +243,7 @@ object SosialFieldDefinitions : FieldDefinitions() {
                 Code("10", "Kvalifiseringsprogram")
             ),
 
-        ),
+            ),
         FieldDefinition(
             number = 141,
             name = STMND_1_COL_NAME,
@@ -311,7 +310,7 @@ object SosialFieldDefinitions : FieldDefinitions() {
                 Code("06", "Juni")
             ),
 
-        ),
+            ),
         FieldDefinition(
             number = 147,
             name = STMND_7_COL_NAME,

@@ -7,7 +7,8 @@ import jakarta.xml.bind.annotation.*
 data class KostraSaksinnholdType(
 
     @field:XmlAttribute(name = "Kode", required = true)
-    val kode: String = "0", /** workaround for data that is missing this field due to previous bug in XSD */
+    val kode: String = "0",
+    /** workaround for data that is missing this field due to previous bug in XSD */
 
     @field:XmlElement(name = "Presisering")
     val presisering: String? = null

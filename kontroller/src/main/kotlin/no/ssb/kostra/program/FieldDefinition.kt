@@ -11,7 +11,7 @@ data class FieldDefinition(
     var codeList: List<Code> = emptyList(),
     var datePattern: String = "",
     val mandatory: Boolean = false
-){
+) {
     init {
         if (viewType.equals(CHECKBOX_VIEWTYPE, ignoreCase = true) && codeList.isEmpty()) {
             codeList = listOf(

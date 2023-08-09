@@ -15,7 +15,8 @@ class Lovhjemmel03 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.fodselsnummer
         ?.ageInYears(arguments.aargang.toInt())
-        ?.takeIf { ageInYears -> ageInYears > AGE_SEVENTEEN && context.tiltak.any { it.erOmsorgsTiltak() }
+        ?.takeIf { ageInYears ->
+            ageInYears > AGE_SEVENTEEN && context.tiltak.any { it.erOmsorgsTiltak() }
         }?.let { ageInYears ->
             context.tiltak
                 .filter { it.erOmsorgsTiltak() }

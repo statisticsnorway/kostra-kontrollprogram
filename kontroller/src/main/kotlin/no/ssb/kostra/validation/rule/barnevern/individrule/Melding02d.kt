@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_
 import java.time.LocalDate
 
 /**
-    Jon Ole: Det burde vært en test på individnivå om avslutta3112 == 1 og sluttDato == null
+Jon Ole: Det burde vært en test på individnivå om avslutta3112 == 1 og sluttDato == null
  */
 
 class Melding02d : AbstractRule<KostraIndividType>(

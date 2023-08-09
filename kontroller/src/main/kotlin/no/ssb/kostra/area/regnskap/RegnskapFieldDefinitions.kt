@@ -1,6 +1,5 @@
 package no.ssb.kostra.area.regnskap
 
-import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_AARGANG
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
@@ -12,6 +11,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ORGNR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.STRING_TYPE
 

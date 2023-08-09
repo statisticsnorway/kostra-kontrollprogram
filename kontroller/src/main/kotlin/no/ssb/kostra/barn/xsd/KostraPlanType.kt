@@ -1,7 +1,7 @@
 package no.ssb.kostra.barn.xsd
 
-import java.time.LocalDate
 import jakarta.xml.bind.annotation.*
+import java.time.LocalDate
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PlanType")

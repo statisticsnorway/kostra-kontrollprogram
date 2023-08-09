@@ -49,7 +49,6 @@ open class AbstractRule<in T : Any>(
     )
 
 
-
     protected fun createSingleReportEntryList(
         messageText: String,
         lineNumbers: List<Int>

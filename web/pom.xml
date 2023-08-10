@@ -30,7 +30,7 @@
         <micronaut.openapi.version>4.8.7</micronaut.openapi.version>
         <slf4j.version>2.0.7</slf4j.version>
         <!-- 1.4.9 does not work with micronaut 3.9.x -->
-        <logback.version>1.4.8</logback.version>
+        <logback.version>1.4.11</logback.version>
 
         <exec.mainClass>no.ssb.kostra.web.ApplicationKt</exec.mainClass>
 

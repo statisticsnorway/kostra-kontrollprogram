@@ -24,10 +24,11 @@ class ConversionExtensionsKtTest : BehaviorSpec({
 
     Given("Severity.toInt") {
         forAll(
-            row(Severity.WARNING, 1),
-            row(Severity.ERROR, 2),
             row(Severity.FATAL, 2),
+            row(Severity.ERROR, 2),
+            row(Severity.WARNING, 1),
             row(Severity.INFO, 0),
+            row(Severity.OK, 0),
         ) { sut, expectedValue ->
 
             When(sut.name) {

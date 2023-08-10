@@ -30,10 +30,18 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekterTest : Behavior
                 ), false
             ),
             row(
-                "riktig regnskap og art, men sum kalkulatoriskeUtgifter + kalkulatoriskeInntekter er utenfor interval på +-30",
+                "riktig regnskap og art, men sum kalkulatoriskeUtgifter + kalkulatoriskeInntekter er utenfor interval på -30",
                 listOf(
                     kostraRecordInTest("0F", "390", 0),
                     kostraRecordInTest("0F", "790", -1000)
+                ),
+                true
+            ),
+            row(
+                "riktig regnskap og art, men sum kalkulatoriskeUtgifter + kalkulatoriskeInntekter er utenfor interval på +30",
+                listOf(
+                    kostraRecordInTest("0F", "390", 1000),
+                    kostraRecordInTest("0F", "790", 0)
                 ),
                 true
             ),

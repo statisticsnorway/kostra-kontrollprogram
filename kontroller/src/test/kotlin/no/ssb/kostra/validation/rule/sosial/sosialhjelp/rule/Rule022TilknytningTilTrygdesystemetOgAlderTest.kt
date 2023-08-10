@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_FODSELSNR_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.TRYGDESIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem

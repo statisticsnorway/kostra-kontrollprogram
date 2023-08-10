@@ -7,10 +7,10 @@ import no.ssb.kostra.validation.rule.sosial.rule.*
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule.*
 
 class SosialhjelpMain(arguments: KotlinArguments) : Validator(arguments) {
-    override val fieldDefinitions = SosialFieldDefinitions
+    override val fieldDefinitions = SosialhjelpFieldDefinitions
 
     override val fatalRules = listOf(
-        Rule001RecordLength(SosialFieldDefinitions.fieldLength)
+        Rule001RecordLength(SosialhjelpFieldDefinitions.fieldLength)
     )
 
     override val validationRules = listOf(

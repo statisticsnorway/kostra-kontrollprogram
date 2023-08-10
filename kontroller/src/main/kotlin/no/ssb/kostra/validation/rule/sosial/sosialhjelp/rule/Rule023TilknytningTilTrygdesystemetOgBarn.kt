@@ -1,8 +1,9 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ANT_BARN_UNDER_18_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.TRYGDESIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ANT_BARN_UNDER_18_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.fieldAs
@@ -22,6 +23,10 @@ class Rule023TilknytningTilTrygdesystemetOgBarn : AbstractRule<List<KostraRecord
         }.map {
             createValidationReportEntry(
                 "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

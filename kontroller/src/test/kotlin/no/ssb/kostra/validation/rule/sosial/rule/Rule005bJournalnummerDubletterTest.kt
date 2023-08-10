@@ -61,7 +61,7 @@ class Rule005bJournalnummerDubletterTest : BehaviorSpec({
                 KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to journalId,
                 KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to fodselsnummerInTest
             ),
-            KvalifiseringFieldDefinitions.fieldDefinitions.associate { with(it) { name to it } }
+            KvalifiseringFieldDefinitions.fieldDefinitions.associateBy { it.name }
         )
     }
 }

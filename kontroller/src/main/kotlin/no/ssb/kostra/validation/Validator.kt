@@ -37,7 +37,6 @@ open class Validator(
         val kostraRecordList = arguments
             .getInputContentAsStringList()
             .withIndex()
-            .filter { (_, line) -> line.length == fieldDefinitions.fieldLength }
             .map { (index, recordString) ->
                 recordString.toKostraRecord(
                     index = index + 1,
@@ -49,10 +48,9 @@ open class Validator(
             .mapNotNull { it.validate(context = kostraRecordList, arguments = arguments) }
             .flatten()
 
-        val validationSeverity: Severity = fatalValidationReportEntries
+        val validationSeverity: Severity = validationReportEntries
             .map { it.severity }
             .maxByOrNull { it.ordinal } ?: Severity.OK
-
 
         return ValidationResult(
             reportEntries = validationReportEntries,

@@ -5,13 +5,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.area.sosial.SosialConstants.MONTH_PREFIX
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.program.extension.toRecordString
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.rule.RuleTestData
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Rule028MaanederMedKvalifiseringsstonad
 import java.time.LocalDate
 import java.time.Year
 
@@ -104,7 +104,7 @@ class KvalifiseringMainTest : BehaviorSpec({
                 KvalifiseringColumnNames.KVP_STONAD_COL_NAME to "42",
 
                 *((1..12).map {
-                    "${Rule028MaanederMedKvalifiseringsstonad.MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
+                    "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
                 }).toTypedArray(),
             ),
             KvalifiseringFieldDefinitions.fieldDefinitionsByName

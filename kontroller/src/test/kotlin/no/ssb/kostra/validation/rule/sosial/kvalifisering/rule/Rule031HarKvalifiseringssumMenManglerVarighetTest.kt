@@ -1,13 +1,13 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
+import no.ssb.kostra.area.sosial.SosialConstants.MONTH_PREFIX
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Rule028MaanederMedKvalifiseringsstonad.Companion.MONTH_PREFIX
 
 class Rule031HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
     include(
@@ -16,7 +16,7 @@ class Rule031HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
             forAllRows = listOf(
                 ForAllRowItem(
                     "with other status, months and amount",
-                    kostraRecordInTest("X"," ", false),
+                    kostraRecordInTest("X", " ", false),
                 ),
 
                 ForAllRowItem(

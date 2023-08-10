@@ -1,9 +1,9 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_DUF_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_FODSELSNR_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.PERSON_JOURNALNR_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.SAKSBEHANDLER_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_DUF_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.util.SsnValidationUtils.validateDUF

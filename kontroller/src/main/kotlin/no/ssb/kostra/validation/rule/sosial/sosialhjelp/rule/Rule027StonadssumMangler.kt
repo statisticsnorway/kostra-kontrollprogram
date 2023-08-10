@@ -1,7 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.BIDRAG_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.LAAN_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -20,6 +21,10 @@ class Rule027StonadssumMangler : AbstractRule<List<KostraRecord>>(
                 "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp " +
                         "(bidrag (${it[BIDRAG_COL_NAME]}) eller lån (${it[LAAN_COL_NAME]})) i løpet av året, " +
                         "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

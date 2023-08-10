@@ -1,8 +1,9 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.ARBSIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.TRYGDESIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ARBSIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
@@ -33,6 +34,10 @@ class Rule024TilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractRule<List<
             createValidationReportEntry(
                 "Mottakeren mottar trygd ($trygdesituasjon), " +
                         "men det er oppgitt ugyldig kode ($arbeidssituasjon) på arbeidssituasjon."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

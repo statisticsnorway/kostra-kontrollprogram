@@ -1,6 +1,6 @@
 package no.ssb.kostra.area.sosial.sosialhjelp
 
-object SosialColumnNames {
+object SosialhjelpColumnNames {
     const val SAKSBEHANDLER_COL_NAME = "SAKSBEHANDLER"
     const val PERSON_JOURNALNR_COL_NAME = "PERSON_JOURNALNR"
     const val PERSON_FODSELSNR_COL_NAME = "PERSON_FODSELSNR"

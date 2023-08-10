@@ -2,12 +2,12 @@ package no.ssb.kostra.validation.rule.sosial.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.BYDELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -56,7 +56,7 @@ class Rule003BydelsnummerTest : BehaviorSpec({
                     SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                     PERSON_JOURNALNR_COL_NAME to "~journalId~"
 
-                ).toKostraRecord(lineNumber = 1, fieldDefinitions = RegnskapFieldDefinitions.fieldDefinitions)
+                ).toKostraRecord(lineNumber = 1, fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions)
             )
     }
 }

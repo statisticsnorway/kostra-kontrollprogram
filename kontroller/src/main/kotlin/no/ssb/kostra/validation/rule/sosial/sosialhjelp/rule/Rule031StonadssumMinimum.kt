@@ -1,7 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.BIDRAG_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.LAAN_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -22,6 +23,10 @@ class Rule031StonadssumMinimum : AbstractRule<List<KostraRecord>>(
                         "av bidrag (${it[BIDRAG_COL_NAME]}) og lån (${it[LAAN_COL_NAME]})) som mottakeren " +
                         "har fått i løpet av rapporteringsåret er lik/lavere enn Statistisk sentralbyrås " +
                         "kontrollgrense på kr. (${min}),-."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 

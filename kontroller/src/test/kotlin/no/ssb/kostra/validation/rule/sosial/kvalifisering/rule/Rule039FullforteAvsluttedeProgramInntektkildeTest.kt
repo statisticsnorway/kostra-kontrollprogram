@@ -26,7 +26,7 @@ class Rule039FullforteAvsluttedeProgramInntektkildeTest : BehaviorSpec({
                     "status = 3, no income code defined",
                     kostraRecordInTest("3", "  "),
                     "Feltet 'Hva var deltakerens <b>viktigste</b> inntektskilde umiddelbart etter avslutningen? " +
-                            "Må fylles ut dersom det er krysset av for svaralternativ "+
+                            "Må fylles ut dersom det er krysset av for svaralternativ " +
                             "3 = Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting) eller " +
                             "7 = Deltakeren program er avsluttet etter avbrudd under feltet for " +
                             "'Hva er status for deltakelsen i kvalifiseringsprogrammet per per 31.12.${(Year.now().value - 1)}'?",

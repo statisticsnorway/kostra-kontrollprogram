@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.BOSIT_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BOSIT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
@@ -28,9 +28,9 @@ class Rule035BoligsituasjonGyldigeKoder : AbstractRule<List<KostraRecord>>(
                         "Feltet er obligatorisk å fylle ut.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
-                caseworker = it[SosialColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[SosialColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[SosialColumnNames.PERSON_FODSELSNR_COL_NAME],
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

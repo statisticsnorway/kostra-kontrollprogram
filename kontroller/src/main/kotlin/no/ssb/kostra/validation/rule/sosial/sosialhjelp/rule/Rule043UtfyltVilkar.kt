@@ -1,19 +1,19 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARANNET_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARARBEID_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARDIGPLAN_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARHELSE_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARJOBBLOG_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARJOBBTILB_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARKURS_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARLIVSH_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKAROKRETT_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARSAMT_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARSOSLOV_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARUTD_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARANNET_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARARBEID_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARDIGPLAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARHELSE_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARJOBBLOG_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARJOBBTILB_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARKURS_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARLIVSH_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKAROKRETT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSAMT_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSOSLOV_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARUTD_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
@@ -52,9 +52,9 @@ class Rule043UtfyltVilkar : AbstractRule<List<KostraRecord>>(
                         "Feltet er obligatorisk å fylle ut.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
-                caseworker = it[SosialColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[SosialColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[SosialColumnNames.PERSON_FODSELSNR_COL_NAME],
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

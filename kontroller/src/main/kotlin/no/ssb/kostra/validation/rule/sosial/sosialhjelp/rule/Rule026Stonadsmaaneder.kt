@@ -1,20 +1,21 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.BIDRAG_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.LAAN_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_10_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_11_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_12_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_1_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_2_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_3_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_4_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_5_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_6_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_7_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_8_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.STMND_9_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.LAAN_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_10_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_11_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_12_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_1_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_2_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_3_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_4_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_5_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_6_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_7_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_8_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_9_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
@@ -37,6 +38,10 @@ class Rule026Stonadsmaaneder : AbstractRule<List<KostraRecord>>(
                 "Det er ikke krysset av for hvilke måneder mottakeren har fått utbetalt økonomisk " +
                         "sosialhjelp (bidrag (${it[BIDRAG_COL_NAME]}) eller lån (${it[LAAN_COL_NAME]})) i løpet " +
                         "av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 

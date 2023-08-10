@@ -32,8 +32,4 @@ class Rule028MaanederMedKvalifiseringsstonad : AbstractRule<List<KostraRecord>>(
                 individId = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
-
-    companion object {
-        internal const val MONTH_PREFIX = "STMND_"
-    }
 }

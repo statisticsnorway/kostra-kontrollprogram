@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.VILKARSOSLOV_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSOSLOV_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
@@ -24,9 +24,9 @@ class Rule039Vilkar : AbstractRule<List<KostraRecord>>(
                         "sosialtjenesteloven. Registreres for første vilkår i kalenderåret. Feltet er obligatorisk.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
-                caseworker = it[SosialColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[SosialColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[SosialColumnNames.PERSON_FODSELSNR_COL_NAME],
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

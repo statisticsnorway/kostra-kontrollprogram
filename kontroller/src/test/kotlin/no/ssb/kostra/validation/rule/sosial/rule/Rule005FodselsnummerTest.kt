@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
@@ -38,7 +38,7 @@ class Rule005FodselsnummerTest : BehaviorSpec({
                     PERSON_FODSELSNR_COL_NAME to individId,
                     SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                     PERSON_JOURNALNR_COL_NAME to "~journalId~"
-                ).toKostraRecord(lineNumber = 1, fieldDefinitions = SosialFieldDefinitions.fieldDefinitions)
+                ).toKostraRecord(lineNumber = 1, fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions)
             )
     }
 }

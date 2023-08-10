@@ -5,7 +5,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -40,7 +40,7 @@ class Rule003KommunenummerTest : BehaviorSpec({
                     PERSON_FODSELSNR_COL_NAME to "~fodselsnr~",
                     SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                     PERSON_JOURNALNR_COL_NAME to "~journalId~"
-                ).toKostraRecord(lineNumber = 1, fieldDefinitions = SosialFieldDefinitions.fieldDefinitions)
+                ).toKostraRecord(lineNumber = 1, fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions)
             )
     }
 }

@@ -1,7 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialColumnNames.GITT_OKONOMIRAD_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.GITT_OKONOMIRAD_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
@@ -19,13 +20,17 @@ class Rule032OkonomiskRaadgivningGyldigeKoder : AbstractRule<List<KostraRecord>>
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filterNot {
             fieldDefinitions.byColumnName(GITT_OKONOMIRAD_COL_NAME).codeExists(it[GITT_OKONOMIRAD_COL_NAME])
-        }.map { kostraRecord ->
-            val utfylt = Code(kostraRecord[GITT_OKONOMIRAD_COL_NAME], UNKNOWN)
+        }.map {
+            val utfylt = Code(it[GITT_OKONOMIRAD_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
                 "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med " +
                         "utbetaling av økonomisk sosialhjelp. Utfylt verdi er '($utfylt)'. " +
                         "Feltet er obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

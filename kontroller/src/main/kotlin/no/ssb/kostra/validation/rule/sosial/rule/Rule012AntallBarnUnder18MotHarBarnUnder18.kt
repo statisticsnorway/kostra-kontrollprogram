@@ -3,6 +3,9 @@ package no.ssb.kostra.validation.rule.sosial.rule
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.JA
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -28,9 +31,9 @@ class Rule012AntallBarnUnder18MotHarBarnUnder18 : AbstractRule<List<KostraRecord
                         "antall barn under 18 år som bor i husholdningen.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
-                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME],
+                caseworker = it[SAKSBEHANDLER_COL_NAME],
+                journalId = it[PERSON_JOURNALNR_COL_NAME],
+                individId = it[PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

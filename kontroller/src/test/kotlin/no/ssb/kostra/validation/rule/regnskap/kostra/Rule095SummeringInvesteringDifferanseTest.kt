@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -12,7 +13,9 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.TestUtils
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils
 
 class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
     Given("context") {
@@ -20,295 +23,56 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
 
         forAll(
             row(
+                "feil skjema",
                 listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
+                    kostraRecordInTest("XX", "XXXXXX", "0","100", 0),
+                    kostraRecordInTest("XX", "XXXXXX", "0", "780", -1000)
                 ), false
             ),
             row(
+                "riktig skjema og regnskap, men Oslo bydel",
                 listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "030100",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "030100",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "030101",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "030101",
-                        FIELD_SKJEMA to "0A",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
+                    kostraRecordInTest("0A", "030101", "0", "100", 0),
+                    kostraRecordInTest("0A", "030101", "0", "710", -1000)
                 ), false
             ),
             row(
+                "riktig skjema, regnskap og kommune, men driftsregnskap",
                 listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0C",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0C",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
+                    kostraRecordInTest("0A", "123400", "1", "100", 0),
+                    kostraRecordInTest("0A", "123400", "1", "710", -1000)
                 ), false
             ),
             row(
+                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
                 listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0C",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0C",
-                        FIELD_KONTOKLASSE to "0",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
+                    kostraRecordInTest("0A", "123400", "0", "100", 0),
+                    kostraRecordInTest("0A", "123400", "0", "710", -1000)
+                ),
+                true
             ),
             row(
+                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
                 listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0I",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0I",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
+                    kostraRecordInTest("0A", "123400", "0", "100", 1000),
+                    kostraRecordInTest("0A", "123400", "0", "710", 0)
+                ),
+                true
+            ),
+            row(
+                "alt riktig, differanse = 0",
+                listOf(
+                    kostraRecordInTest("0A", "123400", "0", "100", 1000),
+                    kostraRecordInTest("0A", "123400", "0", "710", -1000)
                 ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0I",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0I",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0K",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0K",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0K",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0K",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0M",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0M",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0M",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0M",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0P",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0P",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-100"
-                    )
-                ), false
-            ),
-            row(
-                listOf(
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0P",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "590",
-                        FIELD_BELOP to "100"
-                    ),
-                    mapOf(
-                        FIELD_REGION to "420400",
-                        FIELD_SKJEMA to "0P",
-                        FIELD_KONTOKLASSE to "4",
-                        FIELD_FUNKSJON to "100 ",
-                        FIELD_ART to "600",
-                        FIELD_BELOP to "-1000"
-                    )
-                ), true
-            ),
-        ) { recordList, expectError ->
-            val kostraRecordList = recordList.toKostraRecords(RegnskapFieldDefinitions.fieldDefinitions)
-            val investeringUtgifter = kostraRecordList[0].fieldAsIntOrDefault(FIELD_BELOP)
-            val investeringInntekter = kostraRecordList[1].fieldAsIntOrDefault(FIELD_BELOP)
-            val investeringDifferanse = kostraRecordList.sumOf {
-                it.fieldAsIntOrDefault(FIELD_BELOP)
-            }
+            )
+        ) { description, kostraRecordList, expectError ->
+            val investeringUtgifter = kostraRecordList[0].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
+            val investeringInntekter = kostraRecordList[1].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
+            val investeringDifferanse = investeringUtgifter + investeringInntekter
 
-            When("List is $recordList") {
-                verifyValidationResult(
+            When(description) {
+                TestUtils.verifyValidationResult(
                     validationReportEntries = sut.validate(kostraRecordList),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
@@ -318,4 +82,23 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
             }
         }
     }
-})
+
+}) {
+    companion object {
+        private fun kostraRecordInTest(
+            skjema: String,
+            region: String,
+            kontoklasse : String,
+            art: String,
+            belop: Int,
+        ) = RegnskapTestUtils.regnskapRecordInTest(
+            mapOf(
+                RegnskapConstants.FIELD_SKJEMA to skjema,
+                RegnskapConstants.FIELD_REGION to region,
+                RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
+                RegnskapConstants.FIELD_ART to art,
+                RegnskapConstants.FIELD_BELOP to belop.toString()
+            )
+        )
+    }
+}

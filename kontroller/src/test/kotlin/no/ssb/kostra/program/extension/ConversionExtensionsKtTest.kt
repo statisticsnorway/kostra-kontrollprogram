@@ -26,6 +26,7 @@ class ConversionExtensionsKtTest : BehaviorSpec({
         forAll(
             row(Severity.WARNING, 1),
             row(Severity.ERROR, 2),
+            row(Severity.FATAL, 2),
             row(Severity.INFO, 0),
         ) { sut, expectedValue ->
 

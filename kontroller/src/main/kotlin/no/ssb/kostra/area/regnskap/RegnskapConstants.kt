@@ -123,12 +123,14 @@ object RegnskapConstants {
         mappingBasis
             .filter { it.skjema == skjema }
             .map { it.regnskapType }
+            .distinct()
 
 
     fun getKontoklasseBySkjema(skjema: String): List<String> =
         mappingBasis
             .filter { it.skjema == skjema }
             .map { it.kontoklasse }
+            .distinct()
 
     fun getKontoTypeBySkjemaAndKontoklasse(skjema: String, kontoklasse: String): String =
         mappingBasis

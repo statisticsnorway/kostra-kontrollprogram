@@ -19,11 +19,10 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecor
         .groupBy {
             if (it.fieldAsIntOrDefault(FIELD_SEKTOR) < 200)
                 "eiendeler"
+            else if (it.fieldAsIntOrDefault(FIELD_SEKTOR) < 210)
+                "egenkaptital"
             else
-                if (it.fieldAsIntOrDefault(FIELD_SEKTOR) < 210)
-                    "egenkaptital"
-                else
-                    "gjeld"
+                "gjeld"
         }
         .mapValues {
             it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) }
@@ -33,13 +32,10 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecor
                 it.getOrDefault("eiendeler", 0),
                 it.getOrDefault("egenkaptital", 0),
                 it.getOrDefault("gjeld", 0),
-            ).also { that -> println(that) }
+            )
         }
         .takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
-            (sumEiendeler
-                    + sumEgenkapital
-                    + sumGjeld
-                    ) in -50..50
+            (sumEiendeler + sumEgenkapital + sumGjeld) in -50..50
         }
         ?.let { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             val sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld)

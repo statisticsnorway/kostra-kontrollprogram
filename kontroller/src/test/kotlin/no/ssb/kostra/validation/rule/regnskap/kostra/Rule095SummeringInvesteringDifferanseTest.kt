@@ -38,22 +38,29 @@ class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
                 listOf(
                     kostraRecordInTest("0A", "123400", "0", "100", 0),
-                    kostraRecordInTest("0A", "123400", "0", "710", -1000)
+                    kostraRecordInTest("0A", "123400", "0", "710", -31)
                 ),
                 true
             ),
             row(
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
                 listOf(
-                    kostraRecordInTest("0A", "123400", "0", "100", 1000),
+                    kostraRecordInTest("0A", "123400", "0", "100", 31),
                     kostraRecordInTest("0A", "123400", "0", "710", 0)
                 ),
                 true
             ),
             row(
-                "alt riktig, differanse = 0",
+                "alt riktig, differanse = -30",
                 listOf(
                     kostraRecordInTest("0A", "123400", "0", "100", 1000),
+                    kostraRecordInTest("0A", "123400", "0", "710", -1030)
+                ), false
+            ),
+            row(
+                "alt riktig, differanse = +30",
+                listOf(
+                    kostraRecordInTest("0A", "123400", "0", "100", 1030),
                     kostraRecordInTest("0A", "123400", "0", "710", -1000)
                 ), false
             )

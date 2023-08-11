@@ -1,102 +1,99 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.TestUtils
-import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule095SummeringInvesteringDifferanseTest : BehaviorSpec({
-    Given("context") {
-        val sut = Rule095SummeringInvesteringDifferanse()
-
-        forAll(
-            row(
-                "feil skjema",
-                listOf(
-                    kostraRecordInTest("XX", "XXXXXX", "0", "100", 0),
-                    kostraRecordInTest("XX", "XXXXXX", "0", "780", -1000)
-                ), false
-            ),
-            row(
-                "riktig skjema og regnskap, men Oslo bydel",
-                listOf(
-                    kostraRecordInTest("0A", "030101", "0", "100", 0),
-                    kostraRecordInTest("0A", "030101", "0", "710", -1000)
-                ), false
-            ),
-            row(
-                "riktig skjema, regnskap og kommune, men driftsregnskap",
-                listOf(
-                    kostraRecordInTest("0A", "123400", "1", "100", 0),
-                    kostraRecordInTest("0A", "123400", "1", "710", -1000)
-                ), false
-            ),
-            row(
-                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
-                listOf(
-                    kostraRecordInTest("0A", "123400", "0", "100", 0),
-                    kostraRecordInTest("0A", "123400", "0", "710", -31)
+    include(
+        KostraTestFactory.validationRuleTest(
+            sut = Rule095SummeringInvesteringDifferanse(),
+            forAllRows = listOf(
+                ForAllRowItem(
+                    "All good",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 0, 100, 100),
+                        kostraRecordInTest("030100", "0A", 0, 710, -100)
+                    ),
                 ),
-                true
-            ),
-            row(
-                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
-                listOf(
-                    kostraRecordInTest("0A", "123400", "0", "100", 31),
-                    kostraRecordInTest("0A", "123400", "0", "710", 0)
+
+                ForAllRowItem(
+                    "region is Oslo bydel 01",
+                    listOf(
+                        kostraRecordInTest("030101", "0A", 0, 100, 1000),
+                        kostraRecordInTest("030101", "0A", 0, 710, -100)
+                    ),
                 ),
-                true
+                ForAllRowItem(
+                    "skjema is not BevilgningRegnskap",
+                    listOf(
+                        kostraRecordInTest("030100", "XX", 0, 100, 1000),
+                        kostraRecordInTest("030100", "xx", 0, 710, -100)
+                    ),
+                ),
+                ForAllRowItem(
+                    "kontoklasse is not Investering",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 1, 100, 1000),
+                        kostraRecordInTest("030100", "0A", 1, 710, -100)
+                    ),
+                ),
+                ForAllRowItem(
+                    "sum of belop is -10",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 0, 100, 100),
+                        kostraRecordInTest("030100", "0A", 0, 710, -110)
+                    ),
+                ),
+                ForAllRowItem(
+                    "sum of belop is 10",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 0, 100, 110),
+                        kostraRecordInTest("030100", "0A", 0, 710, -100)
+                    ),
+                ),
+                ForAllRowItem(
+                    "sum of belop is -31",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 0, 100, 100),
+                        kostraRecordInTest("030100", "0A", 0, 710, -131)
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (-31) mellom inntekter " +
+                            "(-131) og utgifter (100) i investeringsregnskapet"
+                ),
+                ForAllRowItem(
+                    "sum of belop is 31",
+                    listOf(
+                        kostraRecordInTest("030100", "0A", 0, 100, 131),
+                        kostraRecordInTest("030100", "0A", 0, 710, -100)
+                    ),
+                    expectedErrorMessage = "Korrigér differansen (31) mellom inntekter " +
+                            "(-100) og utgifter (131) i investeringsregnskapet"
+                ),
             ),
-            row(
-                "alt riktig, differanse = -30",
-                listOf(
-                    kostraRecordInTest("0A", "123400", "0", "100", 1000),
-                    kostraRecordInTest("0A", "123400", "0", "710", -1030)
-                ), false
-            ),
-            row(
-                "alt riktig, differanse = +30",
-                listOf(
-                    kostraRecordInTest("0A", "123400", "0", "100", 1030),
-                    kostraRecordInTest("0A", "123400", "0", "710", -1000)
-                ), false
-            )
-        ) { description, kostraRecordList, expectError ->
-            val investeringUtgifter = kostraRecordList[0].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
-            val investeringInntekter = kostraRecordList[1].fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP)
-            val investeringDifferanse = investeringUtgifter + investeringInntekter
-
-            When(description) {
-                TestUtils.verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
-                    expectError = expectError,
-                    expectedSeverity = Severity.ERROR,
-                    "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
-                            "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
-                )
-            }
-        }
-    }
-
+            expectedSeverity = Severity.ERROR,
+            useArguments = false
+        )
+    )
 }) {
     companion object {
         private fun kostraRecordInTest(
-            skjema: String,
             region: String,
-            kontoklasse: String,
-            art: String,
-            belop: Int,
-        ) = RegnskapTestUtils.regnskapRecordInTest(
-            mapOf(
-                RegnskapConstants.FIELD_SKJEMA to skjema,
-                RegnskapConstants.FIELD_REGION to region,
-                RegnskapConstants.FIELD_KONTOKLASSE to kontoklasse,
-                RegnskapConstants.FIELD_ART to art,
-                RegnskapConstants.FIELD_BELOP to belop.toString()
-            )
-        )
+            skjema: String,
+            kontoklasse: Int,
+            art: Int,
+            belop: Int
+        ) = mapOf(
+            RegnskapConstants.FIELD_REGION to region,
+            RegnskapConstants.FIELD_SKJEMA to skjema,
+            RegnskapConstants.FIELD_KONTOKLASSE to "$kontoklasse",
+            RegnskapConstants.FIELD_FUNKSJON to "100",
+            RegnskapConstants.FIELD_ART to "$art",
+            RegnskapConstants.FIELD_BELOP to "$belop"
+        ).toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions)
     }
 }

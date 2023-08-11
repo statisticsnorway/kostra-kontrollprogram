@@ -24,9 +24,7 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
             )
         }
         ?.takeUnless { (investeringUtgifter, investeringInntekter) ->
-            0 < investeringUtgifter
-                    && investeringInntekter < 0
-                    && investeringUtgifter + investeringInntekter in -30..30
+            (investeringUtgifter + investeringInntekter) in -30..30
         }?.let { (investeringUtgifter, investeringInntekter) ->
             val investeringDifferanse = investeringUtgifter + investeringInntekter
             createSingleReportEntryList(

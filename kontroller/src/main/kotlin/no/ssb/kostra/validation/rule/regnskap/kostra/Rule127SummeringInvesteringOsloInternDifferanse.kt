@@ -14,7 +14,8 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRule<List<Kostra
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isOsloInternRegnskap() && it.isBevilgningInvesteringRegnskap() }
+        .filter { it.isOsloInternRegnskap() }
+        .filter { it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord[RegnskapConstants.FIELD_ART] in listOf("298", "798") }
         ?.partition { kostraRecord -> kostraRecord[RegnskapConstants.FIELD_ART] == "298" }
@@ -22,15 +23,16 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractRule<List<Kostra
             Pair(
                 art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (sumArt298Investering, sumArt798Investering) ->
-                sumArt298Investering + sumArt798Investering in -10..10
-            }?.let { (sumArt298Investering, sumArt798Investering) ->
-                val sumOslointerneInvestering = sumArt298Investering + sumArt798Investering
-                createSingleReportEntryList(
-                    messageText = "Korrigér differansen ($sumOslointerneInvestering) mellom sum over alle funksjoner " +
-                            "for art 298 ($sumArt298Investering) og sum over alle funksjoner for art 798 " +
-                            "($sumArt798Investering) i investeringsregnskapet."
-                )
-            }
+            )
+        }
+        ?.takeUnless { (sumArt298Investering, sumArt798Investering) ->
+            sumArt298Investering + sumArt798Investering in -10..10
+        }?.let { (sumArt298Investering, sumArt798Investering) ->
+            val sumDifferanse = sumArt298Investering + sumArt798Investering
+            createSingleReportEntryList(
+                messageText = "Korrigér differansen ($sumDifferanse) mellom sum over alle funksjoner " +
+                        "for art 298 ($sumArt298Investering) og sum over alle funksjoner for art 798 " +
+                        "($sumArt798Investering) i investeringsregnskapet."
+            )
         }
 }

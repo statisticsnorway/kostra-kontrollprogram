@@ -21,16 +21,18 @@ class Rule095SummeringInvesteringDifferanse : AbstractRule<List<KostraRecord>>(
             Pair(
                 investeringUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 investeringInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (investeringUtgifter, investeringInntekter) ->
-                0 < investeringUtgifter
-                        && investeringInntekter < 0
-                        && investeringUtgifter + investeringInntekter in -30..30
-            }?.let { (investeringUtgifter, investeringInntekter) ->
-                val investeringDifferanse = investeringUtgifter + investeringInntekter
-                createSingleReportEntryList(
-                    messageText = "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
-                            "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
-                )
-            }
+            )
         }
+        ?.takeUnless { (investeringUtgifter, investeringInntekter) ->
+            0 < investeringUtgifter
+                    && investeringInntekter < 0
+                    && investeringUtgifter + investeringInntekter in -30..30
+        }?.let { (investeringUtgifter, investeringInntekter) ->
+            val investeringDifferanse = investeringUtgifter + investeringInntekter
+            createSingleReportEntryList(
+                messageText = "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
+                        "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
+            )
+        }
+
 }

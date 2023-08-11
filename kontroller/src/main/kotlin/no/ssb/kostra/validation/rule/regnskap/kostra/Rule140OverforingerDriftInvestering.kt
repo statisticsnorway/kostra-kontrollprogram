@@ -14,7 +14,8 @@ class Rule140OverforingerDriftInvestering : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningRegnskap() }
+        .filterNot { it.isOsloBydel() }
+        .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isBevilgningDriftRegnskap() }
         ?.let { (driftPosteringer, investeringPosteringer) ->
@@ -23,15 +24,16 @@ class Rule140OverforingerDriftInvestering : AbstractRule<List<KostraRecord>>(
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 investeringPosteringer.filter { it[FIELD_ART] == "970" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (driftOverforinger, investeringOverforinger) ->
-                driftOverforinger + investeringOverforinger in -30..30
-            }?.let { (driftOverforinger, investeringOverforinger) ->
-                val overforingDifferanse = driftOverforinger + investeringOverforinger
-                createSingleReportEntryList(
-                    messageText = "Korrigér i fila slik at differansen ($overforingDifferanse) i " +
-                            "overføringer mellom drifts- ($driftOverforinger) og investeringsregnskapet " +
-                            "($investeringOverforinger) stemmer overens."
-                )
-            }
+            )
+        }
+        ?.takeUnless { (driftOverforinger, investeringOverforinger) ->
+            driftOverforinger + investeringOverforinger in -30..30
+        }?.let { (driftOverforinger, investeringOverforinger) ->
+            val overforingDifferanse = driftOverforinger + investeringOverforinger
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at differansen ($overforingDifferanse) i " +
+                        "overføringer mellom drifts- ($driftOverforinger) og investeringsregnskapet " +
+                        "($investeringOverforinger) stemmer overens."
+            )
         }
 }

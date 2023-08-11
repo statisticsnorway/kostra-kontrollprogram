@@ -13,8 +13,8 @@ class Rule115SummeringBalanseAktiva : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBalanseRegnskap() }
+        .filter { it.isAktiva() }
         .takeIf { it.any() }
-        ?.filter { it.isAktiva() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { 0 < it }
         ?.let { sumAktiva ->

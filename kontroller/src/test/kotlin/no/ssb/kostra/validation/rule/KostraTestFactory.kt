@@ -10,7 +10,6 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
-import kotlin.math.exp
 
 data class ForAllRowItem<out T : Any>(
     val description: String,

@@ -3,8 +3,8 @@ package no.ssb.kostra.validation.rule.barnevern.avgiverrule
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 
 class Avgiver03Test : BehaviorSpec({
     include(

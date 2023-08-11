@@ -92,8 +92,8 @@ object IndividRuleTestData {
     val undersokelseTypeInTest = KostraUndersokelseType(
         id = KOSTRA_UNDERSOKELSE_ID,
         startDato = dateInTest,
-        sluttDato =  null,
-        konklusjon =  null,
+        sluttDato = null,
+        konklusjon = null,
         presisering = null,
         vedtaksgrunnlag = mutableListOf()
     )

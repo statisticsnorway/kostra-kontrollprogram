@@ -2,8 +2,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
@@ -53,8 +53,7 @@ class Undersokelse03Test : BehaviorSpec({
                             )
                         )
                     )
-                )
-,
+                ),
 
                 ForAllRowItem(
                     "undersokelse with konklusjon without presisering",
@@ -68,7 +67,7 @@ class Undersokelse03Test : BehaviorSpec({
                             )
                         )
                     ),
-                    expectedErrorMessage ="Undersøkelse (${undersokelseTypeInTest.id}). Undersøkelse der kode for " +
+                    expectedErrorMessage = "Undersøkelse (${undersokelseTypeInTest.id}). Undersøkelse der kode for " +
                             "konklusjon er $CODE_THAT_REQUIRES_CLARIFICATION mangler presisering"
                 )
             ),

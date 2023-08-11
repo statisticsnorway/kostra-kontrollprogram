@@ -2,8 +2,8 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.meldingTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.undersokelseTypeInTest
@@ -76,7 +76,7 @@ class Vedtak02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    expectedErrorMessage ="Vedtaksgrunnlag med kode 18 mangler presisering"
+                    expectedErrorMessage = "Vedtaksgrunnlag med kode 18 mangler presisering"
                 ),
                 ForAllRowItem(
                     "undersokelse with vedtaksgrunnlag without presisering, kode = 19",
@@ -94,7 +94,7 @@ class Vedtak02Test : BehaviorSpec({
                             )
                         )
                     ),
-                    expectedErrorMessage ="Vedtaksgrunnlag med kode 19 mangler presisering"
+                    expectedErrorMessage = "Vedtaksgrunnlag med kode 19 mangler presisering"
                 )
             ),
             expectedSeverity = Severity.ERROR,

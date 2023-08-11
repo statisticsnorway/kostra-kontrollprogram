@@ -69,8 +69,8 @@ class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("030100", "0A", 1, 298, 100),
                         kostraRecordInTest("030100", "0A", 1, 798, -111)
                     ),
-                    expectedErrorMessage = "Korrigér differansen (-11) mellom sum over alle funksjoner for art 298 " +
-                            "(1) og sum over alle funksjoner for art 798 (-12) i driftsregnskapet."
+                    expectedErrorMessage = "Korrigér differansen (-11) mellom sum over alle funksjoner for art " +
+                            "298 (100) og sum over alle funksjoner for art 798 (-111) i driftsregnskapet."
                 ),
                 ForAllRowItem(
                     "sum of belop is 11",
@@ -78,8 +78,8 @@ class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("030100", "0A", 1, 298, 111),
                         kostraRecordInTest("030100", "0A", 1, 798, -100)
                     ),
-                    expectedErrorMessage = "Korrigér differansen (11) mellom sum over alle funksjoner for art 298 " +
-                            "(12) og sum over alle funksjoner for art 798 (-1) i driftsregnskapet."
+                    expectedErrorMessage = "Korrigér differansen (11) mellom sum over alle funksjoner for art " +
+                            "298 (111) og sum over alle funksjoner for art 798 (-100) i driftsregnskapet."
                 ),
             ),
             expectedSeverity = Severity.ERROR,

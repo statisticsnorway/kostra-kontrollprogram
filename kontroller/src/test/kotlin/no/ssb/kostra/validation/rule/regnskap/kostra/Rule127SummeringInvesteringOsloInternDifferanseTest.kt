@@ -70,7 +70,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("030100", "0A", 0, 798, -111)
                     ),
                     expectedErrorMessage = "Korrigér differansen (-11) mellom sum over alle funksjoner for art 298 " +
-                            "(1) og sum over alle funksjoner for art 798 (-12) i investeringsregnskapet."
+                            "(100) og sum over alle funksjoner for art 798 (-111) i investeringsregnskapet."
                 ),
                 ForAllRowItem(
                     "sum of belop is 11",
@@ -79,7 +79,7 @@ class Rule127SummeringInvesteringOsloInternDifferanseTest : BehaviorSpec({
                         kostraRecordInTest("030100", "0A", 0, 798, -100)
                     ),
                     expectedErrorMessage = "Korrigér differansen (11) mellom sum over alle funksjoner for art 298 " +
-                            "(12) og sum over alle funksjoner for art 798 (-1) i investeringsregnskapet."
+                            "(111) og sum over alle funksjoner for art 798 (-100) i investeringsregnskapet."
                 ),
             ),
             expectedSeverity = Severity.ERROR,

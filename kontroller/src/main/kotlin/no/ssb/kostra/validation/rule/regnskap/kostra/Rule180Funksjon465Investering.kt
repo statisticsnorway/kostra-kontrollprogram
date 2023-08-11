@@ -7,7 +7,6 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isFylkeRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
 class Rule180Funksjon465Investering : AbstractRule<List<KostraRecord>>(
     "Kontroll 180 : Funksjon 465, investeringsregnskapet",
@@ -15,8 +14,7 @@ class Rule180Funksjon465Investering : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter {
-            !it.isOsloBydel()
-                    && it.isFylkeRegnskap()
+            it.isFylkeRegnskap()
                     && it.isBevilgningInvesteringRegnskap()
                     && it[FIELD_FUNKSJON].trim() == "465"
         }
@@ -26,7 +24,7 @@ class Rule180Funksjon465Investering : AbstractRule<List<KostraRecord>>(
         ?.let { funksjon465Investering ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at differanse ($funksjon465Investering) på funksjon 465 " +
-                        "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i driftsregnskapet. " +
+                        "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet. " +
                         "(margin på +/- 30')"
             )
         }

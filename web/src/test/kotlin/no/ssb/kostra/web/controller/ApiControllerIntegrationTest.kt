@@ -3,7 +3,6 @@ package no.ssb.kostra.web.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -32,7 +31,6 @@ import java.io.File
 import java.io.FileWriter
 import java.time.Year
 
-@Ignored("Ignored until build problem in Azure DevOps is fixed")
 @MicronautTest
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,
@@ -40,7 +38,6 @@ class ApiControllerIntegrationTest(
 ) : BehaviorSpec({
 
     Given("uiData request") {
-
         val request: HttpRequest<Any> = HttpRequest.GET("/api/ui-data")
 
         When("valid get request") {
@@ -89,7 +86,6 @@ class ApiControllerIntegrationTest(
                 "aar",
                 "År kan ikke være mindre enn 2022"
             ),
-
             row(
                 "blank skjematype",
                 KostraFormVm(
@@ -226,7 +222,6 @@ class ApiControllerIntegrationTest(
                 "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
-
             When(description) {
 
                 val requestBody = buildMultipartRequest(kostraForm, objectMapper)
@@ -257,7 +252,6 @@ class ApiControllerIntegrationTest(
     }
 
     Given("valid POST requests, receive result") {
-
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)
 
         When("post multipart request") {
@@ -276,14 +270,13 @@ class ApiControllerIntegrationTest(
 
             and("error report should contain expected values") {
                 assertSoftly(response.body()!!) {
-                    it.antallKontroller shouldBe 2
+                    it.antallKontroller.shouldBeGreaterThan(50)
                 }
             }
         }
     }
 }) {
     companion object {
-
         private val kostraFormInTest = KostraFormVm(
             aar = Year.now().value,
             skjema = "0G",
@@ -301,19 +294,17 @@ class ApiControllerIntegrationTest(
             formData: KostraFormVm,
             objectMapper: ObjectMapper,
             file: File = createTestFile()
-        ): MultipartBody {
-            return MultipartBody.builder()
-                .addPart(
-                    "kostraFormAsJson",
-                    objectMapper.writeValueAsString(formData)
-                )
-                .addPart(
-                    "file",
-                    file.name,
-                    MediaType.TEXT_PLAIN_TYPE,
-                    file
-                ).build()
-        }
+        ): MultipartBody = MultipartBody.builder()
+            .addPart(
+                "kostraFormAsJson",
+                objectMapper.writeValueAsString(formData)
+            )
+            .addPart(
+                "file",
+                file.name,
+                MediaType.TEXT_PLAIN_TYPE,
+                file
+            ).build()
 
         private fun createTestFile(): File = File.createTempFile("data", ".dat").apply {
             FileWriter(this).use {

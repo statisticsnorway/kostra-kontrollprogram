@@ -20,7 +20,7 @@
         <junit.version>4.13.2</junit.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlinVersion>1.8.20</kotlinVersion>
         <kotestVersion>5.6.2</kotestVersion>
         <jackson.version>2.15.2</jackson.version>
     </properties>
@@ -38,17 +38,17 @@
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-common</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlinVersion}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlinVersion}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-reflect</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlinVersion}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -231,7 +231,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlinVersion}</version>
                 <executions>
                     <execution>
                         <id>compile</id>

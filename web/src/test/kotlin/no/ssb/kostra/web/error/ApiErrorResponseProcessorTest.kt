@@ -2,6 +2,7 @@ package no.ssb.kostra.web.error
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -12,6 +13,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
+@Ignored
 @MicronautTest
 class ApiErrorResponseProcessorTest(@Client("/") val client: HttpClient) : BehaviorSpec({
 

@@ -2,14 +2,12 @@ package no.ssb.kostra.web.error
 
 import io.micronaut.http.HttpResponseFactory
 import io.micronaut.http.MutableHttpResponse
-import io.micronaut.http.annotation.Produces
 import io.micronaut.http.server.exceptions.response.ErrorContext
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor
-import jakarta.inject.Singleton
 import java.time.Instant
 
-@Produces
-@Singleton
+//@Produces
+//@Singleton
 class ApiErrorResponseProcessor : ErrorResponseProcessor<ApiError> {
 
     override fun processResponse(

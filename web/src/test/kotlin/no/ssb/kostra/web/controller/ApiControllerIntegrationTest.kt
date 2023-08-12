@@ -32,7 +32,6 @@ import java.io.File
 import java.io.FileWriter
 import java.time.Year
 
-@Ignored("Ignored until build problem in Azure DevOps is fixed")
 @MicronautTest
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,

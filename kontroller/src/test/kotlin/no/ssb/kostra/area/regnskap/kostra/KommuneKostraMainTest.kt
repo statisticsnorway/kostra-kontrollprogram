@@ -12,53 +12,50 @@ import no.ssb.kostra.program.extension.plus
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.program.extension.toRecordString
 import no.ssb.kostra.validation.rule.RuleTestData
-import java.time.Year
 
 class KommuneKostraMainTest : BehaviorSpec({
     Given("KommuneKostraMain") {
         forAll(
             *validSkjema.map { skjema ->
-                row(
-                    "skjema $skjema -> validating an invalid record string",
-                    KotlinArguments(
-                        skjema = "0F",
-                        aargang = "2022",
-                        region = "1234  ",
-                        inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength + 10)
-                    ),
-                    1,
-                    1
-                )
-            }.toTypedArray(),
-            *validSkjema.map { skjema ->
-                row(
-                    "skjema $skjema -> validating an empty record string",
-                    KotlinArguments(
-                        skjema = validSkjema[0],
-                        aargang = "2022",
-                        region = "1234  ",
-                        inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
-                    ),
-                    numberOfValidations,
-                    3
-                )
-            }.toTypedArray(),
-            *validSkjema.map { skjema ->
-                row(
-                    "skjema $skjema -> validating a valid record string",
-                    argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
-                    numberOfValidations,
-                    0
-                )
-            }.toTypedArray(),
-            *validSkjema.map { skjema ->
-                row(
-                    "skjema $skjema -> validating a valid record string with invalid data",
-                    argumentsInTest(recordVersion = "XXXX"),
-                    numberOfValidations,
-                    1
-                )
-            }.toTypedArray(),
+                regions.map { region ->
+                    listOf(
+                        row(
+                            "skjema $skjema, region = $region -> validating an empty record string",
+                            KotlinArguments(
+                                skjema = validSkjema[0],
+                                aargang = RuleTestData.argumentsInTest.aargang,
+                                region = region,
+                                inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
+                            ),
+                            numberOfValidations,
+                            3
+                        ),
+                        row(
+                            "skjema $skjema, region = $region -> validating an invalid record string",
+                            KotlinArguments(
+                                skjema = skjema,
+                                aargang = RuleTestData.argumentsInTest.aargang,
+                                region = region,
+                                inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength + 10)
+                            ),
+                            1,
+                            1
+                        ),
+                        row(
+                            "skjema = $skjema, region = $region -> validating a valid record string",
+                            argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
+                            numberOfValidations,
+                            0
+                        ),
+                        row(
+                            "skjema $skjema, region = $region -> validating a valid record string with invalid data",
+                            argumentsInTest(recordVersion = "XXXX"),
+                            numberOfValidations,
+                            1
+                        )
+                    )
+                }.flatten()
+            }.flatten().toTypedArray(),
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
                 val validationResult = KommuneKostraMain(kotlinArguments).validate()
@@ -74,6 +71,7 @@ class KommuneKostraMainTest : BehaviorSpec({
     }
 }) {
     companion object {
+        private val regions = listOf("1234  ", "030100")
         private val validSkjema = listOf("0A", "0B", "0C", "0D", "0I", "0J", "0K", "0L", "0M", "0N", "0P", "0Q")
         private const val numberOfValidations = 51
 
@@ -81,7 +79,8 @@ class KommuneKostraMainTest : BehaviorSpec({
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
             argumentsSkjema: String = validSkjema.first(),
             argumentsRegion: String = RuleTestData.argumentsInTest.region,
-            argumentsOrgnr: String = if (argumentsSkjema in listOf("0I", "0J", "0K", "0L")) "987654321" else " ".repeat(9),
+            argumentsOrgnr: String =
+                if (argumentsSkjema in listOf("0I", "0J", "0K", "0L")) "958935420" else " ".repeat(9),
             recordVersion: String = argumentsVersion,
             recordSkjema: String = argumentsSkjema,
             recordRegion: String = argumentsRegion,

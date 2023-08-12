@@ -8,8 +8,6 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @MicronautTest
 class ViewsControllerTest(@Client("/") client: HttpClient) : BehaviorSpec({
@@ -18,9 +16,7 @@ class ViewsControllerTest(@Client("/") client: HttpClient) : BehaviorSpec({
         val request: HttpRequest<Any> = HttpRequest.GET("/")
 
         When("request") {
-            val response = withContext(Dispatchers.IO) {
-                client.toBlocking().exchange(request, Argument.of(Object::class.java))
-            }
+            val response = client.toBlocking().exchange(request, Argument.of(Object::class.java))
 
             Then("response should be OK") {
                 response.status shouldBe HttpStatus.OK

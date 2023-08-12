@@ -17,37 +17,51 @@ import java.time.Year
 class KvartalKostraMainTest : BehaviorSpec({
     Given("KvartalKostraMain") {
         forAll(
-            row(
-                "validating an invalid record string",
-                " ".repeat(RegnskapFieldDefinitions.fieldLength + 10),
-                1,
-                1
-            ),
-            row(
-                "validating an empty record string",
-                " ".repeat(RegnskapFieldDefinitions.fieldLength),
-                17,
-                3
-            ),
-            row(
-                "validating a valid record string",
-                recordStringInTest("2022"),
-                17,
-                0
-            ),
-            row(
-                "validating a valid record string with invalid data",
-                recordStringInTest("XXXX"),
-                17,
-                1
-            ),
-        ) { description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
+            *validSkjema.map { skjema ->
+                row(
+                    "skjema $skjema -> validating an invalid record string",
+                    KotlinArguments(
+                        skjema = "0F",
+                        aargang = "2022",
+                        region = "1234  ",
+                        inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength + 10)
+                    ),
+                    1,
+                    1
+                )
+            }.toTypedArray(),
+            *validSkjema.map { skjema ->
+                row(
+                    "skjema $skjema -> validating an empty record string",
+                    KotlinArguments(
+                        skjema = validSkjema[0],
+                        aargang = "2022",
+                        region = "1234  ",
+                        inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
+                    ),
+                    numberOfValidations,
+                    3
+                )
+            }.toTypedArray(),
+            *validSkjema.map { skjema ->
+                row(
+                    "skjema $skjema -> validating a valid record string",
+                    argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
+                    numberOfValidations,
+                    0
+                )
+            }.toTypedArray(),
+            *validSkjema.map { skjema ->
+                row(
+                    "skjema $skjema -> validating a valid record string with invalid data",
+                    argumentsInTest(recordVersion = "XXXX"),
+                    numberOfValidations,
+                    1
+                )
+            }.toTypedArray(),
+        ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
-                val validationResult = KvartalKostraMain(
-                    argumentsInTest(
-                        inputFileContent = inputFileContent
-                    )
-                ).validate()
+                val validationResult = KvartalKostraMain(kotlinArguments).validate()
 
                 Then("validationResult should be as expected") {
                     assertSoftly(validationResult) {
@@ -60,30 +74,35 @@ class KvartalKostraMainTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun recordStringInTest(version: String) =
-            " ".repeat(RegnskapFieldDefinitions.fieldDefinitions.last().to)
+        private val validSkjema = listOf("0A", "0B", "0C", "0D")
+        private const val numberOfValidations = 17
+
+        private fun argumentsInTest(
+            argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
+            argumentsSkjema: String = validSkjema.first(),
+            argumentsRegion: String = RuleTestData.argumentsInTest.region,
+            recordVersion: String = argumentsVersion,
+            recordSkjema: String = argumentsSkjema,
+            recordRegion: String = argumentsRegion,
+
+        ): KotlinArguments = KotlinArguments(
+            skjema = argumentsSkjema,
+            aargang = argumentsVersion,
+            region = argumentsRegion,
+            inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldDefinitions.last().to)
                 .toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions)
                 .plus(
                     mapOf(
-                        RegnskapConstants.FIELD_SKJEMA to "0A",
-                        RegnskapConstants.FIELD_AARGANG to version,
-                        RegnskapConstants.FIELD_REGION to "1234  ",
-                        RegnskapConstants.FIELD_KONTOKLASSE to "4",
-                        RegnskapConstants.FIELD_FUNKSJON to "041 ",
+                        RegnskapConstants.FIELD_SKJEMA to recordSkjema,
+                        RegnskapConstants.FIELD_AARGANG to recordVersion,
+                        RegnskapConstants.FIELD_REGION to recordRegion,
+                        RegnskapConstants.FIELD_KONTOKLASSE to "0",
+                        RegnskapConstants.FIELD_FUNKSJON to "100 ",
                         RegnskapConstants.FIELD_ART to "200",
                         RegnskapConstants.FIELD_BELOP to "1"
                     )
                 )
                 .toRecordString()
-
-        private fun argumentsInTest(
-            inputFileContent: String
-        ): KotlinArguments = KotlinArguments(
-            skjema = "0A",
-            aargang = (Year.now().value - 1).toString(),
-            region = RuleTestData.argumentsInTest.region,
-
-            inputFileContent = inputFileContent
         )
     }
 }

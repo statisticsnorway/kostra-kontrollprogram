@@ -19,7 +19,7 @@ class AvgiverTypeTest : BehaviorSpec({
             shouldNotThrowAny {
                 getSchemaValidator().validate(
                     ("<Avgiver Versjon=\"2022\" Kommunenummer=\"1234\" Kommunenavn=\"~Kommunenavn~\" " +
-                                "Organisasjonsnummer=\"999999999\"/>").toStreamSource()
+                            "Organisasjonsnummer=\"999999999\"/>").toStreamSource()
                 )
             }
         }

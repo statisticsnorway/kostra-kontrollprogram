@@ -12,7 +12,6 @@ import no.ssb.kostra.program.extension.plus
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.program.extension.toRecordString
 import no.ssb.kostra.validation.rule.RuleTestData
-import java.time.Year
 
 class KirkeKostraMainTest : BehaviorSpec({
     Given("KirkeKostraMain") {
@@ -80,7 +79,9 @@ class KirkeKostraMainTest : BehaviorSpec({
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
             argumentsSkjema: String = validSkjema.first(),
             argumentsRegion: String = RuleTestData.argumentsInTest.region,
-            argumentsOrgnr: String = if (argumentsSkjema in listOf("0I", "0J", "0K", "0L")) "987654321" else " ".repeat(9),
+            argumentsOrgnr: String = if (argumentsSkjema in listOf("0I", "0J", "0K", "0L")) "987654321" else " ".repeat(
+                9
+            ),
             recordVersion: String = argumentsVersion,
             recordSkjema: String = argumentsSkjema,
             recordRegion: String = argumentsRegion,

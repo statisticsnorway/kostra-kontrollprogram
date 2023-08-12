@@ -227,62 +227,50 @@ class KommuneKostraMain(
         "877"
     )
 
-    private fun getArtAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    ACCOUNTING_TYPE_BEVILGNING,
-                    ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
+    private fun getArtAsList(): List<String> =
+        if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
+            val result = ArrayList<String>(basisArter)
+            when (arguments.skjema) {
+                "0A", "0M" -> {
+                    result.addAll(konserninterneArter)
+                    result.addAll(kommunaleArter)
 
-        val result = ArrayList<String>(basisArter)
-        when (arguments.skjema) {
-            "0A", "0M" -> {
-                result.addAll(konserninterneArter)
-                result.addAll(kommunaleArter)
+                    if (arguments.region in osloKommuner) {
+                        result.addAll(osloArter)
+                    }
+                }
 
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloArter)
+                "0C", "0P" -> {
+                    result.addAll(konserninterneArter)
+                    result.addAll(fylkeskommunaleArter)
+                }
+
+                "0I", "0K" -> {
+                    result.addAll(konserninterneArter)
                 }
             }
 
-            "0C", "0P" -> {
-                result.addAll(konserninterneArter)
-                result.addAll(fylkeskommunaleArter)
-            }
+            result.sorted().toList()
+        } else
+            emptyList()
 
-            "0I", "0K" -> {
-                result.addAll(konserninterneArter)
-            }
-        }
-
-        return result.sorted().toList()
-
-    }
-
-    private fun getSektorAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it == ACCOUNTING_TYPE_BALANSE
-            }
-        )
-            return emptyList()
-
+    private val sektorList =
+        if (arguments.skjema in listOf("0B", "0D", "0J", "0L", "0N", "0Q"))
         // Sektorer
-        return listOf(
-            // @formatter:off
-            "000", "070", "080",
-            "110", "151", "152",
-            "200", "320",
-            "355", "395",
-            "430", "450", "499",
-            "550", "570",
-            "610", "640", "650",
-            "890", "900"
-            // @formatter:on
-        )
-    }
+            listOf(
+                // @formatter:off
+                "000", "070", "080",
+                "110", "151", "152",
+                "200", "320",
+                "355", "395",
+                "430", "450", "499",
+                "550", "570",
+                "610", "640", "650",
+                "890", "900"
+                // @formatter:on
+            )
+        else emptyList()
+
 
     // Kun gyldig i investering og skal fjernes fra drift
     private fun getInvalidDriftArtList() =
@@ -324,7 +312,7 @@ class KommuneKostraMain(
         Rule010Funksjon(funksjonList = getFunksjonAsList()),
         Rule011Kapittel(kapittelList = getKapittelAsList()),
         Rule012Art(artList = getArtAsList()),
-        Rule013Sektor(sektorList = getSektorAsList()),
+        Rule013Sektor(sektorList = sektorList),
         Rule014Belop(),
         Rule015Duplicates(mappingDuplicates(arguments = arguments)),
         Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = getInvalidDriftFunksjonList()),

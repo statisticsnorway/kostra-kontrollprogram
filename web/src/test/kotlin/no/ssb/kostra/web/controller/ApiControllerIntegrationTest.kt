@@ -1,6 +1,7 @@
 package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.kotest.assertions.asClue
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -30,6 +31,7 @@ import no.ssb.kostra.web.viewmodel.UiDataVm
 import java.io.File
 import java.io.FileWriter
 import java.time.Year
+import kotlin.time.Duration.Companion.seconds
 
 @MicronautTest
 class ApiControllerIntegrationTest(
@@ -222,8 +224,7 @@ class ApiControllerIntegrationTest(
                 "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
-            When(description) {
-
+            Then(description).config(timeout = 10.seconds) {
                 val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
                 val apiError = shouldThrow<HttpClientResponseException> {
@@ -234,7 +235,7 @@ class ApiControllerIntegrationTest(
                     )
                 }.response.getBody(ApiError::class.java).get()
 
-                Then("apiError should contain expected values") {
+                "apiError should contain expected values".asClue {
                     assertSoftly(apiError) {
                         errorType shouldBe ApiErrorType.VALIDATION_ERROR
                         httpStatusCode shouldBe HttpStatus.BAD_REQUEST.code
@@ -254,7 +255,7 @@ class ApiControllerIntegrationTest(
     Given("valid POST requests, receive result") {
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)
 
-        When("post multipart request") {
+        Then("post multipart request").config(timeout = 10.seconds) {
             val response = withContext(Dispatchers.IO) {
                 client.toBlocking()
                     .exchange(
@@ -264,11 +265,11 @@ class ApiControllerIntegrationTest(
                     )
             }
 
-            Then("status should be OK") {
+            "status should be OK".asClue {
                 response.status shouldBe HttpStatus.OK
             }
 
-            and("error report should contain expected values") {
+            "error report should contain expected values".asClue {
                 assertSoftly(response.body()!!) {
                     it.antallKontroller.shouldBeGreaterThan(50)
                 }

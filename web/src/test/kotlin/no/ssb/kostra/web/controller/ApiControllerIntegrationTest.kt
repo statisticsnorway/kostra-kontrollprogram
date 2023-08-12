@@ -276,7 +276,7 @@ class ApiControllerIntegrationTest(
     }
 }) {
     companion object {
-        private val kostraFormInTest = KostraFormVm(
+        val kostraFormInTest = KostraFormVm(
             aar = Year.now().value,
             skjema = "0G",
             region = "667600",
@@ -284,26 +284,25 @@ class ApiControllerIntegrationTest(
             filnavn = "0G.dat"
         )
 
-        private fun buildMultipartRequest(
+        private val fileInTest = File("./${UUID.randomUUID()}.dat").apply {
+            FileWriter(this).use {
+                writeBytes(ApiControllerIntegrationTest::class.java.getResourceAsStream("/0G.dat")!!.readBytes())
+            }
+        }
+
+        fun buildMultipartRequest(
             formData: KostraFormVm,
             objectMapper: ObjectMapper,
-            file: File = createTestFile()
+            file: File = fileInTest
         ): MultipartBody = MultipartBody.builder()
             .addPart(
                 "kostraFormAsJson",
                 objectMapper.writeValueAsString(formData)
-            )
-            .addPart(
+            ).addPart(
                 "file",
                 file.name,
                 MediaType.TEXT_PLAIN_TYPE,
                 file
             ).build()
-
-        private fun createTestFile(): File = File("./${UUID.randomUUID()}.dat").apply {
-            FileWriter(this).use {
-                writeBytes(ApiControllerIntegrationTest::class.java.getResourceAsStream("/0G.dat")!!.readBytes())
-            }
-        }
     }
 }

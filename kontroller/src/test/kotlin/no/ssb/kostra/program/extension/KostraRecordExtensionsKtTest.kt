@@ -73,6 +73,7 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
                     "Field789" to "789",
                     "Field012" to " -1"
                 )
+                kostraRecord.lineNumber shouldBe 0
             }
         }
     }
@@ -107,6 +108,7 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
                     "Field789" to "789",
                     "Field012" to " -1"
                 )
+                kostraRecord.lineNumber shouldBe 0
             }
         }
     }

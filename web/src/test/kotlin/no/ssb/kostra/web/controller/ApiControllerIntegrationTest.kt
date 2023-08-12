@@ -2,11 +2,7 @@ package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -16,15 +12,10 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import no.ssb.kostra.web.error.ApiError
-import no.ssb.kostra.web.error.ApiErrorType
-import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
-import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
@@ -32,7 +23,6 @@ import java.io.File
 import java.io.FileWriter
 import java.time.Year
 
-@Ignored("Ignored until build problem in Azure DevOps is fixed")
 @MicronautTest
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,
@@ -74,6 +64,7 @@ class ApiControllerIntegrationTest(
         }
     }
 
+/*
     Given("invalid POST requests, receive ApiError") {
         val urlInTest = "/api/kontroller-skjema"
 
@@ -252,6 +243,7 @@ class ApiControllerIntegrationTest(
             }
         }
     }
+*/
 
     Given("valid POST requests, receive result") {
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)

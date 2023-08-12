@@ -121,8 +121,6 @@ class KommuneKostraMain(
                 result.addAll(fylkeskommunaleFunksjoner)
                 result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
             }
-
-            else -> result.add("!!!!")
         }
         return result.map { it.padEnd(4, ' ') }.sorted().toList()
     }

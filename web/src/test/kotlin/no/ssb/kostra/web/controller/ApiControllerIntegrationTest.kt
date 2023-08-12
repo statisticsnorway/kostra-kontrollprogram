@@ -3,7 +3,6 @@ package no.ssb.kostra.web.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -31,9 +30,7 @@ import no.ssb.kostra.web.viewmodel.UiDataVm
 import java.io.File
 import java.io.FileWriter
 import java.time.Year
-import java.util.UUID
 
-@Ignored("Ignored until build problem in Azure DevOps is fixed")
 @MicronautTest
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,
@@ -44,9 +41,11 @@ class ApiControllerIntegrationTest(
         val request: HttpRequest<Any> = HttpRequest.GET("/api/ui-data")
 
         When("valid get request") {
-            val httpResponse = client.toBlocking().exchange(
-                request, Argument.of(UiDataVm::class.java)
-            )
+            val httpResponse = withContext(Dispatchers.IO) {
+                client.toBlocking().exchange(
+                    request, Argument.of(UiDataVm::class.java)
+                )
+            }
 
             Then("response code should be OK") {
                 httpResponse.status shouldBe HttpStatus.OK
@@ -278,7 +277,7 @@ class ApiControllerIntegrationTest(
     }
 }) {
     companion object {
-        val kostraFormInTest = KostraFormVm(
+        private val kostraFormInTest = KostraFormVm(
             aar = Year.now().value,
             skjema = "0G",
             region = "667600",
@@ -286,25 +285,31 @@ class ApiControllerIntegrationTest(
             filnavn = "0G.dat"
         )
 
-        private val fileInTest = File("./${UUID.randomUUID()}.dat").apply {
-            FileWriter(this).use {
-                writeBytes(ApiControllerIntegrationTest::class.java.getResourceAsStream("/0G.dat")!!.readBytes())
-            }
-        }
+        private val PLAIN_TEXT_0G = """
+            0G2020 300500976989732         510  123      263
+            0G2020 300500976989732         510           263
+        """.trimIndent()
 
-        fun buildMultipartRequest(
+        private fun buildMultipartRequest(
             formData: KostraFormVm,
             objectMapper: ObjectMapper,
-            file: File = fileInTest
+            file: File = createTestFile()
         ): MultipartBody = MultipartBody.builder()
             .addPart(
                 "kostraFormAsJson",
                 objectMapper.writeValueAsString(formData)
-            ).addPart(
+            )
+            .addPart(
                 "file",
                 file.name,
                 MediaType.TEXT_PLAIN_TYPE,
                 file
             ).build()
+
+        private fun createTestFile(): File = File.createTempFile("data", ".dat").apply {
+            FileWriter(this).use {
+                it.write(PLAIN_TEXT_0G)
+            }
+        }
     }
 }

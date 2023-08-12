@@ -20,9 +20,9 @@ class KvartalKostraMainTest : BehaviorSpec({
                 regions.map { region ->
                     listOf(
                         row(
-                            "skjema $skjema, region = $region -> validating an empty record string",
+                            "skjema = $skjema, region = $region -> validating an empty record string",
                             KotlinArguments(
-                                skjema = validSkjema[0],
+                                skjema = skjema,
                                 aargang = RuleTestData.argumentsInTest.aargang,
                                 region = region,
                                 inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
@@ -31,7 +31,7 @@ class KvartalKostraMainTest : BehaviorSpec({
                             3
                         ),
                         row(
-                            "skjema $skjema, region = $region -> validating an invalid record string",
+                            "skjema = $skjema, region = $region -> validating an invalid record string",
                             KotlinArguments(
                                 skjema = skjema,
                                 aargang = RuleTestData.argumentsInTest.aargang,
@@ -43,13 +43,24 @@ class KvartalKostraMainTest : BehaviorSpec({
                         ),
                         row(
                             "skjema = $skjema, region = $region -> validating a valid record string",
-                            argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
+                            argumentsInTest(
+                                argumentsSkjema = skjema,
+                                recordSkjema = skjema,
+                                argumentsRegion = region,
+                                recordRegion = region
+                            ),
                             numberOfValidations,
                             0
                         ),
                         row(
-                            "skjema $skjema, region = $region -> validating a valid record string with invalid data",
-                            argumentsInTest(recordVersion = "XXXX"),
+                            "skjema = $skjema, region = $region -> validating a valid record string with invalid data",
+                            argumentsInTest(
+                                argumentsSkjema = skjema,
+                                recordSkjema = skjema,
+                                argumentsRegion = region,
+                                recordRegion = region,
+                                recordVersion = "XXXX"
+                            ),
                             numberOfValidations,
                             1
                         )
@@ -71,7 +82,7 @@ class KvartalKostraMainTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private val regions = listOf("1234  ", "030100")
+        private val regions = listOf("123400", "030100", "040000")
         private val validSkjema = listOf("0A", "0B", "0C", "0D")
         private const val numberOfValidations = 17
 

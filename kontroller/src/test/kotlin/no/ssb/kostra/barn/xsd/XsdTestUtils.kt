@@ -25,7 +25,7 @@ object XsdTestUtils {
             "is not facet-valid with respect to maxLength '1000' for type '#AnonType_Presisering'."
 
     fun buildIndividXml(innerXml: String) =
-                "<Individ Saksbehandler=\"Sara Saksbehandler\" Avslutta3112=\"1\" " +
+        "<Individ Saksbehandler=\"Sara Saksbehandler\" Avslutta3112=\"1\" " +
                 "StartDato=\"2022-11-14\" Id=\"42\" Journalnummer=\"2022-00004\">" +
                 innerXml + "</Individ>"
 }

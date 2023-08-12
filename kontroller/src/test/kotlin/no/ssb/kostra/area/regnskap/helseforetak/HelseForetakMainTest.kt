@@ -8,9 +8,7 @@ import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
-import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.RuleTestData
-import no.ssb.kostra.validation.rule.regnskap.helseforetak.Rule540EiendelerErLikEgenkaptialPlussGjeldTest
 import java.time.Year
 
 class HelseForetakMainTest : BehaviorSpec({

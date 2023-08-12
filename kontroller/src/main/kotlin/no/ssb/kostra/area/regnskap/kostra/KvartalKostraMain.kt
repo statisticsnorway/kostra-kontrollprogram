@@ -109,10 +109,6 @@ class KvartalKostraMain(
             // @formatter:on
         )
 
-        if (arguments.skjema in listOf("0J", "0L")) {
-            result.addAll(listOf("17", "46"))
-        }
-
         return result.map { it.padEnd(4, ' ') }.sorted().toList()
     }
 

@@ -227,40 +227,38 @@ class KommuneKostraMain(
         "877"
     )
 
-    private fun getArtAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
+    private fun getArtAsList(): List<String> =
+        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).any {
                 it in listOf(
                     ACCOUNTING_TYPE_BEVILGNING,
                     ACCOUNTING_TYPE_REGIONALE
                 )
             }
-        )
-            return emptyList()
+        ) {
+            val result = ArrayList<String>(basisArter)
+            when (arguments.skjema) {
+                "0A", "0M" -> {
+                    result.addAll(konserninterneArter)
+                    result.addAll(kommunaleArter)
 
-        val result = ArrayList<String>(basisArter)
-        when (arguments.skjema) {
-            "0A", "0M" -> {
-                result.addAll(konserninterneArter)
-                result.addAll(kommunaleArter)
+                    if (arguments.region in osloKommuner) {
+                        result.addAll(osloArter)
+                    }
+                }
 
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloArter)
+                "0C", "0P" -> {
+                    result.addAll(konserninterneArter)
+                    result.addAll(fylkeskommunaleArter)
+                }
+
+                "0I", "0K" -> {
+                    result.addAll(konserninterneArter)
                 }
             }
 
-            "0C", "0P" -> {
-                result.addAll(konserninterneArter)
-                result.addAll(fylkeskommunaleArter)
-            }
-
-            "0I", "0K" -> {
-                result.addAll(konserninterneArter)
-            }
-        }
-
-        return result.sorted().toList()
-
-    }
+            result.sorted().toList()
+        } else
+            emptyList()
 
     private fun getSektorAsList(): List<String> {
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {

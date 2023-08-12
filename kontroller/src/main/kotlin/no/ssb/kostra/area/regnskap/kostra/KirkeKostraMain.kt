@@ -3,6 +3,7 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
@@ -98,6 +99,8 @@ class KirkeKostraMain(
 
     // Kun gyldig i drift og skal fjernes fra investering
     private fun getInvalidInvesteringArtList() = listOf("570", "590", "990")
+
+    override val fieldDefinitions: FieldDefinitions = RegnskapFieldDefinitions
 
     override val fatalRules = listOf(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)

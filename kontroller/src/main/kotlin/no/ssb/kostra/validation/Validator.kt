@@ -19,6 +19,9 @@ open class Validator(
     open val fieldDefinitions: FieldDefinitions = FieldDefinitions()
 
     open fun validate(): ValidationResult {
+        if (fieldDefinitions.fieldDefinitions.isEmpty())
+            throw IndexOutOfBoundsException("validate(): fieldDefinitions are missing")
+
         val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
             .mapNotNull { it.validate(arguments.getInputContentAsStringList()) }
             .flatten()

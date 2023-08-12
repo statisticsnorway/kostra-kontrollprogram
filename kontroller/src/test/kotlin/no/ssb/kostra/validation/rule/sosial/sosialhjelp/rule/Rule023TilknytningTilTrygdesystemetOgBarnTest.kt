@@ -6,49 +6,47 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.HAR_BARN_UND
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
 class Rule023TilknytningTilTrygdesystemetOgBarnTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule023TilknytningTilTrygdesystemetOgBarn(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "trygdesitCode = 00, harBarn = 0, antallBarn = 0",
-                    kostraRecordInTest("00", "0", "0"),
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 1, antallBarn = 1",
-                    kostraRecordInTest("05", "1", "1"),
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 0, antallBarn = 0",
-                    kostraRecordInTest("05", "0", "0"),
-                    expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 1, antallBarn = 0",
-                    kostraRecordInTest("05", "1", "0"),
-                    expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 1, antallBarn = blank",
-                    kostraRecordInTest("05", "1", " "),
-                    expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 2, antallBarn = 0",
-                    kostraRecordInTest("05", "2", "0"),
-                    expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
-                ),
-                ForAllRowItem(
-                    "trygdesitCode = 05, harBarn = 2, antallBarn = blank",
-                    kostraRecordInTest("05", "2", " "),
-                    expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
-                )
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "trygdesitCode = 00, harBarn = 0, antallBarn = 0",
+                kostraRecordInTest("00", "0", "0"),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 1, antallBarn = 1",
+                kostraRecordInTest("05", "1", "1"),
+            ),
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 0, antallBarn = 0",
+                kostraRecordInTest("05", "0", "0"),
+                expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+            ),
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 1, antallBarn = 0",
+                kostraRecordInTest("05", "1", "0"),
+                expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+            ),
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 1, antallBarn = blank",
+                kostraRecordInTest("05", "1", " "),
+                expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+            ),
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 2, antallBarn = 0",
+                kostraRecordInTest("05", "2", "0"),
+                expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+            ),
+            ForAllRowItem(
+                "trygdesitCode = 05, harBarn = 2, antallBarn = blank",
+                kostraRecordInTest("05", "2", " "),
+                expectedErrorMessage = "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+            )
         )
     )
 }) {

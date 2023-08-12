@@ -9,25 +9,23 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import java.time.LocalDate
 
 class Rule005FodselsnummerTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule005Fodselsnummer(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "record with valid fodselsnummer",
-                    kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now())),
-                ),
-                ForAllRowItem(
-                    "record with invalid fodselsnummer",
-                    kostraRecordInTest("42"),
-                    expectedErrorMessage = "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren",
-                ),
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "record with valid fodselsnummer",
+                kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now())),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "record with invalid fodselsnummer",
+                kostraRecordInTest("42"),
+                expectedErrorMessage = "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren",
+            )
         )
     )
 }) {

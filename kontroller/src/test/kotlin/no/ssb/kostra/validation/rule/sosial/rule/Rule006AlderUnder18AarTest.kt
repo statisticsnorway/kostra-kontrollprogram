@@ -9,29 +9,27 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSsn
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule006AlderUnder18AarTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule006AlderUnder18Aar(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "record with valid age",
-                    kostraRecordInTest(generateRandomSsn(18, argumentsInTest.aargang.toInt())),
-                ),
-                ForAllRowItem(
-                    "record with blank fødselsnummer",
-                    kostraRecordInTest(" ".repeat(11)),
-                ),
-                ForAllRowItem(
-                    "record with invalid age",
-                    kostraRecordInTest(generateRandomSsn(17, argumentsInTest.aargang.toInt())),
-                    expectedErrorMessage = "Deltakeren (17 år) er under 18 år.",
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "record with valid age",
+                kostraRecordInTest(generateRandomSsn(18, argumentsInTest.aargang.toInt())),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "record with blank fødselsnummer",
+                kostraRecordInTest(" ".repeat(11)),
+            ),
+            ForAllRowItem(
+                "record with invalid age",
+                kostraRecordInTest(generateRandomSsn(17, argumentsInTest.aargang.toInt())),
+                expectedErrorMessage = "Deltakeren (17 år) er under 18 år.",
+            )
         )
     )
 }) {

@@ -10,35 +10,32 @@ import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule055KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule055KombinasjonInvesteringKontoklasseArt(listOf("620")),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "all conditions match",
-                    kostraRecordsInTest(0, 620, 1),
-                    expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: (620) regnes å være ulogisk art i " +
-                            "investeringsregnskapet. Vennligst vurder å postere på annen art eller om " +
-                            "posteringen hører til i driftsregnskapet.",
-                ),
-                ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = false",
-                    kostraRecordsInTest(1, 620, 1),
-                ),
-                ForAllRowItem(
-                    "art != 620",
-                    kostraRecordsInTest(0, 621, 1),
-                ),
-                ForAllRowItem(
-                    "belop = 0",
-                    kostraRecordsInTest(0, 620, 0),
-                )
-            ),
             expectedSeverity = Severity.INFO,
-            useArguments = false
+            ForAllRowItem(
+                "all conditions match",
+                kostraRecordsInTest(0, 620, 1),
+                expectedErrorMessage = "Kun advarsel, hindrer ikke innsending: (620) regnes å være ulogisk art i " +
+                        "investeringsregnskapet. Vennligst vurder å postere på annen art eller om " +
+                        "posteringen hører til i driftsregnskapet.",
+            ),
+            ForAllRowItem(
+                "isBevilgningInvesteringRegnskap = false",
+                kostraRecordsInTest(1, 620, 1),
+            ),
+            ForAllRowItem(
+                "art != 620",
+                kostraRecordsInTest(0, 621, 1),
+            ),
+            ForAllRowItem(
+                "belop = 0",
+                kostraRecordsInTest(0, 620, 0),
+            )
         )
     )
 }) {

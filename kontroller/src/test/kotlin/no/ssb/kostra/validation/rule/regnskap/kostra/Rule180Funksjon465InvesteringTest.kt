@@ -10,67 +10,63 @@ import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule180Funksjon465InvesteringTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule180Funksjon465Investering(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "All good",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 465, 0)
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "skjema not isFylkeskommuneRegnskap",
-                    listOf(
-                        kostraRecordInTest("420000", "0A", 0, 465, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "kontoklasse is not investering",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 1, 465, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "funksjon not 465",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 100, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -30",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 465, -30)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is 30",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 465, 30)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -31",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 465, -31)
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at differanse (-31) på funksjon 465 " +
-                            "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet. " +
-                            "(margin på +/- 30')"
-                ),
-                ForAllRowItem(
-                    "sum of belop is 31",
-                    listOf(
-                        kostraRecordInTest("420000", "0C", 0, 465, 31)
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at differanse (31) på funksjon 465 " +
-                            "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet. " +
-                            "(margin på +/- 30')"
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "All good",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 465, 0)
                 ),
             ),
-            expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "skjema not isFylkeskommuneRegnskap",
+                listOf(
+                    kostraRecordInTest("420000", "0A", 0, 465, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "kontoklasse is not investering",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 1, 465, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "funksjon not 465",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 100, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -30",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 465, -30)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is 30",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 465, 30)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -31",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 465, -31)
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at differanse (-31) på funksjon 465 " +
+                        "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet. " +
+                        "(margin på +/- 30')"
+            ),
+            ForAllRowItem(
+                "sum of belop is 31",
+                listOf(
+                    kostraRecordInTest("420000", "0C", 0, 465, 31)
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at differanse (31) på funksjon 465 " +
+                        "Interfylkeskommunale samarbeid (§§ 27/28a-samarbeid) går i 0 i investeringsregnskapet. " +
+                        "(margin på +/- 30')"
+            )
         )
     )
 }) {

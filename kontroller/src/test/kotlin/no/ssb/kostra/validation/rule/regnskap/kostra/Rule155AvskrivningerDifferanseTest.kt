@@ -11,93 +11,90 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule155AvskrivningerDifferanseTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule155AvskrivningerDifferanse(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "all conditions match, negative amount",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 1),
-                        kostraRecordInTest("420400", 1, 860, 990, -32),
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at avskrivninger (1) stemmer " +
-                            "overens med motpost avskrivninger (-32) (margin på +/- 30')",
-                ),
-                ForAllRowItem(
-                    "all conditions match, positive amount",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 32),
-                        kostraRecordInTest("420400", 1, 860, 990, -1),
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at avskrivninger (32) stemmer " +
-                            "overens med motpost avskrivninger (-1) (margin på +/- 30')",
-                ),
-                ForAllRowItem(
-                    "not it.isOsloBydel() = false",
-                    listOf(
-                        kostraRecordInTest("030101", 1, 100, 590, 1),
-                        kostraRecordInTest("030101", 1, 860, 990, -32),
-                    ),
-                ),
-                ForAllRowItem(
-                    "isBevilgningDriftRegnskap = false",
-                    listOf(
-                        kostraRecordInTest("420400", 0, 100, 590, 1),
-                        kostraRecordInTest("420400", 0, 860, 990, -32),
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "funksjon #1 mismatch",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 99, 590, 1),
-                        kostraRecordInTest("420400", 1, 860, 990, -30),
-                    ),
-                ),
-                ForAllRowItem(
-                    "art #1 mismatch",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 591, 1),
-                        kostraRecordInTest("420400", 1, 860, 990, -30),
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "funksjon #2 mismatch",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 1),
-                        kostraRecordInTest("420400", 1, 861, 990, -30),
-                    ),
-                ),
-                ForAllRowItem(
-                    "art #2 mismatch",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 1),
-                        kostraRecordInTest("420400", 1, 860, 991, -30),
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "sum within margin #1",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 31),
-                        kostraRecordInTest("420400", 1, 860, 990, -1),
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum within margin #2",
-                    listOf(
-                        kostraRecordInTest("420400", 1, 100, 590, 1),
-                        kostraRecordInTest("420400", 1, 860, 990, -31),
-                    ),
-                )
-            ),
             expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "all conditions match, negative amount",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 1),
+                    kostraRecordInTest("420400", 1, 860, 990, -32),
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at avskrivninger (1) stemmer " +
+                        "overens med motpost avskrivninger (-32) (margin på +/- 30')",
+            ),
+            ForAllRowItem(
+                "all conditions match, positive amount",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 32),
+                    kostraRecordInTest("420400", 1, 860, 990, -1),
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at avskrivninger (32) stemmer " +
+                        "overens med motpost avskrivninger (-1) (margin på +/- 30')",
+            ),
+            ForAllRowItem(
+                "not it.isOsloBydel() = false",
+                listOf(
+                    kostraRecordInTest("030101", 1, 100, 590, 1),
+                    kostraRecordInTest("030101", 1, 860, 990, -32),
+                ),
+            ),
+            ForAllRowItem(
+                "isBevilgningDriftRegnskap = false",
+                listOf(
+                    kostraRecordInTest("420400", 0, 100, 590, 1),
+                    kostraRecordInTest("420400", 0, 860, 990, -32),
+                ),
+            ),
+
+            ForAllRowItem(
+                "funksjon #1 mismatch",
+                listOf(
+                    kostraRecordInTest("420400", 1, 99, 590, 1),
+                    kostraRecordInTest("420400", 1, 860, 990, -30),
+                ),
+            ),
+            ForAllRowItem(
+                "art #1 mismatch",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 591, 1),
+                    kostraRecordInTest("420400", 1, 860, 990, -30),
+                ),
+            ),
+
+            ForAllRowItem(
+                "funksjon #2 mismatch",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 1),
+                    kostraRecordInTest("420400", 1, 861, 990, -30),
+                ),
+            ),
+            ForAllRowItem(
+                "art #2 mismatch",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 1),
+                    kostraRecordInTest("420400", 1, 860, 991, -30),
+                ),
+            ),
+
+            ForAllRowItem(
+                "sum within margin #1",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 31),
+                    kostraRecordInTest("420400", 1, 860, 990, -1),
+                ),
+            ),
+            ForAllRowItem(
+                "sum within margin #2",
+                listOf(
+                    kostraRecordInTest("420400", 1, 100, 590, 1),
+                    kostraRecordInTest("420400", 1, 860, 990, -31),
+                ),
+            )
         )
     )
 }) {

@@ -10,34 +10,31 @@ import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule050KombinasjonInvesteringKontoklasseArtTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule050KombinasjonInvesteringKontoklasseArt(listOf("990")),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "all conditions match",
-                    kostraRecordsInTest(0, 990, 1),
-                    expectedErrorMessage = "Korrigér ugyldig art '990' i investeringsregnskapet til en " +
-                            "gyldig art i investeringsregnskapet eller overfør posteringen til driftsregnskapet.",
-                ),
-                ForAllRowItem(
-                    "isBevilgningInvesteringRegnskap = false",
-                    kostraRecordsInTest(1, 990, 1),
-                ),
-                ForAllRowItem(
-                    "art != 990",
-                    kostraRecordsInTest(0, 991, 1),
-                ),
-                ForAllRowItem(
-                    "belop == 0",
-                    kostraRecordsInTest(0, 990, 0),
-                )
-            ),
             expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "all conditions match",
+                kostraRecordsInTest(0, 990, 1),
+                expectedErrorMessage = "Korrigér ugyldig art '990' i investeringsregnskapet til en " +
+                        "gyldig art i investeringsregnskapet eller overfør posteringen til driftsregnskapet.",
+            ),
+            ForAllRowItem(
+                "isBevilgningInvesteringRegnskap = false",
+                kostraRecordsInTest(1, 990, 1),
+            ),
+            ForAllRowItem(
+                "art != 990",
+                kostraRecordsInTest(0, 991, 1),
+            ),
+            ForAllRowItem(
+                "belop == 0",
+                kostraRecordsInTest(0, 990, 0),
+            )
         )
     )
 }) {

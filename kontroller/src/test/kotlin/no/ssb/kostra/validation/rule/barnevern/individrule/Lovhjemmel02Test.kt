@@ -3,7 +3,7 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleWithArgsTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
@@ -12,60 +12,58 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.t
 
 class Lovhjemmel02Test : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleWithArgsTest(
             sut = Lovhjemmel02(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "individ without tiltak",
-                    individInTest
-                ),
-                ForAllRowItem(
-                    "individ with tiltak, erOmsorgstiltak = false",
-                    individInTest.copy(
-                        tiltak = mutableListOf(tiltakTypeInTest)
-                    )
-                ),
-                ForAllRowItem(
-                    "individ with tiltak, erOmsorgstiltak = true, sluttDato = null",
-                    individInTest.copy(
-                        tiltak = mutableListOf(
-                            tiltakTypeInTest.copy(
-                                sluttDato = null,
-                                lovhjemmel = omsorgLovhjemmelTypeInTest
-                            )
-                        )
-                    )
-                ),
-                ForAllRowItem(
-                    "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
-                    individInTest.copy(
-                        tiltak = mutableListOf(
-                            tiltakTypeInTest.copy(
-                                sluttDato = dateInTest,
-                                lovhjemmel = omsorgLovhjemmelTypeInTest,
-                                opphevelse = opphevelseTypeInTest
-                            )
-                        )
-                    )
-                ),
-
-                ForAllRowItem(
-                    "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse = null",
-                    individInTest.copy(
-                        tiltak = mutableListOf(
-                            tiltakTypeInTest.copy(
-                                sluttDato = dateInTest,
-                                lovhjemmel = omsorgLovhjemmelTypeInTest,
-                                opphevelse = null
-                            )
-                        )
-                    ),
-                    expectedErrorMessage = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato " +
-                            "krever årsak til opphevelse"
+            expectedSeverity = Severity.WARNING,
+            expectedContextId = tiltakTypeInTest.id,
+            ForAllRowItem(
+                "individ without tiltak",
+                individInTest
+            ),
+            ForAllRowItem(
+                "individ with tiltak, erOmsorgstiltak = false",
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest)
                 )
             ),
-            expectedSeverity = Severity.WARNING,
-            expectedContextId = tiltakTypeInTest.id
+            ForAllRowItem(
+                "individ with tiltak, erOmsorgstiltak = true, sluttDato = null",
+                individInTest.copy(
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(
+                            sluttDato = null,
+                            lovhjemmel = omsorgLovhjemmelTypeInTest
+                        )
+                    )
+                )
+            ),
+            ForAllRowItem(
+                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
+                individInTest.copy(
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(
+                            sluttDato = dateInTest,
+                            lovhjemmel = omsorgLovhjemmelTypeInTest,
+                            opphevelse = opphevelseTypeInTest
+                        )
+                    )
+                )
+            ),
+
+            ForAllRowItem(
+                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse = null",
+                individInTest.copy(
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(
+                            sluttDato = dateInTest,
+                            lovhjemmel = omsorgLovhjemmelTypeInTest,
+                            opphevelse = null
+                        )
+                    )
+                ),
+                expectedErrorMessage = "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato " +
+                        "krever årsak til opphevelse"
+            )
         )
     )
 })

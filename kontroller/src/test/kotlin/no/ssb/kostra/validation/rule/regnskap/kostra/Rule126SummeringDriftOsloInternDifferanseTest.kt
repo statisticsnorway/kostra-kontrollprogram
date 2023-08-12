@@ -10,80 +10,76 @@ import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule126SummeringDriftOsloInternDifferanseTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule126SummeringDriftOsloInternDifferanse(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "All good",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 298, 100),
-                        kostraRecordInTest("030100", "0A", 1, 798, -100)
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "region is not Oslo, isOsloInternRegnskap is false",
-                    listOf(
-                        kostraRecordInTest("XXXXXX", "0A", 1, 298, 100),
-                        kostraRecordInTest("XXXXXX", "0A", 1, 798, -100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "skjema not in 0A or 0M, isOsloInternRegnskap is false",
-                    listOf(
-                        kostraRecordInTest("030100", "XX", 1, 298, 100),
-                        kostraRecordInTest("030100", "XX", 1, 798, -100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "kontoklasse is not drift",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 0, 298, 100),
-                        kostraRecordInTest("030100", "0A", 0, 798, -100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "art not in 298 or 798",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 100, 100),
-                        kostraRecordInTest("030100", "0A", 1, 100, -100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -10",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 298, 100),
-                        kostraRecordInTest("030100", "0A", 1, 798, -110)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is 10",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 298, 110),
-                        kostraRecordInTest("030100", "0A", 1, 798, -100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -11",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 298, 100),
-                        kostraRecordInTest("030100", "0A", 1, 798, -111)
-                    ),
-                    expectedErrorMessage = "Korrigér differansen (-11) mellom sum over alle funksjoner for art " +
-                            "298 (100) og sum over alle funksjoner for art 798 (-111) i driftsregnskapet."
-                ),
-                ForAllRowItem(
-                    "sum of belop is 11",
-                    listOf(
-                        kostraRecordInTest("030100", "0A", 1, 298, 111),
-                        kostraRecordInTest("030100", "0A", 1, 798, -100)
-                    ),
-                    expectedErrorMessage = "Korrigér differansen (11) mellom sum over alle funksjoner for art " +
-                            "298 (111) og sum over alle funksjoner for art 798 (-100) i driftsregnskapet."
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "All good",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 298, 100),
+                    kostraRecordInTest("030100", "0A", 1, 798, -100)
                 ),
             ),
-            expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "region is not Oslo, isOsloInternRegnskap is false",
+                listOf(
+                    kostraRecordInTest("XXXXXX", "0A", 1, 298, 100),
+                    kostraRecordInTest("XXXXXX", "0A", 1, 798, -100)
+                ),
+            ),
+            ForAllRowItem(
+                "skjema not in 0A or 0M, isOsloInternRegnskap is false",
+                listOf(
+                    kostraRecordInTest("030100", "XX", 1, 298, 100),
+                    kostraRecordInTest("030100", "XX", 1, 798, -100)
+                ),
+            ),
+            ForAllRowItem(
+                "kontoklasse is not drift",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 0, 298, 100),
+                    kostraRecordInTest("030100", "0A", 0, 798, -100)
+                ),
+            ),
+            ForAllRowItem(
+                "art not in 298 or 798",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 100, 100),
+                    kostraRecordInTest("030100", "0A", 1, 100, -100)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -10",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 298, 100),
+                    kostraRecordInTest("030100", "0A", 1, 798, -110)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is 10",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 298, 110),
+                    kostraRecordInTest("030100", "0A", 1, 798, -100)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -11",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 298, 100),
+                    kostraRecordInTest("030100", "0A", 1, 798, -111)
+                ),
+                expectedErrorMessage = "Korrigér differansen (-11) mellom sum over alle funksjoner for art " +
+                        "298 (100) og sum over alle funksjoner for art 798 (-111) i driftsregnskapet."
+            ),
+            ForAllRowItem(
+                "sum of belop is 11",
+                listOf(
+                    kostraRecordInTest("030100", "0A", 1, 298, 111),
+                    kostraRecordInTest("030100", "0A", 1, 798, -100)
+                ),
+                expectedErrorMessage = "Korrigér differansen (11) mellom sum over alle funksjoner for art " +
+                        "298 (111) og sum over alle funksjoner for art 798 (-100) i driftsregnskapet."
+            )
         )
     )
 }) {

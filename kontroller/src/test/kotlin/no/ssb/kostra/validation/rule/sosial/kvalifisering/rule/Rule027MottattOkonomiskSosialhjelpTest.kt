@@ -9,53 +9,51 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Rule027MottattOkonomiskSosialhjelpTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule027MottattOkonomiskSosialhjelp(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "answer Ja, all fields blank",
-                    recordInTestAllValuesBlank(1),
-                    expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
-                            "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
-                            "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
-                            "fylle ut. Det er mottatt støtte."
-                ),
-                ForAllRowItem(
-                    "answer Ja, all fields '0'",
-                    recordInTestAllValuesZero(1),
-                    expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
-                            "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
-                            "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
-                            "fylle ut. Det er mottatt støtte."
-                ),
-                ForAllRowItem(
-                    "answer Ja, all fields populated with valid values",
-                    recordInTestAllValuesPopulated(1),
-                ),
-                ForAllRowItem(
-                    "answer Nei, all fields blank",
-                    recordInTestAllValuesBlank(2),
-                ),
-                ForAllRowItem(
-                    "answer Nei, all fields '0'",
-                    recordInTestAllValuesZero(2),
-                ),
-                ForAllRowItem(
-                    "answer Nei, all fields populated with valid values",
-                    recordInTestAllValuesPopulated(2),
-                    expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
-                            "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
-                            "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
-                            "fylle ut. Det er IKKE mottatt støtte."
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "answer Ja, all fields blank",
+                recordInTestAllValuesBlank(1),
+                expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
+                        "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                        "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
+                        "fylle ut. Det er mottatt støtte."
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "answer Ja, all fields '0'",
+                recordInTestAllValuesZero(1),
+                expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
+                        "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                        "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
+                        "fylle ut. Det er mottatt støtte."
+            ),
+            ForAllRowItem(
+                "answer Ja, all fields populated with valid values",
+                recordInTestAllValuesPopulated(1),
+            ),
+            ForAllRowItem(
+                "answer Nei, all fields blank",
+                recordInTestAllValuesBlank(2),
+            ),
+            ForAllRowItem(
+                "answer Nei, all fields '0'",
+                recordInTestAllValuesZero(2),
+            ),
+            ForAllRowItem(
+                "answer Nei, all fields populated with valid values",
+                recordInTestAllValuesPopulated(2),
+                expectedErrorMessage = "Svaralternativer for feltet \"Har deltakeren i ${argumentsInTest.aargang} " +
+                        "i løpet av perioden med kvalifiseringsstønad mottatt økonomisk sosialhjelp, kommunal " +
+                        "bostøtte eller Husbankens bostøtte?\" har ugyldige koder. Feltet er obligatorisk å " +
+                        "fylle ut. Det er IKKE mottatt støtte."
+            )
         )
     )
 }) {

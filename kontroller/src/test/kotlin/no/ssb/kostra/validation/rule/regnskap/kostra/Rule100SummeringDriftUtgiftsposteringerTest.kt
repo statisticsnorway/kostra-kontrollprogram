@@ -12,40 +12,37 @@ import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule100SummeringDriftUtgiftsposteringer(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "all conditions match",
-                    kostraRecordsInTest("420400", 1, 100, 590, 0),
-                    expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
-                            "(0) i driftsregnskapet",
-                ),
-                ForAllRowItem(
-                    "isOsloBydel() = true",
-                    kostraRecordsInTest("030114", 1, 100, 590, 0),
-                ),
-                ForAllRowItem(
-                    "isBevilgningDriftRegnskap = false",
-                    kostraRecordsInTest("420400", 0, 100, 590, 0),
-                ),
-                ForAllRowItem(
-                    "isUtgift = false",
-                    kostraRecordsInTest("420400", 1, 100, 600, 0),
-                    expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
-                            "(0) i driftsregnskapet",
-                ),
-                ForAllRowItem(
-                    "belop > 0",
-                    kostraRecordsInTest("420400", 1, 100, 590, 1),
-                ),
-            ),
             expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "all conditions match",
+                kostraRecordsInTest("420400", 1, 100, 590, 0),
+                expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
+                        "(0) i driftsregnskapet",
+            ),
+            ForAllRowItem(
+                "isOsloBydel() = true",
+                kostraRecordsInTest("030114", 1, 100, 590, 0),
+            ),
+            ForAllRowItem(
+                "isBevilgningDriftRegnskap = false",
+                kostraRecordsInTest("420400", 0, 100, 590, 0),
+            ),
+            ForAllRowItem(
+                "isUtgift = false",
+                kostraRecordsInTest("420400", 1, 100, 600, 0),
+                expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
+                        "(0) i driftsregnskapet",
+            ),
+            ForAllRowItem(
+                "belop > 0",
+                kostraRecordsInTest("420400", 1, 100, 590, 1),
+            )
         )
     )
 }) {

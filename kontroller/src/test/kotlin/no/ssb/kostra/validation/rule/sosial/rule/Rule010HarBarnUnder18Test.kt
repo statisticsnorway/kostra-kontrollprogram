@@ -9,29 +9,27 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 
 class Rule010HarBarnUnder18Test : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule010HarBarnUnder18(),
-            forAllRows = listOf(
-                *(1..2).map {
-                    ForAllRowItem(
-                        "code = $it",
-                        kostraRecordInTest(it)
-                    )
-                }.toTypedArray(),
+            expectedSeverity = Severity.ERROR,
+            *(1..2).map {
                 ForAllRowItem(
-                    "code = 3",
-                    kostraRecordInTest(3),
-                    expectedErrorMessage = "Korrigér forsørgerplikt. Fant '3', forventet én av [1=Ja, 2=Nei]'. " +
-                            "Det er ikke krysset av for om deltakeren har barn under 18 år, som deltakeren " +
-                            "(eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen " +
-                            "ved siste kontakt. Feltet er obligatorisk å fylle ut.",
+                    "code = $it",
+                    kostraRecordInTest(it)
                 )
-            ),
-            expectedSeverity = Severity.ERROR
+            }.toTypedArray(),
+            ForAllRowItem(
+                "code = 3",
+                kostraRecordInTest(3),
+                expectedErrorMessage = "Korrigér forsørgerplikt. Fant '3', forventet én av [1=Ja, 2=Nei]'. " +
+                        "Det er ikke krysset av for om deltakeren har barn under 18 år, som deltakeren " +
+                        "(eventuelt ektefelle/samboer) har forsørgerplikt for, og som bor i husholdningen " +
+                        "ved siste kontakt. Feltet er obligatorisk å fylle ut.",
+            )
         )
     )
 }) {

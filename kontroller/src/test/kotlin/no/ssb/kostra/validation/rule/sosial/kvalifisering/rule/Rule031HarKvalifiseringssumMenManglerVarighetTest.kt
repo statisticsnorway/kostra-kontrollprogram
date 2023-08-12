@@ -6,36 +6,33 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STON
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 class Rule031HarKvalifiseringssumMenManglerVarighetTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule031HarKvalifiseringssumMenManglerVarighet(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "with other status, months and amount",
-                    kostraRecordInTest("X", " ", false),
-                ),
-
-                ForAllRowItem(
-                    "with months and amount",
-                    kostraRecordInTest("1", "2", true),
-                ),
-                ForAllRowItem(
-                    "without months, without amount",
-                    kostraRecordInTest("1", " ", false),
-                ),
-                ForAllRowItem(
-                    "without months, with amount",
-                    kostraRecordInTest("1", "1", false),
-                    "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
-                            "men mangler utfylling for hvilke måneder stønaden gjelder. " +
-                            "Feltet er obligatorisk å fylle ut.",
-                )
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "with other status, months and amount",
+                kostraRecordInTest("X", " ", false),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "with months and amount",
+                kostraRecordInTest("1", "2", true),
+            ),
+            ForAllRowItem(
+                "without months, without amount",
+                kostraRecordInTest("1", " ", false),
+            ),
+            ForAllRowItem(
+                "without months, with amount",
+                kostraRecordInTest("1", "1", false),
+                "Deltakeren har fått kvalifiseringsstønad (1) i løpet av året, " +
+                        "men mangler utfylling for hvilke måneder stønaden gjelder. " +
+                        "Feltet er obligatorisk å fylle ut.",
+            )
         )
     )
 }) {

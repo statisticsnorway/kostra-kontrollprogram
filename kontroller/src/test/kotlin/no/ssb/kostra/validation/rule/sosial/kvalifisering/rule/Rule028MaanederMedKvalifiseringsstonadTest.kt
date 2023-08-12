@@ -7,31 +7,29 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_C
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.PERMISJON
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 
 
 class Rule028MaanederMedKvalifiseringsstonadTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule028MaanederMedKvalifiseringsstonad(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "permisjon",
-                    kostraRecordInTest(PERMISJON, false),
-                ),
-                ForAllRowItem(
-                    "status != permisjon, all months present",
-                    kostraRecordInTest("1", true)
-                ),
-                ForAllRowItem(
-                    "status != permisjon, all months missing",
-                    kostraRecordInTest("1", false),
-                    expectedErrorMessage = "Det er ikke krysset av for hvilke måneder deltakeren har " +
-                            "fått utbetalt kvalifiseringsstønad"
-                ),
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "permisjon",
+                kostraRecordInTest(PERMISJON, false),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "status != permisjon, all months present",
+                kostraRecordInTest("1", true)
+            ),
+            ForAllRowItem(
+                "status != permisjon, all months missing",
+                kostraRecordInTest("1", false),
+                expectedErrorMessage = "Det er ikke krysset av for hvilke måneder deltakeren har " +
+                        "fått utbetalt kvalifiseringsstønad"
+            )
         )
     )
 }) {

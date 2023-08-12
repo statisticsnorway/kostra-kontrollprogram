@@ -16,34 +16,32 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_9_COL
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
 class Rule036BidragSumTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule036BidragSum(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "bidrag = 0, sum bidrag per måned = 0",
-                    kostraRecordInTest("0", "0"),
-                ),
-                ForAllRowItem(
-                    "bidrag = 1, sum bidrag per måned = 1",
-                    kostraRecordInTest("1", "1"),
-                ),
-                ForAllRowItem(
-                    "bidrag = 0, sum bidrag per måned = 1",
-                    kostraRecordInTest("0", "1"),
-                    expectedErrorMessage = "Det er ikke fylt ut bidrag (0) fordelt på måneder eller sum stemmer ikke med sum bidrag (1) utbetalt i løpet av året.",
-                ),
-                ForAllRowItem(
-                    "bidrag = X, sum bidrag per måned = 1",
-                    kostraRecordInTest(" ", "1"),
-                    expectedErrorMessage = "Det er ikke fylt ut bidrag (0) fordelt på måneder eller sum stemmer ikke med sum bidrag (1) utbetalt i løpet av året.",
-                ),
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "bidrag = 0, sum bidrag per måned = 0",
+                kostraRecordInTest("0", "0"),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "bidrag = 1, sum bidrag per måned = 1",
+                kostraRecordInTest("1", "1"),
+            ),
+            ForAllRowItem(
+                "bidrag = 0, sum bidrag per måned = 1",
+                kostraRecordInTest("0", "1"),
+                expectedErrorMessage = "Det er ikke fylt ut bidrag (0) fordelt på måneder eller sum stemmer ikke med sum bidrag (1) utbetalt i løpet av året.",
+            ),
+            ForAllRowItem(
+                "bidrag = X, sum bidrag per måned = 1",
+                kostraRecordInTest(" ", "1"),
+                expectedErrorMessage = "Det er ikke fylt ut bidrag (0) fordelt på måneder eller sum stemmer ikke med sum bidrag (1) utbetalt i løpet av året.",
+            )
         )
     )
 }) {

@@ -9,30 +9,28 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fie
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule004OppgaveAarTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule004OppgaveAar(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "record with valid aargang",
-                    kostraRecordInTest((argumentsInTest.aargang.toInt() - 2_000).toString()),
-                ),
-                ForAllRowItem(
-                    "record with non-numeric aargang",
-                    kostraRecordInTest("ab"),
-                    expectedErrorMessage = "Korrigér årgang. Fant ab, forventet",
-                ),
-                ForAllRowItem(
-                    "record with invalid aargang",
-                    kostraRecordInTest("42"),
-                    expectedErrorMessage = "Korrigér årgang. Fant 42, forventet",
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "record with valid aargang",
+                kostraRecordInTest((argumentsInTest.aargang.toInt() - 2_000).toString()),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "record with non-numeric aargang",
+                kostraRecordInTest("ab"),
+                expectedErrorMessage = "Korrigér årgang. Fant ab, forventet",
+            ),
+            ForAllRowItem(
+                "record with invalid aargang",
+                kostraRecordInTest("42"),
+                expectedErrorMessage = "Korrigér årgang. Fant 42, forventet",
+            )
         )
     )
 }) {

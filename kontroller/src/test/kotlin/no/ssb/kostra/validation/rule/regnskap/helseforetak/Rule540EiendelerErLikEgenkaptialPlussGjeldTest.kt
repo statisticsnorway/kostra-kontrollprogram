@@ -6,44 +6,42 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils
 
 class Rule540EiendelerErLikEgenkaptialPlussGjeldTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule540EiendelerErLikEgenkaptialPlussGjeld(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "feil skjema",
-                    listOf(
-                        kostraRecordInTest("0X", "100", 0),
-                    )
-                ),
-                *setOf(Pair(-551, -51), Pair(-449, 51)).map { (sumGjeld, differanse) ->
-                    ForAllRowItem(
-                        "riktig skjema, sektor, men beløp utenfor interval, differanse = $differanse",
-                        listOf(
-                            kostraRecordInTest("0Y", "100", 1000),
-                            kostraRecordInTest("0Y", "200", -500),
-                            kostraRecordInTest("0Y", "210", sumGjeld),
-                        ),
-                        expectedErrorMessage = "Balansen ($differanse) skal balansere ved at sum eiendeler (1000)  = sum " +
-                                "egenkapital (-500) + sum gjeld ($sumGjeld) . Differanser +/- 50' kroner godtas"
-                    )
-                }.toTypedArray(),
-                *setOf(Pair(-550, -50), Pair(-450, 50)).map { (sumGjeld, differanse) ->
-                    ForAllRowItem(
-                        "riktig skjema, sektor og beløp innenfor interval, differanse = $differanse",
-                        listOf(
-                            kostraRecordInTest("0Y", "100", 1100),
-                            kostraRecordInTest("0Y", "200", -600),
-                            kostraRecordInTest("0Y", "210", sumGjeld),
-                        )
-                    )
-                }.toTypedArray(),
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "feil skjema",
+                listOf(
+                    kostraRecordInTest("0X", "100", 0),
+                )
             ),
-            expectedSeverity = Severity.WARNING
+            *setOf(Pair(-551, -51), Pair(-449, 51)).map { (sumGjeld, differanse) ->
+                ForAllRowItem(
+                    "riktig skjema, sektor, men beløp utenfor interval, differanse = $differanse",
+                    listOf(
+                        kostraRecordInTest("0Y", "100", 1000),
+                        kostraRecordInTest("0Y", "200", -500),
+                        kostraRecordInTest("0Y", "210", sumGjeld),
+                    ),
+                    expectedErrorMessage = "Balansen ($differanse) skal balansere ved at sum eiendeler (1000)  = sum " +
+                            "egenkapital (-500) + sum gjeld ($sumGjeld) . Differanser +/- 50' kroner godtas"
+                )
+            }.toTypedArray(),
+            *setOf(Pair(-550, -50), Pair(-450, 50)).map { (sumGjeld, differanse) ->
+                ForAllRowItem(
+                    "riktig skjema, sektor og beløp innenfor interval, differanse = $differanse",
+                    listOf(
+                        kostraRecordInTest("0Y", "100", 1100),
+                        kostraRecordInTest("0Y", "200", -600),
+                        kostraRecordInTest("0Y", "210", sumGjeld),
+                    )
+                )
+            }.toTypedArray(),
         )
     )
 

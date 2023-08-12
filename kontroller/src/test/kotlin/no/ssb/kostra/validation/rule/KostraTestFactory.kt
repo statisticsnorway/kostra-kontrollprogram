@@ -20,13 +20,49 @@ data class ForAllRowItem<out T : Any>(
 )
 
 object KostraTestFactory {
-
-    fun <T : Any> validationRuleTest(
+    fun <T : Any> validationRuleNoContextTest(
         sut: AbstractRule<T>,
-        forAllRows: Collection<ForAllRowItem<T>>,
         expectedSeverity: Severity,
-        expectedContextId: String? = null,
-        useArguments: Boolean = true
+        vararg forAllRows: ForAllRowItem<T>
+    ) = validationRuleTest(
+        sut = sut,
+        expectedSeverity = expectedSeverity,
+        expectedContextId = null,
+        useArguments = true,
+        forAllRows = forAllRows
+    )
+
+    fun <T : Any> validationRuleWithArgsTest(
+        sut: AbstractRule<T>,
+        expectedSeverity: Severity,
+        expectedContextId: String?,
+        vararg forAllRows: ForAllRowItem<T>
+    ) = validationRuleTest(
+        sut = sut,
+        expectedSeverity = expectedSeverity,
+        expectedContextId = expectedContextId,
+        useArguments = true,
+        forAllRows = forAllRows
+    )
+
+    fun <T : Any> validationRuleNoArgsTest(
+        sut: AbstractRule<T>,
+        expectedSeverity: Severity,
+        vararg forAllRows: ForAllRowItem<T>
+    ) = validationRuleTest(
+        sut = sut,
+        expectedSeverity = expectedSeverity,
+        expectedContextId = null,
+        useArguments = false,
+        forAllRows = forAllRows
+    )
+
+    private fun <T : Any> validationRuleTest(
+        sut: AbstractRule<T>,
+        expectedSeverity: Severity,
+        expectedContextId: String?,
+        useArguments: Boolean,
+        vararg forAllRows: ForAllRowItem<T>
     ) = behaviorSpec {
         Given("context") {
             forAll(

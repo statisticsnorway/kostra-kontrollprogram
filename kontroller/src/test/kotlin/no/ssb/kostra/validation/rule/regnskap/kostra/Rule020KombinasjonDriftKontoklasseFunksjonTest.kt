@@ -10,35 +10,32 @@ import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule020KombinasjonDriftKontoklasseFunksjonTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule020KombinasjonDriftKontoklasseFunksjon(listOf("841")),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "all conditions match",
-                    kostraRecordsInTest(1, 841, 1),
-                    expectedErrorMessage = "Korrigér ugyldig funksjon '841' i driftsregnskapet " +
-                            "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
-                            "investeringsregnskapet.",
-                ),
-                ForAllRowItem(
-                    "isBevilgningDriftRegnskap = false",
-                    kostraRecordsInTest(0, 841, 1),
-                ),
-                ForAllRowItem(
-                    "funksjon != 841",
-                    kostraRecordsInTest(1, 842, 1),
-                ),
-                ForAllRowItem(
-                    "belop == 0",
-                    kostraRecordsInTest(1, 841, 0),
-                )
-            ),
             expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "all conditions match",
+                kostraRecordsInTest(1, 841, 1),
+                expectedErrorMessage = "Korrigér ugyldig funksjon '841' i driftsregnskapet " +
+                        "til en gyldig funksjon i driftsregnskapet eller overfør posteringen til " +
+                        "investeringsregnskapet.",
+            ),
+            ForAllRowItem(
+                "isBevilgningDriftRegnskap = false",
+                kostraRecordsInTest(0, 841, 1),
+            ),
+            ForAllRowItem(
+                "funksjon != 841",
+                kostraRecordsInTest(1, 842, 1),
+            ),
+            ForAllRowItem(
+                "belop == 0",
+                kostraRecordsInTest(1, 841, 0),
+            )
         )
     )
 }) {

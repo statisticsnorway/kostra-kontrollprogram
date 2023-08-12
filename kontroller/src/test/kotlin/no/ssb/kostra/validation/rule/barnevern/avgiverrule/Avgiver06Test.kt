@@ -4,30 +4,27 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 
 class Avgiver06Test : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Avgiver06(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "avgiver with kommunenavn",
-                    kostraAvgiverTypeInTest
-                ),
-
-                ForAllRowItem(
-                    "avgiver with empty kommunenavn",
-                    kostraAvgiverTypeInTest.copy(kommunenavn = ""),
-                    expectedErrorMessage = "Filen mangler kommunenavn."
-                ),
-                ForAllRowItem(
-                    "avgiver with blank kommunenavn",
-                    kostraAvgiverTypeInTest.copy(kommunenavn = "   "),
-                    expectedErrorMessage = "Filen mangler kommunenavn."
-                )
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "avgiver with kommunenavn",
+                kostraAvgiverTypeInTest
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "avgiver with empty kommunenavn",
+                kostraAvgiverTypeInTest.copy(kommunenavn = ""),
+                expectedErrorMessage = "Filen mangler kommunenavn."
+            ),
+            ForAllRowItem(
+                "avgiver with blank kommunenavn",
+                kostraAvgiverTypeInTest.copy(kommunenavn = "   "),
+                expectedErrorMessage = "Filen mangler kommunenavn."
+            )
         )
     )
 })

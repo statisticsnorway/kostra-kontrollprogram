@@ -17,27 +17,25 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_8_COL_
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_9_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
 class Rule026StonadsmaanederTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule026Stonadsmaaneder(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "varighet = 01",
-                    kostraRecordInTest("01"),
-                ),
-                ForAllRowItem(
-                    "varighet = XX",
-                    kostraRecordInTest("XX"),
-                    expectedErrorMessage = "Det er ikke krysset av for hvilke måneder mottakeren har fått utbetalt " +
-                            "økonomisk sosialhjelp (bidrag (1000) eller lån (0)) i løpet av rapporteringsåret. " +
-                            "Feltet er obligatorisk å fylle ut.",
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "varighet = 01",
+                kostraRecordInTest("01"),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "varighet = XX",
+                kostraRecordInTest("XX"),
+                expectedErrorMessage = "Det er ikke krysset av for hvilke måneder mottakeren har fått utbetalt " +
+                        "økonomisk sosialhjelp (bidrag (1000) eller lån (0)) i løpet av rapporteringsåret. " +
+                        "Feltet er obligatorisk å fylle ut.",
+            )
         )
     )
 }) {

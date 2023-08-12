@@ -4,35 +4,33 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils.kvalifiseringKostraRecordInTest
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.Rule032KvalifiseringssumOverMaksimum.Companion.STONAD_SUM_MAX
 
 class Rule032KvalifiseringssumOverMaksimumTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule032KvalifiseringssumOverMaksimum(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "empty amount",
-                    kostraRecordInTest(" "),
-                ),
-                ForAllRowItem(
-                    "valid amount",
-                    kostraRecordInTest("42"),
-                ),
-                ForAllRowItem(
-                    "max amount",
-                    kostraRecordInTest(STONAD_SUM_MAX.toString()),
-                ),
-                ForAllRowItem(
-                    "amount too high",
-                    kostraRecordInTest((STONAD_SUM_MAX + 1).toString()),
-                    "Kvalifiseringsstønaden (600001) som deltakeren har fått i løpet av " +
-                            "rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på NOK 600000,-.",
-                )
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "empty amount",
+                kostraRecordInTest(" "),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "valid amount",
+                kostraRecordInTest("42"),
+            ),
+            ForAllRowItem(
+                "max amount",
+                kostraRecordInTest(STONAD_SUM_MAX.toString()),
+            ),
+            ForAllRowItem(
+                "amount too high",
+                kostraRecordInTest((STONAD_SUM_MAX + 1).toString()),
+                "Kvalifiseringsstønaden (600001) som deltakeren har fått i løpet av " +
+                        "rapporteringsåret overstiger Statistisk sentralbyrås kontrollgrense på NOK 600000,-.",
+            )
         )
     )
 }) {

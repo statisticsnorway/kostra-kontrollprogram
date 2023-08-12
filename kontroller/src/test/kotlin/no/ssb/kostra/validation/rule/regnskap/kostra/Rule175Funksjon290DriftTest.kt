@@ -10,71 +10,68 @@ import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule175Funksjon290DriftTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule175Funksjon290Drift(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "All good",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 290, 0)
-                    ),
-                ),
-
-                ForAllRowItem(
-                    "region is Oslo Bydel 01",
-                    listOf(
-                        kostraRecordInTest("030101", "0A", 1, 290, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "skjema not isKommuneRegnskap",
-                    listOf(
-                        kostraRecordInTest("420400", "0C", 1, 290, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "kontoklasse is not drift",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 0, 290, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "funksjon not 290",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 100, 100)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -30",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 290, -30)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is 30",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 290, 30)
-                    ),
-                ),
-                ForAllRowItem(
-                    "sum of belop is -31",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 290, -31)
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at differanse (-31) på funksjon 290 " +
-                            "interkommunale samarbeid går i 0 i driftsregnskapet. (margin på +/- 30')"
-                ),
-                ForAllRowItem(
-                    "sum of belop is 31",
-                    listOf(
-                        kostraRecordInTest("420400", "0A", 1, 290, 31)
-                    ),
-                    expectedErrorMessage = "Korrigér i fila slik at differanse (31) på funksjon 290 " +
-                            "interkommunale samarbeid går i 0 i driftsregnskapet. (margin på +/- 30')"
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "All good",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 290, 0)
                 ),
             ),
-            expectedSeverity = Severity.ERROR,
-            useArguments = false
+
+            ForAllRowItem(
+                "region is Oslo Bydel 01",
+                listOf(
+                    kostraRecordInTest("030101", "0A", 1, 290, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "skjema not isKommuneRegnskap",
+                listOf(
+                    kostraRecordInTest("420400", "0C", 1, 290, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "kontoklasse is not drift",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 0, 290, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "funksjon not 290",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 100, 100)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -30",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 290, -30)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is 30",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 290, 30)
+                ),
+            ),
+            ForAllRowItem(
+                "sum of belop is -31",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 290, -31)
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at differanse (-31) på funksjon 290 " +
+                        "interkommunale samarbeid går i 0 i driftsregnskapet. (margin på +/- 30')"
+            ),
+            ForAllRowItem(
+                "sum of belop is 31",
+                listOf(
+                    kostraRecordInTest("420400", "0A", 1, 290, 31)
+                ),
+                expectedErrorMessage = "Korrigér i fila slik at differanse (31) på funksjon 290 " +
+                        "interkommunale samarbeid går i 0 i driftsregnskapet. (margin på +/- 30')"
+            )
         )
     )
 }) {

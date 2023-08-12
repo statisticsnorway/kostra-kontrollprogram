@@ -5,32 +5,30 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.UTBETDATO_CO
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSOSLOV_COL_NAME
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils.twoDigitReportingYear
 
 class Rule041DatoForUtbetalingsvedtakTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule041DatoForUtbetalingsvedtak(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "vilkar = X, utbetdato = blank",
-                    kostraRecordInTest("X", ""),
-                ),
-                ForAllRowItem(
-                    "vilkar = 1, utbetdato = 0101$twoDigitReportingYear",
-                    kostraRecordInTest("1", "0101$twoDigitReportingYear"),
-                ),
-                ForAllRowItem(
-                    "vilkar = 1, utbetdato = blank",
-                    kostraRecordInTest("1", "      "),
-                    expectedErrorMessage = "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
-                            "sosialtjenesteloven', så skal utbetalingsvedtakets dato (      ) oppgis. " +
-                            "Feltet er obligatorisk å fylle ut.",
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "vilkar = X, utbetdato = blank",
+                kostraRecordInTest("X", ""),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "vilkar = 1, utbetdato = 0101$twoDigitReportingYear",
+                kostraRecordInTest("1", "0101$twoDigitReportingYear"),
+            ),
+            ForAllRowItem(
+                "vilkar = 1, utbetdato = blank",
+                kostraRecordInTest("1", "      "),
+                expectedErrorMessage = "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
+                        "sosialtjenesteloven', så skal utbetalingsvedtakets dato (      ) oppgis. " +
+                        "Feltet er obligatorisk å fylle ut.",
+            )
         )
     )
 }) {

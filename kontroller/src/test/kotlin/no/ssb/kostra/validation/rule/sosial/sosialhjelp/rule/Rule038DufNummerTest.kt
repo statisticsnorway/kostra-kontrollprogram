@@ -5,31 +5,29 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
 class Rule038DufNummerTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule038DufNummer(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "fnr = random generated, dufnr = blank",
-                    kostraRecordInTest(fnr, ""),
-                ),
-                ForAllRowItem(
-                    "fnr = blank, dufnr = random generated",
-                    kostraRecordInTest("", dufnr),
-                ),
-                ForAllRowItem(
-                    "fnr = blank, dufnr = blank",
-                    kostraRecordInTest("", ""),
-                    expectedErrorMessage = "Det er ikke oppgitt fødselsnummer/d-nummer på sosialhjelpsmottakeren eller " +
-                            "fødselsnummeret/d-nummeret inneholder feil. Oppgi ett 12-sifret DUF-nummer.",
-                ),
+            expectedSeverity = Severity.WARNING,
+            ForAllRowItem(
+                "fnr = random generated, dufnr = blank",
+                kostraRecordInTest(fnr, ""),
             ),
-            expectedSeverity = Severity.WARNING
+            ForAllRowItem(
+                "fnr = blank, dufnr = random generated",
+                kostraRecordInTest("", dufnr),
+            ),
+            ForAllRowItem(
+                "fnr = blank, dufnr = blank",
+                kostraRecordInTest("", ""),
+                expectedErrorMessage = "Det er ikke oppgitt fødselsnummer/d-nummer på sosialhjelpsmottakeren eller " +
+                        "fødselsnummeret/d-nummeret inneholder feil. Oppgi ett 12-sifret DUF-nummer.",
+            )
         )
     )
 }) {

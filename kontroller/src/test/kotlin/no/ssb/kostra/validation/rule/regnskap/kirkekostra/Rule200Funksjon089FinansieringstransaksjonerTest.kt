@@ -11,50 +11,47 @@ import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleTest
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
 
 class Rule200Funksjon089FinansieringstransaksjonerTest : BehaviorSpec({
     include(
-        validationRuleTest(
+        validationRuleNoArgsTest(
             sut = Rule200Funksjon089Finansieringstransaksjoner(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art != 500..580",
-                    kostraRecordsInTest(skjema = "0F", funksjon = "089 ", art = "499"),
-                    expectedErrorMessage = "Korrigér i fila slik at art (499) " +
-                            "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = false, funksjon = 089, art != 500..580",
-                    kostraRecordsInTest("0X", "089 ", "499"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon != 089, art match",
-                    kostraRecordsInTest("0F", "088 ", "499"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art = 500",
-                    kostraRecordsInTest("0F", "089 ", "500"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art = 580",
-                    kostraRecordsInTest("0F", "089 ", "580"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art = 830",
-                    kostraRecordsInTest("0F", "089 ", "830"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art = 900",
-                    kostraRecordsInTest("0F", "089 ", "900"),
-                ),
-                ForAllRowItem(
-                    "isBevilgningRegnskap = true, funksjon = 089, art = 980",
-                    kostraRecordsInTest("0F", "089 ", "980"),
-                )
-            ),
             expectedSeverity = Severity.ERROR,
-            useArguments = false
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art != 500..580",
+                kostraRecordsInTest(skjema = "0F", funksjon = "089 ", art = "499"),
+                expectedErrorMessage = "Korrigér i fila slik at art (499) " +
+                        "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = false, funksjon = 089, art != 500..580",
+                kostraRecordsInTest("0X", "089 ", "499"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon != 089, art match",
+                kostraRecordsInTest("0F", "088 ", "499"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art = 500",
+                kostraRecordsInTest("0F", "089 ", "500"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art = 580",
+                kostraRecordsInTest("0F", "089 ", "580"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art = 830",
+                kostraRecordsInTest("0F", "089 ", "830"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art = 900",
+                kostraRecordsInTest("0F", "089 ", "900"),
+            ),
+            ForAllRowItem(
+                "isBevilgningRegnskap = true, funksjon = 089, art = 980",
+                kostraRecordsInTest("0F", "089 ", "980"),
+            )
         )
     )
 }) {

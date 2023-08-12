@@ -11,46 +11,44 @@ import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import java.time.LocalDate
 
 class Rule005aFoedselsnummerDubletterTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule005aFoedselsnummerDubletter(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "no records",
-                    emptyList(),
-                ),
-                ForAllRowItem(
-                    "single record",
-                    listOf(kostraRecordInTest()),
-                ),
-                ForAllRowItem(
-                    "two records, different fødselsnummer",
-                    listOf(
-                        kostraRecordInTest(),
-                        kostraRecordInTest(
-                            RandomUtils.generateRandomSSN(
-                                LocalDate.now().minusYears(1),
-                                LocalDate.now()
-                            )
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "no records",
+                emptyList(),
+            ),
+            ForAllRowItem(
+                "single record",
+                listOf(kostraRecordInTest()),
+            ),
+            ForAllRowItem(
+                "two records, different fødselsnummer",
+                listOf(
+                    kostraRecordInTest(),
+                    kostraRecordInTest(
+                        RandomUtils.generateRandomSSN(
+                            LocalDate.now().minusYears(1),
+                            LocalDate.now()
                         )
-                    ),
-                ),
-                ForAllRowItem(
-                    "two records with same fødselsnummer",
-                    listOf(
-                        kostraRecordInTest(),
-                        kostraRecordInTest(journalId = "~journalId2~")
-                    ),
-                    expectedErrorMessage = "Fødselsnummeret i journalnummer ~journalId~ fins også i journalene ~journalId2~.",
-                    expectedSize = 2
+                    )
                 ),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "two records with same fødselsnummer",
+                listOf(
+                    kostraRecordInTest(),
+                    kostraRecordInTest(journalId = "~journalId2~")
+                ),
+                expectedErrorMessage = "Fødselsnummeret i journalnummer ~journalId~ fins også i journalene ~journalId2~.",
+                expectedSize = 2
+            )
         )
     )
 }) {

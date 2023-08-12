@@ -10,25 +10,23 @@ import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule003KommunenummerTest : BehaviorSpec({
     include(
-        KostraTestFactory.validationRuleTest(
+        validationRuleNoContextTest(
             sut = Rule003Kommunenummer(),
-            forAllRows = listOf(
-                ForAllRowItem(
-                    "record with valid kommunenummer",
-                    kostraRecordInTest(argumentsInTest.region.municipalityIdFromRegion()),
-                ),
-                ForAllRowItem(
-                    "record with invalid kommunenummer",
-                    kostraRecordInTest("4242"),
-                    expectedErrorMessage = "Korrigér kommunenummeret. Fant 4242, forventet 1234.",
-                ),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "record with valid kommunenummer",
+                kostraRecordInTest(argumentsInTest.region.municipalityIdFromRegion()),
             ),
-            expectedSeverity = Severity.ERROR
+            ForAllRowItem(
+                "record with invalid kommunenummer",
+                kostraRecordInTest("4242"),
+                expectedErrorMessage = "Korrigér kommunenummeret. Fant 4242, forventet 1234.",
+            )
         )
     )
 }) {

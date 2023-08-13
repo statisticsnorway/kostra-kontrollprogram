@@ -81,41 +81,34 @@ class KommuneKostraMain(
     private val funksjonList =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>()
-            when (arguments.skjema) {
-                "0A", "0M" -> {
-                    if (arguments.region in osloKommuner) {
-                        result.addAll(osloFunksjoner)
-                        result.addAll(fylkeskommunaleFunksjoner)
-                    }
-                    result.addAll(kommunaleFunksjoner)
-                    result.addAll(kommuneFinansielleFunksjoner)
-                }
 
-                "0C", "0P" -> {
-                    result.addAll(fylkeskommunaleFunksjoner)
-                    result.addAll(fylkeFinansielleFunksjoner)
-                }
+            if (arguments.skjema in listOf("0A", "0I", "0M"))
+                result.addAll(kommunaleFunksjoner)
 
-                "0I" -> {
-                    if (arguments.region in osloKommuner) {
-                        result.addAll(osloFunksjoner)
-                        result.addAll(fylkeskommunaleFunksjoner)
-                    }
-                    result.addAll(kommunaleFunksjoner)
-                    if (arguments.orgnr in orgnrSpesial) {
-                        result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
-                    } else {
-                        result.addAll(kommunaleSbdrFinansielleFunksjoner)
-                    }
-                }
+            if (arguments.skjema in listOf("0A", "0M"))
+                result.addAll(kommuneFinansielleFunksjoner)
 
-                "0K" -> {
-                    result.addAll(fylkeskommunaleFunksjoner)
+            if (arguments.skjema in listOf("0I"))
+                if (arguments.orgnr in orgnrSpesial)
                     result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
-                }
+                else
+                    result.addAll(kommunaleSbdrFinansielleFunksjoner)
+
+            if (arguments.skjema in listOf("0C", "0K", "0P"))
+                result.addAll(fylkeskommunaleFunksjoner)
+
+            if (arguments.skjema in listOf("0C", "0P"))
+                result.addAll(fylkeFinansielleFunksjoner)
+
+            if (arguments.skjema in listOf("0K"))
+                result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
+
+            if (arguments.region in osloKommuner) {
+                result.addAll(osloFunksjoner)
+                result.addAll(fylkeskommunaleFunksjoner)
             }
 
-            result.map { it.padEnd(4, ' ') }.sorted().toList()
+            result.map { it.padEnd(4, ' ') }.distinct().sorted().toList()
 
         } else
             emptyList()

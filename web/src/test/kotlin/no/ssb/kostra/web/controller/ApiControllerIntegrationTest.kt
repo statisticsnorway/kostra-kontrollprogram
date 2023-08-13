@@ -2,7 +2,10 @@ package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -12,8 +15,13 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import no.ssb.kostra.web.error.ApiError
+import no.ssb.kostra.web.error.ApiErrorType
+import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
@@ -60,186 +68,184 @@ class ApiControllerIntegrationTest(
         }
     }
 
-    /*
-        Given("invalid POST requests, receive ApiError") {
-            val urlInTest = "/api/kontroller-skjema"
+    Given("invalid POST requests, receive ApiError") {
+        val urlInTest = "/api/kontroller-skjema"
 
-            forAll(
-                row(
-                    "invalid aar",
-                    KostraFormVm(
-                        aar = 2020,
-                        skjema = "15F",
-                        region = "667600"
-                    ),
-                    "aar",
-                    "År kan ikke være mindre enn 2022"
+        forAll(
+            row(
+                "invalid aar",
+                KostraFormVm(
+                    aar = 2020,
+                    skjema = "15F",
+                    region = "667600"
                 ),
-                row(
-                    "blank skjematype",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "",
-                        region = "667600"
-                    ),
-                    "skjema",
-                    "Ugyldig skjematype ()"
+                "aar",
+                "År kan ikke være mindre enn 2022"
+            ),
+            row(
+                "blank skjematype",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "",
+                    region = "667600"
                 ),
-                row(
-                    "white-space skjematype",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "   ",
-                        region = "667600"
-                    ),
-                    "skjema",
-                    "Ugyldig skjematype (   )"
+                "skjema",
+                "Ugyldig skjematype ()"
+            ),
+            row(
+                "white-space skjematype",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "   ",
+                    region = "667600"
                 ),
-                row(
-                    "invalid skjematype",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "a",
-                        region = "667600"
-                    ),
-                    "skjema",
-                    "Ugyldig skjematype (a)"
+                "skjema",
+                "Ugyldig skjematype (   )"
+            ),
+            row(
+                "invalid skjematype",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "a",
+                    region = "667600"
                 ),
+                "skjema",
+                "Ugyldig skjematype (a)"
+            ),
 
-                row(
-                    "blank region",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "15F",
-                        region = ""
-                    ),
-                    "region",
-                    "Region må bestå av 6 siffer uten mellomrom"
+            row(
+                "blank region",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = ""
                 ),
-                row(
-                    "white-space region",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "15F",
-                        region = "   "
-                    ),
-                    "region",
-                    "Region må bestå av 6 siffer uten mellomrom"
+                "region",
+                "Region må bestå av 6 siffer uten mellomrom"
+            ),
+            row(
+                "white-space region",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "   "
                 ),
-                row(
-                    "invalid region",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "15F",
-                        region = "a"
-                    ),
-                    "region",
-                    "Region må bestå av 6 siffer uten mellomrom"
+                "region",
+                "Region må bestå av 6 siffer uten mellomrom"
+            ),
+            row(
+                "invalid region",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "a"
                 ),
+                "region",
+                "Region må bestå av 6 siffer uten mellomrom"
+            ),
 
-                row(
-                    "blank filnavn",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "15F",
-                        region = "667600",
-                        filnavn = ""
-                    ),
-                    "filnavn",
-                    "Filvedlegg er påkrevet"
+            row(
+                "blank filnavn",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "667600",
+                    filnavn = ""
                 ),
-                row(
-                    "white-space filnavn",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "15F",
-                        region = "667600",
-                        filnavn = "  "
-                    ),
-                    "filnavn",
-                    "Filvedlegg er påkrevet"
+                "filnavn",
+                "Filvedlegg er påkrevet"
+            ),
+            row(
+                "white-space filnavn",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "667600",
+                    filnavn = "  "
                 ),
+                "filnavn",
+                "Filvedlegg er påkrevet"
+            ),
 
-                row(
-                    "orgnrForetak missing",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0F",
-                        region = "667600",
-                        filnavn = "test.dat"
-                    ),
-                    FALLBACK_PROPERTY_PATH,
-                    "Skjema krever orgnr"
+            row(
+                "orgnrForetak missing",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0F",
+                    region = "667600",
+                    filnavn = "test.dat"
                 ),
-                row(
-                    "invalid orgnrForetak",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0F",
-                        region = "667600",
-                        orgnrForetak = "a",
-                        filnavn = "test.dat"
-                    ),
-                    "orgnrForetak",
-                    "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+                FALLBACK_PROPERTY_PATH,
+                "Skjema krever orgnr"
+            ),
+            row(
+                "invalid orgnrForetak",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0F",
+                    region = "667600",
+                    orgnrForetak = "a",
+                    filnavn = "test.dat"
                 ),
+                "orgnrForetak",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            ),
 
-                row(
-                    "empty orgnrVirksomhet",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0X",
-                        region = "667600",
-                        orgnrForetak = "987654321",
-                        orgnrVirksomhet = setOf(),
-                        filnavn = "test.dat"
-                    ),
-                    FALLBACK_PROPERTY_PATH,
-                    "Skjema krever ett eller flere orgnr for virksomhet(er)"
+            row(
+                "empty orgnrVirksomhet",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
+                    orgnrForetak = "987654321",
+                    orgnrVirksomhet = setOf(),
+                    filnavn = "test.dat"
                 ),
-                row(
-                    "Invalid orgnrVirksomhet",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0X",
-                        region = "667600",
-                        orgnrForetak = "987654321",
-                        orgnrVirksomhet = setOf(CompanyIdVm("a")),
-                        filnavn = "test.dat"
-                    ),
-                    "orgnr",
-                    "Må starte med 8 eller 9 etterfulgt av 8 siffer"
-                )
-            ) { description, kostraForm, propertyPath, expectedValidationError ->
-                When(description) {
+                FALLBACK_PROPERTY_PATH,
+                "Skjema krever ett eller flere orgnr for virksomhet(er)"
+            ),
+            row(
+                "Invalid orgnrVirksomhet",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
+                    orgnrForetak = "987654321",
+                    orgnrVirksomhet = setOf(CompanyIdVm("a")),
+                    filnavn = "test.dat"
+                ),
+                "orgnr",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            )
+        ) { description, kostraForm, propertyPath, expectedValidationError ->
+            When(description) {
 
-                    val requestBody = buildMultipartRequest(kostraForm, objectMapper)
+                val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
-                    val apiError = shouldThrow<HttpClientResponseException> {
-                        client.toBlocking().exchange(
-                            HttpRequest.POST(urlInTest, requestBody)
-                                .contentType(MediaType.MULTIPART_FORM_DATA_TYPE),
-                            Any::class.java
-                        )
-                    }.response.getBody(ApiError::class.java).get()
+                val apiError = shouldThrow<HttpClientResponseException> {
+                    client.toBlocking().exchange(
+                        HttpRequest.POST(urlInTest, requestBody)
+                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE),
+                        Any::class.java
+                    )
+                }.response.getBody(ApiError::class.java).get()
 
-                    Then("apiError should contain expected values") {
-                        assertSoftly(apiError) {
-                            errorType shouldBe ApiErrorType.VALIDATION_ERROR
-                            httpStatusCode shouldBe HttpStatus.BAD_REQUEST.code
-                            url shouldBe urlInTest
+                Then("apiError should contain expected values") {
+                    assertSoftly(apiError) {
+                        errorType shouldBe ApiErrorType.VALIDATION_ERROR
+                        httpStatusCode shouldBe HttpStatus.BAD_REQUEST.code
+                        url shouldBe urlInTest
 
-                            validationErrors.shouldNotBeNull()
-                            @Suppress("USELESS_CAST")
-                            (assertSoftly(validationErrors as Map<String, String>) {
-                                it[propertyPath] shouldBe expectedValidationError
-                            })
-                        }
+                        validationErrors.shouldNotBeNull()
+                        @Suppress("USELESS_CAST")
+                        (assertSoftly(validationErrors as Map<String, String>) {
+                            it[propertyPath] shouldBe expectedValidationError
+                        })
                     }
                 }
             }
         }
-    */
+    }
 
     Given("valid POST requests, receive result") {
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)
@@ -255,10 +261,8 @@ class ApiControllerIntegrationTest(
                 response.status shouldBe HttpStatus.OK
             }
 
-            and("error report should contain expected values") {
-                assertSoftly(response.body()!!) {
-                    it.antallKontroller.shouldBeGreaterThan(50)
-                }
+            And("error report should contain expected values") {
+                response.body()!!.antallKontroller.shouldBeGreaterThan(50)
             }
         }
     }

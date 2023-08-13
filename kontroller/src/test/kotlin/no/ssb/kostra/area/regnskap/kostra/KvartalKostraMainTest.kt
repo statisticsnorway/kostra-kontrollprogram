@@ -83,21 +83,24 @@ class KvartalKostraMainTest : BehaviorSpec({
 }) {
     companion object {
         private val regions = listOf("123400", "030100", "040000")
-        private val validSkjema = listOf("0A", "0B", "0C", "0D")
+        private val validSkjema = listOf("0AK1", "0BK1", "0CK1", "0DK1")
         private const val numberOfValidations = 17
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
             argumentsSkjema: String = validSkjema.first(),
             argumentsRegion: String = RuleTestData.argumentsInTest.region,
+            argumentsKvartal: String = "1",
             recordVersion: String = argumentsVersion,
-            recordSkjema: String = argumentsSkjema,
+            recordSkjema: String = argumentsSkjema.substring(0, 2),
             recordRegion: String = argumentsRegion,
+            recordKvartal: String = argumentsKvartal,
 
             ): KotlinArguments = KotlinArguments(
             skjema = argumentsSkjema,
             aargang = argumentsVersion,
             region = argumentsRegion,
+            kvartal = argumentsKvartal,
             inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldDefinitions.last().to)
                 .toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions)
                 .plus(
@@ -105,6 +108,7 @@ class KvartalKostraMainTest : BehaviorSpec({
                         RegnskapConstants.FIELD_SKJEMA to recordSkjema,
                         RegnskapConstants.FIELD_AARGANG to recordVersion,
                         RegnskapConstants.FIELD_REGION to recordRegion,
+                        RegnskapConstants.FIELD_KVARTAL to recordKvartal,
                         RegnskapConstants.FIELD_KONTOKLASSE to "0",
                         RegnskapConstants.FIELD_FUNKSJON to "100 ",
                         RegnskapConstants.FIELD_ART to "200",

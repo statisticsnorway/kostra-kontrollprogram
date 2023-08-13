@@ -1,9 +1,6 @@
 package no.ssb.kostra.area.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BALANSE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
-import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
@@ -18,6 +15,9 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.*
 class KommuneKostraMain(
     arguments: KotlinArguments
 ) : Validator(arguments) {
+    private val bevilgningRegnskap = listOf("0A", "0C", "0I", "0K", "0M", "0P")
+    private val balanseRegnskap = listOf("0B", "0D", "0J", "0L", "0N", "0Q")
+
     private val svalbard = listOf("211100")
 
     private val orgnrSpesial = listOf(
@@ -78,106 +78,77 @@ class KommuneKostraMain(
         "841", "850", "860", "870", "880", "899"
     )
 
-    private fun getFunksjonAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    ACCOUNTING_TYPE_BEVILGNING,
-                    ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
-
-        val result = ArrayList<String>()
-        when (arguments.skjema) {
-            "0A", "0M" -> {
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloFunksjoner)
-                    result.addAll(fylkeskommunaleFunksjoner)
+    private val funksjonList =
+        if (arguments.skjema in bevilgningRegnskap) {
+            val result = ArrayList<String>()
+            when (arguments.skjema) {
+                "0A", "0M" -> {
+                    if (arguments.region in osloKommuner) {
+                        result.addAll(osloFunksjoner)
+                        result.addAll(fylkeskommunaleFunksjoner)
+                    }
+                    result.addAll(kommunaleFunksjoner)
+                    result.addAll(kommuneFinansielleFunksjoner)
                 }
-                result.addAll(kommunaleFunksjoner)
-                result.addAll(kommuneFinansielleFunksjoner)
-            }
 
-            "0C", "0P" -> {
-                result.addAll(fylkeskommunaleFunksjoner)
-                result.addAll(fylkeFinansielleFunksjoner)
-            }
-
-            "0I" -> {
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloFunksjoner)
+                "0C", "0P" -> {
                     result.addAll(fylkeskommunaleFunksjoner)
+                    result.addAll(fylkeFinansielleFunksjoner)
                 }
-                result.addAll(kommunaleFunksjoner)
-                if (arguments.orgnr in orgnrSpesial) {
+
+                "0I" -> {
+                    if (arguments.region in osloKommuner) {
+                        result.addAll(osloFunksjoner)
+                        result.addAll(fylkeskommunaleFunksjoner)
+                    }
+                    result.addAll(kommunaleFunksjoner)
+                    if (arguments.orgnr in orgnrSpesial) {
+                        result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
+                    } else {
+                        result.addAll(kommunaleSbdrFinansielleFunksjoner)
+                    }
+                }
+
+                "0K" -> {
+                    result.addAll(fylkeskommunaleFunksjoner)
                     result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
-                } else {
-                    result.addAll(kommunaleSbdrFinansielleFunksjoner)
                 }
             }
 
-            "0K" -> {
-                result.addAll(fylkeskommunaleFunksjoner)
-                result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
-            }
-        }
-        return result.map { it.padEnd(4, ' ') }.sorted().toList()
-    }
+            result.map { it.padEnd(4, ' ') }.sorted().toList()
 
-    private fun getInvalidDriftFunksjonList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    ACCOUNTING_TYPE_BEVILGNING,
-                    ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
+        } else
+            emptyList()
 
+
+    private val invalidDriftFunksjonList =
+        if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i investering og skal fjernes fra drift
-        return listOf("841 ")
-    }
+            listOf("841 ")
+        else
+            emptyList()
 
-    private fun getInvalidInvesteringFunksjonAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    ACCOUNTING_TYPE_BEVILGNING,
-                    ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
-
+    private val invalidInvesteringFunksjonAsList: List<String> =
+        if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i drift og skal fjernes fra investering
-        return listOf("800 ", "840 ", "850 ", "860 ")
-    }
+            listOf("800 ", "840 ", "850 ", "860 ")
+        else
+            emptyList()
 
-    private fun getIllogicalInvesteringFunksjonAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    ACCOUNTING_TYPE_BEVILGNING,
-                    ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
 
+    private val illogicalInvesteringFunksjonAsList: List<String> =
+        if (arguments.skjema in bevilgningRegnskap)
         // Anses som ulogisk i investering
-        return listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
-    }
+            listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
+        else
+            emptyList()
 
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it == ACCOUNTING_TYPE_BALANSE
-            }
-        )
-            return emptyList()
-
-        val result = mutableListOf(
-            // @formatter:off
+    private val kapittelList =
+        if (arguments.skjema in balanseRegnskap) {
+            val result = mutableListOf(
+                // @formatter:off
             "10", "11", "12", "13", "14", "15", "16", "18", "19",
             "20", "21", "22", "23", "24", "27", "28", "29",
             "31", "32", "33", "34", "35", "39",
@@ -185,14 +156,15 @@ class KommuneKostraMain(
             "51", "53", "55", "56", "580", "581", "5900", "5970", "5990",
             "9100", "9110", "9200", "9999"
             // @formatter:on
-        )
+            )
 
-        if (arguments.skjema in listOf("0J", "0L")) {
-            result.addAll(listOf("17", "46"))
-        }
+            if (arguments.skjema in listOf("0J", "0L")) {
+                result.addAll(listOf("17", "46"))
+            }
 
-        return result.map { it.padEnd(4, ' ') }.sorted().toList()
-    }
+            result.map { it.padEnd(4, ' ') }.sorted().toList()
+
+        } else emptyList()
 
 
     // Arter
@@ -227,30 +199,28 @@ class KommuneKostraMain(
         "877"
     )
 
-    private fun getArtAsList(): List<String> =
+    private val artList =
         if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
             val result = ArrayList<String>(basisArter)
-            when (arguments.skjema) {
-                "0A", "0M" -> {
-                    result.addAll(konserninterneArter)
-                    result.addAll(kommunaleArter)
 
-                    if (arguments.region in osloKommuner) {
-                        result.addAll(osloArter)
-                    }
+            if (arguments.skjema in listOf("0A", "0M")) {
+                result.addAll(konserninterneArter)
+                result.addAll(kommunaleArter)
+
+                if (arguments.region in osloKommuner) {
+                    result.addAll(osloArter)
                 }
 
-                "0C", "0P" -> {
-                    result.addAll(konserninterneArter)
-                    result.addAll(fylkeskommunaleArter)
-                }
+            } else if (arguments.skjema in listOf("0C", "0P")) {
+                result.addAll(konserninterneArter)
+                result.addAll(fylkeskommunaleArter)
 
-                "0I", "0K" -> {
-                    result.addAll(konserninterneArter)
-                }
+            } else {
+                result.addAll(konserninterneArter)
             }
 
             result.sorted().toList()
+
         } else
             emptyList()
 
@@ -273,7 +243,7 @@ class KommuneKostraMain(
 
 
     // Kun gyldig i investering og skal fjernes fra drift
-    private fun getInvalidDriftArtList() =
+    private val invalidDriftArtList =
         if ((arguments.skjema in listOf("0I", "0K") && arguments.orgnr in orgnrSpesial)
             || (arguments.skjema in listOf("0M", "0P") && arguments.region in kommunenummerSpesial)
         ) {
@@ -283,7 +253,7 @@ class KommuneKostraMain(
         }
 
     // Kun gyldig i drift og skal fjernes fra investering
-    private fun getInvalidInvesteringArtList() = listOf(
+    private val invalidInvesteringArtList = listOf(
         // @formatter:off
         "070", "080",
         "110", "114",
@@ -309,19 +279,19 @@ class KommuneKostraMain(
         Rule007Organisasjonsnummer(),
         Rule008Foretaksnummer(),
         Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
-        Rule010Funksjon(funksjonList = getFunksjonAsList()),
-        Rule011Kapittel(kapittelList = getKapittelAsList()),
-        Rule012Art(artList = getArtAsList()),
+        Rule010Funksjon(funksjonList = funksjonList),
+        Rule011Kapittel(kapittelList = kapittelList),
+        Rule012Art(artList = artList),
         Rule013Sektor(sektorList = sektorList),
         Rule014Belop(),
         Rule015Duplicates(mappingDuplicates(arguments = arguments)),
-        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = getInvalidDriftFunksjonList()),
-        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
+        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
+        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
         Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
         Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
-        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
-        Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = getIllogicalInvesteringFunksjonAsList()),
-        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
+        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList),
+        Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonAsList),
+        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
         Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
         Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
         Rule065KombinasjonBevilgningFunksjonArt(),

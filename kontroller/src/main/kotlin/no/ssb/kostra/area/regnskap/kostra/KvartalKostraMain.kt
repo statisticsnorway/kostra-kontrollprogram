@@ -15,6 +15,9 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteri
 class KvartalKostraMain(
     arguments: KotlinArguments
 ) : Validator(arguments) {
+    private val bevilgningRegnskap = listOf("0AK1", "0AK2", "0AK3", "0AK4", "0CK1", "0CK2", "0CK3", "0CK4")
+    private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
+
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -47,70 +50,51 @@ class KvartalKostraMain(
         "800", "840", "841", "850", "860", "870", "880", "899", "Z", "z", "~"
     )
 
-    private fun getFunksjonAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
-                    RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        ) return emptyList()
+    private fun getFunksjonAsList() =
+        if (arguments.skjema in bevilgningRegnskap) {
+            val result = ArrayList<String>()
 
-        val result = ArrayList<String>()
-        when (arguments.skjema) {
-            "0A" -> {
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloFunksjoner)
-                    result.addAll(fylkeskommunaleFunksjoner)
-                }
+            if (arguments.skjema in listOf("0AK1", "0AK2", "0AK3", "0AK4")) {
                 result.addAll(kommunaleFunksjoner)
                 result.addAll(finansielleFunksjoner)
             }
 
-            "0C" -> {
+            if (arguments.skjema in listOf("0CK1", "0CK2", "0CK3", "0CK4"))
+                result.addAll(fylkeskommunaleFunksjoner)
+
+            if (arguments.region in osloKommuner) {
+                result.addAll(osloFunksjoner)
                 result.addAll(fylkeskommunaleFunksjoner)
             }
 
-            else -> result.add("!!!!")
-        }
-        return result.map { it.padEnd(4, ' ') }.sorted().toList()
-    }
+            result.map { it.padEnd(4, ' ') }.distinct().sorted().toList()
+        } else
+            emptyList()
 
-    private fun getInvalidInvesteringFunksjonAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
-                    RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
-
+    private fun getInvalidInvesteringFunksjonAsList() =
+        if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i drift og skal fjernes fra investering
-        return listOf("800 ", "840 ", "860 ")
-    }
+            listOf("800 ", "840 ", "860 ")
+        else
+            emptyList()
 
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
-            }
-        )
-            return emptyList()
-
-        val result = mutableListOf(
+    private fun getKapittelAsList(): List<String> =
+        if (arguments.skjema in balanseRegnskap) {
+            val result = mutableListOf(
             // @formatter:off
-            "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23", "24", "27", "28", "29",
-            "31", "32", "33", "34", "35", "39", "40", "41", "42", "43", "45", "47", "51", "53", "55", "56", "580", "581",
-            "5900", "5950", "5960", "5970", "5990",
-            "9100", "9110", "9200", "9999",
-            "Z", "z", "~", ""
+                "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23", "24", "27", "28", "29",
+                "31", "32", "33", "34", "35", "39", "40", "41", "42", "43", "45", "47", "51", "53", "55", "56", "580", "581",
+                "5900", "5950", "5960", "5970", "5990",
+                "9100", "9110", "9200", "9999",
+                "Z", "z", "~", ""
             // @formatter:on
-        )
+            )
 
-        return result.map { it.padEnd(4, ' ') }.sorted().toList()
-    }
+            result.map { it.padEnd(4, ' ') }.sorted().toList()
+        } else
+            emptyList()
 
 
     // Arter
@@ -138,45 +122,25 @@ class KvartalKostraMain(
         "298", "379", "798"
     )
 
-    private fun getArtAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
-                    RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        )
-            return emptyList()
+    private fun getArtAsList(): List<String> =
+        if (arguments.skjema in bevilgningRegnskap) {
+            val result = ArrayList<String>(basisArter + konserninterneArter)
 
-        val result = ArrayList<String>(basisArter)
-        when (arguments.skjema) {
-            "0A" -> {
-                result.addAll(konserninterneArter)
-
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloArter)
-                }
+            if (arguments.region in osloKommuner) {
+                result.addAll(osloArter)
             }
 
-            "0C" -> {
-                result.addAll(konserninterneArter)
-            }
-        }
+            result.sorted().toList()
 
-        return result.sorted().toList()
+        } else
+            emptyList()
 
-    }
 
-    private fun getSektorAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
-            }
-        )
-            return emptyList()
-
+    private fun getSektorAsList(): List<String> =
+        if (arguments.skjema in balanseRegnskap)
         // Sektorer
-        return listOf(
-            // @formatter:off
+            listOf(
+                // @formatter:off
             "000", "070", "080",
             "110", "151", "152",
             "200",
@@ -188,8 +152,10 @@ class KvartalKostraMain(
             "900",
             "Z", "z", "~"
             // @formatter:on
-        )
-    }
+            )
+        else
+            emptyList()
+
 
     // Kun gyldig i investering og skal fjernes fra drift
     private fun getInvalidDriftArtList() = listOf(

@@ -11,12 +11,12 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.AbstractRule
 
 
-open class Validator(
-    open val arguments: KotlinArguments
+abstract class Validator(
+    val arguments: KotlinArguments
 ) {
-    open val fatalRules: List<AbstractRule<List<String>>> = emptyList()
-    open val validationRules: List<AbstractRule<List<KostraRecord>>> = emptyList()
-    open val fieldDefinitions: FieldDefinitions = FieldDefinitions()
+    abstract val fatalRules: List<AbstractRule<List<String>>>
+    abstract val validationRules: List<AbstractRule<List<KostraRecord>>>
+    abstract val fieldDefinitions: FieldDefinitions
 
     open fun validate(): ValidationResult {
         if (fieldDefinitions.fieldDefinitions.isEmpty())

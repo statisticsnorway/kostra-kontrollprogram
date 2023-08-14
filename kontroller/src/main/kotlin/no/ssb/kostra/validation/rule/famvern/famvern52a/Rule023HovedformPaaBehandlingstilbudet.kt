@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.HOVEDF_BEHAND_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.PRIMK_KJONN_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -11,19 +11,19 @@ import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule013Kjonn : AbstractRule<List<KostraRecord>>(
-    Familievern52aRuleId.FAMILIEVERN52A_RULE011.title,
+class Rule023HovedformPaaBehandlingstilbudet : AbstractRule<List<KostraRecord>>(
+    Familievern52aRuleId.FAMILIEVERN52A_RULE023.title,
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
-        fieldDefinitions.byColumnName(PRIMK_KJONN_A_COL_NAME).codeExists(it[PRIMK_KJONN_A_COL_NAME])
+        fieldDefinitions.byColumnName(HOVEDF_BEHAND_A_COL_NAME).codeExists(it[HOVEDF_BEHAND_A_COL_NAME])
     }.map {
         val codeList =
-            fieldDefinitions.byColumnName(PRIMK_KJONN_A_COL_NAME).codeList
+            fieldDefinitions.byColumnName(HOVEDF_BEHAND_A_COL_NAME).codeList
         createValidationReportEntry(
-            messageText = "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. " +
-                    "Fant '${it[PRIMK_KJONN_A_COL_NAME]}', forventet én av: $codeList. " +
-                    "Feltet er obligatorisk å fylle ut.",
+            messageText = "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden " +
+                    "saken ble opprettet, eller feil kode er benyttet. Fant '${it[HOVEDF_BEHAND_A_COL_NAME]}', " +
+                    "forventet én av: $codeList. Feltet er obligatorisk å fylle ut.",
             lineNumbers = listOf(it.lineNumber)
         ).copy(
             caseworker = it[KONTOR_NR_A_COL_NAME],

@@ -21,7 +21,7 @@ enum class Familievern52aRuleId(val title: String) {
     FAMILIEVERN52A_RULE020("Kontroll 020 : Dato for første behandlingssamtale"),
     FAMILIEVERN52A_RULE021("Kontroll 021 : Første behandlingssamtale er før henvendelsesdato"),
     FAMILIEVERN52A_RULE022("Kontroll 022 : Områder det har vært arbeidet med i saken"),
-    FAMILIEVERN52A_RULE023("Kontroll 023 : Områder det har vært arbeidet med i saken"),
+    FAMILIEVERN52A_RULE023("Kontroll 023 : Hovedform på behandlingstilbudet"),
     FAMILIEVERN52A_RULE024("Kontroll 024 : Deltagelse i behandlingssamtaler med primærklienten i løpet av året"),
     FAMILIEVERN52A_RULE025("Kontroll 025 : Behandlingssamtaler for de involverte i saken i løpet av året"),
     FAMILIEVERN52A_RULE026("Kontroll 026 : Relasjon mellom antall behandlingssamtaler og hvem som har deltatt"),

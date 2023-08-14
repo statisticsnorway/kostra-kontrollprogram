@@ -619,6 +619,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("3", "Familiesamtale"),
                 Code("4", "Individualsamtale")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 21,

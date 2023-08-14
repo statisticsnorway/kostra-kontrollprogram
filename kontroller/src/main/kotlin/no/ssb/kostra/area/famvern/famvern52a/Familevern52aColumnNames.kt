@@ -1,4 +1,4 @@
-package no.ssb.kostra.area.famvern.s52a
+package no.ssb.kostra.area.famvern.famvern52a
 
 object Familievern52aColumnNames {
 const val REGION_NR_A_COL_NAME = "REGION_NR_A"

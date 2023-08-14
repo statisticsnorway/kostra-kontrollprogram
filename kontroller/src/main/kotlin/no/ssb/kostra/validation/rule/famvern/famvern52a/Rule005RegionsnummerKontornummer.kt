@@ -7,19 +7,21 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule003Regionsnummer(
+class Rule005RegionsnummerKontornummer(
     private val mappingList: List<Familievern52aMain.KontorFylkeRegionMapping>
 ) : AbstractRule<List<KostraRecord>>(
-    Familievern52aRuleId.FAMILIEVERN52A_RULE003.title,
+    Familievern52aRuleId.FAMILIEVERN52A_RULE005.title,
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
-        mappingList.any { mapping -> it[Columns.REGION_NR_A_COL_NAME] == mapping.region }
+        mappingList.any { mapping ->
+            it[Columns.REGION_NR_A_COL_NAME] == mapping.region
+                    && it[Columns.KONTOR_NR_A_COL_NAME] == mapping.kontor
+        }
     }.map {
-        val regionList = mappingList.map { item -> item.region }.distinct().sorted()
         createValidationReportEntry(
-            messageText = "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
-                    + "Fant '${it[Columns.REGION_NR_A_COL_NAME]}', forventet én av : $regionList.",
+            messageText = "Regionsnummer '${it[Columns.REGION_NR_A_COL_NAME]}' og "
+                    + "kontornummer '${it[Columns.KONTOR_NR_A_COL_NAME]}' stemmer ikke overens.",
             lineNumbers = listOf(it.lineNumber)
         ).copy(
             caseworker = it[Columns.KONTOR_NR_A_COL_NAME],

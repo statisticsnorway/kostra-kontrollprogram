@@ -1,27 +1,24 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.HENV_DATO_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.REGION_NR_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
-class Rule003Regionsnummer(
-    private val mappingList: List<Familievern52aMain.KontorFylkeRegionMapping>
-) : AbstractRule<List<KostraRecord>>(
-    Familievern52aRuleId.FAMILIEVERN52A_RULE003.title,
+class Rule007Henvendelsesdato : AbstractRule<List<KostraRecord>>(
+    Familievern52aRuleId.FAMILIEVERN52A_RULE007.title,
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
-        mappingList.any { mapping -> it[REGION_NR_A_COL_NAME] == mapping.region }
+        it.fieldAsLocalDate(HENV_DATO_A_COL_NAME) != null
     }.map {
-        val regionList = mappingList.map { item -> item.region }.distinct().sorted()
         createValidationReportEntry(
-            messageText = "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
-                    + "Fant '${it[REGION_NR_A_COL_NAME]}', forventet én av : $regionList.",
+            messageText = "Dette er ikke oppgitt dato (${it[HENV_DATO_A_COL_NAME]}) for når " +
+                    "primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format " +
+                    "(DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut.",
             lineNumbers = listOf(it.lineNumber)
         ).copy(
             caseworker = it[KONTOR_NR_A_COL_NAME],

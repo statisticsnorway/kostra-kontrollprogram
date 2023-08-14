@@ -4,9 +4,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule003Regionsnummer
-import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule004Kontornummer
-import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule005RegionsnummerKontornummer
+import no.ssb.kostra.validation.rule.famvern.famvern52a.*
 
 class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
     data class KontorFylkeRegionMapping(
@@ -70,6 +68,9 @@ class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
     override val validationRules = listOf(
         Rule003Regionsnummer(kontorFylkeRegionMappingList),
         Rule004Kontornummer(kontorFylkeRegionMappingList),
-        Rule005RegionsnummerKontornummer(kontorFylkeRegionMappingList)
+        Rule005RegionsnummerKontornummer(kontorFylkeRegionMappingList),
+        Rule006Dubletter(),
+        Rule007Henvendelsesdato(),
+
     )
 }

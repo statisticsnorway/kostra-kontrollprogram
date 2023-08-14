@@ -1,7 +1,9 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.REGION_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames as Columns
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -15,17 +17,17 @@ class Rule005RegionsnummerKontornummer(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
         mappingList.any { mapping ->
-            it[Columns.REGION_NR_A_COL_NAME] == mapping.region
-                    && it[Columns.KONTOR_NR_A_COL_NAME] == mapping.kontor
+            it[REGION_NR_A_COL_NAME] == mapping.region
+                    && it[KONTOR_NR_A_COL_NAME] == mapping.kontor
         }
     }.map {
         createValidationReportEntry(
-            messageText = "Regionsnummer '${it[Columns.REGION_NR_A_COL_NAME]}' og "
-                    + "kontornummer '${it[Columns.KONTOR_NR_A_COL_NAME]}' stemmer ikke overens.",
+            messageText = "Regionsnummer '${it[REGION_NR_A_COL_NAME]}' og "
+                    + "kontornummer '${it[KONTOR_NR_A_COL_NAME]}' stemmer ikke overens.",
             lineNumbers = listOf(it.lineNumber)
         ).copy(
-            caseworker = it[Columns.KONTOR_NR_A_COL_NAME],
-            journalId = it[Columns.JOURNAL_NR_A_COL_NAME]
+            caseworker = it[KONTOR_NR_A_COL_NAME],
+            journalId = it[JOURNAL_NR_A_COL_NAME]
         )
     }.ifEmpty { null }
 }

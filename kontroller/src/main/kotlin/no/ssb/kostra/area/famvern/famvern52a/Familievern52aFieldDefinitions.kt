@@ -106,6 +106,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 1,
             to = 6,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 2,
@@ -114,6 +115,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 7,
             to = 9,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 3,
@@ -122,6 +124,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 10,
             to = 18,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 4,
@@ -131,6 +134,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 19,
             to = 26,
             datePattern = DATE8_PATTERN,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 5,
@@ -145,6 +149,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("3", "3 år eller mer siden"),
                 Code("4", "har ikke vært i kontakt med familievernet tidligere")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 6,
@@ -159,6 +164,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("3", "Andre eller sammensatte problemer i familien"),
                 Code("4", "Hjelp til barn og ungdom")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 7,
@@ -168,8 +174,10 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 29,
             to = 29,
             codeList = listOf(
-                Code("1", "Mann/gutt"), Code("2", "Kvinne/jente")
+                Code("1", "Mann/gutt"),
+                Code("2", "Kvinne/jente")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 8,
@@ -392,7 +400,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 58,
             to = 58,
             codeList = listOf(
-                Code("1", "Forhold hos kontoret"), Code("2", "Forhold hos klient/klientene")
+                Code("1", "Forhold hos kontoret"),
+                Code("2", "Forhold hos klient/klientene")
             ),
         ),
         FieldDefinition(
@@ -615,7 +624,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 78,
             to = 78,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -626,7 +636,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 79,
             to = 79,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -637,7 +648,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 80,
             to = 80,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -648,7 +660,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 81,
             to = 81,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -659,7 +672,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 82,
             to = 82,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -670,7 +684,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 83,
             to = 83,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -681,7 +696,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 84,
             to = 84,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -692,7 +708,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 85,
             to = 85,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -703,7 +720,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 86,
             to = 86,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(
@@ -850,7 +868,8 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             from = 129,
             to = 129,
             codeList = listOf(
-                Code("1", "Ja"), Code("2", "Nei")
+                Code("1", "Ja"),
+                Code("2", "Nei")
             ),
         ),
         FieldDefinition(

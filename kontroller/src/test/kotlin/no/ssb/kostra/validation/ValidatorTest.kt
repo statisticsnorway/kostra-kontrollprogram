@@ -35,6 +35,5 @@ class ValidatorTest : BehaviorSpec({
                 thrown.message shouldBe "validate(): fieldDefinitions are missing"
             }
         }
-
     }
 })

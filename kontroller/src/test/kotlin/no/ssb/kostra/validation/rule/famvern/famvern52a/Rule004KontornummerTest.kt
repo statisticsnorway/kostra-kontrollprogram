@@ -7,11 +7,10 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-
-class Rule003RegionsnummerTest : BehaviorSpec({
+class Rule004KontornummerTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
-            sut = Rule003Regionsnummer(
+            sut = Rule004Kontornummer(
                 listOf(
                     Familievern52aMain.KontorFylkeRegionMapping("017", "30", "667600")
                 )
@@ -19,13 +18,13 @@ class Rule003RegionsnummerTest : BehaviorSpec({
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid region",
-                kostraRecordInTest("667600"),
+                kostraRecordInTest("017"),
             ),
             ForAllRowItem(
                 "invalid region",
-                kostraRecordInTest("XXXXXX"),
-                expectedErrorMessage = "Regionsnummeret som er oppgitt i recorden fins ikke i listen med " +
-                        "gyldige regionsnumre. Fant 'XXXXXX', forventet én av : [667600].",
+                kostraRecordInTest("XXX"),
+                expectedErrorMessage = "Kontornummeret som er oppgitt i recorden fins ikke i listen med " +
+                        "gyldige kontornumre. Fant 'XXX', forventet én av : [017].",
             ),
         )
     )
@@ -33,7 +32,7 @@ class Rule003RegionsnummerTest : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(region: String) = listOf(
             Familievern52aTestUtils.familievernRecordInTest(
-                mapOf(Familievern52aColumnNames.REGION_NR_A_COL_NAME to region)
+                mapOf(Familievern52aColumnNames.KONTOR_NR_A_COL_NAME to region)
             )
         )
     }

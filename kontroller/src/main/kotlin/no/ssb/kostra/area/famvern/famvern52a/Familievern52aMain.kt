@@ -1,10 +1,12 @@
-package no.ssb.kostra.area.famvern.s52a
+package no.ssb.kostra.area.famvern.famvern52a
 
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule003Regionsnummer
+import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule004Kontornummer
+import no.ssb.kostra.validation.rule.famvern.famvern52a.Rule005RegionsnummerKontornummer
 
 class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
     data class KontorFylkeRegionMapping(
@@ -13,7 +15,7 @@ class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
         val region: String
     )
 
-    val kontorFylkeRegionMappingList = listOf(
+    private val kontorFylkeRegionMappingList = listOf(
         KontorFylkeRegionMapping("017", "30", "667600"),
         KontorFylkeRegionMapping("023", "30", "667600"),
         KontorFylkeRegionMapping("024", "30", "667600"),
@@ -66,6 +68,8 @@ class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
     )
 
     override val validationRules = listOf(
-        Rule003Regionsnummer(kontorFylkeRegionMappingList.map { it.region }.distinct())
+        Rule003Regionsnummer(kontorFylkeRegionMappingList),
+        Rule004Kontornummer(kontorFylkeRegionMappingList),
+        Rule005RegionsnummerKontornummer(kontorFylkeRegionMappingList)
     )
 }

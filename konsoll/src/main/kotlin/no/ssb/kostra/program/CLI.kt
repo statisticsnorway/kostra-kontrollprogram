@@ -1,9 +1,9 @@
 package no.ssb.kostra.program
 
-import no.ssb.kostra.controlprogram.ArgumentConstants
-import no.ssb.kostra.controlprogram.GetOpt
-import no.ssb.kostra.controlprogram.GetOptDesc
+import no.ssb.kostra.controlprogram.*
 import no.ssb.kostra.felles.Constants
+import java.io.PrintStream
+import java.nio.charset.StandardCharsets
 import kotlin.system.exitProcess
 
 private var skjema = " "
@@ -61,26 +61,23 @@ fun main(args: Array<String>) {
             }
         }
 
+        val arguments = Arguments(
+            skjema,
+            aargang,
+            kvartal,
+            region,
+            navn,
+            orgnr,
+            foretaknr,
+            harVedlegg,
+            isRunAsExternalProcess,
+            inputFileContent.split("\n").toMutableList() // FIX ME ?
+        )
 
-        /* FIX ME
-                    val arguments = Arguments(
-                        skjema,
-                        aargang,
-                        kvartal,
-                        region,
-                        navn,
-                        orgnr,
-                        foretaknr,
-                        harVedlegg,
-                        isRunAsExternalProcess,
-                        inputFileContent
-                    )
-
-                    val report = ControlDispatcher.doControls(arguments)
-                    errorTypeFound = report.severity.ordinal
-                    val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
-                    printStream.print(report.generateReport())
-        */
+        val report = ControlDispatcher.doControls(arguments)
+        errorTypeFound = 42 // FIX ME report.severity.ordinal
+        val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
+        printStream.print(report.generateReport())
     } catch (e: IllegalArgumentException) {
         println(e.message)
         errorTypeFound = Constants.PARAMETER_ERROR
@@ -91,6 +88,5 @@ fun main(args: Array<String>) {
         println(e.message)
         errorTypeFound = Constants.SYSTEM_ERROR
     }
-    //exitProcess(errorTypeFound)
-    exitProcess(42) // FIX ME
+    exitProcess(errorTypeFound)
 }

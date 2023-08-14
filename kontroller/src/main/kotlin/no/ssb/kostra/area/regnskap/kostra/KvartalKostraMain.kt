@@ -67,7 +67,7 @@ class KvartalKostraMain(
                 result.addAll(fylkeskommunaleFunksjoner)
             }
 
-            result.map { it.padEnd(4, ' ') }.distinct().sorted().toList()
+            result.map { it.padEnd(4, ' ') }.distinct().sorted()
         } else
             emptyList()
 
@@ -83,7 +83,7 @@ class KvartalKostraMain(
     private fun getKapittelAsList(): List<String> =
         if (arguments.skjema in balanseRegnskap) {
             val result = mutableListOf(
-            // @formatter:off
+                // @formatter:off
                 "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23", "24", "27", "28", "29",
                 "31", "32", "33", "34", "35", "39", "40", "41", "42", "43", "45", "47", "51", "53", "55", "56", "580", "581",
                 "5900", "5950", "5960", "5970", "5990",
@@ -92,7 +92,7 @@ class KvartalKostraMain(
             // @formatter:on
             )
 
-            result.map { it.padEnd(4, ' ') }.sorted().toList()
+            result.map { it.padEnd(4, ' ') }.sorted()
         } else
             emptyList()
 
@@ -129,9 +129,7 @@ class KvartalKostraMain(
             if (arguments.region in osloKommuner) {
                 result.addAll(osloArter)
             }
-
-            result.sorted().toList()
-
+            result.sorted()
         } else
             emptyList()
 

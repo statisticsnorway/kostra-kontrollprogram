@@ -108,7 +108,7 @@ class KommuneKostraMain(
                 result.addAll(fylkeskommunaleFunksjoner)
             }
 
-            result.map { it.padEnd(4, ' ') }.distinct().sorted().toList()
+            result.map { it.padEnd(4, ' ') }.distinct().sorted()
 
         } else
             emptyList()
@@ -155,7 +155,7 @@ class KommuneKostraMain(
                 result.addAll(listOf("17", "46"))
             }
 
-            result.map { it.padEnd(4, ' ') }.sorted().toList()
+            result.map { it.padEnd(4, ' ') }.sorted()
 
         } else emptyList()
 
@@ -192,28 +192,27 @@ class KommuneKostraMain(
         "877"
     )
 
-    private val artList =
-        if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
-            ArrayList<String>(basisArter).apply {
-                when (arguments.skjema) {
-                    in listOf("0A", "0M") -> {
-                        addAll(konserninterneArter)
-                        addAll(kommunaleArter)
+    private val artList: List<String> = if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
+        ArrayList<String>(basisArter).apply {
+            when (arguments.skjema) {
+                in listOf("0A", "0M") -> {
+                    addAll(konserninterneArter)
+                    addAll(kommunaleArter)
 
-                        if (arguments.region in osloKommuner) {
-                            addAll(osloArter)
-                        }
+                    if (arguments.region in osloKommuner) {
+                        addAll(osloArter)
                     }
-
-                    in listOf("0C", "0P") -> {
-                        addAll(konserninterneArter)
-                        addAll(fylkeskommunaleArter)
-                    }
-
-                    else -> addAll(konserninterneArter)
                 }
-            }.sorted().toList()
-        } else emptyList()
+
+                in listOf("0C", "0P") -> {
+                    addAll(konserninterneArter)
+                    addAll(fylkeskommunaleArter)
+                }
+
+                else -> addAll(konserninterneArter)
+            }
+        }.sorted()
+    } else emptyList()
 
     private val sektorList =
         if (arguments.skjema in listOf("0B", "0D", "0J", "0L", "0N", "0Q"))

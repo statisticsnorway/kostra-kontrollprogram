@@ -26,10 +26,9 @@ class KirkeKostraMain(
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
             }
-        )
-            return emptyList()
+        ) return emptyList()
 
-        return funksjoner.map { it.padEnd(4, ' ') }.sorted().toList()
+        return funksjoner.map { it.padEnd(4, ' ') }.sorted()
     }
 
     private val kapitler = listOf(
@@ -46,10 +45,9 @@ class KirkeKostraMain(
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
             }
-        )
-            return emptyList()
+        ) return emptyList()
 
-        return kapitler.map { it.padEnd(4, ' ') }.sorted().toList()
+        return kapitler.map { it.padEnd(4, ' ') }.sorted()
     }
 
 
@@ -76,11 +74,9 @@ class KirkeKostraMain(
                     RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
                 )
             }
-        )
-            return emptyList()
+        ) return emptyList()
 
-        return arter.sorted().toList()
-
+        return arter.sorted()
     }
 
     private fun getSektorAsList(): List<String> {

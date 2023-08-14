@@ -39,7 +39,7 @@ class HelseForetakMain(
     )
 
     private fun getFunksjonAsList(): List<String> = when (arguments.skjema) {
-        "0X" -> funksjoner.map { it.padEnd(4, ' ') }.sorted().toList()
+        "0X" -> funksjoner.map { it.padEnd(4, ' ') }.sorted()
         else -> emptyList()
     }
 
@@ -136,7 +136,7 @@ class HelseForetakMain(
     }
 
     private val art320Funksjoner = listOf("620", "630", "636", "637", "641", "642", "651", "681", "840")
-        .map { it.padEnd(4, ' ') }.sorted().toList()
+        .map { it.padEnd(4, ' ') }.sorted()
 
     private val artPositiveBelop = listOf("190", "192", "194", "195")
 

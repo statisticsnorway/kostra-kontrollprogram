@@ -17,12 +17,13 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecor
             it.isBalanseRegnskap()
         }
         .groupBy {
-            if (it.fieldAsIntOrDefault(FIELD_SEKTOR) < 200)
-                "eiendeler"
-            else if (it.fieldAsIntOrDefault(FIELD_SEKTOR) < 210)
-                "egenkaptital"
-            else
-                "gjeld"
+            it.fieldAsIntOrDefault(FIELD_SEKTOR).let { sektor ->
+                when {
+                    sektor < 200 -> "eiendeler"
+                    sektor < 210 -> "egenkaptital"
+                    else -> "gjeld"
+                }
+            }
         }
         .mapValues {
             it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) }

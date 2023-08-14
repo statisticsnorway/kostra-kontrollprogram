@@ -186,6 +186,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 30,
             to = 33,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 91,
@@ -200,6 +201,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("3", "Samboer"),
                 Code("4", "Lever ikke i samliv")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 92,
@@ -231,6 +233,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("4", "Andre"),
                 Code("5", "Ikke sammen med andre")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 11,

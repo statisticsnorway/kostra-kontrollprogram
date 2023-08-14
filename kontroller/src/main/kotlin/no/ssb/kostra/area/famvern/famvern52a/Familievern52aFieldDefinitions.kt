@@ -251,6 +251,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("6", "Annen inntekt fre NAV"),
                 Code("7", "Uten inntekt")
             ),
+            mandatory = true,
         ),
         FieldDefinition(
             number = 12,

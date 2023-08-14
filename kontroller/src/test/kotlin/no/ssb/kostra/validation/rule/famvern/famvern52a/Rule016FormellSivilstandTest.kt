@@ -12,7 +12,7 @@ class Rule016FormellSivilstandTest : BehaviorSpec({
             sut = Rule016FormellSivilstand(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
-                "different sivilstand, no match",
+                "no match",
                 kostraRecordInTest("X", " "),
             ),
             ForAllRowItem(
@@ -20,7 +20,7 @@ class Rule016FormellSivilstandTest : BehaviorSpec({
                 kostraRecordInTest("3", "1"),
             ),
             ForAllRowItem(
-                "sivilstand = OK, invalid formell sivilstand",
+                "invalid value",
                 kostraRecordInTest("3", " "),
                 expectedErrorMessage = "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at " +
                         "primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens " +

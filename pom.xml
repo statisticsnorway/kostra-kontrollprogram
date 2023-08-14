@@ -28,8 +28,7 @@
         <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
         <sonar.exclusions>
             **/Application.kt,
-            **/node_modules/**/*,
-            **/KostraRecordExtensionsGenerics.kt
+            **/node_modules/**/*
         </sonar.exclusions>
 
         <exec.mainClass>no.ssb.kostra.controlprogram.CLI</exec.mainClass>

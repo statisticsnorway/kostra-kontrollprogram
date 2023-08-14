@@ -194,28 +194,26 @@ class KommuneKostraMain(
 
     private val artList =
         if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
-            val result = ArrayList<String>(basisArter)
+            ArrayList<String>(basisArter).apply {
+                when (arguments.skjema) {
+                    in listOf("0A", "0M") -> {
+                        addAll(konserninterneArter)
+                        addAll(kommunaleArter)
 
-            if (arguments.skjema in listOf("0A", "0M")) {
-                result.addAll(konserninterneArter)
-                result.addAll(kommunaleArter)
+                        if (arguments.region in osloKommuner) {
+                            addAll(osloArter)
+                        }
+                    }
 
-                if (arguments.region in osloKommuner) {
-                    result.addAll(osloArter)
+                    in listOf("0C", "0P") -> {
+                        addAll(konserninterneArter)
+                        addAll(fylkeskommunaleArter)
+                    }
+
+                    else -> addAll(konserninterneArter)
                 }
-
-            } else if (arguments.skjema in listOf("0C", "0P")) {
-                result.addAll(konserninterneArter)
-                result.addAll(fylkeskommunaleArter)
-
-            } else {
-                result.addAll(konserninterneArter)
-            }
-
-            result.sorted().toList()
-
-        } else
-            emptyList()
+            }.sorted().toList()
+        } else emptyList()
 
     private val sektorList =
         if (arguments.skjema in listOf("0B", "0D", "0J", "0L", "0N", "0Q"))

@@ -22,5 +22,17 @@ class Familievern52bMain(arguments: KotlinArguments) : Validator(arguments) {
         Rule007Gruppenavn(),
         Rule008StartDato(),
         Rule009Malgruppe(),
+        Rule010GruppensHovedtema(),
+        Rule011AntallGruppemoterGjennomfortILA(),
+        Rule012AntallGruppemoterGjennomfortSO(),
+        Rule013AntallTimerAnvendtIGruppenTotaltILA(),
+        Rule014AntallTimerAnvendtIGruppenTotaltSO(),
+        Rule015AntallDeltagereIGruppenILA(),
+        Rule016AntallDeltagereIGruppenSO(),
+        Rule017AntallTerapeuterInvolvertIGruppebehandlingen(),
+        Rule018Tolk(),
+        Rule019StatusVedAretsSlutt(),
+        Rule020GruppebehandlingenAvsluttetManglerAvslutningsdato(),
+        Rule021AvslutningsdatoForForsteSamtale(),
     )
 }

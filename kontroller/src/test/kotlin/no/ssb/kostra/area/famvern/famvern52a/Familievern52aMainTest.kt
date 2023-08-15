@@ -49,7 +49,6 @@ class Familievern52aMainTest : BehaviorSpec({
                 numberOfValidations,
                 2
             )
-
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
                 val validationResult = Familievern52aMain(kotlinArguments).validate()

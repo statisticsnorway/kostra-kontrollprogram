@@ -1,5 +1,7 @@
 package no.ssb.kostra.controlprogram;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +52,7 @@ public final class Arguments {
         this.inputFileContent = new ArrayList<>();
 
         for (var line : inputFileContent) {
-            if (line != null && line.trim().length() != 0) {
+            if (line != null && !line.trim().isEmpty()) {
                 this.inputFileContent.add(line);
             }
         }
@@ -64,6 +66,53 @@ public final class Arguments {
     // for testing only
     public Arguments(final String[] argv) {
 
+        final var parser = getGetOpt();
+        @SuppressWarnings("rawtypes") final Map optionsFound = parser.parseArguments(argv);
+
+        for (var o : optionsFound.keySet()) {
+            final var key = (String) o;
+            final var c = key.charAt(0);
+            switch (c) {
+                case SCHEMA_ABBR -> skjema = (String) optionsFound.get(key);
+                case YEAR_ABBR -> aargang = (String) optionsFound.get(key);
+                case QUARTER_ABBR -> kvartal = (String) optionsFound.get(key);
+                case REGION_ABBR -> region = (String) optionsFound.get(key);
+                case NAME_ABBR -> navn = (String) optionsFound.get(key);
+                case UNIT_ORGNR_ABBR -> orgnr = (String) optionsFound.get(key);
+                case COMPANY_ORGNR_ABBR -> foretaknr = (String) optionsFound.get(key);
+                case ATTACHMENT_ABBR -> {
+                    final var vedlegg = (String) optionsFound.get(key);
+                    harVedlegg = vedlegg.equalsIgnoreCase("1");
+                }
+                case EXTERNAL_PROCESS_ABBR -> {
+                    final var process = (String) optionsFound.get(key);
+                    isRunAsExternalProcess = process.equalsIgnoreCase("1");
+                }
+                case '?' -> {
+                }
+//                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
+                default -> {
+                    System.err.println("Unexpected option character: " + c);
+                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
+                }
+            }
+        }
+
+        if (skjema == null || skjema.trim().isEmpty()) {
+            throw new IllegalArgumentException("parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A");
+        }
+
+        if (aargang == null || aargang.trim().isEmpty()) {
+            throw new IllegalArgumentException("parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020");
+        }
+
+        if (region == null || region.trim().isEmpty()) {
+            throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100");
+        }
+    }
+
+    @NotNull
+    private static GetOpt getGetOpt() {
         GetOptDesc[] options = {
                 new GetOptDesc(SCHEMA_ABBR, "schema", true),
                 new GetOptDesc(YEAR_ABBR, "year", true),
@@ -76,61 +125,7 @@ public final class Arguments {
                 new GetOptDesc(EXTERNAL_PROCESS_ABBR, "external-process", true)
         };
 
-        final var parser = new GetOpt(options);
-        @SuppressWarnings("rawtypes") final Map optionsFound = parser.parseArguments(argv);
-        for (var o : optionsFound.keySet()) {
-            final var key = (String) o;
-            final var c = key.charAt(0);
-            switch (c) {
-                case SCHEMA_ABBR:
-                    skjema = (String) optionsFound.get(key);
-                    break;
-                case YEAR_ABBR:
-                    aargang = (String) optionsFound.get(key);
-                    break;
-                case QUARTER_ABBR:
-                    kvartal = (String) optionsFound.get(key);
-                    break;
-                case REGION_ABBR:
-                    region = (String) optionsFound.get(key);
-                    break;
-                case NAME_ABBR:
-                    navn = (String) optionsFound.get(key);
-                    break;
-                case UNIT_ORGNR_ABBR:
-                    orgnr = (String) optionsFound.get(key);
-                    break;
-                case COMPANY_ORGNR_ABBR:
-                    foretaknr = (String) optionsFound.get(key);
-                    break;
-                case ATTACHMENT_ABBR:
-                    final var vedlegg = (String) optionsFound.get(key);
-                    harVedlegg = vedlegg.equalsIgnoreCase("1");
-                    break;
-                case EXTERNAL_PROCESS_ABBR:
-                    final var process = (String) optionsFound.get(key);
-                    isRunAsExternalProcess = process.equalsIgnoreCase("1");
-                    break;
-                case '?':
-//                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
-                    break;
-                default:
-                    System.err.println("Unexpected option character: " + c);
-                    System.err.println("Usage: GetOptDemo [-n][-o file][file...]");
-            }
-        }
-
-        if (skjema == null || skjema.trim().length() == 0) {
-            throw new IllegalArgumentException("parameter for skjema er ikke definert. Bruk -s SS. F.eks. -s 0A");
-        }
-
-        if (aargang == null || aargang.trim().length() == 0) {
-            throw new IllegalArgumentException("parameter for årgang er ikke definert. Bruk -y YYYY. F.eks. -y 2020");
-        }
-
-        if (region == null || region.trim().length() == 0) {
-            throw new IllegalArgumentException("parameter for region er ikke definert. Bruk -r RRRRRR. F.eks. -r 030100");
-        }
+        return new GetOpt(options);
     }
 
     public String getSkjema() {
@@ -174,7 +169,7 @@ public final class Arguments {
 
                 while ((line = reader.readLine()) != null) {
                     // utelater tomme linjer
-                    if (line.trim().length() != 0) {
+                    if (!line.trim().isEmpty()) {
                         inputFileContent.add(line);
                     }
                 }
@@ -195,14 +190,14 @@ public final class Arguments {
         }
 
         for (var line : inputFileContent) {
-            if (line != null && line.trim().length() != 0) {
+            if (line != null && !line.trim().isEmpty()) {
                 this.inputFileContent.add(line);
             }
         }
     }
 
     public boolean hasInputContent() {
-        return this.inputFileContent == null || 0 < this.inputFileContent.size();
+        return this.inputFileContent == null || !this.inputFileContent.isEmpty();
     }
 
     public boolean harVedlegg() {
@@ -213,7 +208,7 @@ public final class Arguments {
         return isRunAsExternalProcess;
     }
 
-    public String getNewline(){
+    public String getNewline() {
         return (isRunAsExternalProcess) ? "" : "\n";
     }
 

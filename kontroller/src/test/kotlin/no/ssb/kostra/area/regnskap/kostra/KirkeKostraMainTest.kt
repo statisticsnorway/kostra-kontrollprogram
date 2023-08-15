@@ -20,7 +20,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 row(
                     "skjema $skjema -> validating an invalid record string",
                     KotlinArguments(
-                        skjema = "0F",
+                        skjema = skjema,
                         aargang = "2022",
                         region = "1234  ",
                         inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength + 10)
@@ -33,7 +33,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 row(
                     "skjema $skjema -> validating an empty record string",
                     KotlinArguments(
-                        skjema = validSkjema[0],
+                        skjema = skjema,
                         aargang = "2022",
                         region = "1234  ",
                         inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)

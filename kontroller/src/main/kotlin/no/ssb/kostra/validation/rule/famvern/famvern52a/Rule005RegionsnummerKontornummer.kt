@@ -1,16 +1,16 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
+import no.ssb.kostra.area.famvern.FamilievernConstants
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.REGION_NR_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule005RegionsnummerKontornummer(
-    private val mappingList: List<Familievern52aMain.KontorFylkeRegionMapping>
+    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>
 ) : AbstractRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE005.title,
     Severity.WARNING

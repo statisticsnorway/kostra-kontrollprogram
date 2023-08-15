@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
 import io.kotest.core.spec.style.BehaviorSpec
+import no.ssb.kostra.area.famvern.FamilievernConstants
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -12,7 +12,7 @@ class Rule005RegionsnummerKontornummerTest : BehaviorSpec({
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule005RegionsnummerKontornummer(
                 listOf(
-                    Familievern52aMain.KontorFylkeRegionMapping("017", "30", "667600")
+                    FamilievernConstants.KontorFylkeRegionMapping("017", "30", "667600")
                 )
             ),
             expectedSeverity = Severity.WARNING,

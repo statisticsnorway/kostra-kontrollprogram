@@ -632,6 +632,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
                 Code("1", "Ja"),
                 Code("2", "Nei")
             ),
+            mandatory = true
         ),
         FieldDefinition(
             number = 221,

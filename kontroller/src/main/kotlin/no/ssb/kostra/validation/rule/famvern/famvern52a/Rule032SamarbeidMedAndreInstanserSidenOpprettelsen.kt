@@ -13,8 +13,11 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_PS
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_SKOLE_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_SOS_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_STATB_A_COL_NAME
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.byColumnName
+import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
@@ -24,7 +27,7 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen : AbstractRule<List<Kos
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
         fields.any { field ->
-            0 < it.fieldAsIntOrDefault(field)
+            fieldDefinitions.byColumnName(field).codeExists(it[field])
         }
     }.map {
         createValidationReportEntry(

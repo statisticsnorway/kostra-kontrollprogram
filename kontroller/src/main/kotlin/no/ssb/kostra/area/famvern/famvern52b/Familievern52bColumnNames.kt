@@ -1,0 +1,22 @@
+package no.ssb.kostra.area.famvern.famvern52b
+
+object Familievern52bColumnNames {
+    const val REGION_NR_B_COL_NAME = "REGION_NR_B"
+    const val KONTOR_NR_B_COL_NAME = "KONTOR_NR_B"
+    const val GRUPPE_NR_B_COL_NAME = "GRUPPE_NR_B"
+    const val GRUPPE_NAVN_B_COL_NAME = "GRUPPE_NAVN_B"
+    const val DATO_GRSTART_B_COL_NAME = "DATO_GRSTART_B"
+    const val STRUKTUR_GR_B_COL_NAME = "STRUKTUR_GR_B"
+    const val HOVEDI_GR_B_COL_NAME = "HOVEDI_GR_B"
+    const val ANTMOTERTOT_IARET_B_COL_NAME = "ANTMOTERTOT_IARET_B"
+    const val ANTMOTERTOT_OPPR_B_COL_NAME = "ANTMOTERTOT_OPPR_B"
+    const val TIMERTOT_IARET_B_COL_NAME = "TIMERTOT_IARET_B"
+    const val TIMERTOT_OPPR_B_COL_NAME = "TIMERTOT_OPPR_B"
+    const val ANTDELT_IARET_B_COL_NAME = "ANTDELT_IARET_B"
+    const val ANTDELT_OPPR_B_COL_NAME = "ANTDELT_OPPR_B"
+    const val ANTTER_GRUPPEB_B_COL_NAME = "ANTTER_GRUPPEB_B"
+    const val TOLK_B_COL_NAME = "TOLK_B"
+    const val STATUS_ARETSSL_B_COL_NAME = "STATUS_ARETSSL_B"
+    const val DATO_GRAVSLUTN_B_COL_NAME = "DATO_GRAVSLUTN_B"
+
+}

@@ -808,6 +808,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 105,
             to = 107,
+            mandatory = false,
         ),
         FieldDefinition(
             number = 242,
@@ -816,6 +817,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 108,
             to = 110,
+            mandatory = false,
         ),
         FieldDefinition(
             number = 251,
@@ -824,6 +826,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 111,
             to = 113,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 252,
@@ -832,6 +835,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 114,
             to = 116,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 261,
@@ -856,6 +860,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 123,
             to = 125,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 272,
@@ -864,6 +869,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions() {
             viewType = TEXTBOX_VIEWTYPE,
             from = 126,
             to = 128,
+            mandatory = true,
         ),
         FieldDefinition(
             number = 28,

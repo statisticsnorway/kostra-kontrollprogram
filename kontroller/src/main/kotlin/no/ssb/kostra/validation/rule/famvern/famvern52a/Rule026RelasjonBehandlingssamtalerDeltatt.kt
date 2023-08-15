@@ -24,11 +24,11 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractRule<List<KostraRecord>>(
-    Familievern52aRuleId.FAMILIEVERN52A_RULE025.title,
+    Familievern52aRuleId.FAMILIEVERN52A_RULE026.title,
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.map {
-        mappingList.map { mapping ->
+        mappingList.mapNotNull { mapping ->
             if (it[mapping.participation] == "1" && it.fieldAsIntOrDefault(mapping.count) == 0) {
                 createValidationReportEntry(
                     messageText = "Det er oppgitt at andre personer (${mapping.title}) har deltatt i samtaler med " +
@@ -40,7 +40,7 @@ class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractRule<List<KostraRecord
                     journalId = it[JOURNAL_NR_A_COL_NAME]
                 )
             } else null
-        }.filterNotNull()
+        }
     }.flatten().ifEmpty { null }
 
     data class Mapping(

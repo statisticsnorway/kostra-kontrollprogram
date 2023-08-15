@@ -5,7 +5,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 open class AbstractRule<in T : Any>(
-    private val ruleName: String,
+    protected val ruleName: String,
     private val severity: Severity
 ) {
     open fun validate(context: T): List<ValidationReportEntry>? = null
@@ -14,6 +14,19 @@ open class AbstractRule<in T : Any>(
 
     /** used by record-based rules */
     protected fun createValidationReportEntry(
+        messageText: String,
+        lineNumbers: List<Int> = emptyList(),
+        contextId: String = "",
+    ) = ValidationReportEntry(
+        severity = severity,
+        ruleName = ruleName,
+        messageText = messageText,
+        lineNumbers = lineNumbers,
+        contextId = contextId,
+    )
+
+    protected fun createValidationReportEntry(
+        ruleName: String,
         messageText: String,
         lineNumbers: List<Int> = emptyList(),
         contextId: String = "",

@@ -23,7 +23,7 @@ class Rule020GruppebehandlingenAvsluttetManglerAvslutningsdatoTest : BehaviorSpe
                 "invalid value",
                 kostraRecordInTest("2", "        "),
                 expectedErrorMessage = "Det er krysset av for at gruppebehandlingen er avsluttet i " +
-                "rapporteringsåret, men ikke fylt ut dato '        ' for avslutning av saken.",
+                        "rapporteringsåret, men ikke fylt ut dato '        ' for avslutning av saken.",
             ),
         )
     )

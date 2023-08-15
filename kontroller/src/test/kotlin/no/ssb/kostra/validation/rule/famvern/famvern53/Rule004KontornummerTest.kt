@@ -1,8 +1,8 @@
-package no.ssb.kostra.validation.rule.famvern.famvern52b
+package no.ssb.kostra.validation.rule.famvern.famvern53
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.famvern.FamilievernConstants
-import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames
+import no.ssb.kostra.area.famvern.famvern53.Familievern53ColumnNames
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
@@ -31,8 +31,8 @@ class Rule004KontornummerTest : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(region: String) = listOf(
-            Familievern52bTestUtils.familievernRecordInTest(
-                mapOf(Familievern52bColumnNames.KONTOR_NR_B_COL_NAME to region)
+            Familievern53TestUtils.familievernRecordInTest(
+                mapOf(Familievern53ColumnNames.KONTORNR_COL_NAME to region)
             )
         )
     }

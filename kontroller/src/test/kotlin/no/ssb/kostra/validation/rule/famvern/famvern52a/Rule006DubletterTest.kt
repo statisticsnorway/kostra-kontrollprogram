@@ -19,7 +19,7 @@ class Rule006DubletterTest : BehaviorSpec({
                 ),
             ),
             ForAllRowItem(
-                "No duplicates, different journal offices",
+                "No duplicates, different journals and offices",
                 listOf(
                     kostraRecordInTest("017", "J1"),
                     kostraRecordInTest("023", "J1")

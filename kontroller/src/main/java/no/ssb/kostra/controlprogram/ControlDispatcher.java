@@ -1,5 +1,6 @@
 package no.ssb.kostra.controlprogram;
 
+import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain;
 import no.ssb.kostra.area.regnskap.helseforetak.HelseForetakMain;
 import no.ssb.kostra.area.regnskap.kostra.KirkeKostraMain;
 import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain;
@@ -66,7 +67,8 @@ public final class ControlDispatcher {
             errorReport = BarnevernMain.doControls(arguments);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("52AF"))) {
-            errorReport = no.ssb.kostra.control.famvern.s52a.Main.doControls(arguments);
+            var validationResult = new Familievern52aMain(fromArguments(arguments, true)).validate();
+            toErrorReport(errorReport, validationResult);
 
         } else if (isCodeInCodeList(arguments.getSkjema(), List.of("52BF"))) {
             errorReport = no.ssb.kostra.control.famvern.s52b.Main.doControls(arguments);

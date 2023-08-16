@@ -47,7 +47,7 @@ class UtilsTest : BehaviorSpec({
             )
         ).asList()
 
-        When("getting rows and columns of valid parameters"){
+        When("getting rows and columns of valid parameters") {
             val kostraRecordList = Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
                     Familievern55ColumnNames.MEKLING_SEP_1_COL_NAME to "1",
@@ -57,14 +57,14 @@ class UtilsTest : BehaviorSpec({
                 )
             ).asList()
 
-            Then("a 2D-list is made"){
+            Then("a 2D-list is made") {
                 val combined = validateMatrix(kostraRecordList, fieldList, columnSize)
                 println(combined)
                 combined.size shouldBe 0
             }
         }
 
-        When("getting rows and columns of invalid parameters"){
+        When("getting rows and columns of invalid parameters") {
             val kostraRecordList = Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
                     Familievern55ColumnNames.MEKLING_SEP_1_COL_NAME to "1",
@@ -74,16 +74,16 @@ class UtilsTest : BehaviorSpec({
                 )
             ).asList()
 
-            Then("a 2D-list is made"){
+            Then("a 2D-list is made") {
                 val combined = validateMatrix(kostraRecordList, fieldList, columnSize)
                 println(combined)
                 combined.size shouldBe 2
             }
         }
 
-        When("invalid parameters"){
+        When("invalid parameters") {
 
-            Then("get an IndexOutOfBoundsException"){
+            Then("get an IndexOutOfBoundsException") {
                 shouldThrow<IndexOutOfBoundsException> {
                     validateMatrix(kostraRecordList, fieldList.dropLast(1), columnSize)
                 }

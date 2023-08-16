@@ -3,7 +3,7 @@ package no.ssb.kostra.area.famvern.famvern55
 import no.ssb.kostra.program.KostraRecord
 
 object Utils {
-    data class calculationItem(
+    data class CalculationItem(
         val sumItem: Pair<String, Int>,
         val itemList: List<Pair<String, Int>>,
         val lineNumbers: List<Int>
@@ -27,7 +27,12 @@ object Utils {
 
     fun validateMatrix(kostraRecordList: List<KostraRecord>, fieldList: List<String>, columnSize: Int) =
         if (fieldList.size % columnSize == 0) {
-            val calculationList = getRows(fieldList, columnSize) + getColumns(fieldList, fieldList.size / columnSize)
+            val calculationList =
+                if (fieldList.size / columnSize > 1)
+                    getRows(fieldList, columnSize) + getColumns(fieldList, fieldList.size / columnSize)
+                else
+                    getRows(fieldList, columnSize)
+
             kostraRecordList.map { kostraRecord ->
                 calculationList.mapNotNull { fieldList ->
                     val itemList = fieldList.dropLast(1).map { item ->
@@ -39,7 +44,7 @@ object Utils {
                     }
 
                     if (itemListSum != sumItem.second) {
-                        calculationItem(sumItem, itemList, listOf(kostraRecord.lineNumber))
+                        CalculationItem(sumItem, itemList, listOf(kostraRecord.lineNumber))
                     } else null
 
                 }
@@ -48,22 +53,3 @@ object Utils {
             throw IndexOutOfBoundsException("FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})")
 
 }
-/*
-context.map {
-        Utils.validateMatrix(fieldList, columns).mapNotNull { fieldList ->
-            val itemList = fieldList.dropLast(1).map { item -> item to it.fieldAsIntOrDefault(item) }
-            val itemListSum = itemList.sumOf { item -> item.second }
-            val sumItem = fieldList.last().let { item -> item to it.fieldAsIntOrDefault(item) }
-
- //           "Summen (${sumItem.first}) med verdi (${sumItem.second}) er ulik summen ($itemListSum) av følgende liste ($itemList)".also { that -> println(that) }
-
-            if (itemListSum != sumItem.second) {
-                createValidationReportEntry(
-                    messageText = "Summen (${sumItem.first}) med verdi (${sumItem.second}) " +
-                            "er ulik summen ($itemListSum) av følgende liste ($itemList)",
-                    lineNumbers = listOf(it.lineNumber)
-                )
-            } else null
-        }
-    }.flatten().ifEmpty { null }
- */

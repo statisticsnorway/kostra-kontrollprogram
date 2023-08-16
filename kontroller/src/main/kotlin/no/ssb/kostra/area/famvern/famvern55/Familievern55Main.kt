@@ -26,7 +26,8 @@ class Familievern55Main(arguments: KotlinArguments) : Validator(arguments) {
         Rule011ResultatAvAvsluttedeMeklinger(),
         Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultat(),
         Rule013AvsluttedeMeklingerOgBekymringsmeldinger(),
-
+        Rule014KontrollAvTotalsummerForMeklinger(),
+        Rule015KontrollAvTotalsummerForSkriftligeAvtaler(),
         Rule016AvsluttedeMeklingerUtenOppmote()
     )
 }

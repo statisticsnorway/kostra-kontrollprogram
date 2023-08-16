@@ -140,6 +140,9 @@
                     <execution>
                         <id>default-shade</id>
                         <phase>none</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

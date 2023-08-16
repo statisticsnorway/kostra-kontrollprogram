@@ -16,7 +16,7 @@
         <finalName>${project.artifactId}-${revision}</finalName>
 
         <micronaut.aot.enabled>false</micronaut.aot.enabled>
-        <micronaut.aot.packageName>no.ssb.web.aot.generated</micronaut.aot.packageName>
+        <micronaut.aot.packageName>no.ssb.kostra.program.aot.generated</micronaut.aot.packageName>
 
         <exec.mainClass>no.ssb.kostra.program.KostraKontrollprogramCommand</exec.mainClass>
     </properties>

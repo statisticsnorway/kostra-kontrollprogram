@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.famvern.famvern55
 
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames
-import no.ssb.kostra.area.famvern.famvern55.Utils
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity

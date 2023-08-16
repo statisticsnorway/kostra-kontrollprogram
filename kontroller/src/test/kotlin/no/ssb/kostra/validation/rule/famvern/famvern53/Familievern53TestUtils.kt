@@ -10,7 +10,7 @@ object Familievern53TestUtils {
         valuesByName: Map<String, String> = emptyMap()
     ) = " ".repeat(Familievern53FieldDefinitions.fieldDefinitions.last().to)
         .toKostraRecord(index = 1, Familievern53FieldDefinitions.fieldDefinitions)
-        .plus(Familievern53ColumnNames.FYLKE_NR_COL_NAME to "~f#~")
+        .plus(Familievern53ColumnNames.FYLKE_NR_COL_NAME to "~~")
         .plus(Familievern53ColumnNames.KONTORNR_COL_NAME to "~k~")
         .plus(valuesByName)
 }

@@ -9,9 +9,8 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor
 import io.micronaut.validation.exceptions.ConstraintExceptionHandler
 import jakarta.inject.Singleton
+import jakarta.validation.ConstraintViolationException
 import java.time.Instant
-import java.util.*
-import javax.validation.ConstraintViolationException
 
 /**
  * Custom exception handler for validation exceptions.

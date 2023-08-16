@@ -1,7 +1,6 @@
 package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
@@ -15,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.validation.ConstraintViolationException
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.error.ApiError
@@ -24,8 +24,7 @@ import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
-import javax.validation.ConstraintViolationException
-
+import com.fasterxml.jackson.module.kotlin.readValue
 
 /**
  * API controller
@@ -72,6 +71,7 @@ open class ApiController(
         /**  we'll have to deserialize and validate our self because of multipart request */
         val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
+            println(iterator().asSequence().toSet())
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 

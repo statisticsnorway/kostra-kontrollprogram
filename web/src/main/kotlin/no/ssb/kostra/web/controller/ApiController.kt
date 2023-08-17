@@ -1,6 +1,7 @@
 package no.ssb.kostra.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
@@ -24,7 +25,6 @@ import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
-import com.fasterxml.jackson.module.kotlin.readValue
 
 /**
  * API controller
@@ -71,8 +71,14 @@ open class ApiController(
         /**  we'll have to deserialize and validate our self because of multipart request */
         val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
-            println(iterator().asSequence().toSet())
             throw ConstraintViolationException(iterator().asSequence().toSet())
+        }
+
+        /** temp-fix for issues with MN:4.x and validating collections */
+        kostraForm.orgnrVirksomhet.flatMap { companyId ->
+            validator.validate(companyId).iterator().asSequence()
+        }.takeIf { it.isNotEmpty() }?.let {
+            throw ConstraintViolationException(it.toSet())
         }
 
         /** target stream, file content will end up here */

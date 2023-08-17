@@ -229,21 +229,19 @@ class ApiControllerIntegrationTest(
                 FALLBACK_PROPERTY_PATH,
                 "Skjema krever ett eller flere orgnr for virksomhet(er)"
             ),
-            /* TODO: Not working with Micronaut:4.x
-                        row(
-                            "Invalid orgnrVirksomhet",
-                            KostraFormVm(
-                                aar = Year.now().value,
-                                skjema = "0X",
-                                region = "667600",
-                                orgnrForetak = "987654321",
-                                orgnrVirksomhet = setOf(CompanyIdVm("a")),
-                                filnavn = "test.dat"
-                            ),
-                            "orgnr",
-                            "Må starte med 8 eller 9 etterfulgt av 8 siffer"
-                        )
-            */
+            row(
+                "Invalid orgnrVirksomhet",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
+                    orgnrForetak = "987654321",
+                    orgnrVirksomhet = listOf(CompanyIdVm("a")),
+                    filnavn = "test.dat"
+                ),
+                "orgnr",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
             When(description) {
 

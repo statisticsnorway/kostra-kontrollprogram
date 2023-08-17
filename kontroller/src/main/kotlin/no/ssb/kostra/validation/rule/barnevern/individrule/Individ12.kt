@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.report.Severity
@@ -13,7 +13,7 @@ class Individ12 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
         if (context.fodselsnummer == null
-            || !isValidSocialSecurityIdOrDnr(context.fodselsnummer)
+            || !isValidSocialSecurityIdOrDnr(context.fodselsnummer ?: "")
         ) {
             createSingleReportEntryList(
                 contextId = context.id,

@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.extension
 
-import no.ssb.kostra.barn.xsd.KostraLovhjemmelType
+import no.ssb.kostra.barnevern.xsd.KostraLovhjemmelType
 
 fun KostraLovhjemmelType.matches(requirement: KostraLovhjemmelType): Boolean = when {
     !this.isEqualTo(requirement) -> false

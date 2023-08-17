@@ -11,8 +11,8 @@ import io.mockk.every
 import io.mockk.mockk
 import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
-import no.ssb.kostra.barn.xsd.KostraBarnevernType
+import no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.marshallInstance
+import no.ssb.kostra.barnevern.xsd.KostraBarnevernType
 import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry

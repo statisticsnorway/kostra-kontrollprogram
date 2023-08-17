@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.barn.xsd.KostraLovhjemmelType
+import no.ssb.kostra.barnevern.xsd.KostraLovhjemmelType
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL2021
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.lovhjemmelTypeInTest

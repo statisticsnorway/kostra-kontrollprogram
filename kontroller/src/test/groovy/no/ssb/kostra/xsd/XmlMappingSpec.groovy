@@ -2,15 +2,15 @@
 package no.ssb.kostra.xsd
 
 
-import no.ssb.kostra.barn.xsd.KostraMeldingType
+import no.ssb.kostra.barnevern.xsd.KostraMeldingType
 import spock.lang.Specification
 
 import java.time.LocalDate
 
 import static no.ssb.kostra.TestUtils.getResourceAsString
-import static no.ssb.kostra.barn.KostraValidationUtils.validate
-import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
-import static no.ssb.kostra.barn.convert.KostraBarnevernConverter.unmarshallXml
+import static no.ssb.kostra.barnevern.KostraValidationUtils.validate
+import static no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.marshallInstance
+import static no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.unmarshallXml
 
 class XmlMappingSpec extends Specification {
 

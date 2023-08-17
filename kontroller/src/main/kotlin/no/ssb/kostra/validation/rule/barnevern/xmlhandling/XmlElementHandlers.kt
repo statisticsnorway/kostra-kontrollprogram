@@ -1,10 +1,10 @@
 package no.ssb.kostra.validation.rule.barnevern.xmlhandling
 
-import no.ssb.kostra.barn.KostraValidationUtils
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter.XML_MAPPER
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.KostraValidationUtils
+import no.ssb.kostra.barnevern.convert.KostraBarnevernConverter
+import no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.XML_MAPPER
+import no.ssb.kostra.barnevern.xsd.KostraAvgiverType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError

@@ -16,6 +16,7 @@
         <module>konsoll</module>
         <module>web</module>
         <module>kontroller</module>
+        <module>kostra-barnevern</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
@@ -80,22 +81,10 @@
         </dependency>
 
 
-        <!-- for reading application.yml -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-jackson-databind</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <scope>runtime</scope>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- scope = test -->
@@ -107,11 +96,6 @@
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-runner-junit5-jvm</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.test</groupId>
-            <artifactId>micronaut-test-kotest5</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

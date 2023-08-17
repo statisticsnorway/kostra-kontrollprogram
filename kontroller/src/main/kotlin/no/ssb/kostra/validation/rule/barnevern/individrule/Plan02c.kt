@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -14,8 +14,7 @@ class Plan02c : AbstractRule<KostraIndividType>(
         .takeIf { it.sluttDato != null }
         ?.let { innerContext ->
             innerContext.plan.filter {
-                it.sluttDato != null
-                        && it.sluttDato.isAfter(context.sluttDato)
+                it.sluttDato?.let { sluttDato -> sluttDato.isAfter(context.sluttDato) } ?: false
             }.map { plan ->
                 createValidationReportEntry(
                     contextId = plan.id,

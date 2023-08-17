@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern
 
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.ValidationResult
 import no.ssb.kostra.validation.report.Severity
@@ -51,12 +51,12 @@ object BarnevernValidator {
 
                         kostraIndivid.fodselsnummer?.also {
                             seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(
-                                kostraIndivid.fodselsnummer,
+                                kostraIndivid.fodselsnummer ?: "",
                                 kostraIndivid.journalnummer
                             )
                             seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(
                                 kostraIndivid.journalnummer,
-                                kostraIndivid.fodselsnummer
+                                kostraIndivid.fodselsnummer ?: ""
                             )
                         }
                     }

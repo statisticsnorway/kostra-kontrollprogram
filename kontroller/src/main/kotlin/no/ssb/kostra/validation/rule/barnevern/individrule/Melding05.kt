@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -12,11 +12,12 @@ class Melding05 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.melding
         .filter {
-            it.sluttDato != null
-                    && arguments.aargang.toInt() - 1 < it.sluttDato.year
-                    && it.konklusjon != null
-                    && it.konklusjon in setOf("1", "2")
-                    && it.saksinnhold.none()
+            it.sluttDato?.let { sluttDato ->
+                arguments.aargang.toInt() - 1 < sluttDato.year
+                        && it.konklusjon != null
+                        && it.konklusjon in setOf("1", "2")
+                        && it.saksinnhold.none()
+            } ?: false
         }
         .map { melding ->
             createValidationReportEntry(

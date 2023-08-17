@@ -1,8 +1,8 @@
 package no.ssb.kostra
 
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.barn.xsd.KostraBarnevernType
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraAvgiverType
+import no.ssb.kostra.barnevern.xsd.KostraBarnevernType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.testutil.RandomUtils
 import java.time.LocalDate
 import java.time.Year

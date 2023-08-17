@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.xmlhandling
 
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraAvgiverType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError

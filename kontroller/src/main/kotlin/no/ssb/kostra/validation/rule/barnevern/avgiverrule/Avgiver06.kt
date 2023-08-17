@@ -1,6 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.avgiverrule
 
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
+import no.ssb.kostra.barnevern.xsd.KostraAvgiverType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule

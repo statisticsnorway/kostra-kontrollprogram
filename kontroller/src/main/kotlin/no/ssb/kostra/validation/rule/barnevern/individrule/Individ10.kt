@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule

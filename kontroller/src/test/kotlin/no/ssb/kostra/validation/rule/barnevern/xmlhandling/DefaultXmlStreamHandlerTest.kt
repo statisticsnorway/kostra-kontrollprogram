@@ -9,9 +9,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import no.ssb.kostra.BarnevernTestData.barnevernTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
-import no.ssb.kostra.barn.convert.KostraBarnevernConverter.marshallInstance
-import no.ssb.kostra.barn.xsd.KostraAvgiverType
-import no.ssb.kostra.barn.xsd.KostraIndividType
+import no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.marshallInstance
+import no.ssb.kostra.barnevern.xsd.KostraAvgiverType
+import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors.avgiverFileError

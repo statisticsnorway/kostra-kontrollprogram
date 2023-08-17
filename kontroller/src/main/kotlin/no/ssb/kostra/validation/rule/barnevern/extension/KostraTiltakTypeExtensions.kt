@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.extension
 
-import no.ssb.kostra.barn.xsd.KostraLovhjemmelType
-import no.ssb.kostra.barn.xsd.KostraTiltakType
+import no.ssb.kostra.barnevern.xsd.KostraLovhjemmelType
+import no.ssb.kostra.barnevern.xsd.KostraTiltakType
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.ALLOCATION_CODE_1_PREFIX
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.ALLOCATION_CODE_2_PREFIX
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992

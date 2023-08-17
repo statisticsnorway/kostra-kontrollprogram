@@ -1,6 +1,9 @@
 package no.ssb.kostra.program
 
-import no.ssb.kostra.controlprogram.*
+import no.ssb.kostra.controlprogram.ArgumentConstants
+import no.ssb.kostra.controlprogram.Arguments
+import no.ssb.kostra.controlprogram.GetOpt
+import no.ssb.kostra.controlprogram.GetOptDesc
 import no.ssb.kostra.felles.Constants
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
@@ -74,7 +77,7 @@ fun main(args: Array<String>) {
             inputFileContent.split("\n").toMutableList() // FIX ME ?
         )
 
-        val report = ControlDispatcher.doControls(arguments)
+        val report = ControlDispatcher.validate(arguments)
         errorTypeFound = 42 // FIX ME report.severity.ordinal
         val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
         printStream.print(report.generateReport())

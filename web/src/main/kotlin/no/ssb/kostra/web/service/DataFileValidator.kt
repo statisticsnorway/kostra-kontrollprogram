@@ -1,7 +1,7 @@
 package no.ssb.kostra.web.service
 
 import jakarta.inject.Singleton
-import no.ssb.kostra.controlprogram.ControlDispatcher
+import no.ssb.kostra.program.ControlDispatcher
 import no.ssb.kostra.web.extension.toErrorReportVm
 import no.ssb.kostra.web.extension.toKostraArguments
 import no.ssb.kostra.web.viewmodel.FileReportVm
@@ -16,5 +16,5 @@ class DataFileValidator {
         kostraForm: KostraFormVm,
         inputStream: InputStream
     ): FileReportVm =
-        ControlDispatcher.doControls(kostraForm.toKostraArguments(inputStream)).toErrorReportVm()
+        ControlDispatcher.validate(kostraForm.toKostraArguments(inputStream)).toErrorReportVm()
 }

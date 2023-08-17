@@ -21,6 +21,7 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
@@ -113,7 +114,7 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "blank region",
+                "empty region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -123,7 +124,7 @@ class ApiControllerIntegrationTest(
                 "Region må bestå av 6 siffer uten mellomrom"
             ),
             row(
-                "white-space region",
+                "blank region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -144,7 +145,7 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "blank filnavn",
+                "empty filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -155,7 +156,7 @@ class ApiControllerIntegrationTest(
                 "Filvedlegg er påkrevet"
             ),
             row(
-                "white-space filnavn",
+                "blank filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -178,12 +179,37 @@ class ApiControllerIntegrationTest(
                 "Skjema krever orgnr"
             ),
             row(
-                "invalid orgnrForetak",
+                "empty orgnrForetak",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0F",
                     region = "667600",
+                    orgnrForetak = "",
+                    filnavn = "test.dat"
+                ),
+                "orgnrForetak",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            ),
+            row(
+                "blank orgnrForetak",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0F",
+                    region = "667600",
+                    orgnrForetak = "  ",
+                    filnavn = "test.dat"
+                ),
+                "orgnrForetak",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            ),
+            row(
+                "invalid orgnrForetak",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
                     orgnrForetak = "a",
+                    orgnrVirksomhet = listOf(CompanyIdVm("987654321")),
                     filnavn = "test.dat"
                 ),
                 "orgnrForetak",

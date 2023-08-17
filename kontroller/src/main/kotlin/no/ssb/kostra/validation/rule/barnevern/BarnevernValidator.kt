@@ -49,14 +49,14 @@ object BarnevernValidator {
                     ) { kostraIndivid: KostraIndividType ->
                         individCount++
 
-                        kostraIndivid.fodselsnummer?.also {
+                        kostraIndivid.fodselsnummer?.also { fodselsnummer ->
                             seenFodselsnummer.addKeyOrAddValueIfKeyIsPresent(
-                                kostraIndivid.fodselsnummer ?: "",
+                                fodselsnummer,
                                 kostraIndivid.journalnummer
                             )
                             seenJournalNummer.addKeyOrAddValueIfKeyIsPresent(
                                 kostraIndivid.journalnummer,
-                                kostraIndivid.fodselsnummer ?: ""
+                                fodselsnummer
                             )
                         }
                     }

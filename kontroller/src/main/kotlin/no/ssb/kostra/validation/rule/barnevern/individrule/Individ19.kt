@@ -12,7 +12,7 @@ class Individ19 : AbstractRule<KostraIndividType>(
     severity = Severity.WARNING
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
-        if (context.duFnummer != null && !validateDUF(context.duFnummer ?: "")) {
+        if (context.duFnummer?.let { dufNumber -> !validateDUF(dufNumber) } == true) {
             createSingleReportEntryList(
                 contextId = context.id,
                 messageText = "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."

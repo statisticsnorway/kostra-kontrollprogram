@@ -37,7 +37,7 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
       # The version of the repo on GitHub. Change to needed version
-      ref: refs/tags/1.1.43
+      ref: refs/tags/1.1.44
       # Service connection in the barn project on Pipelines
       # with access to the template repository.
       endpoint: 'github-Barnevernsregisteret'
@@ -66,39 +66,13 @@ jobs:
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-authenticate-gar.yml
       - template: maven/task-authenticate-gar.yml@templates
 
-      # The following template is commented out because it runs both test and verify
       # Verify and run sonarcloud, for non-tag-builds
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-verify.yml
-      #- template: maven/task-verify.yml@templates
-      #  parameters:
-      #    sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
-      #    checkStyleRunAnalysis: false
-      #    pmdRunAnalysis: false
-      - task: SonarCloudPrepare@1
-        condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-        inputs:
-          SonarCloud: 'bipSonarCloud-Barnevernsregisteret'
-          organization: 'statisticsnorway'
-          scannerMode: 'Other'
-
-      - task: Maven@3
-        condition: not(startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
-        displayName: 'Maven verify'
-        inputs:
-          mavenPomFile: 'pom.xml'
-          goals: 'verify'
-          options: '-X -P ssb-bip,coverage --batch-mode $(MAVEN_OPTS)'
-          publishJUnitResults: true
-          javaHomeOption: 'JDKVersion'
-          mavenVersionOption: 'Default'
-          mavenOptions: '-Xmx3072m'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          isJacocoCoverageReportXML: true
+      - template: maven/task-verify.yml@templates
+        parameters:
+          sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
           checkStyleRunAnalysis: false
           pmdRunAnalysis: false
-          sonarQubeRunAnalysis: true
-          sqMavenPluginVersionChoice: 'pom'
 
       - task: Maven@3
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')

@@ -84,13 +84,14 @@ jobs:
           javaHomeOption: 'JDKVersion'
 
       # Deploy artifact to artifact registry
+      # Note: Only kostra-barnevern is deployed to artifact registry
       - task: Maven@3
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
         displayName: 'Maven install and deploy'
         inputs:
           goals: 'deploy'
           mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
+          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -am -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
           mavenPomFile: 'pom.xml'
           javaHomeOption: 'JDKVersion'
           jdkArchitectureOption: 'x64'

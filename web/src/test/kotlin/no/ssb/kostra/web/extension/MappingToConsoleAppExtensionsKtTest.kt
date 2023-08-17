@@ -32,7 +32,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     skjema = "0A",
                     aar = Year.now().value,
                     region = "123456",
-                    orgnrVirksomhet = setOf()
+                    orgnrVirksomhet = emptyList()
                 )
             ),
             row(
@@ -85,7 +85,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
             aar = Year.now().value,
             region = "123456",
             orgnrForetak = generateCompanyIdInTest('9'),
-            orgnrVirksomhet = setOf(
+            orgnrVirksomhet = listOf(
                 CompanyIdVm(generateCompanyIdInTest('8')),
                 CompanyIdVm(generateCompanyIdInTest('9'))
             )

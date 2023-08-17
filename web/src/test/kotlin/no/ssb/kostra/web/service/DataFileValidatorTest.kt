@@ -20,7 +20,7 @@ class DataFileValidatorTest : BehaviorSpec({
             skjema = "52AF",
             region = "667600",
             filnavn = "fil.data",
-            orgnrVirksomhet = setOf()
+            orgnrVirksomhet = emptyList()
         )
 
         When("validateDataFile with valid content") {

@@ -18,22 +18,20 @@ class ValidatorFactory(private val uiConfig: UiConfig) {
 
     @Singleton
     fun validForm(): ConstraintValidator<ValidForm, KostraFormVm> = ConstraintValidator { value, _, context ->
+        uiConfig.skjematyper.firstOrNull { it.id == value.skjema }?.let { formTypeFromConfig ->
+            when {
+                formTypeFromConfig.labelOrgnrVirksomhetene != null && value.orgnrVirksomhet.isEmpty() -> {
+                    context.messageTemplate("Skjema krever ett eller flere orgnr for virksomhet(er)")
+                    false
+                }
 
-        /** leave validation to dedicated validators */
-        if (value!!.skjema !in uiConfig.skjematyper.map { it.id }) return@ConstraintValidator true
+                formTypeFromConfig.labelOrgnr != null && value.orgnrForetak.isNullOrEmpty() -> {
+                    context.messageTemplate("Skjema krever orgnr")
+                    false
+                }
 
-        val formTypeFromConfig = uiConfig.skjematyper.first { it.id == value.skjema }
-
-        if (formTypeFromConfig.labelOrgnrVirksomhetene != null && value.orgnrVirksomhet.isEmpty()) {
-            context.messageTemplate("Skjema krever ett eller flere orgnr for virksomhet(er)")
-            return@ConstraintValidator false
-        }
-
-        if (formTypeFromConfig.labelOrgnr != null && value.orgnrForetak == null) {
-            context.messageTemplate("Skjema krever orgnr")
-            return@ConstraintValidator false
-        }
-
-        true
+                else -> true
+            }
+        } ?: true // leave validation of invalid form type to dedicated validators
     }
 }

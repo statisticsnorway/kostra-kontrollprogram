@@ -197,7 +197,7 @@ class ApiControllerIntegrationTest(
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = "987654321",
-                    orgnrVirksomhet = setOf(),
+                    orgnrVirksomhet = emptyList(),
                     filnavn = "test.dat"
                 ),
                 FALLBACK_PROPERTY_PATH,

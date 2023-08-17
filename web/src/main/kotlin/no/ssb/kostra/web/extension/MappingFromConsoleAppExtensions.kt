@@ -20,7 +20,7 @@ fun Arguments.toReportRequestVm(): KostraFormVm {
         navn = this.navn,
         orgnrForetak = this.foretaknr.ifBlank { null },
         orgnrVirksomhet =
-        if (this.orgnr.isNullOrEmpty()) setOf()
+        if (this.orgnr.isNullOrEmpty()) emptyList()
         else this.orgnr
             .split(",")
             .filterNot { it.isBlank() }

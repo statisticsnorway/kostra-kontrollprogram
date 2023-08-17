@@ -27,7 +27,7 @@ data class KostraFormVm(
     val orgnrForetak: String? = null,
 
     // @field:Valid // not working with Micronaut:4.x
-    val orgnrVirksomhet: Collection<CompanyIdVm> = setOf(),
+    val orgnrVirksomhet: List<CompanyIdVm> = emptyList(),
 
     @field:NotBlank(message = "Filvedlegg er påkrevet")
     val filnavn: String = ""

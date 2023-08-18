@@ -1,10 +1,11 @@
 package no.ssb.kostra.felles.git
 
-import java.util.*
+import java.util.Properties
 
+// TODO: Move this to application-common when ErrorReport is rewritten
 object GitPropertiesLoader {
     const val DEFAULT_GIT_PROPERTIES_FILENAME = "/git.properties"
-    const val NOT_AVAILABLE_VALUE = ""
+    const val NOT_AVAILABLE_VALUE = "N/A"
     private const val GIT_TAGS_KEY = "git.tags"
 
     @JvmStatic

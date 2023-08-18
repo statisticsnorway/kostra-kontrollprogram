@@ -84,6 +84,7 @@ public class ErrorReport {
     }
 
     public String generateReport() {
+        // TODO: I Kotlin-versjonen må du sende inn denne som parameter. Den injektes i konsoll-appen
         final var releaseVersion = loadGitProperties(DEFAULT_GIT_PROPERTIES_FILENAME).getTags();
         final var report = new StringBuilder();
         final var lf = args.getNewline();

@@ -6,6 +6,7 @@ import jakarta.inject.Inject
 import no.ssb.kostra.extensions.toErrorReportVm
 import no.ssb.kostra.extensions.toKostraArguments
 import no.ssb.kostra.felles.ErrorReport
+import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.viewmodel.CompanyIdVm
 import no.ssb.kostra.viewmodel.KostraFormVm
 import picocli.CommandLine.Command
@@ -18,17 +19,22 @@ import java.time.Year
 )
 class KostraKontrollprogramCommand : Runnable {
 
+    @Option(names = ["-v", "--verbose"], description = ["..."])
+    private var verbose: Boolean = false
+
     @Inject
     lateinit var validator: Validator
 
-    @Option(names = ["-v", "--verbose"], description = ["..."])
-    private var verbose: Boolean = false
+    @Inject
+    lateinit var gitProperties: GitProperties // inneholder versjonsinformasjon
 
     override fun run() {
         // business logic here
         if (verbose) {
             println("Hi!")
         }
+
+        println(gitProperties)
 
         /** TODO Jon Ole: Putt inn verdier fra argumentene her  */
         val kostraForm = KostraFormVm( // will pass validation

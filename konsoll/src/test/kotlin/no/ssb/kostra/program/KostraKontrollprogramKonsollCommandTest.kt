@@ -4,12 +4,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.string.shouldContain
 import io.micronaut.configuration.picocli.PicocliRunner
 import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment.CLI
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import no.ssb.kostra.CustomEnvironment
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-@MicronautTest(environments = [CustomEnvironment.DEFAULT])
+@MicronautTest(environments = [CLI])
 class KostraKontrollprogramCommandSpec(
     applicationContext: ApplicationContext
 ) : BehaviorSpec({

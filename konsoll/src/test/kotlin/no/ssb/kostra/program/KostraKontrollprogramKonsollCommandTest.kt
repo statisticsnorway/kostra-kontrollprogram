@@ -29,6 +29,10 @@ class KostraKontrollprogramCommandSpec(
             }
 
             System.setOut(origStream)
+
+            /** Her printes feilmeldingene fra valideringen */
+            /** linjen som starter med [DefaultConstraintViolation{rootBean= */
+            println(baos.toString())
         }
 
         When("other") {

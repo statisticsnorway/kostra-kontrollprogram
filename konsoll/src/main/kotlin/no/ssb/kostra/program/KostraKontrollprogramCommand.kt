@@ -3,7 +3,9 @@ package no.ssb.kostra.program
 import io.micronaut.configuration.picocli.PicocliRunner
 import io.micronaut.validation.validator.Validator
 import jakarta.inject.Inject
+import no.ssb.kostra.extensions.toErrorReportVm
 import no.ssb.kostra.extensions.toKostraArguments
+import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.viewmodel.CompanyIdVm
 import no.ssb.kostra.viewmodel.KostraFormVm
 import picocli.CommandLine.Command
@@ -29,7 +31,7 @@ class KostraKontrollprogramCommand : Runnable {
         }
 
         /** TODO Jon Ole: Putt inn verdier fra argumentene her  */
-        val kostraForm = KostraFormVm(
+        val kostraForm = KostraFormVm( // will pass validation
             aar = Year.now().value,
             skjema = "0G",
             region = "667600",
@@ -38,23 +40,25 @@ class KostraKontrollprogramCommand : Runnable {
             filnavn = "0G.dat"
         )
 
-        val validationErrors = validator.validate(kostraForm).iterator().asSequence().plus(
+        val validationErrors: Map<String, String> = validator.validate(kostraForm).iterator().asSequence().plus(
             /** temp-fix for issues with MN:4.x and validating collections */
             kostraForm.orgnrVirksomhet.flatMap { companyId ->
                 validator.validate(companyId).iterator().asSequence()
             }
-        )
+        ).associate { (it.propertyPath.lastOrNull()?.name ?: "MISSING") to it.message }
 
         if (validationErrors.any()) {
             /** TODO Jon Ole: Presenter validationErrors her  */
+            println(validationErrors)
         } else {
-
             /** TODO #1 Jon Ole: Putt inn verdier fra argumentene her  */
             /** TODO #2 Jon Ole: Se på om toKostraArguments har nok kode */
             /** TODO #3 Jon Ole: Sjekk om fil er input stream */
-            val errorReport = ControlDispatcher.validate(kostraForm.toKostraArguments(PLAIN_TEXT_0G.byteInputStream()))
+            val errorReport: ErrorReport =
+                ControlDispatcher.validate(kostraForm.toKostraArguments(PLAIN_TEXT_0G.byteInputStream()))
 
             /** TODO Jon Ole: Presenter ErrorReport her  */
+            println(errorReport.toErrorReportVm())
         }
     }
 

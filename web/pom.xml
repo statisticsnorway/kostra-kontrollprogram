@@ -25,7 +25,7 @@
     <dependencies>
         <dependency>
             <groupId>no.ssb.kostra</groupId>
-            <artifactId>application-common</artifactId>
+            <artifactId>kostra-application-common</artifactId>
             <version>LOCAL-SNAPSHOT</version>
         </dependency>
 

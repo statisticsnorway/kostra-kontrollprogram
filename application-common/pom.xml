@@ -9,7 +9,7 @@
         <version>LOCAL-SNAPSHOT</version>
     </parent>
 
-    <artifactId>application-common</artifactId>
+    <artifactId>kostra-application-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

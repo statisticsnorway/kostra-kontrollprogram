@@ -7,12 +7,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import no.ssb.kostra.web.viewmodel.KostraErrorCode
-import no.ssb.kostra.web.viewmodel.KostraFormVm
+import no.ssb.kostra.viewmodel.KostraErrorCode
+import no.ssb.kostra.viewmodel.KostraFormVm
 
 @Ignored("Wait until code is more complete")
-class DataFileValidatorTest : BehaviorSpec({
-    val sut = DataFileValidator()
+class ControlRunnerTest : BehaviorSpec({
+    val sut = ControlRunner()
 
     Given("request with non-fatal error") {
         val kostraForm = KostraFormVm(
@@ -24,7 +24,7 @@ class DataFileValidatorTest : BehaviorSpec({
         )
 
         When("validateDataFile with valid content") {
-            val errorReport = sut.validateDataFile(
+            val errorReport = sut.runControls(
                 kostraForm = kostraForm,
                 inputStream = PLAIN_TEXT.toByteArray().inputStream()
             )
@@ -47,7 +47,7 @@ class DataFileValidatorTest : BehaviorSpec({
 
         When("validateDataFile without content") {
             shouldNotThrowAny {
-                sut.validateDataFile(
+                sut.runControls(
                     kostraForm,
                     "".byteInputStream()
                 )

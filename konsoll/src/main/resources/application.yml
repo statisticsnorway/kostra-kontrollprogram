@@ -1,3 +1,101 @@
 micronaut:
   application:
-    name: kostraKontrollprogram
+    name: kostra-kontrollprogram
+
+iu-innstillinger:
+  aarganger: [ 2022,2023 ]
+  skjematyper:
+    - id: 0A
+      tittel: "0A. Bevilgningsregnskap for kommuner"
+    - id: 0AK1
+      tittel: "0AK1. Bevilgningsregnskap - 1. kvartal for kommuner"
+    - id: 0AK2
+      tittel: "0AK2. Bevilgningsregnskap - 2. kvartal for kommuner"
+    - id: 0AK3
+      tittel: "0AK3. Bevilgningsregnskap - 3. kvartal for kommuner"
+    - id: 0AK4
+      tittel: "0AK4. Bevilgningsregnskap - 4. kvartal for kommuner"
+
+    - id: 0B
+      tittel: "0B. Balanseregnskap for kommuner"
+    - id: 0BK1
+      tittel: "0BK1. Balanseregnskap - 1. kvartal for kommuner"
+    - id: 0BK2
+      tittel: "0BK2. Balanseregnskap - 2. kvartal for kommuner"
+    - id: 0BK3
+      tittel: "0BK3. Balanseregnskap - 3. kvartal for kommuner"
+    - id: 0BK4
+      tittel: "0BK4. Balanseregnskap - 4. kvartal for kommuner"
+
+    - id: 0C
+      tittel: "0C. Bevilgningsregnskap for fylkeskommuner"
+    - id: 0CK1
+      tittel: "0CK1. Bevilgningsregnskap - 1. kvartal for fylkeskommune"
+    - id: 0CK2
+      tittel: "0CK2. Bevilgningsregnskap - 2. kvartal for fylkeskommuner"
+    - id: 0CK3
+      tittel: "0CK3. Bevilgningsregnskap - 3. kvartal for fylkeskommuner"
+    - id: 0CK4
+      tittel: "0CK4. Bevilgningsregnskap - 4. kvartal for fylkeskommuner"
+
+    - id: 0D
+      tittel: "0D. Balanseregnskap for fylkeskommuner"
+    - id: 0DK1
+      tittel: "0DK1. Balanseregnskap - 1. kvartal for fylkeskommuner"
+    - id: 0DK2
+      tittel: "0DK2. Balanseregnskap - 2. kvartal for fylkeskommuner"
+    - id: 0DK3
+      tittel: "0DK3. Balanseregnskap - 3. kvartal for fylkeskommuner"
+    - id: 0DK4
+      tittel: "0DK4. Balanseregnskap - 4. kvartal for fylkeskommuner"
+
+    - id: 0F
+      tittel: "0F. Bevilgningsregnskap for kirkelig fellesråd"
+      label-orgnr: Organisasjonsnummer
+    - id: 0G
+      tittel: "0G. Balanseregnskap for kirkelig fellesråd"
+      label-orgnr: Organisasjonsnummer
+    - id: 0I
+      tittel: "0I. Bevilgningsregnskap for kommunale særbedrifter"
+      label-orgnr: Organisasjonsnummer
+    - id: 0J
+      tittel: "0J. Balanseregnskap for kommunale særbedrifter"
+      label-orgnr: Organisasjonsnummer
+    - id: 0K
+      tittel: "0K. Bevilgningsregnskap for fylkeskommunale særbedrifter"
+      label-orgnr: Organisasjonsnummer
+    - id: 0L
+      tittel: "0L. Balanseregnskap for fylkeskommunale særbedrifter"
+      label-orgnr: Organisasjonsnummer
+
+    - id: 0M
+      tittel: "0M. Konsolidert bevilgningsregnskap for kommuner"
+    - id: 0N
+      tittel: "0N. Konsolidert balanseregnskap for kommuner"
+    - id: 0P
+      tittel: "0P. Konsolidert bevilgningsregnskap for fylkeskommuner"
+    - id: 0Q
+      tittel: "0Q. Konsolidert balanseregnskap for fylkeskommuner"
+
+    - id: 0X
+      tittel: "0X. Resultatregnskap for helseforetak"
+      label-orgnr: "Organisasjonsnummer for foretaket"
+      label-orgnr-virksomhetene: "Organisasjonsnummer for virksomhetene"
+
+    - id: 0Y
+      tittel: "0Y. Balanseregnskap for helseforetak"
+    - id: 11CF
+      tittel: "11CF. Kvalifiseringsstønad"
+    - id: 11F
+      tittel: "11F. Sosialhjelp"
+    - id: 15F
+      tittel: "15F. Barnevern"
+
+    - id: 52AF
+      tittel: "52AF. Familievernsaker, klientrapportering"
+    - id: 52BF
+      tittel: "52BF. Gruppeskjema for familievernet"
+    - id: 53F
+      tittel: "53F. Utadrettet virksomhet i familieverntjenesten"
+    - id: 55F
+      tittel: "55F. Meklingssaker i familieverntjenesten"

@@ -17,6 +17,7 @@
         <module>web</module>
         <module>kontroller</module>
         <module>kostra-barnevern</module>
+        <module>application-common</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

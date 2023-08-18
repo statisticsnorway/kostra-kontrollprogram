@@ -1,8 +1,10 @@
-package no.ssb.kostra.web.config
+package no.ssb.kostra.config
 
 import io.micronaut.context.annotation.ConfigurationProperties
-import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
+import io.micronaut.context.annotation.Context
+import no.ssb.kostra.viewmodel.KostraFormTypeVm
 
+@Context
 @ConfigurationProperties("iu-innstillinger")
 data class UiConfig(
     var aarganger: List<Int> = emptyList(),

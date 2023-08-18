@@ -16,13 +16,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.ConstraintViolationException
+import no.ssb.kostra.config.UiConfig
 import no.ssb.kostra.felles.git.GitProperties
-import no.ssb.kostra.web.config.UiConfig
+import no.ssb.kostra.viewmodel.FileReportVm
+import no.ssb.kostra.viewmodel.KostraFormVm
+import no.ssb.kostra.viewmodel.UiDataVm
 import no.ssb.kostra.web.error.ApiError
-import no.ssb.kostra.web.service.DataFileValidator
-import no.ssb.kostra.web.viewmodel.FileReportVm
-import no.ssb.kostra.web.viewmodel.KostraFormVm
-import no.ssb.kostra.web.viewmodel.UiDataVm
+import no.ssb.kostra.web.service.ControlRunner
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
 
@@ -32,7 +32,7 @@ import java.io.ByteArrayOutputStream
 @Controller("/api")
 open class ApiController(
     private val uiConfig: UiConfig,
-    private val dataFileValidator: DataFileValidator,
+    private val controlRunner: ControlRunner,
     private val objectMapper: ObjectMapper,
     private val validator: Validator,
     private val gitProperties: GitProperties
@@ -71,6 +71,7 @@ open class ApiController(
         /**  we'll have to deserialize and validate our self because of multipart request */
         val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
+            println("Validation errors: ${iterator().asSequence().toSet()}")
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 
@@ -78,6 +79,7 @@ open class ApiController(
         kostraForm.orgnrVirksomhet.flatMap { companyId ->
             validator.validate(companyId).iterator().asSequence()
         }.takeIf { it.isNotEmpty() }?.let {
+            println("Validation errors: ${it.toSet()}")
             throw ConstraintViolationException(it.toSet())
         }
 
@@ -87,7 +89,7 @@ open class ApiController(
         return Mono.from(file.transferTo(outputStream)).handle { success, sink ->
             if (success) sink.next(
                 HttpResponse.ok(
-                    dataFileValidator.validateDataFile(
+                    controlRunner.runControls(
                         kostraForm,
                         outputStream.toByteArray().inputStream()
                     )

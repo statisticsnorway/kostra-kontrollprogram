@@ -1,22 +1,16 @@
-package no.ssb.kostra.web.extension
+package no.ssb.kostra.extension
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.controlprogram.ArgumentConstants.COMPANY_ORGNR_ABBR
-import no.ssb.kostra.controlprogram.ArgumentConstants.REGION_ABBR
-import no.ssb.kostra.controlprogram.ArgumentConstants.SCHEMA_ABBR
-import no.ssb.kostra.controlprogram.ArgumentConstants.UNIT_ORGNR_ABBR
-import no.ssb.kostra.controlprogram.ArgumentConstants.YEAR_ABBR
+import no.ssb.kostra.controlprogram.ArgumentConstants.*
 import no.ssb.kostra.controlprogram.Arguments
-import no.ssb.kostra.felles.Constants.CRITICAL_ERROR
-import no.ssb.kostra.felles.Constants.NORMAL_ERROR
-import no.ssb.kostra.felles.Constants.NO_ERROR
-import no.ssb.kostra.felles.Constants.PARAMETER_ERROR
-import no.ssb.kostra.felles.Constants.SYSTEM_ERROR
-import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import no.ssb.kostra.extensions.toKostraErrorCode
+import no.ssb.kostra.extensions.toReportRequestVm
+import no.ssb.kostra.felles.Constants.*
+import no.ssb.kostra.viewmodel.KostraErrorCode
 import java.time.Year
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({

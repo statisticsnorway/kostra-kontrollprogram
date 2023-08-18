@@ -2,57 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>no.ssb.kostra</groupId>
         <artifactId>kostra-kontrollprogram-parent</artifactId>
         <version>LOCAL-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kostra-kontrollprogram</artifactId>
+    <artifactId>application-common</artifactId>
 
     <properties>
-        <revision>LOCAL-SNAPSHOT</revision>
-        <finalName>${project.artifactId}-${revision}</finalName>
-
-        <micronaut.aot.enabled>false</micronaut.aot.enabled>
-        <micronaut.aot.packageName>no.ssb.kostra.program.aot.generated</micronaut.aot.packageName>
-
-        <exec.mainClass>no.ssb.kostra.program.KostraKontrollprogramCommand</exec.mainClass>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>no.ssb.kostra</groupId>
-            <artifactId>application-common</artifactId>
+            <artifactId>kostra-kontroller</artifactId>
             <version>LOCAL-SNAPSHOT</version>
         </dependency>
 
-        <!-- for reading application.yml -->
         <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jackson-databind</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.picocli</groupId>
-            <artifactId>micronaut-picocli</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micronaut.test</groupId>
-            <artifactId>micronaut-test-kotest5</artifactId>
-            <scope>test</scope>
+            <groupId>io.micronaut.validation</groupId>
+            <artifactId>micronaut-validation</artifactId>
         </dependency>
     </dependencies>
 
@@ -62,14 +41,6 @@
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
         <plugins>
-            <plugin>
-                <groupId>io.micronaut.maven</groupId>
-                <artifactId>micronaut-maven-plugin</artifactId>
-                <configuration>
-                    <configFile>aot-${packaging}.properties</configFile>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -104,20 +75,10 @@
                                     <artifactId>micronaut-validation</artifactId>
                                     <version>${micronaut.validation.version}</version>
                                 </path>
-                                <path>
-                                    <groupId>info.picocli</groupId>
-                                    <artifactId>picocli-codegen</artifactId>
-                                    <version>${picocli.version}</version>
-                                </path>
-                                <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-graal</artifactId>
-                                    <version>${micronaut.core.version}</version>
-                                </path>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
-                                <annotationProcessorArg>micronaut.processing.group=no.ssb.kostra</annotationProcessorArg>
-                                <annotationProcessorArg>micronaut.processing.module=kostraKontrollprogram</annotationProcessorArg>
+                                <annotationProcessorArg>micronaut.processing.group=no.ssb
+                                </annotationProcessorArg>
                             </annotationProcessorArgs>
                         </configuration>
                     </execution>
@@ -145,17 +106,12 @@
                                 <path>
                                     <groupId>io.micronaut</groupId>
                                     <artifactId>micronaut-inject-java</artifactId>
-                                    <version>${micronaut.core.version}</version>
+                                    <version>${micronaut.version}</version>
                                 </path>
                                 <path>
                                     <groupId>io.micronaut.validation</groupId>
                                     <artifactId>micronaut-validation</artifactId>
                                     <version>${micronaut.validation.version}</version>
-                                </path>
-                                <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-graal</artifactId>
-                                    <version>${micronaut.core.version}</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>
@@ -183,42 +139,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>github</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.6.0</version>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <outputDirectory>${project.build.directory}/jar</outputDirectory>
-                            <descriptors>
-                                <descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>
-                            </descriptors>
-                            <archive>
-                                <manifest>
-                                    <mainClass>no.ssb.kostra.program.KostraKontrollprogramCommand</mainClass>
-                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>standalone</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

@@ -41,6 +41,10 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>io.micronaut.validation</groupId>
+            <artifactId>micronaut-validation</artifactId>
+        </dependency>
+        <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
         </dependency>
@@ -105,6 +109,11 @@
                                     <version>${micronaut.core.version}</version>
                                 </path>
                                 <path>
+                                    <groupId>io.micronaut.validation</groupId>
+                                    <artifactId>micronaut-validation</artifactId>
+                                    <version>${micronaut.validation.version}</version>
+                                </path>
+                                <path>
                                     <groupId>info.picocli</groupId>
                                     <artifactId>picocli-codegen</artifactId>
                                     <version>${picocli.version}</version>
@@ -146,6 +155,11 @@
                                     <groupId>io.micronaut</groupId>
                                     <artifactId>micronaut-inject-java</artifactId>
                                     <version>${micronaut.core.version}</version>
+                                </path>
+                                <path>
+                                    <groupId>io.micronaut.validation</groupId>
+                                    <artifactId>micronaut-validation</artifactId>
+                                    <version>${micronaut.validation.version}</version>
                                 </path>
                                 <path>
                                     <groupId>io.micronaut</groupId>

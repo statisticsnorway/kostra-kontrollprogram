@@ -28,6 +28,8 @@ class KostraKontrollprogramCommand : Runnable {
             println("Hi!")
 
             val validationErrors = validator.validate(MyTestDto(name = "", aar = 2021))
+                .associate { (it.propertyPath.lastOrNull()?.name ?: "MISSING") to it.message }
+
             println(validationErrors)
         }
     }
@@ -41,8 +43,8 @@ class KostraKontrollprogramCommand : Runnable {
 
     @Introspected
     private data class MyTestDto(
-        @field:NotBlank val
-        name: String,
+        @field:NotBlank
+        val name: String,
 
         @field:Min(value = 2022, message = "År kan ikke være mindre enn {value}")
         val aar: Int

@@ -91,7 +91,7 @@ jobs:
         inputs:
           goals: 'deploy'
           mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -am -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
+          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
           mavenPomFile: 'pom.xml'
           javaHomeOption: 'JDKVersion'
           jdkArchitectureOption: 'x64'

@@ -42,7 +42,8 @@
         <sonar.exclusions>
             **/Application.kt,
             **/node_modules/**/*,
-            **/KostraRecordExtensionsGenerics.kt
+            **/KostraRecordExtensionsGenerics.kt,
+            **/viewmodel/**/*
         </sonar.exclusions>
 
         <!-- removes [WARNING] Unable to locate Source XRef to link to - DISABLED -->

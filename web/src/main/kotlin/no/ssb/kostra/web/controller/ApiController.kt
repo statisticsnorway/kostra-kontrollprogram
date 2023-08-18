@@ -84,17 +84,16 @@ open class ApiController(
         /** target stream, file content will end up here */
         val outputStream = ByteArrayOutputStream()
 
-        return Mono.from(file.transferTo(outputStream))
-            .map { success: Boolean ->
-                if (success) {
-                    HttpResponse.ok(
-                        dataFileValidator.validateDataFile(
-                            kostraForm,
-                            outputStream.toByteArray().inputStream()
-                        )
+        return Mono.from(file.transferTo(outputStream)).handle { success, sink ->
+            if (success) sink.next(
+                HttpResponse.ok(
+                    dataFileValidator.validateDataFile(
+                        kostraForm,
+                        outputStream.toByteArray().inputStream()
                     )
-                } else throw RuntimeException("Failed to read file at backend")
-            }
+                )
+            ) else sink.error(RuntimeException("Failed to read file at backend"))
+        }
     }
 
     @Get(

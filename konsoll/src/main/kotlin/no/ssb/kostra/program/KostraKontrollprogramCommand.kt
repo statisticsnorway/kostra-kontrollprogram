@@ -3,7 +3,6 @@ package no.ssb.kostra.program
 import io.micronaut.configuration.picocli.PicocliRunner
 import io.micronaut.validation.validator.Validator
 import jakarta.inject.Inject
-import no.ssb.kostra.extensions.toErrorReportVm
 import no.ssb.kostra.extensions.toKostraArguments
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.felles.git.GitProperties
@@ -64,7 +63,7 @@ class KostraKontrollprogramCommand : Runnable {
                 ControlDispatcher.validate(kostraForm.toKostraArguments(PLAIN_TEXT_0G.byteInputStream()))
 
             /** TODO Jon Ole: Presenter ErrorReport her  */
-            println(errorReport.toErrorReportVm())
+            println(errorReport.generateReport())
         }
     }
 

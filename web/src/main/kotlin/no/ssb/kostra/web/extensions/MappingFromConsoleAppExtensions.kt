@@ -1,4 +1,4 @@
-package no.ssb.kostra.extensions
+package no.ssb.kostra.web.extensions
 
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.Constants.*

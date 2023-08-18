@@ -1,4 +1,4 @@
-package no.ssb.kostra.extension
+package no.ssb.kostra.web.extension
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
@@ -7,8 +7,8 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.controlprogram.ArgumentConstants.*
 import no.ssb.kostra.controlprogram.Arguments
-import no.ssb.kostra.extensions.toKostraErrorCode
-import no.ssb.kostra.extensions.toReportRequestVm
+import no.ssb.kostra.web.extensions.toKostraErrorCode
+import no.ssb.kostra.web.extensions.toReportRequestVm
 import no.ssb.kostra.felles.Constants.*
 import no.ssb.kostra.viewmodel.KostraErrorCode
 import java.time.Year

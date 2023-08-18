@@ -18,6 +18,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import no.ssb.kostra.CustomEnvironment
 import no.ssb.kostra.viewmodel.CompanyIdVm
 import no.ssb.kostra.viewmodel.FileReportVm
 import no.ssb.kostra.viewmodel.KostraFormVm
@@ -29,7 +30,7 @@ import java.io.File
 import java.io.FileWriter
 import java.time.Year
 
-@MicronautTest
+@MicronautTest(environments = [CustomEnvironment.DEFAULT])
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,
     objectMapper: ObjectMapper

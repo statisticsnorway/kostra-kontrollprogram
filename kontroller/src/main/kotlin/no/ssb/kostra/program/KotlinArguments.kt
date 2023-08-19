@@ -12,8 +12,7 @@ data class KotlinArguments(
     val foretaknr: String = BLANK_CHAR.repeat(9),
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
-    val inputFileContent: String = BLANK_CHAR,
-    val inputFileStream: InputStream? = null
+    val inputFileContent: String = BLANK_CHAR
 ) {
     init {
         require(skjema.isNotBlank()) {

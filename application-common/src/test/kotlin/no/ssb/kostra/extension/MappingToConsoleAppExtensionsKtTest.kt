@@ -4,10 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.extensions.NAME_FALLBACK_VALUE
-import no.ssb.kostra.extensions.toKostraArguments
-import no.ssb.kostra.viewmodel.CompanyIdVm
-import no.ssb.kostra.viewmodel.KostraFormVm
+import no.ssb.kostra.common.extensions.NAME_FALLBACK_VALUE
+import no.ssb.kostra.common.extensions.toKostraArguments
+import no.ssb.kostra.common.viewmodel.CompanyIdVm
+import no.ssb.kostra.common.viewmodel.KostraFormVm
 import java.time.Year
 
 class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({

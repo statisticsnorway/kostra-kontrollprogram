@@ -16,11 +16,11 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.ConstraintViolationException
-import no.ssb.kostra.config.UiConfig
+import no.ssb.kostra.common.config.UiConfig
+import no.ssb.kostra.common.viewmodel.FileReportVm
+import no.ssb.kostra.common.viewmodel.KostraFormVm
+import no.ssb.kostra.common.viewmodel.UiDataVm
 import no.ssb.kostra.felles.git.GitProperties
-import no.ssb.kostra.viewmodel.FileReportVm
-import no.ssb.kostra.viewmodel.KostraFormVm
-import no.ssb.kostra.viewmodel.UiDataVm
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.service.ControlRunner
 import reactor.core.publisher.Mono

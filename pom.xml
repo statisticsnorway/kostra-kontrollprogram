@@ -43,7 +43,7 @@
             **/Application.kt,
             **/node_modules/**/*,
             **/KostraRecordExtensionsGenerics.kt,
-            **/viewmodel/**/*
+            **/kostra/common/**/*
         </sonar.exclusions>
 
         <!-- removes [WARNING] Unable to locate Source XRef to link to - DISABLED -->

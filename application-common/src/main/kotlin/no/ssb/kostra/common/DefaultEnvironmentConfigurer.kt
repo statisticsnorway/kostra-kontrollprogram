@@ -1,4 +1,4 @@
-package no.ssb.kostra
+package no.ssb.kostra.common
 
 import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.context.ApplicationContextConfigurer

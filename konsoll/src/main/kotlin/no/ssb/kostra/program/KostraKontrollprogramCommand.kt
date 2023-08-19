@@ -3,11 +3,11 @@ package no.ssb.kostra.program
 import io.micronaut.configuration.picocli.PicocliRunner
 import io.micronaut.validation.validator.Validator
 import jakarta.inject.Inject
-import no.ssb.kostra.extensions.toKostraArguments
+import no.ssb.kostra.common.extensions.toKostraArguments
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.felles.git.GitProperties
-import no.ssb.kostra.viewmodel.CompanyIdVm
-import no.ssb.kostra.viewmodel.KostraFormVm
+import no.ssb.kostra.common.viewmodel.CompanyIdVm
+import no.ssb.kostra.common.viewmodel.KostraFormVm
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import java.time.Year

@@ -1,4 +1,4 @@
-package no.ssb.kostra.viewmodel
+package no.ssb.kostra.common.viewmodel
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import io.micronaut.core.annotation.Introspected

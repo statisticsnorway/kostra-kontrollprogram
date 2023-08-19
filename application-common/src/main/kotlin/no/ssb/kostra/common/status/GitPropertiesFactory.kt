@@ -1,4 +1,4 @@
-package no.ssb.kostra.status
+package no.ssb.kostra.common.status
 
 import io.micronaut.context.annotation.Factory
 import jakarta.inject.Singleton

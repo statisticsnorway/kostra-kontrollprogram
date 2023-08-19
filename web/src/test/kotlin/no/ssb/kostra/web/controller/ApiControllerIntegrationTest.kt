@@ -19,10 +19,10 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import no.ssb.kostra.viewmodel.CompanyIdVm
-import no.ssb.kostra.viewmodel.FileReportVm
-import no.ssb.kostra.viewmodel.KostraFormVm
-import no.ssb.kostra.viewmodel.UiDataVm
+import no.ssb.kostra.common.viewmodel.CompanyIdVm
+import no.ssb.kostra.common.viewmodel.FileReportVm
+import no.ssb.kostra.common.viewmodel.KostraFormVm
+import no.ssb.kostra.common.viewmodel.UiDataVm
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH

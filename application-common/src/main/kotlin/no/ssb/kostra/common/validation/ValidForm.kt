@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation
+package no.ssb.kostra.common.validation
 
 import jakarta.validation.Constraint
 

@@ -17,7 +17,6 @@ import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors
 import java.time.Year
@@ -131,16 +130,16 @@ class BarnevernValidatorTest : BehaviorSpec({
         ) { description, avgiver, individList, destroyXml, expectedResult, expectedNumberOfControls ->
 
             When(description) {
-                val validationResult = validateBarnevern(
+                val validationResult = BarnevernValidator(
                     argumentsInTest.copy(
-                        inputFileStream = marshallInstance(
+                        inputFileContent = marshallInstance(
                             KostraBarnevernType(
                                 avgiver = avgiver,
                                 individ = individList
                             )
-                        ).let { if (destroyXml) it.substring(5, it.length) else it }.byteInputStream()
+                        ).let { if (destroyXml) it.substring(5, it.length) else it }
                     )
-                )
+                ).validate()
 
                 Then("result should be as expected") {
                     assertSoftly(validationResult) {
@@ -152,9 +151,9 @@ class BarnevernValidatorTest : BehaviorSpec({
         }
 
         When("avgiver missing") {
-            val validationResult = validateBarnevern(
-                argumentsInTest.copy(inputFileStream = marshallInstance(kostraIndividInTest).byteInputStream())
-            )
+            val validationResult = BarnevernValidator(
+                argumentsInTest.copy(inputFileContent = marshallInstance(kostraIndividInTest))
+            ).validate()
 
             Then("result should be as expected") {
                 assertSoftly(validationResult) {
@@ -174,7 +173,7 @@ class BarnevernValidatorTest : BehaviorSpec({
         every { streamHandler.handleStream(any(), any(), any(), any()) } answers { throw NullPointerException() }
 
         When("streamHandler throws exception") {
-            val result = validateBarnevern(argumentsInTest, streamHandler)
+            val result = BarnevernValidator(argumentsInTest).validateBarnevern(argumentsInTest, streamHandler)
 
             Then("reportEntries should be as expected, and numberOfControls should be 0") {
                 result.shouldNotBeNull()

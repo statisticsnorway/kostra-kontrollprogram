@@ -2,12 +2,12 @@ package no.ssb.kostra.area.famvern.famvern52a
 
 import no.ssb.kostra.area.famvern.FamilievernConstants.kontorFylkeRegionMappingList
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.famvern.famvern52a.*
 
-class Familievern52aMain(arguments: KotlinArguments) : Validator(arguments) {
+class Familievern52aMain(arguments: KotlinArguments) : PositionedFileValidator(arguments) {
     override val fieldDefinitions = Familievern52aFieldDefinitions
 
     override val fatalRules: List<AbstractRule<List<String>>> = listOf(

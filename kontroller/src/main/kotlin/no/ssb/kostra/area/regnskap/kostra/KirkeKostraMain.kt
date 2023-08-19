@@ -5,7 +5,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kirkekostra.*
@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 class KirkeKostraMain(
     arguments: KotlinArguments
-) : Validator(arguments) {
+) : PositionedFileValidator(arguments) {
 
     private val funksjoner = listOf(
         //@formatter:off

@@ -82,7 +82,6 @@ class ConversionUtilsTest : BehaviorSpec({
                         foretaknr shouldBe arguments.foretaknr
                         harVedlegg shouldBe arguments.harVedlegg()
                         isRunAsExternalProcess shouldBe arguments.isRunAsExternalProcess
-                        inputFileStream shouldBe arguments.inputContentAsInputStream
                         inputFileContent shouldBe expectedContent
                     }
                 }

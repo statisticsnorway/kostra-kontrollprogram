@@ -3,7 +3,7 @@ package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.*
@@ -11,7 +11,7 @@ import no.ssb.kostra.validation.rule.sosial.rule.*
 
 class KvalifiseringMain(
     arguments: KotlinArguments
-) : Validator(arguments) {
+) : PositionedFileValidator(arguments) {
     override val fieldDefinitions = KvalifiseringFieldDefinitions
 
     override val fatalRules = listOf(

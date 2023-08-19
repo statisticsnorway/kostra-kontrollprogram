@@ -13,7 +13,6 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_7_COL
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_8_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_9_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
@@ -39,7 +38,6 @@ class Rule036BidragSum : AbstractRule<List<KostraRecord>>(
             ).copy(
                 caseworker = it.first[SAKSBEHANDLER_COL_NAME],
                 journalId = it.first[PERSON_JOURNALNR_COL_NAME],
-                individId = it.first[PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 

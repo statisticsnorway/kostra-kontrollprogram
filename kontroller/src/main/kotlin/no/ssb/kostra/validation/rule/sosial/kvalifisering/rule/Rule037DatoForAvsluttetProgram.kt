@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
@@ -33,6 +34,9 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
                             "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for " +
                             "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+                ).copy(
+                    caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                    journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
                 )
             else
                 createValidationReportEntry(
@@ -40,6 +44,9 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
                             "(${it[AVSL_DATO_COL_NAME]}), skal være blankt dersom det er krysset av for " +
                             "svaralternativ $codeListThatDisallowsDate under feltet for 'Hva er status for deltakelsen " +
                             "i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+                ).copy(
+                    caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                    journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
                 )
         }.ifEmpty { null }
 

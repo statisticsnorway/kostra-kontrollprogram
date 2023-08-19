@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.PERMISJON
@@ -25,6 +26,9 @@ class Rule030HarVarighetMenManglerKvalifiseringssum : AbstractRule<List<KostraRe
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +
                         "(${it[KVP_STONAD_COL_NAME]}) i løpet av " +
                         "året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

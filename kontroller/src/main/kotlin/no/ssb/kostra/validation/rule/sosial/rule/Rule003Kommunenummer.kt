@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
@@ -26,7 +25,6 @@ class Rule003Kommunenummer : AbstractRule<List<KostraRecord>>(
             ).copy(
                 caseworker = it[SAKSBEHANDLER_COL_NAME],
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
-                individId = it[PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

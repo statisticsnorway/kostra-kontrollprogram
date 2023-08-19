@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.program.KostraRecord
@@ -25,6 +26,9 @@ class Rule031HarKvalifiseringssumMenManglerVarighet : AbstractRule<List<KostraRe
                 "Deltakeren har fått kvalifiseringsstønad (${it[KVP_STONAD_COL_NAME]}) " +
                         "i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er " +
                         "obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

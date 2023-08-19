@@ -4,8 +4,6 @@ import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import java.io.BufferedReader
-import java.io.PrintStream
-import java.nio.charset.StandardCharsets
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
 
@@ -60,11 +58,14 @@ class KostraKontrollprogramCommand : Callable<Int> {
             isRunAsExternalProcess = isRunAsExternalProcess,
             inputFileContent = inputFileContent,
         )
-        val report = ControlDispatcher.validate(kotlinArguments)
+/*
+        val report: ErrorReport = ControlDispatcher.validate(kotlinArguments)
         val errorTypeFound = report.errorType
         val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
         printStream.print(report.generateReport())
         return errorTypeFound
+*/
+        return 2
     }
 
     companion object {

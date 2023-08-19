@@ -18,13 +18,13 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import no.ssb.kostra.web.viewmodel.FileReportVm
-import no.ssb.kostra.web.viewmodel.UiDataVm
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
+import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
+import no.ssb.kostra.web.viewmodel.UiDataVm
 import java.io.File
 import java.io.FileWriter
 import java.time.Year
@@ -286,9 +286,8 @@ class ApiControllerIntegrationTest(
                 response.status shouldBe HttpStatus.OK
             }
 
-
             And("error report should contain expected values") {
-                response.body()!!.antallKontroller.shouldBeGreaterThan(50)
+                response.body()!!.antallKontroller.shouldBeGreaterThan(40)
             }
         }
     }

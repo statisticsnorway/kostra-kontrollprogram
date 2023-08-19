@@ -1,4 +1,4 @@
-package no.ssb.kostra.extension
+package no.ssb.kostra.common.extension
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll

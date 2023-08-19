@@ -5,7 +5,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule025KombinasjonDriftKontoklasseArt
@@ -14,7 +14,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteri
 
 class KvartalKostraMain(
     arguments: KotlinArguments
-) : Validator(arguments) {
+) : PositionedFileValidator(arguments) {
     private val bevilgningRegnskap = listOf("0AK1", "0AK2", "0AK3", "0AK4", "0CK1", "0CK2", "0CK3", "0CK4")
     private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
 

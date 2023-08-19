@@ -35,12 +35,12 @@ class Rule038DufNummerTest : BehaviorSpec({
         internal val fnr = RandomUtils.generateRandomSsn(
             RuleTestData.argumentsInTest.aargang.toInt() - 50,
             RuleTestData.argumentsInTest.aargang.toInt() - 20
-        ).also { println(it) }
+        )
 
         internal val dufnr = RandomUtils.generateRandomDuf(
             RuleTestData.argumentsInTest.aargang.toInt() - 50,
             RuleTestData.argumentsInTest.aargang.toInt() - 20
-        ).also { println(it) }
+        )
 
         private fun kostraRecordInTest(
             fnr: String,

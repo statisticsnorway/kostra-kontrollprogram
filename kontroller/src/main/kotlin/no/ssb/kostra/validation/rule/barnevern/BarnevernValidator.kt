@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule.barnevern
 import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.ValidationResult
+import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
@@ -16,10 +17,11 @@ import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.avgiverXmlElementHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.individElementHandler
 
-object BarnevernValidator {
+class BarnevernValidator(
+    override val arguments: KotlinArguments
+) : Validator(arguments) {
 
-    @JvmStatic
-    fun validateBarnevern(arguments: KotlinArguments) = validateBarnevern(
+    override fun validate(): ValidationResult = validateBarnevern(
         arguments = arguments,
         streamHandler = DefaultXmlStreamHandler(
             avgiverXmlElementHandler,
@@ -34,7 +36,7 @@ object BarnevernValidator {
         var avgiverCount = 0
         var individCount = 0
 
-        arguments.inputFileStream.use { fileStream ->
+        arguments.getInputContentAsInputStream().use { fileStream ->
             val reportEntries = mutableListOf<ValidationReportEntry>()
 
             val seenFodselsnummer = mutableMapOf<String, MutableList<String>>()
@@ -43,7 +45,7 @@ object BarnevernValidator {
             try {
                 reportEntries.addAll(
                     streamHandler.handleStream(
-                        fileStream = fileStream!!,
+                        fileStream = fileStream,
                         arguments = arguments,
                         { _ -> avgiverCount++ }
                     ) { kostraIndivid: KostraIndividType ->

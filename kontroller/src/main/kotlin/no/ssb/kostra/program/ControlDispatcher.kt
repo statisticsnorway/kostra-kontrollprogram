@@ -13,60 +13,59 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpMain
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.ErrorReport
 import no.ssb.kostra.program.util.ConversionUtils
-import no.ssb.kostra.program.util.ConversionUtils.fromArguments
 import no.ssb.kostra.validation.ValidationResult
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator.validateBarnevern
+import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator
 
 object ControlDispatcher {
-    fun validate(arguments: Arguments): ErrorReport {
-        val validationResult = when (arguments.skjema) {
+    fun validate(kotlinArguments: KotlinArguments): ErrorReport {
+        val validationResult = when (kotlinArguments.skjema) {
             in "0AK1", "0AK2", "0AK3", "0AK4",
             "0BK1", "0BK2", "0BK3", "0BK4",
             "0CK1", "0CK2", "0CK3", "0CK4",
             "0DK1", "0DK2", "0DK3", "0DK4" ->
-                KvartalKostraMain(fromArguments(arguments, true)).validate()
+                KvartalKostraMain(kotlinArguments).validate()
 
             in "0A", "0B", "0C", "0D",
             "0I", "0J", "0K", "0L",
             "0M", "0N", "0P", "0Q" ->
-                KommuneKostraMain(fromArguments(arguments, true)).validate()
+                KommuneKostraMain(kotlinArguments).validate()
 
             in "0F", "0G" ->
-                KirkeKostraMain(fromArguments(arguments, true)).validate()
+                KirkeKostraMain(kotlinArguments).validate()
 
             in "0X", "0Y" ->
-                HelseForetakMain(fromArguments(arguments, true)).validate()
+                HelseForetakMain(kotlinArguments).validate()
 
             "11F" ->
-                SosialhjelpMain(fromArguments(arguments, true)).validate()
+                SosialhjelpMain(kotlinArguments).validate()
 
             "11CF" ->
-                KvalifiseringMain(fromArguments(arguments, true)).validate()
+                KvalifiseringMain(kotlinArguments).validate()
 
             "15F" ->
-                validateBarnevern(fromArguments(arguments, false))
+                BarnevernValidator(kotlinArguments).validate()
 
             "52AF" ->
-                Familievern52aMain(fromArguments(arguments, true)).validate()
+                Familievern52aMain(kotlinArguments).validate()
 
             "52BF" ->
-                Familievern52bMain(fromArguments(arguments, true)).validate()
+                Familievern52bMain(kotlinArguments).validate()
 
             "53F" ->
-                Familievern53Main(fromArguments(arguments, true)).validate()
+                Familievern53Main(kotlinArguments).validate()
 
             "55F" ->
-                Familievern55Main(fromArguments(arguments, true)).validate()
+                Familievern55Main(kotlinArguments).validate()
 
             else -> ValidationResult(
                 reportEntries = listOf(
                     ValidationReportEntry(
                         severity = Severity.FATAL,
                         ruleName = "Ukjent skjema",
-                        messageText = "Korrigér filutrekket. Forventet '${arguments.skjema}', " +
-                                "men fant ikke noe. Avslutter...."
+                        messageText = "Korrigér filutrekket. Skjema '${kotlinArguments.skjema}' " +
+                                "er ukjent for kostra-kontrollprogram. Avslutter...."
 
 
                     )
@@ -75,7 +74,20 @@ object ControlDispatcher {
             )
         }
 
-        val errorReport = ErrorReport(arguments)
+        val errorReport = ErrorReport(
+            Arguments(
+                kotlinArguments.skjema,
+                kotlinArguments.aargang,
+                kotlinArguments.kvartal,
+                kotlinArguments.region,
+                kotlinArguments.navn,
+                kotlinArguments.orgnr,
+                kotlinArguments.foretaknr,
+                kotlinArguments.harVedlegg,
+                kotlinArguments.isRunAsExternalProcess,
+                mutableListOf("")
+            )
+        )
         validationResult.reportEntries
             .map {
                 ConversionUtils.toErrorReportEntry(it)

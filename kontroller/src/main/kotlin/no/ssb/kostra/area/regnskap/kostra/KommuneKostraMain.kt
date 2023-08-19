@@ -6,7 +6,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
@@ -14,7 +14,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 class KommuneKostraMain(
     arguments: KotlinArguments
-) : Validator(arguments) {
+) : PositionedFileValidator(arguments) {
     private val bevilgningRegnskap = listOf("0A", "0C", "0I", "0K", "0M", "0P")
     private val balanseRegnskap = listOf("0B", "0D", "0J", "0L", "0N", "0Q")
 

@@ -23,7 +23,7 @@ class ArgumentsTest : BehaviorSpec({
             val result = sut.toString()
 
             Then("result should formatted as expected") {
-                result shouldBe """KotlinArguments(skjema=S, aargang=YYYY, kvartal=K, region=RRRR, navn=NNNNN, orgnr=987654321, foretaknr=876543210, harVedlegg=true, isRunAsExternalProcess=false, inputFileContent=record1, inputFileStream=null)"""
+                result shouldBe """KotlinArguments(skjema=S, aargang=YYYY, kvartal=K, region=RRRR, navn=NNNNN, orgnr=987654321, foretaknr=876543210, harVedlegg=true, isRunAsExternalProcess=false, inputFileContent=record1)"""
             }
         }
 
@@ -37,7 +37,7 @@ class ArgumentsTest : BehaviorSpec({
             val result = sut.toString()
 
             Then("result should formatted as expected") {
-                result shouldBe """KotlinArguments(skjema=S, aargang=YYYY, kvartal= , region=RRRR, navn=Uoppgitt, orgnr=         , foretaknr=         , harVedlegg=true, isRunAsExternalProcess=false, inputFileContent= , inputFileStream=null)"""
+                result shouldBe """KotlinArguments(skjema=S, aargang=YYYY, kvartal= , region=RRRR, navn=Uoppgitt, orgnr=         , foretaknr=         , harVedlegg=true, isRunAsExternalProcess=false, inputFileContent= )"""
             }
         }
     }

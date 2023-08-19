@@ -47,25 +47,22 @@ class UtilsTest : BehaviorSpec({
             )
         ).asList()
 
+
         When("getting rows and columns of valid parameters") {
-            val kostraRecordList = Familievern55TestUtils.familievernRecordInTest(
-                mapOf(
-                    Familievern55ColumnNames.MEKLING_SEP_1_COL_NAME to "1",
-                    Familievern55ColumnNames.MEKLING_SEP_TOT_COL_NAME to "1",
-                    Familievern55ColumnNames.MEKLING_TOT_1_COL_NAME to "1",
-                    Familievern55ColumnNames.MEKLING_TOT_ALLE_COL_NAME to "1",
-                )
-            ).asList()
 
             Then("a 2D-list is made") {
-                val combined = validateMatrix(kostraRecordList, fieldList, columnSize)
-                println(combined)
+                val combined = validateMatrix(
+                    kostraRecordList,
+                    fieldList,
+                    columnSize
+                )
+
                 combined.size shouldBe 0
             }
         }
 
         When("getting rows and columns of invalid parameters") {
-            val kostraRecordList = Familievern55TestUtils.familievernRecordInTest(
+            val kostraRecordListWithInvalidValues = Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
                     Familievern55ColumnNames.MEKLING_SEP_1_COL_NAME to "1",
                     Familievern55ColumnNames.MEKLING_SEP_TOT_COL_NAME to "1",
@@ -75,17 +72,25 @@ class UtilsTest : BehaviorSpec({
             ).asList()
 
             Then("a 2D-list is made") {
-                val combined = validateMatrix(kostraRecordList, fieldList, columnSize)
-                println(combined)
+                val combined = validateMatrix(
+                    kostraRecordListWithInvalidValues,
+                    fieldList,
+                    columnSize
+                )
+
                 combined.size shouldBe 2
             }
         }
 
         When("invalid parameters") {
-
+            val invalidFieldList = fieldList.dropLast(1)
             Then("get an IndexOutOfBoundsException") {
                 shouldThrow<IndexOutOfBoundsException> {
-                    validateMatrix(kostraRecordList, fieldList.dropLast(1), columnSize)
+                    validateMatrix(
+                        kostraRecordList,
+                        invalidFieldList,
+                        columnSize
+                    )
                 }
             }
         }

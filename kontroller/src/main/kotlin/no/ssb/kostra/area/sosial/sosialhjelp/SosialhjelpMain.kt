@@ -1,12 +1,12 @@
 package no.ssb.kostra.area.sosial.sosialhjelp
 
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.Validator
+import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.sosial.rule.*
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule.*
 
-class SosialhjelpMain(arguments: KotlinArguments) : Validator(arguments) {
+class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(arguments) {
     override val fieldDefinitions = SosialhjelpFieldDefinitions
 
     override val fatalRules = listOf(

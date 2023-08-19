@@ -36,7 +36,6 @@ object ConversionUtils {
         foretaknr = arguments.foretaknr,
         harVedlegg = arguments.harVedlegg(),
         isRunAsExternalProcess = arguments.isRunAsExternalProcess,
-        inputFileContent = if (contentAsString) arguments.inputContentAsStringList.joinToString("\n") else "",
-        inputFileStream = if (contentAsString) null else arguments.inputContentAsInputStream
+        inputFileContent = if (contentAsString) arguments.inputContentAsStringList.joinToString("\n") else ""
     )
 }

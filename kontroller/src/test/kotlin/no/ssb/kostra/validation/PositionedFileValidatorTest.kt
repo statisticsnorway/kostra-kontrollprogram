@@ -8,10 +8,10 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.rule.AbstractRule
 
-class ValidatorTest : BehaviorSpec({
+class PositionedFileValidatorTest : BehaviorSpec({
 
     Given("Validator with empty FieldDefinitions") {
-        val sut = object : Validator(
+        val sut = object : PositionedFileValidator(
             KotlinArguments(
                 skjema = "S",
                 aargang = "YYYY",

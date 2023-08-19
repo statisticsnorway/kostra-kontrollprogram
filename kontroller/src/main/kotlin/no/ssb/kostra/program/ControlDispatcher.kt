@@ -64,8 +64,8 @@ object ControlDispatcher {
                     ValidationReportEntry(
                         severity = Severity.FATAL,
                         ruleName = "Ukjent skjema",
-                        messageText = "Korrigér filutrekket. Forventet '${kotlinArguments.skjema}', " +
-                                "men fant ikke noe. Avslutter...."
+                        messageText = "Korrigér filutrekket. Skjema '${kotlinArguments.skjema}' " +
+                                "er ukjent for kostra-kontrollprogram. Avslutter...."
 
 
                     )

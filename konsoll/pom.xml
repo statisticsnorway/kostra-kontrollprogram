@@ -22,6 +22,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>no.ssb.kostra</groupId>
+            <artifactId>kostra-kontroller</artifactId>
+            <version>LOCAL-SNAPSHOT</version>
+        </dependency>
+
         <!-- for reading application.yml -->
         <dependency>
             <groupId>org.yaml</groupId>

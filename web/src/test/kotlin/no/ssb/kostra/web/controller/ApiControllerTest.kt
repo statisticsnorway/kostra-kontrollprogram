@@ -8,10 +8,10 @@ import io.micronaut.http.multipart.StreamingFileUpload
 import io.micronaut.validation.validator.Validator
 import io.mockk.every
 import io.mockk.mockk
-import no.ssb.kostra.common.config.UiConfig
 import no.ssb.kostra.felles.git.GitProperties
-import no.ssb.kostra.common.viewmodel.KostraFormVm
+import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.ControlRunner
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 import java.io.OutputStream

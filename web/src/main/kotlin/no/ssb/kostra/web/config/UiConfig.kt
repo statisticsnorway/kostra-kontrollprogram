@@ -1,8 +1,8 @@
-package no.ssb.kostra.common.config
+package no.ssb.kostra.web.config
 
 import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.context.annotation.Context
-import no.ssb.kostra.common.viewmodel.KostraFormTypeVm
+import no.ssb.kostra.web.viewmodel.KostraFormTypeVm
 
 @Context
 @ConfigurationProperties("iu-innstillinger")

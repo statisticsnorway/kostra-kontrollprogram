@@ -7,10 +7,10 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.controlprogram.ArgumentConstants.*
 import no.ssb.kostra.controlprogram.Arguments
+import no.ssb.kostra.felles.Constants.*
 import no.ssb.kostra.web.extensions.toKostraErrorCode
 import no.ssb.kostra.web.extensions.toReportRequestVm
-import no.ssb.kostra.felles.Constants.*
-import no.ssb.kostra.common.viewmodel.KostraErrorCode
+import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import java.time.Year
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({

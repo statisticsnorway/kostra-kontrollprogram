@@ -17,7 +17,6 @@
         <module>web</module>
         <module>kontroller</module>
         <module>kostra-barnevern</module>
-        <module>application-common</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
@@ -42,8 +41,7 @@
         <sonar.exclusions>
             **/Application.kt,
             **/node_modules/**/*,
-            **/KostraRecordExtensionsGenerics.kt,
-            **/kostra/common/**/*
+            **/KostraRecordExtensionsGenerics.kt
         </sonar.exclusions>
 
         <!-- removes [WARNING] Unable to locate Source XRef to link to - DISABLED -->

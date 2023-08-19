@@ -9,7 +9,6 @@ import io.kotest.data.row
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.micronaut.context.env.Environment.CLI
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
@@ -19,18 +18,18 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import no.ssb.kostra.common.viewmodel.CompanyIdVm
-import no.ssb.kostra.common.viewmodel.FileReportVm
-import no.ssb.kostra.common.viewmodel.KostraFormVm
-import no.ssb.kostra.common.viewmodel.UiDataVm
+import no.ssb.kostra.web.viewmodel.FileReportVm
+import no.ssb.kostra.web.viewmodel.UiDataVm
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.io.File
 import java.io.FileWriter
 import java.time.Year
 
-@MicronautTest(environments = [CLI])
+@MicronautTest
 class ApiControllerIntegrationTest(
     @Client("/") client: HttpClient,
     objectMapper: ObjectMapper

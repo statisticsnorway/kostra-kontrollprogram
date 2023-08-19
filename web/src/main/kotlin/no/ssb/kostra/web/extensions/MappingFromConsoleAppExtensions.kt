@@ -1,9 +1,9 @@
 package no.ssb.kostra.web.extensions
 
-import no.ssb.kostra.common.viewmodel.*
 import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.Constants.*
 import no.ssb.kostra.felles.ErrorReport
+import no.ssb.kostra.web.viewmodel.*
 
 fun Arguments.toReportRequestVm(): KostraFormVm = KostraFormVm(
     aar = this.aargang.toInt(),

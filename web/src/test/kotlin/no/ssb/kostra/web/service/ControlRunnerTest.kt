@@ -6,8 +6,8 @@ import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.common.viewmodel.KostraErrorCode
-import no.ssb.kostra.common.viewmodel.KostraFormVm
+import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 
 @Ignored("Wait until code is more complete")
 class ControlRunnerTest : BehaviorSpec({

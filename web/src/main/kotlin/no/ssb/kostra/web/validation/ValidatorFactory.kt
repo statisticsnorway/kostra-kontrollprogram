@@ -1,10 +1,10 @@
-package no.ssb.kostra.common.validation
+package no.ssb.kostra.web.validation
 
 import io.micronaut.context.annotation.Factory
 import io.micronaut.validation.validator.constraints.ConstraintValidator
 import jakarta.inject.Singleton
-import no.ssb.kostra.common.config.UiConfig
-import no.ssb.kostra.common.viewmodel.KostraFormVm
+import no.ssb.kostra.web.config.UiConfig
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 
 @Factory
 class ValidatorFactory(private val uiConfig: UiConfig) {

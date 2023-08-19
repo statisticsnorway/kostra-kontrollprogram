@@ -1,4 +1,4 @@
-package no.ssb.kostra.common.viewmodel
+package no.ssb.kostra.web.viewmodel
 
 import io.micronaut.core.annotation.Introspected
 import jakarta.validation.constraints.Pattern

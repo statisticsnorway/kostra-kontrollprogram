@@ -16,13 +16,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.ConstraintViolationException
-import no.ssb.kostra.common.config.UiConfig
-import no.ssb.kostra.common.viewmodel.FileReportVm
-import no.ssb.kostra.common.viewmodel.KostraFormVm
-import no.ssb.kostra.common.viewmodel.UiDataVm
 import no.ssb.kostra.felles.git.GitProperties
+import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.service.ControlRunner
+import no.ssb.kostra.web.viewmodel.FileReportVm
+import no.ssb.kostra.web.viewmodel.KostraFormVm
+import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
 

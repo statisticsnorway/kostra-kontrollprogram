@@ -1,7 +1,7 @@
-package no.ssb.kostra.common.validation
+package no.ssb.kostra.web.validation
 
 import jakarta.validation.Constraint
 
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [])
-annotation class ValidForm
+annotation class ValidFormType

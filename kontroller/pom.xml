@@ -13,7 +13,6 @@
 
     <properties>
         <junit.version>4.13.2</junit.version>
-        <spock.version>2.3-groovy-4.0</spock.version>
     </properties>
 
     <dependencies>
@@ -52,12 +51,6 @@
             <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <version>${spock.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -87,7 +80,6 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/test/groovy</source>
                                 <source>src/test/java</source>
                                 <source>src/test/kotlin</source>
                             </sources>
@@ -146,28 +138,8 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/test/java</sourceDir>
-                                <sourceDir>${project.basedir}/src/test/groovy</sourceDir>
                             </sourceDirs>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addSources</goal>
-                            <goal>generateStubs</goal>
-                            <goal>compile</goal>
-                            <goal>removeStubs</goal>
-                            <goal>addTestSources</goal>
-                            <goal>generateTestStubs</goal>
-                            <goal>compileTests</goal>
-                            <goal>removeTestStubs</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>

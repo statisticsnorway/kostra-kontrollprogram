@@ -28,25 +28,9 @@
             <version>LOCAL-SNAPSHOT</version>
         </dependency>
 
-        <!-- for reading application.yml -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-jackson-databind</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.picocli</groupId>
-            <artifactId>micronaut-picocli</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -100,16 +84,6 @@
                             </sourceDirs>
                             <annotationProcessorPaths combine.self="override">
                                 <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-inject-java</artifactId>
-                                    <version>${micronaut.core.version}</version>
-                                </path>
-                                <path>
-                                    <groupId>io.micronaut.validation</groupId>
-                                    <artifactId>micronaut-validation</artifactId>
-                                    <version>${micronaut.validation.version}</version>
-                                </path>
-                                <path>
                                     <groupId>info.picocli</groupId>
                                     <artifactId>picocli-codegen</artifactId>
                                     <version>${picocli.version}</version>
@@ -147,16 +121,6 @@
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                             </sourceDirs>
                             <annotationProcessorPaths combine.self="override">
-                                <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-inject-java</artifactId>
-                                    <version>${micronaut.core.version}</version>
-                                </path>
-                                <path>
-                                    <groupId>io.micronaut.validation</groupId>
-                                    <artifactId>micronaut-validation</artifactId>
-                                    <version>${micronaut.validation.version}</version>
-                                </path>
                                 <path>
                                     <groupId>io.micronaut</groupId>
                                     <artifactId>micronaut-graal</artifactId>

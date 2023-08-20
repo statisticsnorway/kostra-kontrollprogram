@@ -105,6 +105,6 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
     }
 }) {
     companion object {
-        fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
+        private fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
     }
 }

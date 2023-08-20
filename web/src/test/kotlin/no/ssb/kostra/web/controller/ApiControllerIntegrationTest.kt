@@ -47,7 +47,7 @@ class ApiControllerIntegrationTest(
                 httpResponse.status shouldBe HttpStatus.OK
             }
 
-            and("body should contain data") {
+            And("body should contain data") {
                 val uiData = httpResponse.body()
 
                 uiData.shouldNotBeNull()
@@ -244,7 +244,6 @@ class ApiControllerIntegrationTest(
             )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
             When(description) {
-
                 val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
                 val apiError = shouldThrow<HttpClientResponseException> {

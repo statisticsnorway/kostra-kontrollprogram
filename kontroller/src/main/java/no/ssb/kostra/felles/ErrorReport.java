@@ -22,15 +22,11 @@ public class ErrorReport {
     private final Arguments args;
     private long count = 0;
     private int errorType = Constants.NO_ERROR;
-    private List<String> reportHeaders = List.of("", "", "", "");
+    private final List<String> reportHeaders = List.of("", "", "", "");
     private final List<StatsReportEntry> stats = new ArrayList<>();
 
     public ErrorReport(final Arguments args) {
         this.args = args;
-    }
-
-    public void incrementCount() {
-        count++;
     }
 
     public void setCount(long count) {
@@ -126,7 +122,7 @@ public class ErrorReport {
             report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf);
             report.append("<table>").append(lf);
 
-            if (reportHeaders.stream().anyMatch(s -> 0 < s.trim().length())) {
+            if (reportHeaders.stream().anyMatch(s -> !s.trim().isEmpty())) {
                 report.append("<!-- header start -->");
                 report.append("<tr>");
                 reportHeaders.forEach(s -> report.append(String.format("<td>%s</td>", s)));
@@ -172,7 +168,7 @@ public class ErrorReport {
             }
         }
 
-        if (errorType != Constants.CRITICAL_ERROR && 0 < stats.size()) {
+        if (errorType != Constants.CRITICAL_ERROR && !stats.isEmpty()) {
             report.append("<h3>Statistikkrapport</h3>");
             stats.forEach(s -> report.append(s.toString()));
         }
@@ -196,13 +192,5 @@ public class ErrorReport {
 
     public int getErrorType() {
         return errorType;
-    }
-
-    public void setReportHeaders(final List<String> stringList) {
-        this.reportHeaders = stringList;
-    }
-
-    public void addStats(final StatsReportEntry entry) {
-        this.stats.add(entry);
     }
 }

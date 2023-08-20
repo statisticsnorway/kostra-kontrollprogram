@@ -44,23 +44,9 @@ public class FieldDefinition {
             this.codeList = Arrays.asList(new Code("", "uninitialzed"), new Code("0", "unchecked"), new Code("1", "checked"));
         }
 
-        if (this.dataType.equalsIgnoreCase("date") && (this.datePattern == null || this.datePattern.length() == 0)) {
+        if (this.dataType.equalsIgnoreCase("date") && (this.datePattern == null || this.datePattern.isEmpty())) {
             this.datePattern = "ddMMyyyy";
         }
-    }
-
-    public FieldDefinition getFieldDefinition() {
-        return new FieldDefinition(
-                this.number,
-                this.name,
-                this.dataType,
-                this.viewType,
-                this.from,
-                this.to,
-                this.codeList,
-                this.datePattern,
-                this.mandatory
-        );
     }
 
     public Integer getNumber() {
@@ -89,14 +75,6 @@ public class FieldDefinition {
 
     public void setCodeList(final List<Code> codeList) {
         this.codeList = codeList;
-    }
-
-    public String getDatePattern() {
-        return datePattern;
-    }
-
-    public boolean isMandatory() {
-        return mandatory;
     }
 
     @Override

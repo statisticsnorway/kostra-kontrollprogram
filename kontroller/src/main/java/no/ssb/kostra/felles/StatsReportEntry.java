@@ -24,7 +24,7 @@ public class StatsReportEntry {
 
 
         // add content
-        if (this.classification == null || this.classification.size() == 0){
+        if (this.classification == null || this.classification.isEmpty()){
             data.forEach(d -> sb.append("<tr>").append("<td>&nbsp;</td>").append("<td style='text-align:right;'>").append(d.value()).append("</td>").append("</tr>").append(lf));
         } else {
             classification.forEach(c -> {

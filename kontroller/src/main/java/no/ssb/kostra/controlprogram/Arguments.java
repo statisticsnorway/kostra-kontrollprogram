@@ -32,7 +32,7 @@ public final class Arguments {
     private boolean harVedlegg = true;
     private boolean isRunAsExternalProcess = false;
 
-    private InputStream inputFileStream = null;
+    private final InputStream inputFileStream = null;
     private List<String> inputFileContent = null;
 
     public Arguments(
@@ -56,11 +56,6 @@ public final class Arguments {
                 this.inputFileContent.add(line);
             }
         }
-    }
-
-    public Arguments(final String[] argv, final InputStream inputFileStream) {
-        this(argv);
-        this.inputFileStream = inputFileStream;
     }
 
     // for testing only
@@ -180,10 +175,6 @@ public final class Arguments {
         return inputFileContent;
     }
 
-    public InputStream getInputContentAsInputStream() {
-        return inputFileStream;
-    }
-
     public void setInputFileContent(final List<String> inputFileContent) {
         if (this.inputFileContent == null) {
             this.inputFileContent = new ArrayList<>();
@@ -194,10 +185,6 @@ public final class Arguments {
                 this.inputFileContent.add(line);
             }
         }
-    }
-
-    public boolean hasInputContent() {
-        return this.inputFileContent == null || !this.inputFileContent.isEmpty();
     }
 
     public boolean harVedlegg() {

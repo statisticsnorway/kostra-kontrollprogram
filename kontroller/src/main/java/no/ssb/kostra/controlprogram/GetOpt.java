@@ -128,10 +128,6 @@ public class GetOpt {
     /**
      * Retrieve the current option argument; UNIX variant spelling.
      */
-    public String optarg() {
-        return optarg;
-    }
-
     /* Construct a GetOpt parser, given the option specifications
      * in an array of GetOptDesc objects. This is the preferred constructor.
      */
@@ -142,35 +138,6 @@ public class GetOpt {
     /* Construct a GetOpt parser, storing the set of option characters.
      * This is a legacy constructor for backwards compatibility.
      */
-    public GetOpt(final String pattern) {
-        if (pattern == null) {
-            throw new IllegalArgumentException("Pattern may not be null");
-        }
-
-        // Pass One: just count the letters
-        var n = 0;
-        for (var i = 0; i < pattern.length(); i++) {
-            if (pattern.charAt(i) != ':')
-                ++n;
-        }
-        if (n == 0) {
-            throw new IllegalArgumentException(
-                    "No option letters found in " + pattern);
-        }
-
-        // Pass Two: construct an array of GetOptDesc opjects.
-        options = new GetOptDesc[n];
-        for (int i = 0, ix = 0; i < pattern.length(); i++) {
-            final var c = pattern.charAt(i);
-            var argTakesValue = false;
-            if (i < pattern.length() - 1 && pattern.charAt(i + 1) == ':') {
-                argTakesValue = true;
-                ++i;
-            }
-            options[ix] = new GetOptDesc(c, null, argTakesValue);
-            ++ix;
-        }
-    }
 
     /**
      * Array used to convert a char to a String
@@ -204,17 +171,6 @@ public class GetOpt {
             }
         }
         return optionsAndValues;
-    }
-
-    /**
-     * Get the list of filename-like arguments after options
-     */
-    public List<String> getFilenameList() {
-        if (fileNameArguments == null) {
-            throw new IllegalArgumentException(
-                    "Illegal call to getFilenameList() before parseOptions()");
-        }
-        return fileNameArguments;
     }
 
     /**
@@ -264,12 +220,5 @@ public class GetOpt {
             done = true;
             return DONE;
         }
-    }
-
-    /**
-     * Return optind, the index into args of the last option we looked at
-     */
-    public int getOptInd() {
-        return optind;
     }
 }

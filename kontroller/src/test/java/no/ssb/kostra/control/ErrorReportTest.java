@@ -18,7 +18,6 @@ public class ErrorReportTest {
         var errorReport = new ErrorReport(args);
 
         assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
-        errorReport.incrementCount();
 
         errorReport.addEntry(new ErrorReportEntry(
                 "Test", "1", " ", " "
@@ -58,7 +57,6 @@ public class ErrorReportTest {
         var errorReport = new ErrorReport(args);
 
         assertEquals(Constants.NO_ERROR, errorReport.getErrorType());
-        errorReport.incrementCount();
 
         errorReport.addEntry(new ErrorReportEntry(
                 "Embedded Test", "1", " ", " "

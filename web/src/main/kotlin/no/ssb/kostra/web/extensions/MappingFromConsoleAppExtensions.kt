@@ -1,23 +1,11 @@
 package no.ssb.kostra.web.extensions
 
-import no.ssb.kostra.controlprogram.Arguments
 import no.ssb.kostra.felles.Constants.*
 import no.ssb.kostra.felles.ErrorReport
-import no.ssb.kostra.web.viewmodel.*
-
-fun Arguments.toReportRequestVm(): KostraFormVm = KostraFormVm(
-    aar = this.aargang.toInt(),
-    skjema = this.skjema,
-    region = this.region,
-    navn = this.navn,
-    orgnrForetak = this.foretaknr.ifBlank { null },
-    orgnrVirksomhet =
-    if (this.orgnr.isNullOrEmpty()) emptyList()
-    else this.orgnr
-        .split(",")
-        .filterNot { it.isBlank() }
-        .map { CompanyIdVm(it) }
-)
+import no.ssb.kostra.web.viewmodel.FileReportEntryVm
+import no.ssb.kostra.web.viewmodel.FileReportVm
+import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import no.ssb.kostra.web.viewmodel.KostraFormVm
 
 fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {
     NORMAL_ERROR -> KostraErrorCode.NORMAL_ERROR
@@ -27,7 +15,7 @@ fun Int.toKostraErrorCode(): KostraErrorCode = when (this) {
     else -> KostraErrorCode.NO_ERROR
 }
 
-fun ErrorReport.toErrorReportVm(): FileReportVm {
+fun ErrorReport.toErrorReportVm(kostraForm: KostraFormVm): FileReportVm {
     val errorReportEntries = this.rapportMap.entries.flatMap { (saksbehandler, errorDetails) ->
         errorDetails.entries.flatMap { (journalnummer, journalDetails) ->
             journalDetails.map { (_, errorList) ->
@@ -43,7 +31,7 @@ fun ErrorReport.toErrorReportVm(): FileReportVm {
     }
 
     return FileReportVm(
-        innparametere = this.args.toReportRequestVm(),
+        innparametere = kostraForm,
         antallKontroller = this.count.toInt(),
         feil = errorReportEntries,
         feilkode = errorReportEntries.map { it.feilkode }

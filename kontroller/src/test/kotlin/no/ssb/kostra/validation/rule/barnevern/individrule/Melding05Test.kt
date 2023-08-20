@@ -26,6 +26,14 @@ class Melding05Test : BehaviorSpec({
                 )
             ),
             ForAllRowItem(
+                "melding with sluttDato before reporting year",
+                individInTest.copy(
+                    melding = mutableListOf(
+                        meldingTypeInTest.copy(sluttDato = dateInTest.minusYears(2))
+                    )
+                )
+            ),
+            ForAllRowItem(
                 "melding with sluttDato in reporting year",
                 individInTest.copy(
                     melding = mutableListOf(

@@ -49,7 +49,11 @@ class Tiltak06Test : BehaviorSpec({
                         dateInTest.minusYears(12),
                         dateInTest.minusYears(11)
                     ),
-                    tiltak = mutableListOf(tiltakTypeInTest)
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(
+                            kategori = kategoriTypeInTest.copy(kode = "4.3")
+                        )
+                    )
                 )
             ),
             ForAllRowItem(

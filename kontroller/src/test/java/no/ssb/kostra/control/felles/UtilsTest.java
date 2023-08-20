@@ -9,21 +9,6 @@ import static org.junit.Assert.assertEquals;
 public class UtilsTest {
 
     @Test
-    public void createLinenumberTest() {
-        // TODO
-    }
-
-    @Test
-    public void getValidRecordsTest() {
-        // TODO
-    }
-
-    @Test
-    public void mergeFieldDefinitionsAndArgumentsTest() {
-        // TODO
-    }
-
-    @Test
     public void rpadListTest() {
         assertEquals(List.of("1   ", "12  ", "123 ", "1234"), Utils.rpadList(List.of("1", "12", "123", "1234"), 4));
     }

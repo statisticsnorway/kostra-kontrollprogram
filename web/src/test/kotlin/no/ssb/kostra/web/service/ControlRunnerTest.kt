@@ -1,15 +1,13 @@
 package no.ssb.kostra.web.service
 
-import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
-@Ignored("Wait until code is more complete")
 class ControlRunnerTest : BehaviorSpec({
     val sut = ControlRunner()
 
@@ -29,13 +27,9 @@ class ControlRunnerTest : BehaviorSpec({
             )
 
             Then("errorReportVm should be as expected") {
-                errorReport.feilkode shouldBe KostraErrorCode.NORMAL_ERROR
+                errorReport.feilkode shouldBe KostraErrorCode.NO_ERROR
                 errorReport.antallKontroller.shouldBeGreaterThan(50)
-                errorReport.feil.size shouldBe 1
-
-                assertSoftly(errorReport.feil.first()){
-                    feilkode shouldBe KostraErrorCode.NORMAL_ERROR
-                }
+                errorReport.feil.shouldBeEmpty()
             }
         }
 

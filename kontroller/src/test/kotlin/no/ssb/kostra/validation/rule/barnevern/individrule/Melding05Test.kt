@@ -50,30 +50,35 @@ class Melding05Test : BehaviorSpec({
                     )
                 )
             ),
-            ForAllRowItem(
-                "melding with sluttDato after reporting year, with konklusjon '1'",
-                individInTest.copy(
-                    melding = mutableListOf(
-                        meldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "1",
-                            saksinnhold = mutableListOf(saksinnholdTypeInTest)
+            *('1'..'2').map {
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, with konklusjon '$it', saksinnhold is not empty",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "$it",
+                                saksinnhold = mutableListOf(saksinnholdTypeInTest)
+                            )
                         )
                     )
                 )
-            ),
-            ForAllRowItem(
-                "melding with sluttDato after reporting year, with konklusjon '2'",
-                individInTest.copy(
-                    melding = mutableListOf(
-                        meldingTypeInTest.copy(
-                            sluttDato = dateInTest,
-                            konklusjon = "2"
+            }.toTypedArray(),
+            *('1'..'2').map {
+                ForAllRowItem(
+                    "melding with sluttDato after reporting year, with konklusjon '$it', saksinnhold is empty",
+                    individInTest.copy(
+                        melding = mutableListOf(
+                            meldingTypeInTest.copy(
+                                sluttDato = dateInTest,
+                                konklusjon = "$it",
+                                saksinnhold = mutableListOf()
+                            )
                         )
-                    )
-                ),
-                expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Konkludert melding mangler saksinnhold."
-            )
+                    ),
+                    expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Konkludert melding mangler saksinnhold."
+                )
+            }.toTypedArray()
         )
     )
 })

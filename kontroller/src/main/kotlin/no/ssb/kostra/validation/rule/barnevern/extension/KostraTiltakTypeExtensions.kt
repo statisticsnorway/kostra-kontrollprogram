@@ -14,6 +14,7 @@ import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRA
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRAF_8
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.leddOmsorg
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 const val MIN_OVERLAP_IN_DAYS = 90L
 
@@ -24,29 +25,18 @@ fun KostraTiltakType.erPlasseringsTiltak() =
 
 fun KostraTiltakType.erOmsorgsTiltak(): Boolean = lovhjemmelOmsorgstiltak.any { this.lovhjemmel.matches(it) }
 
+internal fun KostraTiltakType.overlapInNumberOfDays(
+    other: KostraTiltakType,
+    fallbackEndDate: LocalDate
+): Long = ChronoUnit.DAYS.between(
+    setOf(this.startDato, other.startDato).max(),
+    setOf(this.sluttDato ?: fallbackEndDate, other.sluttDato ?: fallbackEndDate).min()
+)
+
 fun KostraTiltakType.isOverlapWithAtLeastThreeMonthsOf(
     other: KostraTiltakType,
     fallbackEndDate: LocalDate
-): Boolean {
-
-    val firstRange = this.toStartDateEndDateRange(fallbackEndDate)
-    val secondRange = other.toStartDateEndDateRange(fallbackEndDate)
-
-    return firstRange.areOverlapping(secondRange)
-            && firstRange.start.maxDate(secondRange.start)
-        .plusDays(MIN_OVERLAP_IN_DAYS)
-        .isBefore(firstRange.endInclusive.minDate(secondRange.endInclusive))
-}
-
-internal fun ClosedRange<LocalDate>.areOverlapping(other: ClosedRange<LocalDate>) =
-    this.start.isBefore(other.endInclusive) && other.start.isBefore(this.endInclusive)
-
-internal fun LocalDate.maxDate(other: LocalDate) = if (this.isAfter(other)) this else other
-
-internal fun LocalDate.minDate(other: LocalDate) = if (this.isBefore(other)) this else other
-
-internal fun KostraTiltakType.toStartDateEndDateRange(fallbackEndDate: LocalDate) =
-    this.startDato.rangeTo(this.sluttDato ?: fallbackEndDate)
+): Boolean = this.overlapInNumberOfDays(other, fallbackEndDate) >= MIN_OVERLAP_IN_DAYS
 
 private val lovhjemmelOmsorgstiltak = setOf(
     KostraLovhjemmelType(

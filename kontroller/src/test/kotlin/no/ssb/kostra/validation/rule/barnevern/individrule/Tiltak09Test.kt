@@ -69,6 +69,29 @@ class Tiltak09Test : BehaviorSpec({
                     )
                 ),
                 expectedErrorMessage = "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder"
+            ),
+            ForAllRowItem(
+                "three overlapping plasseringstiltak, nore than 90 days",
+                individInTest.copy(
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(
+                            startDato = dateInTest.minusYears(1),
+                            sluttDato = null,
+                            kategori = kategoriTypeInTest.copy(kode = "1.1")
+                        ),
+                        tiltakTypeInTest.copy(
+                            startDato = dateInTest.minusYears(1).plusDays(1),
+                            sluttDato = dateInTest.minusYears(1).plusDays(91),
+                            kategori = kategoriTypeInTest.copy(kode = "1.2")
+                        ),
+                        tiltakTypeInTest.copy(
+                            startDato = dateInTest.minusYears(1).plusDays(2),
+                            sluttDato = dateInTest.minusYears(1).plusDays(92),
+                            kategori = kategoriTypeInTest.copy(kode = "1.2")
+                        )
+                    )
+                ),
+                expectedErrorMessage = "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder"
             )
         )
     )

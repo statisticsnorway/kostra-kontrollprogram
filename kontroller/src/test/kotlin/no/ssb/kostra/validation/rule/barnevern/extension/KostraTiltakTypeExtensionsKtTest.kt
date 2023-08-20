@@ -8,7 +8,6 @@ import no.ssb.kostra.BarnevernTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.MEASURE_CATEGORY_CODE_8_2
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
-import java.time.LocalDate
 
 class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
 
@@ -46,33 +45,44 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
         }
     }
 
-    Given("LocalDate.maxDate") {
+    Given("overlapInNumberOfDays") {
         forAll(
             row(
-                "first date before second, expect second",
-                dateInTest,
-                dateInTest.plusDays(1),
+                "overlapping with one day, both measures without sluttDato",
+                tiltakTypeInTest,
+                tiltakTypeInTest,
                 dateInTest.plusDays(1)
             ),
             row(
-                "dates are equal, expect either",
-                dateInTest,
-                dateInTest,
+                "overlapping with one day, both measures with sluttDato",
+                tiltakTypeInTest.copy(
+                    startDato = dateInTest.plusDays(1),
+                    sluttDato = dateInTest.plusDays(2)
+                ),
+                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(2)),
                 dateInTest
             ),
             row(
-                "first date after second, expect first",
-                dateInTest.plusDays(1),
-                dateInTest,
+                "first without sluttDato",
+                tiltakTypeInTest,
+                tiltakTypeInTest.copy(
+                    startDato = dateInTest.plusDays(1),
+                    sluttDato = dateInTest.plusDays(3)
+                ),
+                dateInTest.plusDays(2)
+            ),
+            row(
+                "second without sluttDato",
+                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(4)),
+                tiltakTypeInTest,
                 dateInTest.plusDays(1)
             )
-        ) { description, firstDate, secondDate, expected ->
-
+        ) { description, sut, other, fallbackDate ->
             When(description) {
-                val result = firstDate.maxDate(secondDate)
+                val overlapInNumberOfDays = sut.overlapInNumberOfDays(other, fallbackDate)
 
-                Then("result should be as expected") {
-                    result shouldBe expected
+                Then("overlapInNumberOfDays should be 1") {
+                    overlapInNumberOfDays shouldBe 1L
                 }
             }
         }
@@ -113,69 +123,6 @@ class KostraTiltakTypeExtensionsKtTest : BehaviorSpec({
                     otherMeasure,
                     fallbackDate
                 )
-
-                Then("expect expectedResult") {
-                    areOverlapping shouldBe expectedResult
-                }
-            }
-        }
-    }
-
-    Given("KostraTiltakType#toStartDateEndDateRange(LocalDate)") {
-
-        forAll(
-            row(
-                "tiltak with sluttDato",
-                tiltakTypeInTest.copy(sluttDato = dateInTest.plusDays(2)),
-                dateInTest.plusDays(3)
-            ),
-            row(
-                "tiltak without sluttDato",
-                tiltakTypeInTest,
-                dateInTest.plusDays(3)
-            )
-        ) { description, sut, fallbackDate ->
-
-            When(description) {
-                val range = sut.toStartDateEndDateRange(fallbackDate)
-
-                Then("expect expectedResult") {
-                    range.start shouldBe sut.startDato
-                    range.endInclusive shouldBe (sut.sluttDato ?: fallbackDate)
-                }
-            }
-        }
-    }
-
-    Given("ClosedRange<LocalDate>#areOverlapping(LocalDate)") {
-
-        val sut = LocalDate.now().rangeTo(LocalDate.now().plusDays(3))
-
-        forAll(
-            row(
-                "other range before sut",
-                dateInTest.minusDays(4).rangeTo(dateInTest.minusDays(1)),
-                false
-            ),
-            row(
-                "other range 2 days into sut",
-                dateInTest.minusDays(2).rangeTo(dateInTest.plusDays(2)),
-                true
-            ),
-            row(
-                "other range is equal to sut",
-                dateInTest.rangeTo(dateInTest.plusDays(3)),
-                true
-            ),
-            row(
-                "other range is after to sut",
-                dateInTest.plusDays(4).rangeTo(dateInTest.plusDays(7)),
-                false
-            )
-        ) { description, otherRange, expectedResult ->
-
-            When(description) {
-                val areOverlapping = sut.areOverlapping(otherRange)
 
                 Then("expect expectedResult") {
                     areOverlapping shouldBe expectedResult

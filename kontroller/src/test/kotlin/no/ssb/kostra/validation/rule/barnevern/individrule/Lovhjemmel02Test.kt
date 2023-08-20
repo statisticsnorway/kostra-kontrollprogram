@@ -6,6 +6,7 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleWithArgsTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
+import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.lovhjemmelTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.omsorgLovhjemmelTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.opphevelseTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
@@ -23,7 +24,9 @@ class Lovhjemmel02Test : BehaviorSpec({
             ForAllRowItem(
                 "individ with tiltak, erOmsorgstiltak = false",
                 individInTest.copy(
-                    tiltak = mutableListOf(tiltakTypeInTest)
+                    tiltak = mutableListOf(
+                        tiltakTypeInTest.copy(lovhjemmel = lovhjemmelTypeInTest)
+                    )
                 )
             ),
             ForAllRowItem(
@@ -38,7 +41,7 @@ class Lovhjemmel02Test : BehaviorSpec({
                 )
             ),
             ForAllRowItem(
-                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse != null",
+                "individ with tiltak, erOmsorgstiltak = true, sluttDato != null, opphevelse != null",
                 individInTest.copy(
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(
@@ -49,9 +52,8 @@ class Lovhjemmel02Test : BehaviorSpec({
                     )
                 )
             ),
-
             ForAllRowItem(
-                "individ with tiltak, erOmsorgstiltak = true, sluttDato !=, opphevelse = null",
+                "individ with tiltak, erOmsorgstiltak = true, sluttDato != null, opphevelse = null",
                 individInTest.copy(
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(

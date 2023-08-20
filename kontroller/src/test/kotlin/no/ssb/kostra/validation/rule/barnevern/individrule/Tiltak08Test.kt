@@ -19,6 +19,12 @@ class Tiltak08Test : BehaviorSpec({
                 individInTest
             ),
             ForAllRowItem(
+                "individ with tiltak without opphevelse",
+                individInTest.copy(
+                    tiltak = mutableListOf(tiltakTypeInTest.copy(opphevelse = null))
+                )
+            ),
+            ForAllRowItem(
                 "individ with opphevelse that does not require presisering",
                 individInTest.copy(
                     tiltak = mutableListOf(tiltakTypeInTest.copy(opphevelse = opphevelseTypeInTest))

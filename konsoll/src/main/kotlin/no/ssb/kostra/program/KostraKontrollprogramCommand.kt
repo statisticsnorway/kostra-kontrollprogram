@@ -47,6 +47,7 @@ class KostraKontrollprogramCommand : Callable<Int> {
 
     override fun call(): Int {
         if (schema.isNotBlank() && hasAttachment == "1")
+        /** Note: .use is difficult to get coverage for in SonarCloud */
             inputFileContent = System.`in`.bufferedReader().use(BufferedReader::readText).trim()
 
         val kotlinArguments = KotlinArguments(
@@ -61,10 +62,12 @@ class KostraKontrollprogramCommand : Callable<Int> {
             isRunAsExternalProcess = isRunAsExternalProcess,
             inputFileContent = inputFileContent,
         )
+
         val validationReportArguments = ControlDispatcher.validate(kotlinArguments)
-        val validationReport = ValidationReport(validationReportArguments)
-        val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
-        printStream.print(validationReport)
+
+        PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use {
+            print(ValidationReport(validationReportArguments))
+        }
 
         return validationReportArguments.validationResult.severity.info.returnCode
     }

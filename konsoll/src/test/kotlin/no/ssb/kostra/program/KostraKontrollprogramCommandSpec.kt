@@ -24,7 +24,11 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
             ),
             row(
                 "invocation with non-existing schema",
-                arrayOf("--schema", "SS", "--year", "${Year.now().toString().toInt() - 1}", "--region", "1234"),
+                arrayOf(
+                    "--schema", "SS",
+                    "--year", "$previousYear",
+                    "--region", "1234"
+                ),
                 " ",
                 2,
                 "Ukjent skjema"
@@ -33,7 +37,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 "invocation with blank schema",
                 arrayOf(
                     "--schema", "  ",
-                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--year", "$previousYear",
                     "--region", "1234"
                 ),
                 "",
@@ -44,7 +48,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 "invocation with valid schema, but hasAttachment = 0",
                 arrayOf(
                     "--schema", "0G",
-                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--year", "$previousYear",
                     "--region", "1234",
                     "--attachment", "0"
                 ),
@@ -56,7 +60,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 "invocation with valid schema, hasAttachment = 1",
                 arrayOf(
                     "--schema", "0G",
-                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--year", "$previousYear",
                     "--region", "1234",
                     "--attachment", "1"
                 ),
@@ -92,6 +96,8 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
     }
 }) {
     companion object {
+        private val previousYear = Year.now().value - 1
+
         private val PLAIN_TEXT_0G = """
             0G2020 300500976989732         510  123      263
             0G2020 300500976989732         510           263

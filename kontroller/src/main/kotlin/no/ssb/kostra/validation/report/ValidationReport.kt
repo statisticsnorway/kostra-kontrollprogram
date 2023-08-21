@@ -112,4 +112,8 @@ class ValidationReport(private val validationReportArguments: ValidationReportAr
 
         return report.toString()
     }
+
+    fun replaceSpaceWithNoBreakingSpace(s: String): String {
+        return s.replace(" ", "&nbsp;")
+    }
 }

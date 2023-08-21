@@ -2,11 +2,15 @@ package no.ssb.kostra.validation.report
 
 import jakarta.inject.Inject
 import no.ssb.kostra.felles.git.GitProperties
+import no.ssb.kostra.felles.git.GitPropertiesLoader
 import java.util.*
 
-class ValidationReport(private val validationReportArguments: ValidationReportArguments) {
-    @Inject
-    lateinit var gitProperties: GitProperties // inneholder versjonsinformasjonﬁ
+class ValidationReport(
+    private val validationReportArguments: ValidationReportArguments,
+    private val gitProperties: GitProperties = GitPropertiesLoader.loadGitProperties(
+        GitPropertiesLoader.DEFAULT_GIT_PROPERTIES_FILENAME
+    )
+) {
 
     override fun toString(): String {
         val kotlinArguments = validationReportArguments.kotlinArguments

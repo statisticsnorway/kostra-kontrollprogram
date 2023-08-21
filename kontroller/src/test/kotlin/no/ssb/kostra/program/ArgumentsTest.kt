@@ -19,7 +19,7 @@ class ArgumentsTest : BehaviorSpec({
                 harVedlegg = true,
                 isRunAsExternalProcess = false,
                 inputFileContent = "record1",
-                startTime = LocalDateTime.of(2022,1,1, 1,1,1),
+                startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 1),
             )
 
             val result = sut.toString()
@@ -34,7 +34,7 @@ class ArgumentsTest : BehaviorSpec({
                 skjema = "S",
                 aargang = "YYYY",
                 region = "RRRR",
-                startTime = LocalDateTime.of(2022,1,1, 1,1,1),
+                startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 1),
             )
 
             val result = sut.toString()
@@ -51,7 +51,7 @@ class ArgumentsTest : BehaviorSpec({
             aargang = "YYYY",
             region = "RRRR",
             inputFileContent = "record1\nrecord2",
-            startTime = LocalDateTime.of(2022,1,1, 1,1,1),
+            startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 1),
         )
 
         When("getting inputFileContent as a list of String") {

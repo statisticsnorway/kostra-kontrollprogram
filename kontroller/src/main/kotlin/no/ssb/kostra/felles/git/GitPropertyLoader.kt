@@ -1,6 +1,6 @@
 package no.ssb.kostra.felles.git
 
-import java.util.Properties
+import java.util.*
 
 object GitPropertiesLoader {
     const val DEFAULT_GIT_PROPERTIES_FILENAME = "/git.properties"

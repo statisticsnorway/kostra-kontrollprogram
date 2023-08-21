@@ -10,10 +10,10 @@ import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain
 import no.ssb.kostra.area.regnskap.kostra.KvartalKostraMain
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringMain
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpMain
-import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator
 
 object ControlDispatcher {

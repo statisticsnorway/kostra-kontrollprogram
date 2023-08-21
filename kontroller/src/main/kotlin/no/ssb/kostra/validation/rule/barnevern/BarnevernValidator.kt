@@ -2,10 +2,10 @@ package no.ssb.kostra.validation.rule.barnevern
 
 import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.barnevern.AvgiverRules.avgiverRules
 import no.ssb.kostra.validation.rule.barnevern.IndividRules.individRules
 import no.ssb.kostra.validation.rule.barnevern.extension.addKeyOrAddValueIfKeyIsPresent

@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 
 abstract class PositionedFileValidator(
     override val arguments: KotlinArguments
-) : Validator(arguments) {
+) : Validator {
     abstract val fatalRules: List<AbstractRule<List<String>>>
     abstract val validationRules: List<AbstractRule<List<KostraRecord>>>
     abstract val fieldDefinitions: FieldDefinitions
@@ -63,5 +63,6 @@ abstract class PositionedFileValidator(
         )
     }
 
+    // CR note: This method returns emptyList(), should be abstract
     open fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> = emptyList()
 }

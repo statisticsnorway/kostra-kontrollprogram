@@ -19,7 +19,7 @@ import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers.in
 
 class BarnevernValidator(
     override val arguments: KotlinArguments
-) : Validator(arguments) {
+) : Validator {
 
     override fun validate(): ValidationResult = validateBarnevern(
         arguments = arguments,

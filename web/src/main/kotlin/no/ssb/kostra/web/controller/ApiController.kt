@@ -75,14 +75,6 @@ open class ApiController(
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 
-        /** temp-fix for issues with MN:4.x and validating collections */
-        kostraForm.orgnrVirksomhet.flatMap { companyId ->
-            validator.validate(companyId).iterator().asSequence()
-        }.takeIf { it.isNotEmpty() }?.let {
-            println("Validation errors: ${it.toSet()}")
-            throw ConstraintViolationException(it.toSet())
-        }
-
         /** target stream, file content will end up here */
         val outputStream = ByteArrayOutputStream()
 

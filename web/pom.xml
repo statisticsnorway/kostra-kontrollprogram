@@ -145,7 +145,7 @@
                                 </path>
                                 <path>
                                     <groupId>io.micronaut.validation</groupId>
-                                    <artifactId>micronaut-validation</artifactId>
+                                    <artifactId>micronaut-validation-processor</artifactId>
                                     <version>${micronaut.validation.version}</version>
                                 </path>
                                 <path>
@@ -190,7 +190,7 @@
                                 </path>
                                 <path>
                                     <groupId>io.micronaut.validation</groupId>
-                                    <artifactId>micronaut-validation</artifactId>
+                                    <artifactId>micronaut-validation-processor</artifactId>
                                     <version>${micronaut.validation.version}</version>
                                 </path>
                             </annotationProcessorPaths>

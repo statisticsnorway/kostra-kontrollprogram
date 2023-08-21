@@ -10,7 +10,7 @@ data class ValidationResult(
     val endTime: LocalDateTime = LocalDateTime.now(),
 ) {
     val severity: Severity
-        get() = this.reportEntries.maxOf { it.severity }
+        get() = if (numberOfControls == 0) Severity.ERROR else this.reportEntries.maxOf { it.severity }
 
     val count: Int
         get() = reportEntries.size

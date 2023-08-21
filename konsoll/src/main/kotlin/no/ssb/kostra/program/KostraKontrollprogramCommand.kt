@@ -65,8 +65,8 @@ class KostraKontrollprogramCommand : Callable<Int> {
 
         val validationReportArguments = ControlDispatcher.validate(kotlinArguments)
 
-        PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use {
-            print(ValidationReport(validationReportArguments))
+        PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
+            printStream.print(ValidationReport(validationReportArguments))
         }
 
         return validationReportArguments.validationResult.severity.info.returnCode

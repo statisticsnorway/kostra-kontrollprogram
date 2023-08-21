@@ -46,8 +46,8 @@ class Tiltak06Test : BehaviorSpec({
                 "individ with fodselsnummer, age above 11, tiltak with kategori#kode different from 4.2",
                 individInTest.copy(
                     fodselsnummer = generateRandomSSN(
-                        dateInTest.minusYears(12),
-                        dateInTest.minusYears(11)
+                        dateInTest.minusYears(13),
+                        dateInTest.minusYears(12)
                     ),
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(

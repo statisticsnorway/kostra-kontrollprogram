@@ -21,7 +21,7 @@ class Rule005aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
             kostraRecord[PERSON_FODSELSNR_COL_NAME]
         }.filter { (_, group) ->
             group.size > 1
-        }.flatMap { (foedselsnummer, group) ->
+        }.flatMap { (_, group) ->
             group.map { kostraRecord ->
                 val journalId = kostraRecord[PERSON_JOURNALNR_COL_NAME]
 

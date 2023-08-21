@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.report
 
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.felles.git.GitPropertiesLoader
-import java.util.*
+import java.util.Calendar
 
 class ValidationReport(
     private val validationReportArguments: ValidationReportArguments,
@@ -44,58 +44,57 @@ class ValidationReport(
                 .append(lf)
 
             // summary
-            if (numberOfControls == 0) {
-                report.append("Finner ingen data!  :-(")
-            } else if (reportEntries.isEmpty()) {
-                report.append("Ingen feil funnet!").append(lf)
-            } else {
-                report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf)
+            when {
+                numberOfControls == 0 -> report.append("Finner ingen data!  :-(")
+                reportEntries.isEmpty() -> report.append("Ingen feil funnet!").append(lf)
+                else -> {
+                    report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf)
 
-                uniqueReportEntries
-                    .sortedBy { it.ruleName }
-                    .groupBy { it.ruleName }
-                    .forEach { (title, group) ->
-                        when (group.first().severity) {
-                            Severity.FATAL ->
-                                report.append(
-                                    "<div style='font-size:12pt; vertical-align: top; color: ${Severity.FATAL.info.color}'>" +
-                                            "$title har funnet ${group.size} feil som hindrer innsending " +
-                                            "og de andre kontrollene i bli kjørt</div>"
-                                ).append(lf)
+                    uniqueReportEntries
+                        .sortedBy { it.ruleName }
+                        .groupBy { it.ruleName }
+                        .forEach { (title, group) ->
+                            when (group.first().severity) {
+                                Severity.FATAL ->
+                                    report.append(
+                                        "<div style='font-size:12pt; vertical-align: top; color: ${Severity.FATAL.info.color}'>" +
+                                                "$title har funnet ${group.size} feil som hindrer innsending " +
+                                                "og de andre kontrollene i bli kjørt</div>"
+                                    ).append(lf)
 
-                            Severity.ERROR ->
-                                report.append(
-                                    "<div style='font-size:12pt; vertical-align: top; color: ${Severity.ERROR.info.color}'>" +
-                                            "$title har funnet ${group.size} feil som hindrer innsending</div>"
-                                ).append(lf)
+                                Severity.ERROR ->
+                                    report.append(
+                                        "<div style='font-size:12pt; vertical-align: top; color: ${Severity.ERROR.info.color}'>" +
+                                                "$title har funnet ${group.size} feil som hindrer innsending</div>"
+                                    ).append(lf)
 
-                            Severity.WARNING ->
-                                report.append(
-                                    "<div style='font-size:12pt; vertical-align: top; color: ${Severity.WARNING.info.color}'>" +
-                                            "$title har funnet ${group.size} advarsler</div>"
-                                ).append(lf)
+                                Severity.WARNING ->
+                                    report.append(
+                                        "<div style='font-size:12pt; vertical-align: top; color: ${Severity.WARNING.info.color}'>" +
+                                                "$title har funnet ${group.size} advarsler</div>"
+                                    ).append(lf)
 
-                            Severity.INFO ->
-                                report.append(
-                                    "<div style='font-size:12pt; vertical-align: top; color: ${Severity.INFO.info.color}'>" +
-                                            "$title har funnet ${group.size} til informasjonsmeldinger</div>"
-                                ).append(lf)
+                                Severity.INFO ->
+                                    report.append(
+                                        "<div style='font-size:12pt; vertical-align: top; color: ${Severity.INFO.info.color}'>" +
+                                                "$title har funnet ${group.size} til informasjonsmeldinger</div>"
+                                    ).append(lf)
 
-                            else ->
-                                report.append(
-                                    "<div style='font-size:12pt; vertical-align: top; color: ${Severity.OK.info.color}'>" +
-                                            "$title har funnet ${group.size} meldinger</div>"
-                                ).append(lf)
+                                else ->
+                                    report.append(
+                                        "<div style='font-size:12pt; vertical-align: top; color: ${Severity.OK.info.color}'>" +
+                                                "$title har funnet ${group.size} meldinger</div>"
+                                    ).append(lf)
+                            }
                         }
-                    }
 
-                report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf)
+                    report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf)
 
-                report.append("TODO").append(lf)
+                    report.append("TODO").append(lf)
+                }
             }
 
             // information per validation
-
             // statistics
             if (severity < Severity.ERROR && statsReportEntries.isNotEmpty()) {
                 report.append("<h3>Statistikkrapport</h3>")
@@ -106,9 +105,5 @@ class ValidationReport(
         }
 
         return report.toString()
-    }
-
-    fun replaceSpaceWithNoBreakingSpace(s: String): String {
-        return s.replace(" ", "&nbsp;")
     }
 }

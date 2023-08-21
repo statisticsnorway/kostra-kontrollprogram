@@ -1,6 +1,5 @@
 package no.ssb.kostra.validation.report
 
-import jakarta.inject.Inject
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.felles.git.GitPropertiesLoader
 import java.util.*
@@ -47,19 +46,13 @@ class ValidationReport(
             // summary
             if (numberOfControls == 0) {
                 report.append("Finner ingen data!  :-(")
-
             } else if (reportEntries.isEmpty()) {
                 report.append("Ingen feil funnet!").append(lf)
-
             } else {
                 report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf)
 
-                reportEntries
-                    .sortedBy {
-                        with(it) {
-                            listOf(caseworker, journalId, ruleName, messageText).joinToString("|")
-                        }
-                    }
+                uniqueReportEntries
+                    .sortedBy { it.ruleName }
                     .groupBy { it.ruleName }
                     .forEach { (title, group) ->
                         when (group.first().severity) {

@@ -6,7 +6,6 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import picocli.CommandLine
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
@@ -23,35 +22,35 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 2,
                 ""
             ),
-// TODO fix test
-//            row(
-//                "invocation with non-existing schema",
-//                arrayOf("--schema", "SS", "--year", "${Year.now().toString().toInt() - 1}", "--region", "1234"),
-//                " ",
-//                2,
-//                "Ukjent skjema"
-//            )
+            row(
+                "invocation with non-existing schema",
+                arrayOf("--schema", "SS", "--year", "${Year.now().toString().toInt() - 1}", "--region", "1234"),
+                " ",
+                2,
+                "Ukjent skjema"
+            ),
+            row(
+                "invocation with valid schema",
+                arrayOf("--schema", "0G", "--year", "${Year.now().toString().toInt() - 1}", "--region", "1234"),
+                PLAIN_TEXT_0G,
+                2,
+                "Oppsummering pr. kontroll"
+            )
         ) { description, args, input, expectedExitCode, expectedOutput ->
             When(description) {
                 val originalSystemOut = System.out
                 val originalSystemIn = System.`in`
 
-                val bais = ByteArrayInputStream(input.toByteArray(StandardCharsets.ISO_8859_1))
-                System.setIn(bais)
+                System.setIn(input.byteInputStream(StandardCharsets.ISO_8859_1))
 
-                val baos = ByteArrayOutputStream()
-                System.setOut(PrintStream(baos))
+                val outputStream = ByteArrayOutputStream()
+                System.setOut(PrintStream(outputStream))
 
                 val exitCode = CommandLine(KostraKontrollprogramCommand()).execute(*args)
-                val output = baos.toString()
+                val output = outputStream.toString()
 
                 System.setIn(originalSystemIn)
                 System.setOut(originalSystemOut)
-
-                /** Her printes feilmeldingene fra valideringen */
-                /** linjen som starter med [DefaultConstraintViolation{rootBean= */
-                println(output)
-
 
                 Then("exit code '$exitCode' should be '$expectedExitCode'") {
                     exitCode shouldBe expectedExitCode
@@ -63,4 +62,11 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
             }
         }
     }
-})
+}) {
+    companion object {
+        private val PLAIN_TEXT_0G = """
+            0G2020 300500976989732         510  123      263
+            0G2020 300500976989732         510           263
+        """.trimIndent()
+    }
+}

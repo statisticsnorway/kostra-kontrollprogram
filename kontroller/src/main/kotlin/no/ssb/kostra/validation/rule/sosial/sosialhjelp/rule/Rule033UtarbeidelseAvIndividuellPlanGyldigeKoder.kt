@@ -29,7 +29,6 @@ class Rule033UtarbeidelseAvIndividuellPlanGyldigeKoder : AbstractRule<List<Kostr
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

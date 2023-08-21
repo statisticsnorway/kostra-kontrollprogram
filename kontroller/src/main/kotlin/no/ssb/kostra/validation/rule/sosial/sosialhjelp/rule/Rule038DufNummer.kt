@@ -28,7 +28,6 @@ class Rule038DufNummer : AbstractRule<List<KostraRecord>>(
             ).copy(
                 caseworker = it[SAKSBEHANDLER_COL_NAME],
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
-                individId = it[PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

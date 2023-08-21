@@ -10,16 +10,14 @@ import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain
 import no.ssb.kostra.area.regnskap.kostra.KvartalKostraMain
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringMain
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpMain
-import no.ssb.kostra.controlprogram.Arguments
-import no.ssb.kostra.felles.ErrorReport
-import no.ssb.kostra.program.util.ConversionUtils
-import no.ssb.kostra.validation.ValidationResult
+import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator
 
 object ControlDispatcher {
-    fun validate(kotlinArguments: KotlinArguments): ErrorReport {
+    fun validate(kotlinArguments: KotlinArguments): ValidationReportArguments {
         val validationResult = when (kotlinArguments.skjema) {
             in "0AK1", "0AK2", "0AK3", "0AK4",
             "0BK1", "0BK2", "0BK3", "0BK4",
@@ -74,30 +72,9 @@ object ControlDispatcher {
             )
         }
 
-        val errorReport = ErrorReport(
-            Arguments(
-                kotlinArguments.skjema,
-                kotlinArguments.aargang,
-                kotlinArguments.kvartal,
-                kotlinArguments.region,
-                kotlinArguments.navn,
-                kotlinArguments.orgnr,
-                kotlinArguments.foretaknr,
-                kotlinArguments.harVedlegg,
-                kotlinArguments.isRunAsExternalProcess,
-                mutableListOf("")
-            )
+        return ValidationReportArguments(
+            kotlinArguments = kotlinArguments,
+            validationResult = validationResult
         )
-        validationResult.reportEntries
-            .map {
-                ConversionUtils.toErrorReportEntry(it)
-            }
-            .forEach {
-                errorReport.addEntry(it)
-            }
-
-        errorReport.count = validationResult.numberOfControls.toLong()
-
-        return errorReport
     }
 }

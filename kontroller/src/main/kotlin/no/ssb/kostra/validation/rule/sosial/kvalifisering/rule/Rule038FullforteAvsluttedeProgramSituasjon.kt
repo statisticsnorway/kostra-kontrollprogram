@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ARBLONNSTILS_COL_NAME
@@ -38,6 +39,9 @@ class Rule038FullforteAvsluttedeProgramSituasjon : AbstractRule<List<KostraRecor
                         "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført " +
                         "program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for " +
                         "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 

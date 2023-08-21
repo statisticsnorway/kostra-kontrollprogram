@@ -45,7 +45,6 @@ class Rule027MottattOkonomiskSosialhjelp : AbstractRule<List<KostraRecord>>(
                 ).copy(
                     caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                     journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                    individId = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME],
                 )
 
                 else -> createValidationReportEntry(
@@ -57,7 +56,6 @@ class Rule027MottattOkonomiskSosialhjelp : AbstractRule<List<KostraRecord>>(
                 ).copy(
                     caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                     journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                    individId = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME],
                 )
             }
         }.ifEmpty { null }

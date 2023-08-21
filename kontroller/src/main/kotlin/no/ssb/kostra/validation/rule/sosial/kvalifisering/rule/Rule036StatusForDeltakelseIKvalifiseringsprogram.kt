@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
@@ -23,6 +24,9 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogram : AbstractRule<List<Kostr
                 "Korrigér status. Fant '${it[STATUS_COL_NAME]}', forventet én av " +
                         "'${fieldDefinitions.byColumnName(STATUS_COL_NAME).codeListToString()}'. " +
                         "Feltet er obligatorisk å fylle ut."
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

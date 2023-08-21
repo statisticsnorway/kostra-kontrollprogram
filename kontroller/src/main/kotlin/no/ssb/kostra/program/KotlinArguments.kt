@@ -1,6 +1,7 @@
 package no.ssb.kostra.program
 
 import java.io.InputStream
+import java.time.LocalDateTime
 
 data class KotlinArguments(
     val skjema: String,
@@ -12,7 +13,8 @@ data class KotlinArguments(
     val foretaknr: String = BLANK_CHAR.repeat(9),
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
-    val inputFileContent: String = BLANK_CHAR
+    val inputFileContent: String = BLANK_CHAR,
+    val startTime: LocalDateTime = LocalDateTime.now()
 ) {
     init {
         require(skjema.isNotBlank()) {

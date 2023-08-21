@@ -36,7 +36,6 @@ class Rule005aFoedselsnummerDubletter : AbstractRule<List<KostraRecord>>(
                 ).copy(
                     caseworker = kostraRecord[SAKSBEHANDLER_COL_NAME],
                     journalId = journalId,
-                    individId = foedselsnummer
                 )
             }
         }.ifEmpty { null }

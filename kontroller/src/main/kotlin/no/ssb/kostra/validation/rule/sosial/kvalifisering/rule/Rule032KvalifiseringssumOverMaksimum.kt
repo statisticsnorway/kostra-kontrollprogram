@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -19,6 +20,9 @@ class Rule032KvalifiseringssumOverMaksimum : AbstractRule<List<KostraRecord>>(
                 "Kvalifiseringsstønaden (${it[KVP_STONAD_COL_NAME]}) " +
                         "som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +
                         "kontrollgrense på NOK $STONAD_SUM_MAX,-."
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 

@@ -34,7 +34,6 @@ class Rule039FullforteAvsluttedeProgramInntektkilde : AbstractRule<List<KostraRe
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                individId = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

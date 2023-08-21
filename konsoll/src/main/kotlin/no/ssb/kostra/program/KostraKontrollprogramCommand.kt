@@ -47,7 +47,7 @@ class KostraKontrollprogramCommand : Callable<Int> {
 
     override fun call(): Int {
         if (schema.isNotBlank() && hasAttachment == "1")
-            inputFileContent = System.`in`.bufferedReader().use(BufferedReader::readText).trim { it <= ' ' }
+            inputFileContent = System.`in`.bufferedReader().use(BufferedReader::readText).trim()
 
         val kotlinArguments = KotlinArguments(
             skjema = schema,

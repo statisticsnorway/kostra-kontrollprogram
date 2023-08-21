@@ -3,7 +3,7 @@ package no.ssb.kostra.program
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.*
+import java.util.Objects
 
 data class KostraRecord(
     val lineNumber: Int = 1,
@@ -16,7 +16,7 @@ data class KostraRecord(
         throw NoSuchFieldException("fieldAsString(): $field is missing")
     }
 
-    fun fieldAsTrimmedString(field: String): String = fieldAsString(field).trim { it <= ' ' }
+    fun fieldAsTrimmedString(field: String): String = fieldAsString(field).trim()
 
     fun fieldAsInt(field: String): Int? = fieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
 

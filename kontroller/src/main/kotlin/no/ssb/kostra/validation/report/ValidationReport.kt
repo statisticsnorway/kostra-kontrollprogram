@@ -1,14 +1,12 @@
 package no.ssb.kostra.validation.report
 
+import jakarta.inject.Inject
+import no.ssb.kostra.felles.git.GitProperties
 import java.util.*
 
 class ValidationReport(private val validationReportArguments: ValidationReportArguments) {
-
-    val count: Int
-        get() = this.validationReportArguments.validationResult.count
-
-    val severity: Severity
-        get() = validationReportArguments.validationResult.severity
+    @Inject
+    lateinit var gitProperties: GitProperties // inneholder versjonsinformasjonﬁ
 
     override fun toString(): String {
         val kotlinArguments = validationReportArguments.kotlinArguments
@@ -30,7 +28,7 @@ class ValidationReport(private val validationReportArguments: ValidationReportAr
                 .append("</h2>").append(lf)
                 .append("<hr/>").append(lf)
                 .append("<div>Kontrollprogramversjon: ")
-                .append(validationReportArguments.gitProperties.tags)
+                .append(gitProperties.tags)
                 .append(endDiv).append(lf)
                 .append("<div>Kontroller startet: ").append(kotlinArguments.startTime).append(endDiv).append(lf)
                 .append("<div>Rapport generert: ").append(Calendar.getInstance().time).append(endDiv).append(lf)
@@ -39,7 +37,7 @@ class ValidationReport(private val validationReportArguments: ValidationReportAr
                 .append(endDiv).append(lf)
                 .append("<div>Antall sjekker utført: ").append(count)
                 .append(endDiv).append(lf).append(lf)
-                .append("<div>Feilkode: ").append(validationReportArguments.validationResult.severity).append(endDiv)
+                .append("<div>Feilkode: ").append(severity.info.returnCode).append(endDiv)
                 .append(lf)
 
             // summary

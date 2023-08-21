@@ -30,8 +30,36 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 "Ukjent skjema"
             ),
             row(
-                "invocation with valid schema",
-                arrayOf("--schema", "0G", "--year", "${Year.now().toString().toInt() - 1}", "--region", "1234"),
+                "invocation with blank schema",
+                arrayOf(
+                    "--schema", "  ",
+                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--region", "1234"
+                ),
+                "",
+                1,
+                ""
+            ),
+            row(
+                "invocation with valid schema, but hasAttachment = 0",
+                arrayOf(
+                    "--schema", "0G",
+                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--region", "1234",
+                    "--attachment", "0"
+                ),
+                "",
+                2,
+                "Recordlengde har funnet 1 feil som hindrer innsending"
+            ),
+            row(
+                "invocation with valid schema, hasAttachment = 1",
+                arrayOf(
+                    "--schema", "0G",
+                    "--year", "${Year.now().toString().toInt() - 1}",
+                    "--region", "1234",
+                    "--attachment", "1"
+                ),
                 PLAIN_TEXT_0G,
                 2,
                 "Oppsummering pr. kontroll"

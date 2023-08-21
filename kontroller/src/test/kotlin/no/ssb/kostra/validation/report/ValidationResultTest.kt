@@ -1,112 +1,80 @@
 package no.ssb.kostra.validation.report
 
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import java.time.LocalDateTime
 
 class ValidationResultTest : BehaviorSpec({
-    Given("ValidationResult instance with 2 reportEntries and  empty statsReportEntries") {
-        val sut = ValidationResult(
-            reportEntries = listOf(
-                ValidationReportEntry().copy(lineNumbers = listOf(1, 2)),
-                ValidationReportEntry().copy(severity = Severity.WARNING, lineNumbers = listOf(2, 3)),
+    Given("ValidationResult#severity & numberOfControls") {
+        forAll(
+            row(
+                "numberOfControls = 0, no entries",
+                0,
+                emptyList(),
+                Severity.ERROR,
+                0,
+                0,
             ),
-            numberOfControls = 1,
-            statsReportEntries = emptyList(),
-            endTime = LocalDateTime.of(2022,1,1, 1,1,1),
-        )
+            row(
+                "numberOfControls = 1, 2 unique entries",
+                1,
+                listOf(
+                    ValidationReportEntry().copy(
+                        ruleName = "Rule 1",
+                        severity = Severity.WARNING,
+                        lineNumbers = listOf(1)
+                    ),
+                    ValidationReportEntry().copy(
+                        ruleName = "Rule 2",
+                        severity = Severity.INFO,
+                        lineNumbers = listOf(2)
+                    ),
+                ),
+                Severity.WARNING,
+                2,
+                2,
+            ),
+            row(
+                "numberOfControls = 1, 2 duplicate entries",
+                1,
+                listOf(
+                    ValidationReportEntry().copy(
+                        ruleName = "Rule 1",
+                        severity = Severity.WARNING,
+                        lineNumbers = listOf(1)
+                    ),
+                    ValidationReportEntry().copy(
+                        ruleName = "Rule 1",
+                        severity = Severity.WARNING,
+                        lineNumbers = listOf(2)
+                    ),
+                ),
+                Severity.WARNING,
+                2,
+                1,
+            ),
+            row(
+                "numberOfControls = 1, no entries",
+                1,
+                emptyList(),
+                Severity.OK,
+                0,
+                0,
+            ),
+        ) { description, numberOfControls, reportEntries, expectedSeverity, expectedCount, expectedUnique ->
+            When(description) {
+                val sut = ValidationResult(
+                    reportEntries = reportEntries,
+                    numberOfControls = numberOfControls,
+                )
 
-        When("count is called") {
-            val result = sut.count
-
-            Then("result should be as expected") {
-                result shouldBe 2
-            }
-        }
-
-        When("severity is called") {
-            val result = sut.severity
-
-            Then("result should be as expected") {
-                result shouldBe Severity.WARNING
-            }
-        }
-
-        When("uniqueReportEntries is called") {
-            val result = sut.uniqueReportEntries
-
-            Then("result should be as expected") {
-                result.size shouldBe 1
-                result[0].lineNumbers shouldBe listOf(1, 2, 3)
-            }
-        }
-    }
-
-    Given("ValidationResult with numberOfControls = 0") {
-        val sut = ValidationResult(
-            reportEntries = emptyList(),
-            numberOfControls = 0,
-            statsReportEntries = emptyList(),
-            endTime = LocalDateTime.of(2022,1,1, 1,1,1),
-        )
-
-        When("count is called") {
-            val result = sut.count
-
-            Then("result should be as expected") {
-                result shouldBe 0
-            }
-        }
-
-        When("severity is called") {
-            val result = sut.severity
-
-            Then("result should be as expected") {
-                result shouldBe Severity.ERROR
-            }
-        }
-
-        When("uniqueReportEntries is called") {
-            val result = sut.uniqueReportEntries
-
-            Then("result should be as expected") {
-                result.size shouldBe 0
-            }
-        }
-    }
-
-    Given("ValidationResult with numberOfControls = 1") {
-        val sut = ValidationResult(
-            reportEntries = emptyList(),
-            numberOfControls = 1,
-            statsReportEntries = emptyList(),
-            endTime = LocalDateTime.of(2022,1,1, 1,1,1),
-        )
-
-        When("count is called") {
-            val result = sut.count
-
-            Then("result should be as expected") {
-                result shouldBe 0
-            }
-        }
-
-        When("severity is called") {
-            val result = sut.severity
-
-            Then("result should be as expected") {
-                result shouldBe Severity.OK
-            }
-        }
-
-        When("uniqueReportEntries is called") {
-            val result = sut.uniqueReportEntries
-
-            Then("result should be as expected") {
-                result.size shouldBe 0
+                Then("result should be as expected") {
+                    sut.severity shouldBe expectedSeverity
+                    sut.count shouldBe expectedCount
+                    sut.uniqueReportEntries.size shouldBe expectedUnique
+                }
             }
         }
     }
-
-
 })

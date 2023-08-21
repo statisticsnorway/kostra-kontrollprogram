@@ -1,10 +1,13 @@
 package no.ssb.kostra.validation.report
 
+import java.time.LocalDateTime
+
 
 data class ValidationResult(
     val reportEntries: List<ValidationReportEntry>,
     val numberOfControls: Int,
-    val statsReportEntries: List<StatsReportEntry> = emptyList()
+    val statsReportEntries: List<StatsReportEntry> = emptyList(),
+    val endTime: LocalDateTime = LocalDateTime.now(),
 ) {
     val severity: Severity
         get() = this.reportEntries.maxOf { it.severity }

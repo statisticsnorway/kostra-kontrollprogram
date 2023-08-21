@@ -4,6 +4,7 @@ import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
+import java.io.BufferedReader
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.Callable
@@ -55,7 +56,7 @@ class KostraKontrollprogramCommand : Callable<Int> {
             isRunAsExternalProcess = isRunAsExternalProcess,
             inputFileContent =
                 if (schema.isNotBlank() && hasAttachment == "1")
-                    System.`in`.bufferedReader().use { it.readText() }
+                    System.`in`.bufferedReader().use(BufferedReader::readText)
                 else
                     BLANK_CHAR
         )

@@ -24,6 +24,6 @@ class Tiltak06 : AbstractRule<KostraIndividType>(
                         messageText = "Tiltak (${tiltak.id}). Barnet er over 11 år og i SFO. " +
                                 "Barnets alder er $ageInYears år"
                     )
-                }.ifEmpty { null }
-        }
+                }
+        }?.ifEmpty { null }
 }

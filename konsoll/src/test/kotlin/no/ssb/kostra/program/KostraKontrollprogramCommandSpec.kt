@@ -47,7 +47,12 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 System.setIn(originalSystemIn)
                 System.setOut(originalSystemOut)
 
-                Then("exit code should be $exitCode") {
+                /** Her printes feilmeldingene fra valideringen */
+                /** linjen som starter med [DefaultConstraintViolation{rootBean= */
+                println(output)
+
+
+                Then("exit code '$exitCode' should be '$expectedExitCode'") {
                     exitCode shouldBe expectedExitCode
                 }
 

@@ -1,6 +1,6 @@
 package no.ssb.kostra.program
 
-import no.ssb.kostra.felles.ErrorReport
+import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -61,11 +61,12 @@ class KostraKontrollprogramCommand : Callable<Int> {
             isRunAsExternalProcess = isRunAsExternalProcess,
             inputFileContent = inputFileContent,
         )
-        val report: ErrorReport = ControlDispatcher.validate(kotlinArguments)
-        val errorTypeFound = report.errorType
+        val validationReportArguments = ControlDispatcher.validate(kotlinArguments)
+        val validationReport = ValidationReport(validationReportArguments)
         val printStream = PrintStream(System.out, true, StandardCharsets.ISO_8859_1)
-        printStream.print(report.generateReport())
-        return errorTypeFound
+        printStream.print(validationReport)
+
+        return validationReportArguments.validationResult.severity.info.returnCode
     }
 
     companion object {

@@ -8,6 +8,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.AbstractRule
 
 
@@ -59,7 +60,7 @@ abstract class PositionedFileValidator(
             reportEntries = validationReportEntries,
             numberOfControls = arguments.getInputContentAsStringList().size * fatalRules.size
                     + kostraRecordList.size * validationRules.size,
-            statsEntries = if (validationSeverity < Severity.ERROR) createStats(kostraRecordList) else emptyList()
+            statsReportEntries = if (validationSeverity < Severity.ERROR) createStats(kostraRecordList) else emptyList()
         )
     }
 

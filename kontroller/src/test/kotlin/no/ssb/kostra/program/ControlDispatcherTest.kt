@@ -10,6 +10,11 @@ class ControlDispatcherTest : BehaviorSpec({
     Given("ValidationResult instance with 2 reportEntries and  empty statsReportEntries") {
         forAll(
             row("0AK1"),
+            row("0A"),
+            row("0B"),
+            row("0I"),
+            row("0J"),
+            row("0N"),
             row("0Q"),
             row("0F"),
             row("0X"),

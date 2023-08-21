@@ -46,30 +46,29 @@ class KostraKontrollprogramCommand : Callable<Int> {
     private var inputFileContent: String = " "
 
     override fun call(): Int {
-        if (schema.isNotBlank() && hasAttachment == "1")
         /** Note: .use is difficult to get coverage for in SonarCloud */
+        if (schema.isNotBlank() && hasAttachment == "1")
             inputFileContent = System.`in`.bufferedReader().use(BufferedReader::readText).trim()
 
-        val kotlinArguments = KotlinArguments(
-            skjema = schema,
-            aargang = year,
-            kvartal = quarter,
-            region = region,
-            navn = name,
-            orgnr = unitId,
-            foretaknr = companyId,
-            harVedlegg = (hasAttachment == "1"),
-            isRunAsExternalProcess = isRunAsExternalProcess,
-            inputFileContent = inputFileContent,
-        )
-
-        val validationReportArguments = ControlDispatcher.validate(kotlinArguments)
-
-        PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
-            printStream.print(ValidationReport(validationReportArguments))
+        return ControlDispatcher.validate(
+            KotlinArguments(
+                skjema = schema,
+                aargang = year,
+                kvartal = quarter,
+                region = region,
+                navn = name,
+                orgnr = unitId,
+                foretaknr = companyId,
+                harVedlegg = (hasAttachment == "1"),
+                isRunAsExternalProcess = isRunAsExternalProcess,
+                inputFileContent = inputFileContent,
+            )
+        ).let { validationReportArguments ->
+            PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
+                printStream.print(ValidationReport(validationReportArguments))
+            }
+            validationReportArguments.validationResult.severity.info.returnCode
         }
-
-        return validationReportArguments.validationResult.severity.info.returnCode
     }
 
     companion object {

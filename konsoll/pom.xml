@@ -37,12 +37,6 @@
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <dependency>
-            <groupId>io.micronaut.test</groupId>
-            <artifactId>micronaut-test-kotest5</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -88,11 +82,6 @@
                                     <artifactId>picocli-codegen</artifactId>
                                     <version>${picocli.version}</version>
                                 </path>
-                                <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-graal</artifactId>
-                                    <version>${micronaut.core.version}</version>
-                                </path>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
                                 <annotationProcessorArg>micronaut.processing.group=no.ssb.kostra</annotationProcessorArg>
@@ -120,13 +109,6 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                             </sourceDirs>
-                            <annotationProcessorPaths combine.self="override">
-                                <path>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-graal</artifactId>
-                                    <version>${micronaut.core.version}</version>
-                                </path>
-                            </annotationProcessorPaths>
                         </configuration>
                     </execution>
                     <execution>

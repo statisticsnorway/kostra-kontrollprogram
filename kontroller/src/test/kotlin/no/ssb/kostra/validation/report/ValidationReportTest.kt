@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.string.shouldContain
+import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KotlinArguments
 import java.time.LocalDateTime
 
@@ -48,7 +49,6 @@ class ValidationReportTest : BehaviorSpec({
         }
     }
 
-
     Given("ValidationReport, summary per validation, severity") {
         forAll(
             row(Severity.FATAL, "kontrollene i bli kjørt</div>"),
@@ -80,6 +80,47 @@ class ValidationReportTest : BehaviorSpec({
                 Then("result should be as expected") {
                     result shouldContain expectedMessaage
                     result shouldContain "color: ${severity.info.color}"
+                }
+            }
+        }
+    }
+
+    Given("ValidationReport, show stats") {
+        forAll(
+            row(
+                "has errors, no stats shown",
+                Severity.ERROR,
+                emptyList<StatsReportEntry>(),
+                "Oppsummering pr. kontroll"
+            ),
+            row(
+                "has no errors, no shown",
+                Severity.INFO,
+                listOf(
+                    StatsReportEntry(
+                        content = "Content unit",
+                        codeList = listOf(Code("1", "first")),
+                        statsEntryList = listOf(StatsEntry("1", "123"))
+                    )
+                ),
+                "Oppsummering pr. kontroll"
+            ),
+        ) { description, severity, statsReportEntries, expectedMessage ->
+            When(description) {
+                val sut = ValidationReport(
+                    validationReportArguments = ValidationReportArguments(
+                        kotlinArguments = kotlinArguments,
+                        validationResult = ValidationResult(
+                            reportEntries = listOf(ValidationReportEntry(severity = severity)),
+                            numberOfControls = 1,
+                            statsReportEntries = statsReportEntries
+                        )
+                    )
+                )
+
+                println(sut.toString())
+                Then("result should be as expected") {
+                    sut.toString() shouldContain expectedMessage
                 }
             }
         }

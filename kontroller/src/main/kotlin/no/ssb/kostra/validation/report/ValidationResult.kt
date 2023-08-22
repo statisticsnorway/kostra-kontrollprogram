@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 private fun List<ValidationReportEntry>.severity(): Severity =
     if (this.isEmpty()) Severity.OK
-    else this.maxOf { it.severity }
+    else this.maxBy { it.severity.ordinal }.severity
 
 data class ValidationResult(
     val reportEntries: List<ValidationReportEntry>,

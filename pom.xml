@@ -42,7 +42,8 @@
             **/Application.kt,
             **/node_modules/**/*,
             **/KostraRecordExtensionsGenerics.kt,
-            **/MappingToConsoleAppExtensions.kt
+            **/MappingToConsoleAppExtensions.kt,
+            **/KostraKontrollprogramCommand.kt
         </sonar.exclusions>
 
         <!-- removes [WARNING] Unable to locate Source XRef to link to - DISABLED -->

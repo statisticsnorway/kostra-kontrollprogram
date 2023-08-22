@@ -13,7 +13,7 @@ class ValidationReport(
 
     override fun toString(): String {
         val kotlinArguments = validationReportArguments.kotlinArguments
-        val lf = if (kotlinArguments.isRunAsExternalProcess) "" else "\n"
+        val lf = "\n"
         val endDiv = "</div>"
         val report = StringBuilder()
 

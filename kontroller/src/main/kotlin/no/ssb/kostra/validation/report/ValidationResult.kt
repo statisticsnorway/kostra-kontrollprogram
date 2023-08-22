@@ -2,18 +2,18 @@ package no.ssb.kostra.validation.report
 
 import java.time.LocalDateTime
 
-
-private fun List<ValidationReportEntry>.severity(): Severity =
-    if (this.isEmpty()) Severity.OK
-    else this.maxBy { it.severity.ordinal }.severity
-
 data class ValidationResult(
     val reportEntries: List<ValidationReportEntry>,
     val numberOfControls: Int,
     val statsReportEntries: List<StatsReportEntry> = emptyList(),
     val endTime: LocalDateTime = LocalDateTime.now(),
 ) {
-    val severity: Severity = if (numberOfControls == 0) Severity.ERROR else reportEntries.severity()
+    val severity: Severity = when {
+        (numberOfControls == 0) -> Severity.ERROR
+        reportEntries.isNotEmpty() -> reportEntries.maxBy { it.severity.ordinal }.severity
+        else -> Severity.OK
+    }
+
     val count: Int = reportEntries.size
 
     val uniqueReportEntries: List<ValidationReportEntry>

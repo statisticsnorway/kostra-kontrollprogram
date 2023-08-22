@@ -10,11 +10,19 @@ class ValidationResultTest : BehaviorSpec({
         forAll(
             row(
                 "numberOfControls = 0, no entries",
-                0,
-                emptyList(),
-                Severity.ERROR,
-                0,
-                0,
+                0, emptyList(), Severity.ERROR, 0, 0
+            ),
+            row(
+                "numberOfControls = 1, 1 entries",
+                1,
+                listOf(
+                    ValidationReportEntry().copy(
+                        ruleName = "Rule 1",
+                        severity = Severity.ERROR,
+                        lineNumbers = listOf(1)
+                    ),
+                ),
+                Severity.ERROR, 1, 1
             ),
             row(
                 "numberOfControls = 1, 2 unique entries",
@@ -31,9 +39,7 @@ class ValidationResultTest : BehaviorSpec({
                         lineNumbers = listOf(2)
                     ),
                 ),
-                Severity.WARNING,
-                2,
-                2,
+                Severity.WARNING, 2, 2
             ),
             row(
                 "numberOfControls = 1, 2 duplicate entries",
@@ -50,18 +56,14 @@ class ValidationResultTest : BehaviorSpec({
                         lineNumbers = listOf(2)
                     ),
                 ),
-                Severity.WARNING,
-                2,
-                1,
+                Severity.WARNING, 2, 1
             ),
             row(
                 "numberOfControls = 1, no entries",
                 1,
                 emptyList(),
-                Severity.OK,
-                0,
-                0,
-            ),
+                Severity.OK, 0, 0
+            )
         ) { description, numberOfControls, reportEntries, expectedSeverity, expectedCount, expectedUnique ->
             When(description) {
                 val sut = ValidationResult(

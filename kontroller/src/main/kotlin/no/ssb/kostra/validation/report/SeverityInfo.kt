@@ -1,3 +1,6 @@
 package no.ssb.kostra.validation.report
 
-data class SeverityInfo(val returnCode: Int, val color: String)
+data class SeverityInfo(
+    val returnCode: Int,
+    val color: String
+)

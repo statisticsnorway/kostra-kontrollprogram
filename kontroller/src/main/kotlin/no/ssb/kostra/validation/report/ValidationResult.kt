@@ -9,15 +9,13 @@ data class ValidationResult(
     val statsReportEntries: List<StatsReportEntry> = emptyList(),
     val endTime: LocalDateTime = LocalDateTime.now(),
 ) {
-    val severity: Severity
-        get() = when {
-            numberOfControls == 0 -> Severity.ERROR
-            reportEntries.isNotEmpty() -> reportEntries.maxOf { it.severity }
-            else -> Severity.OK
-        }
+    val severity: Severity = when {
+        numberOfControls == 0 -> Severity.ERROR
+        reportEntries.isNotEmpty() -> reportEntries.maxOf { it.severity }
+        else -> Severity.OK
+    }
 
-    val count: Int
-        get() = reportEntries.size
+    val count: Int = reportEntries.size
 
     val uniqueReportEntries: List<ValidationReportEntry>
         get() = reportEntries

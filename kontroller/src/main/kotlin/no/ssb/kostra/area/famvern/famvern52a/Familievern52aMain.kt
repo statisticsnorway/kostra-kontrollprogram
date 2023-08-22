@@ -29,6 +29,7 @@ class Familievern52aMain(arguments: KotlinArguments) : PositionedFileValidator(a
         Rule017Bosituasjon(),
         Rule018Arbeidssituasjon(),
         Rule019AVarighetSamtalepartner(),
+        // TODO Jon Ole: Denne skal antakelig inn her, men testene feiler med denne: Rule019B1VarighetSidenBrudd(),
         Rule019B2VarighetEkspartner(),
         Rule020DatoForsteBehandlingssamtale(),
         Rule021DatoForsteBehandlingssamtaleEtterHenvendelse(),

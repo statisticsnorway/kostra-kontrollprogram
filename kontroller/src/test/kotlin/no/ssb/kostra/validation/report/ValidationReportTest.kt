@@ -9,13 +9,6 @@ import no.ssb.kostra.program.KotlinArguments
 import java.time.LocalDateTime
 
 class ValidationReportTest : BehaviorSpec({
-    val kotlinArguments = KotlinArguments(
-        skjema = "0A",
-        aargang = "2023",
-        region = "1234",
-        startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 0),
-    )
-
     Given("ValidationReport, summary per validation, branch") {
         forAll(
             row("Finner ingen data", 0, emptyList()),
@@ -33,7 +26,7 @@ class ValidationReportTest : BehaviorSpec({
             When(description) {
                 val sut = ValidationReport(
                     validationReportArguments = ValidationReportArguments(
-                        kotlinArguments = kotlinArguments,
+                        kotlinArguments = kotlinArgumentsInTest,
                         validationResult = ValidationResult(
                             reportEntries = reportEntries,
                             numberOfControls = numberOfControls,
@@ -59,7 +52,9 @@ class ValidationReportTest : BehaviorSpec({
         ) { severity, expectedMessaage ->
             When(severity.name) {
                 val validationReportArguments = ValidationReportArguments(
-                    kotlinArguments = kotlinArguments,
+                    kotlinArguments = kotlinArgumentsInTest.copy(
+                        isRunAsExternalProcess = false
+                    ),
                     validationResult = ValidationResult(
                         reportEntries = listOf(
                             ValidationReportEntry(
@@ -90,7 +85,7 @@ class ValidationReportTest : BehaviorSpec({
             row(
                 "has errors, no stats shown",
                 Severity.ERROR,
-                emptyList<StatsReportEntry>(),
+                emptyList(),
                 "Oppsummering pr. kontroll"
             ),
             row(
@@ -109,7 +104,7 @@ class ValidationReportTest : BehaviorSpec({
             When(description) {
                 val sut = ValidationReport(
                     validationReportArguments = ValidationReportArguments(
-                        kotlinArguments = kotlinArguments,
+                        kotlinArguments = kotlinArgumentsInTest,
                         validationResult = ValidationResult(
                             reportEntries = listOf(ValidationReportEntry(severity = severity)),
                             numberOfControls = 1,
@@ -125,5 +120,14 @@ class ValidationReportTest : BehaviorSpec({
             }
         }
     }
-
-})
+}) {
+    companion object {
+        private val kotlinArgumentsInTest = KotlinArguments(
+            skjema = "0A",
+            aargang = "2023",
+            region = "1234",
+            startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 0),
+            isRunAsExternalProcess = true
+        )
+    }
+}

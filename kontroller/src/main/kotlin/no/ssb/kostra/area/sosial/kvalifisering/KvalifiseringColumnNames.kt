@@ -33,6 +33,7 @@ object KvalifiseringColumnNames {
     const val KVP_MED_SOSHJ_PGM_COL_NAME = "KVP_MED_SOSHJ_PGM"
     const val KVP_MED_SOSHJ_SUP_COL_NAME = "KVP_MED_SOSHJ_SUP"
 
+    // CR NOTE: Not in use
     const val KVP_OSLO_COL_NAME = "KVP_OSLO"
 
     const val YTELSE_SOSHJELP_COL_NAME = "YTELSE_SOSHJELP"

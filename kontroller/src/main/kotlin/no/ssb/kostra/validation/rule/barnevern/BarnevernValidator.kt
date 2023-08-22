@@ -29,7 +29,7 @@ class BarnevernValidator(
         )
     )
 
-    fun validateBarnevern(
+    internal fun validateBarnevern(
         arguments: KotlinArguments,
         streamHandler: BarnevernXmlStreamHandler
     ): ValidationResult {

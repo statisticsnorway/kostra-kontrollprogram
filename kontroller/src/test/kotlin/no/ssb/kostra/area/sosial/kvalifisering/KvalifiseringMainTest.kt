@@ -104,7 +104,7 @@ class KvalifiseringMainTest : BehaviorSpec({
                 KvalifiseringColumnNames.KVP_STONAD_COL_NAME to "42",
 
                 *((1..12).map {
-                    "${MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
+                    "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
                 }).toTypedArray(),
             ),
             KvalifiseringFieldDefinitions.fieldDefinitionsByName

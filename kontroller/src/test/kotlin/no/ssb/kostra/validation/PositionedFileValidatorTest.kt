@@ -3,6 +3,7 @@ package no.ssb.kostra.validation
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
@@ -23,7 +24,10 @@ class PositionedFileValidatorTest : BehaviorSpec({
             override val validationRules: List<AbstractRule<List<KostraRecord>>>
                 get() = emptyList()
             override val fieldDefinitions: FieldDefinitions
-                get() = FieldDefinitions()
+                get() = object : FieldDefinitions {
+                    override val fieldDefinitions: List<FieldDefinition>
+                        get() = emptyList()
+                }
         }
 
         When("validate") {

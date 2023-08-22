@@ -24,7 +24,7 @@ import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_2_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_3_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_ALLE_COL_NAME
-import no.ssb.kostra.area.famvern.famvern55.Utils
+import no.ssb.kostra.area.famvern.famvern55.Utils.validateMatrix
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
@@ -35,19 +35,17 @@ class Rule005AvsluttedeMeklingerEtterTidsbruk : AbstractRule<List<KostraRecord>>
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
-        Utils.validateMatrix(context, fieldList, columns)
-            .mapNotNull {
-                val itemListSum = it.itemList.sumOf { item -> item.second }
-                createValidationReportEntry(
-                    messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +
-                            "er ulik summen ($itemListSum) av følgende liste (${it.itemList})",
-                    lineNumbers = it.lineNumbers
-                )
-            }
-            .takeIf { it.any() }
+        validateMatrix(context, fieldList, NUM_COLS).map {
+            val itemListSum = it.itemList.sumOf { item -> item.second }
+            createValidationReportEntry(
+                messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +
+                        "er ulik summen ($itemListSum) av følgende liste (${it.itemList})",
+                lineNumbers = it.lineNumbers
+            )
+        }.takeIf { it.any() }
 
     companion object {
-        const val columns = 4
+        const val NUM_COLS = 4
 
         val fieldList = listOf(
             MEKLING_SEP_1_COL_NAME,

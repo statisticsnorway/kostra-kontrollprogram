@@ -88,7 +88,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TLFSAMT_O
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TOLK_A_COL_NAME
 import no.ssb.kostra.program.*
 
-object Familievern52aFieldDefinitions : FieldDefinitions() {
+object Familievern52aFieldDefinitions : FieldDefinitions {
     private val varighet = listOf(
         Code("1", "Har ikke bodd sammen"),
         Code("2", "Under 2 år"),

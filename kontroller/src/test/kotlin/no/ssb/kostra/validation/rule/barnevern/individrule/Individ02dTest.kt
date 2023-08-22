@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleWithArgsTest
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_TRUE
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
@@ -41,4 +40,8 @@ class Individ02dTest : BehaviorSpec({
             )
         )
     )
-})
+}) {
+    companion object{
+        private const val KOSTRA_IS_CLOSED_FALSE = "2"
+    }
+}

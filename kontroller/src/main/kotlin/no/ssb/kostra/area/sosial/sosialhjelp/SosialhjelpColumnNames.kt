@@ -13,6 +13,7 @@ object SosialhjelpColumnNames {
 
     const val KJONN_COL_NAME = "KJONN"
     const val STATUS_COL_NAME = "STATUS"
+    // CR NOTE: Only in use in tests
     const val AVSL_DATO_COL_NAME = "AVSL_DATO"
     const val EKTSTAT_COL_NAME = "EKTSTAT"
 

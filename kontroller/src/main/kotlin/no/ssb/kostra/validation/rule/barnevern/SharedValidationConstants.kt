@@ -3,7 +3,6 @@ package no.ssb.kostra.validation.rule.barnevern
 object SharedValidationConstants {
 
     const val KOSTRA_IS_CLOSED_TRUE = "1"
-    const val KOSTRA_IS_CLOSED_FALSE = "2"
 
     const val AGE_SIX = 6
     const val AGE_TEN = 10

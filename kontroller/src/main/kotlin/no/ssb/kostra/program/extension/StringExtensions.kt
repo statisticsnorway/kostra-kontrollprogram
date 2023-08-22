@@ -6,6 +6,7 @@ fun String.valueOrNull() = if (this.trim() in setOf("", "0")) null else this
 
 fun String.municipalityIdFromRegion() = this.substring(0, 4)
 
+// CR NOTE: Only in use in tests
 fun String.districtIdFromRegion() = this.substring(4, 6)
 
 fun String.ageInYears(reportingYear: Int): Int? =

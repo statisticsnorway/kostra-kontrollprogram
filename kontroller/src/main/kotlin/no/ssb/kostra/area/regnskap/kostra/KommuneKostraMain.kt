@@ -18,8 +18,6 @@ class KommuneKostraMain(
     private val bevilgningRegnskap = listOf("0A", "0C", "0I", "0K", "0M", "0P")
     private val balanseRegnskap = listOf("0B", "0D", "0J", "0L", "0N", "0Q")
 
-    private val svalbard = listOf("211100")
-
     private val orgnrSpesial = listOf(
         "817920632",  // Trøndelag
         "921234554",  // Drammen

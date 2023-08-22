@@ -15,14 +15,14 @@ class Rule031StonadssumMinimum : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filterNot {
-            (it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)) > min
+            (it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)) > MIN
         }.map {
             val stonad = it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)
             createValidationReportEntry(
                 "Det samlede stønadsbeløpet (summen ($stonad) " +
                         "av bidrag (${it[BIDRAG_COL_NAME]}) og lån (${it[LAAN_COL_NAME]})) som mottakeren " +
                         "har fått i løpet av rapporteringsåret er lik/lavere enn Statistisk sentralbyrås " +
-                        "kontrollgrense på kr. (${min}),-."
+                        "kontrollgrense på kr. (${MIN}),-."
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
@@ -30,6 +30,6 @@ class Rule031StonadssumMinimum : AbstractRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        internal const val min = 200
+        internal const val MIN = 200
     }
 }

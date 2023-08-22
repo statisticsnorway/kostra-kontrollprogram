@@ -4,6 +4,7 @@ import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.KostraRecord
 
+// CR NOTE: Only in use in tests
 fun KostraRecord.toRecordString(): String = fieldDefinitionByName.values
     .sortedBy { it.to }
     .let { fieldDefinitions ->
@@ -49,8 +50,10 @@ fun String.toKostraRecord(
     )
 }
 
+// CR NOTE: Only in use in tests
 fun KostraRecord.asList() = listOf(this)
 
+// CR NOTE: Only in use in tests
 fun Map<String, String>.toKostraRecord(
     lineNumber: Int,
     fieldDefinitions: List<FieldDefinition>
@@ -60,6 +63,7 @@ fun Map<String, String>.toKostraRecord(
     fieldDefinitionByName = fieldDefinitions.associateBy { it.name }
 )
 
+// CR NOTE: Only in use in tests
 fun List<Map<String, String>>.toKostraRecords(
     fieldDefinitions: List<FieldDefinition>
 ) = this.mapIndexed { index, map ->

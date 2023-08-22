@@ -15,7 +15,7 @@ import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.STRING_TYPE
 
-object RegnskapFieldDefinitions : FieldDefinitions() {
+object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
             number = 1,

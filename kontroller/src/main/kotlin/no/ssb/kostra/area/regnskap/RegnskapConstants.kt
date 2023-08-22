@@ -18,12 +18,12 @@ object RegnskapConstants {
     const val FIELD_SEKTOR = FIELD_ART_SEKTOR
     const val FIELD_BELOP = "belop"
 
-    const val TITLE_ORGNR = "Organisasjonsnummer"
-    const val TITLE_KONTOKLASSE = "Kontoklasse"
-    const val TITLE_FUNKSJON = "Funksjon"
-    const val TITLE_KAPITTEL = "Kapittel"
-    const val TITLE_ART = "Art"
-    const val TITLE_SEKTOR = "Sektor"
+    internal const val TITLE_ORGNR = "Organisasjonsnummer"
+    internal const val TITLE_KONTOKLASSE = "Kontoklasse"
+    internal const val TITLE_FUNKSJON = "Funksjon"
+    internal const val TITLE_KAPITTEL = "Kapittel"
+    internal const val TITLE_ART = "Art"
+    internal const val TITLE_SEKTOR = "Sektor"
 
     const val ACCOUNTING_TYPE_BALANSE = "BAL"
     const val ACCOUNTING_TYPE_BEVILGNING = "BEV"

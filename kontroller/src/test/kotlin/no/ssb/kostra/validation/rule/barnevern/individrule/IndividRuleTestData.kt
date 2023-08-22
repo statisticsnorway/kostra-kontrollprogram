@@ -4,14 +4,14 @@ import no.ssb.kostra.barnevern.xsd.*
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTEL_4
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KOSTRA_IS_CLOSED_FALSE
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRAF_12
 import java.time.LocalDate
 
 object IndividRuleTestData {
 
+    private const val KOSTRA_IS_CLOSED_FALSE = "2"
     val dateInTest: LocalDate = LocalDate.now()
-    private const val individKostraId = "C1"
+    private const val INDIVID_KOSTRA_ID = "C1"
 
     private const val KOSTRA_TILTAK_ID = "~tiltak~"
     private const val KOSTRA_MELDING_ID = "~melding~"
@@ -63,7 +63,7 @@ object IndividRuleTestData {
     /** START Kostra types */
 
     val individInTest = KostraIndividType(
-        id = individKostraId,
+        id = INDIVID_KOSTRA_ID,
         journalnummer = "~journalnummer~",
         startDato = dateInTest,
         sluttDato = null,

@@ -188,7 +188,7 @@ import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TO
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME
 import no.ssb.kostra.program.*
 
-object Familievern55FieldDefinitions : FieldDefinitions() {
+object Familievern55FieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
             number = 11,

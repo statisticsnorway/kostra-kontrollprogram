@@ -1,11 +1,12 @@
 package no.ssb.kostra.program
 
-open class FieldDefinitions {
-    open val fieldDefinitions: List<FieldDefinition> = emptyList()
+interface FieldDefinitions {
+    val fieldDefinitions: List<FieldDefinition>
 
     val fieldLength: Int
         get() = fieldDefinitions.last().to
 
+    // CR NOTE: Only in use in tests
     val fieldDefinitionsByName: Map<String, FieldDefinition>
         get() = fieldDefinitions.associateBy { it.name }
 }

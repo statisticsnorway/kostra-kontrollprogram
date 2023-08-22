@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.SosialConstants
+import no.ssb.kostra.area.sosial.SosialConstants.MONTH_PREFIX
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.*
@@ -110,7 +110,7 @@ class SosialhjelpMainTest : BehaviorSpec({
                             ).codeList.last().code,
 
                         *((1..12).map {
-                            "${SosialConstants.MONTH_PREFIX}$it" to it.toString().padStart(2, '0')
+                            "$MONTH_PREFIX$it" to it.toString().padStart(2, '0')
                         }).toTypedArray(),
                     )
                 )

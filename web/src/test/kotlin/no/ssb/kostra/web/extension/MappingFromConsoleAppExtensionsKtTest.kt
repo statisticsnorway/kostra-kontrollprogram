@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.web.viewmodel.Constants
 import no.ssb.kostra.web.extensions.toKostraErrorCode
+import no.ssb.kostra.web.viewmodel.Constants
 import no.ssb.kostra.web.viewmodel.KostraErrorCode
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({

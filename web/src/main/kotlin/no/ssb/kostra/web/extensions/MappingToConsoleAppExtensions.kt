@@ -2,6 +2,7 @@ package no.ssb.kostra.web.extensions
 
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.web.viewmodel.KostraFormVm
+import java.io.BufferedReader
 import java.io.InputStream
 
 private const val SEPARATOR_CHAR = ","
@@ -20,7 +21,7 @@ fun KostraFormVm.toKostraArguments(
     foretaknr = orgnrForetak(),
     harVedlegg = false,
     isRunAsExternalProcess = false,
-    inputFileContent = inputStream.bufferedReader().use { it.readText() },
+    inputFileContent = inputStream.bufferedReader().use(BufferedReader::readText)
 )
 
 fun KostraFormVm.unitOrgnr() = this.orgnrForetak.let { orgnrForetak ->

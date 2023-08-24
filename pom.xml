@@ -24,7 +24,7 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
         <micronaut.version>4.0.3</micronaut.version>
-        <kotlinVersion>1.9.10</kotlinVersion>
+        <kotlinVersion>1.9.0</kotlinVersion>
 
         <jackson.version>2.15.2</jackson.version>
         <reactorCoreVersion>3.5.8</reactorCoreVersion>

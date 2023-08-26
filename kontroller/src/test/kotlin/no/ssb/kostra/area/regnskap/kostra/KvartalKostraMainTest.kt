@@ -27,7 +27,7 @@ class KvartalKostraMainTest : BehaviorSpec({
                                 region = region,
                                 inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
                             ),
-                            numberOfValidations,
+                            NUMBER_OF_VALIDATIONS,
                             3
                         ),
                         row(
@@ -49,7 +49,7 @@ class KvartalKostraMainTest : BehaviorSpec({
                                 argumentsRegion = region,
                                 recordRegion = region
                             ),
-                            numberOfValidations,
+                            NUMBER_OF_VALIDATIONS,
                             0
                         ),
                         row(
@@ -61,7 +61,7 @@ class KvartalKostraMainTest : BehaviorSpec({
                                 recordRegion = region,
                                 recordVersion = "XXXX"
                             ),
-                            numberOfValidations,
+                            NUMBER_OF_VALIDATIONS,
                             1
                         )
                     )
@@ -84,7 +84,7 @@ class KvartalKostraMainTest : BehaviorSpec({
     companion object {
         private val regions = listOf("123400", "030100", "040000")
         private val validSkjema = listOf("0AK1", "0BK1", "0CK1", "0DK1")
-        private const val numberOfValidations = 17
+        private const val NUMBER_OF_VALIDATIONS = 17
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,

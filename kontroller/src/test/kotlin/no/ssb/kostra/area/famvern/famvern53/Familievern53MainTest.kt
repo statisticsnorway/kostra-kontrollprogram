@@ -17,9 +17,9 @@ class Familievern53MainTest : BehaviorSpec({
             row(
                 "validating an invalid record string",
                 KotlinArguments(
-                    skjema = skjema,
+                    skjema = SKJEMA,
                     aargang = RuleTestData.argumentsInTest.aargang,
-                    region = region,
+                    region = REGION,
                     inputFileContent = " ".repeat(Familievern53FieldDefinitions.fieldLength + 10)
                 ),
                 1,
@@ -28,24 +28,24 @@ class Familievern53MainTest : BehaviorSpec({
             row(
                 "validating an empty record string",
                 KotlinArguments(
-                    skjema = skjema,
+                    skjema = SKJEMA,
                     aargang = RuleTestData.argumentsInTest.aargang,
-                    region = region,
+                    region = REGION,
                     inputFileContent = " ".repeat(Familievern53FieldDefinitions.fieldLength)
                 ),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 10
             ),
             row(
                 "validating a valid record string",
                 argumentsInTest(),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 0
             ),
             row(
                 "validating a valid record string with invalid data",
                 argumentsInTest(fylke = "XX"),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 2
             )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
@@ -63,17 +63,17 @@ class Familievern53MainTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private const val skjema = "53F"
-        private const val region = "667600"
-        private const val numberOfValidations = 6
+        private const val SKJEMA = "53F"
+        private const val REGION = "667600"
+        private const val NUMBER_OF_VALIDATIONS = 6
 
         private fun argumentsInTest(
             fylke: String = "30",
 
             ): KotlinArguments = KotlinArguments(
-            skjema = skjema,
+            skjema = SKJEMA,
             aargang = RuleTestData.argumentsInTest.aargang,
-            region = region,
+            region = REGION,
             inputFileContent = " ".repeat(Familievern53FieldDefinitions.fieldDefinitions.last().to)
                 .toKostraRecord(1, Familievern53FieldDefinitions.fieldDefinitions)
                 .plus(

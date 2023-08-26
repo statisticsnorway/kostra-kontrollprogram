@@ -6,12 +6,7 @@ import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 object RandomUtils {
-
-    fun generateRandomSsn(age: Int): String = generateRandomSSN(
-        Year.now().minusYears(age.toLong()).atDay(1),
-        Year.now().minusYears(age - 1L).atDay(1).minusDays(1)
-    )
-
+    
     fun generateRandomSsn(age: Int, year: Int): String = generateRandomSSN(
         Year.of(year).minusYears(age.toLong()).atDay(1),
         Year.of(year).minusYears(age.toLong() - 1L).atDay(1).minusDays(1)

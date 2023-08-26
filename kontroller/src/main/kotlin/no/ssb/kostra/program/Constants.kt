@@ -1,7 +1,5 @@
 package no.ssb.kostra.program
 
-const val DEBUG = false
-
 const val STRING_TYPE = "String"
 const val INTEGER_TYPE = "Integer"
 const val DATE_TYPE = "Date"

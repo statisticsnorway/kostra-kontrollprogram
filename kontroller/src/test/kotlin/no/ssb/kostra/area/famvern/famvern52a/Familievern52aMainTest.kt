@@ -18,9 +18,9 @@ class Familievern52aMainTest : BehaviorSpec({
             row(
                 "validating an invalid record string",
                 KotlinArguments(
-                    skjema = skjema,
+                    skjema = SKJEMA,
                     aargang = RuleTestData.argumentsInTest.aargang,
-                    region = region,
+                    region = REGION,
                     inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength + 10)
                 ),
                 1,
@@ -29,24 +29,24 @@ class Familievern52aMainTest : BehaviorSpec({
             row(
                 "validating an empty record string",
                 KotlinArguments(
-                    skjema = skjema,
+                    skjema = SKJEMA,
                     aargang = RuleTestData.argumentsInTest.aargang,
-                    region = region,
+                    region = REGION,
                     inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength)
                 ),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 26
             ),
             row(
                 "validating a valid record string",
                 argumentsInTest(),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 0
             ),
             row(
                 "validating a valid record string with invalid data",
                 argumentsInTest(region = "XXXXXX"),
-                numberOfValidations,
+                NUMBER_OF_VALIDATIONS,
                 2
             )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
@@ -64,15 +64,15 @@ class Familievern52aMainTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private const val skjema = "52AF"
-        private const val region = "667600"
-        private const val numberOfValidations = 34
+        private const val SKJEMA = "52AF"
+        private const val REGION = "667600"
+        private const val NUMBER_OF_VALIDATIONS = 34
 
         private fun argumentsInTest(
             region: String = "667600",
 
             ): KotlinArguments = KotlinArguments(
-            skjema = skjema,
+            skjema = SKJEMA,
             aargang = RuleTestData.argumentsInTest.aargang,
             region = region,
             inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldDefinitions.last().to)

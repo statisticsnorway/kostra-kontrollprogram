@@ -38,7 +38,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                         region = "1234  ",
                         inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
                     ),
-                    numberOfValidations,
+                    NUMBER_OF_VALIDATIONS,
                     3
                 )
             }.toTypedArray(),
@@ -46,7 +46,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 row(
                     "skjema $skjema -> validating a valid record string",
                     argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
-                    numberOfValidations,
+                    NUMBER_OF_VALIDATIONS,
                     0
                 )
             }.toTypedArray(),
@@ -54,7 +54,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 row(
                     "skjema $skjema -> validating a valid record string with invalid data",
                     argumentsInTest(recordVersion = "XXXX"),
-                    numberOfValidations,
+                    NUMBER_OF_VALIDATIONS,
                     1
                 )
             }.toTypedArray(),
@@ -74,7 +74,7 @@ class KirkeKostraMainTest : BehaviorSpec({
 }) {
     companion object {
         private val validSkjema = listOf("0F", "0G")
-        private const val numberOfValidations = 30
+        private const val NUMBER_OF_VALIDATIONS = 30
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
             argumentsSkjema: String = validSkjema.first(),

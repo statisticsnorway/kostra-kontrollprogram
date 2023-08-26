@@ -21,25 +21,25 @@ class KvalifiseringMainTest : BehaviorSpec({
             row(
                 "validating an invalid record string",
                 " ".repeat(KvalifiseringFieldDefinitions.fieldLength + 10),
-                1,
+                2,
                 1
             ),
             row(
                 "validating an empty record string",
                 " ".repeat(KvalifiseringFieldDefinitions.fieldLength),
-                32,
+                33,
                 13
             ),
             row(
                 "validating a valid record string",
                 recordStringInTest("22"),
-                32,
+                33,
                 0
             ),
             row(
                 "validating a valid record string with invalid data",
                 recordStringInTest("XX"),
-                32,
+                33,
                 1
             ),
         ) { description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->

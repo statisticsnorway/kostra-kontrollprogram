@@ -98,7 +98,7 @@ class KirkeKostraMain(
 
     override val fieldDefinitions: FieldDefinitions = RegnskapFieldDefinitions
 
-    override val fatalRules = listOf(
+    override val preValidationRules = listOf(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
     )
 

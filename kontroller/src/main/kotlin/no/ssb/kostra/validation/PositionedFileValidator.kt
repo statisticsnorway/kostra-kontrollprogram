@@ -15,7 +15,7 @@ import no.ssb.kostra.validation.rule.AbstractRule
 abstract class PositionedFileValidator(
     override val arguments: KotlinArguments
 ) : Validator {
-    abstract val fatalRules: List<AbstractRule<List<String>>>
+    abstract val preValidationRules: List<AbstractRule<List<String>>>
     abstract val validationRules: List<AbstractRule<List<KostraRecord>>>
     abstract val fieldDefinitions: FieldDefinitions
 
@@ -23,20 +23,16 @@ abstract class PositionedFileValidator(
         if (fieldDefinitions.fieldDefinitions.isEmpty())
             throw IndexOutOfBoundsException("validate(): fieldDefinitions are missing")
 
-        val fatalValidationReportEntries: List<ValidationReportEntry> = fatalRules
-            .mapNotNull { it.validate(arguments.getInputContentAsStringList()) }
-            .flatten()
+        val preCheckValidationReportEntries: List<ValidationReportEntry>? =
+            preValidationRules.firstNotNullOfOrNull { it.validate(arguments.getInputContentAsStringList()) }
 
-        val fatalSeverity: Severity = fatalValidationReportEntries
-            .map { it.severity }
-            .maxByOrNull { it.ordinal } ?: Severity.OK
+        if (preCheckValidationReportEntries != null)
 
-        if (fatalSeverity == Severity.FATAL) {
-            return ValidationResult(
-                reportEntries = fatalValidationReportEntries,
-                numberOfControls = arguments.getInputContentAsStringList().size * fatalRules.size
-            )
-        }
+                return ValidationResult(
+                    reportEntries = preCheckValidationReportEntries,
+                    numberOfControls = preValidationRules.size
+                )
+
 
         val kostraRecordList = arguments
             .getInputContentAsStringList()
@@ -58,12 +54,11 @@ abstract class PositionedFileValidator(
 
         return ValidationResult(
             reportEntries = validationReportEntries,
-            numberOfControls = arguments.getInputContentAsStringList().size * fatalRules.size
+            numberOfControls = arguments.getInputContentAsStringList().size * preValidationRules.size
                     + kostraRecordList.size * validationRules.size,
             statsReportEntries = if (validationSeverity < Severity.ERROR) createStats(kostraRecordList) else emptyList()
         )
     }
 
-    // CR note: This method returns emptyList(), should be abstract
     open fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> = emptyList()
 }

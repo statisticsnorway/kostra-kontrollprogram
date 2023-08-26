@@ -176,7 +176,7 @@ class KvartalKostraMain(
 
     override val fieldDefinitions = RegnskapFieldDefinitions
 
-    override val fatalRules = listOf(
+    override val preValidationRules = listOf(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
     )
 

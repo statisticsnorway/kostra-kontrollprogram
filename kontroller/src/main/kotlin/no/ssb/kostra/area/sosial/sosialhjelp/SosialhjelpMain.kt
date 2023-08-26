@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule.*
 class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(arguments) {
     override val fieldDefinitions = SosialhjelpFieldDefinitions
 
-    override val fatalRules = listOf(
+    override val preValidationRules = listOf(
         Rule001RecordLength(SosialhjelpFieldDefinitions.fieldLength)
     )
 

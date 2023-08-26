@@ -15,7 +15,7 @@ import java.time.LocalDate
 import java.time.Year
 
 class SosialhjelpMainTest : BehaviorSpec({
-    Given("KvalifiseringMain") {
+    Given("SosialhjelpMain") {
         forAll(
             row(
                 "validating an invalid record string",
@@ -122,7 +122,7 @@ class SosialhjelpMainTest : BehaviorSpec({
             aargang = (Year.now().value - 1).toString(),
             region = RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
             skjema = "11CF",
-
+            harVedlegg = true,
             inputFileContent = inputFileContent
         )
     }

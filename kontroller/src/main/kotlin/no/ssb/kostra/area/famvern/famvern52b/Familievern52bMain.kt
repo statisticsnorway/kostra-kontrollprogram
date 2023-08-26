@@ -10,7 +10,7 @@ import no.ssb.kostra.validation.rule.famvern.famvern52b.*
 class Familievern52bMain(arguments: KotlinArguments) : PositionedFileValidator(arguments) {
     override val fieldDefinitions = Familievern52bFieldDefinitions
 
-    override val fatalRules: List<AbstractRule<List<String>>> = listOf(
+    override val preValidationRules: List<AbstractRule<List<String>>> = listOf(
         Rule001RecordLength(fieldDefinitions.fieldDefinitions.last().to)
     )
 

@@ -255,7 +255,7 @@ class KommuneKostraMain(
 
     override val fieldDefinitions = RegnskapFieldDefinitions
 
-    override val fatalRules = listOf(
+    override val preValidationRules = listOf(
         Rule001RecordLength(fieldLength)
     )
 

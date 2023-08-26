@@ -19,7 +19,7 @@ class PositionedFileValidatorTest : BehaviorSpec({
                 region = "RRRR"
             )
         ) {
-            override val fatalRules: List<AbstractRule<List<String>>>
+            override val preValidationRules: List<AbstractRule<List<String>>>
                 get() = emptyList()
             override val validationRules: List<AbstractRule<List<KostraRecord>>>
                 get() = emptyList()

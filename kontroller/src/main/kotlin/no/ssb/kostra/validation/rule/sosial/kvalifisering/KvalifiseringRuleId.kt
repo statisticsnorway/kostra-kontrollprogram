@@ -6,8 +6,6 @@ enum class KvalifiseringRuleId(val title: String) {
     BEGYNT_DATO_16("16BegyntDato"),
     KVALIFISERINGSPROGRAM_I_ANNEN_KOMMUNE_19("19KvalifiseringsprogramIAnnenKommune"),
     KVALIFISERINGSPROGRAM_I_ANNEN_KOMMUNE_KOMMUNENUMMER_20("20KvalifiseringsprogramIAnnenKommuneKommunenummer"),
-    // CR NOTE: Not in use
-    FRA_KVALIFISERINGSPROGRAM_I_ANNEN_BYDEL_I_OSLO_20A("20AFraKvalifiseringsprogramIAnnenBydelIOslo"),
     YTELSER_21("21Ytelser"),
     MOTTATT_STOTTE_26("26MottattStotte"),
     MOTTATT_OKONOMISK_SOSIALHJELP_27("27MottattOkonomiskSosialhjelp"),

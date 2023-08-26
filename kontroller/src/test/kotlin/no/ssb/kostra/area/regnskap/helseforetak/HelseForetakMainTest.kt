@@ -1,7 +1,6 @@
 package no.ssb.kostra.area.regnskap.helseforetak
 
 import io.kotest.assertions.assertSoftly
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -12,7 +11,6 @@ import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.validation.rule.RuleTestData
 import java.time.Year
 
-@Ignored("FIX ME")
 class HelseForetakMainTest : BehaviorSpec({
     Given("KvalifiseringMain") {
         forAll(
@@ -26,13 +24,16 @@ class HelseForetakMainTest : BehaviorSpec({
                 )
             }.toTypedArray(),
 
-            *setOf("0X", "0Y").map { skjema ->
+            *setOf(
+                "0X" to 6,
+                "0Y" to 5
+            ).map { (skjema, expectedNumberOfControls) ->
                 row(
                     "For $skjema, validating an empty record string",
                     skjema,
                     " ".repeat(RegnskapFieldDefinitions.fieldLength),
                     19,
-                    3
+                    expectedNumberOfControls
                 )
             }.toTypedArray(),
 //            row(
@@ -76,7 +77,6 @@ class HelseForetakMainTest : BehaviorSpec({
             aargang = (Year.now().value - 1).toString(),
             region = RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
             skjema = skjema,
-
             inputFileContent = inputFileContent
         )
     }

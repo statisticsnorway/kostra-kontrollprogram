@@ -27,12 +27,10 @@ abstract class PositionedFileValidator(
             preValidationRules.firstNotNullOfOrNull { it.validate(arguments.getInputContentAsStringList(), arguments) }
 
         if (preCheckValidationReportEntries != null)
-
-                return ValidationResult(
-                    reportEntries = preCheckValidationReportEntries,
-                    numberOfControls = preValidationRules.size
-                )
-
+            return ValidationResult(
+                reportEntries = preCheckValidationReportEntries,
+                numberOfControls = preValidationRules.size
+            )
 
         val kostraRecordList = arguments
             .getInputContentAsStringList()

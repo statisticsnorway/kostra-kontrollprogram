@@ -24,7 +24,7 @@ abstract class PositionedFileValidator(
             throw IndexOutOfBoundsException("validate(): fieldDefinitions are missing")
 
         val preCheckValidationReportEntries: List<ValidationReportEntry>? =
-            preValidationRules.firstNotNullOfOrNull { it.validate(arguments.getInputContentAsStringList()) }
+            preValidationRules.firstNotNullOfOrNull { it.validate(arguments.getInputContentAsStringList(), arguments) }
 
         if (preCheckValidationReportEntries != null)
 

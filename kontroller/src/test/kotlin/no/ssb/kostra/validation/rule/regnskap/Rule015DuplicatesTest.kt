@@ -7,6 +7,7 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecord
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 
 class Rule015DuplicatesTest : BehaviorSpec({
@@ -24,7 +25,7 @@ class Rule015DuplicatesTest : BehaviorSpec({
         ) { description, kostraRecordList ->
             When(description) {
                 Then("validation should pass with no errors") {
-                    sut.validate(kostraRecordList).shouldBeNull()
+                    sut.validate(kostraRecordList, argumentsInTest).shouldBeNull()
                 }
             }
         }
@@ -41,7 +42,7 @@ class Rule015DuplicatesTest : BehaviorSpec({
             )
         ) { description, kostraRecordList ->
             When(description) {
-                val validationReportEntries = sut.validate(kostraRecordList)
+                val validationReportEntries = sut.validate(kostraRecordList, argumentsInTest)
 
                 Then("validation should result in errors") {
                     validationReportEntries.shouldNotBeNull()

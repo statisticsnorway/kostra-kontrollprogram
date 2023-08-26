@@ -8,6 +8,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.extension.toKostraRecord
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule014BelopTest : BehaviorSpec({
     Given("valid context") {
@@ -21,7 +22,7 @@ class Rule014BelopTest : BehaviorSpec({
         ) { description, kostraRecordList ->
             When(description) {
                 Then("validation should pass with no errors") {
-                    sut.validate(kostraRecordList).shouldBeNull()
+                    sut.validate(kostraRecordList, argumentsInTest).shouldBeNull()
                 }
             }
         }
@@ -41,7 +42,7 @@ class Rule014BelopTest : BehaviorSpec({
         ) { description, kostraRecordList ->
             When(description) {
                 Then("validation should result in errors") {
-                    sut.validate(kostraRecordList).shouldNotBeNull()
+                    sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
                 }
             }
         }

@@ -13,6 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule105SummeringDriftInntektsposteringerTest : BehaviorSpec({
@@ -52,7 +53,7 @@ class Rule105SummeringDriftInntektsposteringerTest : BehaviorSpec({
 
             When("Expenses is zero for $region, $skjema, $kontoklasse, $funksjon, $art, $belop") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér slik at fila inneholder inntektsposteringene ($belop) i driftsregnskapet"

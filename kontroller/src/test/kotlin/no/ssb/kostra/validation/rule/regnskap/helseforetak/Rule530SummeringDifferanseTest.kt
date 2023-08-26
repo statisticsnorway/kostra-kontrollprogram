@@ -7,6 +7,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.toKostraRecords
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils
 
 
@@ -32,7 +33,7 @@ class Rule530SummeringDifferanseTest : BehaviorSpec({
             ).toKostraRecords(fieldDefinitions)
             When("$skjema, $belop1, $belop2") {
                 TestUtils.verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.WARNING,
                     "Sjekk at sum art 300 til og med art 899 skal være 0, her ($belop2). Differanse +/- 100' kroner godtas."

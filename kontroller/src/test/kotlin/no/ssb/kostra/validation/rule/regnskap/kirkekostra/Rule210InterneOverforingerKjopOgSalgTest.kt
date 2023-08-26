@@ -7,6 +7,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.regnskap.RegnskapTestUtils
 
@@ -59,7 +60,7 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
 
             When(description) {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér i fila slik at differansen ($internDifferanse) mellom " +

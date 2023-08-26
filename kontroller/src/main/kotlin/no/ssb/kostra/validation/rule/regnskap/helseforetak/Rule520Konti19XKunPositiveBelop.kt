@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
@@ -13,7 +14,7 @@ class Rule520Konti19XKunPositiveBelop(
     "Kontroll 520 : Konti 190, 192, 194, 195 inneholder kun positive beløp",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter { it.isBalanseRegnskap() }
         .filter { it[FIELD_ART] in validArtList }
         .filterNot { it.fieldAsIntOrDefault(FIELD_BELOP) > 0 }.map { kostraRecord ->

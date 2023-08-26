@@ -1,12 +1,13 @@
 package no.ssb.kostra.validation.rule
 
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class Rule001RecordLength(
     val length: Int
 ) : AbstractRule<List<String>>("Kontroll 001 : Recordlengde", Severity.FATAL) {
-    override fun validate(context: List<String>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<String>, arguments: KotlinArguments): List<ValidationReportEntry>? = context
         .withIndex()
         .filter { it.value.length != length || it.value.contains("\t") }
         .map {

@@ -13,6 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule170Funksjon290InvesteringTest : BehaviorSpec({
@@ -64,7 +65,7 @@ class Rule170Funksjon290InvesteringTest : BehaviorSpec({
 
             When("$description for $region, $skjema, $kontoklasse, $funksjon, $art, $belop -> $expectError") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér i fila slik at differanse ($belop) på funksjon " +

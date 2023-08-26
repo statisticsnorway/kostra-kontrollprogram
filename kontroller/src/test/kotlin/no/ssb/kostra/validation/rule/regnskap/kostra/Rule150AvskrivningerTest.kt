@@ -13,6 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule150AvskrivningerTest : BehaviorSpec({
@@ -68,7 +69,7 @@ class Rule150AvskrivningerTest : BehaviorSpec({
         ) { description, kostraRecords, expectError, expectedSeverity ->
             When("testing $description") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecords),
+                    validationReportEntries = sut.validate(kostraRecords, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = expectedSeverity,
                     "Korrigér i fila slik at den inneholder avskrivninger " +

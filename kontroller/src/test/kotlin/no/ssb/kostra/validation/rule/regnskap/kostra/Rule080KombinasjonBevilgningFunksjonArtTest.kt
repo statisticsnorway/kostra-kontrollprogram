@@ -11,6 +11,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
@@ -48,7 +49,7 @@ class Rule080KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
 
             When("$description for $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Art 800 er kun tillat brukt i kombinasjon med funksjon 840."

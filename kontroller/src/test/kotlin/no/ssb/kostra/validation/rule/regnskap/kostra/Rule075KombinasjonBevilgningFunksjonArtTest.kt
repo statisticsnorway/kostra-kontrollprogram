@@ -11,6 +11,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule075KombinasjonBevilgningFunksjonArt.Companion.REQUIRED_FUNCTION
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule075KombinasjonBevilgningFunksjonArt.Companion.qualifyingArtCodes
@@ -52,7 +53,7 @@ class Rule075KombinasjonBevilgningFunksjonArtTest : BehaviorSpec({
 
             When("$description For $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Artene 870, 871, 872, 873, 875, 876 er kun tillat brukt i kombinasjon med funksjon 800."

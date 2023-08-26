@@ -13,6 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils
 
 class Rule500Funksjon400Test : BehaviorSpec({
@@ -36,7 +37,7 @@ class Rule500Funksjon400Test : BehaviorSpec({
 
             When("$orgnr, $skjema, $funksjon") {
                 TestUtils.verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.WARNING,
                     "Ugyldig funksjon. Funksjonen '400' kan kun benyttes av RHF og Nasjonale " +

@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
@@ -12,7 +13,7 @@ class Rule185Funksjon465Drift : AbstractRule<List<KostraRecord>>(
     "Kontroll 185 : Funksjon 465, driftsregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter {
             it.isFylkeRegnskap()
                     && it.isBevilgningDriftRegnskap()

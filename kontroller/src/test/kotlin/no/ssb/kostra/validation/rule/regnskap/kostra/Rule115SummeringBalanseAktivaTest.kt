@@ -8,6 +8,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils
 
 class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
@@ -28,7 +29,7 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
 
             When("$skjema, $kapittel, $belop") {
                 TestUtils.verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér slik at fila inneholder registrering av aktiva/eiendeler " +

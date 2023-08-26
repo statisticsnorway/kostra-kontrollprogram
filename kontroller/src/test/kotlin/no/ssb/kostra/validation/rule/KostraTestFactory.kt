@@ -28,7 +28,6 @@ object KostraTestFactory {
         sut = sut,
         expectedSeverity = expectedSeverity,
         expectedContextId = null,
-        useArguments = true,
         forAllRows = forAllRows
     )
 
@@ -41,7 +40,6 @@ object KostraTestFactory {
         sut = sut,
         expectedSeverity = expectedSeverity,
         expectedContextId = expectedContextId,
-        useArguments = true,
         forAllRows = forAllRows
     )
 
@@ -53,7 +51,6 @@ object KostraTestFactory {
         sut = sut,
         expectedSeverity = expectedSeverity,
         expectedContextId = null,
-        useArguments = false,
         forAllRows = forAllRows
     )
 
@@ -61,7 +58,6 @@ object KostraTestFactory {
         sut: AbstractRule<T>,
         expectedSeverity: Severity,
         expectedContextId: String?,
-        useArguments: Boolean,
         vararg forAllRows: ForAllRowItem<T>
     ) = behaviorSpec {
         Given("context") {
@@ -71,9 +67,7 @@ object KostraTestFactory {
                 }.toTypedArray()
             ) { description, context, expectedErrorMessage, arguments, expectedSize ->
                 When(description) {
-                    val validationReportEntries =
-                        if (useArguments) sut.validate(context, arguments)
-                        else sut.validate(context)
+                    val validationReportEntries = sut.validate(context, arguments)
 
                     Then("result should be as expected") {
                         verifyValidationResult(

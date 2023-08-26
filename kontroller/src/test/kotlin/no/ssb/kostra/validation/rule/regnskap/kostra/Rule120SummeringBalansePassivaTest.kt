@@ -10,6 +10,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule120SummeringBalansePassivaTest : BehaviorSpec({
@@ -30,7 +31,7 @@ class Rule120SummeringBalansePassivaTest : BehaviorSpec({
 
             When("Activa is zero for $skjema, $kapittel, $belop") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital " +

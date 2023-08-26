@@ -13,6 +13,7 @@ import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
@@ -65,7 +66,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
 
             When("For $skjema, $region, $orgnr, $kontoklasse, $art -> $expectError") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér ugyldig art '${art}' " +
@@ -112,7 +113,7 @@ class Rule025KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
 
             When("$description For $skjema, $funksjon, $art -> $expectError") {
                 verifyValidationResult(
-                    validationReportEntries = sut.validate(kostraRecordList),
+                    validationReportEntries = sut.validate(kostraRecordList, argumentsInTest),
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér ugyldig art '${art}' " +

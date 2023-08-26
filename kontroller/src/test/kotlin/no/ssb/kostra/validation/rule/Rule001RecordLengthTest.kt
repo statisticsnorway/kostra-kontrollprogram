@@ -5,6 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule001RecordLengthTest : BehaviorSpec({
 
@@ -12,7 +13,7 @@ class Rule001RecordLengthTest : BehaviorSpec({
         val sut = Rule001RecordLength(OK_STRING.length)
 
         When("valid list of strings") {
-            val result = sut.validate(listOf(OK_STRING, OK_STRING))
+            val result = sut.validate(listOf(OK_STRING, OK_STRING), argumentsInTest)
 
             Then("validation should pass with no errors") {
                 result.shouldBeNull()
@@ -53,7 +54,7 @@ class Rule001RecordLengthTest : BehaviorSpec({
         ) { description, recordStringLength, recordStringList, expectedErrorCount, lineNumberOfErrors ->
             When(description) {
                 val sut = Rule001RecordLength(recordStringLength)
-                val errors = sut.validate(recordStringList)
+                val errors = sut.validate(recordStringList, argumentsInTest)
 
                 Then("number of errors should be as expected") {
                     errors?.size shouldBe expectedErrorCount

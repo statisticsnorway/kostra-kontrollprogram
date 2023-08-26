@@ -44,9 +44,9 @@ class KommuneKostraMainTest : BehaviorSpec({
                         )
                     }).plus(
                     mapOf(
-                        // "0A" to 0, // FIX ME
+                        "0A" to 2,
                         "0B" to 3,
-                        //"0C" to 1, // FIX ME
+                        "0C" to 2,
                         "0D" to 3,
                         "0I" to 1,
                         "0J" to 3,
@@ -70,20 +70,18 @@ class KommuneKostraMainTest : BehaviorSpec({
                         )
                     })
             }.toTypedArray(),
-            /* FIX ME
-                        row(
-                            "skjema = 0A, region = 123400 -> validating a valid record string with invalid data",
-                            argumentsInTest(
-                                argumentsSkjema = "0A",
-                                recordSkjema = "0A",
-                                argumentsRegion = "123400",
-                                recordRegion = "123400",
-                                recordVersion = "XXXX"
-                            ),
-                            NUMBER_OF_VALIDATIONS,
-                            1
-                        )
-            */
+            row(
+                "skjema = 0A, region = 123400 -> validating a valid record string with invalid data",
+                argumentsInTest(
+                    argumentsSkjema = "0A",
+                    recordSkjema = "0A",
+                    argumentsRegion = "123400",
+                    recordRegion = "123400",
+                    recordVersion = "XXXX"
+                ),
+                NUMBER_OF_VALIDATIONS,
+                3
+            )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
                 val validationResult = KommuneKostraMain(kotlinArguments).validate()

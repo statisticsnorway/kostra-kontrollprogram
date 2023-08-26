@@ -1,7 +1,6 @@
 package no.ssb.kostra.area.regnskap.kostra
 
 import io.kotest.assertions.assertSoftly
-import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -14,11 +13,10 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.program.extension.toRecordString
 import no.ssb.kostra.validation.rule.RuleTestData
 
-@Ignored("FIX ME")
 class KirkeKostraMainTest : BehaviorSpec({
     Given("KirkeKostraMain") {
         forAll(
-            *validSkjema.map { skjema ->
+            *validSkjemaTyper.map { skjema ->
                 row(
                     "skjema $skjema -> validating an invalid record string",
                     KotlinArguments(
@@ -31,7 +29,10 @@ class KirkeKostraMainTest : BehaviorSpec({
                     1
                 )
             }.toTypedArray(),
-            *validSkjema.map { skjema ->
+            *setOf(
+                "0F" to 7,
+                "0G" to 6
+            ).map { (skjema, expectedNumberOfControls) ->
                 row(
                     "skjema $skjema -> validating an empty record string",
                     KotlinArguments(
@@ -41,18 +42,21 @@ class KirkeKostraMainTest : BehaviorSpec({
                         inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
                     ),
                     NUMBER_OF_VALIDATIONS,
-                    3
+                    expectedNumberOfControls
                 )
             }.toTypedArray(),
-            *validSkjema.map { skjema ->
+            *setOf(
+                "0F" to 0,
+                "0G" to 4
+            ).map { (skjema, expectedNumberOfControls) ->
                 row(
                     "skjema $skjema -> validating a valid record string",
                     argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
                     NUMBER_OF_VALIDATIONS,
-                    0
+                    expectedNumberOfControls
                 )
             }.toTypedArray(),
-            *validSkjema.map { skjema ->
+            *validSkjemaTyper.map { skjema ->
                 row(
                     "skjema $skjema -> validating a valid record string with invalid data",
                     argumentsInTest(recordVersion = "XXXX"),
@@ -75,11 +79,12 @@ class KirkeKostraMainTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private val validSkjema = listOf("0F", "0G")
+        private val validSkjemaTyper = setOf("0F", "0G")
         private const val NUMBER_OF_VALIDATIONS = 30
+
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,
-            argumentsSkjema: String = validSkjema.first(),
+            argumentsSkjema: String = validSkjemaTyper.first(),
             argumentsRegion: String = RuleTestData.argumentsInTest.region,
             argumentsOrgnr: String = if (argumentsSkjema in listOf("0I", "0J", "0K", "0L")) "987654321" else " ".repeat(
                 9

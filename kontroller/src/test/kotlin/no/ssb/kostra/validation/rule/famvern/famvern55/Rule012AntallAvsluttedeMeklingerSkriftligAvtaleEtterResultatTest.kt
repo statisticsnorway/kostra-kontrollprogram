@@ -13,11 +13,11 @@ class Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultatTest : Behavio
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "1", "1"),
+                kostraRecordInTest("1", "1", "1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("1", "2", "3", "4"),
+                kostraRecordInTest("2", "3", "4"),
                 expectedErrorMessage = "Summen (AVTALE_SEP_TOT) med verdi (2) er ulik summen (1) av følgende liste ([(AVTALE_SEP_1, 1), (AVTALE_SEP_2, 0), (AVTALE_SEP_3, 0)])",
                 expectedSize = 4
             ),
@@ -26,15 +26,14 @@ class Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultatTest : Behavio
 }) {
     companion object {
         private fun kostraRecordInTest(
-            number: String,
-            rowsum: String,
+            rowSum: String,
             columnSum: String,
             sumOfSums: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.AVTALE_SEP_1_COL_NAME to number,
-                    Familievern55ColumnNames.AVTALE_SEP_TOT_COL_NAME to rowsum,
+                    Familievern55ColumnNames.AVTALE_SEP_1_COL_NAME to "1",
+                    Familievern55ColumnNames.AVTALE_SEP_TOT_COL_NAME to rowSum,
                     Familievern55ColumnNames.AVTALE_TOT_1_COL_NAME to columnSum,
                     Familievern55ColumnNames.AVTALE_TOT_TOT_COL_NAME to sumOfSums
                 )

@@ -13,11 +13,11 @@ class Rule007AvsluttedeMeklingerEtterTidsbrukTest : BehaviorSpec({
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "1", "1"),
+                kostraRecordInTest("1", "1", "1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("1", "2", "3", "4"),
+                kostraRecordInTest("2", "3", "4"),
                 expectedErrorMessage = "Summen (VENTETID_SEP_TOT) med verdi (2) er ulik summen (1) av følgende liste ([(VENTETID_SEP_1, 1), (VENTETID_SEP_2, 0), (VENTETID_SEP_3, 0), (VENTETID_SEP_4, 0)])",
                 expectedSize = 4
             ),
@@ -26,15 +26,14 @@ class Rule007AvsluttedeMeklingerEtterTidsbrukTest : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(
-            number: String,
-            rowsum: String,
+            rowSum: String,
             columnSum: String,
             sumOfSums: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.VENTETID_SEP_1_COL_NAME to number,
-                    Familievern55ColumnNames.VENTETID_SEP_TOT_COL_NAME to rowsum,
+                    Familievern55ColumnNames.VENTETID_SEP_1_COL_NAME to "1",
+                    Familievern55ColumnNames.VENTETID_SEP_TOT_COL_NAME to rowSum,
                     Familievern55ColumnNames.VENTETID_TOT_1_COL_NAME to columnSum,
                     Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME to sumOfSums
                 )

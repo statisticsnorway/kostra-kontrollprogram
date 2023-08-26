@@ -13,11 +13,11 @@ class Rule010AvsluttedeMeklingerHvorBarnHarDeltattTest : BehaviorSpec({
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "2"),
+                kostraRecordInTest("2"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("1", "1", "3"),
+                kostraRecordInTest("3"),
                 expectedErrorMessage = "Summen (BARNDELT_TOT_TOT) med verdi (3) er ulik summen (2) av følgende liste ([(BARNDELT_SEP_TOT, 0), (BARNDELT_SAM_TOT, 0), (BARNDELT_SAK_TOT, 0), (BARNDELT_TILB_TOT, 1), (BARNDELT_FLY_TOT, 1)])",
                 expectedSize = 1
             ),
@@ -25,15 +25,11 @@ class Rule010AvsluttedeMeklingerHvorBarnHarDeltattTest : BehaviorSpec({
     )
 }) {
     companion object {
-        private fun kostraRecordInTest(
-            number1: String,
-            number2: String,
-            rowSum: String
-        ) = listOf(
+        private fun kostraRecordInTest(rowSum: String) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.BARNDELT_TILB_TOT_COL_NAME to number1,
-                    Familievern55ColumnNames.BARNDELT_FLY_TOT_COL_NAME to number2,
+                    Familievern55ColumnNames.BARNDELT_TILB_TOT_COL_NAME to "1",
+                    Familievern55ColumnNames.BARNDELT_FLY_TOT_COL_NAME to "1",
                     Familievern55ColumnNames.BARNDELT_TOT_TOT_COL_NAME to rowSum,
                 )
             )

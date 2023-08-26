@@ -32,7 +32,7 @@ class GenericsJacksonTest : BehaviorSpec({
             row("LocalDate", dateInTest, "[\"java.time.LocalDate\",\"2023-04-22\"]"),
             row("Long", 9223372036854775807L, "[\"java.lang.Long\",9223372036854775807]"),
             row("Float", 2.7182817f, "[\"java.lang.Float\",2.7182817]"),
-            row("MyNestedClass", MyNestedClass(42), createInnerJson(42)),
+            row("MyNestedClass", MyNestedClass(42), createInnerJson()),
         ) { description, currentValue, jsonValue ->
 
             When("serialize $description") {
@@ -63,8 +63,8 @@ class GenericsJacksonTest : BehaviorSpec({
             .registerModule(JavaTimeModule())
 
 
-        private fun createInnerJson(someValue: Int): String {
-            return "{\"@class\":\"no.ssb.kostra.MyNestedClass\",\"someValue\":$someValue}"
+        private fun createInnerJson(): String {
+            return "{\"@class\":\"no.ssb.kostra.MyNestedClass\",\"someValue\":42}"
         }
 
         private fun createJson(innerValue: String): String {

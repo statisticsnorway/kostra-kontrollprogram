@@ -13,11 +13,11 @@ class Rule008AvsluttedeMeklingerIkkeOverholdtTidsfristTest : BehaviorSpec({
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "2"),
+                kostraRecordInTest("2"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("1", "1", "3"),
+                kostraRecordInTest("3"),
                 expectedErrorMessage = "Summen (FORHOLD_TOT) med verdi (3) er ulik summen (2) av følgende liste ([(FORHOLD_MEKLER, 1), (FORHOLD_KLIENT, 1)])",
                 expectedSize = 1
             ),
@@ -26,14 +26,12 @@ class Rule008AvsluttedeMeklingerIkkeOverholdtTidsfristTest : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(
-            number1: String,
-            number2: String,
             rowSum: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.FORHOLD_MEKLER_COL_NAME to number1,
-                    Familievern55ColumnNames.FORHOLD_KLIENT_COL_NAME to number2,
+                    Familievern55ColumnNames.FORHOLD_MEKLER_COL_NAME to "1",
+                    Familievern55ColumnNames.FORHOLD_KLIENT_COL_NAME to "1",
                     Familievern55ColumnNames.FORHOLD_TOT_COL_NAME to rowSum
                 )
             )

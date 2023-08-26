@@ -59,13 +59,12 @@ class Rule027MottattOkonomiskSosialhjelpTest : BehaviorSpec({
 }) {
     companion object {
         private fun recordInTestAllValuesPopulated(
-            kvpMedAStonad: Int,
-            kvpMedKommBos: Int = 4
+            kvpMedAStonad: Int
         ) = listOf(
             kvalifiseringKostraRecordInTest(
                 mapOf(
                     KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
-                    KVP_MED_KOMMBOS_COL_NAME to "$kvpMedKommBos",
+                    KVP_MED_KOMMBOS_COL_NAME to "4",
                     KVP_MED_HUSBANK_COL_NAME to "5",
                     KVP_MED_SOSHJ_ENGANG_COL_NAME to "9",
                     KVP_MED_SOSHJ_PGM_COL_NAME to "8",

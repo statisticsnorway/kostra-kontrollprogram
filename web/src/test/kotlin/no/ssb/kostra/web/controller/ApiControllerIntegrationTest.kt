@@ -308,18 +308,19 @@ class ApiControllerIntegrationTest(
         private fun buildMultipartRequest(
             formData: KostraFormVm,
             objectMapper: ObjectMapper,
-            file: File = createTestFile()
-        ): MultipartBody = MultipartBody.builder()
-            .addPart(
-                "kostraFormAsJson",
-                objectMapper.writeValueAsString(formData)
-            )
-            .addPart(
-                "file",
-                file.name,
-                MediaType.TEXT_PLAIN_TYPE,
-                file
-            ).build()
+        ): MultipartBody = createTestFile().let { file ->
+            MultipartBody.builder()
+                .addPart(
+                    "kostraFormAsJson",
+                    objectMapper.writeValueAsString(formData)
+                )
+                .addPart(
+                    "file",
+                    file.name,
+                    MediaType.TEXT_PLAIN_TYPE,
+                    file
+                ).build()
+        }
 
         private fun createTestFile(): File = File.createTempFile("data", ".dat").apply {
             FileWriter(this).use {

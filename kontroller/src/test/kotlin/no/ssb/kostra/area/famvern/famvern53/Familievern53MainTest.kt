@@ -38,7 +38,7 @@ class Familievern53MainTest : BehaviorSpec({
             ),
             row(
                 "validating a valid record string",
-                argumentsInTest(),
+                argumentsInTest(fylke = "30"),
                 NUMBER_OF_VALIDATIONS,
                 0
             ),
@@ -67,10 +67,7 @@ class Familievern53MainTest : BehaviorSpec({
         private const val REGION = "667600"
         private const val NUMBER_OF_VALIDATIONS = 6
 
-        private fun argumentsInTest(
-            fylke: String = "30",
-
-            ): KotlinArguments = KotlinArguments(
+        private fun argumentsInTest(fylke: String): KotlinArguments = KotlinArguments(
             skjema = SKJEMA,
             aargang = RuleTestData.argumentsInTest.aargang,
             region = REGION,

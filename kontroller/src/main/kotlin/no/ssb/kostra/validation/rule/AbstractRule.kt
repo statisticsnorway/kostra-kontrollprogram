@@ -29,14 +29,13 @@ abstract class AbstractRule<in T : Any>(
     protected fun createValidationReportEntry(
         ruleName: String,
         messageText: String,
-        lineNumbers: List<Int>,
-        contextId: String = "",
+        lineNumbers: List<Int>
     ) = ValidationReportEntry(
         severity = severity,
         ruleName = ruleName,
         messageText = messageText,
         lineNumbers = lineNumbers,
-        contextId = contextId,
+        contextId = "",
     )
 
     protected fun createSingleReportEntryList(

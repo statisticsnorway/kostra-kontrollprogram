@@ -13,11 +13,11 @@ class Rule006AvsluttedeMeklingerEtterDeltakereTest : BehaviorSpec({
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "1", "1"),
+                kostraRecordInTest("1", "1", "1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("1", "2", "3", "4"),
+                kostraRecordInTest("2", "3", "4"),
                 expectedErrorMessage = "Summen (SEP_TOT) med verdi (2) er ulik summen (1) av følgende liste ([(SEP_BEGGE, 1), (SEP_EN, 0)])",
                 expectedSize = 4
             ),
@@ -26,15 +26,14 @@ class Rule006AvsluttedeMeklingerEtterDeltakereTest : BehaviorSpec({
 }) {
     companion object {
         private fun kostraRecordInTest(
-            number: String,
-            rowsum: String,
+            rowSum: String,
             columnSum: String,
             sumOfSums: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.SEP_BEGGE_COL_NAME to number,
-                    Familievern55ColumnNames.SEP_TOT_COL_NAME to rowsum,
+                    Familievern55ColumnNames.SEP_BEGGE_COL_NAME to "1",
+                    Familievern55ColumnNames.SEP_TOT_COL_NAME to rowSum,
                     Familievern55ColumnNames.BEGGE_TOT_COL_NAME to columnSum,
                     Familievern55ColumnNames.ENBEGGE_TOT_COL_NAME to sumOfSums
                 )

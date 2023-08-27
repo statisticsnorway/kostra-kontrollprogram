@@ -24,15 +24,28 @@ class Rule002FileDescription(
         .flatMap { kostraRecord ->
             fieldDefinitions
                 .flatMap { fieldDefinition ->
-                    val validationReportEntries: List<ValidationReportEntry> = mutableListOf()
+                    var validationReportEntries = listOf<ValidationReportEntry>()
 
                     // check if there is a value
-                    if (kostraRecord[fieldDefinition.name].isNotBlank()) {
+                    if (kostraRecord[fieldDefinition.name].isBlank()) {
+                        // value is missing / blank
+                        if (fieldDefinition.mandatory) {
+                            validationReportEntries = validationReportEntries.plus(
+                                createValidationReportEntry(
+                                    ruleName = "$ruleName, mangler obligatorisk verdi",
+                                    messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
+                                            "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
+                                            "mangler obligatorisk verdi.",
+                                    lineNumbers = listOf(kostraRecord.lineNumber)
+                                )
+                            )
+                        }
+                    } else {
                         // value exists
                         if (fieldDefinition.codeList.isNotEmpty()
                             && fieldDefinition.codeIsMissing(kostraRecord[fieldDefinition.name])
-                        )
-                            validationReportEntries.plus(
+                        ) {
+                            validationReportEntries = validationReportEntries.plus(
                                 createValidationReportEntry(
                                     ruleName = "$ruleName, feltdefinisjonlengde",
                                     messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
@@ -41,12 +54,13 @@ class Rule002FileDescription(
                                     lineNumbers = listOf(kostraRecord.lineNumber)
                                 )
                             )
+                        }
 
                         // the value is an Integer
                         if (fieldDefinition.dataType == INTEGER_TYPE
                             && kostraRecord.fieldAsInt(fieldDefinition.name) == null
-                        )
-                            validationReportEntries.plus(
+                        ) {
+                            validationReportEntries = validationReportEntries.plus(
                                 createValidationReportEntry(
                                     ruleName = "$ruleName, feil i heltall-felt",
                                     messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
@@ -55,38 +69,24 @@ class Rule002FileDescription(
                                     lineNumbers = listOf(kostraRecord.lineNumber)
                                 )
                             )
-
+                        }
                         // The value is a Date
                         if (fieldDefinition.dataType == DATE_TYPE
-                            && kostraRecord[fieldDefinition.name] != "0".repeat(fieldDefinition.datePattern.length)
                             && kostraRecord.fieldAsLocalDate(fieldDefinition.name) == null
-                        )
-                            validationReportEntries.plus(
+                        ) {
+                            validationReportEntries = validationReportEntries.plus(
                                 createValidationReportEntry(
                                     ruleName = "$ruleName, feil i dato-felt",
                                     messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
                                             "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
-                                            "er et datofelt med datomønster ('${fieldDefinition.datePattern.uppercase()}'), men inneholder '${kostraRecord[fieldDefinition.name]}'.",
+                                            "er et datofelt med datomønster '${fieldDefinition.datePattern.uppercase()}', men inneholder '${kostraRecord[fieldDefinition.name]}'.",
                                     lineNumbers = listOf(kostraRecord.lineNumber)
                                 )
                             )
-
-                    } else {
-                        // value is missing
-                        if (fieldDefinition.mandatory)
-                            validationReportEntries.plus(
-                                createValidationReportEntry(
-                                    ruleName = "$ruleName, mangler obligatorisk verdi",
-                                    messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
-                                            "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
-                                            "er obligatorisk, men mangler verdi.",
-                                    lineNumbers = listOf(kostraRecord.lineNumber)
-                                )
-                            )
-
+                        }
                     }
 
-                    validationReportEntries
+                    return@flatMap validationReportEntries
                 }
         }
         .ifEmpty { null }

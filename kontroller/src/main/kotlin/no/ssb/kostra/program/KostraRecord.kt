@@ -18,7 +18,11 @@ data class KostraRecord(
 
     fun fieldAsTrimmedString(field: String): String = fieldAsString(field).trim()
 
-    fun fieldAsInt(field: String): Int? = fieldAsTrimmedString(field).takeIf { it.isNotEmpty() }?.toInt()
+    fun fieldAsInt(field: String): Int? = try {
+        fieldAsTrimmedString(field).toInt()
+    } catch (thrown: NumberFormatException) {
+        null
+    }
 
     fun fieldAsIntOrDefault(
         field: String,

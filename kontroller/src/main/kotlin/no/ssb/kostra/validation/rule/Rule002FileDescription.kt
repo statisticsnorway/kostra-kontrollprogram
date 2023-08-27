@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule
 import no.ssb.kostra.program.DATE_TYPE
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.INTEGER_TYPE
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -12,7 +13,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 class Rule002FileDescription(
     val fieldDefinitions: List<FieldDefinition>
 ) : AbstractRule<List<String>>("Kontroll 002 : Filbeskrivese", Severity.FATAL) {
-    override fun validate(context: List<String>): List<ValidationReportEntry>? = context
+    override fun validate(context: List<String>, arguments: KotlinArguments): List<ValidationReportEntry>? = context
         .withIndex()
         .map { (index, recordString) ->
             recordString.toKostraRecord(

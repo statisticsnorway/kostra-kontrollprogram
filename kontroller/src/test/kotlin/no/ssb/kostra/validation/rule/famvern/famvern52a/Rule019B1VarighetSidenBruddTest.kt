@@ -17,11 +17,11 @@ class Rule019B1VarighetSidenBruddTest : BehaviorSpec({
             ),
             ForAllRowItem(
                 "all good",
-                kostraRecordInTest("1", "1"),
+                kostraRecordInTest("2", "1"),
             ),
             ForAllRowItem(
                 "invalid value",
-                kostraRecordInTest("1", " "),
+                kostraRecordInTest("2", " "),
                 expectedErrorMessage = "Det er oppgitt at primærklientens relasjon til viktigste deltager er " +
                         "ekspartner, men det er ikke oppgitt tid siden brudd. Fant ' ', forventet én av: [" +
                         "1=Har ikke bodd sammen, 2=Under 2 år, 3=2 - 4 år, 4=5 - 9 år, 5=10 - 19 år, " +

@@ -17,7 +17,7 @@ class Rule019B1VarighetSidenBrudd : AbstractRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter {
-        it[PRIMK_VSRELASJ_A_COL_NAME] == "1"
+        it[PRIMK_VSRELASJ_A_COL_NAME] == "2"
     }.filterNot {
         fieldDefinitions.byColumnName(EKSPART_LENGDE_A_COL_NAME).codeExists(it[EKSPART_LENGDE_A_COL_NAME])
     }.map {

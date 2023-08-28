@@ -22,7 +22,7 @@ class Familievern55MainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern55FieldDefinitions.fieldLength + 10)
                 ),
-                1,
+                2,
                 1
             ),
             row(
@@ -33,8 +33,8 @@ class Familievern55MainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern55FieldDefinitions.fieldLength)
                 ),
-                NUMBER_OF_VALIDATIONS,
-                1
+                2,
+                12
             ),
             row(
                 "validating a valid record string",
@@ -65,7 +65,7 @@ class Familievern55MainTest : BehaviorSpec({
     companion object {
         private const val SKJEMA = "55F"
         private const val REGION = "667600"
-        private const val NUMBER_OF_VALIDATIONS = 14
+        private const val NUMBER_OF_VALIDATIONS = 15
 
         private fun argumentsInTest(
             fylke: String = "30",
@@ -80,6 +80,51 @@ class Familievern55MainTest : BehaviorSpec({
                     mapOf(
                         Familievern55ColumnNames.FYLKE_NR_COL_NAME to fylke,
                         Familievern55ColumnNames.FYLKE_NAVN_COL_NAME to "Testvik",
+
+                        Familievern55ColumnNames.MEKLING_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.MEKLING_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.MEKLING_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.MEKLING_TOT_ALLE_COL_NAME to "1",
+
+                        Familievern55ColumnNames.SEP_BEGGE_COL_NAME to "1",
+                        Familievern55ColumnNames.SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.BEGGE_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.ENBEGGE_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.VENTETID_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.VENTETID_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.VENTETID_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.FORHOLD_MEKLER_COL_NAME to "1",
+                        Familievern55ColumnNames.FORHOLD_KLIENT_COL_NAME to "0",
+                        Familievern55ColumnNames.FORHOLD_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.VARIGHET_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.VARIGHET_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.VARIGHET_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.VARIGHET_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.BARNDELT_FLY_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.BARNDELT_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.RESULT_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.RESULT_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.RESULT_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.RESULT_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.AVTALE_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.AVTALE_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.AVTALE_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.AVTALE_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.BEKYMR_SEP_1_COL_NAME to "1",
+                        Familievern55ColumnNames.BEKYMR_SEP_TOT_COL_NAME to "1",
+                        Familievern55ColumnNames.BEKYMR_TOT_1_COL_NAME to "1",
+                        Familievern55ColumnNames.BEKYMR_TOT_TOT_COL_NAME to "1",
+
+                        Familievern55ColumnNames.UTEN_OPPM_1_COL_NAME to "1",
+                        Familievern55ColumnNames.UTEN_OPPM_TOT_COL_NAME to "1",
                     )
                 )
                 .toRecordString()

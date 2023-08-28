@@ -22,7 +22,7 @@ class Familievern53MainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern53FieldDefinitions.fieldLength + 10)
                 ),
-                1,
+                2,
                 1
             ),
             row(
@@ -65,7 +65,7 @@ class Familievern53MainTest : BehaviorSpec({
     companion object {
         private const val SKJEMA = "53F"
         private const val REGION = "667600"
-        private const val NUMBER_OF_VALIDATIONS = 6
+        private const val NUMBER_OF_VALIDATIONS = 7
 
         private fun argumentsInTest(fylke: String): KotlinArguments = KotlinArguments(
             skjema = SKJEMA,

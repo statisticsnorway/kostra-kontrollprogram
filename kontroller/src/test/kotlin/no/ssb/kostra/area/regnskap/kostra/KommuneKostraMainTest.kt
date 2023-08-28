@@ -124,7 +124,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                         RegnskapConstants.FIELD_AARGANG to recordVersion,
                         RegnskapConstants.FIELD_REGION to recordRegion,
                         RegnskapConstants.FIELD_ORGNR to recordOrgnr,
-                        RegnskapConstants.FIELD_KONTOKLASSE to "4",
+                        RegnskapConstants.FIELD_KONTOKLASSE to if (argumentsSkjema in listOf("0A", "0C")) "0" else "4",
                         RegnskapConstants.FIELD_FUNKSJON to "041 ",
                         RegnskapConstants.FIELD_ART to "200",
                         RegnskapConstants.FIELD_BELOP to "1"

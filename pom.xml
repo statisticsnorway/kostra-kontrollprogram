@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <jacoco.version>0.8.10</jacoco.version>
-        <checkstyle.version>10.12.2</checkstyle.version>
+        <checkstyle.version>10.12.3</checkstyle.version>
         <sonar.version>3.9.1.2184</sonar.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>statisticsnorway</sonar.organization>

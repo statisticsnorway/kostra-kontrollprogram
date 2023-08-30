@@ -3,6 +3,7 @@ package no.ssb.kostra.validation.rule.barnevern
 enum class IndividRuleId(val title: String) {
     INDIVID_00("Individ Kontroll 00: Individ mangler"),
     INDIVID_01("Individ Kontroll 01: Validering av individ"),
+    INDIVID_01A("Individ Kontroll 01a: Validering av datoer"),
     INDIVID_02A("Individ Kontroll 02a: Startdato etter sluttdato"),
     INDIVID_02B("Individ Kontroll 02b: Sluttdato mot versjon"),
     INDIVID_02D("Individ Kontroll 02d: Avslutta 31 12 medfører at sluttdato skal være satt"),

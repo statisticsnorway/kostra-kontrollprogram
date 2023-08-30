@@ -17,6 +17,7 @@ object IndividRuleTestData {
     private const val KOSTRA_MELDING_ID = "~melding~"
     private const val KOSTRA_UNDERSOKELSE_ID = "~undersokelse~"
     private const val KOSTRA_PLAN_ID = "~plan~"
+    private const val KOSTRA_FLYTTING_ID = "~flytting~"
 
     /** START subtypes */
 
@@ -114,5 +115,18 @@ object IndividRuleTestData {
         plantype = "~plantype~",
         sluttDato = null,
         evaluertDato = null
+    )
+
+    val flyttingTypeInTest = KostraFlyttingType(
+        id = KOSTRA_FLYTTING_ID,
+        sluttDato = dateInTest,
+        arsakFra = KostraArsakFraType(
+            kode = "~kode~",
+            presisering = "~presisering~"
+        ),
+        flyttingTil = KostraFlyttingTilType(
+            kode = "~kode~",
+            presisering = "~presisering~"
+        )
     )
 }

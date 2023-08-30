@@ -5,6 +5,7 @@ import no.ssb.kostra.validation.rule.barnevern.individrule.*
 object IndividRules {
 
     val individRules = setOf(
+        Individ01a(),
         Individ02a(),
         Individ02b(),
         Individ02d(),

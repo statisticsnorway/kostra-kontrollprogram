@@ -34,7 +34,6 @@ class ValidationReportTest : BehaviorSpec({
                     )
                 )
 
-                println(sut.toString())
                 Then("result should be as expected") {
                     sut.toString() shouldContain description
                 }
@@ -113,7 +112,6 @@ class ValidationReportTest : BehaviorSpec({
                     )
                 )
 
-                println(sut.toString())
                 Then("result should be as expected") {
                     sut.toString() shouldContain expectedMessage
                 }

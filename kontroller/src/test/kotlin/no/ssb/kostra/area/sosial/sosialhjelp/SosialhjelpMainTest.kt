@@ -71,7 +71,6 @@ class SosialhjelpMainTest : BehaviorSpec({
                 }
 
                 Then("validationReport should be as expected") {
-                    println(reportString)
                     reportString shouldContain "Kontrollrapport"
                 }
             }

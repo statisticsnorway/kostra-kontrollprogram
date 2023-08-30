@@ -1,12 +1,18 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
+import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.PositionedFileValidator
+import no.ssb.kostra.validation.report.StatsEntry
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
+import no.ssb.kostra.validation.rule.sosial.extensions.ageInYears
+import no.ssb.kostra.validation.rule.sosial.extensions.hasFnr
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.*
 import no.ssb.kostra.validation.rule.sosial.rule.*
 
@@ -58,117 +64,100 @@ class KvalifiseringMain(
     )
 
     override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> {
+        val sumStonad = kostraRecordList.sumOf { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+
+        val ageList = kostraRecordList
+            .filter { it.hasFnr() && it.ageInYears(arguments) > -1 }
+            .map { it.ageInYears(arguments) }
+
+        val stonadstidList = kostraRecordList
+            .map { kostraRecord ->
+                (1..12)
+                    .map {
+                        "STMND_$it"
+                    }.count { fieldName ->
+                        kostraRecord.fieldDefinition(fieldName).codeExists(kostraRecord[fieldName])
+                    }
+            }
+
+        val stonadList = kostraRecordList
+            .map { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+
         return listOf(
             StatsReportEntry(
-                content = "Title",
-                codeList = emptyList(),
-                statsEntryList = emptyList()
+                content = "Sum",
+                codeList = listOf(
+                    Code(KVP_STONAD_COL_NAME, "Stønad"),
+                ),
+                statsEntryList = listOf(
+                    StatsEntry(KVP_STONAD_COL_NAME, "$sumStonad")
+                )
+            ),
+            StatsReportEntry(
+                content = "Kvalifiseringsdeltakere",
+                codeList = listOf(
+                    Code("I_ALT", "I alt"),
+                    Code("0_19", "19 år eller yngre"),
+                    Code("20_24", "20 - 24 år"),
+                    Code("25_29", "25 - 29 år"),
+                    Code("30_39", "30 - 39 år"),
+                    Code("40_49", "40 - 49 år"),
+                    Code("50_66", "50 - 66 år"),
+                    Code("67_999", "67 år eller eldre"),
+                    Code("UGYLDIG_FNR", "Alder ikke mulig å beregne")
+                ),
+                statsEntryList = listOf(
+                    StatsEntry("I_ALT", kostraRecordList.size.toString()),
+                    StatsEntry("0_19", ageList.count { it in 0..19 }.toString()),
+                    StatsEntry("20_24", ageList.count { it in 20..24 }.toString()),
+                    StatsEntry("25_29", ageList.count { it in 25..29 }.toString()),
+                    StatsEntry("30_39", ageList.count { it in 30..39 }.toString()),
+                    StatsEntry("40_49", ageList.count { it in 40..49 }.toString()),
+                    StatsEntry("50_66", ageList.count { it in 50..66 }.toString()),
+                    StatsEntry("67_999", ageList.count { it in 67..999 }.toString()),
+                    StatsEntry("UGYLDIG_FNR", kostraRecordList.count { !it.hasFnr() }.toString()),
+                )
+            ),
+            StatsReportEntry(
+                content = "Stønadstid",
+                codeList = listOf(
+                    Code("1", "1 måned"),
+                    Code("2_3", "2 - 3 måneder"),
+                    Code("4_6", "4 - 6 måneder"),
+                    Code("7_9", "7 - 9 måneder"),
+                    Code("10_11", "10 - 11 måneder"),
+                    Code("12", "12 måneder"),
+                    Code("UOPPGITT", "Uoppgitt")
+                ),
+                statsEntryList = listOf(
+                    StatsEntry("1", stonadstidList.count { it == 1 }.toString()),
+                    StatsEntry("2_3", stonadstidList.count { it in 2..3 }.toString()),
+                    StatsEntry("4_6", stonadstidList.count { it in 4..6 }.toString()),
+                    StatsEntry("7_9", stonadstidList.count { it in 7..9 }.toString()),
+                    StatsEntry("10_11", stonadstidList.count { it in 10..11 }.toString()),
+                    StatsEntry("12", stonadstidList.count { it == 12 }.toString()),
+                    StatsEntry("UOPPGITT", stonadstidList.count { it == 0 }.toString()),
+                )
+            ),
+            StatsReportEntry(
+                content = "Stønad",
+                codeList = listOf(
+                    Code("1_7", "1 - 7999"),
+                    Code("8_49", "8000 - 49999"),
+                    Code("50_99", "50000 - 99999"),
+                    Code("100_149", "100000 - 149999"),
+                    Code("150_9999", "150000 og over"),
+                    Code("0", "Uoppgitt")
+                ),
+                statsEntryList = listOf(
+                    StatsEntry("1_7", stonadList.count { it in 1..7_999 }.toString()),
+                    StatsEntry("8_49", stonadList.count { it in 8_000..49_999 }.toString()),
+                    StatsEntry("50_99", stonadList.count { it in 50_000..99_999 }.toString()),
+                    StatsEntry("100_149", stonadList.count { it in 100_000..149_000 }.toString()),
+                    StatsEntry("150_9999", stonadList.count { it in 150_000..9_999_999 }.toString()),
+                    StatsEntry("0", stonadList.count { it == 0 }.toString()),
+                )
             )
         )
     }
 }
-// TODO() legge til stats ;-)
-/*
-
-        // Kontroller ferdig
-        // Lager statistikkrapport
-        {
-            if (errorReport.getErrorType() < Constants.CRITICAL_ERROR) {
-
-                final var stonadSum = records.stream().map(r -> r.getFieldAsIntegerDefaultEquals0(KVP_STONAD)).reduce(0, Integer::sum);
-
-                errorReport.addStats(new StatsReportEntry(
-                        "Sum"
-                        , List.of(
-                        new Code("STONAD", "Stønad")
-                )
-                        , List.of(
-                        new StatsEntry("STONAD", stonadSum.toString())
-                )
-                ));
-
-                final var gyldigeRecordsAlder = records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) == 1 && r.getFieldAsInteger(ALDER) != -1).map(r -> r.getFieldAsInteger(ALDER)).toList();
-                errorReport.addStats(new StatsReportEntry(
-                        "Kvalifiseringsdeltakere"
-                        , List.of(
-                        new Code("I_ALT", "I alt")
-                        , new Code("0_19", "19 år eller yngre")
-                        , new Code("20_24", "20 - 24 år")
-                        , new Code("25_29", "25 - 29 år")
-                        , new Code("30_39", "30 - 39 år")
-                        , new Code("40_49", "40 - 49 år")
-                        , new Code("50_66", "50 - 66 år")
-                        , new Code("67_999", "67 år eller eldre")
-                        , new Code("UGYLDIG_FNR", "Alder ikke mulig å beregne")
-                )
-                        , List.of(
-                        new StatsEntry("I_ALT", String.valueOf(records.size()))
-                        , new StatsEntry("0_19", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 0, 19)).count()))
-                        , new StatsEntry("20_24", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 20, 24)).count()))
-                        , new StatsEntry("25_29", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 25, 29)).count()))
-                        , new StatsEntry("30_39", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 30, 39)).count()))
-                        , new StatsEntry("40_49", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 40, 49)).count()))
-                        , new StatsEntry("50_66", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 45, 66)).count()))
-                        , new StatsEntry("67_999", String.valueOf(gyldigeRecordsAlder.stream().filter(i -> Comparator.between(i, 67, 999)).count()))
-                        , new StatsEntry("UGYLDIG_FNR", String.valueOf(records.stream().filter(r -> r.getFieldAsInteger(FNR_OK) == 0).count()))
-                )
-                ));
-
-                final var gyldigeRecordsStonadstid = records.stream()
-                        .map(r -> STMND
-                                .stream()
-                                .filter(m -> 0 < r.getFieldAsIntegerDefaultEquals0(m))
-                                .count()
-                        )
-                        .toList();
-
-                errorReport.addStats(new StatsReportEntry(
-                        "Stønadsvarighet"
-                        , List.of(
-                        new Code("1", "1 måned")
-                        , new Code("2_3", "2 - 3 måneder")
-                        , new Code("4_6", "4 - 6 måneder")
-                        , new Code("7_9", "7 - 9 måneder")
-                        , new Code("10_11", "10 - 11 måneder")
-                        , new Code("12", "12 måneder")
-                        , new Code("UOPPGITT", "Uoppgitt")
-                )
-                        , List.of(
-                        new StatsEntry("1", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 1).count()))
-                        , new StatsEntry("2_3", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 2, 3)).count()))
-                        , new StatsEntry("4_6", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 4, 6)).count()))
-                        , new StatsEntry("7_9", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 7, 9)).count()))
-                        , new StatsEntry("10_11", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 10, 11)).count()))
-                        , new StatsEntry("12", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> Comparator.between(i.intValue(), 12, 12)).count()))
-                        , new StatsEntry("UOPPGITT", String.valueOf(gyldigeRecordsStonadstid.stream().filter(i -> i == 0).count()))
-                )
-                ));
-
-                final var gyldigeRecordsStonad = records.stream()
-                        .map(r -> r.getFieldAsIntegerDefaultEquals0(KVP_STONAD))
-                        .toList();
-
-                errorReport.addStats(new StatsReportEntry(
-                        "Stønad"
-                        , List.of(
-                        new Code("1_7", " - 7999 kr")
-                        , new Code("8_49", "8000 - 49999 kr")
-                        , new Code("50_99", "50000 - 99999 kr")
-                        , new Code("100_149", "100000 - 149999 kr")
-                        , new Code("150_9999", "150000 kr og over")
-                        , new Code("0", "Uoppgitt")
-                )
-                        , List.of(
-                        new StatsEntry("1_7", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 1, 7999)).count()))
-                        , new StatsEntry("8_49", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 8000, 49999)).count()))
-                        , new StatsEntry("50_99", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 50000, 99999)).count()))
-                        , new StatsEntry("100_149", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> Comparator.between(i, 100000, 149999)).count()))
-                        , new StatsEntry("150_9999", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> 150000 <= i).count()))
-                        , new StatsEntry("0", String.valueOf(gyldigeRecordsStonad.stream().filter(i -> i == 0).count()))
-                )
-                ));
-            }
-        }
-        return errorReport;
-
-*/

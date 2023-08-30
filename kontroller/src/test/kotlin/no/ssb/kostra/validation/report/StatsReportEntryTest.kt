@@ -43,7 +43,6 @@ class StatsReportEntryTest : BehaviorSpec({
                         """
                         <table style='border: 1px solid black'>
                         <tr><td>&nbsp;</td><td>~content~</td></tr>
-                        <tr><td>&nbsp;</td><td style='text-align:right;'>~value~</td></tr>
                         <tr><td>~value~</td><td style='text-align:right;'>~value~</td></tr>
                         </table>
                         
@@ -67,7 +66,6 @@ class StatsReportEntryTest : BehaviorSpec({
                         """
                         <table style='border: 1px solid black'>
                         <tr><td>&nbsp;</td><td>~content~</td></tr>
-                        <tr><td>&nbsp;</td><td style='text-align:right;'>~value~</td></tr>
                         <tr><td>~value~</td><td style='text-align:right;'>..</td></tr>
                         </table>
                         

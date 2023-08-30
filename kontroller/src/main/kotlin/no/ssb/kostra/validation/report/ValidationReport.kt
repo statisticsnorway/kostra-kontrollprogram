@@ -38,19 +38,19 @@ class ValidationReport(
                 .append("<div>Type filuttrekk: ").append(kotlinArguments.skjema).append(".")
                 .append(kotlinArguments.aargang)
                 .append(endDiv).append(lf)
-                .append("<div>Antall sjekker utført: ").append(count)
-                .append(endDiv).append(lf).append(lf)
+                .append("<div>Antall sjekker utført: ").append(numberOfControls)
+                .append(endDiv).append(lf)
                 .append("<div>Feilkode: ").append(severity.info.returnCode).append(endDiv)
                 .append(lf)
 
             // summary
             when {
-                numberOfControls == 0 -> report.append("Finner ingen data!  :-(")
-                reportEntries.isEmpty() -> report.append("Ingen feil funnet!").append(lf)
+                numberOfControls == 0 -> report.append("<div>Finner ingen data!  :-(</div>").append(lf)
+                reportEntries.isEmpty() -> report.append("<div>Ingen feil funnet!</div>").append(lf)
                 else -> {
                     report.append(lf).append("<h3>Oppsummering pr. kontroll:</h3>").append(lf)
 
-                    uniqueReportEntries
+                    reportEntries
                         .sortedBy { it.ruleName }
                         .groupBy { it.ruleName }
                         .forEach { (title, group) ->
@@ -58,7 +58,7 @@ class ValidationReport(
                                 Severity.FATAL ->
                                     report.append(
                                         "<div style='font-size:12pt; vertical-align: top; color: ${Severity.FATAL.info.color}'>" +
-                                                "$title har funnet ${group.size} feil som hindrer innsending " +
+                                                "$title har funnet ${group.size} kritiske feil som hindrer innsending " +
                                                 "og de andre kontrollene i bli kjørt</div>"
                                     ).append(lf)
 
@@ -89,15 +89,29 @@ class ValidationReport(
                         }
 
                     report.append("<h3>Opplisting av feil, advarsler og meldinger</h3>").append(lf)
+                    report.append("<table>").append(lf)
 
-                    report.append("TODO").append(lf)
+                    uniqueReportEntries
+                        .sorted()
+                        .map {
+                            report
+                                .append("<tr style='font-size:12pt; vertical-align: top; color: ").append(it.severity.info.color).append("'>")
+                                .append("<td>").append(it.caseworker.replace(" ", "&nbsp;")).append("</td>")
+                                .append("<td>").append(it.journalId).append("</td>")
+                                .append("<td>").append(it.ruleName).append("</td>")
+                                .append("<td>").append(it.messageText).append("</td>")
+                                .append("<td>").append(it.lineNumbers).append("</td>")
+                                .append("</tr>").append(lf)
+                        }
+
+                    report.append("</table>").append(lf)
                 }
             }
 
             // information per validation
             // statistics
             if (severity < Severity.ERROR && statsReportEntries.isNotEmpty()) {
-                report.append("<h3>Statistikkrapport</h3>")
+                report.append("<h3>Statistikkrapport</h3>").append(lf)
                 statsReportEntries.forEach { statsReportEntry ->
                     report.append(statsReportEntry.toString())
                 }
@@ -106,4 +120,6 @@ class ValidationReport(
 
         return report.toString()
     }
+
+
 }

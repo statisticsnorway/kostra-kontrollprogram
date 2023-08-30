@@ -18,14 +18,6 @@ data class StatsReportEntry(
             .append(lf)
 
         // add content
-        statsEntryList.forEach { statsEntry ->
-            append("<tr><td>&nbsp;</td><td style='text-align:right;'>")
-                .append(statsEntry.value)
-                .append("</td>")
-                .append("</tr>")
-                .append(lf)
-        }
-
         codeList.forEach { code ->
             val statsEntry = statsEntryList.firstOrNull { entry ->
                 code.code.equals(entry.id, ignoreCase = true)

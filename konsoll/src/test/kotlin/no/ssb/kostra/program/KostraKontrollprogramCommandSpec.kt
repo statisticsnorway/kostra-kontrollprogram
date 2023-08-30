@@ -54,7 +54,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 ),
                 "",
                 2,
-                "Recordlengde har funnet 1 feil som hindrer innsending"
+                "Recordlengde har funnet 1 kritiske feil som hindrer innsending"
             ),
             row(
                 "invocation with valid schema, hasAttachment = 1",

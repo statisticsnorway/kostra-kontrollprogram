@@ -15,10 +15,10 @@ class Individ01a : AbstractRule<KostraIndividType>(
 
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = with(context) {
         melding.asSequence().map { validateMelding(it) }
-            .plus( plan.map { validatePlan(it) } )
-            .plus( tiltak.map { validateTiltak(it) } )
-            .plus( flytting.map {validateFlytting(it) } )
-            .plus ( listOf(validateIndivid(this)) )
+            .plus(plan.map { validatePlan(it) })
+            .plus(tiltak.map { validateTiltak(it) })
+            .plus(flytting.map { validateFlytting(it) })
+            .plus(listOf(validateIndivid(this)))
             .flatten().toList().ifEmpty { null }
     }
 
@@ -142,6 +142,7 @@ class Individ01a : AbstractRule<KostraIndividType>(
                 contextId = contextId
             )
         }
+
     companion object {
         val minDate: LocalDate = LocalDate.of(1998, 1, 1)
         val maxDate: LocalDate = LocalDate.of(2029, 12, 31)

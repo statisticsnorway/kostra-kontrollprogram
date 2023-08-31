@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.report
 
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.felles.git.GitPropertiesLoader
-import java.util.Calendar
+import java.util.*
 
 class ValidationReport(
     private val validationReportArguments: ValidationReportArguments,
@@ -95,7 +95,8 @@ class ValidationReport(
                         .sorted()
                         .map {
                             report
-                                .append("<tr style='font-size:12pt; vertical-align: top; color: ").append(it.severity.info.color).append("'>")
+                                .append("<tr style='font-size:12pt; vertical-align: top; color: ")
+                                .append(it.severity.info.color).append("'>")
                                 .append("<td>").append(it.caseworker.replace(" ", "&nbsp;")).append("</td>")
                                 .append("<td>").append(it.journalId).append("</td>")
                                 .append("<td>").append(it.ruleName).append("</td>")

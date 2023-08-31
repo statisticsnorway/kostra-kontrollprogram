@@ -26,11 +26,11 @@ object TestUtils {
                 }
 
                 ("There should be an entry with (contextId=${expectedContextId}) and message which starts with " +
-                    "(\"${expectedErrorText}\") among the following entries: \n($validationReportEntries)").asClue {
+                        "(\"${expectedErrorText}\") among the following entries: \n($validationReportEntries)").asClue {
 
                     val validationReportEntry = validationReportEntries.find {
                         it.contextId == expectedContextId
-                            && it.messageText.startsWith(expectedErrorText)
+                                && it.messageText.startsWith(expectedErrorText)
                     }
 
                     validationReportEntry.shouldNotBeNull()

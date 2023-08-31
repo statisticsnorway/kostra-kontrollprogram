@@ -11,6 +11,6 @@ data class ValidationReportEntry(
     val lineNumbers: List<Int> = emptyList()
 ) : Comparable<ValidationReportEntry> {
     override fun compareTo(other: ValidationReportEntry): Int {
-        return compareValuesBy(this, other, { it.caseworker }, { it.journalId }, {it.ruleName})
+        return compareValuesBy(this, other, { it.caseworker }, { it.journalId }, { it.ruleName })
     }
 }

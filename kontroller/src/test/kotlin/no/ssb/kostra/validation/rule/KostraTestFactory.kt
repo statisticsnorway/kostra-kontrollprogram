@@ -14,6 +14,7 @@ import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 private const val NO_ERROR = "N/A"
+
 data class ForAllRowItem<out T : Any>(
     val description: String,
     val context: T,
@@ -46,7 +47,8 @@ data class ForAllRowItem<out T : Any>(
     ) : this(
         description = description,
         context = context,
-        expectedErrors = expectedErrors.toList())
+        expectedErrors = expectedErrors.toList()
+    )
 }
 
 object KostraTestFactory {
@@ -117,10 +119,10 @@ object KostraTestFactory {
 
                     /** if contextId is not provided in [expectedErrors], use default */
                     val testRuns = expectedErrors.map { (innerExpectedContextId, expectedErrorMessage) ->
-                        ( when (innerExpectedContextId) {
+                        (when (innerExpectedContextId) {
                             "" -> expectedContextId ?: innerExpectedContextId
-                            else ->  innerExpectedContextId
-                        } ) to expectedErrorMessage
+                            else -> innerExpectedContextId
+                        }) to expectedErrorMessage
                     }
 
                     Then(thenDescription) {

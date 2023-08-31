@@ -15,6 +15,7 @@ enum class Familievern52aRuleId(val title: String) {
     FAMILIEVERN52A_RULE017("Kontroll 017 : Primærklientens bosituasjon ved opprettelsen"),
     FAMILIEVERN52A_RULE018("Kontroll 018 : Primærklientens tilknytning til utdanning og arbeidsliv"),
     FAMILIEVERN52A_RULE019A("Kontroll 019 A : Varighet på relasjon mellom primærklient og viktigste samtalepartner, partnere"),
+
     // CR Note: Only in use in tests
     FAMILIEVERN52A_RULE019B1("Kontroll 019 B1 : Tid siden brudd for primærklient og viktigste samtalepartner, ekspartnere, lengde"),
     FAMILIEVERN52A_RULE019B2("Kontroll 019 B2 : Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"),

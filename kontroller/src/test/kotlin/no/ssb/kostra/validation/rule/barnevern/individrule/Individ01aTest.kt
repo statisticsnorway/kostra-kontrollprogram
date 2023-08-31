@@ -43,7 +43,7 @@ class Individ01aTest : BehaviorSpec({
                 KOSTRA_UNDERSOKELSE_ID to errorStr("Undersokelse startdato", invalidMinDate),
                 KOSTRA_UNDERSOKELSE_ID to errorStr("Undersokelse sluttdato", invalidMaxDate),
 
-            ),
+                ),
             ForAllRowItem(
                 "Plan with invalid non-nullable dates",
                 individInTest().copy(plan = mutableListOf(planInTest(populateNullableDates = false))),

@@ -29,7 +29,8 @@ class Rule009AvsluttedeMeklingerEtterVarighetTest : BehaviorSpec({
             rowSum: String,
             columnSum: String,
             sumOfSums: String
-        ) = listOf(Familievern55TestUtils.familievernRecordInTest(
+        ) = listOf(
+            Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
                     Familievern55ColumnNames.VARIGHET_SEP_1_COL_NAME to "1",
                     Familievern55ColumnNames.VARIGHET_SEP_TOT_COL_NAME to rowSum,

@@ -136,7 +136,7 @@ object RegnskapConstants {
         mappingBasis
             .filter { it.skjema == skjema && it.kontoklasse == kontoklasse }
             .map { it.kontoType }
-            .firstOrNull() ?: ""
+            .first()
 
     fun mappingDuplicates(arguments: KotlinArguments): Pair<List<String>, List<String>> =
         when (getRegnskapTypeBySkjema(arguments.skjema)) {

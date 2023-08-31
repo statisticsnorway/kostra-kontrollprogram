@@ -41,7 +41,7 @@ class Individ02dTest : BehaviorSpec({
         )
     )
 }) {
-    companion object{
+    companion object {
         private const val KOSTRA_IS_CLOSED_FALSE = "2"
     }
 }

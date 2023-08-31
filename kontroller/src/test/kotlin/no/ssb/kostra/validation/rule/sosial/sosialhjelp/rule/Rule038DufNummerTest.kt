@@ -8,6 +8,7 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.RuleTestData
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
+import java.time.LocalDate
 
 class Rule038DufNummerTest : BehaviorSpec({
     include(
@@ -32,9 +33,9 @@ class Rule038DufNummerTest : BehaviorSpec({
     )
 }) {
     companion object {
-        internal val fnr = RandomUtils.generateRandomSsn(
-            RuleTestData.argumentsInTest.aargang.toInt() - 50,
-            RuleTestData.argumentsInTest.aargang.toInt() - 20
+        internal val fnr = RandomUtils.generateRandomSSN(
+            LocalDate.of(RuleTestData.argumentsInTest.aargang.toInt() - 50, 1, 1),
+            LocalDate.of(RuleTestData.argumentsInTest.aargang.toInt() - 20, 1, 1)
         )
 
         internal val dufnr = RandomUtils.generateRandomDuf(

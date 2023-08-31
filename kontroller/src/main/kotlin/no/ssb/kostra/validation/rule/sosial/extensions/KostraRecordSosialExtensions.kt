@@ -7,7 +7,6 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.ageInYears
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
-import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.util.SsnValidationUtils
 
 fun KostraRecord.hasVarighet() =
@@ -26,9 +25,9 @@ fun KostraRecord.hasNotVarighet() =
             fieldDefinitions.byColumnName(it).codeExists(this[it])
         }
 
-fun KostraRecord.ageInYears(arguments: KotlinArguments) : Int =
+fun KostraRecord.ageInYears(arguments: KotlinArguments): Int =
     this[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1
 
-fun KostraRecord.hasFnr() : Boolean =
+fun KostraRecord.hasFnr(): Boolean =
     SsnValidationUtils.isValidSocialSecurityIdOrDnr(this[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME])
 

@@ -75,7 +75,8 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
         val stonad = "STONAD"
 
         val ageList = kostraRecordList
-            .filter { it.hasFnr() && it.ageInYears(arguments) > -1 }
+            .filter { it.hasFnr() }
+            .filter { it.ageInYears(arguments) > -1 }
             .map { it.ageInYears(arguments) }
 
         val stonadstidList = kostraRecordList

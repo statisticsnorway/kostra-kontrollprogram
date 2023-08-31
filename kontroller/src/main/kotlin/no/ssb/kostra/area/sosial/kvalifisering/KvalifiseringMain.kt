@@ -67,7 +67,8 @@ class KvalifiseringMain(
         val sumStonad = kostraRecordList.sumOf { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
 
         val ageList = kostraRecordList
-            .filter { it.hasFnr() && it.ageInYears(arguments) > -1 }
+            .filter { it.hasFnr() }
+            .filter { it.ageInYears(arguments) > -1 }
             .map { it.ageInYears(arguments) }
 
         val stonadstidList = kostraRecordList

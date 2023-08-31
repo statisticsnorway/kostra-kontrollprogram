@@ -68,7 +68,6 @@ class KvalifiseringMain(
 
         val ageList = kostraRecordList
             .filter { it.hasFnr() }
-            .filter { it.ageInYears(arguments) > -1 }
             .map { it.ageInYears(arguments) }
 
         val stonadstidList = kostraRecordList

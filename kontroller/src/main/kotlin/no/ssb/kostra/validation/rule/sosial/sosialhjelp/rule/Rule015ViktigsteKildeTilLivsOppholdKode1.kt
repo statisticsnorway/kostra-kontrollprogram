@@ -5,18 +5,17 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ARBSIT_COL_N
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule015ViktigsteKildeTilLivsOppholdKode1 : AbstractRule<List<KostraRecord>>(
+class Rule015ViktigsteKildeTilLivsOppholdKode1 : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K015_VKLO_ARBEIDSINNTEKT.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments): List<ValidationReportEntry>? =
+    override fun validate(context: List<KostraRecord>): List<ValidationReportEntry>? =
         context
             .filter {
                 it[VKLO_COL_NAME] == "1"

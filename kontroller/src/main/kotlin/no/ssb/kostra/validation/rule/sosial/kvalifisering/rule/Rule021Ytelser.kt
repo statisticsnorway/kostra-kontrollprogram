@@ -7,18 +7,17 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_T
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.JA
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class Rule021Ytelser : AbstractRule<List<KostraRecord>>(
+class Rule021Ytelser : AbstractNoArgsRule<List<KostraRecord>>(
     KvalifiseringRuleId.YTELSER_21.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it[YTELSE_SOSHJELP_COL_NAME] == JA
         }.filter {

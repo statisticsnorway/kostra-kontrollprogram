@@ -4,15 +4,14 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.FORSTE_SA
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule020DatoForsteBehandlingssamtale : AbstractRule<List<KostraRecord>>(
+class Rule020DatoForsteBehandlingssamtale : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE020.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         it.fieldAsLocalDate(FORSTE_SAMT_A_COL_NAME) != null
     }.map {
         createValidationReportEntry(

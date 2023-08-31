@@ -3,16 +3,15 @@ package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 
-class Rule220InterneOverforingerMidler : AbstractRule<List<KostraRecord>>(
+class Rule220InterneOverforingerMidler : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 220 : Interne overføringer, midler",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord[FIELD_ART] in setOf("465", "865") }

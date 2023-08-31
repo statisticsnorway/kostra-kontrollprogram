@@ -2,15 +2,14 @@ package no.ssb.kostra.validation.rule.famvern.famvern55
 
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule014KontrollAvTotalsummerForMeklinger : AbstractRule<List<KostraRecord>>(
+class Rule014KontrollAvTotalsummerForMeklinger : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern55RuleId.FAMILIEVERN55_RULE014.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         fieldList.map { field ->
             field to it.fieldAsIntOrDefault(field)
         }.all { item -> item.second == it.fieldAsIntOrDefault(fieldList.first()) }

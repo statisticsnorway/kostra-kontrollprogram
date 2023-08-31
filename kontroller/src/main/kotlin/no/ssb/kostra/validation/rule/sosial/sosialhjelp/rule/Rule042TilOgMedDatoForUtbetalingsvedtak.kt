@@ -4,18 +4,17 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.UTBETTOMDATO_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSOSLOV_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 import java.time.LocalDate
 
-class Rule042TilOgMedDatoForUtbetalingsvedtak : AbstractRule<List<KostraRecord>>(
+class Rule042TilOgMedDatoForUtbetalingsvedtak : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K042_UTBETALINGSVEDTAK.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it[VILKARSOSLOV_COL_NAME] == "1"
         }.filterNot {

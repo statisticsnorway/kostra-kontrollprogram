@@ -4,15 +4,14 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.ANTDELT_I
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.GRUPPE_NR_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.KONTOR_NR_B_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule015AntallDeltagereIGruppenILA : AbstractRule<List<KostraRecord>>(
+class Rule015AntallDeltagereIGruppenILA : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52bRuleId.FAMILIEVERN52B_RULE015.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         0 < it.fieldAsIntOrDefault(ANTDELT_IARET_B_COL_NAME)
     }.map {
         createValidationReportEntry(

@@ -4,15 +4,14 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_N
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TIMER_OPPR_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule031TotaltAntallTimerSidenSakenBleOpprettet : AbstractRule<List<KostraRecord>>(
+class Rule031TotaltAntallTimerSidenSakenBleOpprettet : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE031.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         0 < it.fieldAsIntOrDefault(TIMER_OPPR_A_COL_NAME)
     }.map {
         createValidationReportEntry(

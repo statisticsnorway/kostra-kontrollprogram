@@ -7,16 +7,15 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 
-class Rule003Bydelsnummer : AbstractRule<List<KostraRecord>>(
+class Rule003Bydelsnummer : AbstractNoArgsRule<List<KostraRecord>>(
     SosialRuleId.BYDELSNUMMER_03.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filterNot {
             when (it[KOMMUNE_NR_COL_NAME]) {
                 OSLO_MUNICIPALITY_ID -> it[BYDELSNR_COL_NAME] in OSLO_DISTRICTS

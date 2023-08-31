@@ -7,17 +7,16 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapConstants.getRegnskapTypeBySkjema
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
-class Rule145AvskrivningerMotpostAvskrivninger : AbstractRule<List<KostraRecord>>(
+class Rule145AvskrivningerMotpostAvskrivninger : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 145 : Avskrivninger, motpost avskrivninger",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filterNot { it.isOsloBydel() }
         .filter { it.isBevilgningDriftRegnskap() }
         .filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }

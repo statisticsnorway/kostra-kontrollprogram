@@ -3,18 +3,17 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloInternRegnskap
 
-class Rule126SummeringDriftOsloInternDifferanse : AbstractRule<List<KostraRecord>>(
+class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 126 : Summeringskontroller driftsregnskapet for de Oslointerne artene 298 og 798, " +
             "differanse i driftsregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { it.isOsloInternRegnskap() }
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }

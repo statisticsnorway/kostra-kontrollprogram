@@ -6,17 +6,16 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_CO
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule024BTilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractRule<List<KostraRecord>>(
+class Rule024BTilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K024B_TRYGDESYSTEMET_ARBEIDSSITUASJON.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it[VKLO_COL_NAME] == "3" && it[TRYGDESIT_COL_NAME] == "11"
         }.filter {

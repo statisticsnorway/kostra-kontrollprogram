@@ -5,17 +5,16 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_FODSE
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.util.SsnValidationUtils.validateDUF
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule038DufNummer : AbstractRule<List<KostraRecord>>(
+class Rule038DufNummer : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K038_DUFNUMMER.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it.fieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME).isBlank()
         }.filterNot {

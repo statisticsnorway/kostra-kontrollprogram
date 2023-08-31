@@ -22,17 +22,16 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_TVAN
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_VOLD_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule022OmraaderArbeidet : AbstractRule<List<KostraRecord>>(
+class Rule022OmraaderArbeidet : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE022.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         tema.any { tema ->
             fieldDefinitions.byColumnName(tema).codeExists(it[tema])
         }

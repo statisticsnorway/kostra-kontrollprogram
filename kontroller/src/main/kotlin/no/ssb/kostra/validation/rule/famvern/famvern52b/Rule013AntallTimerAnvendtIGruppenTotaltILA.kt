@@ -4,15 +4,14 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.GRUPPE_NR
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.KONTOR_NR_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_IARET_B_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule013AntallTimerAnvendtIGruppenTotaltILA : AbstractRule<List<KostraRecord>>(
+class Rule013AntallTimerAnvendtIGruppenTotaltILA : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52bRuleId.FAMILIEVERN52B_RULE013.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         0 < it.fieldAsIntOrDefault(TIMERTOT_IARET_B_COL_NAME)
     }.map {
         createValidationReportEntry(

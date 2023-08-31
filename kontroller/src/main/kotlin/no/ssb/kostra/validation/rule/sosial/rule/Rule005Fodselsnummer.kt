@@ -4,18 +4,17 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_F
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 
-class Rule005Fodselsnummer : AbstractRule<List<KostraRecord>>(
+class Rule005Fodselsnummer : AbstractNoArgsRule<List<KostraRecord>>(
     SosialRuleId.FODSELSNUMMER_05.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filterNot {
             isValidSocialSecurityIdOrDnr(it.fieldAs(PERSON_FODSELSNR_COL_NAME))
         }.map {

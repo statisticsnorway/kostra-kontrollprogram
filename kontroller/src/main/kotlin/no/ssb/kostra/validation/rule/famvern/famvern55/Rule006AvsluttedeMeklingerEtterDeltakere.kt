@@ -3,15 +3,14 @@ package no.ssb.kostra.validation.rule.famvern.famvern55
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames
 import no.ssb.kostra.area.famvern.famvern55.Utils.validateMatrix
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule006AvsluttedeMeklingerEtterDeltakere : AbstractRule<List<KostraRecord>>(
+class Rule006AvsluttedeMeklingerEtterDeltakere : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern55RuleId.FAMILIEVERN55_RULE006.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
+    override fun validate(context: List<KostraRecord>) =
         validateMatrix(context, fieldList, NUM_COLS).map {
             val itemListSum = it.itemList.sumOf { item -> item.second }
             createValidationReportEntry(

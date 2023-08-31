@@ -5,17 +5,16 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.KONTOR_NR
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TOLK_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule018Tolk : AbstractRule<List<KostraRecord>>(
+class Rule018Tolk : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52bRuleId.FAMILIEVERN52B_RULE018.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         fieldDefinitions.byColumnName(TOLK_B_COL_NAME).codeExists(it[TOLK_B_COL_NAME])
     }.map {
         val codeList =

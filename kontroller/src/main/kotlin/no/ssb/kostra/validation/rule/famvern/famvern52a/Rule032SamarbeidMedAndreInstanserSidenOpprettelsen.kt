@@ -15,17 +15,16 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_SO
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_STATB_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen : AbstractRule<List<KostraRecord>>(
+class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE032.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         fields.any { field ->
             fieldDefinitions.byColumnName(field).codeExists(it[field])
         }

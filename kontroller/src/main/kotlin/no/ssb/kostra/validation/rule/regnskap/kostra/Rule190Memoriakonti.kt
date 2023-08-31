@@ -3,16 +3,15 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
-class Rule190Memoriakonti : AbstractRule<List<KostraRecord>>(
+class Rule190Memoriakonti : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 190 : Memoriakonti",
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it.isBalanseRegnskap()
                     && it.fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999

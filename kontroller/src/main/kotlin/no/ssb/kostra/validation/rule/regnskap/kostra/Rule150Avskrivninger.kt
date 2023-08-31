@@ -7,17 +7,16 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.area.regnskap.RegnskapConstants.getRegnskapTypeBySkjema
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
-class Rule150Avskrivninger : AbstractRule<List<KostraRecord>>(
+class Rule150Avskrivninger : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 150 : Avskrivninger, avskrivninger",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
         .filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 100..799 && it[FIELD_ART] == "590" }
         .takeIf { it.any() }

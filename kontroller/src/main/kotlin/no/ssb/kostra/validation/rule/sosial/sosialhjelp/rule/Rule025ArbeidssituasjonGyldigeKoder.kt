@@ -6,18 +6,17 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpConstants.UNKNOWN
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule025ArbeidssituasjonGyldigeKoder : AbstractRule<List<KostraRecord>>(
+class Rule025ArbeidssituasjonGyldigeKoder : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K025_ARBEIDSSITUASJON.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filterNot {
             fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeExists(it[ARBSIT_COL_NAME])
         }.map {

@@ -6,17 +6,16 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.PRIMK_SIVILS_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule016FormellSivilstand : AbstractRule<List<KostraRecord>>(
+class Rule016FormellSivilstand : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE016.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter {
+    override fun validate(context: List<KostraRecord>) = context.filter {
         it[PRIMK_SIVILS_A_COL_NAME] in listOf("3", "4")
     }.filterNot {
         fieldDefinitions.byColumnName(FORMELL_SIVILS_A_COL_NAME).codeExists(it[FORMELL_SIVILS_A_COL_NAME])

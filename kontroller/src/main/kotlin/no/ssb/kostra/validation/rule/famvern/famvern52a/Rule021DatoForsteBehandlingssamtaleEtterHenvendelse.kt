@@ -5,17 +5,16 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.HENV_DATO
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import java.time.LocalDate
 
-class Rule021DatoForsteBehandlingssamtaleEtterHenvendelse : AbstractRule<List<KostraRecord>>(
+class Rule021DatoForsteBehandlingssamtaleEtterHenvendelse : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE021.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null
                 && it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
                 && it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME) < it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME)

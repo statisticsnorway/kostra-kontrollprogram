@@ -5,15 +5,14 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_N
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.STATUS_ARETSSL_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule035SakenAvsluttetManglerAvslutningsdato : AbstractRule<List<KostraRecord>>(
+class Rule035SakenAvsluttetManglerAvslutningsdato : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE035.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter {
+    override fun validate(context: List<KostraRecord>) = context.filter {
         it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2")
     }.filterNot {
         it.fieldAsLocalDate(DATO_AVSL_A_COL_NAME) != null

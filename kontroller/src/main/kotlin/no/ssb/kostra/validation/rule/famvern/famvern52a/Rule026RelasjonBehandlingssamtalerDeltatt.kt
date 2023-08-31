@@ -19,15 +19,14 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_OVRF
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_PARTNER_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_VENN_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractRule<List<KostraRecord>>(
+class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE026.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.map {
+    override fun validate(context: List<KostraRecord>) = context.map {
         mappingList.mapNotNull { mapping ->
             if (it[mapping.participation] == "1" && it.fieldAsIntOrDefault(mapping.count) == 0) {
                 createValidationReportEntry(

@@ -2,16 +2,15 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isResultatRegnskap
 
-class Rule530SummeringDifferanse : AbstractRule<List<KostraRecord>>(
+class Rule530SummeringDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 530 : Sum inntekter og kostnader = 0",
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter { it.isResultatRegnskap() }
         .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

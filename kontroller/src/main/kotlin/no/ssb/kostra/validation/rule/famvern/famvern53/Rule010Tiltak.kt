@@ -4,17 +4,16 @@ import no.ssb.kostra.area.famvern.famvern53.Familievern53ColumnNames.FYLKE_NR_CO
 import no.ssb.kostra.area.famvern.famvern53.Familievern53ColumnNames.KONTORNR_COL_NAME
 import no.ssb.kostra.area.famvern.famvern53.Familievern53Constants
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule010Tiltak(
     private val mappingList: List<Familievern53Constants.Rule010Mapping>
-) : AbstractRule<List<KostraRecord>>(
+) : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern53RuleId.FAMILIEVERN53_RULE010_TILTAK.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.map {
+    override fun validate(context: List<KostraRecord>) = context.map {
         mappingList.mapNotNull { mapping ->
             if (it.fieldAsIntOrDefault(mapping.tiltakField) == 0) {
                 createValidationReportEntry(

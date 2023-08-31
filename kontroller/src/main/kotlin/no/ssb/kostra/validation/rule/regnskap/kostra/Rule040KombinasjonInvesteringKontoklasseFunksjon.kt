@@ -3,18 +3,17 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 
 class Rule040KombinasjonInvesteringKontoklasseFunksjon(
     private val invalidInvesteringFunksjonList: List<String>
-) : AbstractRule<List<KostraRecord>>(
+) : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 040 : Kombinasjon i investeringsregnskapet, kontoklasse og funksjon",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
+    override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningInvesteringRegnskap()
                 && kostraRecord[FIELD_FUNKSJON].trim() in invalidInvesteringFunksjonList.map { it.trim() }
                 && kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) != 0

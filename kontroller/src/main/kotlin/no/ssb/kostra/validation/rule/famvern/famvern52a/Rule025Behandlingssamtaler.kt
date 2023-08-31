@@ -12,15 +12,14 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_PART
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_PRIMK_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMT_VENN_A_COL_NAME
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule025Behandlingssamtaler : AbstractRule<List<KostraRecord>>(
+class Rule025Behandlingssamtaler : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE025.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filterNot {
+    override fun validate(context: List<KostraRecord>) = context.filterNot {
         fields.any { field ->
             0 < it.fieldAsIntOrDefault(field)
         }

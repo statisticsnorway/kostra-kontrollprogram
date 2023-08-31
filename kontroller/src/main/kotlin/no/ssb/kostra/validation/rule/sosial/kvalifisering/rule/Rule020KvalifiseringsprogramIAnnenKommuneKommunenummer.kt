@@ -7,18 +7,17 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHA
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.JA
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class Rule020KvalifiseringsprogramIAnnenKommuneKommunenummer : AbstractRule<List<KostraRecord>>(
+class Rule020KvalifiseringsprogramIAnnenKommuneKommunenummer : AbstractNoArgsRule<List<KostraRecord>>(
     KvalifiseringRuleId.KVALIFISERINGSPROGRAM_I_ANNEN_KOMMUNE_KOMMUNENUMMER_20.title,
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it[KVP_KOMM_COL_NAME] == JA
                     && fieldDefinitions.byColumnName(KOMMNR_KVP_KOMM_COL_NAME)

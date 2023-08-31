@@ -6,17 +6,16 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.STATUS_ARETSSL_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule034SakensHovedtema : AbstractRule<List<KostraRecord>>(
+class Rule034SakensHovedtema : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE034.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter {
+    override fun validate(context: List<KostraRecord>) = context.filter {
         it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2")
     }.filterNot {
         fieldDefinitions.byColumnName(HOVEDTEMA_A_COL_NAME).codeExists(it[HOVEDTEMA_A_COL_NAME])

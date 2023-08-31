@@ -4,16 +4,15 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
 
-class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>(
+class Rule075KombinasjonBevilgningFunksjonArt : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 075 : Ugyldig kombinasjon i bevilgningsregnskapet, funksjon og art",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
+    override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningRegnskap()
                 && kostraRecord[FIELD_ART] in qualifyingArtCodes
                 && kostraRecord[FIELD_FUNKSJON].trim() != REQUIRED_FUNCTION

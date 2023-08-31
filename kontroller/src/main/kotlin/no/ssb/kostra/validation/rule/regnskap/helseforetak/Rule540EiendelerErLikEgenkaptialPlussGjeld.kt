@@ -3,16 +3,15 @@ package no.ssb.kostra.validation.rule.regnskap.helseforetak
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
-class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractRule<List<KostraRecord>>(
+class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 540 : Eiendeler = egenkapital + gjeld",
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filter {
             it.isBalanseRegnskap()
         }

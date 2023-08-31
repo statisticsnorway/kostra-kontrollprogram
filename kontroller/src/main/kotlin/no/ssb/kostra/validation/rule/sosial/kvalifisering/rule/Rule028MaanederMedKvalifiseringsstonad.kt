@@ -5,17 +5,16 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STON
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.STATUS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.PERMISJON
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractRule
+import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.extensions.hasNotVarighet
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 
-class Rule028MaanederMedKvalifiseringsstonad : AbstractRule<List<KostraRecord>>(
+class Rule028MaanederMedKvalifiseringsstonad : AbstractNoArgsRule<List<KostraRecord>>(
     KvalifiseringRuleId.MAANEDER_MED_KVALIFISERINGSSTONAD_28.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+    override fun validate(context: List<KostraRecord>) = context
         .filterNot {
             it[STATUS_COL_NAME] == PERMISJON
         }.filter {

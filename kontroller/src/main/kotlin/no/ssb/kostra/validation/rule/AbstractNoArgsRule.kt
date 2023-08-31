@@ -11,5 +11,5 @@ abstract class AbstractNoArgsRule<in T : Any>(
 
     override fun validate(context: T, arguments: KotlinArguments): List<ValidationReportEntry>? = validate(context)
 
-    abstract fun validate(context: T): List<ValidationReportEntry>?
+    protected abstract fun validate(context: T): List<ValidationReportEntry>?
 }

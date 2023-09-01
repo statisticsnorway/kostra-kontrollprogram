@@ -19,6 +19,5 @@ enum class Familievern52bRuleId(val title: String) {
     FAMILIEVERN52B_RULE018("Kontroll 018 : Er det benyttet tolk i minst én gruppesamtale?"),
     FAMILIEVERN52B_RULE019("Kontroll 019 : Status ved året slutt"),
     FAMILIEVERN52B_RULE020("Kontroll 020 : Gruppebehandlingen er avsluttet, men avslutningsdato mangler"),
-    FAMILIEVERN52B_RULE021("Kontroll 021 : Avslutningsdato før første samtale"),
-
+    FAMILIEVERN52B_RULE021("Kontroll 021 : Avslutningsdato før første samtale")
 }

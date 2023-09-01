@@ -14,18 +14,20 @@ class Rule018Tolk : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52bRuleId.FAMILIEVERN52B_RULE018.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fieldDefinitions.byColumnName(TOLK_B_COL_NAME).codeExists(it[TOLK_B_COL_NAME])
-    }.map {
-        val codeList =
-            fieldDefinitions.byColumnName(TOLK_B_COL_NAME).codeList
-        createValidationReportEntry(
-            messageText = "Kontroller at feltet er utfylt. " +
-                    "Fant '${it[TOLK_B_COL_NAME]}', forventet én av: $codeList.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_B_COL_NAME],
-            journalId = it[GRUPPE_NR_B_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fieldDefinition.codeExists(it[TOLK_B_COL_NAME]) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Kontroller at feltet er utfylt. " +
+                        "Fant '${it[TOLK_B_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_B_COL_NAME],
+                journalId = it[GRUPPE_NR_B_COL_NAME]
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(TOLK_B_COL_NAME)
+    }
 }

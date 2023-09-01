@@ -11,16 +11,16 @@ class Rule008StartDato : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52bRuleId.FAMILIEVERN52B_RULE008.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        it.fieldAsLocalDate(DATO_GRSTART_B_COL_NAME) != null
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke oppgitt dato for gruppebehandlingens start på formatet DDMMÅÅÅÅ. " +
-                    "Fant '${it[DATO_GRSTART_B_COL_NAME]}'.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_B_COL_NAME],
-            journalId = it[GRUPPE_NR_B_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { it.fieldAsLocalDate(DATO_GRSTART_B_COL_NAME) != null }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke oppgitt dato for gruppebehandlingens start på formatet DDMMÅÅÅÅ. " +
+                        "Fant '${it[DATO_GRSTART_B_COL_NAME]}'.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_B_COL_NAME],
+                journalId = it[GRUPPE_NR_B_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

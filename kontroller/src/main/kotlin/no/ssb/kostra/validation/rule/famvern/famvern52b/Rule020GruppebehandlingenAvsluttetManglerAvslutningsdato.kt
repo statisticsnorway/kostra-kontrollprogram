@@ -12,18 +12,17 @@ class Rule020GruppebehandlingenAvsluttetManglerAvslutningsdato : AbstractNoArgsR
     Familievern52bRuleId.FAMILIEVERN52B_RULE020.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filter {
-        it[STATUS_ARETSSL_B_COL_NAME] == "2"
-    }.filterNot {
-        it.fieldAsLocalDate(DATO_GRAVSLUTN_B_COL_NAME) != null
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, " +
-                    "men ikke fylt ut dato '${it[DATO_GRAVSLUTN_B_COL_NAME]}' for avslutning av saken.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_B_COL_NAME],
-            journalId = it[GRUPPE_NR_B_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { it[STATUS_ARETSSL_B_COL_NAME] == "2" }
+        .filterNot { it.fieldAsLocalDate(DATO_GRAVSLUTN_B_COL_NAME) != null }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er krysset av for at gruppebehandlingen er avsluttet i rapporteringsåret, " +
+                        "men ikke fylt ut dato '${it[DATO_GRAVSLUTN_B_COL_NAME]}' for avslutning av saken.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_B_COL_NAME],
+                journalId = it[GRUPPE_NR_B_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

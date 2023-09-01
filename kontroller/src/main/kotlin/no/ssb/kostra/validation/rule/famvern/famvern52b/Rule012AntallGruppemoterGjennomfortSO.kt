@@ -11,16 +11,16 @@ class Rule012AntallGruppemoterGjennomfortSO : AbstractNoArgsRule<List<KostraReco
     Familievern52bRuleId.FAMILIEVERN52B_RULE012.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        0 < it.fieldAsIntOrDefault(ANTMOTERTOT_OPPR_B_COL_NAME)
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt " +
-                    "siden gruppen ble opprettet.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_B_COL_NAME],
-            journalId = it[GRUPPE_NR_B_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { 0 < it.fieldAsIntOrDefault(ANTMOTERTOT_OPPR_B_COL_NAME) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke fylt ut hvor mange gruppemøter det er gjennomført i alt " +
+                        "siden gruppen ble opprettet.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_B_COL_NAME],
+                journalId = it[GRUPPE_NR_B_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

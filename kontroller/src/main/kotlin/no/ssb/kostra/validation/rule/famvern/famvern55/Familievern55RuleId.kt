@@ -13,6 +13,5 @@ enum class Familievern55RuleId(val title: String) {
     FAMILIEVERN55_RULE013("Kontroll 013 : Avsluttede meklinger og bekymringsmeldinger, (sumfelt)"),
     FAMILIEVERN55_RULE014("Kontroll 014 : Kontroll av totalsummer for meklinger"),
     FAMILIEVERN55_RULE015("Kontroll 015 : Kontroll av totalsummer for skriftlige avtaler"),
-    FAMILIEVERN55_RULE016("Kontroll 016 : Avsluttede meklinger uten oppmøte, (sumfelt)"),
-
+    FAMILIEVERN55_RULE016("Kontroll 016 : Avsluttede meklinger uten oppmøte, (sumfelt)")
 }

@@ -10,15 +10,14 @@ class Rule009AvsluttedeMeklingerEtterVarighet : AbstractNoArgsRule<List<KostraRe
     Familievern55RuleId.FAMILIEVERN55_RULE009.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) =
-        validateMatrix(context, fieldList, NUM_COLS).map {
-            val itemListSum = it.itemList.sumOf { item -> item.second }
-            createValidationReportEntry(
-                messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +
-                        "er ulik summen ($itemListSum) av følgende liste (${it.itemList})",
-                lineNumbers = it.lineNumbers
-            )
-        }.takeIf { it.any() }
+    override fun validate(context: List<KostraRecord>) = validateMatrix(context, fieldList, NUM_COLS).map {
+        val itemListSum = it.itemList.sumOf { item -> item.second }
+        createValidationReportEntry(
+            messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +
+                    "er ulik summen ($itemListSum) av følgende liste (${it.itemList})",
+            lineNumbers = it.lineNumbers
+        )
+    }.takeIf { it.any() }
 
     companion object {
         const val NUM_COLS = 4

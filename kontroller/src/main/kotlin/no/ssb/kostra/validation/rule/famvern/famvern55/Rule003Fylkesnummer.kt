@@ -12,15 +12,16 @@ class Rule003Fylkesnummer(
     Familievern55RuleId.FAMILIEVERN55_RULE003.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        mappingList.any { mapping -> it[FYLKE_NR_COL_NAME] == mapping.fylke }
-    }.map {
-        val fylkeList = mappingList.map { item -> item.fylke }.distinct().sorted()
-        createValidationReportEntry(
-            messageText = "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige " +
-                    "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList." +
-                    "Feltet er obligatorisk og må fylles ut.",
-            lineNumbers = listOf(it.lineNumber)
-        )
-    }.ifEmpty { null }
+    private val fylkeList = mappingList.map { item -> item.fylke }.distinct().sorted()
+
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { mappingList.any { mapping -> it[FYLKE_NR_COL_NAME] == mapping.fylke } }
+        .map {
+            createValidationReportEntry(
+                messageText = "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige " +
+                        "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList." +
+                        "Feltet er obligatorisk og må fylles ut.",
+                lineNumbers = listOf(it.lineNumber)
+            )
+        }.ifEmpty { null }
 }

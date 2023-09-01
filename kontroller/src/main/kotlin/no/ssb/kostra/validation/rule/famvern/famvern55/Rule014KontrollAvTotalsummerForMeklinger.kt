@@ -12,7 +12,9 @@ class Rule014KontrollAvTotalsummerForMeklinger : AbstractNoArgsRule<List<KostraR
     override fun validate(context: List<KostraRecord>) = context.filterNot {
         fieldList.map { field ->
             field to it.fieldAsIntOrDefault(field)
-        }.all { item -> item.second == it.fieldAsIntOrDefault(fieldList.first()) }
+        }.all { item ->
+            item.second == it.fieldAsIntOrDefault(fieldList.first())
+        }
     }.map {
         val fieldValueList = fieldList.map { field -> field to it.fieldAsIntOrDefault(field) }
         createValidationReportEntry(

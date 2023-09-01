@@ -33,8 +33,7 @@ class Rule005AvsluttedeMeklingerEtterTidsbruk : AbstractNoArgsRule<List<KostraRe
     Familievern55RuleId.FAMILIEVERN55_RULE005.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) =
-        validateMatrix(context, fieldList, NUM_COLS).map {
+    override fun validate(context: List<KostraRecord>) = validateMatrix(context, fieldList, NUM_COLS).map {
             val itemListSum = it.itemList.sumOf { item -> item.second }
             createValidationReportEntry(
                 messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +

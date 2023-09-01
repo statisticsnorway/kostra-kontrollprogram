@@ -4,7 +4,6 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_COL_N
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.LAAN_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.report.StatsEntry
 import no.ssb.kostra.validation.report.StatsEntryHeading
@@ -75,7 +74,7 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
         val participantsByAge = kostraRecordList
             .map { it.ageInYears(arguments) }
             .groupBy {
-                when (it){
+                when (it) {
                     in 0..17 -> "Under 18"
                     in 18..24 -> "18 - 24"
                     in 25..44 -> "25 - 44"
@@ -94,11 +93,11 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
                 it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)
             }
             .groupBy {
-                when (it){
+                when (it) {
                     in 1..9_999 -> "1 - 9999"
                     in 10_000..49_999 -> "10000 - 49999"
                     in 50_000..99_999 -> "50000 - 99999"
-                    in 100_000.. 149_999 -> "100000 - 149999"
+                    in 100_000..149_999 -> "100000 - 149999"
                     in 150_000..9_999_999 -> "150000 og over"
                     else -> "Uoppgitt"
                 }
@@ -121,11 +120,11 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
                 entries = participantsByAge
             ),
             StatsReportEntry(
-                heading = StatsEntryHeading("Stønadsvarighet","Deltakere"),
+                heading = StatsEntryHeading("Stønadsvarighet", "Deltakere"),
                 entries = kostraRecordList.varighetAsStatsEntries()
             ),
             StatsReportEntry(
-                heading = StatsEntryHeading("Stønad","Deltakere"),
+                heading = StatsEntryHeading("Stønad", "Deltakere"),
                 entries = stonadList
             )
         )

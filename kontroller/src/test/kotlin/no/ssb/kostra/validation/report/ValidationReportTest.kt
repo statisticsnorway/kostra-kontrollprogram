@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.string.shouldContain
-import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KotlinArguments
 import java.time.LocalDateTime
 
@@ -92,7 +91,7 @@ class ValidationReportTest : BehaviorSpec({
                 Severity.INFO,
                 listOf(
                     StatsReportEntry(
-                        heading = StatsEntryHeading("&nbsp;","~content~"),
+                        heading = StatsEntryHeading("&nbsp;", "~content~"),
                         entries = listOf(StatsEntry("first", "123"))
                     )
                 ),

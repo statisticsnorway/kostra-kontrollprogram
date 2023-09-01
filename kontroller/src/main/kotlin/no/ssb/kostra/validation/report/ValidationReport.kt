@@ -4,7 +4,6 @@ import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.felles.git.GitPropertiesLoader
 import java.time.Duration
 import java.time.LocalDateTime
-import java.util.*
 
 class ValidationReport(
     private val validationReportArguments: ValidationReportArguments,
@@ -39,7 +38,8 @@ class ValidationReport(
                 .append(endDiv).append(lf)
                 .append("<div>Kontroller startet: ").append(kotlinArguments.startTime).append(endDiv).append(lf)
                 .append("<div>Rapport generert: ").append(now).append(endDiv).append(lf)
-                .append("<div>Rapport generert på : ").append(reportGenerationTime.toMillis()).append(" ms").append(endDiv).append(lf)
+                .append("<div>Rapport generert på : ").append(reportGenerationTime.toMillis()).append(" ms")
+                .append(endDiv).append(lf)
                 .append("<div>Type filuttrekk: ").append(kotlinArguments.skjema).append(".")
                 .append(kotlinArguments.aargang)
                 .append(endDiv).append(lf)

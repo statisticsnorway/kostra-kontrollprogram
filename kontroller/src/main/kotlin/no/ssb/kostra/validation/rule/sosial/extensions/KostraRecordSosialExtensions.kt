@@ -14,7 +14,8 @@ fun KostraRecord.hasVarighet() =
     (1..12)
         .map {
             "STMND_$it"
-        }.any {
+        }
+        .any {
             fieldDefinitions.byColumnName(it).codeExists(this[it])
         }
 
@@ -37,7 +38,8 @@ fun Collection<KostraRecord>.varighetAsStatsEntries() = this
         (1..12)
             .map {
                 "STMND_$it"
-            }.count { fieldName ->
+            }
+            .count { fieldName ->
                 kostraRecord.fieldDefinition(fieldName).codeExists(kostraRecord[fieldName])
             }
     }

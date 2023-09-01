@@ -2,13 +2,12 @@ package no.ssb.kostra.validation.report
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.Code
 
 class StatsReportEntryTest : BehaviorSpec({
 
     Given("StatsReportEntry instance with empty codeList and statsEntryList") {
         val sut = StatsReportEntry(
-            heading = StatsEntryHeading("~id~","~measure~"),
+            heading = StatsEntryHeading("~id~", "~measure~"),
             entries = emptyList()
         )
 
@@ -29,7 +28,7 @@ class StatsReportEntryTest : BehaviorSpec({
 
     Given("StatsReportEntry instance with populated codeList and statsEntryList") {
         val sut = StatsReportEntry(
-            heading = StatsEntryHeading("~id~","~measure~"),
+            heading = StatsEntryHeading("~id~", "~measure~"),
             entries = listOf(StatsEntry("~id-string~", "~value-string~"))
         )
 

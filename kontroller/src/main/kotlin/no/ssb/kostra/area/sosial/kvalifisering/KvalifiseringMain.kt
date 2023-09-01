@@ -2,10 +2,8 @@ package no.ssb.kostra.area.sosial.kvalifisering
 
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_STONAD_COL_NAME
-import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.report.StatsEntry
 import no.ssb.kostra.validation.report.StatsEntryHeading
@@ -70,7 +68,7 @@ class KvalifiseringMain(
         val ageList = kostraRecordList
             .map { it.ageInYears(arguments) }
             .groupBy {
-                when (it){
+                when (it) {
                     in 0..19 -> "Under 20"
                     in 20..24 -> "20 - 24"
                     in 25..29 -> "25 - 29"
@@ -90,11 +88,11 @@ class KvalifiseringMain(
                 it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME)
             }
             .groupBy {
-                when (it){
+                when (it) {
                     in 1..7_999 -> "1 - 7999"
                     in 8_000..49_999 -> "8000 - 49999"
                     in 50_000..99_999 -> "50000 - 99999"
-                    in 100_000.. 149_999 -> "100000 - 149999"
+                    in 100_000..149_999 -> "100000 - 149999"
                     in 150_000..9_999_999 -> "150000 og over"
                     else -> "Uoppgitt"
                 }
@@ -111,16 +109,16 @@ class KvalifiseringMain(
                 )
             ),
             StatsReportEntry(
-                heading = StatsEntryHeading("Alder","Deltakere"),
+                heading = StatsEntryHeading("Alder", "Deltakere"),
                 entries = listOf(StatsEntry("I alt", kostraRecordList.size.toString()))
                     .plus(ageList)
             ),
             StatsReportEntry(
-                heading = StatsEntryHeading("Stønadsvarighet","Deltakere"),
+                heading = StatsEntryHeading("Stønadsvarighet", "Deltakere"),
                 entries = kostraRecordList.varighetAsStatsEntries()
             ),
             StatsReportEntry(
-                heading = StatsEntryHeading("Stønad","Deltakere"),
+                heading = StatsEntryHeading("Stønad", "Deltakere"),
                 entries = stonadList
             )
         )

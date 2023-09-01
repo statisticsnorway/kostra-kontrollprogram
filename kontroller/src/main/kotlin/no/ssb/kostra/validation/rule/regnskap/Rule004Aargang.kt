@@ -7,13 +7,13 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule004Aargang : AbstractRule<List<KostraRecord>>("Kontroll 004 : Årgang", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
-        kostraRecord[FIELD_AARGANG] != arguments.aargang
-    }.map { kostraRecord ->
-        createValidationReportEntry(
-            messageText = "Fant ugyldig aargang '${kostraRecord[FIELD_AARGANG]}'. " +
-                    "Korrigér aargang til '${arguments.aargang}'",
-            lineNumbers = listOf(kostraRecord.lineNumber)
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filter { kostraRecord -> kostraRecord[FIELD_AARGANG] != arguments.aargang }
+        .map { kostraRecord ->
+            createValidationReportEntry(
+                messageText = "Fant ugyldig aargang '${kostraRecord[FIELD_AARGANG]}'. " +
+                        "Korrigér aargang til '${arguments.aargang}'",
+                lineNumbers = listOf(kostraRecord.lineNumber)
+            )
+        }.ifEmpty { null }
 }

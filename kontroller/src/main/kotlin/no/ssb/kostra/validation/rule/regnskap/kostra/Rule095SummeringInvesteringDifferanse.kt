@@ -22,8 +22,7 @@ class Rule095SummeringInvesteringDifferanse : AbstractNoArgsRule<List<KostraReco
                 investeringUtgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 investeringInntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }
-        ?.takeUnless { (investeringUtgifter, investeringInntekter) ->
+        }?.takeUnless { (investeringUtgifter, investeringInntekter) ->
             (investeringUtgifter + investeringInntekter) in -30..30
         }?.let { (investeringUtgifter, investeringInntekter) ->
             val investeringDifferanse = investeringUtgifter + investeringInntekter
@@ -32,5 +31,4 @@ class Rule095SummeringInvesteringDifferanse : AbstractNoArgsRule<List<KostraReco
                         "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
             )
         }
-
 }

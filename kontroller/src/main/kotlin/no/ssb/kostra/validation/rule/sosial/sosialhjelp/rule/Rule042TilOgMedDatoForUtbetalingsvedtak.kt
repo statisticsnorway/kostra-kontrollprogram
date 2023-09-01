@@ -15,11 +15,9 @@ class Rule042TilOgMedDatoForUtbetalingsvedtak : AbstractNoArgsRule<List<KostraRe
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[VILKARSOSLOV_COL_NAME] == "1"
-        }.filterNot {
-            it.fieldAs<LocalDate?>(UTBETTOMDATO_COL_NAME) != null
-        }.map {
+        .filter { it[VILKARSOSLOV_COL_NAME] == "1" }
+        .filterNot { it.fieldAs<LocalDate?>(UTBETTOMDATO_COL_NAME) != null }
+        .map {
             createValidationReportEntry(
                 "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
                         "sosialtjenesteloven', så skal utbetalingsvedtakets til og med dato " +

@@ -15,9 +15,8 @@ class Rule005Fodselsnummer : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            isValidSocialSecurityIdOrDnr(it.fieldAs(PERSON_FODSELSNR_COL_NAME))
-        }.map {
+        .filterNot { isValidSocialSecurityIdOrDnr(it.fieldAs(PERSON_FODSELSNR_COL_NAME)) }
+        .map {
             createValidationReportEntry(
                 "Det er ikke oppgitt fødselsnummer/d-nummer på deltakeren eller fødselsnummeret/d-nummeret " +
                         "inneholder feil. Med mindre det er snakk om en utenlandsk statsborger som ikke er tildelt " +

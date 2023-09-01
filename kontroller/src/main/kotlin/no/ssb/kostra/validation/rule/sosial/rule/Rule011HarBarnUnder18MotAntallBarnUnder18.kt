@@ -16,11 +16,9 @@ class Rule011HarBarnUnder18MotAntallBarnUnder18 : AbstractNoArgsRule<List<Kostra
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[HAR_BARN_UNDER_18_COL_NAME] == JA
-        }.filterNot {
-            0 < it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME)
-        }.map {
+        .filter { it[HAR_BARN_UNDER_18_COL_NAME] == JA }
+        .filterNot { 0 < it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME) }
+        .map {
             createValidationReportEntry(
                 "Det er krysset av for at det bor barn under 18 år i husholdningen som mottaker eller " +
                         "ektefelle/samboer har forsørgerplikt for, men det er ikke oppgitt hvor mange barn " +

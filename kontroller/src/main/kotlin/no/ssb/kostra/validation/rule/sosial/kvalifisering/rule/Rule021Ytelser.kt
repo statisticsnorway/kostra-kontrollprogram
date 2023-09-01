@@ -18,11 +18,9 @@ class Rule021Ytelser : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[YTELSE_SOSHJELP_COL_NAME] == JA
-        }.filter {
-            fieldDefinitions.byColumnName(YTELSE_TYPE_SOSHJ_COL_NAME).codeIsMissing(it[YTELSE_TYPE_SOSHJ_COL_NAME])
-        }.map {
+        .filter { it[YTELSE_SOSHJELP_COL_NAME] == JA }
+        .filter { fieldDefinition.codeIsMissing(it[YTELSE_TYPE_SOSHJ_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Feltet for 'Hadde deltakeren i løpet av de siste to månedene før " +
                         "registrert søknad ved NAV-kontoret en eller flere av følgende ytelser?' " +
@@ -33,4 +31,8 @@ class Rule021Ytelser : AbstractNoArgsRule<List<KostraRecord>>(
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(YTELSE_TYPE_SOSHJ_COL_NAME)
+    }
 }

@@ -16,9 +16,8 @@ class Rule026MottattStotte : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filter {
-            fieldDefinitions.byColumnName(KVP_MED_ASTONAD_COL_NAME).codeIsMissing(it[KVP_MED_ASTONAD_COL_NAME])
-        }.map {
+        .filter { fieldDefinition.codeIsMissing(it[KVP_MED_ASTONAD_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Feltet for 'Har deltakeren i ${arguments.aargang} i løpet av perioden med " +
                         "kvalifiseringsstønad også mottatt  økonomisk sosialhjelp, kommunal bostøtte eller " +
@@ -30,4 +29,8 @@ class Rule026MottattStotte : AbstractRule<List<KostraRecord>>(
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(KVP_MED_ASTONAD_COL_NAME)
+    }
 }

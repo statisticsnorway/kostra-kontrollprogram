@@ -15,11 +15,9 @@ class Rule028MaanederMedKvalifiseringsstonad : AbstractNoArgsRule<List<KostraRec
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            it[STATUS_COL_NAME] == PERMISJON
-        }.filter {
-            it.hasNotVarighet()
-        }.map {
+        .filterNot { it[STATUS_COL_NAME] == PERMISJON }
+        .filter { it.hasNotVarighet() }
+        .map {
             createValidationReportEntry(
                 "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt " +
                         "kvalifiseringsstønad (${it[KVP_STONAD_COL_NAME]}) i løpet " +

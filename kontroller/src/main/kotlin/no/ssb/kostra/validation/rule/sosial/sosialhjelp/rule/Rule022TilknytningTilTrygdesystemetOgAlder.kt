@@ -15,11 +15,9 @@ class Rule022TilknytningTilTrygdesystemetOgAlder : AbstractRule<List<KostraRecor
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filter {
-            it[TRYGDESIT_COL_NAME] == "07"
-        }.filterNot {
-            (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1) > 62
-        }.map {
+        .filter { it[TRYGDESIT_COL_NAME] == "07" }
+        .filterNot { (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1) > 62 }
+        .map {
             createValidationReportEntry(
                 "Mottakeren (${
                     (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)

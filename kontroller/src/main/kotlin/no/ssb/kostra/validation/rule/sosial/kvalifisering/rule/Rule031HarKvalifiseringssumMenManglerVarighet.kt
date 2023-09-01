@@ -14,13 +14,9 @@ class Rule031HarKvalifiseringssumMenManglerVarighet : AbstractNoArgsRule<List<Ko
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[STATUS_COL_NAME] == "1"
-        }.filter {
-            0 < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME)
-        }.filterNot {
-            it.hasVarighet()
-        }.map {
+        .filter { it[STATUS_COL_NAME] == "1" && 0 < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+        .filterNot { it.hasVarighet() }
+        .map {
             createValidationReportEntry(
                 "Deltakeren har fått kvalifiseringsstønad (${it[KVP_STONAD_COL_NAME]}) " +
                         "i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er " +

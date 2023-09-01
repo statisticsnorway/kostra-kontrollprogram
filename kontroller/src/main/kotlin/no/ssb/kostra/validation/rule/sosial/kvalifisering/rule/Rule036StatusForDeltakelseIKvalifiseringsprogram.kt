@@ -16,9 +16,8 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogram : AbstractNoArgsRule<List
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(STATUS_COL_NAME).codeExists(it[STATUS_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[STATUS_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Korrigér status. Fant '${it[STATUS_COL_NAME]}', forventet én av " +
                         "'${fieldDefinitions.byColumnName(STATUS_COL_NAME).codeListToString()}'. " +
@@ -28,4 +27,8 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogram : AbstractNoArgsRule<List
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(STATUS_COL_NAME)
+    }
 }

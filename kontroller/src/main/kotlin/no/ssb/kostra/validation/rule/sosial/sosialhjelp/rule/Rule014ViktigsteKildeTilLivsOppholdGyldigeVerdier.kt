@@ -16,9 +16,8 @@ class Rule014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractNoArgsRule<Lis
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeIsMissing(it[VKLO_COL_NAME])
-        }.map {
+        .filter { fieldDefinitions.byColumnName(VKLO_COL_NAME).codeIsMissing(it[VKLO_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
                         "skal oppgis. Fant '(${it[VKLO_COL_NAME]})', forventet én av " +

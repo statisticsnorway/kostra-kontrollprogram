@@ -25,8 +25,7 @@ class Rule140OverforingerDriftInvestering : AbstractNoArgsRule<List<KostraRecord
                 investeringPosteringer.filter { it[FIELD_ART] == "970" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }
-        ?.takeUnless { (driftOverforinger, investeringOverforinger) ->
+        }?.takeUnless { (driftOverforinger, investeringOverforinger) ->
             driftOverforinger + investeringOverforinger in -30..30
         }?.let { (driftOverforinger, investeringOverforinger) ->
             val overforingDifferanse = driftOverforinger + investeringOverforinger

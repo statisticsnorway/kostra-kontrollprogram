@@ -22,9 +22,7 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractNoArgsRule<List<KostraRecor
                 internSalgPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
         }
-        ?.takeUnless { (internKjop, internSalg) ->
-            (internKjop + internSalg) in -30..30
-        }
+        ?.takeUnless { (internKjop, internSalg) -> (internKjop + internSalg) in -30..30 }
         ?.let { (internKjop, internSalg) ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at differansen (${internKjop.plus(internSalg)}) mellom " +

@@ -28,6 +28,5 @@ enum class SosialhjelpRuleId(val title: String) {
     SOSIALHJELP_K040_VILKARSAMEKT("Kontroll 40: Første vilkår i året, vilkår til søkerens samboer/ektefelle"),
     SOSIALHJELP_K041_UTBETALINGSVEDTAK("Kontroll 41: Dato for utbetalingsvedtak"),
     SOSIALHJELP_K042_UTBETALINGSVEDTAK("Kontroll 42: Til og med Dato for utbetalingsvedtak"),
-    SOSIALHJELP_K043_TYPEVILKAR("Kontroll 43: Type vilkår det stilles til mottakeren"),
-
+    SOSIALHJELP_K043_TYPEVILKAR("Kontroll 43: Type vilkår det stilles til mottakeren")
 }

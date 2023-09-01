@@ -12,9 +12,8 @@ class Rule032KvalifiseringssumOverMaksimum : AbstractNoArgsRule<List<KostraRecor
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            STONAD_SUM_MAX < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME)
-        }.map {
+        .filter { STONAD_SUM_MAX < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+        .map {
             createValidationReportEntry(
                 "Kvalifiseringsstønaden (${it[KVP_STONAD_COL_NAME]}) " +
                         "som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +

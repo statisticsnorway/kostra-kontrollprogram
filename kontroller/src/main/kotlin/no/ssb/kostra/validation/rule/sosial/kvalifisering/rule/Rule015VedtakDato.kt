@@ -19,9 +19,8 @@ class Rule015VedtakDato : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filterNot {
-            it[KOMMUNE_NR_COL_NAME] == "0301"
-        }.filter {
+        .filterNot { it[KOMMUNE_NR_COL_NAME] == "0301" }
+        .filter {
             it.fieldAs<LocalDate?>(VEDTAK_DATO_COL_NAME) == null
                     ||
                     it.fieldAs<Int>(VERSION_COL_NAME).yearWithCentury()

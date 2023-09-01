@@ -26,9 +26,8 @@ class Rule043UtfyltVilkar : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[VILKARSOSLOV_COL_NAME] == "1"
-        }.filterNot {
+        .filter { it[VILKARSOSLOV_COL_NAME] == "1" }
+        .filterNot {
             listOf(
                 VILKARARBEID_COL_NAME,
                 VILKARKURS_COL_NAME,

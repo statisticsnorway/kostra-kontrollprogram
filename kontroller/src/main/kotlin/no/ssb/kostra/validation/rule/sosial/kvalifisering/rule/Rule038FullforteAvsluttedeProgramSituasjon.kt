@@ -26,9 +26,8 @@ class Rule038FullforteAvsluttedeProgramSituasjon : AbstractRule<List<KostraRecor
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filter { it[STATUS_COL_NAME] in listOf("3", "7") }
         .filter {
-            it[STATUS_COL_NAME] in listOf("3", "7")
-        }.filter {
             qualifyingFieldNames.none { fieldName ->
                 fieldDefinitions.byColumnName(fieldName).codeExists(it[fieldName])
             }

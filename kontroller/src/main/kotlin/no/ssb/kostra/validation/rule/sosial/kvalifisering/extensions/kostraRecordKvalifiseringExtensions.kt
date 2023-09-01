@@ -19,15 +19,10 @@ fun Collection<KostraRecord>.deltakereByAlderAsStatsEntries(arguments: KotlinArg
             in 67..999 -> "67 og over"
             else -> "Ugyldig fnr"
         }
-    }
-    .map {
-        StatsEntry(it.key, it.value.size.toString())
-    }
+    }.map { StatsEntry(it.key, it.value.size.toString()) }
 
 fun Collection<KostraRecord>.stonadAsStatsEntries() = this
-    .map {
-        it.fieldAsIntOrDefault(KvalifiseringColumnNames.KVP_STONAD_COL_NAME)
-    }
+    .map { it.fieldAsIntOrDefault(KvalifiseringColumnNames.KVP_STONAD_COL_NAME) }
     .groupBy {
         when (it) {
             in 1..7_999 -> "1 - 7999"
@@ -37,7 +32,4 @@ fun Collection<KostraRecord>.stonadAsStatsEntries() = this
             in 150_000..9_999_999 -> "150000 og over"
             else -> "Uoppgitt"
         }
-    }
-    .map {
-        StatsEntry(it.key, it.value.size.toString())
-    }
+    }.map { StatsEntry(it.key, it.value.size.toString()) }

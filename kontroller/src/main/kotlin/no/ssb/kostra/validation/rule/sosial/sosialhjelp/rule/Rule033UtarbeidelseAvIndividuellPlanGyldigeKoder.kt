@@ -17,9 +17,8 @@ class Rule033UtarbeidelseAvIndividuellPlanGyldigeKoder : AbstractNoArgsRule<List
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(FAAT_INDIVIDUELL_PLAN_COL_NAME).codeExists(it[FAAT_INDIVIDUELL_PLAN_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[FAAT_INDIVIDUELL_PLAN_COL_NAME]) }
+        .map {
             val utfylt = Code(it[FAAT_INDIVIDUELL_PLAN_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
@@ -30,4 +29,8 @@ class Rule033UtarbeidelseAvIndividuellPlanGyldigeKoder : AbstractNoArgsRule<List
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(FAAT_INDIVIDUELL_PLAN_COL_NAME)
+    }
 }

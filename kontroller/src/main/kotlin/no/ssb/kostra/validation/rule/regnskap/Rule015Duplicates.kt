@@ -10,8 +10,7 @@ class Rule015Duplicates(
     override fun validate(context: List<KostraRecord>) = context
         .groupBy { kostraRecord ->
             fieldNameTitlePairList.first.joinToString(" * ") { fieldName -> kostraRecord[fieldName].trim() }
-        }
-        .filter { (_, group) -> group.size > 1 }
+        }.filter { (_, group) -> group.size > 1 }
         .takeIf { it.any() }
         ?.flatMap { (key, group) ->
             createSingleReportEntryList(

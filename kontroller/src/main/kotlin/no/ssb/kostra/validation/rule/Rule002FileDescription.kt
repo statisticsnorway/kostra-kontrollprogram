@@ -20,16 +20,14 @@ class Rule002FileDescription(
                 index = index + 1,
                 fieldDefinitions = fieldDefinitions
             )
-        }
-        .flatMap records@{ kostraRecord ->
+        }.flatMap records@{ kostraRecord ->
             fieldDefinitions
                 .map { fieldDefinition ->
                     kostraRecord to fieldDefinition
                 }
         }.mapNotNull { (kostraRecord, fieldDefinition) ->
             validateValue(kostraRecord, fieldDefinition)
-        }
-        .ifEmpty { null }
+        }.ifEmpty { null }
 
     private fun validateValue(
         kostraRecord: KostraRecord,

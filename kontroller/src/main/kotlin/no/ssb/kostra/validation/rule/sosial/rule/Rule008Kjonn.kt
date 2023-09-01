@@ -17,9 +17,8 @@ class Rule008Kjonn : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(KJONN_COL_NAME).codeExists(it[KJONN_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[KJONN_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Korrigér kjønn. Fant '${it[KJONN_COL_NAME]}', forventet én av " +
                         "${fieldDefinitions.byColumnName(KJONN_COL_NAME).codeListToString()}." +
@@ -31,4 +30,8 @@ class Rule008Kjonn : AbstractNoArgsRule<List<KostraRecord>>(
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(KJONN_COL_NAME)
+    }
 }

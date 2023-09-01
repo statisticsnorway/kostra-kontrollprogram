@@ -13,11 +13,9 @@ class Rule029KvalifiseringssumMangler : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[STATUS_COL_NAME] == "1"
-        }.filterNot {
-            0 < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME)
-        }.map {
+        .filter { it[STATUS_COL_NAME] == "1" }
+        .filterNot { 0 < it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+        .map {
             createValidationReportEntry(
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +
                         "(${it.fieldAsTrimmedString(KVP_STONAD_COL_NAME)}) i løpet av " +

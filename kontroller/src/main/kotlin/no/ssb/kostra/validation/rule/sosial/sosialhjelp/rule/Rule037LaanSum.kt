@@ -25,11 +25,9 @@ class Rule037LaanSum : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
+        .map { it to months.sumOf { month -> it.fieldAsIntOrDefault(month) } }
+        .filterNot { it.first.fieldAsIntOrDefault(LAAN_COL_NAME) == it.second }
         .map {
-            it to months.sumOf { month -> it.fieldAsIntOrDefault(month) }
-        }.filterNot {
-            it.first.fieldAsIntOrDefault(LAAN_COL_NAME) == it.second
-        }.map {
             createValidationReportEntry(
                 "Det er ikke fylt ut lån (${it.second}) fordelt på måneder eller sum stemmer ikke " +
                         "med sum lån (${it.first[LAAN_COL_NAME]}) utbetalt i løpet av året.",

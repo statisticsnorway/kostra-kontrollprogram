@@ -25,11 +25,9 @@ class Rule036BidragSum : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
+        .map { it to months.sumOf { month -> it.fieldAsIntOrDefault(month) } }
+        .filterNot { it.first.fieldAsIntOrDefault(BIDRAG_COL_NAME) == it.second }
         .map {
-            it to months.sumOf { month -> it.fieldAsIntOrDefault(month) }
-        }.filterNot {
-            it.first.fieldAsIntOrDefault(BIDRAG_COL_NAME) == it.second
-        }.map {
             createValidationReportEntry(
                 "Det er ikke fylt ut bidrag (${it.second}) fordelt på måneder eller sum stemmer ikke " +
                         "med sum bidrag (${it.first[BIDRAG_COL_NAME]}) utbetalt i løpet av året.",

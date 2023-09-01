@@ -17,9 +17,8 @@ class Rule025ArbeidssituasjonGyldigeKoder : AbstractNoArgsRule<List<KostraRecord
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(ARBSIT_COL_NAME).codeExists(it[ARBSIT_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[ARBSIT_COL_NAME]) }
+        .map {
             val arbeidssituasjon = Code(it[ARBSIT_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
@@ -31,4 +30,8 @@ class Rule025ArbeidssituasjonGyldigeKoder : AbstractNoArgsRule<List<KostraRecord
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(ARBSIT_COL_NAME)
+    }
 }

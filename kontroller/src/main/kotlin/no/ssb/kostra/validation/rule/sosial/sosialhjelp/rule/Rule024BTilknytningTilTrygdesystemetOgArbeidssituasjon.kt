@@ -16,11 +16,9 @@ class Rule024BTilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractNoArgsRul
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[VKLO_COL_NAME] == "3" && it[TRYGDESIT_COL_NAME] == "11"
-        }.filter {
-            it[ARBSIT_COL_NAME] == "08"
-        }.map {
+        .filter { it[VKLO_COL_NAME] == "3" && it[TRYGDESIT_COL_NAME] == "11" }
+        .filter { it[ARBSIT_COL_NAME] == "08" }
+        .map {
             val trygdesituasjon =
                 fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.first { item ->
                     item.code == it[TRYGDESIT_COL_NAME]

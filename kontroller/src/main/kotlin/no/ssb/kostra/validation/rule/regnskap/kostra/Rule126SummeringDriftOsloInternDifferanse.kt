@@ -25,9 +25,7 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<Kostra
                 art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
         }
-        ?.takeUnless { (sumArt298Drift, sumArt798Drift) ->
-            sumArt298Drift + sumArt798Drift in -10..10
-        }
+        ?.takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
         ?.let { (sumArt298Drift, sumArt798Drift) ->
             val sumDifferanse = sumArt298Drift + sumArt798Drift
             createSingleReportEntryList(

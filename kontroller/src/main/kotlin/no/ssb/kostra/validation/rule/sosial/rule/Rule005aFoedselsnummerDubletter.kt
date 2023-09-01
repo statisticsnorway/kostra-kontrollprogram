@@ -14,13 +14,10 @@ class Rule005aFoedselsnummerDubletter : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { record ->
-            isValidSocialSecurityIdOrDnr(record[PERSON_FODSELSNR_COL_NAME])
-        }.groupBy { kostraRecord ->
-            kostraRecord[PERSON_FODSELSNR_COL_NAME]
-        }.filter { (_, group) ->
-            group.size > 1
-        }.flatMap { (_, group) ->
+        .filter { record -> isValidSocialSecurityIdOrDnr(record[PERSON_FODSELSNR_COL_NAME]) }
+        .groupBy { kostraRecord -> kostraRecord[PERSON_FODSELSNR_COL_NAME] }
+        .filter { (_, group) -> group.size > 1 }
+        .flatMap { (_, group) ->
             group.map { kostraRecord ->
                 val journalId = kostraRecord[PERSON_JOURNALNR_COL_NAME]
 

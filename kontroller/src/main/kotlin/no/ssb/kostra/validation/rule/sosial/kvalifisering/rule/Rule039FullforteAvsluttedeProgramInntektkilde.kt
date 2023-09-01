@@ -18,9 +18,8 @@ class Rule039FullforteAvsluttedeProgramInntektkilde : AbstractRule<List<KostraRe
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filter { it[STATUS_COL_NAME] == FULLFORT_PROGRAM }
         .filter {
-            it[STATUS_COL_NAME] == FULLFORT_PROGRAM
-        }.filter {
             fieldDefinitions.byColumnName(AVSL_VIKTIGSTE_INNTEKT_COL_NAME)
                 .codeIsMissing(it[AVSL_VIKTIGSTE_INNTEKT_COL_NAME])
         }.map {

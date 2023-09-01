@@ -7,13 +7,13 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 
 class Rule005Kvartal : AbstractRule<List<KostraRecord>>("Kontroll 005 : Kvartal", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context.filter { kostraRecord ->
-        kostraRecord[FIELD_KVARTAL] != arguments.kvartal
-    }.map { kostraRecord ->
-        createValidationReportEntry(
-            messageText = "Fant ugyldig kvartal '${kostraRecord[FIELD_KVARTAL]}'. " +
-                    "Korrigér kvartal til '${arguments.kvartal}'",
-            lineNumbers = listOf(kostraRecord.lineNumber)
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filter { kostraRecord -> kostraRecord[FIELD_KVARTAL] != arguments.kvartal }
+        .map { kostraRecord ->
+            createValidationReportEntry(
+                messageText = "Fant ugyldig kvartal '${kostraRecord[FIELD_KVARTAL]}'. " +
+                        "Korrigér kvartal til '${arguments.kvartal}'",
+                lineNumbers = listOf(kostraRecord.lineNumber)
+            )
+        }.ifEmpty { null }
 }

@@ -17,9 +17,8 @@ class Rule032OkonomiskRaadgivningGyldigeKoder : AbstractNoArgsRule<List<KostraRe
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(GITT_OKONOMIRAD_COL_NAME).codeExists(it[GITT_OKONOMIRAD_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[GITT_OKONOMIRAD_COL_NAME]) }
+        .map {
             val utfylt = Code(it[GITT_OKONOMIRAD_COL_NAME], UNKNOWN)
 
             createValidationReportEntry(
@@ -31,4 +30,8 @@ class Rule032OkonomiskRaadgivningGyldigeKoder : AbstractNoArgsRule<List<KostraRe
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(GITT_OKONOMIRAD_COL_NAME)
+    }
 }

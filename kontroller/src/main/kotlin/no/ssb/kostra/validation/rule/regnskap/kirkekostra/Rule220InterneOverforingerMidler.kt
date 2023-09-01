@@ -30,5 +30,4 @@ class Rule220InterneOverforingerMidler : AbstractNoArgsRule<List<KostraRecord>>(
                         "stemmer overens (margin på +/- 30')"
             )
         }
-
 }

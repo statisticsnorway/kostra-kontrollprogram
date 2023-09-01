@@ -15,11 +15,9 @@ class Rule017ViktigsteKildeTilLivsOppholdKode4 : AbstractNoArgsRule<List<KostraR
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[VKLO_COL_NAME] == "4"
-        }.filterNot {
-            it[ARBSIT_COL_NAME] in validCodes
-        }.map {
+        .filter { it[VKLO_COL_NAME] == "4" }
+        .filterNot { it[ARBSIT_COL_NAME] in validCodes }
+        .map {
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
                         "er ${

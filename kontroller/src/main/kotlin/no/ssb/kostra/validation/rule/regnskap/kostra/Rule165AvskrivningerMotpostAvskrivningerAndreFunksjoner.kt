@@ -20,8 +20,7 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner : AbstractNoArgsRu
                     && it[FIELD_FUNKSJON].trim() != "860"
                     && it[FIELD_ART] == "990"
                     && it.fieldAsIntOrDefault(FIELD_BELOP) != 0
-        }
-        .takeIf { it.any() }
+        }.takeIf { it.any() }
         ?.let { kostraRecordList ->
             (kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) } to
                     kostraRecordList.map { it[FIELD_FUNKSJON].trim() })

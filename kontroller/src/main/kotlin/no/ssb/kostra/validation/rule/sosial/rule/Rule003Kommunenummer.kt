@@ -15,9 +15,8 @@ class Rule003Kommunenummer : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filterNot {
-            arguments.region.municipalityIdFromRegion() == it[KOMMUNE_NR_COL_NAME]
-        }.map {
+        .filterNot { arguments.region.municipalityIdFromRegion() == it[KOMMUNE_NR_COL_NAME] }
+        .map {
             createValidationReportEntry(
                 "Korrigér kommunenummeret. Fant ${it[KOMMUNE_NR_COL_NAME]}, " +
                         "forventet ${arguments.region.municipalityIdFromRegion()}.",

@@ -15,11 +15,9 @@ class Rule038DufNummer : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it.fieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME).isBlank()
-        }.filterNot {
-            validateDUF(it[PERSON_DUF_COL_NAME])
-        }.map {
+        .filter { it.fieldAsTrimmedString(PERSON_FODSELSNR_COL_NAME).isBlank() }
+        .filterNot { validateDUF(it[PERSON_DUF_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Det er ikke oppgitt fødselsnummer/d-nummer på sosialhjelpsmottakeren eller " +
                         "fødselsnummeret/d-nummeret inneholder feil. Oppgi ett 12-sifret DUF-nummer.",

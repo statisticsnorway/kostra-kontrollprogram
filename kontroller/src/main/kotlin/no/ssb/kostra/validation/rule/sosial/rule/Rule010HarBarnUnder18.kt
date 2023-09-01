@@ -17,9 +17,8 @@ class Rule010HarBarnUnder18 : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(HAR_BARN_UNDER_18_COL_NAME).codeExists(it[HAR_BARN_UNDER_18_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[HAR_BARN_UNDER_18_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Korrigér forsørgerplikt. Fant '${it[HAR_BARN_UNDER_18_COL_NAME]}', forventet én av " +
                         "${
@@ -33,4 +32,8 @@ class Rule010HarBarnUnder18 : AbstractNoArgsRule<List<KostraRecord>>(
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(HAR_BARN_UNDER_18_COL_NAME)
+    }
 }

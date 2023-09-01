@@ -28,11 +28,8 @@ class Rule026Stonadsmaaneder : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            months.any { month ->
-                fieldDefinitions.byColumnName(month).codeExists(it[month])
-            }
-        }.map {
+        .filterNot { months.any { month -> fieldDefinitions.byColumnName(month).codeExists(it[month]) } }
+        .map {
             createValidationReportEntry(
                 "Det er ikke krysset av for hvilke måneder mottakeren har fått utbetalt økonomisk " +
                         "sosialhjelp (bidrag (${it[BIDRAG_COL_NAME]}) eller lån (${it[LAAN_COL_NAME]})) i løpet " +

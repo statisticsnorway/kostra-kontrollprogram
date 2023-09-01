@@ -12,11 +12,9 @@ class Rule005bJournalnummerDubletter : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .groupBy { kostraRecord ->
-            kostraRecord[PERSON_JOURNALNR_COL_NAME]
-        }.filter { (_, group) ->
-            group.size > 1
-        }.flatMap { (journalId, group) ->
+        .groupBy { kostraRecord -> kostraRecord[PERSON_JOURNALNR_COL_NAME] }
+        .filter { (_, group) -> group.size > 1 }
+        .flatMap { (journalId, group) ->
             group.map { kostraRecord ->
                 createValidationReportEntry(
                     "Journalnummer $journalId forekommer ${group.size} ganger.",

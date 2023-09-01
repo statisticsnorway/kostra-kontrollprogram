@@ -19,8 +19,7 @@ class Rule170Funksjon290Investering : AbstractNoArgsRule<List<KostraRecord>>(
                     && it.isKommuneRegnskap()
                     && it.isBevilgningInvesteringRegnskap()
                     && it[FIELD_FUNKSJON].trim() == "290"
-        }
-        .takeIf { it.any() }
+        }.takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { funksjon290Investering -> funksjon290Investering in -30..30 }
         ?.let { funksjon290Investering ->

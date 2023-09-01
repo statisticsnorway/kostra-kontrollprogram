@@ -15,11 +15,9 @@ class Rule023TilknytningTilTrygdesystemetOgBarn : AbstractNoArgsRule<List<Kostra
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it[TRYGDESIT_COL_NAME] == "05"
-        }.filterNot {
-            it[HAR_BARN_UNDER_18_COL_NAME] == "1" && it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME) > 0
-        }.map {
+        .filter { it[TRYGDESIT_COL_NAME] == "05" }
+        .filterNot { it[HAR_BARN_UNDER_18_COL_NAME] == "1" && it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME) > 0 }
+        .map {
             createValidationReportEntry(
                 "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen."
             ).copy(

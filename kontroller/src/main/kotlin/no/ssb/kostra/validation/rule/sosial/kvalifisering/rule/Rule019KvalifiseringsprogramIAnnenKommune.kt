@@ -16,9 +16,8 @@ class Rule019KvalifiseringsprogramIAnnenKommune : AbstractNoArgsRule<List<Kostra
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            fieldDefinitions.byColumnName(KVP_KOMM_COL_NAME).codeExists(it[KVP_KOMM_COL_NAME])
-        }.map {
+        .filterNot { fieldDefinition.codeExists(it[KVP_KOMM_COL_NAME]) }
+        .map {
             createValidationReportEntry(
                 "Feltet for 'Kommer deltakeren fra kvalifiseringsprogram i annen kommune?' er ikke " +
                         "fylt ut, eller feil kode er benyttet (${it[KVP_KOMM_COL_NAME]}). Feltet er obligatorisk å fylle ut.",
@@ -28,4 +27,8 @@ class Rule019KvalifiseringsprogramIAnnenKommune : AbstractNoArgsRule<List<Kostra
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(KVP_KOMM_COL_NAME)
+    }
 }

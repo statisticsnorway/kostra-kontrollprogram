@@ -2,6 +2,8 @@ package no.ssb.kostra.validation.report
 
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.felles.git.GitPropertiesLoader
+import java.time.Duration
+import java.time.LocalDateTime
 import java.util.*
 
 class ValidationReport(
@@ -16,6 +18,8 @@ class ValidationReport(
         val lf = "\n"
         val endDiv = "</div>"
         val report = StringBuilder()
+        val now = LocalDateTime.now()
+        val reportGenerationTime = Duration.between(kotlinArguments.startTime, now)
 
         with(validationReportArguments.validationResult) {
             // heading
@@ -34,13 +38,14 @@ class ValidationReport(
                 .append(gitProperties.tags)
                 .append(endDiv).append(lf)
                 .append("<div>Kontroller startet: ").append(kotlinArguments.startTime).append(endDiv).append(lf)
-                .append("<div>Rapport generert: ").append(Calendar.getInstance().time).append(endDiv).append(lf)
+                .append("<div>Rapport generert: ").append(now).append(endDiv).append(lf)
+                .append("<div>Rapport generert på : ").append(reportGenerationTime.toMillis()).append(" ms").append(endDiv).append(lf)
                 .append("<div>Type filuttrekk: ").append(kotlinArguments.skjema).append(".")
                 .append(kotlinArguments.aargang)
                 .append(endDiv).append(lf)
                 .append("<div>Antall sjekker utført: ").append(numberOfControls)
                 .append(endDiv).append(lf)
-                .append("<div>Feilkode: ").append(severity.info.returnCode).append(endDiv)
+                .append("<div>Returkode: ").append(severity.info.returnCode).append(endDiv)
                 .append(lf)
 
             // summary

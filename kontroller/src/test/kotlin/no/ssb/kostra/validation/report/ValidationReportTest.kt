@@ -92,9 +92,8 @@ class ValidationReportTest : BehaviorSpec({
                 Severity.INFO,
                 listOf(
                     StatsReportEntry(
-                        content = "Content unit",
-                        codeList = listOf(Code("1", "first")),
-                        statsEntryList = listOf(StatsEntry("1", "123"))
+                        heading = StatsEntryHeading("&nbsp;","~content~"),
+                        entries = listOf(StatsEntry("first", "123"))
                     )
                 ),
                 "Oppsummering pr. kontroll"

@@ -62,7 +62,7 @@ class SosialhjelpMainTest : BehaviorSpec({
                 )
 
                 val reportString = validationReport.toString()
-
+                println(reportString)
                 Then("validationResult should be as expected") {
                     assertSoftly(validationResult) {
                         numberOfControls shouldBe expectedNumberOfControls

@@ -8,11 +8,12 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.report.StatsEntry
+import no.ssb.kostra.validation.report.StatsEntryHeading
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.sosial.extensions.ageInYears
-import no.ssb.kostra.validation.rule.sosial.extensions.hasFnr
+import no.ssb.kostra.validation.rule.sosial.extensions.varighetAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.rule.*
 import no.ssb.kostra.validation.rule.sosial.rule.*
 
@@ -67,96 +68,60 @@ class KvalifiseringMain(
         val sumStonad = kostraRecordList.sumOf { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
 
         val ageList = kostraRecordList
-            .filter { it.hasFnr() }
             .map { it.ageInYears(arguments) }
-
-        val stonadstidList = kostraRecordList
-            .map { kostraRecord ->
-                (1..12)
-                    .map {
-                        "STMND_$it"
-                    }.count { fieldName ->
-                        kostraRecord.fieldDefinition(fieldName).codeExists(kostraRecord[fieldName])
-                    }
+            .groupBy {
+                when (it){
+                    in 0..19 -> "Under 20"
+                    in 20..24 -> "20 - 24"
+                    in 25..29 -> "25 - 29"
+                    in 30..39 -> "30 - 39"
+                    in 40..49 -> "40 - 49"
+                    in 50..66 -> "50 - 66"
+                    in 67..999 -> "67 og over"
+                    else -> "Ugyldig fnr"
+                }
+            }
+            .map {
+                StatsEntry(it.key, it.value.size.toString())
             }
 
         val stonadList = kostraRecordList
-            .map { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
+            .map {
+                it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME)
+            }
+            .groupBy {
+                when (it){
+                    in 1..7_999 -> "1 - 7999"
+                    in 8_000..49_999 -> "8000 - 49999"
+                    in 50_000..99_999 -> "50000 - 99999"
+                    in 100_000.. 149_999 -> "100000 - 149999"
+                    in 150_000..9_999_999 -> "150000 og over"
+                    else -> "Uoppgitt"
+                }
+            }
+            .map {
+                StatsEntry(it.key, it.value.size.toString())
+            }
 
         return listOf(
             StatsReportEntry(
-                content = "Sum",
-                codeList = listOf(
-                    Code(KVP_STONAD_COL_NAME, "Stønad"),
-                ),
-                statsEntryList = listOf(
-                    StatsEntry(KVP_STONAD_COL_NAME, "$sumStonad")
+                heading = StatsEntryHeading("Stønad", "Sum"),
+                entries = listOf(
+                    StatsEntry("I alt", "$sumStonad")
                 )
             ),
             StatsReportEntry(
-                content = "Kvalifiseringsdeltakere",
-                codeList = listOf(
-                    Code("I_ALT", "I alt"),
-                    Code("0_19", "19 år eller yngre"),
-                    Code("20_24", "20 - 24 år"),
-                    Code("25_29", "25 - 29 år"),
-                    Code("30_39", "30 - 39 år"),
-                    Code("40_49", "40 - 49 år"),
-                    Code("50_66", "50 - 66 år"),
-                    Code("67_999", "67 år eller eldre"),
-                    Code("UGYLDIG_FNR", "Alder ikke mulig å beregne")
-                ),
-                statsEntryList = listOf(
-                    StatsEntry("I_ALT", kostraRecordList.size.toString()),
-                    StatsEntry("0_19", ageList.count { it in 0..19 }.toString()),
-                    StatsEntry("20_24", ageList.count { it in 20..24 }.toString()),
-                    StatsEntry("25_29", ageList.count { it in 25..29 }.toString()),
-                    StatsEntry("30_39", ageList.count { it in 30..39 }.toString()),
-                    StatsEntry("40_49", ageList.count { it in 40..49 }.toString()),
-                    StatsEntry("50_66", ageList.count { it in 50..66 }.toString()),
-                    StatsEntry("67_999", ageList.count { it in 67..999 }.toString()),
-                    StatsEntry("UGYLDIG_FNR", kostraRecordList.count { !it.hasFnr() }.toString()),
-                )
+                heading = StatsEntryHeading("Alder","Deltakere"),
+                entries = listOf(StatsEntry("I alt", kostraRecordList.size.toString()))
+                    .plus(ageList)
             ),
             StatsReportEntry(
-                content = "Stønadstid",
-                codeList = listOf(
-                    Code("1", "1 måned"),
-                    Code("2_3", "2 - 3 måneder"),
-                    Code("4_6", "4 - 6 måneder"),
-                    Code("7_9", "7 - 9 måneder"),
-                    Code("10_11", "10 - 11 måneder"),
-                    Code("12", "12 måneder"),
-                    Code("UOPPGITT", "Uoppgitt")
-                ),
-                statsEntryList = listOf(
-                    StatsEntry("1", stonadstidList.count { it == 1 }.toString()),
-                    StatsEntry("2_3", stonadstidList.count { it in 2..3 }.toString()),
-                    StatsEntry("4_6", stonadstidList.count { it in 4..6 }.toString()),
-                    StatsEntry("7_9", stonadstidList.count { it in 7..9 }.toString()),
-                    StatsEntry("10_11", stonadstidList.count { it in 10..11 }.toString()),
-                    StatsEntry("12", stonadstidList.count { it == 12 }.toString()),
-                    StatsEntry("UOPPGITT", stonadstidList.count { it == 0 }.toString()),
-                )
+                heading = StatsEntryHeading("Stønadsvarighet","Deltakere"),
+                entries = kostraRecordList.varighetAsStatsEntries()
             ),
             StatsReportEntry(
-                content = "Stønad",
-                codeList = listOf(
-                    Code("1_7", "1 - 7999"),
-                    Code("8_49", "8000 - 49999"),
-                    Code("50_99", "50000 - 99999"),
-                    Code("100_149", "100000 - 149999"),
-                    Code("150_9999", "150000 og over"),
-                    Code("0", "Uoppgitt")
-                ),
-                statsEntryList = listOf(
-                    StatsEntry("1_7", stonadList.count { it in 1..7_999 }.toString()),
-                    StatsEntry("8_49", stonadList.count { it in 8_000..49_999 }.toString()),
-                    StatsEntry("50_99", stonadList.count { it in 50_000..99_999 }.toString()),
-                    StatsEntry("100_149", stonadList.count { it in 100_000..149_000 }.toString()),
-                    StatsEntry("150_9999", stonadList.count { it in 150_000..9_999_999 }.toString()),
-                    StatsEntry("0", stonadList.count { it == 0 }.toString()),
-                )
+                heading = StatsEntryHeading("Stønad","Deltakere"),
+                entries = stonadList
             )
         )
     }

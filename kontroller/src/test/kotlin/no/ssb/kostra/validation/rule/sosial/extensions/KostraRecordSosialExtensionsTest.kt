@@ -5,13 +5,12 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
-import no.ssb.kostra.program.extension.asList
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.rule.RuleTestData
-import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringTestUtils
+import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
 class KostraRecordSosialExtensionsTest : BehaviorSpec({
     Given("KostraRecordSosialExtensions#hasVarighet") {
@@ -23,7 +22,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(setStmndRangeValues = setStmndRangeValues)
 
                 Then("result should be as expected") {
-                    sut.hasVarighet() shouldBe expectedResult
+                    sut.first().hasVarighet() shouldBe expectedResult
                 }
             }
         }
@@ -38,7 +37,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(setStmndRangeValues = setStmndRangeValues)
 
                 Then("result should be as expected") {
-                    sut.hasNotVarighet() shouldBe expectedResult
+                    sut.first().hasNotVarighet() shouldBe expectedResult
                 }
             }
         }
@@ -61,7 +60,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(fnr = fnr)
 
                 Then("result should be as expected") {
-                    sut.ageInYears(RuleTestData.argumentsInTest) shouldBe expectedResult
+                    sut.first().ageInYears(RuleTestData.argumentsInTest) shouldBe expectedResult
                 }
             }
         }
@@ -89,7 +88,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(fnr = fnr)
 
                 Then("result should be as expected") {
-                    sut.hasFnr() shouldBe expectedResult
+                    sut.first().hasFnr() shouldBe expectedResult
                 }
             }
         }
@@ -110,7 +109,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(
                     stmndRange = stmndRange,
                     setStmndRangeValues = setStmndRangeValues
-                ).asList()
+                )
                 val result = sut.varighetAsStatsEntries()
 
                 Then("result should be as expected") {
@@ -126,7 +125,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
             fnr: String = RandomUtils.generateRandomSsn(30, RuleTestData.argumentsInTest.aargang.toInt()),
             stmndRange: IntRange = 1..1,
             setStmndRangeValues: Boolean = false
-        ) = KvalifiseringTestUtils.kvalifiseringKostraRecordInTest(
+        ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
                 SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME to fnr
             ).plus(

@@ -26,7 +26,7 @@ class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractNoArgsRule<List<Kostra
     Familievern52aRuleId.FAMILIEVERN52A_RULE026.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.map {
+    override fun validate(context: List<KostraRecord>) = context.flatMap {
         mappingList.mapNotNull { mapping ->
             if (it[mapping.participation] == "1" && it.fieldAsIntOrDefault(mapping.count) == 0) {
                 createValidationReportEntry(
@@ -40,7 +40,7 @@ class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractNoArgsRule<List<Kostra
                 )
             } else null
         }
-    }.flatten().ifEmpty { null }
+    }.ifEmpty { null }
 
     data class Mapping(
         val title: String,

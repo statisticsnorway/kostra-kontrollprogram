@@ -59,30 +59,30 @@ object RegnskapConstants {
         // Kostra og Kirke
         .plus(
             listOf("0A", "0C")
-                .map { skjema ->
+                .flatMap { skjema ->
                     listOf(
                         Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_DRIFT, "1"),
                         Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_INVESTERING, "0"),
                         Mapping(ACCOUNTING_TYPE_REGIONALE, skjema, ACCOUNT_TYPE_DRIFT, "1"),
                         Mapping(ACCOUNTING_TYPE_REGIONALE, skjema, ACCOUNT_TYPE_INVESTERING, "0"),
                     )
-                }.flatten()
+                }
         ).plus(
-            listOf("0F", "0I", "0K").map { skjema ->
+            listOf("0F", "0I", "0K").flatMap { skjema ->
                 listOf(
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_DRIFT, "3"),
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_INVESTERING, "4"),
                 )
-            }.flatten()
+            }
         ).plus(
-            listOf("0M", "0P").map { skjema ->
+            listOf("0M", "0P").flatMap { skjema ->
                 listOf(
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_DRIFT, "3"),
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_INVESTERING, "4"),
                     Mapping(ACCOUNTING_TYPE_REGIONALE, skjema, ACCOUNT_TYPE_DRIFT, "3"),
                     Mapping(ACCOUNTING_TYPE_REGIONALE, skjema, ACCOUNT_TYPE_INVESTERING, "4"),
                 )
-            }.flatten()
+            }
         ).plus(
             listOf("0B", "0D").map { skjema ->
                 Mapping(ACCOUNTING_TYPE_BALANSE, skjema, ACCOUNT_TYPE_BALANSE, "2")
@@ -97,24 +97,24 @@ object RegnskapConstants {
             listOf(
                 "0AK1", "0AK2", "0AK3", "0AK4",
                 "0CK1", "0CK2", "0CK3", "0CK4",
-            ).map { skjema ->
+            ).flatMap { skjema ->
                 listOf(
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_DRIFT, "1"),
                     Mapping(ACCOUNTING_TYPE_BEVILGNING, skjema, ACCOUNT_TYPE_INVESTERING, "0"),
                 )
-            }.flatten()
+            }
         ).plus(
             listOf(
                 "0BK1", "0BK2", "0BK3", "0BK4",
                 "0DK1", "0DK2", "0DK3", "0DK4",
-            ).map { skjema ->
+            ).flatMap { skjema ->
                 listOf(
                     Mapping(ACCOUNTING_TYPE_BALANSE, skjema, ACCOUNT_TYPE_BALANSE, "2"),
                     Mapping(ACCOUNTING_TYPE_BALANSE, skjema, ACCOUNT_TYPE_BALANSE, "Z"),
                     Mapping(ACCOUNTING_TYPE_BALANSE, skjema, ACCOUNT_TYPE_BALANSE, "z"),
                     Mapping(ACCOUNTING_TYPE_BALANSE, skjema, ACCOUNT_TYPE_BALANSE, "~"),
                 )
-            }.flatten()
+            }
         )
         .toList()
 

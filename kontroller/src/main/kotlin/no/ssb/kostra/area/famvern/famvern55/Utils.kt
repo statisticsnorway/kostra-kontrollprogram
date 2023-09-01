@@ -33,7 +33,7 @@ object Utils {
                 else
                     getRows(fieldList, columnSize)
 
-            kostraRecordList.map { kostraRecord ->
+            kostraRecordList.flatMap { kostraRecord ->
                 calculationList.mapNotNull { fieldList ->
                     val itemList = fieldList.dropLast(1).map { item ->
                         item to kostraRecord.fieldAsIntOrDefault(item)
@@ -48,7 +48,7 @@ object Utils {
                     } else null
 
                 }
-            }.flatten().ifEmpty { emptyList() }
+            }.ifEmpty { emptyList() }
         } else
             throw IndexOutOfBoundsException("FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})")
 

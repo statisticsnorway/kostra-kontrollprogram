@@ -12,9 +12,11 @@ class Rule010Timer(
     Familievern53RuleId.FAMILIEVERN53_RULE010_TIMER.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.map {
+    override fun validate(context: List<KostraRecord>) = context.flatMap {
         mappingList.mapNotNull { mapping ->
-            if (0 < it.fieldAsIntOrDefault(mapping.tiltakField) && it.fieldAsIntOrDefault(mapping.timerField) == 0) {
+            if (0 < it.fieldAsIntOrDefault(mapping.tiltakField)
+                && it.fieldAsIntOrDefault(mapping.timerField) == 0
+            ) {
                 createValidationReportEntry(
                     ruleName = "$ruleName ${mapping.kategori}, timer",
                     messageText = "Det er ikke fylt hvor mange timer '${it[mapping.timerField]}' " +
@@ -27,5 +29,5 @@ class Rule010Timer(
                 )
             } else null
         }
-    }.flatten().ifEmpty { null }
+    }.ifEmpty { null }
 }

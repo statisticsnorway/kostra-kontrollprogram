@@ -13,7 +13,7 @@ class Rule010Tiltak(
     Familievern53RuleId.FAMILIEVERN53_RULE010_TILTAK.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.map {
+    override fun validate(context: List<KostraRecord>) = context.flatMap {
         mappingList.mapNotNull { mapping ->
             if (it.fieldAsIntOrDefault(mapping.tiltakField) == 0) {
                 createValidationReportEntry(
@@ -28,5 +28,5 @@ class Rule010Tiltak(
                 )
             } else null
         }
-    }.flatten().ifEmpty { null }
+    }.ifEmpty { null }
 }

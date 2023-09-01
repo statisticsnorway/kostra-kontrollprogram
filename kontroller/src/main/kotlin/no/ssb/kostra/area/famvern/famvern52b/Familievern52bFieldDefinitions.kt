@@ -188,5 +188,4 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             datePattern = DATE8_PATTERN,
         )
     )
-
 }

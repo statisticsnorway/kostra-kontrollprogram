@@ -57,6 +57,6 @@ object Familievern53Constants {
             "Annet",
             ANNET_TILTAK_COL_NAME,
             ANNET_TIMER_COL_NAME
-        ),
+        )
     )
 }

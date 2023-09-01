@@ -22,6 +22,7 @@ class FieldDefinitionTest : BehaviorSpec({
 
                 Then("${result.datePattern} should be $expectedResultDatePattern") {
                     result.datePattern shouldBe expectedResultDatePattern
+                    result.length shouldBe 1
                 }
             }
         }
@@ -47,6 +48,7 @@ class FieldDefinitionTest : BehaviorSpec({
 
                 Then("codeList.size should be $expectedResultCodeListLength") {
                     result.codeList.size shouldBe expectedResultCodeListLength
+                    result.length shouldBe 1
                 }
             }
         }

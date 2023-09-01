@@ -2,7 +2,7 @@ package no.ssb.kostra.area.famvern.famvern55
 
 import no.ssb.kostra.program.KostraRecord
 
-object Utils {
+object Famvern55Utils {
     data class CalculationItem(
         val sumItem: Pair<String, Int>,
         val itemList: List<Pair<String, Int>>,
@@ -49,7 +49,7 @@ object Utils {
 
                 }
             }.ifEmpty { emptyList() }
-        } else
-            throw IndexOutOfBoundsException("FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})")
-
+        } else throw IndexOutOfBoundsException(
+            "FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})"
+        )
 }

@@ -1,6 +1,7 @@
 package no.ssb.kostra.area.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.FieldDefinitions
@@ -22,14 +23,12 @@ class KirkeKostraMain(
         // @formatter:on
     )
 
-    private fun getFunksjonAsList(): List<String> {
+    private fun getFunksjonAsList(): List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it == RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
+                it == ACCOUNTING_TYPE_BEVILGNING
             }
-        ) return emptyList()
-
-        return funksjoner.map { it.padEnd(4, ' ') }.sorted()
-    }
+        ) emptyList()
+        else funksjoner.map { it.padEnd(4, ' ') }.sorted()
 
     private val kapitler = listOf(
         "10", "11", "12", "13", "18",
@@ -41,14 +40,12 @@ class KirkeKostraMain(
     )
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> {
+    private fun getKapittelAsList(): List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
             }
-        ) return emptyList()
-
-        return kapitler.map { it.padEnd(4, ' ') }.sorted()
-    }
+        ) emptyList()
+        else kapitler.map { it.padEnd(4, ' ') }.sorted()
 
 
     // Arter
@@ -67,28 +64,21 @@ class KirkeKostraMain(
         // @formatter:on
     )
 
-    private fun getArtAsList(): List<String> {
-        if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-                it in listOf(
-                    RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
-                    RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-                )
-            }
-        ) return emptyList()
+    private fun getArtAsList(): List<String> = if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
+            it in listOf(
+                RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
+                RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+            )
+        }
+    ) emptyList()
+    else arter.sorted()
 
-        return arter.sorted()
-    }
-
-    private fun getSektorAsList(): List<String> {
+    private fun getSektorAsList(): List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
             }
-        )
-            return emptyList()
-
-        // Sektorer
-        return listOf("   ")
-    }
+        ) emptyList()
+        else listOf("   ") // Sektorer
 
     // Kun gyldig i investering og skal fjernes fra drift
     private fun getInvalidDriftArtList() = listOf("280", "285", "670", "910", "970")

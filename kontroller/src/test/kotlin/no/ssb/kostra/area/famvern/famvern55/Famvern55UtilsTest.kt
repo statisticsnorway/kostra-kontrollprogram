@@ -3,11 +3,11 @@ package no.ssb.kostra.area.famvern.famvern55
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.area.famvern.famvern55.Utils.validateMatrix
+import no.ssb.kostra.area.famvern.famvern55.Famvern55Utils.validateMatrix
 import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.validation.rule.famvern.famvern55.Familievern55TestUtils
 
-class UtilsTest : BehaviorSpec({
+class Famvern55UtilsTest : BehaviorSpec({
     Given("getCombinedList") {
         val columnSize = 4
 

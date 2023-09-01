@@ -68,11 +68,11 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
         Rule043UtfyltVilkar()
     )
 
-    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> {
-        val sumBidrag = kostraRecordList.sumOf { it.fieldAsIntOrDefault(BIDRAG_COL_NAME) }
-        val sumLaan = kostraRecordList.sumOf { it.fieldAsIntOrDefault(LAAN_COL_NAME) }
-
-        return listOf(
+    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> = Pair(
+        kostraRecordList.sumOf { it.fieldAsIntOrDefault(BIDRAG_COL_NAME) },
+        kostraRecordList.sumOf { it.fieldAsIntOrDefault(LAAN_COL_NAME) }
+    ).let { (sumBidrag, sumLaan) ->
+        listOf(
             StatsReportEntry(
                 heading = StatsEntryHeading("Stønad", "Sum"),
                 entries = listOf(

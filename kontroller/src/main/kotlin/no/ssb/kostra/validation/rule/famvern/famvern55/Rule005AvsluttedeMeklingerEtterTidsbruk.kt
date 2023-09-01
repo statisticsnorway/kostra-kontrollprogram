@@ -24,7 +24,7 @@ import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_2_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_3_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.MEKLING_TOT_ALLE_COL_NAME
-import no.ssb.kostra.area.famvern.famvern55.Utils.validateMatrix
+import no.ssb.kostra.area.famvern.famvern55.Famvern55Utils.validateMatrix
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule

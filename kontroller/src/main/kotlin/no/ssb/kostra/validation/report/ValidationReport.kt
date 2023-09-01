@@ -11,7 +11,6 @@ class ValidationReport(
         GitPropertiesLoader.DEFAULT_GIT_PROPERTIES_FILENAME
     )
 ) {
-
     override fun toString(): String {
         val kotlinArguments = validationReportArguments.kotlinArguments
         val lf = "\n"
@@ -126,6 +125,4 @@ class ValidationReport(
 
         return report.toString()
     }
-
-
 }

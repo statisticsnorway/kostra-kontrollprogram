@@ -63,12 +63,8 @@ class GenericsJacksonTest : BehaviorSpec({
             .registerModule(JavaTimeModule())
 
 
-        private fun createInnerJson(): String {
-            return "{\"@class\":\"no.ssb.kostra.MyNestedClass\",\"someValue\":42}"
-        }
+        private fun createInnerJson(): String = "{\"@class\":\"no.ssb.kostra.MyNestedClass\",\"someValue\":42}"
 
-        private fun createJson(innerValue: String): String {
-            return "{\"innerValue\":${innerValue}}"
-        }
+        private fun createJson(innerValue: String): String = "{\"innerValue\":${innerValue}}"
     }
 }

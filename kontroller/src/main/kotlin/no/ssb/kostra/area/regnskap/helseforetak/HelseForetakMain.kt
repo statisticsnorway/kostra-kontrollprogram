@@ -43,10 +43,8 @@ class HelseForetakMain(
         else -> emptyList()
     }
 
-
     // Kapitler
     private fun getKapittelAsList(): List<String> = listOf("    ")
-
 
     // Arter
     private val arter = listOf(

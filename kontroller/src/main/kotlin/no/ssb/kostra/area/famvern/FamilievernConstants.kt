@@ -51,5 +51,4 @@ object FamilievernConstants {
         KontorFylkeRegionMapping("203", "54", "667200"),
         KontorFylkeRegionMapping("205", "54", "667200")
     )
-
 }

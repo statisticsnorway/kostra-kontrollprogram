@@ -63,14 +63,12 @@ class KvalifiseringMain(
 
     )
 
-    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> {
-        val sumStonad = kostraRecordList.sumOf { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }
-
-        return listOf(
+    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> =
+        listOf(
             StatsReportEntry(
                 heading = StatsEntryHeading("Stønad", "Sum"),
                 entries = listOf(
-                    StatsEntry("I alt", "$sumStonad")
+                    StatsEntry("I alt", "${kostraRecordList.sumOf { it.fieldAsIntOrDefault(KVP_STONAD_COL_NAME) }}")
                 )
             ),
             StatsReportEntry(
@@ -87,5 +85,4 @@ class KvalifiseringMain(
                 entries = kostraRecordList.stonadAsStatsEntries()
             )
         )
-    }
 }

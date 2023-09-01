@@ -7,7 +7,6 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.StatsReportEntry
-import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.AbstractRule
 
@@ -23,8 +22,9 @@ abstract class PositionedFileValidator(
         if (fieldDefinitions.fieldDefinitions.isEmpty())
             throw IndexOutOfBoundsException("validate(): fieldDefinitions are missing")
 
-        val preCheckValidationReportEntries: List<ValidationReportEntry>? =
-            preValidationRules.firstNotNullOfOrNull { it.validate(arguments.getInputContentAsStringList(), arguments) }
+        val preCheckValidationReportEntries = preValidationRules.firstNotNullOfOrNull {
+            it.validate(arguments.getInputContentAsStringList(), arguments)
+        }
 
         if (preCheckValidationReportEntries != null)
             return ValidationResult(

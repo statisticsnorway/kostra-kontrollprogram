@@ -81,7 +81,6 @@ class DefaultXmlStreamHandler(
         listOf(individFileError)
     }
 
-
     companion object {
         private const val AVGIVER_XML_TAG = "Avgiver"
         private const val INDIVID_XML_TAG = "Individ"

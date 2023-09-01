@@ -11,16 +11,16 @@ class Rule029AntallBehandlingssamtalerSidenOpprettelsen : AbstractNoArgsRule<Lis
     Familievern52aRuleId.FAMILIEVERN52A_RULE029.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        0 < it.fieldAsIntOrDefault(ANTSAMT_OPPR_A_COL_NAME)
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke fylt ut hvor mange behandlingssamtaler det er " +
-                    "gjennomført siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { 0 < it.fieldAsIntOrDefault(ANTSAMT_OPPR_A_COL_NAME) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke fylt ut hvor mange behandlingssamtaler det er " +
+                        "gjennomført siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

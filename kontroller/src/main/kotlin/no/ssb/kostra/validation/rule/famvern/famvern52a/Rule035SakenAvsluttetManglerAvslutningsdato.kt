@@ -12,18 +12,17 @@ class Rule035SakenAvsluttetManglerAvslutningsdato : AbstractNoArgsRule<List<Kost
     Familievern52aRuleId.FAMILIEVERN52A_RULE035.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filter {
-        it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2")
-    }.filterNot {
-        it.fieldAsLocalDate(DATO_AVSL_A_COL_NAME) != null
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er krysset av for at saken er avsluttet i rapporteringsåret, " +
-                    "men ikke fylt ut dato '${it[DATO_AVSL_A_COL_NAME]}' for avslutning av saken.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2") }
+        .filterNot { it.fieldAsLocalDate(DATO_AVSL_A_COL_NAME) != null }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er krysset av for at saken er avsluttet i rapporteringsåret, " +
+                        "men ikke fylt ut dato '${it[DATO_AVSL_A_COL_NAME]}' for avslutning av saken.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

@@ -14,18 +14,21 @@ class Rule011HenvendelsesBegrunnelse : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE011.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fieldDefinitions.byColumnName(HENV_GRUNN_A_COL_NAME).codeExists(it[HENV_GRUNN_A_COL_NAME])
-    }.map {
-        val codeList = fieldDefinitions.byColumnName(HENV_GRUNN_A_COL_NAME).codeList
-        createValidationReportEntry(
-            messageText = "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller " +
-                    "feltet har ugyldig format. Fant '${it[HENV_GRUNN_A_COL_NAME]}', forventet én av: $codeList. " +
-                    "Feltet er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fieldDefinition.codeExists(it[HENV_GRUNN_A_COL_NAME]) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller " +
+                        "feltet har ugyldig format. Fant '${it[HENV_GRUNN_A_COL_NAME]}', forventet én av: " +
+                        "${fieldDefinition.codeList}. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(HENV_GRUNN_A_COL_NAME)
+    }
 }

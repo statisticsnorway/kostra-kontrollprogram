@@ -25,8 +25,11 @@ object Famvern55Utils {
         }
         .toList()
 
-    fun validateMatrix(kostraRecordList: List<KostraRecord>, fieldList: List<String>, columnSize: Int) =
-        if (fieldList.size % columnSize == 0) {
+    fun validateMatrix(
+        kostraRecordList: List<KostraRecord>,
+        fieldList: List<String>,
+        columnSize: Int
+    ) = if (fieldList.size % columnSize == 0) {
             val calculationList =
                 if (fieldList.size / columnSize > 1)
                     getRows(fieldList, columnSize) + getColumns(fieldList, fieldList.size / columnSize)
@@ -49,7 +52,7 @@ object Famvern55Utils {
 
                 }
             }.ifEmpty { emptyList() }
-        } else throw IndexOutOfBoundsException(
+        } else throw IllegalArgumentException(
             "FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})"
         )
 }

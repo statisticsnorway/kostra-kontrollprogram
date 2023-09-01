@@ -12,7 +12,6 @@ class Individ01a : AbstractRule<KostraIndividType>(
     ruleName = IndividRuleId.INDIVID_01A.title,
     severity = Severity.ERROR
 ) {
-
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = with(context) {
         melding.asSequence().map { validateMelding(it) }
             .plus(plan.map { validatePlan(it) })

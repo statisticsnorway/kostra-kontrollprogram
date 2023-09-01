@@ -19,20 +19,18 @@ class Rule025Behandlingssamtaler : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE025.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fields.any { field ->
-            0 < it.fieldAsIntOrDefault(field)
-        }
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke fylt ut ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
-                    "deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fields.any { field -> 0 < it.fieldAsIntOrDefault(field) } }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke fylt ut ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
+                        "deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 
     companion object {
         val fields = listOf(

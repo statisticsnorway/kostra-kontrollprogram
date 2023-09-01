@@ -84,8 +84,9 @@ class Famvern55UtilsTest : BehaviorSpec({
 
         When("invalid parameters") {
             val invalidFieldList = fieldList.dropLast(1)
+
             Then("get an IndexOutOfBoundsException") {
-                shouldThrow<IndexOutOfBoundsException> {
+                shouldThrow<IllegalArgumentException> {
                     validateMatrix(
                         kostraRecordList,
                         invalidFieldList,

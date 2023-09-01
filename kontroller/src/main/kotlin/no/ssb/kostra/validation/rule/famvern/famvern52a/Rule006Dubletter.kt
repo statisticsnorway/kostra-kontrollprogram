@@ -11,16 +11,14 @@ class Rule006Dubletter : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE006.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.groupBy {
-        it[KONTOR_NR_A_COL_NAME] to it[JOURNAL_NR_A_COL_NAME]
-    }.filter { (_, group) ->
-        group.size > 1
-    }.flatMap { (kontorJournalNummerPair, group) ->
-        createSingleReportEntryList(
-            "Journalnummeret er benyttet på mer enn en sak (${group.size} stk). " +
-                    "Dubletter på kontornummer '${kontorJournalNummerPair.first}' - " +
-                    "journalnummer '${kontorJournalNummerPair.second}'.",
-            lineNumbers = group.map { it.lineNumber }
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .groupBy { it[KONTOR_NR_A_COL_NAME] to it[JOURNAL_NR_A_COL_NAME] }.filter { (_, group) -> group.size > 1 }
+        .flatMap { (kontorJournalNummerPair, group) ->
+            createSingleReportEntryList(
+                "Journalnummeret er benyttet på mer enn en sak (${group.size} stk). " +
+                        "Dubletter på kontornummer '${kontorJournalNummerPair.first}' - " +
+                        "journalnummer '${kontorJournalNummerPair.second}'.",
+                lineNumbers = group.map { it.lineNumber }
+            )
+        }.ifEmpty { null }
 }

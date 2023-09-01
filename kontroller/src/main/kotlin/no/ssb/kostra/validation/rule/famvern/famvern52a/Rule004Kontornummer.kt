@@ -13,17 +13,18 @@ class Rule004Kontornummer(
     Familievern52aRuleId.FAMILIEVERN52A_RULE004.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        mappingList.any { mapping -> it[KONTOR_NR_A_COL_NAME] == mapping.kontor }
-    }.map {
-        val kontorList = mappingList.map { item -> item.kontor }.distinct().sorted()
-        createValidationReportEntry(
-            messageText = "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. " +
-                    "Fant '${it[KONTOR_NR_A_COL_NAME]}', forventet én av : ${kontorList}.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { mappingList.any { mapping -> it[KONTOR_NR_A_COL_NAME] == mapping.kontor } }
+        .map {
+            val kontorList = mappingList.map { item -> item.kontor }.distinct().sorted()
+
+            createValidationReportEntry(
+                messageText = "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. " +
+                        "Fant '${it[KONTOR_NR_A_COL_NAME]}', forventet én av : ${kontorList}.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 }

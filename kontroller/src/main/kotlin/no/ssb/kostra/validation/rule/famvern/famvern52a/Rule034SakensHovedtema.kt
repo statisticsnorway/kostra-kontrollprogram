@@ -15,21 +15,22 @@ class Rule034SakensHovedtema : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE034.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filter {
-        it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2")
-    }.filterNot {
-        fieldDefinitions.byColumnName(HOVEDTEMA_A_COL_NAME).codeExists(it[HOVEDTEMA_A_COL_NAME])
-    }.map {
-        val codeList =
-            fieldDefinitions.byColumnName(HOVEDTEMA_A_COL_NAME).codeList
-        createValidationReportEntry(
-            messageText = "Det er krysset av for at saken er avsluttet i rapporteringsåret, men " +
-                    "ikke fylt ut hovedtema for saken, eller feltet har ugyldig format. " +
-                    "Fant '${it[HOVEDTEMA_A_COL_NAME]}', forventet én av: $codeList.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2") }
+        .filterNot { fieldDefinition.codeExists(it[HOVEDTEMA_A_COL_NAME]) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er krysset av for at saken er avsluttet i rapporteringsåret, men " +
+                        "ikke fylt ut hovedtema for saken, eller feltet har ugyldig format. " +
+                        "Fant '${it[HOVEDTEMA_A_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(HOVEDTEMA_A_COL_NAME)
+    }
 }

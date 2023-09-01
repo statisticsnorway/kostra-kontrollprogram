@@ -14,19 +14,21 @@ class Rule033StatusVedAretsSlutt : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE033.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fieldDefinitions.byColumnName(STATUS_ARETSSL_A_COL_NAME).codeExists(it[STATUS_ARETSSL_A_COL_NAME])
-    }.map {
-        val codeList =
-            fieldDefinitions.byColumnName(STATUS_ARETSSL_A_COL_NAME).codeList
-        createValidationReportEntry(
-            messageText = "Det er ikke fylt ut hva som er sakens status ved utgangen av året. " +
-                    "Fant '${it[STATUS_ARETSSL_A_COL_NAME]}', forventet én av: $codeList. " +
-                    "Feltet er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fieldDefinition.codeExists(it[STATUS_ARETSSL_A_COL_NAME]) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke fylt ut hva som er sakens status ved utgangen av året. " +
+                        "Fant '${it[STATUS_ARETSSL_A_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}. " +
+                        "Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(STATUS_ARETSSL_A_COL_NAME)
+    }
 }

@@ -31,20 +31,18 @@ class Rule022OmraaderArbeidet : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE022.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        tema.any { tema ->
-            fieldDefinitions.byColumnName(tema).codeExists(it[tema])
-        }
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke fylt ut hvilke områder det har vært arbeidet med siden saken ble opprettet. " +
-                    "Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { tema.any { tema -> fieldDefinitions.byColumnName(tema).codeExists(it[tema]) } }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke fylt ut hvilke områder det har vært arbeidet med siden saken ble opprettet. " +
+                        "Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 
     companion object {
         val tema = listOf(
@@ -65,8 +63,7 @@ class Rule022OmraaderArbeidet : AbstractNoArgsRule<List<KostraRecord>>(
             TEMA_RUS_A_COL_NAME,
             TEMA_SYKD_A_COL_NAME,
             TEMA_VOLD_A_COL_NAME,
-            TEMA_ALVH_A_COL_NAME,
-
-            )
+            TEMA_ALVH_A_COL_NAME
+        )
     }
 }

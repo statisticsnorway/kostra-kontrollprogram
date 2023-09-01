@@ -21,20 +21,18 @@ class Rule024DeltagelseBehandlingssamtaler : AbstractNoArgsRule<List<KostraRecor
     Familievern52aRuleId.FAMILIEVERN52A_RULE024.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        deltakere.any { deltaker ->
-            fieldDefinitions.byColumnName(deltaker).codeExists(it[deltaker])
-        }
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler " +
-                    "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { deltakere.any { deltaker -> fieldDefinitions.byColumnName(deltaker).codeExists(it[deltaker]) } }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler " +
+                        "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 
     companion object {
         val deltakere = listOf(

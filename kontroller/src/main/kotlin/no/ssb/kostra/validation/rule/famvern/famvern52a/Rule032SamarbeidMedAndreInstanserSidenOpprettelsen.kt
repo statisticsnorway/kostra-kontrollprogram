@@ -24,20 +24,18 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen : AbstractNoArgsRule<Li
     Familievern52aRuleId.FAMILIEVERN52A_RULE032.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fields.any { field ->
-            fieldDefinitions.byColumnName(field).codeExists(it[field])
-        }
-    }.map {
-        createValidationReportEntry(
-            messageText = "Det er ikke krysset av for om det har vært samarbeid med andre " +
-                    "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fields.any { field -> fieldDefinitions.byColumnName(field).codeExists(it[field]) } }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke krysset av for om det har vært samarbeid med andre " +
+                        "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
 
     companion object {
         val fields = listOf(

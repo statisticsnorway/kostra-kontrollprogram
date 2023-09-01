@@ -37,6 +37,5 @@ enum class Familievern52aRuleId(val title: String) {
     FAMILIEVERN52A_RULE034("Kontroll 034 : Sakens hovedtema (Fylles ut når saken avsluttes)"),
     FAMILIEVERN52A_RULE035("Kontroll 035 : Saken avsluttet, men ikke satt avslutningsdato"),
     FAMILIEVERN52A_RULE036("Kontroll 036 : Avslutningsdato før første samtale"),
-    FAMILIEVERN52A_RULE037("Kontroll 037 : Bekymringsmelding sendt barnevernet"),
-
+    FAMILIEVERN52A_RULE037("Kontroll 037 : Bekymringsmelding sendt barnevernet")
 }

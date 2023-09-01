@@ -26,6 +26,5 @@ data class FieldDefinition(
         }
     }
 
-    val length: Int
-        get() = to + 1 - from
+    val length: Int get() = to + 1 - from
 }

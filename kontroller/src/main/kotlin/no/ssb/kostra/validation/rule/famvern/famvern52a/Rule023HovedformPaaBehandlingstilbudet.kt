@@ -14,19 +14,21 @@ class Rule023HovedformPaaBehandlingstilbudet : AbstractNoArgsRule<List<KostraRec
     Familievern52aRuleId.FAMILIEVERN52A_RULE023.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        fieldDefinitions.byColumnName(HOVEDF_BEHAND_A_COL_NAME).codeExists(it[HOVEDF_BEHAND_A_COL_NAME])
-    }.map {
-        val codeList =
-            fieldDefinitions.byColumnName(HOVEDF_BEHAND_A_COL_NAME).codeList
-        createValidationReportEntry(
-            messageText = "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden " +
-                    "saken ble opprettet, eller feil kode er benyttet. Fant '${it[HOVEDF_BEHAND_A_COL_NAME]}', " +
-                    "forventet én av: $codeList. Feltet er obligatorisk å fylle ut.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filterNot { fieldDefinition.codeExists(it[HOVEDF_BEHAND_A_COL_NAME]) }
+        .map {
+            createValidationReportEntry(
+                messageText = "Det er ikke krysset av for hva som har vært hovedformen på behandlingstilbudet siden " +
+                        "saken ble opprettet, eller feil kode er benyttet. Fant '${it[HOVEDF_BEHAND_A_COL_NAME]}', " +
+                        "forventet én av: ${fieldDefinition.codeList}. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }.ifEmpty { null }
+
+    companion object {
+        private val fieldDefinition = fieldDefinitions.byColumnName(HOVEDF_BEHAND_A_COL_NAME)
+    }
 }

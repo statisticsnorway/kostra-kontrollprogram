@@ -51,7 +51,7 @@ object Famvern55Utils {
                     } else null
 
                 }
-            }.ifEmpty { emptyList() }
+            }
         } else throw IllegalArgumentException(
             "FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})"
         )

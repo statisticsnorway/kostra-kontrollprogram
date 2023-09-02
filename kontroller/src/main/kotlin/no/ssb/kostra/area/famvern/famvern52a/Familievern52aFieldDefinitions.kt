@@ -103,7 +103,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 1,
             name = REGION_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 1,
             to = 6,
             mandatory = true,
@@ -112,7 +111,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 2,
             name = KONTOR_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 7,
             to = 9,
             mandatory = true,
@@ -121,7 +119,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 3,
             name = JOURNAL_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 10,
             to = 18,
             mandatory = true,
@@ -130,7 +127,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 4,
             name = HENV_DATO_A_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 19,
             to = 26,
             datePattern = DATE8_PATTERN,
@@ -182,8 +178,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 8,
             name = PRIMK_FODT_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 30,
             to = 33,
             mandatory = true,
@@ -301,7 +295,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 161,
             name = PRIMKREL_PART_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 42,
             to = 42,
@@ -312,7 +305,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 162,
             name = PRIMKREL_EKSPART_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 43,
             to = 43,
@@ -323,7 +315,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 163,
             name = PRIMKREL_FORELD_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 44,
             to = 44,
@@ -334,7 +325,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 164,
             name = PRIMKREL_BU18_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 45,
             to = 45,
@@ -345,7 +335,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 165,
             name = PRIMKREL_B18_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 46,
             to = 46,
@@ -356,7 +345,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 166,
             name = PRIMKREL_OVRIG_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 47,
             to = 47,
@@ -367,7 +355,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 167,
             name = PRIMKREL_VENN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 48,
             to = 48,
@@ -378,7 +365,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 168,
             name = PRIMKREL_ANDRE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 49,
             to = 49,
@@ -390,7 +376,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 17,
             name = FORSTE_SAMT_A_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 50,
             to = 57,
             datePattern = DATE8_PATTERN,
@@ -411,7 +396,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 191,
             name = TEMA_PARREL_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 59,
             to = 59,
@@ -422,7 +406,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 192,
             name = TEMA_AVKLAR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 60,
             to = 60,
@@ -433,7 +416,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 193,
             name = TEMA_SAMLBRUDD_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 61,
             to = 61,
@@ -444,7 +426,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 194,
             name = TEMA_SAMSPILL_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 62,
             to = 62,
@@ -455,7 +436,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 195,
             name = TEMA_BARNSIT_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 63,
             to = 63,
@@ -466,7 +446,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 196,
             name = TEMA_BARNFOR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 64,
             to = 64,
@@ -477,7 +456,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 197,
             name = TEMA_BOSTED_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 65,
             to = 65,
@@ -488,7 +466,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 198,
             name = TEMA_FORELDRE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 66,
             to = 66,
@@ -499,7 +476,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 199,
             name = TEMA_FORBARN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 67,
             to = 67,
@@ -510,7 +486,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1910,
             name = TEMA_FLERGEN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 68,
             to = 68,
@@ -521,7 +496,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1911,
             name = TEMA_SAMBARN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 69,
             to = 69,
@@ -532,7 +506,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1912,
             name = TEMA_SAERBARN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 70,
             to = 70,
@@ -543,7 +516,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1913,
             name = TEMA_KULTUR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 71,
             to = 71,
@@ -554,7 +526,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1914,
             name = TEMA_TVANG_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 72,
             to = 72,
@@ -565,7 +536,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1915,
             name = TEMA_RUS_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 73,
             to = 73,
@@ -576,7 +546,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1916,
             name = TEMA_SYKD_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 74,
             to = 74,
@@ -587,7 +556,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1917,
             name = TEMA_VOLD_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 75,
             to = 75,
@@ -598,7 +566,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1918,
             name = TEMA_ALVH_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 76,
             to = 76,
@@ -733,80 +700,60 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 231,
             name = SAMT_PRIMK_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 87,
             to = 88,
         ),
         FieldDefinition(
             number = 232,
             name = SAMT_PARTNER_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 89,
             to = 90,
         ),
         FieldDefinition(
             number = 233,
             name = SAMT_EKSPART_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 91,
             to = 92,
         ),
         FieldDefinition(
             number = 234,
             name = SAMT_BARNU18_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 93,
             to = 94,
         ),
         FieldDefinition(
             number = 235,
             name = SAMT_BARNO18_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 95,
             to = 96,
         ),
         FieldDefinition(
             number = 236,
             name = SAMT_FORELDRE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 97,
             to = 98,
         ),
         FieldDefinition(
             number = 237,
             name = SAMT_OVRFAM_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 99,
             to = 100,
         ),
         FieldDefinition(
             number = 238,
             name = SAMT_VENN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 101,
             to = 102,
         ),
         FieldDefinition(
             number = 239,
             name = SAMT_ANDRE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 103,
             to = 104,
         ),
         FieldDefinition(
             number = 241,
             name = ANTSAMT_HOVEDT_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 105,
             to = 107,
             mandatory = false,
@@ -814,8 +761,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 242,
             name = ANTSAMT_ANDREANS_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 108,
             to = 110,
             mandatory = false,
@@ -823,8 +768,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 251,
             name = ANTSAMT_IARET_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 111,
             to = 113,
             mandatory = true,
@@ -832,8 +775,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 252,
             name = ANTSAMT_OPPR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 114,
             to = 116,
             mandatory = true,
@@ -841,24 +782,18 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 261,
             name = TLFSAMT_IARET_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 117,
             to = 119,
         ),
         FieldDefinition(
             number = 262,
             name = TLFSAMT_OPPR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 120,
             to = 122,
         ),
         FieldDefinition(
             number = 271,
             name = TIMER_IARET_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 123,
             to = 125,
             mandatory = true,
@@ -866,8 +801,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 272,
             name = TIMER_OPPR_A_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 126,
             to = 128,
             mandatory = true,
@@ -887,7 +820,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 291,
             name = SAMARB_INGEN_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 130,
             to = 130,
@@ -898,7 +830,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 292,
             name = SAMARB_LEGE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 131,
             to = 131,
@@ -909,7 +840,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 293,
             name = SAMARB_HELSE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 132,
             to = 132,
@@ -920,7 +850,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 294,
             name = SAMARB_PSYKH_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 133,
             to = 133,
@@ -931,7 +860,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 295,
             name = SAMARB_JURIST_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 134,
             to = 134,
@@ -942,7 +870,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 296,
             name = SAMARB_KRISES_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 135,
             to = 135,
@@ -953,7 +880,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 297,
             name = SAMARB_SKOLE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 136,
             to = 136,
@@ -964,7 +890,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 298,
             name = SAMARB_SOS_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 137,
             to = 137,
@@ -975,7 +900,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 299,
             name = SAMARB_KOMMB_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 138,
             to = 138,
@@ -986,7 +910,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 2910,
             name = SAMARB_STATB_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 139,
             to = 139,
@@ -997,7 +920,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 2911,
             name = SAMARB_ANDRE_A_COL_NAME,
-            dataType = INTEGER_TYPE,
             viewType = CHECKBOX_VIEWTYPE,
             from = 140,
             to = 140,
@@ -1050,7 +972,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 32,
             name = DATO_AVSL_A_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 144,
             to = 151,
             datePattern = DATE8_PATTERN,

@@ -52,7 +52,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 1,
             name = KOMMUNE_NR_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 1, to = 4,
             mandatory = true
         ),
@@ -60,7 +59,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 2,
             name = VERSION_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 5, to = 6,
             mandatory = true
         ),
@@ -68,21 +66,18 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 3,
             name = BYDELSNR_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 7, to = 8
         ),
         FieldDefinition(
             number = 4,
             name = DISTRIKTSNR_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 9, to = 10
         ),
         FieldDefinition(
             number = 5,
             name = PERSON_JOURNALNR_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 11, to = 18,
             mandatory = true
         ),
@@ -90,7 +85,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 6,
             name = PERSON_FODSELSNR_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 19, to = 29,
             mandatory = true
         ),
@@ -135,15 +129,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 92,
             name = ANT_BARN_UNDER_18_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 33, to = 34
         ),
         FieldDefinition(
             number = 10,
             name = REG_DATO_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 35, to = 40,
             datePattern = DATE6_PATTERN,
             mandatory = true
@@ -152,7 +143,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 11,
             name = VEDTAK_DATO_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 41, to = 46,
             datePattern = DATE6_PATTERN,
             mandatory = true
@@ -161,7 +151,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 12,
             name = BEGYNT_DATO_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 47, to = 52,
             datePattern = DATE6_PATTERN,
             mandatory = true
@@ -181,7 +170,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 142,
             name = KOMMNR_KVP_KOMM_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 54, to = 57,  // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
             codeList = listOf(
                 Code(OSLO_MUNICIPALITY_ID, "Oslo"),
@@ -794,8 +782,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 22,
             name = KVP_STONAD_COL_NAME,
-            dataType = INTEGER_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 93, to = 99
         ),
         FieldDefinition(
@@ -821,7 +807,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 25,
             name = AVSL_DATO_COL_NAME,
             dataType = DATE_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 101, to = 106,
             datePattern = DATE6_PATTERN
         ),
@@ -957,7 +942,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             number = 27,
             name = SAKSBEHANDLER_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = TEXTBOX_VIEWTYPE,
             from = 129, to = 138
         )
     )

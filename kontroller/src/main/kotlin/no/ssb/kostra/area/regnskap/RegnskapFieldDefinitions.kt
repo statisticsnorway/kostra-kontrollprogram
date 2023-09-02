@@ -12,7 +12,6 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
-import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.STRING_TYPE
 
 object RegnskapFieldDefinitions : FieldDefinitions {
@@ -94,7 +93,6 @@ object RegnskapFieldDefinitions : FieldDefinitions {
             from = 40,
             to = 48,
             name = FIELD_BELOP,
-            dataType = INTEGER_TYPE,
             mandatory = true
         )
     )

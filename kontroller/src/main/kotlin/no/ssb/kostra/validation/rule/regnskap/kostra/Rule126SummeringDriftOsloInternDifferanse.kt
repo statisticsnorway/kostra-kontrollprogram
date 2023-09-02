@@ -24,8 +24,7 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<Kostra
                 art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }
-        ?.takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
+        }?.takeUnless { (sumArt298Drift, sumArt798Drift) -> sumArt298Drift + sumArt798Drift in -10..10 }
         ?.let { (sumArt298Drift, sumArt798Drift) ->
             val sumDifferanse = sumArt298Drift + sumArt798Drift
             createSingleReportEntryList(
@@ -34,5 +33,4 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<Kostra
                         "($sumArt798Drift) i driftsregnskapet."
             )
         }
-
 }

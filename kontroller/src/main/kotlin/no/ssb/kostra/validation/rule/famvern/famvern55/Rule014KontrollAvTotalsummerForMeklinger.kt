@@ -24,7 +24,7 @@ class Rule014KontrollAvTotalsummerForMeklinger : AbstractNoArgsRule<List<KostraR
     }.ifEmpty { null }
 
     companion object {
-        val fieldList = listOf(
+        private val fieldList = listOf(
             Familievern55ColumnNames.MEKLING_TOT_ALLE_COL_NAME,
             Familievern55ColumnNames.ENBEGGE_TOT_COL_NAME,
             Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME,

@@ -38,7 +38,7 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen : AbstractNoArgsRule<Li
         }.ifEmpty { null }
 
     companion object {
-        val fields = listOf(
+        private val fields = listOf(
             SAMARB_INGEN_A_COL_NAME,
             SAMARB_LEGE_A_COL_NAME,
             SAMARB_HELSE_A_COL_NAME,

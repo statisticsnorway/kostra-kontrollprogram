@@ -21,16 +21,14 @@ class Rule540EiendelerErLikEgenkaptialPlussGjeld : AbstractNoArgsRule<List<Kostr
                     else -> "gjeld"
                 }
             }
-        }
-        .mapValues { it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) } }
+        }.mapValues { it.value.sumOf { kostraRecord -> kostraRecord.fieldAsIntOrDefault(FIELD_BELOP) } }
         .let {
             Triple(
                 it.getOrDefault("eiendeler", 0),
                 it.getOrDefault("egenkaptital", 0),
                 it.getOrDefault("gjeld", 0),
             )
-        }
-        .takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
+        }.takeUnless { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             (sumEiendeler + sumEgenkapital + sumGjeld) in -50..50
         }?.let { (sumEiendeler, sumEgenkapital, sumGjeld) ->
             val sumBalanse = sumEiendeler + (sumEgenkapital + sumGjeld)

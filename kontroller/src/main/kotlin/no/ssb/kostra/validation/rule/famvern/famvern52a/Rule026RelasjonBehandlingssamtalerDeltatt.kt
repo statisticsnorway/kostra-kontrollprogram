@@ -42,14 +42,14 @@ class Rule026RelasjonBehandlingssamtalerDeltatt : AbstractNoArgsRule<List<Kostra
         }
     }.ifEmpty { null }
 
-    data class Mapping(
+    private data class Mapping(
         val title: String,
         val participation: String,
         val count: String
     )
 
     companion object {
-        val mappingList = listOf(
+        private val mappingList = listOf(
             Mapping("Partner", DELT_PARTNER_A_COL_NAME, SAMT_PARTNER_A_COL_NAME),
             Mapping("Ekspartner", DELT_EKSPART_A_COL_NAME, SAMT_EKSPART_A_COL_NAME),
             Mapping("Barn under 18år", DELT_BARNU18_A_COL_NAME, SAMT_BARNU18_A_COL_NAME),

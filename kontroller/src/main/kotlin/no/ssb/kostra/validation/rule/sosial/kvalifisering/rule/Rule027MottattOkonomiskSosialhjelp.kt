@@ -61,7 +61,7 @@ class Rule027MottattOkonomiskSosialhjelp : AbstractRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val fieldNamesToCheck = setOf(
+        private val fieldNamesToCheck = setOf(
             KVP_MED_KOMMBOS_COL_NAME,
             KVP_MED_HUSBANK_COL_NAME,
             KVP_MED_SOSHJ_ENGANG_COL_NAME,

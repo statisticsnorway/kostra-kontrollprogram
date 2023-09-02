@@ -39,7 +39,7 @@ class Rule037LaanSum : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val months = listOf(
+        private val months = listOf(
             LAAN_1_COL_NAME,
             LAAN_2_COL_NAME,
             LAAN_3_COL_NAME,

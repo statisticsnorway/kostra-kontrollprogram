@@ -45,7 +45,7 @@ class Rule022OmraaderArbeidet : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val tema = listOf(
+        private val tema = listOf(
             TEMA_PARREL_A_COL_NAME,
             TEMA_AVKLAR_A_COL_NAME,
             TEMA_SAMLBRUDD_A_COL_NAME,

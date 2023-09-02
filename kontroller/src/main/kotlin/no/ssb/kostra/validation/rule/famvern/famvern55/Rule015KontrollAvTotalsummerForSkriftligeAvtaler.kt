@@ -24,7 +24,7 @@ class Rule015KontrollAvTotalsummerForSkriftligeAvtaler : AbstractNoArgsRule<List
     }.ifEmpty { null }
 
     companion object {
-        val fieldList = listOf(
+        private val fieldList = listOf(
             Familievern55ColumnNames.RESULT_TOT_1_COL_NAME,
             Familievern55ColumnNames.AVTALE_TOT_TOT_COL_NAME,
         )

@@ -35,7 +35,7 @@ class Rule024DeltagelseBehandlingssamtaler : AbstractNoArgsRule<List<KostraRecor
         }.ifEmpty { null }
 
     companion object {
-        val deltakere = listOf(
+        private val deltakere = listOf(
             DELT_PARTNER_A_COL_NAME,
             DELT_EKSPART_A_COL_NAME,
             DELT_BARNU18_A_COL_NAME,

@@ -33,7 +33,7 @@ class Rule025Behandlingssamtaler : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val fields = listOf(
+        private val fields = listOf(
             SAMT_PRIMK_A_COL_NAME,
             SAMT_PARTNER_A_COL_NAME,
             SAMT_EKSPART_A_COL_NAME,

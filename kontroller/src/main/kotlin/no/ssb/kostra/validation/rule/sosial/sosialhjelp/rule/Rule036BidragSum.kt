@@ -39,7 +39,7 @@ class Rule036BidragSum : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val months = listOf(
+        private val months = listOf(
             BIDRAG_1_COL_NAME,
             BIDRAG_2_COL_NAME,
             BIDRAG_3_COL_NAME,

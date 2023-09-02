@@ -41,7 +41,7 @@ class Rule026Stonadsmaaneder : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        val months = listOf(
+        private val months = listOf(
             STMND_1_COL_NAME,
             STMND_2_COL_NAME,
             STMND_3_COL_NAME,

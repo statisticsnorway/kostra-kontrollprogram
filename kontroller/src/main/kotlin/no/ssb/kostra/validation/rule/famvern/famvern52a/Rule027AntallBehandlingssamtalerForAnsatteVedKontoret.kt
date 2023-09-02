@@ -26,7 +26,7 @@ class Rule027AntallBehandlingssamtalerForAnsatteVedKontoret : AbstractNoArgsRule
         }.ifEmpty { null }
 
     companion object {
-        val fields = listOf(
+        private val fields = listOf(
             ANTSAMT_HOVEDT_A_COL_NAME,
             ANTSAMT_ANDREANS_A_COL_NAME,
         )

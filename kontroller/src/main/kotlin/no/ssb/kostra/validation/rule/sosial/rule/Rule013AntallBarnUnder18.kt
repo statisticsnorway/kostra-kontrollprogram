@@ -27,6 +27,6 @@ class Rule013AntallBarnUnder18 : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        const val CHILD_COUNT_THRESHOLD = 14
+        private const val CHILD_COUNT_THRESHOLD = 14
     }
 }

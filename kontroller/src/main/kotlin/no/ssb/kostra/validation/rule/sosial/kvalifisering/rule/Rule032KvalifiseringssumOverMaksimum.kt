@@ -25,6 +25,6 @@ class Rule032KvalifiseringssumOverMaksimum : AbstractNoArgsRule<List<KostraRecor
         }.ifEmpty { null }
 
     companion object {
-        const val STONAD_SUM_MAX = 600_000
+        internal const val STONAD_SUM_MAX = 600_000
     }
 }

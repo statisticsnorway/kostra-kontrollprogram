@@ -35,6 +35,6 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraR
         }.ifEmpty { null }
 
     companion object {
-        val validCodes = listOf("01", "02", "04", "05", "06", "07", "09", "10", "11")
+        private val validCodes = listOf("01", "02", "04", "05", "06", "07", "09", "10", "11")
     }
 }

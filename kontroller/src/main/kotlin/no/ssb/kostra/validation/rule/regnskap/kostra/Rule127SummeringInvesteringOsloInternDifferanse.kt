@@ -24,8 +24,7 @@ class Rule127SummeringInvesteringOsloInternDifferanse : AbstractNoArgsRule<List<
                 art298Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 art798Posteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }
-        ?.takeUnless { (sumArt298Investering, sumArt798Investering) ->
+        }?.takeUnless { (sumArt298Investering, sumArt798Investering) ->
             sumArt298Investering + sumArt798Investering in -10..10
         }?.let { (sumArt298Investering, sumArt798Investering) ->
             val sumDifferanse = sumArt298Investering + sumArt798Investering

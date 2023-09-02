@@ -3,7 +3,7 @@
 **Bruksanvisning for kontrollprogrammet:**
 
 1. Sørg for at datamaskinen har _Java utviklingsmiljø (JDK)_ installert. Minimum versjon: _**17 (**__**[OpenJDK](https://adoptium.net/temurin/releases/?os=any&package=jdk&arch=x64)**__**)**_.
-2. Gå til [nedlastningsiden for nyeste versjon](https://github.com/statisticsnorway/kostra-kontrollprogram/releases), last ned og lagre filen _kostra-kontrollprogram-[VERSION].jar_ i en katalog på datamaskinens filsystem.
+2. Gå til [nedlastningsiden for nyeste versjon](https://github.com/statisticsnorway/kostra-kontrollprogram/releases/latest), last ned og lagre filen _kostra-kontrollprogram-[VERSION].jar_ i en katalog på datamaskinens filsystem.
 3. Åpne et _kommandolinjevindu_, og naviger til katalogen nevnt i punkt 2.
 4. Avhengig av hvilken type filuttrekk du vil kontrollere, skriv inn et av følgende:
 

@@ -3,7 +3,7 @@ package no.ssb.kostra.program
 
 data class FieldDefinition(
     val number: Int = 0,
-    val name: String = "",
+    val name: String,
     val dataType: String = INTEGER_TYPE,
     val viewType: String = TEXTBOX_VIEWTYPE,
     val from: Int = 0,

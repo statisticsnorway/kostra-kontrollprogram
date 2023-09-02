@@ -755,15 +755,13 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 241,
             name = ANTSAMT_HOVEDT_A_COL_NAME,
             from = 105,
-            to = 107,
-            mandatory = false,
+            to = 107
         ),
         FieldDefinition(
             number = 242,
             name = ANTSAMT_ANDREANS_A_COL_NAME,
             from = 108,
             to = 110,
-            mandatory = false,
         ),
         FieldDefinition(
             number = 251,

@@ -37,8 +37,7 @@ object RegnskapFieldDefinitions : FieldDefinitions {
             from = 7,
             to = 7,
             name = FIELD_KVARTAL,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 4,
@@ -53,40 +52,35 @@ object RegnskapFieldDefinitions : FieldDefinitions {
             from = 14,
             to = 22,
             name = FIELD_ORGNR,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 6,
             from = 23,
             to = 31,
             name = FIELD_FORETAKSNR,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 7,
             from = 32,
             to = 32,
             name = FIELD_KONTOKLASSE,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 8,
             from = 33,
             to = 36,
             name = FIELD_FUNKSJON_KAPITTEL,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 9,
             from = 37,
             to = 39,
             name = FIELD_ART_SEKTOR,
-            dataType = STRING_TYPE,
-            mandatory = false
+            dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 10,

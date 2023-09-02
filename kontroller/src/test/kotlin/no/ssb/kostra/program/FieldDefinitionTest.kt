@@ -11,11 +11,11 @@ class FieldDefinitionTest : BehaviorSpec({
         forAll(
             row("default", "", DATE8_PATTERN),
             row("blank", "        ", DATE8_PATTERN),
-            row("DATE8_PATTERN", DATE8_PATTERN, DATE8_PATTERN),
-
-            ) { description, datePattern, expectedResultDatePattern ->
+            row("DATE8_PATTERN", DATE8_PATTERN, DATE8_PATTERN)
+        ) { description, datePattern, expectedResultDatePattern ->
             When(description) {
                 val result = FieldDefinition(
+                    name = "~name~",
                     dataType = DATE_TYPE,
                     datePattern = datePattern
                 )
@@ -37,11 +37,11 @@ class FieldDefinitionTest : BehaviorSpec({
                 CHECKBOX_VIEWTYPE,
                 listOf(Code("1", "1"), Code("2", "2")),
                 2
-            ),
-
-            ) { description, viewType, codeList, expectedResultCodeListLength ->
+            )
+        ) { description, viewType, codeList, expectedResultCodeListLength ->
             When(description) {
                 val result = FieldDefinition(
+                    name = "~name~",
                     viewType = viewType,
                     codeList = codeList
                 )

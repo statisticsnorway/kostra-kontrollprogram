@@ -2,8 +2,8 @@
 
 ## Begrep
 ### Alvorligehetsgrader
-* FATAL, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart. FATAL hindrer da andre kontroller i bli kjørt. Denne hindrer videre innsending av filvedlegget til SSB.
-* ERROR, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne videre innsending av filvedlegget til SSB.
+* FATAL, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart. FATAL hindrer da andre kontrollene i bli kjørt. Videre så hindrer denne innsending av filvedlegget til SSB.
+* ERROR, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne innsending av filvedlegget til SSB.
 * WARNING, når en kontroll ender med alvorlighetsgraden WARNING så kan filvedlegget bli sendt inn til SSB med advarsler.
 * INFO, når en kontroll ender med alvorlighetsgraden INFO så kan filvedlegget bli sendt inn til SSB med tilbakemeldinger som er til informasjon for avgiveren.
 * OK, når en kontroll ender med alvorlighetsgraden vises ingentilbakemelding av noe slag da alt er i orden.

@@ -1,0 +1,2 @@
+# Kravpesisfikasjon for posisjonsbaserte filvedlegg
+

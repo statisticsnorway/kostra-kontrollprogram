@@ -2,6 +2,7 @@ package no.ssb.kostra.area.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
 import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.program.FieldDefinitions
@@ -65,9 +66,9 @@ class KirkeKostraMain(
     )
 
     private fun getArtAsList(): List<String> = if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
-            it in listOf(
-                RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING,
-                RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+            it in setOf(
+                ACCOUNTING_TYPE_BEVILGNING,
+                ACCOUNTING_TYPE_REGIONALE
             )
         }
     ) emptyList()

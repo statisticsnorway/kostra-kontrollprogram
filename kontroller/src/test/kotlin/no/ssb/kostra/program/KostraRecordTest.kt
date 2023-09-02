@@ -90,16 +90,12 @@ class KostraRecordTest : BehaviorSpec({
                 kostraRecord["Field"].shouldBe(string)
             }
 
-            And("$description, fieldAs<String>, trim = false") {
-                kostraRecord.fieldAs<String>("Field", false).shouldBe(string)
-            }
-
-            And("$description, fieldAs<String>, trim = true") {
-                kostraRecord.fieldAs<String>("Field", true).shouldBe(trimmedString)
+            And("$description, fieldAs<String>") {
+                kostraRecord.fieldAs<String>("Field").shouldBe(trimmedString)
             }
 
             And("$description, fieldAs<String?>") {
-                kostraRecord.fieldAs<String?>("Field", true).shouldBe(trimmedToNull)
+                kostraRecord.fieldAs<String?>("Field").shouldBe(trimmedToNull)
             }
         }
     }

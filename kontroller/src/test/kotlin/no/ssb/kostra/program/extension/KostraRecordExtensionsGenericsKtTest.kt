@@ -31,9 +31,6 @@ class KostraRecordExtensionsGenericsKtTest : BehaviorSpec({
         When("fieldAs<String>") {
             sutWithValue.fieldAs<String>("Field").shouldBe("42")
         }
-        When("fieldAs<String>, trim=false") {
-            sutWithValue.fieldAs<String>("Field", false).shouldBe("42 ")
-        }
         When("fieldAs<String?>") {
             sutWithoutValue.fieldAs<String?>("Field").shouldBe(null)
         }

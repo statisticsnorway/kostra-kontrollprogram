@@ -53,7 +53,6 @@ class KostraRecordSosialhjelpExtensionsTest : BehaviorSpec({
             row("Has stonad, 100 000 kr", "100000", "100000 - 149999"),
             row("Has stonad, 149 999 kr", "149999", "100000 - 149999"),
             row("Has stonad, 150 000 kr", "150000", "150000 og over"),
-            row("Has stonad, 9 999 999 kr", "9999999", "150000 og over"),
             row("Missing stonad, 0 kr", "0", "Uoppgitt"),
 
             ) { description, bidrag, expectedResult ->

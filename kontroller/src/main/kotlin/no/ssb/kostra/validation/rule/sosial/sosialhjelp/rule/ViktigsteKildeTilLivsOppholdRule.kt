@@ -12,10 +12,12 @@ import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 abstract class ViktigsteKildeTilLivsOppholdRule(
     ruleName: String,
     severity: Severity
-) : AbstractNoArgsRule<List<KostraRecord>>(ruleName, severity) {
-
-    abstract val vkldColumnFilter: String
-    abstract val validCodes: Set<String>
+) : AbstractNoArgsRule<List<KostraRecord>>(
+    ruleName = ruleName,
+    severity = severity
+) {
+    protected abstract val vkldColumnFilter: String
+    protected abstract val validCodes: Set<String>
 
     override fun validate(context: List<KostraRecord>) = context
         .filter { it[VKLO_COL_NAME] == vkldColumnFilter }

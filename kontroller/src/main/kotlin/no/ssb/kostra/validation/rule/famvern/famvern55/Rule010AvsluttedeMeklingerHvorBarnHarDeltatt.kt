@@ -1,34 +1,20 @@
 package no.ssb.kostra.validation.rule.famvern.famvern55
 
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames
-import no.ssb.kostra.area.famvern.famvern55.Famvern55Utils.validateMatrix
-import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule010AvsluttedeMeklingerHvorBarnHarDeltatt : AbstractNoArgsRule<List<KostraRecord>>(
+class Rule010AvsluttedeMeklingerHvorBarnHarDeltatt : ValidateMatrixRule(
     Familievern55RuleId.FAMILIEVERN55_RULE010.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = validateMatrix(context, fieldList, NUM_COLS).map {
-        val itemListSum = it.itemList.sumOf { item -> item.second }
-        createValidationReportEntry(
-            messageText = "Summen (${it.sumItem.first}) med verdi (${it.sumItem.second}) " +
-                    "er ulik summen ($itemListSum) av følgende liste (${it.itemList})",
-            lineNumbers = it.lineNumbers
-        )
-    }.takeIf { it.any() }
+    override val columnSize = 6
 
-    companion object {
-        const val NUM_COLS = 6
-
-        val fieldList = listOf(
-            Familievern55ColumnNames.BARNDELT_SEP_TOT_COL_NAME,
-            Familievern55ColumnNames.BARNDELT_SAM_TOT_COL_NAME,
-            Familievern55ColumnNames.BARNDELT_SAK_TOT_COL_NAME,
-            Familievern55ColumnNames.BARNDELT_TILB_TOT_COL_NAME,
-            Familievern55ColumnNames.BARNDELT_FLY_TOT_COL_NAME,
-            Familievern55ColumnNames.BARNDELT_TOT_TOT_COL_NAME,
-        )
-    }
+    override val fieldList = listOf(
+        Familievern55ColumnNames.BARNDELT_SEP_TOT_COL_NAME,
+        Familievern55ColumnNames.BARNDELT_SAM_TOT_COL_NAME,
+        Familievern55ColumnNames.BARNDELT_SAK_TOT_COL_NAME,
+        Familievern55ColumnNames.BARNDELT_TILB_TOT_COL_NAME,
+        Familievern55ColumnNames.BARNDELT_FLY_TOT_COL_NAME,
+        Familievern55ColumnNames.BARNDELT_TOT_TOT_COL_NAME,
+    )
 }

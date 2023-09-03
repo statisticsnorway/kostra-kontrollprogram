@@ -87,6 +87,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TLFSAMT_I
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TLFSAMT_OPPR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TOLK_A_COL_NAME
 import no.ssb.kostra.program.*
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 
 object Familievern52aFieldDefinitions : FieldDefinitions {
     private val varighet = listOf(
@@ -103,32 +104,28 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 1,
             name = REGION_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 1,
-            to = 6,
+            size = 6,
             mandatory = true,
         ),
         FieldDefinition(
             number = 2,
             name = KONTOR_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 7,
-            to = 9,
+            size = 3,
             mandatory = true,
         ),
         FieldDefinition(
             number = 3,
             name = JOURNAL_NR_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 10,
-            to = 18,
+            size = 9,
             mandatory = true,
         ),
         FieldDefinition(
             number = 4,
             name = HENV_DATO_A_COL_NAME,
             dataType = DATE_TYPE,
-            from = 19,
-            to = 26,
+            size = 8,
             datePattern = DATE8_PATTERN,
             mandatory = true,
         ),
@@ -136,8 +133,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 5,
             name = KONTAKT_TIDL_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 27,
-            to = 27,
             codeList = listOf(
                 Code("1", "under 6 md siden"),
                 Code("2", "mellom 6 md og 3 år siden"),
@@ -150,8 +145,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 6,
             name = HENV_GRUNN_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 28,
-            to = 28,
             codeList = listOf(
                 Code("1", "Parforholdet"),
                 Code("2", "Foreldresamarbeid/- veiledning"),
@@ -164,8 +157,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 7,
             name = PRIMK_KJONN_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 29,
-            to = 29,
             codeList = listOf(
                 Code("1", "Mann/gutt"),
                 Code("2", "Kvinne/jente")
@@ -175,16 +166,13 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 8,
             name = PRIMK_FODT_A_COL_NAME,
-            from = 30,
-            to = 33,
+            size = 4,
             mandatory = true,
         ),
         FieldDefinition(
             number = 91,
             name = PRIMK_SIVILS_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 34,
-            to = 34,
             codeList = listOf(
                 Code("1", "Gift"),
                 Code("2", "Registrert partner"),
@@ -197,8 +185,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 92,
             name = FORMELL_SIVILS_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 35,
-            to = 35,
             codeList = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
@@ -206,14 +192,12 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
                 Code("4", "Separert / separert partner"),
                 Code("5", "Skilt / skilt partner"),
                 Code("6", "Enke / enkemann / gjenlevende partner")
-            ),
+            )
         ),
         FieldDefinition(
             number = 10,
             name = PRIMK_SAMBO_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 36,
-            to = 36,
             codeList = listOf(
                 Code("1", "Partner (og eventuelt barn)"),
                 Code("2", "Barn"),
@@ -227,8 +211,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 11,
             name = PRIMK_ARBSIT_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 37,
-            to = 37,
             codeList = listOf(
                 Code("1", "Arbeid heltid"),
                 Code("2", "Arbeid deltid"),
@@ -244,8 +226,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 12,
             name = PRIMK_VSRELASJ_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 38,
-            to = 38,
             codeList = listOf(
                 Code("1", "Partner"),
                 Code("2", "Ekspartner"),
@@ -255,110 +235,87 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
                 Code("6", "Øvrig familie"),
                 Code("7", "Venn"),
                 Code("8", "Annet")
-            ),
+            )
         ),
         FieldDefinition(
             number = 13,
             name = PART_LENGDE_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 39,
-            to = 39,
             codeList = varighet,
         ),
         FieldDefinition(
             number = 14,
             name = EKSPART_LENGDE_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 40,
-            to = 40,
             codeList = varighet,
         ),
         FieldDefinition(
             number = 15,
             name = EKSPART_VARIGH_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 41,
-            to = 41,
             codeList = varighet,
         ),
         FieldDefinition(
             number = 161,
             name = PRIMKREL_PART_A_COL_NAME,
-            from = 42,
-            to = 42,
             codeList = listOf(
                 Code("1", "Partner")
-            ),
+            )
         ),
         FieldDefinition(
             number = 162,
             name = PRIMKREL_EKSPART_A_COL_NAME,
-            from = 43,
-            to = 43,
             codeList = listOf(
                 Code("1", "Ekspartner")
-            ),
+            )
         ),
         FieldDefinition(
             number = 163,
             name = PRIMKREL_FORELD_A_COL_NAME,
-            from = 44,
-            to = 44,
             codeList = listOf(
                 Code("1", "Forelder")
-            ),
+            )
         ),
         FieldDefinition(
             number = 164,
             name = PRIMKREL_BU18_A_COL_NAME,
-            from = 45,
-            to = 45,
             codeList = listOf(
                 Code("1", "Sønn/datter (under 18 år)")
-            ),
+            )
         ),
         FieldDefinition(
             number = 165,
             name = PRIMKREL_B18_A_COL_NAME,
-            from = 46,
-            to = 46,
             codeList = listOf(
                 Code("1", "Sønn/datter (18 år eller eldre)")
-            ),
+            )
         ),
         FieldDefinition(
             number = 166,
             name = PRIMKREL_OVRIG_A_COL_NAME,
-            from = 47,
-            to = 47,
             codeList = listOf(
                 Code("1", "Øvrig familie")
-            ),
+            )
         ),
         FieldDefinition(
             number = 167,
             name = PRIMKREL_VENN_A_COL_NAME,
-            from = 48,
-            to = 48,
             codeList = listOf(
                 Code("1", "Venner")
-            ),
+            )
         ),
         FieldDefinition(
             number = 168,
             name = PRIMKREL_ANDRE_A_COL_NAME,
-            from = 49,
-            to = 49,
             codeList = listOf(
                 Code("1", "Annet")
-            ),
+            )
         ),
         FieldDefinition(
             number = 17,
             name = FORSTE_SAMT_A_COL_NAME,
             dataType = DATE_TYPE,
-            from = 50,
-            to = 57,
+            size = 8,
             datePattern = DATE8_PATTERN,
             mandatory = true
         ),
@@ -366,181 +323,141 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 18,
             name = SAMT_FORHOLD_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 58,
-            to = 58,
             codeList = listOf(
                 Code("1", "Forhold hos kontoret"),
                 Code("2", "Forhold hos klient/klientene")
-            ),
+            )
         ),
         FieldDefinition(
             number = 191,
             name = TEMA_PARREL_A_COL_NAME,
-            from = 59,
-            to = 59,
             codeList = listOf(
                 Code("1", "Styrke parforholdet")
-            ),
+            )
         ),
         FieldDefinition(
             number = 192,
             name = TEMA_AVKLAR_A_COL_NAME,
-            from = 60,
-            to = 60,
             codeList = listOf(
                 Code("1", "Avklare/avslutte parforholdet")
-            ),
+            )
         ),
         FieldDefinition(
             number = 193,
             name = TEMA_SAMLBRUDD_A_COL_NAME,
-            from = 61,
-            to = 61,
             codeList = listOf(
                 Code("1", "Samlivsbrudd i familien")
-            ),
+            )
         ),
         FieldDefinition(
             number = 194,
             name = TEMA_SAMSPILL_A_COL_NAME,
-            from = 62,
-            to = 62,
             codeList = listOf(
                 Code("1", "Samspillsvansker")
-            ),
+            )
         ),
         FieldDefinition(
             number = 195,
             name = TEMA_BARNSIT_A_COL_NAME,
-            from = 63,
-            to = 63,
             codeList = listOf(
                 Code("1", "Barnets opplevelse av sin livssituasjon")
-            ),
+            )
         ),
         FieldDefinition(
             number = 196,
             name = TEMA_BARNFOR_A_COL_NAME,
-            from = 64,
-            to = 64,
             codeList = listOf(
                 Code("1", "Barnets situasjon i foreldrenes konflikt")
-            ),
+            )
         ),
         FieldDefinition(
             number = 197,
             name = TEMA_BOSTED_A_COL_NAME,
-            from = 65,
-            to = 65,
             codeList = listOf(
                 Code("1", "bostedsavklaring/samvær")
-            ),
+            )
         ),
         FieldDefinition(
             number = 198,
             name = TEMA_FORELDRE_A_COL_NAME,
-            from = 66,
-            to = 66,
             codeList = listOf(
                 Code("1", "foreldrerollen")
-            ),
+            )
         ),
         FieldDefinition(
             number = 199,
             name = TEMA_FORBARN_A_COL_NAME,
-            from = 67,
-            to = 67,
             codeList = listOf(
                 Code("1", "foreldre-barn-relasjonen")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1910,
             name = TEMA_FLERGEN_A_COL_NAME,
-            from = 68,
-            to = 68,
             codeList = listOf(
                 Code("1", "flergenerasjonsproblematikk")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1911,
             name = TEMA_SAMBARN_A_COL_NAME,
-            from = 69,
-            to = 69,
             codeList = listOf(
                 Code("1", "samarb. om felles barn (foreldre bor ikke sammen)")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1912,
             name = TEMA_SAERBARN_A_COL_NAME,
-            from = 70,
-            to = 70,
             codeList = listOf(
                 Code("1", "særkullsbarn og/eller ny familie")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1913,
             name = TEMA_KULTUR_A_COL_NAME,
-            from = 71,
-            to = 71,
             codeList = listOf(
                 Code("1", "kultur-/minoritetsspørsmål")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1914,
             name = TEMA_TVANG_A_COL_NAME,
-            from = 72,
-            to = 72,
             codeList = listOf(
                 Code("1", "tvangsekteskap")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1915,
             name = TEMA_RUS_A_COL_NAME,
-            from = 73,
-            to = 73,
             codeList = listOf(
                 Code("1", "bruk av rusmidler")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1916,
             name = TEMA_SYKD_A_COL_NAME,
-            from = 74,
-            to = 74,
             codeList = listOf(
                 Code("1", "sykdom / nedsatt funksjonsevne")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1917,
             name = TEMA_VOLD_A_COL_NAME,
-            from = 75,
-            to = 75,
             codeList = listOf(
                 Code("1", "fysisk / psykisk vold / seksuelt misbruk")
-            ),
+            )
         ),
         FieldDefinition(
             number = 1918,
             name = TEMA_ALVH_A_COL_NAME,
-            from = 76,
-            to = 76,
             codeList = listOf(
                 Code("1", "annen alvorlig hendelse")
-            ),
+            )
         ),
         FieldDefinition(
             number = 20,
             name = HOVEDF_BEHAND_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 77,
-            to = 77,
             codeList = listOf(
                 Code("1", "Parsamtale"),
                 Code("2", "Foreldresamtale"),
@@ -553,8 +470,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 21,
             name = BEKYMR_MELD_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 78,
-            to = 78,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
@@ -565,324 +480,264 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 221,
             name = DELT_PARTNER_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 79,
-            to = 79,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 222,
             name = DELT_EKSPART_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 80,
-            to = 80,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 223,
             name = DELT_BARNU18_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 81,
-            to = 81,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 224,
             name = DELT_BARNO18_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 82,
-            to = 82,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 225,
             name = DELT_FORELDRE_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 83,
-            to = 83,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 226,
             name = DELT_OVRFAM_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 84,
-            to = 84,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 227,
             name = DELT_VENN_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 85,
-            to = 85,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 228,
             name = DELT_ANDR_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 86,
-            to = 86,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 231,
             name = SAMT_PRIMK_A_COL_NAME,
-            from = 87,
-            to = 88,
+            size = 2
         ),
         FieldDefinition(
             number = 232,
             name = SAMT_PARTNER_A_COL_NAME,
-            from = 89,
-            to = 90,
+            size = 2
         ),
         FieldDefinition(
             number = 233,
             name = SAMT_EKSPART_A_COL_NAME,
-            from = 91,
-            to = 92,
+            size = 2
         ),
         FieldDefinition(
             number = 234,
             name = SAMT_BARNU18_A_COL_NAME,
-            from = 93,
-            to = 94,
+            size = 2
         ),
         FieldDefinition(
             number = 235,
             name = SAMT_BARNO18_A_COL_NAME,
-            from = 95,
-            to = 96,
+            size = 2
         ),
         FieldDefinition(
             number = 236,
             name = SAMT_FORELDRE_A_COL_NAME,
-            from = 97,
-            to = 98,
+            size = 2
         ),
         FieldDefinition(
             number = 237,
             name = SAMT_OVRFAM_A_COL_NAME,
-            from = 99,
-            to = 100,
+            size = 2
         ),
         FieldDefinition(
             number = 238,
             name = SAMT_VENN_A_COL_NAME,
-            from = 101,
-            to = 102,
+            size = 2
         ),
         FieldDefinition(
             number = 239,
             name = SAMT_ANDRE_A_COL_NAME,
-            from = 103,
-            to = 104,
+            size = 2
         ),
         FieldDefinition(
             number = 241,
             name = ANTSAMT_HOVEDT_A_COL_NAME,
-            from = 105,
-            to = 107
+            size = 3
         ),
         FieldDefinition(
             number = 242,
             name = ANTSAMT_ANDREANS_A_COL_NAME,
-            from = 108,
-            to = 110,
+            size = 3
         ),
         FieldDefinition(
             number = 251,
             name = ANTSAMT_IARET_A_COL_NAME,
-            from = 111,
-            to = 113,
+            size = 3,
             mandatory = true,
         ),
         FieldDefinition(
             number = 252,
             name = ANTSAMT_OPPR_A_COL_NAME,
-            from = 114,
-            to = 116,
+            size = 3,
             mandatory = true,
         ),
         FieldDefinition(
             number = 261,
             name = TLFSAMT_IARET_A_COL_NAME,
-            from = 117,
-            to = 119,
+            size = 3
         ),
         FieldDefinition(
             number = 262,
             name = TLFSAMT_OPPR_A_COL_NAME,
-            from = 120,
-            to = 122,
+            size = 3
         ),
         FieldDefinition(
             number = 271,
             name = TIMER_IARET_A_COL_NAME,
-            from = 123,
-            to = 125,
+            size = 3,
             mandatory = true,
         ),
         FieldDefinition(
             number = 272,
             name = TIMER_OPPR_A_COL_NAME,
-            from = 126,
-            to = 128,
+            size = 3,
             mandatory = true,
         ),
         FieldDefinition(
             number = 28,
             name = TOLK_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 129,
-            to = 129,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
-            ),
+            )
         ),
         FieldDefinition(
             number = 291,
             name = SAMARB_INGEN_A_COL_NAME,
-            from = 130,
-            to = 130,
             codeList = listOf(
                 Code("1", "Ikke samarbeid med med annen instans")
-            ),
+            )
         ),
         FieldDefinition(
             number = 292,
             name = SAMARB_LEGE_A_COL_NAME,
-            from = 131,
-            to = 131,
             codeList = listOf(
                 Code("1", "Fastlege")
-            ),
+            )
         ),
         FieldDefinition(
             number = 293,
             name = SAMARB_HELSE_A_COL_NAME,
-            from = 132,
-            to = 132,
             codeList = listOf(
                 Code("1", "Helsestasjon / Familiesenter")
-            ),
+            )
         ),
         FieldDefinition(
             number = 294,
             name = SAMARB_PSYKH_A_COL_NAME,
-            from = 133,
-            to = 133,
             codeList = listOf(
                 Code("1", "Psykisk helsevern")
-            ),
+            )
         ),
         FieldDefinition(
             number = 295,
             name = SAMARB_JURIST_A_COL_NAME,
-            from = 134,
-            to = 134,
             codeList = listOf(
                 Code("1", "Jurist")
-            ),
+            )
         ),
         FieldDefinition(
             number = 296,
             name = SAMARB_KRISES_A_COL_NAME,
-            from = 135,
-            to = 135,
             codeList = listOf(
                 Code("1", "Krisesenter")
-            ),
+            )
         ),
         FieldDefinition(
             number = 297,
             name = SAMARB_SKOLE_A_COL_NAME,
-            from = 136,
-            to = 136,
             codeList = listOf(
                 Code("1", "Skole/PP-tjeneste")
-            ),
+            )
         ),
         FieldDefinition(
             number = 298,
             name = SAMARB_SOS_A_COL_NAME,
-            from = 137,
-            to = 137,
             codeList = listOf(
                 Code("1", "NAV")
-            ),
+            )
         ),
         FieldDefinition(
             number = 299,
             name = SAMARB_KOMMB_A_COL_NAME,
-            from = 138,
-            to = 138,
             codeList = listOf(
                 Code("1", "Kommunalt barnevern")
-            ),
+            )
         ),
         FieldDefinition(
             number = 2910,
             name = SAMARB_STATB_A_COL_NAME,
-            from = 139,
-            to = 139,
             codeList = listOf(
                 Code("1", "Statlig barnevern")
-            ),
+            )
         ),
         FieldDefinition(
             number = 2911,
             name = SAMARB_ANDRE_A_COL_NAME,
-            from = 140,
-            to = 140,
             codeList = listOf(
                 Code("1", "Annet")
-            ),
+            )
         ),
         FieldDefinition(
             number = 30,
             name = STATUS_ARETSSL_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 141,
-            to = 141,
             codeList = listOf(
                 Code("1", "Avsluttet etter avtale med klient"),
                 Code("2", "Klient uteblitt"),
                 Code("3", "Saken ikke avsluttet i inneværende år")
-            ),
+            )
         ),
         FieldDefinition(
             number = 31,
             name = HOVEDTEMA_A_COL_NAME,
             dataType = STRING_TYPE,
-            from = 142,
-            to = 143,
+            size = 2,
             codeList = listOf(
                 Code("01", "styrke parforholdet"),
                 Code("02", "avklare/avslutte parforholdet"),
@@ -902,15 +757,14 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
                 Code("16", "sykdom / nedsatt funksjonsevne"),
                 Code("17", "fysisk / psykisk vold / seksuelt misbruk"),
                 Code("18", "annen alvorlig hendelse")
-            ),
+            )
         ),
         FieldDefinition(
             number = 32,
             name = DATO_AVSL_A_COL_NAME,
             dataType = DATE_TYPE,
-            from = 144,
-            to = 151,
+            size = 8,
             datePattern = DATE8_PATTERN,
         )
-    )
+    ).buildFieldDefinitions()
 }

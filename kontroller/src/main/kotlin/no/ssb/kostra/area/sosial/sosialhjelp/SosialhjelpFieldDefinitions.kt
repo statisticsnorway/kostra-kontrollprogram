@@ -135,7 +135,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 8, name = KJONN_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 42, 42,
             codeList = listOf(
                 Code("1", "Mann"),
@@ -146,7 +145,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 9,
             name = EKTSTAT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 43,
             to = 43,
             codeList = listOf(
@@ -161,7 +159,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 101,
             name = HAR_BARN_UNDER_18_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 44,
             to = 44,
             codeList = listOf(
@@ -179,7 +176,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 11,
             name = VKLO_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 47,
             to = 47,
             codeList = listOf(
@@ -198,7 +194,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 12,
             name = TRYGDESIT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 48,
             to = 49,
             codeList = listOf(
@@ -218,7 +213,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 13,
             name = ARBSIT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 50,
             to = 51,
             codeList = listOf(
@@ -239,7 +233,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 141,
             name = STMND_1_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 52,
             to = 53,
             codeList = listOf(
@@ -250,7 +243,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 142,
             name = STMND_2_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 54,
             to = 55,
             codeList = listOf(
@@ -261,7 +253,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 143,
             name = STMND_3_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 56,
             to = 57,
             codeList = listOf(
@@ -272,7 +263,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 144,
             name = STMND_4_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 58,
             to = 59,
             codeList = listOf(
@@ -283,7 +273,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 145,
             name = STMND_5_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 60,
             to = 61,
             codeList = listOf(
@@ -294,7 +283,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 146,
             name = STMND_6_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 62,
             to = 63,
             codeList = listOf(
@@ -306,7 +294,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 147,
             name = STMND_7_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 64,
             to = 65,
             codeList = listOf(
@@ -317,7 +304,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 148,
             name = STMND_8_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 66,
             67,
             codeList = listOf(
@@ -328,7 +314,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 149,
             name = STMND_9_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 68,
             to = 69,
             codeList = listOf(
@@ -339,7 +324,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 1410,
             name = STMND_10_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 70,
             to = 71,
             codeList = listOf(
@@ -350,7 +334,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 1411,
             name = STMND_11_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 72,
             to = 73,
             codeList = listOf(
@@ -361,7 +344,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 1412,
             name = STMND_12_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 74,
             to = 75,
             codeList = listOf(
@@ -528,7 +510,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 17,
             name = GITT_OKONOMIRAD_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 258,
             to = 258,
             codeList = listOf(
@@ -540,7 +521,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 18,
             name = FAAT_INDIVIDUELL_PLAN_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 259,
             to = 259,
             codeList = listOf(
@@ -558,7 +538,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 20,
             name = BOSIT_COL_NAME,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 270,
             to = 270,
             codeList = listOf(
@@ -574,7 +553,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 21,
             name = VILKARSOSLOV_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 271,
             to = 271,
             codeList = listOf(
@@ -586,7 +564,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 22,
             name = VILKARSAMEKT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 272,
             to = 272,
             codeList = listOf(
@@ -614,7 +591,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 251,
             name = VILKARARBEID_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 285,
             to = 286,
             codeList = listOf(
@@ -625,7 +601,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 252,
             name = VILKARKURS_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 287,
             to = 288,
             codeList = listOf(
@@ -636,7 +611,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 254,
             name = VILKARUTD_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 289,
             to = 290,
             codeList = listOf(
@@ -647,7 +621,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 256,
             name = VILKARJOBBLOG_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 291,
             to = 292,
             codeList = listOf(
@@ -658,7 +631,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 257,
             name = VILKARJOBBTILB_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 293,
             to = 294,
             codeList = listOf(
@@ -669,7 +641,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 258,
             name = VILKARSAMT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 295,
             to = 296,
             codeList = listOf(
@@ -680,7 +651,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 2510,
             name = VILKAROKRETT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 297,
             to = 298,
             codeList = listOf(
@@ -691,7 +661,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 2511,
             name = VILKARLIVSH_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 299,
             to = 300,
             codeList = listOf(
@@ -702,7 +671,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 2514,
             name = VILKARHELSE_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 301,
             to = 302,
             codeList = listOf(
@@ -713,7 +681,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 2515,
             name = VILKARANNET_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 303,
             to = 304,
             codeList = listOf(
@@ -724,7 +691,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 2516,
             name = VILKARDIGPLAN_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 305,
             to = 306,
             codeList = listOf(
@@ -743,7 +709,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 271,
             name = VEDTAKARB_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 313,
             to = 314,
             codeList = listOf(
@@ -754,7 +719,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 272,
             name = VEDTAKAKT_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 315,
             to = 316,
             codeList = listOf(
@@ -768,7 +732,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 273,
             name = VEDTAKHELSE_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 317,
             to = 318,
             codeList = listOf(
@@ -779,7 +742,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 274,
             name = VEDTAKGRUNN_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 319,
             to = 320,
             codeList = listOf(
@@ -790,7 +752,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 281,
             name = SANKSJONRED_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 321,
             to = 322,
             codeList = listOf(
@@ -801,7 +762,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             number = 282,
             name = SANKSJONANDRE_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 323,
             to = 324,
             codeList = listOf(

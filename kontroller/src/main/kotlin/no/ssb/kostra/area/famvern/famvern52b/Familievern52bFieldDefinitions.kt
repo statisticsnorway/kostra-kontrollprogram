@@ -60,7 +60,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 6,
             name = STRUKTUR_GR_B_COL_NAME,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 54,
             to = 54,
             codeList = listOf(
@@ -75,7 +74,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             number = 7,
             name = HOVEDI_GR_B_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 55,
             to = 56,
             codeList = listOf(
@@ -137,7 +135,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 12,
             name = TOLK_B_COL_NAME,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 77,
             to = 77,
             codeList = listOf(
@@ -148,7 +145,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 13,
             name = STATUS_ARETSSL_B_COL_NAME,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 78,
             to = 78,
             codeList = listOf(

@@ -136,7 +136,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 5,
             name = KONTAKT_TIDL_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 27,
             to = 27,
             codeList = listOf(
@@ -151,7 +150,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 6,
             name = HENV_GRUNN_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 28,
             to = 28,
             codeList = listOf(
@@ -166,7 +164,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 7,
             name = PRIMK_KJONN_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 29,
             to = 29,
             codeList = listOf(
@@ -186,7 +183,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 91,
             name = PRIMK_SIVILS_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 34,
             to = 34,
             codeList = listOf(
@@ -201,7 +197,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 92,
             name = FORMELL_SIVILS_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 35,
             to = 35,
             codeList = listOf(
@@ -217,7 +212,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 10,
             name = PRIMK_SAMBO_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 36,
             to = 36,
             codeList = listOf(
@@ -233,7 +227,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 11,
             name = PRIMK_ARBSIT_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 37,
             to = 37,
             codeList = listOf(
@@ -251,7 +244,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 12,
             name = PRIMK_VSRELASJ_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 38,
             to = 38,
             codeList = listOf(
@@ -269,7 +261,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 13,
             name = PART_LENGDE_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 39,
             to = 39,
             codeList = varighet,
@@ -278,7 +269,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 14,
             name = EKSPART_LENGDE_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 40,
             to = 40,
             codeList = varighet,
@@ -287,7 +277,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 15,
             name = EKSPART_VARIGH_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 41,
             to = 41,
             codeList = varighet,
@@ -295,7 +284,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 161,
             name = PRIMKREL_PART_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 42,
             to = 42,
             codeList = listOf(
@@ -305,7 +293,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 162,
             name = PRIMKREL_EKSPART_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 43,
             to = 43,
             codeList = listOf(
@@ -315,7 +302,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 163,
             name = PRIMKREL_FORELD_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 44,
             to = 44,
             codeList = listOf(
@@ -325,7 +311,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 164,
             name = PRIMKREL_BU18_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 45,
             to = 45,
             codeList = listOf(
@@ -335,7 +320,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 165,
             name = PRIMKREL_B18_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 46,
             to = 46,
             codeList = listOf(
@@ -345,7 +329,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 166,
             name = PRIMKREL_OVRIG_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 47,
             to = 47,
             codeList = listOf(
@@ -355,7 +338,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 167,
             name = PRIMKREL_VENN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 48,
             to = 48,
             codeList = listOf(
@@ -365,7 +347,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 168,
             name = PRIMKREL_ANDRE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 49,
             to = 49,
             codeList = listOf(
@@ -385,7 +366,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 18,
             name = SAMT_FORHOLD_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 58,
             to = 58,
             codeList = listOf(
@@ -396,7 +376,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 191,
             name = TEMA_PARREL_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 59,
             to = 59,
             codeList = listOf(
@@ -406,7 +385,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 192,
             name = TEMA_AVKLAR_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 60,
             to = 60,
             codeList = listOf(
@@ -416,7 +394,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 193,
             name = TEMA_SAMLBRUDD_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 61,
             to = 61,
             codeList = listOf(
@@ -426,7 +403,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 194,
             name = TEMA_SAMSPILL_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 62,
             to = 62,
             codeList = listOf(
@@ -436,7 +412,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 195,
             name = TEMA_BARNSIT_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 63,
             to = 63,
             codeList = listOf(
@@ -446,7 +421,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 196,
             name = TEMA_BARNFOR_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 64,
             to = 64,
             codeList = listOf(
@@ -456,7 +430,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 197,
             name = TEMA_BOSTED_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 65,
             to = 65,
             codeList = listOf(
@@ -466,7 +439,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 198,
             name = TEMA_FORELDRE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 66,
             to = 66,
             codeList = listOf(
@@ -476,7 +448,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 199,
             name = TEMA_FORBARN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 67,
             to = 67,
             codeList = listOf(
@@ -486,7 +457,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1910,
             name = TEMA_FLERGEN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 68,
             to = 68,
             codeList = listOf(
@@ -496,7 +466,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1911,
             name = TEMA_SAMBARN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 69,
             to = 69,
             codeList = listOf(
@@ -506,7 +475,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1912,
             name = TEMA_SAERBARN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 70,
             to = 70,
             codeList = listOf(
@@ -516,7 +484,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1913,
             name = TEMA_KULTUR_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 71,
             to = 71,
             codeList = listOf(
@@ -526,7 +493,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1914,
             name = TEMA_TVANG_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 72,
             to = 72,
             codeList = listOf(
@@ -536,7 +502,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1915,
             name = TEMA_RUS_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 73,
             to = 73,
             codeList = listOf(
@@ -546,7 +511,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1916,
             name = TEMA_SYKD_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 74,
             to = 74,
             codeList = listOf(
@@ -556,7 +520,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1917,
             name = TEMA_VOLD_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 75,
             to = 75,
             codeList = listOf(
@@ -566,7 +529,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 1918,
             name = TEMA_ALVH_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 76,
             to = 76,
             codeList = listOf(
@@ -577,7 +539,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 20,
             name = HOVEDF_BEHAND_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 77,
             to = 77,
             codeList = listOf(
@@ -592,7 +553,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 21,
             name = BEKYMR_MELD_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 78,
             to = 78,
             codeList = listOf(
@@ -605,7 +565,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 221,
             name = DELT_PARTNER_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 79,
             to = 79,
             codeList = listOf(
@@ -617,7 +576,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 222,
             name = DELT_EKSPART_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 80,
             to = 80,
             codeList = listOf(
@@ -629,7 +587,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 223,
             name = DELT_BARNU18_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 81,
             to = 81,
             codeList = listOf(
@@ -641,7 +598,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 224,
             name = DELT_BARNO18_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 82,
             to = 82,
             codeList = listOf(
@@ -653,7 +609,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 225,
             name = DELT_FORELDRE_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 83,
             to = 83,
             codeList = listOf(
@@ -665,7 +620,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 226,
             name = DELT_OVRFAM_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 84,
             to = 84,
             codeList = listOf(
@@ -677,7 +631,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 227,
             name = DELT_VENN_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 85,
             to = 85,
             codeList = listOf(
@@ -689,7 +642,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 228,
             name = DELT_ANDR_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 86,
             to = 86,
             codeList = listOf(
@@ -807,7 +759,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 28,
             name = TOLK_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 129,
             to = 129,
             codeList = listOf(
@@ -818,7 +769,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 291,
             name = SAMARB_INGEN_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 130,
             to = 130,
             codeList = listOf(
@@ -828,7 +778,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 292,
             name = SAMARB_LEGE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 131,
             to = 131,
             codeList = listOf(
@@ -838,7 +787,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 293,
             name = SAMARB_HELSE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 132,
             to = 132,
             codeList = listOf(
@@ -848,7 +796,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 294,
             name = SAMARB_PSYKH_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 133,
             to = 133,
             codeList = listOf(
@@ -858,7 +805,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 295,
             name = SAMARB_JURIST_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 134,
             to = 134,
             codeList = listOf(
@@ -868,7 +814,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 296,
             name = SAMARB_KRISES_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 135,
             to = 135,
             codeList = listOf(
@@ -878,7 +823,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 297,
             name = SAMARB_SKOLE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 136,
             to = 136,
             codeList = listOf(
@@ -888,7 +832,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 298,
             name = SAMARB_SOS_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 137,
             to = 137,
             codeList = listOf(
@@ -898,7 +841,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 299,
             name = SAMARB_KOMMB_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 138,
             to = 138,
             codeList = listOf(
@@ -908,7 +850,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 2910,
             name = SAMARB_STATB_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 139,
             to = 139,
             codeList = listOf(
@@ -918,7 +859,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 2911,
             name = SAMARB_ANDRE_A_COL_NAME,
-            viewType = CHECKBOX_VIEWTYPE,
             from = 140,
             to = 140,
             codeList = listOf(
@@ -929,7 +869,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 30,
             name = STATUS_ARETSSL_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 141,
             to = 141,
             codeList = listOf(
@@ -942,7 +881,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
             number = 31,
             name = HOVEDTEMA_A_COL_NAME,
             dataType = STRING_TYPE,
-            viewType = DROPDOWNLIST_VIEWTYPE,
             from = 142,
             to = 143,
             codeList = listOf(

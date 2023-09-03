@@ -4,7 +4,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.*
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.INTEGER_TYPE
+import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.STRING_TYPE
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 
@@ -116,10 +119,10 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
 }) {
     companion object {
         private val fieldDefinitions = listOf(
-            FieldDefinition(1, "Field123", STRING_TYPE, INPUTBOX_VIEWTYPE, 1, 3, emptyList(), "", false),
-            FieldDefinition(2, "Field456", STRING_TYPE, INPUTBOX_VIEWTYPE, 4, 6, emptyList(), "", false),
-            FieldDefinition(3, "Field789", STRING_TYPE, INPUTBOX_VIEWTYPE, 7, 9, emptyList(), "", false),
-            FieldDefinition(4, "Field012", INTEGER_TYPE, INPUTBOX_VIEWTYPE, 10, 12, emptyList(), "", false)
+            FieldDefinition(1, "Field123", STRING_TYPE, 1, 3, emptyList(), "", false),
+            FieldDefinition(2, "Field456", STRING_TYPE, 4, 6, emptyList(), "", false),
+            FieldDefinition(3, "Field789", STRING_TYPE, 7, 9, emptyList(), "", false),
+            FieldDefinition(4, "Field012", INTEGER_TYPE, 10, 12, emptyList(), "", false)
         )
     }
 }

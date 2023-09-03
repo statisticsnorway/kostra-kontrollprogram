@@ -17,6 +17,4 @@ data class FieldDefinition(
             datePattern = DATE8_PATTERN
         }
     }
-
-    val length: Int get() = to + 1 - from
 }

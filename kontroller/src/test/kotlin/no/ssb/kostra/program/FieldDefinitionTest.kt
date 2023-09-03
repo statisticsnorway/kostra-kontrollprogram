@@ -22,7 +22,6 @@ class FieldDefinitionTest : BehaviorSpec({
 
                 Then("${result.datePattern} should be $expectedResultDatePattern") {
                     result.datePattern shouldBe expectedResultDatePattern
-                    result.length shouldBe 1
                 }
             }
         }

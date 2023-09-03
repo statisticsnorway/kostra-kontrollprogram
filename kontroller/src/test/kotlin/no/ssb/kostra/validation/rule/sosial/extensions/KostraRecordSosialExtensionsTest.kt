@@ -131,7 +131,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
             ).plus(
                 stmndRange.map {
                     with(fieldDefinitions.byColumnName("STMND_$it")) {
-                        "STMND_$it" to if (setStmndRangeValues) codeList.first().code else " ".repeat(length)
+                        "STMND_$it" to if (setStmndRangeValues) codeList.first().code else " ".repeat(size)
                     }
                 }
             )

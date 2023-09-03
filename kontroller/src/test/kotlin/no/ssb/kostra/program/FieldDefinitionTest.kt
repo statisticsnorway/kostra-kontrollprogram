@@ -30,6 +30,35 @@ class FieldDefinitionTest : BehaviorSpec({
         }
     }
 
+    Given("FieldDefinition with all values set") {
+        val sut = FieldDefinition(
+            number = 1,
+            name = "~name~",
+            dataType = DATE_TYPE,
+            from = 2,
+            codeList = listOf(Code("1", "one")),
+            datePattern = DATE6_PATTERN,
+            mandatory = true,
+            size = 3
+        )
+
+        When("FieldDefinition is created") {
+            Then("FieldDefinition should be as expected") {
+                assertSoftly(sut) {
+                    number shouldBe 1
+                    name shouldBe "~name~"
+                    dataType shouldBe DATE_TYPE
+                    from shouldBe 2
+                    codeList shouldBe listOf(Code("1", "one"))
+                    datePattern shouldBe DATE6_PATTERN
+                    mandatory shouldBe true
+                    size shouldBe 3
+                    to shouldBe 4
+                }
+            }
+        }
+    }
+
     Given("FieldDefinition dataType = DATE_TYPE with empty or blank datePattern") {
         forAll(
             row("empty datePattern", ""),

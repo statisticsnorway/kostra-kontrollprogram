@@ -6,16 +6,16 @@ data class FieldDefinition(
     val name: String,
     val dataType: String = INTEGER_TYPE,
     val from: Int = 0,
-    var codeList: List<Code> = emptyList(),
-    var datePattern: String = "",
+    val codeList: List<Code> = emptyList(),
+    val datePattern: String = "",
     val mandatory: Boolean = false,
     val size: Int = 1
 ) {
-    val to: Int get() = from + size - 1
-
     init {
-        if (dataType.equals(DATE_TYPE, ignoreCase = true) && datePattern.isBlank()) {
-            datePattern = DATE8_PATTERN
+        if (dataType == DATE_TYPE && datePattern.isBlank()) {
+            throw IllegalArgumentException("datePattern cannot be empty or blank when dataType is $DATE_TYPE")
         }
     }
+
+    val to: Int get() = from + size - 1
 }

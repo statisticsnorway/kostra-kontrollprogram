@@ -153,7 +153,7 @@ class KostraRecordTest : BehaviorSpec({
                 dataType = DATE_TYPE,
                 from = 1,
                 size = 3,
-                datePattern = ""
+                datePattern = DATE8_PATTERN
             )
         ).associateBy { it.name }
 
@@ -228,10 +228,9 @@ class KostraRecordTest : BehaviorSpec({
         val fieldDefinitionsByName = listOf(
             FieldDefinition(
                 name = "Field",
-                dataType = DATE_TYPE,
+                dataType = STRING_TYPE,
                 from = 1,
-                size = 3,
-                datePattern = "        "
+                size = 3
             )
         ).associateBy { it.name }
 

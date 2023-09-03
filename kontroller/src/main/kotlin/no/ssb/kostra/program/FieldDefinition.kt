@@ -12,8 +12,8 @@ data class FieldDefinition(
     val size: Int = 1
 ) {
     init {
-        if (dataType == DATE_TYPE && datePattern.isBlank()) {
-            throw IllegalArgumentException("datePattern cannot be empty or blank when dataType is $DATE_TYPE")
+        require(!(dataType == DATE_TYPE && datePattern.isBlank())) {
+            "datePattern cannot be empty or blank when dataType is $DATE_TYPE"
         }
     }
 

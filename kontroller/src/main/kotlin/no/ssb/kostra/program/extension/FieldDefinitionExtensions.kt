@@ -17,10 +17,7 @@ fun List<FieldDefinition>.buildFieldDefinitions() = mutableListOf<FieldDefinitio
         do {
             dequeue.removeFirst().also { current ->
                 fieldDefinitions.add(
-                    current.copy(
-                        from = columnIndex,
-                        to = columnIndex + current.size - 1
-                    )
+                    current.copy(from = columnIndex)
                 )
                 columnIndex += current.size
             }

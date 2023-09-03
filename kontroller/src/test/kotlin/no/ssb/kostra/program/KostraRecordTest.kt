@@ -54,7 +54,7 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field",
                 dataType = STRING_TYPE,
                 from = 1,
-                to = 3
+                size = 3
             )
         ).associateBy { it.name }
 
@@ -110,7 +110,7 @@ class KostraRecordTest : BehaviorSpec({
             FieldDefinition(
                 name = "Field",
                 from = 1,
-                to = 3
+                size = 3
             )
         ).associateBy { it.name }
 
@@ -152,7 +152,7 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field",
                 dataType = DATE_TYPE,
                 from = 1,
-                to = 3,
+                size = 3,
                 datePattern = ""
             )
         ).associateBy { it.name }
@@ -197,7 +197,7 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field",
                 dataType = DATE_TYPE,
                 from = 1,
-                to = 3,
+                size = 3,
                 datePattern = "dd-MM-yyyy"
             )
         ).associateBy { it.name }
@@ -230,7 +230,7 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field",
                 dataType = DATE_TYPE,
                 from = 1,
-                to = 3,
+                size = 3,
                 datePattern = "        "
             )
         ).associateBy { it.name }
@@ -278,14 +278,14 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field123",
                 dataType = STRING_TYPE,
                 from = 1,
-                to = 3,
+                size = 3,
                 datePattern = ""
             )
         )
         val valuesByName = mapOf("Field123" to "123")
         val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
         val result =
-            "{Field123=123}\n{Field123=FieldDefinition(number=1, name=Field123, dataType=String, from=1, to=3, codeList=[], datePattern=, mandatory=false, size=1)}"
+            "{Field123=123}\n{Field123=FieldDefinition(number=1, name=Field123, dataType=String, from=1, codeList=[], datePattern=, mandatory=false, size=3)}"
         forAll(
             row("happy path scenario is created", kostraRecord, result),
         ) { description, thisInstance, expectedResult ->
@@ -306,7 +306,7 @@ class KostraRecordTest : BehaviorSpec({
                 name = "Field123",
                 dataType = STRING_TYPE,
                 from = 1,
-                to = 3,
+                size = 3,
                 datePattern = ""
             )
         )

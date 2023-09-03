@@ -11,7 +11,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 class Rule006RegionTest : BehaviorSpec({
     Given("context") {
         val sut = Rule006Region()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_REGION, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_REGION, from = 1, size = 4))
         val arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234")
 
         When("valid list of KostraRecord") {

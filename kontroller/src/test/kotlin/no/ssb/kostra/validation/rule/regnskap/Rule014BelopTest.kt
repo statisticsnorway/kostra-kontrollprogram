@@ -13,7 +13,7 @@ import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 class Rule014BelopTest : BehaviorSpec({
     Given("valid context") {
         val sut = Rule014Belop()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_BELOP, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_BELOP, from = 1, size = 3))
 
         forAll(
             row("'  1'", listOf("  1".toKostraRecord(1, fieldDefinitions))),
@@ -30,7 +30,7 @@ class Rule014BelopTest : BehaviorSpec({
 
     Given("invalid context") {
         val sut = Rule014Belop()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_BELOP, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_BELOP, from = 1, size = 3))
 
         forAll(
             row("'   '", listOf("   ".toKostraRecord(1, fieldDefinitions))),

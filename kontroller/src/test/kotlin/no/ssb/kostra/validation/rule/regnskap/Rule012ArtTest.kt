@@ -13,7 +13,7 @@ class Rule012ArtTest : BehaviorSpec({
         val sut = Rule012Art(
             artList = listOf("100", "400")
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ART, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ART, from = 1, size = 3))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(
@@ -41,7 +41,7 @@ class Rule012ArtTest : BehaviorSpec({
         val sut = Rule012Art(
             artList = emptyList()
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ART, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_ART, from = 1, size = 3))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(

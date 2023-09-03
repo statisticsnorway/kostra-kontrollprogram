@@ -11,7 +11,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 class Rule003SkjemaTest : BehaviorSpec({
     Given("context") {
         val sut = Rule003Skjema()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SKJEMA, from = 1, to = 2))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SKJEMA, from = 1, size = 2))
         val arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234")
 
         When("valid list of KostraRecord") {
@@ -37,7 +37,7 @@ class Rule003SkjemaTest : BehaviorSpec({
 
     Given("kvartal") {
         val sut = Rule003Skjema()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SKJEMA, from = 1, to = 2))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SKJEMA, from = 1, size = 2))
         val arguments = KotlinArguments(skjema = "OAK1", aargang = "2023", region = "1234")
 
         When("valid list of KostraRecord") {

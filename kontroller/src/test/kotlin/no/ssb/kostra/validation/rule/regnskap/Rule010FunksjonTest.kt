@@ -13,7 +13,7 @@ class Rule010FunksjonTest : BehaviorSpec({
         val sut = Rule010Funksjon(
             funksjonList = listOf("100 ", "400 ")
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FUNKSJON, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FUNKSJON, from = 1, size = 4))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(
@@ -41,7 +41,7 @@ class Rule010FunksjonTest : BehaviorSpec({
         val sut = Rule010Funksjon(
             funksjonList = emptyList()
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FUNKSJON, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_FUNKSJON, from = 1, size = 4))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(

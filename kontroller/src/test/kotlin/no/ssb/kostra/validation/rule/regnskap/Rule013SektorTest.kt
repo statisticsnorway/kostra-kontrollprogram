@@ -13,7 +13,7 @@ class Rule013SektorTest : BehaviorSpec({
         val sut = Rule013Sektor(
             sektorList = listOf("100", "400")
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, size = 3))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(
@@ -41,7 +41,7 @@ class Rule013SektorTest : BehaviorSpec({
         val sut = Rule013Sektor(
             sektorList = emptyList()
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, to = 3))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, size = 3))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(

@@ -6,12 +6,13 @@ data class FieldDefinition(
     val name: String,
     val dataType: String = INTEGER_TYPE,
     val from: Int = 0,
-    val to: Int = 0,
     var codeList: List<Code> = emptyList(),
     var datePattern: String = "",
     val mandatory: Boolean = false,
     val size: Int = 1
 ) {
+    val to: Int get() = from + size - 1
+
     init {
         if (dataType.equals(DATE_TYPE, ignoreCase = true) && datePattern.isBlank()) {
             datePattern = DATE8_PATTERN

@@ -11,7 +11,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 class Rule004AargangTest : BehaviorSpec({
     Given("context") {
         val sut = Rule004Aargang()
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_AARGANG, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_AARGANG, from = 1, size = 4))
         val arguments = KotlinArguments(skjema = "OK", aargang = "2023", region = "1234")
 
         When("valid list of KostraRecord") {

@@ -13,7 +13,7 @@ class Rule011KapittelTest : BehaviorSpec({
         val sut = Rule011Kapittel(
             kapittelList = listOf("100 ", "400 ")
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KAPITTEL, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KAPITTEL, from = 1, size = 4))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(
@@ -41,7 +41,7 @@ class Rule011KapittelTest : BehaviorSpec({
         val sut = Rule011Kapittel(
             kapittelList = emptyList()
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KAPITTEL, from = 1, to = 4))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KAPITTEL, from = 1, size = 4))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(

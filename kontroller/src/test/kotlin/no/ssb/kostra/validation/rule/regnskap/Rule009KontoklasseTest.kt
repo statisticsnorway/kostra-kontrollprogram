@@ -13,7 +13,7 @@ class Rule009KontoklasseTest : BehaviorSpec({
         val sut = Rule009Kontoklasse(
             kontoklasseList = listOf("0", "1")
         )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KONTOKLASSE, from = 1, to = 1))
+        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_KONTOKLASSE, from = 1, size = 1))
 
         When("valid list of KostraRecord") {
             val kostraRecordList = listOf(

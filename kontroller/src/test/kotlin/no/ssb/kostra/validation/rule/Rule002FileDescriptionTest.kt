@@ -15,7 +15,7 @@ class Rule002FileDescriptionTest : BehaviorSpec({
             name = "someFieldName",
             dataType = STRING_TYPE,
             from = 1,
-            to = 5
+            size = 5
         )
     val kotlinArguments = KotlinArguments(skjema = "SS", aargang = "YYYY", region = "RRRRRR")
 
@@ -53,12 +53,12 @@ class Rule002FileDescriptionTest : BehaviorSpec({
             ),
             row(
                 "Optional date, no content",
-                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, to = 8, datePattern = "ddMMyyyy"),
+                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, size = 8, datePattern = "ddMMyyyy"),
                 " ".repeat(8),
             ),
             row(
                 "Field is date, correct content",
-                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, to = 8, datePattern = "ddMMyyyy"),
+                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, size = 8, datePattern = "ddMMyyyy"),
                 "01012023",
             ),
 
@@ -96,7 +96,7 @@ class Rule002FileDescriptionTest : BehaviorSpec({
             ),
             row(
                 "Field is date, but incorrect content",
-                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, to = 8, datePattern = "ddMMyyyy"),
+                templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, size = 8, datePattern = "ddMMyyyy"),
                 "BIG FAIL",
             ),
 

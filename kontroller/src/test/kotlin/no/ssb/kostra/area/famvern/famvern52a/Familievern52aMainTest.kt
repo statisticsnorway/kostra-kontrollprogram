@@ -130,8 +130,7 @@ class Familievern52aMainTest : BehaviorSpec({
                             Familievern52aColumnNames.BEKYMR_MELD_A_COL_NAME
                         ).codeList.first().code,
                     )
-                )
-                .toRecordString()
+                ).toRecordString()
         )
     }
 }

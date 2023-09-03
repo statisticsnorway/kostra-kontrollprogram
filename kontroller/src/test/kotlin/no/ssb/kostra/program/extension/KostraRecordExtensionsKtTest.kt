@@ -5,7 +5,6 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.STRING_TYPE
 
@@ -119,10 +118,29 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
 }) {
     companion object {
         private val fieldDefinitions = listOf(
-            FieldDefinition(1, "Field123", STRING_TYPE, 1, 3, emptyList(), "", false),
-            FieldDefinition(2, "Field456", STRING_TYPE, 4, 6, emptyList(), "", false),
-            FieldDefinition(3, "Field789", STRING_TYPE, 7, 9, emptyList(), "", false),
-            FieldDefinition(4, "Field012", INTEGER_TYPE, 10, 12, emptyList(), "", false)
-        )
+            FieldDefinition(
+                number = 1,
+                name = "Field123",
+                dataType = STRING_TYPE,
+                size = 3
+            ),
+            FieldDefinition(
+                number = 2,
+                name = "Field456",
+                dataType = STRING_TYPE,
+                size = 3
+            ),
+            FieldDefinition(
+                number = 3,
+                name = "Field789",
+                dataType = STRING_TYPE,
+                size = 3
+            ),
+            FieldDefinition(
+                number = 4,
+                name = "Field012",
+                size = 3
+            )
+        ).buildFieldDefinitions()
     }
 }

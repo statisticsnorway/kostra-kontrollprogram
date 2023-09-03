@@ -50,7 +50,12 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("that dataType is string") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(0, "Field", STRING_TYPE, 1, 3, emptyList(), "ddMMyyyy", false)
+            FieldDefinition(
+                name = "Field",
+                dataType = STRING_TYPE,
+                from = 1,
+                to = 3
+            )
         ).associateBy { it.name }
 
         forAll(
@@ -102,7 +107,11 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("that dataType is integer") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(0, "Field", INTEGER_TYPE, 1, 3, emptyList(), "ddMMyyyy", false)
+            FieldDefinition(
+                name = "Field",
+                from = 1,
+                to = 3
+            )
         ).associateBy { it.name }
 
         forAll(
@@ -139,7 +148,13 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("that dataType is date and using default datePattern of ddMMyyyy") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(0, "Field", DATE_TYPE, 1, 3, emptyList(), "", false)
+            FieldDefinition(
+                name = "Field",
+                dataType = DATE_TYPE,
+                from = 1,
+                to = 3,
+                datePattern = ""
+            )
         ).associateBy { it.name }
 
         forAll(
@@ -178,7 +193,13 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("that dataType is date and using wrong datePattern of dd-MM-yyyy") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(0, "Field", DATE_TYPE, 1, 3, emptyList(), "dd-MM-yyyy", false)
+            FieldDefinition(
+                name = "Field",
+                dataType = DATE_TYPE,
+                from = 1,
+                to = 3,
+                datePattern = "dd-MM-yyyy"
+            )
         ).associateBy { it.name }
 
         forAll(
@@ -205,7 +226,13 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("that fieldDefinitionsByName is set, but is missing a particular field") {
         val fieldDefinitionsByName = listOf(
-            FieldDefinition(0, "Field", DATE_TYPE, 1, 3, emptyList(), "        ", false)
+            FieldDefinition(
+                name = "Field",
+                dataType = DATE_TYPE,
+                from = 1,
+                to = 3,
+                datePattern = "        "
+            )
         ).associateBy { it.name }
 
         val valuesByName = mapOf("Field" to " ".repeat(8))
@@ -246,7 +273,14 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("testing of overridden function toString()") {
         val fieldDefinitions = listOf(
-            FieldDefinition(1, "Field123", STRING_TYPE, 1, 3, emptyList(), "", false)
+            FieldDefinition(
+                number = 1,
+                name = "Field123",
+                dataType = STRING_TYPE,
+                from = 1,
+                to = 3,
+                datePattern = ""
+            )
         )
         val valuesByName = mapOf("Field123" to "123")
         val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
@@ -267,7 +301,14 @@ class KostraRecordTest : BehaviorSpec({
 
     Given("testing of overridden function hashCode()") {
         val fieldDefinitions = listOf(
-            FieldDefinition(1, "Field123", STRING_TYPE, 1, 3, emptyList(), "", false)
+            FieldDefinition(
+                number = 1,
+                name = "Field123",
+                dataType = STRING_TYPE,
+                from = 1,
+                to = 3,
+                datePattern = ""
+            )
         )
         val valuesByName = mapOf("Field123" to "123")
         val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })

@@ -25,7 +25,7 @@ class Rule007GruppenavnTest : BehaviorSpec({
                             Familievern52bFieldDefinitions.fieldDefinitions.byColumnName(
                                 Familievern52bColumnNames.GRUPPE_NAVN_B_COL_NAME
                             )
-                        ) { to + 1 - from })
+                        ) { size })
                 ),
                 expectedErrorMessage = "Det er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt " +
                         "30 posisjoner.",

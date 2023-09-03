@@ -12,13 +12,12 @@ fun KostraRecord.toRecordString(): String = fieldDefinitionByName.values
         else {
             fieldDefinitions.fold(" ".repeat(fieldDefinitions.last().to)) { recordString, fieldDefinition ->
                 with(fieldDefinition) {
-                    val fieldLength = to - from + 1
                     val value = fieldAsString(name)
                     val stringValue =
-                        if (dataType == INTEGER_TYPE) value.trim().padStart(fieldLength, ' ')
-                        else value.padEnd(fieldLength, ' ')
+                        if (dataType == INTEGER_TYPE) value.trim().padStart(size, ' ')
+                        else value.padEnd(size, ' ')
 
-                    recordString.replaceRange(from - 1, to, stringValue.substring(0, fieldLength))
+                    recordString.replaceRange(from - 1, to, stringValue.substring(0, size))
                 }
             }
         }

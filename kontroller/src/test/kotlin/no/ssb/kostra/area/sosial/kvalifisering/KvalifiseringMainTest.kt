@@ -89,7 +89,7 @@ class KvalifiseringMainTest : BehaviorSpec({
             1,
             mapOf(
                 *((KvalifiseringFieldDefinitions.fieldDefinitionsByName).map {
-                    it.key to " ".repeat(it.value.to + 1 - it.value.from)
+                    it.key to " ".repeat(it.value.size)
                 }).toTypedArray(),
 
                 KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",

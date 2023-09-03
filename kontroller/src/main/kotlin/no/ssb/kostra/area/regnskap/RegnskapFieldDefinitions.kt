@@ -18,65 +18,57 @@ import no.ssb.kostra.program.extension.buildFieldDefinitions
 object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
-            number = 1,
             size = 2,
             name = FIELD_SKJEMA,
             dataType = STRING_TYPE,
             mandatory = true,
         ),
         FieldDefinition(
-            number = 2,
             size = 4,
             name = FIELD_AARGANG,
             dataType = STRING_TYPE,
             mandatory = true
         ),
         FieldDefinition(
-            number = 3,
             name = FIELD_KVARTAL,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 4,
             size = 6,
             name = FIELD_REGION,
             dataType = STRING_TYPE,
             mandatory = true
         ),
         FieldDefinition(
-            number = 5,
             size = 9,
             name = FIELD_ORGNR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 6,
             size = 9,
             name = FIELD_FORETAKSNR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 7,
             name = FIELD_KONTOKLASSE,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 8,
             size = 4,
             name = FIELD_FUNKSJON_KAPITTEL,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 9,
             size = 3,
             name = FIELD_ART_SEKTOR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
-            number = 10,
             size = 9,
             name = FIELD_BELOP,
             mandatory = true
         )
-    ).buildFieldDefinitions()
+    ).mapIndexed { index, fieldDefinition ->
+        fieldDefinition.copy(number = index + 1)
+    }.buildFieldDefinitions()
 }

@@ -1,6 +1,7 @@
 package no.ssb.kostra.program.extension
 
 import no.ssb.kostra.program.FieldDefinition
+import java.util.concurrent.atomic.AtomicInteger
 
 fun FieldDefinition.codeListToString() = this.codeList.map { it.toString() }
 
@@ -10,17 +11,6 @@ fun FieldDefinition.codeExists(code: String) = this.codeList.any { it.code == co
 
 fun Collection<FieldDefinition>.byColumnName(columnName: String) = this.first { it.name == columnName }
 
-fun List<FieldDefinition>.buildFieldDefinitions() = mutableListOf<FieldDefinition>().also { fieldDefinitions ->
-    ArrayDeque(this).also { dequeue ->
-        var columnIndex = 1
-
-        do {
-            dequeue.removeFirst().also { current ->
-                fieldDefinitions.add(
-                    current.copy(from = columnIndex)
-                )
-                columnIndex += current.size
-            }
-        } while (dequeue.isNotEmpty())
-    }
+fun List<FieldDefinition>.buildFieldDefinitions() = AtomicInteger(1).let { columnIndex ->
+    this.map { it.copy(from = columnIndex.getAndAdd(it.size)) }
 }

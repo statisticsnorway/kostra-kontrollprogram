@@ -9,7 +9,8 @@ data class FieldDefinition(
     val to: Int = 0,
     var codeList: List<Code> = emptyList(),
     var datePattern: String = "",
-    val mandatory: Boolean = false
+    val mandatory: Boolean = false,
+    val size: Int = 1
 ) {
     init {
         if (dataType.equals(DATE_TYPE, ignoreCase = true) && datePattern.isBlank()) {

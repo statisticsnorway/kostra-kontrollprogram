@@ -13,81 +13,70 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.STRING_TYPE
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 
 object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
             number = 1,
-            from = 1,
-            to = 2,
+            size = 2,
             name = FIELD_SKJEMA,
             dataType = STRING_TYPE,
-            mandatory = true
+            mandatory = true,
         ),
         FieldDefinition(
             number = 2,
-            from = 3,
-            to = 6,
+            size = 4,
             name = FIELD_AARGANG,
             dataType = STRING_TYPE,
             mandatory = true
         ),
         FieldDefinition(
             number = 3,
-            from = 7,
-            to = 7,
             name = FIELD_KVARTAL,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 4,
-            from = 8,
-            to = 13,
+            size = 6,
             name = FIELD_REGION,
             dataType = STRING_TYPE,
             mandatory = true
         ),
         FieldDefinition(
             number = 5,
-            from = 14,
-            to = 22,
+            size = 9,
             name = FIELD_ORGNR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 6,
-            from = 23,
-            to = 31,
+            size = 9,
             name = FIELD_FORETAKSNR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 7,
-            from = 32,
-            to = 32,
             name = FIELD_KONTOKLASSE,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 8,
-            from = 33,
-            to = 36,
+            size = 4,
             name = FIELD_FUNKSJON_KAPITTEL,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 9,
-            from = 37,
-            to = 39,
+            size = 3,
             name = FIELD_ART_SEKTOR,
             dataType = STRING_TYPE
         ),
         FieldDefinition(
             number = 10,
-            from = 40,
-            to = 48,
+            size = 9,
             name = FIELD_BELOP,
             mandatory = true
         )
-    )
+    ).buildFieldDefinitions()
 }

@@ -18,6 +18,7 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_OPPR_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TOLK_B_COL_NAME
 import no.ssb.kostra.program.*
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 
 object Familievern52bFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
@@ -25,43 +26,36 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             number = 1,
             name = REGION_NR_B_COL_NAME,
             dataType = STRING_TYPE,
-            from = 1,
-            to = 6,
+            size = 6
         ),
         FieldDefinition(
             number = 2,
             name = KONTOR_NR_B_COL_NAME,
             dataType = STRING_TYPE,
-            from = 7,
-            to = 9,
+            size = 3
         ),
         FieldDefinition(
             number = 3,
             name = GRUPPE_NR_B_COL_NAME,
             dataType = STRING_TYPE,
-            from = 10,
-            to = 15,
+            size = 6
         ),
         FieldDefinition(
             number = 4,
             name = GRUPPE_NAVN_B_COL_NAME,
             dataType = STRING_TYPE,
-            from = 16,
-            to = 45,
+            size = 30
         ),
         FieldDefinition(
             number = 5,
             name = DATO_GRSTART_B_COL_NAME,
             dataType = DATE_TYPE,
-            from = 46,
-            to = 53,
+            size = 8,
             datePattern = DATE8_PATTERN,
         ),
         FieldDefinition(
             number = 6,
             name = STRUKTUR_GR_B_COL_NAME,
-            from = 54,
-            to = 54,
             codeList = listOf(
                 Code("1", "Par"),
                 Code("2", "Barn (under 18 år)"),
@@ -74,8 +68,7 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             number = 7,
             name = HOVEDI_GR_B_COL_NAME,
             dataType = STRING_TYPE,
-            from = 55,
-            to = 56,
+            size = 2,
             codeList = listOf(
                 Code("01", "Samlivskurs"),
                 Code("02", "Samlivsbrudd"),
@@ -93,50 +86,41 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 81,
             name = ANTMOTERTOT_IARET_B_COL_NAME,
-            from = 57,
-            to = 59,
+            size = 3
         ),
         FieldDefinition(
             number = 82,
             name = ANTMOTERTOT_OPPR_B_COL_NAME,
-            from = 60,
-            to = 62,
+            size = 3
         ),
         FieldDefinition(
             number = 91,
             name = TIMERTOT_IARET_B_COL_NAME,
-            from = 63,
-            to = 65,
+            size = 3
         ),
         FieldDefinition(
             number = 92,
             name = TIMERTOT_OPPR_B_COL_NAME,
-            from = 66,
-            to = 68,
+            size = 3
         ),
         FieldDefinition(
             number = 101,
             name = ANTDELT_IARET_B_COL_NAME,
-            from = 69,
-            to = 71,
+            size = 3
         ),
         FieldDefinition(
             number = 102,
             name = ANTDELT_OPPR_B_COL_NAME,
-            from = 72,
-            to = 74,
+            size = 3
         ),
         FieldDefinition(
             number = 11,
             name = ANTTER_GRUPPEB_B_COL_NAME,
-            from = 75,
-            to = 76,
+            size = 2
         ),
         FieldDefinition(
             number = 12,
             name = TOLK_B_COL_NAME,
-            from = 77,
-            to = 77,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
@@ -145,8 +129,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             number = 13,
             name = STATUS_ARETSSL_B_COL_NAME,
-            from = 78,
-            to = 78,
             codeList = listOf(
                 Code("1", "Gruppebehandlingen ikke avsluttet i inneværende år"),
                 Code("2", "Avsluttet")
@@ -156,9 +138,8 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             number = 14,
             name = DATO_GRAVSLUTN_B_COL_NAME,
             dataType = DATE_TYPE,
-            from = 79,
-            to = 86,
+            size = 8,
             datePattern = DATE8_PATTERN,
         )
-    )
+    ).buildFieldDefinitions()
 }

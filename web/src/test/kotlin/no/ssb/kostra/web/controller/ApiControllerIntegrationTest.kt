@@ -18,8 +18,6 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.error.ApiErrorType
 import no.ssb.kostra.web.error.CustomConstraintExceptionHandler.Companion.FALLBACK_PROPERTY_PATH
@@ -30,7 +28,6 @@ import no.ssb.kostra.web.viewmodel.UiDataVm
 import java.io.File
 import java.io.FileWriter
 import java.time.Year
-import java.util.*
 
 @MicronautTest
 class ApiControllerIntegrationTest(
@@ -39,21 +36,18 @@ class ApiControllerIntegrationTest(
 ) : BehaviorSpec({
 
     Given("uiData request") {
-
         val request: HttpRequest<Any> = HttpRequest.GET("/api/ui-data")
 
         When("valid get request") {
-            val httpResponse = withContext(Dispatchers.IO) {
-                client.toBlocking().exchange(
-                    request, Argument.of(UiDataVm::class.java)
-                )
-            }
+            val httpResponse = client.toBlocking().exchange(
+                request, Argument.of(UiDataVm::class.java)
+            )
 
             Then("response code should be OK") {
                 httpResponse.status shouldBe HttpStatus.OK
             }
 
-            and("body should contain data") {
+            And("body should contain data") {
                 val uiData = httpResponse.body()
 
                 uiData.shouldNotBeNull()
@@ -88,7 +82,6 @@ class ApiControllerIntegrationTest(
                 "aar",
                 "År kan ikke være mindre enn 2022"
             ),
-
             row(
                 "blank skjematype",
                 KostraFormVm(
@@ -121,7 +114,7 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "blank region",
+                "empty region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -131,7 +124,7 @@ class ApiControllerIntegrationTest(
                 "Region må bestå av 6 siffer uten mellomrom"
             ),
             row(
-                "white-space region",
+                "blank region",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -152,7 +145,7 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
-                "blank filnavn",
+                "empty filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -163,7 +156,7 @@ class ApiControllerIntegrationTest(
                 "Filvedlegg er påkrevet"
             ),
             row(
-                "white-space filnavn",
+                "blank filnavn",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "15F",
@@ -186,12 +179,37 @@ class ApiControllerIntegrationTest(
                 "Skjema krever orgnr"
             ),
             row(
-                "invalid orgnrForetak",
+                "empty orgnrForetak",
                 KostraFormVm(
                     aar = Year.now().value,
                     skjema = "0F",
                     region = "667600",
+                    orgnrForetak = "",
+                    filnavn = "test.dat"
+                ),
+                "orgnrForetak",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            ),
+            row(
+                "blank orgnrForetak",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0F",
+                    region = "667600",
+                    orgnrForetak = "  ",
+                    filnavn = "test.dat"
+                ),
+                "orgnrForetak",
+                "Må starte med 8 eller 9 etterfulgt av 8 siffer"
+            ),
+            row(
+                "invalid orgnrForetak",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "0X",
+                    region = "667600",
                     orgnrForetak = "a",
+                    orgnrVirksomhet = listOf(CompanyIdVm("987654321")),
                     filnavn = "test.dat"
                 ),
                 "orgnrForetak",
@@ -205,7 +223,7 @@ class ApiControllerIntegrationTest(
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = "987654321",
-                    orgnrVirksomhet = setOf(),
+                    orgnrVirksomhet = emptyList(),
                     filnavn = "test.dat"
                 ),
                 FALLBACK_PROPERTY_PATH,
@@ -218,16 +236,14 @@ class ApiControllerIntegrationTest(
                     skjema = "0X",
                     region = "667600",
                     orgnrForetak = "987654321",
-                    orgnrVirksomhet = setOf(CompanyIdVm("a")),
+                    orgnrVirksomhet = listOf(CompanyIdVm("a")),
                     filnavn = "test.dat"
                 ),
                 "orgnr",
                 "Må starte med 8 eller 9 etterfulgt av 8 siffer"
             )
         ) { description, kostraForm, propertyPath, expectedValidationError ->
-
             When(description) {
-
                 val requestBody = buildMultipartRequest(kostraForm, objectMapper)
 
                 val apiError = shouldThrow<HttpClientResponseException> {
@@ -256,33 +272,26 @@ class ApiControllerIntegrationTest(
     }
 
     Given("valid POST requests, receive result") {
-
         val requestBody = buildMultipartRequest(kostraFormInTest, objectMapper)
 
         When("post multipart request") {
-            val response = withContext(Dispatchers.IO) {
-                client.toBlocking()
-                    .exchange(
-                        HttpRequest.POST("/api/kontroller-skjema", requestBody)
-                            .contentType(MediaType.MULTIPART_FORM_DATA_TYPE),
-                        FileReportVm::class.java
-                    )
-            }
+            val response = client.toBlocking().exchange(
+                HttpRequest.POST("/api/kontroller-skjema", requestBody)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_TYPE),
+                FileReportVm::class.java
+            )
 
             Then("status should be OK") {
                 response.status shouldBe HttpStatus.OK
             }
 
-            and("error report should contain expected values") {
-                assertSoftly(response.body()!!) {
-                    it.antallKontroller shouldBe 2
-                }
+            And("error report should contain expected values") {
+                response.body()!!.antallKontroller.shouldBeGreaterThan(40)
             }
         }
     }
 }) {
     companion object {
-
         private val kostraFormInTest = KostraFormVm(
             aar = Year.now().value,
             skjema = "0G",
@@ -299,9 +308,8 @@ class ApiControllerIntegrationTest(
         private fun buildMultipartRequest(
             formData: KostraFormVm,
             objectMapper: ObjectMapper,
-            file: File = createTestFile()
-        ): MultipartBody {
-            return MultipartBody.builder()
+        ): MultipartBody = createTestFile().let { file ->
+            MultipartBody.builder()
                 .addPart(
                     "kostraFormAsJson",
                     objectMapper.writeValueAsString(formData)

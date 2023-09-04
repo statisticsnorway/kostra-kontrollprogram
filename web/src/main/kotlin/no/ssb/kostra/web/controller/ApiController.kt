@@ -15,17 +15,16 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.validation.ConstraintViolationException
 import no.ssb.kostra.felles.git.GitProperties
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.error.ApiError
-import no.ssb.kostra.web.service.DataFileValidator
+import no.ssb.kostra.web.service.ControlRunner
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
-import javax.validation.ConstraintViolationException
-
 
 /**
  * API controller
@@ -33,7 +32,7 @@ import javax.validation.ConstraintViolationException
 @Controller("/api")
 open class ApiController(
     private val uiConfig: UiConfig,
-    private val dataFileValidator: DataFileValidator,
+    private val controlRunner: ControlRunner,
     private val objectMapper: ObjectMapper,
     private val validator: Validator,
     private val gitProperties: GitProperties
@@ -72,23 +71,23 @@ open class ApiController(
         /**  we'll have to deserialize and validate our self because of multipart request */
         val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
+            println("Validation errors: ${iterator().asSequence().toSet()}")
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 
         /** target stream, file content will end up here */
         val outputStream = ByteArrayOutputStream()
 
-        return Mono.from(file.transferTo(outputStream))
-            .map { success: Boolean ->
-                if (success) {
-                    HttpResponse.ok(
-                        dataFileValidator.validateDataFile(
-                            kostraForm,
-                            outputStream.toByteArray().inputStream()
-                        )
+        return Mono.from(file.transferTo(outputStream)).handle { success, sink ->
+            if (success) sink.next(
+                HttpResponse.ok(
+                    controlRunner.runControls(
+                        kostraForm,
+                        outputStream.toByteArray().inputStream()
                     )
-                } else throw RuntimeException("Failed to read file at backend")
-            }
+                )
+            ) else sink.error(RuntimeException("Failed to read file at backend"))
+        }
     }
 
     @Get(

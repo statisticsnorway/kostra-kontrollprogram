@@ -1,7 +1,7 @@
 package no.ssb.kostra.web.viewmodel
 
 import io.micronaut.core.annotation.Introspected
-import javax.validation.constraints.Pattern
+import jakarta.validation.constraints.Pattern
 
 @Introspected
 data class CompanyIdVm(

@@ -275,7 +275,6 @@ class KostraRecordTest : BehaviorSpec({
     Given("testing of overridden function toString()") {
         val fieldDefinitions = listOf(
             FieldDefinition(
-                number = 1,
                 name = "Field123",
                 dataType = STRING_TYPE,
                 from = 1,
@@ -286,7 +285,7 @@ class KostraRecordTest : BehaviorSpec({
         val valuesByName = mapOf("Field123" to "123")
         val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
         val result =
-            "{Field123=123}\n{Field123=FieldDefinition(number=1, name=Field123, dataType=String, from=1, codeList=[], datePattern=, mandatory=false, size=3)}"
+            "{Field123=123}\n{Field123=FieldDefinition(name=Field123, dataType=STRING_TYPE, from=1, codeList=[], datePattern=, mandatory=false, size=3)}"
         forAll(
             row("happy path scenario is created", kostraRecord, result),
         ) { description, thisInstance, expectedResult ->
@@ -303,7 +302,6 @@ class KostraRecordTest : BehaviorSpec({
     Given("testing of overridden function hashCode()") {
         val fieldDefinitions = listOf(
             FieldDefinition(
-                number = 1,
                 name = "Field123",
                 dataType = STRING_TYPE,
                 from = 1,

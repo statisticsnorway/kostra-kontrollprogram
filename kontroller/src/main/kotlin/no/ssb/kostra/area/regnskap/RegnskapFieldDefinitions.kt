@@ -68,7 +68,5 @@ object RegnskapFieldDefinitions : FieldDefinitions {
             name = FIELD_BELOP,
             mandatory = true
         )
-    ).mapIndexed { index, fieldDefinition ->
-        fieldDefinition.copy(number = index + 1)
-    }.buildFieldDefinitions()
+    ).buildFieldDefinitions()
 }

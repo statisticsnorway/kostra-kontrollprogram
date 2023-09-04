@@ -37,7 +37,7 @@ class Rule002FileDescription(
         if (fieldDefinition.mandatory) {
             createValidationReportEntry(
                 ruleName = "$ruleName, mangler obligatorisk verdi",
-                messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
+                messageText = "Korrigér felt '${fieldDefinition.name}', " +
                         "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
                         "mangler obligatorisk verdi.",
                 lineNumbers = listOf(kostraRecord.lineNumber)
@@ -54,7 +54,7 @@ class Rule002FileDescription(
         INTEGER_TYPE -> if (kostraRecord.fieldAsInt(fieldDefinition.name) == null)
             createValidationReportEntry(
                 ruleName = "$ruleName, feil i heltall-felt",
-                messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
+                messageText = "Korrigér felt '${fieldDefinition.name}', " +
                         "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
                         "er et tallfelt, men inneholder '${kostraRecord[fieldDefinition.name]}'.",
                 lineNumbers = listOf(kostraRecord.lineNumber)
@@ -64,7 +64,7 @@ class Rule002FileDescription(
         DATE_TYPE -> if (kostraRecord.fieldAsLocalDate(fieldDefinition.name) == null)
             createValidationReportEntry(
                 ruleName = "$ruleName, feil i dato-felt",
-                messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
+                messageText = "Korrigér felt '${fieldDefinition.name}', " +
                         "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
                         "er et datofelt med datomønster '${fieldDefinition.datePattern.uppercase()}', " +
                         "men inneholder '${kostraRecord[fieldDefinition.name]}'.",
@@ -77,7 +77,7 @@ class Rule002FileDescription(
         )
             createValidationReportEntry(
                 ruleName = "$ruleName, feltdefinisjonlengde",
-                messageText = "Korrigér felt ${fieldDefinition.number} / '${fieldDefinition.name}', " +
+                messageText = "Korrigér felt '${fieldDefinition.name}', " +
                         "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
                         "sin kode '${kostraRecord[fieldDefinition.name]}' fins ikke i ${fieldDefinition.codeList}.",
                 lineNumbers = listOf(kostraRecord.lineNumber)

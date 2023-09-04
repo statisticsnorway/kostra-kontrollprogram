@@ -11,7 +11,6 @@ import no.ssb.kostra.program.*
 class Rule002FileDescriptionTest : BehaviorSpec({
     val templateFieldDefinition =
         FieldDefinition(
-            number = 1,
             name = "someFieldName",
             dataType = STRING_TYPE,
             from = 1,

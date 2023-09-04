@@ -50,47 +50,40 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
 
     override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
-            number = 1,
             name = KOMMUNE_NR_COL_NAME,
             dataType = STRING_TYPE,
             size = 4,
             mandatory = true
         ),
         FieldDefinition(
-            number = 2,
             name = VERSION_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
             mandatory = true
         ),
         FieldDefinition(
-            number = 3,
             name = BYDELSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
-            number = 4,
             name = DISTRIKTSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
-            number = 5,
             name = PERSON_JOURNALNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 8,
             mandatory = true
         ),
         FieldDefinition(
-            number = 6,
             name = PERSON_FODSELSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 11,
             mandatory = true
         ),
         FieldDefinition(
-            number = 7,
             name = KJONN_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -100,7 +93,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 8,
             name = EKTSTAT_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -112,7 +104,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 91,
             name = HAR_BARN_UNDER_18_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -122,12 +113,10 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 92,
             name = ANT_BARN_UNDER_18_COL_NAME,
             size = 2
         ),
         FieldDefinition(
-            number = 10,
             name = REG_DATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
@@ -135,7 +124,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 11,
             name = VEDTAK_DATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
@@ -143,7 +131,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 12,
             name = BEGYNT_DATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
@@ -151,7 +138,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 141,
             name = KVP_KOMM_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -160,7 +146,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 142,
             name = KOMMNR_KVP_KOMM_COL_NAME,
             dataType = STRING_TYPE,
             size = 4, // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
@@ -524,7 +509,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 151,
             name = YTELSE_SOSHJELP_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -532,7 +516,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 152,
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -541,7 +524,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 153,
             name = YTELSE_INTRO_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -549,7 +531,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 154,
             name = YTELSE_INDIVIDSTONAD_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -557,7 +538,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 155,
             name = YTELSE_FOLKETRYGDL_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -565,7 +545,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 201,
             name = KVP_MED_ASTONAD_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -574,7 +553,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 202,
             name = KVP_MED_KOMMBOS_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -582,7 +560,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 203,
             name = KVP_MED_HUSBANK_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -590,7 +567,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 204,
             name = KVP_MED_SOSHJ_ENGANG_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -598,7 +574,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 205,
             name = KVP_MED_SOSHJ_PGM_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -609,7 +584,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 206,
             name = KVP_MED_SOSHJ_SUP_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -620,7 +594,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 211,
             name = "STMND_1",
             dataType = STRING_TYPE,
             size = 2,
@@ -629,7 +602,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 212,
             name = "STMND_2",
             dataType = STRING_TYPE,
             size = 2,
@@ -638,7 +610,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 213,
             name = "STMND_3",
             dataType = STRING_TYPE,
             size = 2,
@@ -647,7 +618,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 214,
             name = "STMND_4",
             dataType = STRING_TYPE,
             size = 2,
@@ -656,7 +626,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 215,
             name = "STMND_5",
             dataType = STRING_TYPE,
             size = 2,
@@ -665,7 +634,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 216,
             name = "STMND_6",
             dataType = STRING_TYPE,
             size = 2,
@@ -674,7 +642,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 217,
             name = "STMND_7",
             dataType = STRING_TYPE,
             size = 2,
@@ -683,7 +650,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 218,
             name = "STMND_8",
             dataType = STRING_TYPE,
             size = 2,
@@ -692,7 +658,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 219,
             name = "STMND_9",
             dataType = STRING_TYPE,
             size = 2,
@@ -701,7 +666,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2110,
             name = "STMND_10",
             dataType = STRING_TYPE,
             size = 2,
@@ -710,7 +674,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2111,
             name = "STMND_11",
             dataType = STRING_TYPE,
             size = 2,
@@ -719,7 +682,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2112,
             name = "STMND_12",
             dataType = STRING_TYPE,
             size = 2,
@@ -728,12 +690,10 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 22,
             name = KVP_STONAD_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 24,
             name = STATUS_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -750,14 +710,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             mandatory = true
         ),
         FieldDefinition(
-            number = 25,
             name = AVSL_DATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
-            number = 261,
             name = AVSL_ORDINAERTARB_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -766,7 +724,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 262,
             name = AVSL_ARBLONNSTILS_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -778,7 +735,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 263,
             name = AVSL_ARBMARK_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -787,7 +743,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 264,
             name = AVSL_SKOLE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -796,7 +751,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 265,
             name = AVSL_UFORE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -805,7 +759,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 266,
             name = AVSL_AAP_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -814,7 +767,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 267,
             name = AVSL_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -823,7 +775,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 268,
             name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -832,7 +783,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 269,
             name = AVSL_ANNET_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -841,7 +791,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2611,
             name = AVSL_UKJENT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -850,7 +799,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 2612,
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -874,7 +822,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 27,
             name = SAKSBEHANDLER_COL_NAME,
             dataType = STRING_TYPE,
             size = 10

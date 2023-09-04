@@ -84,49 +84,41 @@ import no.ssb.kostra.program.extension.buildFieldDefinitions
 object SosialhjelpFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
-            number = 1,
             name = KOMMUNE_NR_COL_NAME,
             dataType = STRING_TYPE,
             size = 4
         ),
         FieldDefinition(
-            number = 2,
             name = VERSION_COL_NAME,
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
-            number = 3,
             name = BYDELSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
-            number = 4,
             name = DISTRIKTSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
-            number = 5,
             name = PERSON_JOURNALNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 8
         ),
         FieldDefinition(
-            number = 6,
             name = PERSON_FODSELSNR_COL_NAME,
             dataType = STRING_TYPE,
             size = 11
         ),
         FieldDefinition(
-            number = 7,
             name = PERSON_DUF_COL_NAME,
             dataType = STRING_TYPE,
             size = 12
         ),
-        FieldDefinition(
-            number = 8, name = KJONN_COL_NAME,
+        FieldDefinition( name = KJONN_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
                 Code("1", "Mann"),
@@ -134,7 +126,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 9,
             name = EKTSTAT_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -146,7 +137,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 101,
             name = HAR_BARN_UNDER_18_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -155,12 +145,10 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 102,
             name = ANT_BARN_UNDER_18_COL_NAME,
             size = 2
         ),
         FieldDefinition(
-            number = 11,
             name = VKLO_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -176,7 +164,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 12,
             name = TRYGDESIT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -194,7 +181,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 13,
             name = ARBSIT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -212,7 +198,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 141,
             name = STMND_1_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -221,7 +206,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 142,
             name = STMND_2_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -230,7 +214,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 143,
             name = STMND_3_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -239,7 +222,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 144,
             name = STMND_4_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -248,7 +230,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             )
         ),
         FieldDefinition(
-            number = 145,
             name = STMND_5_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -257,7 +238,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 146,
             name = STMND_6_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -267,7 +247,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
 
             ),
         FieldDefinition(
-            number = 147,
             name = STMND_7_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -276,7 +255,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 148,
             name = STMND_8_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -285,7 +263,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 149,
             name = STMND_9_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -294,7 +271,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 1410,
             name = STMND_10_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -303,7 +279,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 1411,
             name = STMND_11_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -312,7 +287,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 1412,
             name = STMND_12_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -321,137 +295,110 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 151,
             name = BIDRAG_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            152,
             name = LAAN_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 161,
             name = BIDRAG_1_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 162,
             name = LAAN_1_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 163,
             name = BIDRAG_2_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 164,
             name = LAAN_2_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 165,
             name = BIDRAG_3_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 166,
             name = LAAN_3_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 167,
             name = BIDRAG_4_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 168,
             name = LAAN_4_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 169,
             name = BIDRAG_5_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1610,
             name = LAAN_5_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1611,
             name = BIDRAG_6_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1612,
             name = LAAN_6_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1613,
             name = BIDRAG_7_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1614,
             name = LAAN_7_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1615,
             name = BIDRAG_8_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1616,
             name = LAAN_8_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1617,
             name = BIDRAG_9_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1618,
             name = LAAN_9_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1619,
             name = BIDRAG_10_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1620,
             name = LAAN_10_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1621,
             name = BIDRAG_11_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1622,
             name = LAAN_11_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1623,
             name = BIDRAG_12_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 1624,
             name = LAAN_12_COL_NAME,
             size = 7
         ),
         FieldDefinition(
-            number = 17,
             name = GITT_OKONOMIRAD_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -460,7 +407,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 18,
             name = FAAT_INDIVIDUELL_PLAN_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -469,14 +415,13 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 19,
             name = SAKSBEHANDLER_COL_NAME,
             dataType = STRING_TYPE,
             size = 10
         ),
         FieldDefinition(
-            number = 20,
             name = BOSIT_COL_NAME,
+            dataType = STRING_TYPE,
             codeList = listOf(
                 Code("1", "Bor i leid privat bolig"),
                 Code("2", "Bor i leid kommunal bolig"),
@@ -487,7 +432,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 21,
             name = VILKARSOSLOV_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -496,7 +440,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 22,
             name = VILKARSAMEKT_COL_NAME,
             dataType = STRING_TYPE,
             codeList = listOf(
@@ -505,21 +448,18 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 23,
             name = UTBETDATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
         ),
         FieldDefinition(
-            number = 24,
             name = UTBETTOMDATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
-            number = 251,
             name = VILKARARBEID_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -528,7 +468,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 252,
             name = VILKARKURS_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -537,7 +476,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 254,
             name = VILKARUTD_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -546,7 +484,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 256,
             name = VILKARJOBBLOG_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -555,7 +492,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 257,
             name = VILKARJOBBTILB_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -564,7 +500,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 258,
             name = VILKARSAMT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -573,7 +508,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 2510,
             name = VILKAROKRETT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -582,7 +516,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 2511,
             name = VILKARLIVSH_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -591,7 +524,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 2514,
             name = VILKARHELSE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -600,7 +532,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 2515,
             name = VILKARANNET_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -609,7 +540,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 2516,
             name = VILKARDIGPLAN_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -618,14 +548,12 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 26,
             name = VEDTAKDATO_COL_NAME,
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
         ),
         FieldDefinition(
-            number = 271,
             name = VEDTAKARB_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -634,7 +562,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 272,
             name = VEDTAKAKT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -646,7 +573,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 273,
             name = VEDTAKHELSE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -655,7 +581,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 274,
             name = VEDTAKGRUNN_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -664,7 +589,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 281,
             name = SANKSJONRED_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -673,7 +597,6 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 282,
             name = SANKSJONANDRE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,

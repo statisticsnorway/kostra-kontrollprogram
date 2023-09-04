@@ -25,39 +25,34 @@ import no.ssb.kostra.program.DataType.STRING_TYPE
 object Familievern52bFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
         FieldDefinition(
-            number = 1,
             name = REGION_NR_B_COL_NAME,
             dataType = STRING_TYPE,
             size = 6
         ),
         FieldDefinition(
-            number = 2,
             name = KONTOR_NR_B_COL_NAME,
             dataType = STRING_TYPE,
             size = 3
         ),
         FieldDefinition(
-            number = 3,
             name = GRUPPE_NR_B_COL_NAME,
             dataType = STRING_TYPE,
             size = 6
         ),
         FieldDefinition(
-            number = 4,
             name = GRUPPE_NAVN_B_COL_NAME,
             dataType = STRING_TYPE,
             size = 30
         ),
         FieldDefinition(
-            number = 5,
             name = DATO_GRSTART_B_COL_NAME,
             dataType = DATE_TYPE,
             size = 8,
             datePattern = DATE8_PATTERN,
         ),
         FieldDefinition(
-            number = 6,
             name = STRUKTUR_GR_B_COL_NAME,
+            dataType = STRING_TYPE,
             codeList = listOf(
                 Code("1", "Par"),
                 Code("2", "Barn (under 18 år)"),
@@ -67,7 +62,6 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 7,
             name = HOVEDI_GR_B_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
@@ -86,58 +80,50 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
             ),
         ),
         FieldDefinition(
-            number = 81,
             name = ANTMOTERTOT_IARET_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 82,
             name = ANTMOTERTOT_OPPR_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 91,
             name = TIMERTOT_IARET_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 92,
             name = TIMERTOT_OPPR_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 101,
             name = ANTDELT_IARET_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 102,
             name = ANTDELT_OPPR_B_COL_NAME,
             size = 3
         ),
         FieldDefinition(
-            number = 11,
             name = ANTTER_GRUPPEB_B_COL_NAME,
             size = 2
         ),
         FieldDefinition(
-            number = 12,
             name = TOLK_B_COL_NAME,
+            dataType = STRING_TYPE,
             codeList = listOf(
                 Code("1", "Ja"),
                 Code("2", "Nei")
             ),
         ),
         FieldDefinition(
-            number = 13,
             name = STATUS_ARETSSL_B_COL_NAME,
+            dataType = STRING_TYPE,
             codeList = listOf(
                 Code("1", "Gruppebehandlingen ikke avsluttet i inneværende år"),
                 Code("2", "Avsluttet")
             ),
         ),
         FieldDefinition(
-            number = 14,
             name = DATO_GRAVSLUTN_B_COL_NAME,
             dataType = DATE_TYPE,
             size = 8,

@@ -4,7 +4,6 @@ import no.ssb.kostra.program.DataType.DATE_TYPE
 import no.ssb.kostra.program.DataType.INTEGER_TYPE
 
 data class FieldDefinition(
-    val number: Int = 0,
     val name: String,
     val dataType: DataType = INTEGER_TYPE,
     val from: Int = 0,

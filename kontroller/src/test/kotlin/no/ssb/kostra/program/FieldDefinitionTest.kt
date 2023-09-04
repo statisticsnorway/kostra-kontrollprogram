@@ -18,7 +18,6 @@ class FieldDefinitionTest : BehaviorSpec({
         When("FieldDefinition is created") {
             Then("FieldDefinition should be as expected") {
                 assertSoftly(sut) {
-                    number shouldBe 0
                     name shouldBe "~name~"
                     dataType shouldBe INTEGER_TYPE
                     from shouldBe 0
@@ -34,7 +33,6 @@ class FieldDefinitionTest : BehaviorSpec({
 
     Given("FieldDefinition with all values set") {
         val sut = FieldDefinition(
-            number = 1,
             name = "~name~",
             dataType = DATE_TYPE,
             from = 2,
@@ -47,7 +45,6 @@ class FieldDefinitionTest : BehaviorSpec({
         When("FieldDefinition is created") {
             Then("FieldDefinition should be as expected") {
                 assertSoftly(sut) {
-                    number shouldBe 1
                     name shouldBe "~name~"
                     dataType shouldBe DATE_TYPE
                     from shouldBe 2

@@ -119,25 +119,21 @@ class KostraRecordExtensionsKtTest : BehaviorSpec({
     companion object {
         private val fieldDefinitions = listOf(
             FieldDefinition(
-                number = 1,
                 name = "Field123",
                 dataType = STRING_TYPE,
                 size = 3
             ),
             FieldDefinition(
-                number = 2,
                 name = "Field456",
                 dataType = STRING_TYPE,
                 size = 3
             ),
             FieldDefinition(
-                number = 3,
                 name = "Field789",
                 dataType = STRING_TYPE,
                 size = 3
             ),
             FieldDefinition(
-                number = 4,
                 name = "Field012",
                 size = 3
             )

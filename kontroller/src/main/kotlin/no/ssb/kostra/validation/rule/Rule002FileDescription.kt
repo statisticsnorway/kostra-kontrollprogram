@@ -1,8 +1,8 @@
 package no.ssb.kostra.validation.rule
 
-import no.ssb.kostra.program.DATE_TYPE
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.INTEGER_TYPE
 import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.INTEGER_TYPE
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.program.extension.toKostraRecord

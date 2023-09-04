@@ -4,9 +4,9 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.program.DataType.STRING_TYPE
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.STRING_TYPE
 
 class KostraRecordExtensionsKtTest : BehaviorSpec({
 

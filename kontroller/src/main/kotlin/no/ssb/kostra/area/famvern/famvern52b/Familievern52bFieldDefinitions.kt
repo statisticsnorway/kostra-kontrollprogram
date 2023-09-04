@@ -19,6 +19,8 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TOLK_B_COL_NAME
 import no.ssb.kostra.program.*
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object Familievern52bFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(

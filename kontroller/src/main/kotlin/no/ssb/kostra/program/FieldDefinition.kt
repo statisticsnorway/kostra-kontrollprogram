@@ -1,10 +1,12 @@
 package no.ssb.kostra.program
 
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.INTEGER_TYPE
 
 data class FieldDefinition(
     val number: Int = 0,
     val name: String,
-    val dataType: String = INTEGER_TYPE,
+    val dataType: DataType = INTEGER_TYPE,
     val from: Int = 0,
     val codeList: List<Code> = emptyList(),
     val datePattern: String = "",

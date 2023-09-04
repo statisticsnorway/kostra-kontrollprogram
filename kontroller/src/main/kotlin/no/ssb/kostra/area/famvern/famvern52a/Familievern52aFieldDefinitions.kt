@@ -88,6 +88,8 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TLFSAMT_O
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TOLK_A_COL_NAME
 import no.ssb.kostra.program.*
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object Familievern52aFieldDefinitions : FieldDefinitions {
     private val varighet = listOf(

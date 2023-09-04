@@ -18,8 +18,8 @@ import no.ssb.kostra.area.famvern.famvern53.Familievern53ColumnNames.VEILEDNING_
 import no.ssb.kostra.area.famvern.famvern53.Familievern53ColumnNames.VEILEDNING_STUDENTER_TIMER_COL_NAME
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
-import no.ssb.kostra.program.STRING_TYPE
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object Familievern53FieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(

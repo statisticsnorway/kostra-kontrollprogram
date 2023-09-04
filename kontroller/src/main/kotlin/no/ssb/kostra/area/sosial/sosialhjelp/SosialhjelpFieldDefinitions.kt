@@ -80,6 +80,8 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARUTD_CO
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.program.*
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object SosialhjelpFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> = listOf(

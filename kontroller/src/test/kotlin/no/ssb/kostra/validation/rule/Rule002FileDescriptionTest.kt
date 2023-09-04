@@ -6,7 +6,10 @@ import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.*
+import no.ssb.kostra.program.Code
+import no.ssb.kostra.program.DataType.*
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.KotlinArguments
 
 class Rule002FileDescriptionTest : BehaviorSpec({
     val templateFieldDefinition =

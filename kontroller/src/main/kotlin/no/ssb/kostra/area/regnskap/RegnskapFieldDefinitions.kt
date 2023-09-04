@@ -12,8 +12,8 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_REGION
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
-import no.ssb.kostra.program.STRING_TYPE
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(

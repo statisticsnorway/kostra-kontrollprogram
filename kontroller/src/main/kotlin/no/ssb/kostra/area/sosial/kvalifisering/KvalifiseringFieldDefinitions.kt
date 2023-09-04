@@ -45,6 +45,8 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_T
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
 import no.ssb.kostra.program.*
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.DataType.DATE_TYPE
+import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object KvalifiseringFieldDefinitions : FieldDefinitions {
 

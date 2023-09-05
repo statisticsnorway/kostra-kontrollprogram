@@ -91,8 +91,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KJONN_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("1", "Mann"),
                 Code("2", "Kvinne")
             ),
@@ -100,8 +99,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = EKTSTAT_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
                 Code("3", "Samboer"),
@@ -111,8 +109,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = yesNoCodeList,
+            codeListOverload = yesNoCodeList,
             mandatory = true
         ),
         FieldDefinition(
@@ -142,14 +139,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_KOMM_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = yesNoCodeList
+            codeListOverload = yesNoCodeList
         ),
         FieldDefinition(
             name = KOMMNR_KVP_KOMM_COL_NAME,
-            dataType = STRING_TYPE,
             size = 4, // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code(OSLO_MUNICIPALITY_ID, "Oslo"),
                 Code("1101", "Eigersund"),
                 Code("1103", "Stavanger"),
@@ -510,55 +505,45 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = YTELSE_SOSHJELP_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("1", "Sosialhjelp")
         ),
         FieldDefinition(
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                 Code("3", "Supplerende sosialhjelp")
             )
         ),
         FieldDefinition(
             name = YTELSE_INTRO_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("4", "Introduksjonsstønad")
         ),
         FieldDefinition(
             name = YTELSE_INDIVIDSTONAD_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")
         ),
         FieldDefinition(
             name = YTELSE_FOLKETRYGDL_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")
         ),
         FieldDefinition(
             name = KVP_MED_ASTONAD_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = yesNoCodeList
+            codeListOverload = yesNoCodeList
         ),
         FieldDefinition(
             name = KVP_MED_KOMMBOS_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("4", "Kommunal bostøtte")
         ),
         FieldDefinition(
             name = KVP_MED_HUSBANK_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("5", "Husbankens bostøtte")
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_ENGANG_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_PGM_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code(
                 "8",
                 "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet"
@@ -566,7 +551,6 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_SUP_COL_NAME,
-            dataType = STRING_TYPE,
             code = Code(
                 "7",
                 "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter"
@@ -574,73 +558,61 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = "STMND_1",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("01", "Januar")
         ),
         FieldDefinition(
             name = "STMND_2",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("02", "Februar")
         ),
         FieldDefinition(
             name = "STMND_3",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("03", "Mars")
         ),
         FieldDefinition(
             name = "STMND_4",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("04", "April")
         ),
         FieldDefinition(
             name = "STMND_5",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("05", "Mai")
         ),
         FieldDefinition(
             name = "STMND_6",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("06", "Juni")
         ),
         FieldDefinition(
             name = "STMND_7",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("07", "Juli")
         ),
         FieldDefinition(
             name = "STMND_8",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("08", "August")
         ),
         FieldDefinition(
             name = "STMND_9",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("09", "September")
         ),
         FieldDefinition(
             name = "STMND_10",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("10", "Oktober")
         ),
         FieldDefinition(
             name = "STMND_11",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("11", "November")
         ),
         FieldDefinition(
             name = "STMND_12",
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("12", "Desember")
         ),
@@ -650,8 +622,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = STATUS_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                 Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
                 Code(
@@ -672,13 +643,11 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = AVSL_ORDINAERTARB_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("01", "Ordinært arbeid (heltid/deltid)")
         ),
         FieldDefinition(
             name = AVSL_ARBLONNSTILS_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code(
                 "11",
@@ -687,57 +656,48 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = AVSL_ARBMARK_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
         ),
         FieldDefinition(
             name = AVSL_SKOLE_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("04", "Skole/utdanning")
         ),
         FieldDefinition(
             name = AVSL_UFORE_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("13", "Uføretrygd")
         ),
         FieldDefinition(
             name = AVSL_AAP_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("14", "Arbeidsavklaringspenger")
         ),
         FieldDefinition(
             name = AVSL_OK_AVKLAR_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("15", "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP")
         ),
         FieldDefinition(
             name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("16", "Økonomisk sosialhjelp uten slik avklaring")
         ),
         FieldDefinition(
             name = AVSL_ANNET_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("10", "Annet")
         ),
         FieldDefinition(
             name = AVSL_UKJENT_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
             code = Code("17", "Ukjent")
         ),
         FieldDefinition(
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("01", "Ordinært arbeid (heltid/deltid)"),
                 Code(
                     "11",

@@ -55,8 +55,7 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = STRUKTUR_GR_B_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("1", "Par"),
                 Code("2", "Barn (under 18 år)"),
                 Code("3", "Individ"),
@@ -66,9 +65,8 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HOVEDI_GR_B_COL_NAME,
-            dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("01", "Samlivskurs"),
                 Code("02", "Samlivsbrudd"),
                 Code("03", "Samarbeid om barn etter brudd"),
@@ -112,13 +110,11 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = TOLK_B_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = FieldDefinition.yesNoCodeList
+            codeListOverload = FieldDefinition.yesNoCodeList
         ),
         FieldDefinition(
             name = STATUS_ARETSSL_B_COL_NAME,
-            dataType = STRING_TYPE,
-            codeList = listOf(
+            codeListOverload = listOf(
                 Code("1", "Gruppebehandlingen ikke avsluttet i inneværende år"),
                 Code("2", "Avsluttet")
             ),

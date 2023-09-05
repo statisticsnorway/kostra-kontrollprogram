@@ -1,6 +1,6 @@
 package no.ssb.kostra.area.sosial.sosialhjelp
 
-import no.ssb.kostra.area.sosial.SosialFelles.calendarMonths
+import no.ssb.kostra.area.sosial.SosialCommon.calendarMonths
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_10_COL_NAME

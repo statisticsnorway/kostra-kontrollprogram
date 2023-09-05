@@ -15,7 +15,7 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_9_COL_
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.FieldDefinition
 
-object SosialFelles {
+object SosialCommon {
 
     val calendarMonths = arrayOf(
         FieldDefinition(

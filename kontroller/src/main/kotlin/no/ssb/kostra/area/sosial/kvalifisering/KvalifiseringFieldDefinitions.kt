@@ -1,7 +1,7 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
-import no.ssb.kostra.area.sosial.SosialFelles.calendarMonths
+import no.ssb.kostra.area.sosial.SosialCommon.calendarMonths
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME

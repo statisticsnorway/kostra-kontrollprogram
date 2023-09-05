@@ -17,10 +17,13 @@ import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.STRUKTUR_
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_IARET_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TIMERTOT_OPPR_B_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bColumnNames.TOLK_B_COL_NAME
-import no.ssb.kostra.program.*
-import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.Code
+import no.ssb.kostra.program.DATE8_PATTERN
 import no.ssb.kostra.program.DataType.DATE_TYPE
 import no.ssb.kostra.program.DataType.STRING_TYPE
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.FieldDefinitions
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 
 object Familievern52bFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(
@@ -110,10 +113,7 @@ object Familievern52bFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = TOLK_B_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("1", "Ja"),
-                Code("2", "Nei")
-            ),
+            codeList = FieldDefinition.yesNoCodeList
         ),
         FieldDefinition(
             name = STATUS_ARETSSL_B_COL_NAME,

@@ -43,10 +43,14 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_I
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
-import no.ssb.kostra.program.*
-import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.Code
+import no.ssb.kostra.program.DATE6_PATTERN
 import no.ssb.kostra.program.DataType.DATE_TYPE
 import no.ssb.kostra.program.DataType.STRING_TYPE
+import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.FieldDefinition.Companion.yesNoCodeList
+import no.ssb.kostra.program.FieldDefinitions
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 
 object KvalifiseringFieldDefinitions : FieldDefinitions {
 
@@ -108,10 +112,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("1", "Ja"),
-                Code("2", "Nei")
-            ),
+            codeList = yesNoCodeList,
             mandatory = true
         ),
         FieldDefinition(
@@ -142,10 +143,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = KVP_KOMM_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("1", "Ja"),
-                Code("2", "Nei")
-            )
+            codeList = yesNoCodeList
         ),
         FieldDefinition(
             name = KOMMNR_KVP_KOMM_COL_NAME,
@@ -513,9 +511,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = YTELSE_SOSHJELP_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("1", "Sosialhjelp")
-            )
+            code = Code("1", "Sosialhjelp")
         ),
         FieldDefinition(
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
@@ -528,168 +524,125 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = YTELSE_INTRO_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("4", "Introduksjonsstønad")
-            )
+            code = Code("4", "Introduksjonsstønad")
         ),
         FieldDefinition(
             name = YTELSE_INDIVIDSTONAD_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")
-            )
+            code = Code("5", "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak")
         ),
         FieldDefinition(
             name = YTELSE_FOLKETRYGDL_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")
-            )
+            code = Code("6", "Livsoppholdsytelse etter folketrygdloven - jf veiledningen")
         ),
         FieldDefinition(
             name = KVP_MED_ASTONAD_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("1", "Ja"),
-                Code("2", "Nei")
-            )
+            codeList = yesNoCodeList
         ),
         FieldDefinition(
             name = KVP_MED_KOMMBOS_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("4", "Kommunal bostøtte")
-            )
+            code = Code("4", "Kommunal bostøtte")
         ),
         FieldDefinition(
             name = KVP_MED_HUSBANK_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("5", "Husbankens bostøtte")
-            )
+            code = Code("5", "Husbankens bostøtte")
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_ENGANG_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")
-            )
+            code = Code("9", "Mottok økonomisk sosialhjelp som engangsstønad")
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_PGM_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code(
-                    "8",
-                    "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet"
-                )
+            code = Code(
+                "8",
+                "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet"
             )
         ),
         FieldDefinition(
             name = KVP_MED_SOSHJ_SUP_COL_NAME,
             dataType = STRING_TYPE,
-            codeList = listOf(
-                Code(
-                    "7",
-                    "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter"
-                )
+            code = Code(
+                "7",
+                "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter"
             )
         ),
         FieldDefinition(
             name = "STMND_1",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("01", "Januar")
-            )
+            code = Code("01", "Januar")
         ),
         FieldDefinition(
             name = "STMND_2",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("02", "Februar")
-            )
+            code = Code("02", "Februar")
         ),
         FieldDefinition(
             name = "STMND_3",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("03", "Mars")
-            )
+            code = Code("03", "Mars")
         ),
         FieldDefinition(
             name = "STMND_4",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("04", "April")
-            )
+            code = Code("04", "April")
         ),
         FieldDefinition(
             name = "STMND_5",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("05", "Mai")
-            )
+            code = Code("05", "Mai")
         ),
         FieldDefinition(
             name = "STMND_6",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("06", "Juni")
-            )
+            code = Code("06", "Juni")
         ),
         FieldDefinition(
             name = "STMND_7",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("07", "Juli")
-            )
+            code = Code("07", "Juli")
         ),
         FieldDefinition(
             name = "STMND_8",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("08", "August")
-            )
+            code = Code("08", "August")
         ),
         FieldDefinition(
             name = "STMND_9",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("09", "September")
-            )
+            code = Code("09", "September")
         ),
         FieldDefinition(
             name = "STMND_10",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("10", "Oktober")
-            )
+            code = Code("10", "Oktober")
         ),
         FieldDefinition(
             name = "STMND_11",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("11", "November")
-            )
+            code = Code("11", "November")
         ),
         FieldDefinition(
             name = "STMND_12",
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("12", "Desember")
-            )
+            code = Code("12", "Desember")
         ),
         FieldDefinition(
             name = KVP_STONAD_COL_NAME,
@@ -721,84 +674,64 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             name = AVSL_ORDINAERTARB_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("01", "Ordinært arbeid (heltid/deltid)")
-            )
+            code = Code("01", "Ordinært arbeid (heltid/deltid)")
         ),
         FieldDefinition(
             name = AVSL_ARBLONNSTILS_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code(
-                    "11",
-                    "Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)"
-                )
+            code = Code(
+                "11",
+                "Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)"
             )
         ),
         FieldDefinition(
             name = AVSL_ARBMARK_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
-            )
+            code = Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
         ),
         FieldDefinition(
             name = AVSL_SKOLE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("04", "Skole/utdanning")
-            )
+            code = Code("04", "Skole/utdanning")
         ),
         FieldDefinition(
             name = AVSL_UFORE_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("13", "Uføretrygd")
-            )
+            code = Code("13", "Uføretrygd")
         ),
         FieldDefinition(
             name = AVSL_AAP_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("14", "Arbeidsavklaringspenger")
-            )
+            code = Code("14", "Arbeidsavklaringspenger")
         ),
         FieldDefinition(
             name = AVSL_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("15", "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP")
-            )
+            code = Code("15", "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP")
         ),
         FieldDefinition(
             name = AVSL_UTEN_OK_AVKLAR_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("16", "Økonomisk sosialhjelp uten slik avklaring")
-            )
+            code = Code("16", "Økonomisk sosialhjelp uten slik avklaring")
         ),
         FieldDefinition(
             name = AVSL_ANNET_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("10", "Annet")
-            )
+            code = Code("10", "Annet")
         ),
         FieldDefinition(
             name = AVSL_UKJENT_COL_NAME,
             dataType = STRING_TYPE,
             size = 2,
-            codeList = listOf(
-                Code("17", "Ukjent")
-            )
+            code = Code("17", "Ukjent")
         ),
         FieldDefinition(
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,

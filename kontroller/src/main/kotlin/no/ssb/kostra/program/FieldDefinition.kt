@@ -12,6 +12,14 @@ data class FieldDefinition(
     val mandatory: Boolean = false,
     val size: Int = 1
 ) {
+    constructor(
+        name: String,
+        dataType: DataType = INTEGER_TYPE,
+        mandatory: Boolean = false,
+        size: Int = 1,
+        code: Code
+    ) : this(name, dataType, 0, listOf(code), "", mandatory, size)
+
     init {
         require(!(dataType == DATE_TYPE && datePattern.isBlank())) {
             "datePattern cannot be empty or blank when dataType is $DATE_TYPE"
@@ -19,4 +27,11 @@ data class FieldDefinition(
     }
 
     val to: Int get() = from + size - 1
+
+    companion object {
+        val yesNoCodeList = listOf(
+            Code("1", "Ja"),
+            Code("2", "Nei")
+        )
+    }
 }

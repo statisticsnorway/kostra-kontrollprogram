@@ -15,14 +15,30 @@ data class FieldDefinition(
         name: String,
         size: Int = 1,
         code: Code
-    ) : this(name, STRING_TYPE, 0, listOf(code), "", false, size)
+    ) : this(
+        name = name,
+        dataType = STRING_TYPE,
+        from = 0,
+        codeList = listOf(code),
+        datePattern = "",
+        mandatory = false,
+        size = size
+    )
 
     constructor(
         name: String,
         size: Int = 1,
         mandatory: Boolean = false,
-        codeListOverload: List<Code>
-    ) : this(name, STRING_TYPE, 0, codeListOverload, "", mandatory, size)
+        codes: List<Code>
+    ) : this(
+        name = name,
+        dataType = STRING_TYPE,
+        from = 0,
+        codeList = codes,
+        datePattern = "",
+        mandatory = mandatory,
+        size = size
+    )
 
     init {
         require(!(dataType == DATE_TYPE && datePattern.isBlank())) {

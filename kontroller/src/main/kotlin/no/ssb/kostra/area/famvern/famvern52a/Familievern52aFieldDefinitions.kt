@@ -133,7 +133,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KONTAKT_TIDL_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "under 6 md siden"),
                 Code("2", "mellom 6 md og 3 år siden"),
                 Code("3", "3 år eller mer siden"),
@@ -143,7 +143,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HENV_GRUNN_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Parforholdet"),
                 Code("2", "Foreldresamarbeid/- veiledning"),
                 Code("3", "Andre eller sammensatte problemer i familien"),
@@ -153,7 +153,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PRIMK_KJONN_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Mann/gutt"),
                 Code("2", "Kvinne/jente")
             ),
@@ -166,7 +166,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PRIMK_SIVILS_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Gift"),
                 Code("2", "Registrert partner"),
                 Code("3", "Samboer"),
@@ -176,7 +176,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = FORMELL_SIVILS_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
                 Code("3", "Registrert partner"),
@@ -187,7 +187,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PRIMK_SAMBO_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Partner (og eventuelt barn)"),
                 Code("2", "Barn"),
                 Code("3", "Foreldre / Andre omsorgspersoner"),
@@ -198,7 +198,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PRIMK_ARBSIT_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Arbeid heltid"),
                 Code("2", "Arbeid deltid"),
                 Code("3", "Arbeidssøker"),
@@ -211,7 +211,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PRIMK_VSRELASJ_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Partner"),
                 Code("2", "Ekspartner"),
                 Code("3", "Forelder"),
@@ -224,15 +224,15 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = PART_LENGDE_A_COL_NAME,
-            codeListOverload = varighet,
+            codes = varighet,
         ),
         FieldDefinition(
             name = EKSPART_LENGDE_A_COL_NAME,
-            codeListOverload = varighet,
+            codes = varighet,
         ),
         FieldDefinition(
             name = EKSPART_VARIGH_A_COL_NAME,
-            codeListOverload = varighet,
+            codes = varighet,
         ),
         FieldDefinition(
             name = PRIMKREL_PART_A_COL_NAME,
@@ -275,7 +275,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = SAMT_FORHOLD_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Forhold hos kontoret"),
                 Code("2", "Forhold hos klient/klientene")
             )
@@ -354,7 +354,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HOVEDF_BEHAND_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Parsamtale"),
                 Code("2", "Foreldresamtale"),
                 Code("3", "Familiesamtale"),
@@ -364,40 +364,40 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = BEKYMR_MELD_A_COL_NAME,
-            codeListOverload = yesNoCodeList,
+            codes = yesNoCodeList,
             mandatory = true
         ),
         FieldDefinition(
             name = DELT_PARTNER_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_EKSPART_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_BARNU18_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_BARNO18_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_FORELDRE_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_OVRFAM_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_VENN_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = DELT_ANDR_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = SAMT_PRIMK_A_COL_NAME,
@@ -473,7 +473,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = TOLK_A_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = SAMARB_INGEN_A_COL_NAME,
@@ -521,7 +521,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = STATUS_ARETSSL_A_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Avsluttet etter avtale med klient"),
                 Code("2", "Klient uteblitt"),
                 Code("3", "Saken ikke avsluttet i inneværende år")
@@ -530,7 +530,7 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = HOVEDTEMA_A_COL_NAME,
             size = 2,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("01", "styrke parforholdet"),
                 Code("02", "avklare/avslutte parforholdet"),
                 Code("03", "samlivsbrudd i familien"),

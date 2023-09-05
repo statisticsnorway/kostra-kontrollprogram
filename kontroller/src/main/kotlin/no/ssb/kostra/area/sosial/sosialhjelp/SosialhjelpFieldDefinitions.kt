@@ -1,5 +1,6 @@
 package no.ssb.kostra.area.sosial.sosialhjelp
 
+import no.ssb.kostra.area.sosial.SosialFelles.calendarMonths
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.ARBSIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.BIDRAG_10_COL_NAME
@@ -43,18 +44,6 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURN
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SANKSJONANDRE_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SANKSJONRED_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_10_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_11_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_12_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_1_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_2_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_3_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_4_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_5_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_6_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_7_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_8_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.STMND_9_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.UTBETDATO_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.UTBETTOMDATO_COL_NAME
@@ -126,14 +115,14 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KJONN_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Mann"),
                 Code("2", "Kvinne")
             )
         ),
         FieldDefinition(
             name = EKTSTAT_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
                 Code("3", "Samboer"),
@@ -143,7 +132,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = ANT_BARN_UNDER_18_COL_NAME,
@@ -151,7 +140,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = VKLO_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Arbeidsinntekt"),
                 Code("2", "Kursstønad/lønn i arbeidsmarkedstiltak"),
                 Code("3", "Trygd/pensjon"),
@@ -166,7 +155,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = TRYGDESIT_COL_NAME,
             size = 2,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("01", "Sykepenger"),
                 Code("02", "Dagpenger"),
                 Code("04", "Uføretrygd"),
@@ -182,7 +171,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = ARBSIT_COL_NAME,
             size = 2,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("01", "Arbeid, heltid"),
                 Code("02", "Arbeid, deltid"),
                 Code("03", "Under utdanning"),
@@ -195,66 +184,9 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
                 Code("10", "Kvalifiseringsprogram")
             )
         ),
-        FieldDefinition(
-            name = STMND_1_COL_NAME,
-            size = 2,
-            code = Code("01", "Januar")
-        ),
-        FieldDefinition(
-            name = STMND_2_COL_NAME,
-            size = 2,
-            code = Code("02", "Februar")
-        ),
-        FieldDefinition(
-            name = STMND_3_COL_NAME,
-            size = 2,
-            code = Code("03", "Mars")
-        ),
-        FieldDefinition(
-            name = STMND_4_COL_NAME,
-            size = 2,
-            code = Code("04", "April")
-        ),
-        FieldDefinition(
-            name = STMND_5_COL_NAME,
-            size = 2,
-            code = Code("05", "Mai")
-        ),
-        FieldDefinition(
-            name = STMND_6_COL_NAME,
-            size = 2,
-            code = Code("06", "Juni")
-        ),
-        FieldDefinition(
-            name = STMND_7_COL_NAME,
-            size = 2,
-            code = Code("07", "Juli")
-        ),
-        FieldDefinition(
-            name = STMND_8_COL_NAME,
-            size = 2,
-            code = Code("08", "August")
-        ),
-        FieldDefinition(
-            name = STMND_9_COL_NAME,
-            size = 2,
-            code = Code("09", "September")
-        ),
-        FieldDefinition(
-            name = STMND_10_COL_NAME,
-            size = 2,
-            code = Code("10", "Oktober")
-        ),
-        FieldDefinition(
-            name = STMND_11_COL_NAME,
-            size = 2,
-            code = Code("11", "November")
-        ),
-        FieldDefinition(
-            name = STMND_12_COL_NAME,
-            size = 2,
-            code = Code("12", "Desember")
-        ),
+
+        *calendarMonths,
+
         FieldDefinition(
             name = BIDRAG_COL_NAME,
             size = 7
@@ -361,11 +293,11 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = GITT_OKONOMIRAD_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = FAAT_INDIVIDUELL_PLAN_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = SAKSBEHANDLER_COL_NAME,
@@ -374,7 +306,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = BOSIT_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Bor i leid privat bolig"),
                 Code("2", "Bor i leid kommunal bolig"),
                 Code("3", "Bor i eid bolig"),
@@ -385,11 +317,11 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = VILKARSOSLOV_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = VILKARSAMEKT_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = UTBETDATO_COL_NAME,

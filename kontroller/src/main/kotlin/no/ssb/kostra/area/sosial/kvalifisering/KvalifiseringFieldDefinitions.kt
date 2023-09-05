@@ -1,6 +1,7 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
+import no.ssb.kostra.area.sosial.SosialFelles.calendarMonths
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
@@ -91,7 +92,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KJONN_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Mann"),
                 Code("2", "Kvinne")
             ),
@@ -99,7 +100,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = EKTSTAT_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
                 Code("3", "Samboer"),
@@ -109,7 +110,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
-            codeListOverload = yesNoCodeList,
+            codes = yesNoCodeList,
             mandatory = true
         ),
         FieldDefinition(
@@ -139,12 +140,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_KOMM_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = KOMMNR_KVP_KOMM_COL_NAME,
             size = 4, // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
-            codeListOverload = listOf(
+            codes = listOf(
                 Code(OSLO_MUNICIPALITY_ID, "Oslo"),
                 Code("1101", "Eigersund"),
                 Code("1103", "Stavanger"),
@@ -509,7 +510,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                 Code("3", "Supplerende sosialhjelp")
             )
@@ -528,7 +529,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_MED_ASTONAD_COL_NAME,
-            codeListOverload = yesNoCodeList
+            codes = yesNoCodeList
         ),
         FieldDefinition(
             name = KVP_MED_KOMMBOS_COL_NAME,
@@ -556,73 +557,16 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter"
             )
         ),
-        FieldDefinition(
-            name = "STMND_1",
-            size = 2,
-            code = Code("01", "Januar")
-        ),
-        FieldDefinition(
-            name = "STMND_2",
-            size = 2,
-            code = Code("02", "Februar")
-        ),
-        FieldDefinition(
-            name = "STMND_3",
-            size = 2,
-            code = Code("03", "Mars")
-        ),
-        FieldDefinition(
-            name = "STMND_4",
-            size = 2,
-            code = Code("04", "April")
-        ),
-        FieldDefinition(
-            name = "STMND_5",
-            size = 2,
-            code = Code("05", "Mai")
-        ),
-        FieldDefinition(
-            name = "STMND_6",
-            size = 2,
-            code = Code("06", "Juni")
-        ),
-        FieldDefinition(
-            name = "STMND_7",
-            size = 2,
-            code = Code("07", "Juli")
-        ),
-        FieldDefinition(
-            name = "STMND_8",
-            size = 2,
-            code = Code("08", "August")
-        ),
-        FieldDefinition(
-            name = "STMND_9",
-            size = 2,
-            code = Code("09", "September")
-        ),
-        FieldDefinition(
-            name = "STMND_10",
-            size = 2,
-            code = Code("10", "Oktober")
-        ),
-        FieldDefinition(
-            name = "STMND_11",
-            size = 2,
-            code = Code("11", "November")
-        ),
-        FieldDefinition(
-            name = "STMND_12",
-            size = 2,
-            code = Code("12", "Desember")
-        ),
+
+        *calendarMonths,
+
         FieldDefinition(
             name = KVP_STONAD_COL_NAME,
             size = 7
         ),
         FieldDefinition(
             name = STATUS_COL_NAME,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                 Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
                 Code(
@@ -697,7 +641,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
             size = 2,
-            codeListOverload = listOf(
+            codes = listOf(
                 Code("01", "Ordinært arbeid (heltid/deltid)"),
                 Code(
                     "11",

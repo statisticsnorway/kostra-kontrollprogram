@@ -1,4 +1,4 @@
-import {describe, test, expect, beforeEach} from "vitest";
+import {beforeEach, describe, expect, test} from "vitest";
 import {render, screen} from '@testing-library/react'
 import ReportSummary from "./ReportSummary";
 import {appReleaseVersionInTest, fileReportInTest, kostraFormInTest} from "../../specData";

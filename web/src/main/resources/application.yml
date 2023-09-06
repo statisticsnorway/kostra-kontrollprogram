@@ -21,11 +21,6 @@ micronaut:
     multipart:
       max-file-size: 10485760 # 10 MiB
 
-netty:
-  default:
-    allocator:
-      max-order: 3
-
 api:
   title: "Kostra Kontrollprogram API"
   version: "1.0"

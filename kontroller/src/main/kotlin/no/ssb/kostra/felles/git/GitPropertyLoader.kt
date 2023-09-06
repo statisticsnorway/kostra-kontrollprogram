@@ -1,10 +1,10 @@
 package no.ssb.kostra.felles.git
 
-import java.util.*
+import java.util.Properties
 
 object GitPropertiesLoader {
     const val DEFAULT_GIT_PROPERTIES_FILENAME = "/git.properties"
-    const val NOT_AVAILABLE_VALUE = ""
+    internal const val NOT_AVAILABLE_VALUE = "N/A"
     private const val GIT_TAGS_KEY = "git.tags"
 
     @JvmStatic

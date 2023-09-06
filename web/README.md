@@ -13,7 +13,7 @@ Bygge app fra rot
 
 Starte app fra rot
 ```bash
-./mvnw -pl web exec:java
+./mvnw -pl web exec:exec
 ```
 
 ## Komme i gang med utvikling frontend

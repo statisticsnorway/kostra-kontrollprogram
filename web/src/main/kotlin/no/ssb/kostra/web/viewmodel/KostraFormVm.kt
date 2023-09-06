@@ -1,14 +1,16 @@
 package no.ssb.kostra.web.viewmodel
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import io.micronaut.core.annotation.Introspected
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Pattern
 import no.ssb.kostra.web.validation.ValidForm
 import no.ssb.kostra.web.validation.ValidFormType
-import javax.validation.Valid
-import javax.validation.constraints.Min
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Pattern
 
 @Introspected
+@JsonInclude(JsonInclude.Include.ALWAYS)
 @ValidForm
 data class KostraFormVm(
     @field:Min(value = 2022, message = "År kan ikke være mindre enn {value}")
@@ -26,7 +28,7 @@ data class KostraFormVm(
     val orgnrForetak: String? = null,
 
     @field:Valid
-    val orgnrVirksomhet: Collection<CompanyIdVm> = setOf(),
+    val orgnrVirksomhet: List<CompanyIdVm> = emptyList(),
 
     @field:NotBlank(message = "Filvedlegg er påkrevet")
     val filnavn: String = ""

@@ -4,6 +4,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.web.extensions.NAME_FALLBACK_VALUE
+import no.ssb.kostra.web.extensions.toKostraArguments
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.time.Year
@@ -32,7 +34,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     skjema = "0A",
                     aar = Year.now().value,
                     region = "123456",
-                    orgnrVirksomhet = setOf()
+                    orgnrVirksomhet = emptyList()
                 )
             ),
             row(
@@ -85,7 +87,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
             aar = Year.now().value,
             region = "123456",
             orgnrForetak = generateCompanyIdInTest('9'),
-            orgnrVirksomhet = setOf(
+            orgnrVirksomhet = listOf(
                 CompanyIdVm(generateCompanyIdInTest('8')),
                 CompanyIdVm(generateCompanyIdInTest('9'))
             )
@@ -103,6 +105,6 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
     }
 }) {
     companion object {
-        fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
+        private fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
     }
 }

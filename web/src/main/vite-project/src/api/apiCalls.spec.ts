@@ -1,12 +1,6 @@
 import {describe, expect, it, vi} from "vitest"
 import {fileReportInTest, kostraFormInTest} from "../specData"
-import {
-    api,
-    kontrollerSkjemaAsync,
-    uiDataAsync,
-    kostraFormToMultipartBody,
-    MULTIPART_HEADER_CONFIG
-} from "./apiCalls"
+import {api, kontrollerSkjemaAsync, kostraFormToMultipartBody, MULTIPART_HEADER_CONFIG, uiDataAsync} from "./apiCalls"
 
 describe('apiCalls', () => {
     describe("ui-data (GET)", () => {

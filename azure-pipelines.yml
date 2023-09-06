@@ -30,15 +30,14 @@ variables:
   - name: MAVEN_OPTS
     value: '-DnewVersion=$(ArtifactRevision) -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram'
 
+
 resources:
   repositories:
-    # See https://github.com/statisticsnorway/ssb-developer-guide/blob/master/docs/azure_pipeline_doc.md#templating
-    # for info on how to use the templates repo
     - repository: templates
       type: github
       name: statisticsnorway/azure-pipelines-templates
       # The version of the repo on GitHub. Change to needed version
-      ref: refs/tags/1.1.39
+      ref: refs/tags/1.1.44
       # Service connection in the barn project on Pipelines
       # with access to the template repository.
       endpoint: 'github-Barnevernsregisteret'
@@ -85,13 +84,14 @@ jobs:
           javaHomeOption: 'JDKVersion'
 
       # Deploy artifact to artifact registry
+      # Note: Only kostra-barnevern is deployed to artifact registry
       - task: Maven@3
         condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
         displayName: 'Maven install and deploy'
         inputs:
           goals: 'deploy'
           mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
+          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
           mavenPomFile: 'pom.xml'
           javaHomeOption: 'JDKVersion'
           jdkArchitectureOption: 'x64'

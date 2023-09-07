@@ -1,20 +1,15 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.PositionedFileValidator
-import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule025KombinasjonDriftKontoklasseArt
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule040KombinasjonInvesteringKontoklasseFunksjon
 import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteringKontoklasseArt
 
 class KvartalKostraMain(
     arguments: KotlinArguments
-) : PositionedFileValidator(arguments) {
+) : RegnskapValidator(arguments) {
     private val bevilgningRegnskap = listOf("0AK1", "0AK2", "0AK3", "0AK4", "0CK1", "0CK2", "0CK3", "0CK4")
     private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
 
@@ -50,7 +45,7 @@ class KvartalKostraMain(
         "800", "840", "841", "850", "860", "870", "880", "899", "Z", "z", "~"
     )
 
-    private fun getFunksjonAsList() =
+    override val funksjonList =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>()
 
@@ -80,7 +75,7 @@ class KvartalKostraMain(
 
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> =
+    override val kapittelList: List<String> =
         if (arguments.skjema in balanseRegnskap) {
             val result = mutableListOf(
                 // @formatter:off
@@ -122,7 +117,7 @@ class KvartalKostraMain(
         "298", "379", "798"
     )
 
-    private fun getArtAsList(): List<String> =
+    override val artList: List<String> =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>(basisArter + konserninterneArter)
 
@@ -134,7 +129,7 @@ class KvartalKostraMain(
             emptyList()
 
 
-    private fun getSektorAsList(): List<String> =
+    override val sektorList: List<String> =
         if (arguments.skjema in balanseRegnskap)
         // Sektorer
             listOf(
@@ -174,28 +169,12 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
-    override val fieldDefinitions = RegnskapFieldDefinitions
-
-    override val preValidationRules = listOf(
-        Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
-    )
-
-    override val validationRules = listOf(
-        Rule003Skjema(),
-        Rule004Aargang(),
-        Rule005Kvartal(),
-        Rule006Region(),
-        Rule007Organisasjonsnummer(),
-        Rule008Foretaksnummer(),
-        Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
-        Rule010Funksjon(funksjonList = getFunksjonAsList()),
-        Rule011Kapittel(kapittelList = getKapittelAsList()),
-        Rule012Art(artList = getArtAsList()),
-        Rule013Sektor(sektorList = getSektorAsList()),
-        Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
-        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
-        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
-        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
-    )
+    override val validationRules = commonValidationRules()
+        .plus(
+            listOf(
+                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
+                Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
+                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
+            )
+        )
 }

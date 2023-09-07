@@ -85,12 +85,6 @@ class KirkeKostraMain(
     // Kun gyldig i drift og skal fjernes fra investering
     private fun getInvalidInvesteringArtList() = listOf("570", "590", "990")
 
-    override val fieldDefinitions: FieldDefinitions = RegnskapFieldDefinitions
-
-    override val preValidationRules = listOf(
-        Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
-    )
-
     override val validationRules = commonValidationRules()
         .plus(
             listOf(

@@ -36,6 +36,4 @@ abstract class RegnskapValidator(
         Rule014Belop(),
         Rule015Duplicates(RegnskapConstants.mappingDuplicates(arguments = arguments))
     )
-
-
 }

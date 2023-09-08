@@ -1,18 +1,13 @@
 package no.ssb.kostra.area.regnskap.helseforetak
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.PositionedFileValidator
-import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.helseforetak.*
 
 class HelseForetakMain(
     arguments: KotlinArguments,
 
-    ) : PositionedFileValidator(arguments) {
+    ) : RegnskapValidator(arguments) {
     private val hfOrgnr = listOf(
         //@formatter:off
         "928033821",
@@ -38,13 +33,13 @@ class HelseForetakMain(
         // @formatter:on
     )
 
-    private fun getFunksjonAsList(): List<String> = when (arguments.skjema) {
+    override val funksjonList: List<String> = when (arguments.skjema) {
         "0X" -> funksjoner.map { it.padEnd(4, ' ') }.sorted()
         else -> emptyList()
     }
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> = listOf("    ")
+    override val kapittelList: List<String> = listOf("    ")
 
     // Arter
     private val arter = listOf(
@@ -100,7 +95,7 @@ class HelseForetakMain(
         // @formatter:on
     )
 
-    private fun getArtAsList(): List<String> = when (arguments.skjema) {
+    override val artList: List<String> = when (arguments.skjema) {
         "0X" -> arter
         else -> emptyList()
     }
@@ -128,7 +123,7 @@ class HelseForetakMain(
         // @formatter:on
     )
 
-    private fun getSektorAsList(): List<String> = when (arguments.skjema) {
+    override val sektorList: List<String> = when (arguments.skjema) {
         "0Y" -> sektorer
         else -> emptyList()
     }
@@ -138,31 +133,14 @@ class HelseForetakMain(
 
     private val artPositiveBelop = listOf("190", "192", "194", "195")
 
-    override val fieldDefinitions = RegnskapFieldDefinitions
-
-    override val preValidationRules = listOf(
-        Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
-    )
-
-    override val validationRules = listOf(
-        Rule003Skjema(),
-        Rule004Aargang(),
-        Rule005Kvartal(),
-        Rule006Region(),
-        Rule007Organisasjonsnummer(),
-        Rule008Foretaksnummer(),
-        Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
-        Rule010Funksjon(funksjonList = getFunksjonAsList()),
-        Rule011Kapittel(kapittelList = getKapittelAsList()),
-        Rule012Art(artList = getArtAsList()),
-        Rule013Sektor(sektorList = getSektorAsList()),
-        Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
-
-        Rule500Funksjon400(validOrgnrList = hfOrgnr),
-        Rule510Art320(validFunksjonList = art320Funksjoner),
-        Rule520Konti19XKunPositiveBelop(validArtList = artPositiveBelop),
-        Rule530SummeringDifferanse(),
-        Rule540EiendelerErLikEgenkaptialPlussGjeld(),
-    )
+    override val validationRules = commonValidationRules()
+        .plus(
+            listOf(
+                Rule500Funksjon400(validOrgnrList = hfOrgnr),
+                Rule510Art320(validFunksjonList = art320Funksjoner),
+                Rule520Konti19XKunPositiveBelop(validArtList = artPositiveBelop),
+                Rule530SummeringDifferanse(),
+                Rule540EiendelerErLikEgenkaptialPlussGjeld(),
+            )
+        )
 }

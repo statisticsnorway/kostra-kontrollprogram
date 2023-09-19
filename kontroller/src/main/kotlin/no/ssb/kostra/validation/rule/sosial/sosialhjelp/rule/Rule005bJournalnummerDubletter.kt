@@ -1,7 +1,7 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
@@ -20,7 +20,7 @@ class Rule005bJournalnummerDubletter : AbstractNoArgsRule<List<KostraRecord>>(
                     "Journalnummer $journalId forekommer ${group.size} ganger.",
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 ).copy(
-                    caseworker = kostraRecord[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                    caseworker = kostraRecord[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                     journalId = journalId,
                 )
             }

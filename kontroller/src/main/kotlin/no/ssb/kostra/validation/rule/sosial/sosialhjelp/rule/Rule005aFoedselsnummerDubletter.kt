@@ -1,8 +1,8 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.util.SsnValidationUtils.isValidSocialSecurityIdOrDnr
 import no.ssb.kostra.validation.report.Severity

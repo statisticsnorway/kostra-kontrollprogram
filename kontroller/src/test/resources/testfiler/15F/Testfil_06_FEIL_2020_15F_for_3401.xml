@@ -2,5 +2,6 @@
 <Barnevern>
     <Avgiver Versjon="2020" Kommunenummer="3401" Kommunenavn="Kongsvinger" Organisasjonsnummer="944117784"/>
     <!-- Kontroller for Individ -->
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="1" StartDato="2020-12-01" SluttDato="2020-05-05" Id="I1" Journalnummer="Individ K1" Dufnummer="201912345678"/>
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="1" StartDato="2020-12-01" SluttDato="2020-05-05"
+             Id="I1" Journalnummer="Individ K1" Dufnummer="201912345678"/>
 </Barnevern>

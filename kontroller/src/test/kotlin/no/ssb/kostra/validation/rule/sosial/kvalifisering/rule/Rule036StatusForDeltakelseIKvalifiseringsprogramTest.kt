@@ -12,7 +12,7 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
         validationRuleNoContextTest(
             sut = Rule036StatusForDeltakelseIKvalifiseringsprogram(),
             expectedSeverity = Severity.ERROR,
-            *(1..6).map {
+            *(1..7).map {
                 ForAllRowItem(
                     "valid status, $it",
                     kostraRecordInTest(it.toString()),
@@ -20,8 +20,8 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogramTest : BehaviorSpec({
             }.toTypedArray(),
             ForAllRowItem(
                 "invalid status",
-                kostraRecordInTest("7"),
-                "Korrigér status. Fant '7', forventet én av",
+                kostraRecordInTest("X"),
+                "Korrigér status. Fant 'X', forventet én av",
             )
         )
     )

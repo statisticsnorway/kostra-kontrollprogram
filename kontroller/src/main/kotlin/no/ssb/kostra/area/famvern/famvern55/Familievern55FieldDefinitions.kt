@@ -186,10 +186,10 @@ import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TO
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TOT_3_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TOT_4_COL_NAME
 import no.ssb.kostra.area.famvern.famvern55.Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME
+import no.ssb.kostra.program.DataType.STRING_TYPE
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.extension.buildFieldDefinitions
-import no.ssb.kostra.program.DataType.STRING_TYPE
 
 object Familievern55FieldDefinitions : FieldDefinitions {
     override val fieldDefinitions = listOf(

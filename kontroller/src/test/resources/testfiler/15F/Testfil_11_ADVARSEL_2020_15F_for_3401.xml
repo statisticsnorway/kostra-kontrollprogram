@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Barnevern>
-    <Avgiver Organisasjonsnummer="944117784" Versjon="2020" Kommunenummer="3401" Kommunenavn="SSB-TESTFIL FOR BARNEVERN"/>
-    <Individ Avslutta3112="1" Saksbehandler="00 Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
+    <Avgiver Organisasjonsnummer="944117784" Versjon="2020" Kommunenummer="3401"
+             Kommunenavn="SSB-TESTFIL FOR BARNEVERN"/>
+    <Individ Avslutta3112="1" Saksbehandler="00 Sara Saksbehandler" StartDato="2020-02-10" Id="i1"
+             SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
         <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
             <Melder Kode="1"/>
             <Melder Kode="2"/>
@@ -58,7 +60,8 @@
             </Undersokelse>
         </Melding>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i2" Fodselsnummer="01011099293" Journalnummer="J2">
+    <Individ Avslutta3112="2" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i2"
+             Fodselsnummer="01011099293" Journalnummer="J2">
         <Melding Id="M2" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
             <Melder Kode="1"/>
             <Saksinnhold Kode="1"/>
@@ -124,13 +127,16 @@
             </Undersokelse>
         </Melding>
     </Individ>
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I5" Journalnummer="Individ K 04 #1" Fodselsnummer="03011199282">
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I5"
+             Journalnummer="Individ K 04 #1" Fodselsnummer="03011199282">
         <Plan StartDato="2020-02-02" SluttDato="2020-05-05" Id="P2" Plantype="1"/>
     </Individ>
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" SluttDato="2020-05-05" Id="I7" Journalnummer="Individ K 05 #1" Fodselsnummer="04011288133">
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2020-01-01" SluttDato="2020-05-05"
+             Id="I7" Journalnummer="Individ K 05 #1" Fodselsnummer="04011288133">
         <Plan StartDato="2020-02-02" Id="P4" Plantype="1"/>
     </Individ>
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 07 ufødt" Fodselsnummer="01012199999">
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10"
+             Journalnummer="Individ K 07 ufødt" Fodselsnummer="01012199999">
         <Tiltak StartDato="2000-02-02" Id="T1">
             <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
             <Kategori Kode="1.1">
@@ -138,24 +144,28 @@
             </Kategori>
         </Tiltak>
     </Individ>
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 08" Fodselsnummer="01010199286">
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10"
+             Journalnummer="Individ K 08" Fodselsnummer="01010199286">
         <Tiltak StartDato="2000-02-02" Id="P7">
             <Lovhjemmel Kapittel="4" Paragraf="4" Lov="BVL" Ledd="2"/>
             <Kategori Kode="1.1"/>
         </Tiltak>
     </Individ>
-    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 11" Fodselsnummer="01011655555">
+    <Individ Saksbehandler="01 Ivar Individkontrollør" Avslutta3112="2" StartDato="2000-01-01" Id="I10"
+             Journalnummer="Individ K 11" Fodselsnummer="01011655555">
         <Plan StartDato="2000-02-02" Id="P8" Plantype="1"/>
     </Individ>
     <!-- Kontroller for Melding -->
-    <Individ Saksbehandler="02 Melvin Meldingskontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-01-20" Id="I14" Journalnummer="Melding K 3" Fodselsnummer="14011288295">
+    <Individ Saksbehandler="02 Melvin Meldingskontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-01-20"
+             Id="I14" Journalnummer="Melding K 3" Fodselsnummer="14011288295">
         <Melding StartDato="2020-01-10" SluttDato="2020-01-20" Id="M5" Konklusjon="3">
             <Melder Kode="1"/>
             <Saksinnhold Kode="1"/>
         </Melding>
     </Individ>
     <!-- Kontroller for Undersøkelse -->
-    <Individ Saksbehandler="05 Undis Undersøkelseskontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I27" Journalnummer="Undersøkelse K 8" Fodselsnummer="27011599163">
+    <Individ Saksbehandler="05 Undis Undersøkelseskontrollør" Avslutta3112="2" StartDato="2020-01-01" Id="I27"
+             Journalnummer="Undersøkelse K 8" Fodselsnummer="27011599163">
         <Melding StartDato="2020-01-01" SluttDato="2020-01-05" Id="M18" Konklusjon="1">
             <Melder Kode="1"/>
             <Saksinnhold Kode="1"/>
@@ -163,23 +173,27 @@
         </Melding>
     </Individ>
     <!-- Kontroller for Plan -->
-    <Individ Saksbehandler="07 Pia Plankontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-02-15" Id="I26" Journalnummer="Plan K 2a" Fodselsnummer="01021099283">
+    <Individ Saksbehandler="07 Pia Plankontrollør" Avslutta3112="1" StartDato="2020-01-10" SluttDato="2020-02-15"
+             Id="I26" Journalnummer="Plan K 2a" Fodselsnummer="01021099283">
         <Plan StartDato="2020-01-10" Id="P10" Plantype="1" SluttDato="2020-01-15"/>
     </Individ>
     <!-- Kontroller for Tiltak -->
-    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I37" Journalnummer="Tiltak K 5" Fodselsnummer="12021099293">
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I37"
+             Journalnummer="Tiltak K 5" Fodselsnummer="12021099293">
         <Tiltak StartDato="2020-01-10" Id="T18" SluttDato="2020-01-28">
             <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
             <Kategori Kode="4.1"/>
         </Tiltak>
     </Individ>
-    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I38" Journalnummer="Tiltak K 6" Fodselsnummer="03030388177">
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I38"
+             Journalnummer="Tiltak K 6" Fodselsnummer="03030388177">
         <Tiltak StartDato="2020-01-10" Id="T19" SluttDato="2020-01-28">
             <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
             <Kategori Kode="4.2"/>
         </Tiltak>
     </Individ>
-    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I41" Journalnummer="Tiltak K 9" Fodselsnummer="15021388154">
+    <Individ Saksbehandler="08 Tilde Tiltakskontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I41"
+             Journalnummer="Tiltak K 9" Fodselsnummer="15021388154">
         <Tiltak StartDato="2020-01-10" Id="T22" SluttDato="2020-06-28">
             <Lovhjemmel Kapittel="1" Paragraf="1" Lov="1" Ledd="1"/>
             <Kategori Kode="1.1"/>
@@ -194,7 +208,8 @@
         </Tiltak>
     </Individ>
     <!-- kontroller for Lovhjemmel -->
-    <Individ Saksbehandler="09 Lovise Lovhjemmelkontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I42" Journalnummer="Lovhjemmel K 2" Fodselsnummer="16021499122">
+    <Individ Saksbehandler="09 Lovise Lovhjemmelkontrollør" Avslutta3112="2" StartDato="2019-01-05" Id="I42"
+             Journalnummer="Lovhjemmel K 2" Fodselsnummer="16021499122">
         <Tiltak StartDato="2020-01-10" Id="T25" SluttDato="2020-01-28">
             <Lovhjemmel Kapittel="4" Paragraf="12" Lov="1" Ledd="2"/>
             <Kategori Kode="1.1"/>

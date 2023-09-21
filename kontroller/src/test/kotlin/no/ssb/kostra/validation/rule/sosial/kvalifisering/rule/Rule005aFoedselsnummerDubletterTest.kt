@@ -1,23 +1,21 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions.fieldDefinitions
+import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.municipalityIdFromRegion
 import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
-import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.rule.KostraTestFactory
+import no.ssb.kostra.validation.rule.RuleTestData
 import java.time.LocalDate
 
 class Rule005aFoedselsnummerDubletterTest : BehaviorSpec({
     include(
-        validationRuleNoContextTest(
+        KostraTestFactory.validationRuleNoContextTest(
             sut = Rule005aFoedselsnummerDubletter(),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
@@ -33,12 +31,27 @@ class Rule005aFoedselsnummerDubletterTest : BehaviorSpec({
                 listOf(
                     kostraRecordInTest(),
                     kostraRecordInTest(
+                        foedselsnummer =
                         RandomUtils.generateRandomSSN(
                             LocalDate.now().minusYears(1),
                             LocalDate.now()
                         )
                     )
                 ),
+            ),
+            ForAllRowItem(
+                "two records for Oslo with same fødselsnummer",
+                listOf(
+                    kostraRecordInTest(kommunenr = OSLO_MUNICIPALITY_ID),
+                    kostraRecordInTest(kommunenr = OSLO_MUNICIPALITY_ID, journalId = "~journalId2~")
+                )
+            ),
+            ForAllRowItem(
+                "two records with same fødselsnummer, but different status",
+                listOf(
+                    kostraRecordInTest(status = "1"),
+                    kostraRecordInTest(status = "2", journalId = "~journalId2~")
+                )
             ),
             ForAllRowItem(
                 "two records with same fødselsnummer",
@@ -59,17 +72,20 @@ class Rule005aFoedselsnummerDubletterTest : BehaviorSpec({
         )
 
         private fun kostraRecordInTest(
+            kommunenr: String = RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
             foedselsnummer: String = fodselsnummerInTest,
+            status: String = "1",
             journalId: String = "~journalId~"
         ) = KostraRecord(
             1,
             mapOf(
-                SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
-                KOMMUNE_NR_COL_NAME to argumentsInTest.region.municipalityIdFromRegion(),
-                PERSON_JOURNALNR_COL_NAME to journalId,
-                PERSON_FODSELSNR_COL_NAME to foedselsnummer
+                KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
+                KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME to kommunenr,
+                KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to journalId,
+                KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to foedselsnummer,
+                KvalifiseringColumnNames.STATUS_COL_NAME to status
             ),
-            fieldDefinitions.associateBy { it.name }
+            KvalifiseringFieldDefinitions.fieldDefinitions.associateBy { it.name }
         )
     }
 }

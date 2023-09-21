@@ -30,29 +30,29 @@ object Famvern55Utils {
         fieldList: List<String>,
         columnSize: Int
     ) = if (fieldList.size % columnSize == 0) {
-            val calculationList =
-                if (fieldList.size / columnSize > 1)
-                    getRows(fieldList, columnSize) + getColumns(fieldList, fieldList.size / columnSize)
-                else
-                    getRows(fieldList, columnSize)
+        val calculationList =
+            if (fieldList.size / columnSize > 1)
+                getRows(fieldList, columnSize) + getColumns(fieldList, fieldList.size / columnSize)
+            else
+                getRows(fieldList, columnSize)
 
-            kostraRecordList.flatMap { kostraRecord ->
-                calculationList.mapNotNull { fieldList ->
-                    val itemList = fieldList.dropLast(1).map { item ->
-                        item to kostraRecord.fieldAsIntOrDefault(item)
-                    }
-                    val itemListSum = itemList.sumOf { item -> item.second }
-                    val sumItem = fieldList.last().let { item ->
-                        item to kostraRecord.fieldAsIntOrDefault(item)
-                    }
-
-                    if (itemListSum != sumItem.second) {
-                        CalculationItem(sumItem, itemList, listOf(kostraRecord.lineNumber))
-                    } else null
-
+        kostraRecordList.flatMap { kostraRecord ->
+            calculationList.mapNotNull { fieldList ->
+                val itemList = fieldList.dropLast(1).map { item ->
+                    item to kostraRecord.fieldAsIntOrDefault(item)
                 }
+                val itemListSum = itemList.sumOf { item -> item.second }
+                val sumItem = fieldList.last().let { item ->
+                    item to kostraRecord.fieldAsIntOrDefault(item)
+                }
+
+                if (itemListSum != sumItem.second) {
+                    CalculationItem(sumItem, itemList, listOf(kostraRecord.lineNumber))
+                } else null
+
             }
-        } else throw IllegalArgumentException(
-            "FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})"
-        )
+        }
+    } else throw IllegalArgumentException(
+        "FieldList (${fieldList.size}) != ($columnSize * ${fieldList.size / columnSize})"
+    )
 }

@@ -19,35 +19,18 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter {
-            (
-                    it[STATUS_COL_NAME] in codesThatRequiresDate
-                            && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
-                    ) || (
-                    it[STATUS_COL_NAME] !in codesThatRequiresDate
-                            && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) != null
-                    )
-        }.map {
-            if (
-                it[STATUS_COL_NAME] in codesThatRequiresDate
+            it[STATUS_COL_NAME] in codesThatRequiresDate
+                    && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
+        }
+        .map {
+            createValidationReportEntry(
+                "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
+                        "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for " +
+                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+            ).copy(
+                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
-                createValidationReportEntry(
-                    "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
-                            "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for " +
-                            "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
-                ).copy(
-                    caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
-                    journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                )
-            else
-                createValidationReportEntry(
-                    "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant " +
-                            "(${it[AVSL_DATO_COL_NAME]}), skal være blankt dersom det er krysset av for " +
-                            "svaralternativ $codeListThatDisallowsDate under feltet for 'Hva er status for deltakelsen " +
-                            "i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
-                ).copy(
-                    caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
-                    journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
-                )
         }.ifEmpty { null }
 
 
@@ -57,11 +40,6 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
         internal val codeListThatRequiredDate = fieldDefinitions
             .byColumnName(STATUS_COL_NAME).codeList
             .filter { it.code in codesThatRequiresDate }
-            .map { it.toString() }
-
-        internal val codeListThatDisallowsDate = fieldDefinitions
-            .byColumnName(STATUS_COL_NAME).codeList
-            .filter { it.code !in codesThatRequiresDate }
             .map { it.toString() }
     }
 }

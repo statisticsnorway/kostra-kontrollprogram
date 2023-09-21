@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Barnevern>
     <Avgiver Versjon="2020" Kommunenummer="0301" Kommunenavn="Oslo" Organisasjonsnummer="958935420"/>
-    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler"
+             StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="01011088194" Journalnummer="J1">
         <Melding SluttDato="2020-02-17" Konklusjon="1" Id="M1" StartDato="2020-02-10">
             <Melder Kode="1"/>
             <Melder Kode="2"/>
@@ -58,7 +59,8 @@
             </Undersokelse>
         </Melding>
     </Individ>
-    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="2" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i2" Fodselsnummer="01011099293" Journalnummer="J2">
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="2" Saksbehandler="Sara Saksbehandler"
+             StartDato="2020-02-10" Id="i2" Fodselsnummer="01011099293" Journalnummer="J2">
         <Melding Id="M2" StartDato="2020-02-10" Konklusjon="1" SluttDato="2020-02-17">
             <Melder Kode="1"/>
             <Saksinnhold Kode="1"/>
@@ -129,10 +131,12 @@
             </Undersokelse>
         </Melding>
     </Individ>
-    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="02011088123" Journalnummer="J3">
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler"
+             StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="02011088123" Journalnummer="J3">
         <Plan StartDato="2020-02-11" Id="P1" Plantype="1" SluttDato="2020-06-17"/>
     </Individ>
-    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler" StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="03011199282" Journalnummer="J4">
+    <Individ Bydelsnavn="Gamle Oslo" Bydelsnummer="02" Avslutta3112="1" Saksbehandler="Sara Saksbehandler"
+             StartDato="2020-02-10" Id="i1" SluttDato="2020-06-17" Fodselsnummer="03011199282" Journalnummer="J4">
         <Tiltak StartDato="2020-02-10" Id="T1" SluttDato="2020-03-10">
             <Lovhjemmel Kapittel="4" Paragraf="12" Lov="BVL" Ledd="1"/>
             <JmfrLovhjemmel Kapittel="4" Paragraf="8" Lov="BVL" Ledd="2"/>

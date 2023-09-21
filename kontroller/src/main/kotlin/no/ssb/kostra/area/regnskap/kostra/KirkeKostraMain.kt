@@ -3,11 +3,8 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
 import no.ssb.kostra.area.regnskap.RegnskapValidator
-import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.kirkekostra.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
 

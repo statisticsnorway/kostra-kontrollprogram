@@ -575,7 +575,8 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 ),
                 Code("4", "Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)"),
                 Code("5", "Deltakerens program ble avbrutt på grunn av flytting til annen kommune"),
-                Code("6", "Kun for Oslos bydeler: Deltakeren flyttet til annen bydel før programperioden var over")
+                Code("6", "Kun for Oslos bydeler: Deltakeren flyttet til annen bydel før programperioden var over"),
+                Code("7", "Deltakerens program er avsluttet etter avbrudd")
             ),
             mandatory = true
         ),

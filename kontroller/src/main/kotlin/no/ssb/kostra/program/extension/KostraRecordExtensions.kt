@@ -1,8 +1,8 @@
 package no.ssb.kostra.program.extension
 
+import no.ssb.kostra.program.DataType.INTEGER_TYPE
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.DataType.INTEGER_TYPE
 
 // CR NOTE: Only in use in tests
 fun KostraRecord.toRecordString(): String = fieldDefinitionByName.values

@@ -1,5 +1,6 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.REG_DATO_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
@@ -18,6 +19,7 @@ class Rule014RegistreringsDato : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filterNot { record -> record[KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME] == "0301" }
         .filter {
             it.fieldAs<LocalDate?>(REG_DATO_COL_NAME) == null
                     ||

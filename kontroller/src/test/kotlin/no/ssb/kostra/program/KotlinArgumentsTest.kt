@@ -69,4 +69,29 @@ class KotlinArgumentsTest : BehaviorSpec({
             }
         }
     }
+
+    Given("KotlinArguments#getInputContentAsStringList()") {
+
+        forAll(
+            row("empty content", "", listOf("")),
+            row("content with new line", "a\nb", listOf("a", "b")),
+            row("content with carriage return and new line", "a\r\nb", listOf("a", "b")),
+            row("content with carriage return and new line plus blank line at end", "a\r\nb\n", listOf("a", "b", "")),
+        ) { description, content, expectedList ->
+            When(description) {
+                val kotlinArguments = KotlinArguments(
+                    skjema = "15",
+                    aargang = Year.now().value.toString(),
+                    region = "030100",
+                    inputFileContent = content
+                )
+
+                val contentAsStringList = kotlinArguments.getInputContentAsStringList()
+
+                Then("getInputContentAsStringList() should produce the expectedList") {
+                    contentAsStringList shouldBe expectedList
+                }
+            }
+        }
+    }
 })

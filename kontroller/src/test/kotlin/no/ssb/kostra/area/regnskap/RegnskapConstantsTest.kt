@@ -1,10 +1,33 @@
 package no.ssb.kostra.area.regnskap
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
+import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain
 import no.ssb.kostra.program.KotlinArguments
 
 class RegnskapConstantsTest : BehaviorSpec({
+    Given("getRegnskapTypeBySkjema"){
+        forAll(
+            row("desc 0A", "0A", listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE)),
+            row("desc 0AK1", "0AK1", listOf(ACCOUNTING_TYPE_BEVILGNING)),
+        ) { description, skjema, expectedResult ->
+            When(description) {
+                val result = RegnskapConstants.getRegnskapTypeBySkjema(skjema)
+
+                Then("result should be as expected") {
+                    assertSoftly(result) {
+                        result shouldBe expectedResult
+                    }
+                }
+            }
+        }
+    }
+
     Given("mappingDuplicates") {
         val kotlinArguments = KotlinArguments(
             skjema = "S",
@@ -39,9 +62,49 @@ class RegnskapConstantsTest : BehaviorSpec({
             }
         }
 
+        When("skjema = 0AK1") {
+            val sut = kotlinArguments.copy(
+                skjema = "0AK1", kvartal = "1"
+            )
+
+            val result = RegnskapConstants.mappingDuplicates(sut)
+
+            Then("result should formatted as expected") {
+                result.toString() shouldBe (listOf(
+                    RegnskapConstants.FIELD_KONTOKLASSE,
+                    RegnskapConstants.FIELD_FUNKSJON,
+                    RegnskapConstants.FIELD_ART
+                ) to listOf(
+                    RegnskapConstants.TITLE_KONTOKLASSE,
+                    RegnskapConstants.TITLE_FUNKSJON,
+                    RegnskapConstants.TITLE_ART
+                )).toString()
+            }
+        }
+
         When("skjema = 0B") {
             val sut = kotlinArguments.copy(
                 skjema = "0B"
+            )
+
+            val result = RegnskapConstants.mappingDuplicates(sut)
+
+            Then("result should formatted as expected") {
+                result.toString() shouldBe (listOf(
+                    RegnskapConstants.FIELD_KONTOKLASSE,
+                    RegnskapConstants.FIELD_KAPITTEL,
+                    RegnskapConstants.FIELD_SEKTOR
+                ) to listOf(
+                    RegnskapConstants.TITLE_KONTOKLASSE,
+                    RegnskapConstants.TITLE_KAPITTEL,
+                    RegnskapConstants.TITLE_SEKTOR
+                )).toString()
+            }
+        }
+
+        When("skjema = 0BK1") {
+            val sut = kotlinArguments.copy(
+                skjema = "0BK1", kvartal = "1"
             )
 
             val result = RegnskapConstants.mappingDuplicates(sut)

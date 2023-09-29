@@ -139,8 +139,8 @@ object RegnskapConstants {
             .first()
 
     fun mappingDuplicates(arguments: KotlinArguments): Pair<List<String>, List<String>> =
-        when (getRegnskapTypeBySkjema(arguments.skjema)) {
-            listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE) ->
+        when (getRegnskapTypeBySkjema(arguments.skjema).firstOrNull()) {
+            ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE ->
                 listOf(
                     FIELD_KONTOKLASSE,
                     FIELD_FUNKSJON,
@@ -151,7 +151,7 @@ object RegnskapConstants {
                     TITLE_ART
                 )
 
-            listOf(ACCOUNTING_TYPE_BALANSE) ->
+            ACCOUNTING_TYPE_BALANSE ->
                 listOf(
                     FIELD_KONTOKLASSE,
                     FIELD_KAPITTEL,
@@ -162,7 +162,7 @@ object RegnskapConstants {
                     TITLE_SEKTOR
                 )
 
-            listOf(ACCOUNTING_TYPE_RESULTAT) ->
+            ACCOUNTING_TYPE_RESULTAT ->
                 listOf(
                     FIELD_ORGNR,
                     FIELD_KONTOKLASSE,

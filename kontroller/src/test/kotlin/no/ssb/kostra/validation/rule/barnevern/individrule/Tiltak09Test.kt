@@ -4,10 +4,11 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleWithArgsTest
-import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.dateInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.kategoriTypeInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
+import java.time.LocalDate
+import java.time.Year
 
 class Tiltak09Test : BehaviorSpec({
     include(
@@ -17,19 +18,22 @@ class Tiltak09Test : BehaviorSpec({
             expectedContextId = tiltakTypeInTest.id,
             ForAllRowItem(
                 "individ without tiltak",
-                individInTest
+                individInTest.copy(startDato = measureStartDateInTest)
             ),
             ForAllRowItem(
                 "individ with single tiltak",
                 individInTest.copy(
-                    tiltak = mutableListOf(tiltakTypeInTest)
+                    startDato = measureStartDateInTest,
+                    tiltak = mutableListOf(tiltakTypeInTest.copy(startDato = measureStartDateInTest))
                 )
             ),
             ForAllRowItem(
                 "individ with single plasseringstiltak",
                 individInTest.copy(
+                    startDato = measureStartDateInTest,
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(
+                            startDato = measureStartDateInTest,
                             kategori = kategoriTypeInTest.copy(kode = "1.1")
                         )
                     )
@@ -38,32 +42,34 @@ class Tiltak09Test : BehaviorSpec({
             ForAllRowItem(
                 "two overlapping plasseringstiltak, less than 90 days",
                 individInTest.copy(
+                    startDato = measureStartDateInTest,
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1),
+                            startDato = measureStartDateInTest,
                             sluttDato = null,
                             kategori = kategoriTypeInTest.copy(kode = "1.1")
                         ),
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1),
-                            sluttDato = dateInTest.minusYears(1).plusDays(89),
+                            startDato = measureStartDateInTest,
+                            sluttDato = measureStartDateInTest.plusDays(89),
                             kategori = kategoriTypeInTest.copy(kode = "1.2")
                         )
                     )
                 )
             ),
             ForAllRowItem(
-                "two overlapping plasseringstiltak, nore than 90 days",
+                "two overlapping plasseringstiltak, more than 90 days",
                 individInTest.copy(
+                    startDato = measureStartDateInTest,
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1),
+                            startDato = measureStartDateInTest,
                             sluttDato = null,
                             kategori = kategoriTypeInTest.copy(kode = "1.1")
                         ),
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1),
-                            sluttDato = dateInTest.minusYears(1).plusDays(100),
+                            startDato = measureStartDateInTest,
+                            sluttDato = measureStartDateInTest.plusDays(100),
                             kategori = kategoriTypeInTest.copy(kode = "1.2")
                         )
                     )
@@ -71,22 +77,23 @@ class Tiltak09Test : BehaviorSpec({
                 expectedErrorMessage = "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder"
             ),
             ForAllRowItem(
-                "three overlapping plasseringstiltak, nore than 90 days",
+                "three overlapping plasseringstiltak, more than 90 days",
                 individInTest.copy(
+                    startDato = measureStartDateInTest,
                     tiltak = mutableListOf(
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1),
+                            startDato = measureStartDateInTest,
                             sluttDato = null,
                             kategori = kategoriTypeInTest.copy(kode = "1.1")
                         ),
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1).plusDays(1),
-                            sluttDato = dateInTest.minusYears(1).plusDays(91),
+                            startDato = measureStartDateInTest.plusDays(1),
+                            sluttDato = measureStartDateInTest.plusDays(91),
                             kategori = kategoriTypeInTest.copy(kode = "1.2")
                         ),
                         tiltakTypeInTest.copy(
-                            startDato = dateInTest.minusYears(1).plusDays(2),
-                            sluttDato = dateInTest.minusYears(1).plusDays(92),
+                            startDato = measureStartDateInTest.plusDays(2),
+                            sluttDato = measureStartDateInTest.plusDays(92),
                             kategori = kategoriTypeInTest.copy(kode = "1.2")
                         )
                     )
@@ -95,4 +102,8 @@ class Tiltak09Test : BehaviorSpec({
             )
         )
     )
-})
+}) {
+    companion object {
+        private val measureStartDateInTest = LocalDate.of(Year.now().value - 1, 1, 1)
+    }
+}

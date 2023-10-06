@@ -73,10 +73,10 @@ class KotlinArgumentsTest : BehaviorSpec({
     Given("KotlinArguments#getInputContentAsStringList()") {
 
         forAll(
-            row("empty content", "", listOf("")),
+            row("empty content", "", listOf()),
             row("content with new line", "a\nb", listOf("a", "b")),
             row("content with carriage return and new line", "a\r\nb", listOf("a", "b")),
-            row("content with carriage return and new line plus blank line at end", "a\r\nb\n", listOf("a", "b", "")),
+            row("content with carriage return and new line plus blank line at end", "a\r\nb\n", listOf("a", "b")),
         ) { description, content, expectedList ->
             When(description) {
                 val kotlinArguments = KotlinArguments(

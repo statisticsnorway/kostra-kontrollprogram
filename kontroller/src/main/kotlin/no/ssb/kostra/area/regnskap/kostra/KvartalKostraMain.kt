@@ -48,11 +48,10 @@ class KvartalKostraMain(
     override val funksjonList =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>()
+            result.addAll(finansielleFunksjoner)
 
-            if (arguments.skjema in listOf("0AK1", "0AK2", "0AK3", "0AK4")) {
+            if (arguments.skjema in listOf("0AK1", "0AK2", "0AK3", "0AK4"))
                 result.addAll(kommunaleFunksjoner)
-                result.addAll(finansielleFunksjoner)
-            }
 
             if (arguments.skjema in listOf("0CK1", "0CK2", "0CK3", "0CK4"))
                 result.addAll(fylkeskommunaleFunksjoner)

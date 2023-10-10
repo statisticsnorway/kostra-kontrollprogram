@@ -61,7 +61,7 @@ class KvartalKostraMain(
                 result.addAll(fylkeskommunaleFunksjoner)
             }
 
-            result.map { it.padEnd(4, ' ') }.distinct().sorted()
+            result.map { it.padEnd(fieldFunksjonKapittelLength, ' ') }.distinct().sorted()
         } else
             emptyList()
 
@@ -86,7 +86,7 @@ class KvartalKostraMain(
             // @formatter:on
             )
 
-            result.map { it.padEnd(4, ' ') }.sorted()
+            result.map { it.padEnd(fieldFunksjonKapittelLength, ' ') }.distinct().sorted()
         } else
             emptyList()
 
@@ -123,7 +123,7 @@ class KvartalKostraMain(
             if (arguments.region in osloKommuner) {
                 result.addAll(osloArter)
             }
-            result.sorted()
+            result.map { it.padEnd(fieldArtSektorLength, ' ') }.distinct().sorted()
         } else
             emptyList()
 
@@ -144,7 +144,7 @@ class KvartalKostraMain(
             "900",
             "Z", "z", "~"
             // @formatter:on
-            )
+            ).map { it.padEnd(fieldArtSektorLength, ' ') }.distinct().sorted()
         else
             emptyList()
 

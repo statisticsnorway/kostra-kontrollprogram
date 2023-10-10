@@ -17,6 +17,9 @@ abstract class RegnskapValidator(
         Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
     )
 
+    protected val fieldFunksjonKapittelLength = RegnskapFieldDefinitions.fieldDefinitionsByName[RegnskapConstants.FIELD_FUNKSJON_KAPITTEL]?.size ?: 4
+    protected val fieldArtSektorLength = RegnskapFieldDefinitions.fieldDefinitionsByName[RegnskapConstants.FIELD_ART_SEKTOR]?.size ?: 3
+
     abstract val funksjonList: List<String>
     abstract val kapittelList: List<String>
     abstract val artList: List<String>

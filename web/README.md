@@ -11,7 +11,7 @@ datafiler.
 java -jar <navn på JAR-fil>
 ```
 
-Åpne en nettleser med adressen som vises, f.eks. http://localhost:8080/
+Åpne en nettleser med adressen som vises i kommandolinjevinduet, f.eks. http://localhost:8080/
 
 ## Open API dokumentasjon
 

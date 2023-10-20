@@ -1,4 +1,4 @@
-# **Veiledning for KOSTRA-kontrollprogrammet - webbasert**
+# **Veiledning for KOSTRA-kontrollprogrammet - web-basert**
 
 ![img.png](img.png)
 kostra-kontrollprogram-web er en web-app som kjøres lokalt og benytter kostra-kontrollprogram internt for kontroll av

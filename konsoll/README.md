@@ -1,4 +1,4 @@
-# **Veiledning for KOSTRA-kontrollprogrammet - kommandolinje-basert**
+# **Veiledning for KOSTRA-kontrollprogrammet - kommandolinjebasert**
 
 **Begrep:**
 * **&lt;rapporteringsår&gt; =**  rapporteringsår (obligatorisk), det året dataene i filuttrekket gjelder for, f.eks. 2020.

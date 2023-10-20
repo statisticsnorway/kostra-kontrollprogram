@@ -1,8 +1,23 @@
-# kostra-kontrollprogram-web
+# **Veiledning for KOSTRA-kontrollprogrammet - web-basert**
 
 ![img.png](img.png)
 kostra-kontrollprogram-web er en web-app som kjøres lokalt og benytter kostra-kontrollprogram internt for kontroll av
 datafiler.
+
+## For sluttbrukere
+
+Åpne et kommandolinjevindu og start webapplikasjonen med:
+```bash
+java -jar <navn på JAR-fil>
+```
+
+Åpne en nettleser med adressen som vises i kommandolinjevinduet, f.eks. http://localhost:8080/
+
+## Open API dokumentasjon
+
+API-dokumentasjon finnes på http://localhost:8080/swagger/kostra-kontrollprogram-api-1.0.yml
+
+# For utviklere
 
 ## Komme i gang med utvikling backend 
 
@@ -37,12 +52,3 @@ Kjøre frontend-tester (også en del av `mvn verify`)
 npx vitest run
 ```
 
-## Bruk (sluttbrukere)
-
-```bash
-java -jar <navn på JAR-fil>
-```
-
-## Open API
-
-http://localhost:8080/swagger/kostra-kontrollprogram-api-1.0.yml

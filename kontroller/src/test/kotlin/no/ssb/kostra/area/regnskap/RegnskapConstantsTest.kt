@@ -7,11 +7,12 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain
+import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNT_TYPE_DRIFT
+import no.ssb.kostra.area.regnskap.RegnskapConstants.DEFAULT_MISSING_VALUE
 import no.ssb.kostra.program.KotlinArguments
 
 class RegnskapConstantsTest : BehaviorSpec({
-    Given("getRegnskapTypeBySkjema"){
+    Given("getRegnskapTypeBySkjema") {
         forAll(
             row("desc 0A", "0A", listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE)),
             row("desc 0AK1", "0AK1", listOf(ACCOUNTING_TYPE_BEVILGNING)),
@@ -157,4 +158,19 @@ class RegnskapConstantsTest : BehaviorSpec({
         }
     }
 
+    Given("getKontoTypeBySkjemaAndKontoklasse") {
+        forAll(
+            row("0A & 1 -> BEV", "0A", "1", ACCOUNT_TYPE_DRIFT),
+            row("0A & 3 -> MISSING", "0A", "3", DEFAULT_MISSING_VALUE)
+        ) { description, skjema, kontoklasse, expectedResult ->
+
+            When(description) {
+                val result = RegnskapConstants.getKontoTypeBySkjemaAndKontoklasse(skjema, kontoklasse)
+
+                Then("result should be as expected") {
+                    result shouldBe expectedResult
+                }
+            }
+        }
+    }
 })

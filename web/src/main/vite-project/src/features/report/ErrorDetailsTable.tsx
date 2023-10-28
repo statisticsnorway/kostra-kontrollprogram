@@ -12,7 +12,7 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileRep
                     <table className="table table-striped table-sm">
                         <thead>
                         <tr>
-                            <th scope="col">Feilkode</th>
+                            <th scope="col">Grad</th>
                             <th scope="col">Journalnummer</th>
                             <th scope="col">Saksbehandler</th>
                             <th scope="col">Kontroll</th>

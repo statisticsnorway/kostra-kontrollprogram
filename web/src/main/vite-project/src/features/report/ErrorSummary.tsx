@@ -33,7 +33,7 @@ const ErrorSummary = ({reportEntries}: {reportEntries: NonNullable<FileReportEnt
                 <table className="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Feilkode</th>
+                        <th scope="col">Grad</th>
                         <th scope="col">Antall</th>
                         <th scope="col">Kontroll</th>
                     </tr>

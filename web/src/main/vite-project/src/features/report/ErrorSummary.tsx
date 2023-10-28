@@ -26,7 +26,7 @@ const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAgg
 const ErrorSummary = ({reportEntries}: {reportEntries: NonNullable<FileReportEntryVm[]>}) =>
     <div className="card mt-3">
         <div className="card-body">
-            <h5 className="card-title mb-0">Oversikt feilkoder og antall</h5>
+            <h5 className="card-title mb-0">Oppsummering</h5>
         </div>
         <ul className="list-group list-group-flush">
             <li className="list-group-item">
@@ -35,7 +35,7 @@ const ErrorSummary = ({reportEntries}: {reportEntries: NonNullable<FileReportEnt
                     <tr>
                         <th scope="col">Feilkode</th>
                         <th scope="col">Antall</th>
-                        <th scope="col">Kontrolltype</th>
+                        <th scope="col">Kontroll</th>
                     </tr>
                     </thead>
                     <tbody data-testid="error-summary-table-tbody">

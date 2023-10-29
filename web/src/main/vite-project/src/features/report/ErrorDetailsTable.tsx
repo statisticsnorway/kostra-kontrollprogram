@@ -22,11 +22,11 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileRep
                         <tbody data-testid="error-details-table-tbody">
                         {reportEntries.map((reportEntry, index) =>
                             <tr key={index}>
-                                <th scope="row"><ErrorLevel level={reportEntry.feilkode}/></th>
-                                <td>{reportEntry.journalnummer}</td>
-                                <td>{reportEntry.saksbehandler}</td>
-                                <td>{reportEntry.kontrollnummer}</td>
-                                <td>{reportEntry.kontrolltekst}</td>
+                                <th scope="row"><ErrorLevel level={reportEntry.severity}/></th>
+                                <td>{reportEntry.journalId}</td>
+                                <td>{reportEntry.caseworker}</td>
+                                <td>{reportEntry.ruleName}</td>
+                                <td>{reportEntry.messageText}</td>
                             </tr>)}
                         </tbody>
                     </table>

@@ -25,7 +25,7 @@ describe("ErrorSummary", () => {
             expect(screen.getByText("1")).toBeDefined()
         })
         test("expect 'Kontrolltype' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTest.kontrollnummer)).toBeDefined()
+            expect(screen.getByText(fileReportEntryInTest.ruleName)).toBeDefined()
         })
     })
 })

@@ -22,13 +22,13 @@ describe("ErrorDetailsTable", () => {
             expect(screen.getByText("Advarsel")).toBeDefined()
         })
         test("expect 'Journalnummer' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTest.journalnummer)).toBeDefined()
+            expect(screen.getByText(fileReportEntryInTest.journalId as string)).toBeDefined()
         })
         test("expect 'Saksbehandler' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTest.saksbehandler)).toBeDefined()
+            expect(screen.getByText(fileReportEntryInTest.caseworker)).toBeDefined()
         })
         test("expect 'Kontrolltype' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTest.kontrollnummer)).toBeDefined()
+            expect(screen.getByText(fileReportEntryInTest.ruleName)).toBeDefined()
         })
     })
 })

@@ -1,20 +1,20 @@
 import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 import ErrorLevel from "./ErrorLevel";
-import KostraErrorCode from "../../kostratypes/kostraErrorCode";
+import KostraSeverity from "../../kostratypes/kostraSeverity";
 
 interface ErrorAggregateEntry {
-    feilkode: KostraErrorCode
+    feilkode: KostraSeverity
     kontrollnummer: string,
     itemCount: number
 }
 
 const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAggregateEntry[] => reportEntries.reduce(
     (accumulator: ErrorAggregateEntry[], currentValue) => {
-        const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.kontrollnummer)
+        const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.ruleName)
         if (findIndex < 0) {
             accumulator.push({
-                feilkode: currentValue.feilkode,
-                kontrollnummer: currentValue.kontrollnummer,
+                feilkode: currentValue.severity,
+                kontrollnummer: currentValue.ruleName,
                 itemCount: 1
             })
         } else {

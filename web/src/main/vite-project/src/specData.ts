@@ -1,5 +1,5 @@
 import KostraFormVm from "./kostratypes/kostraFormVm";
-import KostraErrorCode from "./kostratypes/kostraErrorCode";
+import KostraSeverity from "./kostratypes/kostraSeverity";
 import FileReportVm from "./kostratypes/fileReportVm";
 import FileReportEntryVm from "./kostratypes/fileReportEntryVm";
 
@@ -31,16 +31,19 @@ export const kostraFormInTest: KostraFormVm = {
 }
 
 export const fileReportEntryInTest: FileReportEntryVm = {
-    journalnummer: "~journalnummer~",
-    saksbehandler: "~saksbehandler~",
-    kontrollnummer: "~kontrollnummer~",
-    kontrolltekst: "~kontrolltekst~",
-    feilkode: KostraErrorCode.NORMAL_ERROR
+    severity: KostraSeverity.WARNING,
+    caseworker: "~saksbehandler~",
+    journalId: "~journalnummer~",
+    individId: "~individId~",
+    contextId: "~contextId~",
+    ruleName: "~kontrollnummer~",
+    messageText: "~kontrolltekst~",
+    lineNumbers: [1, 2, 3]
 }
 
 export const fileReportInTest: FileReportVm = {
     innparametere: kostraFormInTest,
     antallKontroller: 42,
-    feilkode: KostraErrorCode.NORMAL_ERROR,
+    feilkode: KostraSeverity.WARNING,
     feil: [fileReportEntryInTest]
 }

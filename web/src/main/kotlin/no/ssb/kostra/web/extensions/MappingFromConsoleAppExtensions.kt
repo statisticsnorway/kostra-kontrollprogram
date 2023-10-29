@@ -27,7 +27,7 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
                     null -> accumulator[key] = fileReportEntry
                     else -> accumulator.replace(
                         key, currentEntry.copy(
-                            lineNumbers = accumulator[key]!!.lineNumbers + fileReportEntry.lineNumbers
+                            lineNumbers = currentEntry.lineNumbers + fileReportEntry.lineNumbers
                         )
                     )
                 }

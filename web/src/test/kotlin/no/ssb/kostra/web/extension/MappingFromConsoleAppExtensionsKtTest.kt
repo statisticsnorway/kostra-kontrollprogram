@@ -4,15 +4,17 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.report.ValidationResult
+import no.ssb.kostra.web.extension.MappingToConsoleAppExtensionsKtTest.Companion.generateCompanyIdInTest
 import no.ssb.kostra.web.extensions.reduceReportEntries
 import no.ssb.kostra.web.extensions.toErrorReportVm
+import no.ssb.kostra.web.extensions.toKostraArguments
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
-import java.time.LocalDateTime
+import no.ssb.kostra.web.viewmodel.KostraFormVm
+import java.time.Year
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
@@ -79,19 +81,16 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
     }
 
     Given("ValidationReportArguments.toErrorReportVm") {
-        val kotlinArguments = KotlinArguments(
+        val kotlinArguments = KostraFormVm(
             skjema = "0A",
-            aargang = "2020",
-            kvartal = "1",
+            aar = Year.now().value,
             region = "123456",
-            navn = "Uoppgitt",
-            orgnr = "987654321",
-            foretaknr = "123456789",
-            harVedlegg = true,
-            isRunAsExternalProcess = false,
-            inputFileContent = "1;2;3;4;5;6;7;8;9;10;11;12;13;14;15",
-            startTime = LocalDateTime.now()
-        )
+            orgnrForetak = generateCompanyIdInTest('9'),
+            orgnrVirksomhet = listOf(
+                CompanyIdVm(generateCompanyIdInTest('8')),
+                CompanyIdVm(generateCompanyIdInTest('9'))
+            )
+        ).toKostraArguments("".byteInputStream())
 
         val firstValidationReportEntry = ValidationReportEntry(
             severity = Severity.ERROR,

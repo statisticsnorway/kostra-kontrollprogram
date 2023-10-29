@@ -12,13 +12,12 @@ import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.web.extensions.reduceReportEntries
 import no.ssb.kostra.web.extensions.toErrorReportVm
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
-import no.ssb.kostra.web.viewmodel.FileReportEntryVm
 import java.time.LocalDateTime
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
-    Given("List<FileReportEntryVm>.reduceReportEntries") {
-        val firstValidationReportEntry = FileReportEntryVm(
+    Given("List<ValidationReportEntry>.reduceReportEntries") {
+        val firstValidationReportEntry = ValidationReportEntry(
             severity = Severity.ERROR,
             caseworker = "caseworker",
             journalId = "journalId",
@@ -26,7 +25,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             contextId = "contextId",
             ruleName = "ruleName",
             messageText = "messageText",
-            lineNumbers = listOf(1, 2, 3)
+            lineNumbers = listOf(3, 2, 1, 4)
         )
 
         val secondValidationReportEntry = firstValidationReportEntry.copy(
@@ -62,8 +61,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     contextId shouldBe firstValidationReportEntry.contextId
                     ruleName shouldBe firstValidationReportEntry.ruleName
                     messageText shouldBe firstValidationReportEntry.messageText
-                    lineNumbers shouldBe
-                            firstValidationReportEntry.lineNumbers + secondValidationReportEntry.lineNumbers
+                    lineNumbers shouldBe listOf(3, 2, 1, 4, 4, 5, 6)
                 }
 
                 assertSoftly(reducedList.last()) {
@@ -103,7 +101,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             contextId = "contextId",
             ruleName = "ruleName",
             messageText = "messageText",
-            lineNumbers = listOf(1, 2, 3)
+            lineNumbers = listOf(4, 2, 1, 3)
         )
 
         val secondValidationReportEntry = firstValidationReportEntry.copy(
@@ -153,8 +151,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     contextId shouldBe firstValidationReportEntry.contextId
                     ruleName shouldBe firstValidationReportEntry.ruleName
                     messageText shouldBe firstValidationReportEntry.messageText.replace("<br/>", "")
-                    lineNumbers shouldBe
-                            firstValidationReportEntry.lineNumbers + secondValidationReportEntry.lineNumbers
+                    lineNumbers shouldBe listOf(1, 2, 3, 4, 5, 6)
                 }
             }
         }

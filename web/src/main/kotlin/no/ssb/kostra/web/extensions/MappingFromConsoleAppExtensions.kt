@@ -19,7 +19,18 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
             messageText = it.messageText.replace("<br/>", ""),
             lineNumbers = it.lineNumbers
         )
-    }.let { validationReportEntries ->
+    }.fold(mutableMapOf<String, FileReportEntryVm>()) { acc, fileReportEntry ->
+        /** Group by ruleName + messageText and accumulate line numbers */
+        acc.also { accumulator ->
+            (fileReportEntry.ruleName + fileReportEntry.messageText).also { key ->
+                accumulator[key]?.let { currentEntry ->
+                    accumulator.replace(
+                        key, currentEntry.copy(lineNumbers = currentEntry.lineNumbers + fileReportEntry.lineNumbers)
+                    )
+                } ?: accumulator.put(key, fileReportEntry)
+            }
+        }
+    }.values.let { reducedValidationReportEntries ->
         FileReportVm(
             innparametere = with(this.kotlinArguments) {
                 KostraFormVm(
@@ -33,7 +44,7 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
                 )
             },
             antallKontroller = this.validationResult.numberOfControls,
-            feil = validationReportEntries,
-            severity = validationReportEntries.map { it.severity }.maxByOrNull { it.ordinal } ?: Severity.OK
+            feil = reducedValidationReportEntries,
+            severity = reducedValidationReportEntries.map { it.severity }.maxByOrNull { it.ordinal } ?: Severity.OK
         )
     }

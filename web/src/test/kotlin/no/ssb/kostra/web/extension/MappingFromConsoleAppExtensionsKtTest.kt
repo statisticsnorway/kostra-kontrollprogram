@@ -29,7 +29,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             startTime = LocalDateTime.now()
         )
 
-        val validationReportEntry = ValidationReportEntry(
+        val firstValidationReportEntry = ValidationReportEntry(
             severity = Severity.ERROR,
             caseworker = "caseworker",
             journalId = "journalId",
@@ -40,8 +40,16 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             lineNumbers = listOf(1, 2, 3)
         )
 
+        val secondValidationReportEntry = firstValidationReportEntry.copy(
+            caseworker = "caseworker2",
+            journalId = "journalId2",
+            individId = "individId2",
+            contextId = "contextId2",
+            lineNumbers = listOf(4, 5, 6)
+        )
+
         val validationResult = ValidationResult(
-            reportEntries = listOf(validationReportEntry),
+            reportEntries = listOf(firstValidationReportEntry, secondValidationReportEntry),
             numberOfControls = 42
         )
 
@@ -72,14 +80,15 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                 }
 
                 assertSoftly(fileReportVm.feil.first()) {
-                    severity shouldBe validationReportEntry.severity
-                    caseworker shouldBe validationReportEntry.caseworker
-                    journalId shouldBe validationReportEntry.journalId
-                    individId shouldBe validationReportEntry.individId
-                    contextId shouldBe validationReportEntry.contextId
-                    ruleName shouldBe validationReportEntry.ruleName
-                    messageText shouldBe validationReportEntry.messageText.replace("<br/>", "")
-                    lineNumbers shouldBe validationReportEntry.lineNumbers
+                    severity shouldBe firstValidationReportEntry.severity
+                    caseworker shouldBe firstValidationReportEntry.caseworker
+                    journalId shouldBe firstValidationReportEntry.journalId
+                    individId shouldBe firstValidationReportEntry.individId
+                    contextId shouldBe firstValidationReportEntry.contextId
+                    ruleName shouldBe firstValidationReportEntry.ruleName
+                    messageText shouldBe firstValidationReportEntry.messageText.replace("<br/>", "")
+                    lineNumbers shouldBe
+                            firstValidationReportEntry.lineNumbers + secondValidationReportEntry.lineNumbers
                 }
             }
         }

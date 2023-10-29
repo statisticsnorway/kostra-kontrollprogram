@@ -1,28 +1,85 @@
 package no.ssb.kostra.web.extension
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.web.extensions.toKostraErrorCode
-import no.ssb.kostra.web.viewmodel.Constants
-import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationReportArguments
+import no.ssb.kostra.validation.report.ValidationReportEntry
+import no.ssb.kostra.validation.report.ValidationResult
+import no.ssb.kostra.web.extensions.toErrorReportVm
+import no.ssb.kostra.web.viewmodel.CompanyIdVm
+import java.time.LocalDateTime
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
-    Given("all error codes as int") {
-        forAll(
-            row(Constants.NORMAL_ERROR, KostraErrorCode.NORMAL_ERROR),
-            row(Constants.CRITICAL_ERROR, KostraErrorCode.CRITICAL_ERROR),
-            row(Constants.SYSTEM_ERROR, KostraErrorCode.SYSTEM_ERROR),
-            row(Constants.PARAMETER_ERROR, KostraErrorCode.PARAMETER_ERROR),
-            row(Constants.NO_ERROR, KostraErrorCode.NO_ERROR)
-        ) { errorCodeAsInt, expectedEnumErrorCode ->
-            When("toKostraErrorCode $errorCodeAsInt") {
-                val mappedErrorCode = errorCodeAsInt.toKostraErrorCode()
+    Given("ValidationReportArguments.toErrorReportVm") {
+        val kotlinArguments = KotlinArguments(
+            skjema = "0A",
+            aargang = "2020",
+            kvartal = "1",
+            region = "123456",
+            navn = "Uoppgitt",
+            orgnr = "987654321",
+            foretaknr = "123456789",
+            harVedlegg = true,
+            isRunAsExternalProcess = false,
+            inputFileContent = "1;2;3;4;5;6;7;8;9;10;11;12;13;14;15",
+            startTime = LocalDateTime.now()
+        )
 
-                Then("mappedErrorCode should be as expected") {
-                    mappedErrorCode shouldBe expectedEnumErrorCode
+        val validationReportEntry = ValidationReportEntry(
+            severity = Severity.ERROR,
+            caseworker = "caseworker",
+            journalId = "journalId",
+            individId = "individId",
+            contextId = "contextId",
+            ruleName = "ruleName",
+            messageText = "messageText",
+            lineNumbers = listOf(1, 2, 3)
+        )
+
+        val validationResult = ValidationResult(
+            reportEntries = listOf(validationReportEntry),
+            numberOfControls = 42
+        )
+
+        val sut = ValidationReportArguments(
+            kotlinArguments = kotlinArguments,
+            validationResult = validationResult
+        )
+
+        When("toErrorReportVm") {
+            val fileReportVm = sut.toErrorReportVm()
+
+            Then("fileReportVm should be as expected") {
+                assertSoftly(fileReportVm.innparametere) {
+                    skjema shouldBe kotlinArguments.skjema
+                    aar shouldBe kotlinArguments.aargang.toInt()
+                    region shouldBe kotlinArguments.region
+                    kvartal shouldBe kotlinArguments.kvartal
+                    orgnrForetak shouldBe kotlinArguments.foretaknr
+                    navn shouldBe kotlinArguments.navn
+                    orgnrVirksomhet shouldBe kotlinArguments.orgnr.split(",")
+                        .map { CompanyIdVm(orgnr = it) }
+                }
+
+                assertSoftly(fileReportVm) {
+                    antallKontroller shouldBe validationResult.numberOfControls
+                    severity shouldBe Severity.ERROR
+                    feil.size shouldBe 1
+                }
+
+                assertSoftly(fileReportVm.feil.first()) {
+                    severity shouldBe validationReportEntry.severity
+                    caseworker shouldBe validationReportEntry.caseworker
+                    journalId shouldBe validationReportEntry.journalId
+                    individId shouldBe validationReportEntry.individId
+                    contextId shouldBe validationReportEntry.contextId
+                    ruleName shouldBe validationReportEntry.ruleName
+                    messageText shouldBe validationReportEntry.messageText.replace("<br/>", "")
+                    lineNumbers shouldBe validationReportEntry.lineNumbers
                 }
             }
         }

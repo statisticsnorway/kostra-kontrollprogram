@@ -22,6 +22,9 @@ data class KostraFormVm(
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")
     val region: String = "",
 
+    @field:Pattern(regexp = "\\d", message = "Kvartal må bestå av 1 siffer")
+    val kvartal: String? = null,
+
     val navn: String? = null,
 
     @field:Pattern(regexp = "[8|9]\\d{8}", message = "Må starte med 8 eller 9 etterfulgt av 8 siffer")

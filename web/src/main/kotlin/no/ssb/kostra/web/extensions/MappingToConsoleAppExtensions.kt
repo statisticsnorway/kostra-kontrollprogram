@@ -6,6 +6,7 @@ import java.io.BufferedReader
 import java.io.InputStream
 
 private const val SEPARATOR_CHAR = ","
+internal const val QUARTER_FALLBACK_VALUE = " "
 internal const val NAME_FALLBACK_VALUE = "UOPPGITT"
 private val FALLBACK_COMPANY_ID = " ".repeat(9)
 
@@ -14,7 +15,7 @@ fun KostraFormVm.toKostraArguments(
 ) = KotlinArguments(
     skjema = skjema,
     aargang = aar.toString(),
-    kvartal = " ",
+    kvartal = kvartal ?: QUARTER_FALLBACK_VALUE,
     region = region,
     navn = navn ?: NAME_FALLBACK_VALUE,
     orgnr = unitOrgnr(),

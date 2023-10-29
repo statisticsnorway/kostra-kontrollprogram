@@ -1,10 +1,12 @@
 package no.ssb.kostra.web.extension
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.web.extensions.NAME_FALLBACK_VALUE
+import no.ssb.kostra.web.extensions.QUARTER_FALLBACK_VALUE
 import no.ssb.kostra.web.extensions.toKostraArguments
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -34,30 +36,36 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     skjema = "0A",
                     aar = Year.now().value,
                     region = "123456",
-                    orgnrVirksomhet = emptyList()
+                    navn = "~navn~"
                 )
             ),
             row(
                 KostraFormVm(
-                    skjema = "0A",
+                    skjema = "0AK1",
                     aar = Year.now().value,
                     region = "123456",
-                    navn = "~navn~"
+                    kvartal = "1"
                 )
             )
         ) { sut ->
-            When("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet} ${sut.navn}") {
+            When("toKostraArguments ${sut}") {
                 val arguments = sut.toKostraArguments("".byteInputStream())
 
                 Then("arguments should be as expected") {
-                    arguments.aargang shouldBe Year.now().value.toString()
-                    arguments.region shouldBe "123456"
+                    assertSoftly(arguments) {
+                        aargang shouldBe Year.now().value.toString()
+                        region shouldBe sut.region
+                        skjema shouldBe sut.skjema
 
-                    arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
-                    arguments.orgnr shouldBe generateCompanyIdInTest(' ')
+                        foretaknr shouldBe generateCompanyIdInTest(' ')
+                        orgnr shouldBe generateCompanyIdInTest(' ')
 
-                    if (sut.navn == null) arguments.navn shouldBe NAME_FALLBACK_VALUE
-                    else arguments.navn shouldBe sut.navn
+                        if (sut.kvartal == null) kvartal shouldBe QUARTER_FALLBACK_VALUE
+                        else kvartal shouldBe sut.kvartal
+
+                        if (sut.navn == null) navn shouldBe NAME_FALLBACK_VALUE
+                        else navn shouldBe sut.navn
+                    }
                 }
             }
         }

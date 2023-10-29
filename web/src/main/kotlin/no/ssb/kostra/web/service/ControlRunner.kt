@@ -19,5 +19,5 @@ class ControlRunner {
         kotlinArguments = kostraForm.toKostraArguments(
             inputStream = inputStream
         )
-    ).toErrorReportVm(kostraForm)
+    ).toErrorReportVm()
 }

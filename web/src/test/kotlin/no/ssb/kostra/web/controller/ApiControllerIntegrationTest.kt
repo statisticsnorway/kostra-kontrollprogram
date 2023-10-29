@@ -145,6 +145,18 @@ class ApiControllerIntegrationTest(
             ),
 
             row(
+                "invalid kvartal",
+                KostraFormVm(
+                    aar = Year.now().value,
+                    skjema = "15F",
+                    region = "123456",
+                    kvartal = "a"
+                ),
+                "kvartal",
+                "Kvartal må bestå av 1 siffer"
+            ),
+
+            row(
                 "empty filnavn",
                 KostraFormVm(
                     aar = Year.now().value,

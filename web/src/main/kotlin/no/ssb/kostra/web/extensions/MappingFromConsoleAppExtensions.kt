@@ -7,6 +7,25 @@ import no.ssb.kostra.web.viewmodel.FileReportEntryVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
+
+fun List<FileReportEntryVm>.reduceReportEntries() =
+    this.filter { it.lineNumbers.any() }
+        .fold(mutableMapOf<String, FileReportEntryVm>()) { acc, fileReportEntry ->
+            /** Group by ruleName + messageText and accumulate line numbers */
+            acc.also { accumulator ->
+                (fileReportEntry.ruleName + fileReportEntry.messageText).also { key ->
+                    when (val currentEntry = accumulator[key]) {
+                        null -> accumulator[key] = fileReportEntry
+                        else -> accumulator.replace(
+                            key, currentEntry.copy(
+                                lineNumbers = currentEntry.lineNumbers + fileReportEntry.lineNumbers
+                            )
+                        )
+                    }
+                }
+            }
+        }.values.plus(this.filter { it.lineNumbers.none() })
+
 fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
     this.validationResult.reportEntries.map {
         FileReportEntryVm(
@@ -19,21 +38,7 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
             messageText = it.messageText.replace("<br/>", ""),
             lineNumbers = it.lineNumbers
         )
-    }.fold(mutableMapOf<String, FileReportEntryVm>()) { acc, fileReportEntry ->
-        /** Group by ruleName + messageText and accumulate line numbers */
-        acc.also { accumulator ->
-            (fileReportEntry.ruleName + fileReportEntry.messageText).also { key ->
-                when (val currentEntry = accumulator[key]) {
-                    null -> accumulator[key] = fileReportEntry
-                    else -> accumulator.replace(
-                        key, currentEntry.copy(
-                            lineNumbers = currentEntry.lineNumbers + fileReportEntry.lineNumbers
-                        )
-                    )
-                }
-            }
-        }
-    }.values.let { reducedValidationReportEntries ->
+    }.reduceReportEntries().let { reducedValidationReportEntries ->
         FileReportVm(
             innparametere = with(this.kotlinArguments) {
                 KostraFormVm(

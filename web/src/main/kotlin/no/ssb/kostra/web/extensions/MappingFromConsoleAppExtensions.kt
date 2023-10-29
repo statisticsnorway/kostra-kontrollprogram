@@ -23,11 +23,14 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
         /** Group by ruleName + messageText and accumulate line numbers */
         acc.also { accumulator ->
             (fileReportEntry.ruleName + fileReportEntry.messageText).also { key ->
-                accumulator[key]?.let { currentEntry ->
-                    accumulator.replace(
-                        key, currentEntry.copy(lineNumbers = currentEntry.lineNumbers + fileReportEntry.lineNumbers)
+                when (val currentEntry = accumulator[key]) {
+                    null -> accumulator[key] = fileReportEntry
+                    else -> accumulator.replace(
+                        key, currentEntry.copy(
+                            lineNumbers = accumulator[key]!!.lineNumbers + fileReportEntry.lineNumbers
+                        )
                     )
-                } ?: accumulator.put(key, fileReportEntry)
+                }
             }
         }
     }.values.let { reducedValidationReportEntries ->

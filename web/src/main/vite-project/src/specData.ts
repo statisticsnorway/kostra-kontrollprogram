@@ -30,7 +30,18 @@ export const kostraFormInTest: KostraFormVm = {
     skjemaFil: createMockFileList()
 }
 
-export const fileReportEntryInTest: FileReportEntryVm = {
+export const fileReportEntryInTestWithRequiredPropsSet: FileReportEntryVm = {
+    severity: KostraSeverity.WARNING,
+    caseworker: null,
+    journalId: null,
+    individId: null,
+    contextId: null,
+    ruleName: "~kontrollnummer~",
+    messageText: "~kontrolltekst~",
+    lineNumbers: null
+}
+
+export const fileReportEntryInTestWithAllPropsSet: FileReportEntryVm = {
     severity: KostraSeverity.WARNING,
     caseworker: "~saksbehandler~",
     journalId: "~journalnummer~",
@@ -45,5 +56,5 @@ export const fileReportInTest: FileReportVm = {
     innparametere: kostraFormInTest,
     antallKontroller: 42,
     feilkode: KostraSeverity.WARNING,
-    feil: [fileReportEntryInTest]
+    feil: [fileReportEntryInTestWithAllPropsSet]
 }

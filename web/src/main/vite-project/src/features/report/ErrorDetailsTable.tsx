@@ -1,8 +1,27 @@
 import ErrorLevel from "./ErrorLevel";
 import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 
-const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileReportEntryVm[]> }) =>
-    <div className="card mt-3 mb-4">
+export const SEVERITY_HEADER = "Grad"
+export const CASE_WORKER_HEADER = "Saksbehandler"
+export const JOURNAL_ID_HEADER = "Journalnummer"
+export const INDIVID_ID_HEADER = "Individ-ID"
+export const CONTEXT_ID_HEADER = "Kontekst-ID"
+export const RULE_ID_HEADER = "Kontroll"
+export const ERROR_MESSAGE_HEADER = "Melding"
+export const LINES_HEADER = "Linje"
+
+const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileReportEntryVm[]> }) => {
+
+    const headers = [SEVERITY_HEADER]
+    if (reportEntries.filter(it => it.caseworker).length > 0) headers.push(CASE_WORKER_HEADER)
+    if (reportEntries.filter(it => it.journalId).length > 0) headers.push(JOURNAL_ID_HEADER)
+    if (reportEntries.filter(it => it.individId).length > 0) headers.push(INDIVID_ID_HEADER)
+    if (reportEntries.filter(it => it.contextId).length > 0) headers.push(CONTEXT_ID_HEADER)
+    headers.push(RULE_ID_HEADER)
+    headers.push(ERROR_MESSAGE_HEADER)
+    if (reportEntries.filter(it => it.lineNumbers).length > 0) headers.push(LINES_HEADER)
+
+    return <div className="card mt-3 mb-4">
         <div className="card-body">
             <h5 className="card-title mb-0">Rapport</h5>
         </div>
@@ -12,27 +31,27 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileRep
                     <table className="table table-striped table-sm">
                         <thead>
                         <tr>
-                            <th scope="col">Grad</th>
-                            <th scope="col">Journalnummer</th>
-                            <th scope="col">Saksbehandler</th>
-                            <th scope="col">Kontroll</th>
-                            <th scope="col">Melding</th>
+                            {headers.map((header, index) => <th key={index} scope="col">{header}</th>)}
                         </tr>
                         </thead>
                         <tbody data-testid="error-details-table-tbody">
                         {reportEntries.map((reportEntry, index) =>
                             <tr key={index}>
                                 <th scope="row"><ErrorLevel level={reportEntry.severity}/></th>
-                                <td>{reportEntry.journalId}</td>
-                                <td>{reportEntry.caseworker}</td>
+                                {reportEntry.caseworker ? <td>{reportEntry.caseworker}</td> : ""}
+                                {reportEntry.journalId ? <td>{reportEntry.journalId}</td> : ""}
+                                {reportEntry.individId ? <td>{reportEntry.individId}</td> : ""}
+                                {reportEntry.contextId ? <td>{reportEntry.contextId}</td> : ""}
                                 <td>{reportEntry.ruleName}</td>
                                 <td>{reportEntry.messageText}</td>
+                                {reportEntry.lineNumbers ? <td>{reportEntry.lineNumbers.join(", ")}</td> : ""}
                             </tr>)}
                         </tbody>
                     </table>
                 </div>
             </li>
         </ul>
-    </div>
+    </div>;
+}
 
 export default ErrorDetailsTable

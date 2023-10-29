@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, test} from "vitest";
 import {render, screen} from "@testing-library/react";
 import ErrorSummary from "./ErrorSummary";
-import {fileReportEntryInTest} from "../../specData";
+import {fileReportEntryInTestWithAllPropsSet} from "../../specData";
 
 describe("ErrorSummary", () => {
     describe("Layout without entries", () => {
@@ -12,7 +12,7 @@ describe("ErrorSummary", () => {
     })
     describe("Layout with entries", () => {
         beforeEach(() => {
-            render(<ErrorSummary reportEntries={[fileReportEntryInTest]}/>)
+            render(<ErrorSummary reportEntries={[fileReportEntryInTestWithAllPropsSet]}/>)
         })
 
         test("there are one error, expect one entry in table", () => {
@@ -25,7 +25,7 @@ describe("ErrorSummary", () => {
             expect(screen.getByText("1")).toBeDefined()
         })
         test("expect 'Kontrolltype' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTest.ruleName)).toBeDefined()
+            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeDefined()
         })
     })
 })

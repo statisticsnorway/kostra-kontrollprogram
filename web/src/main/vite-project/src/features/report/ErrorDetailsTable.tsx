@@ -38,13 +38,13 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileRep
                         {reportEntries.map((reportEntry, index) =>
                             <tr key={index}>
                                 <th scope="row"><ErrorLevel level={reportEntry.severity}/></th>
-                                {reportEntry.caseworker ? <td>{reportEntry.caseworker}</td> : ""}
-                                {reportEntry.journalId ? <td>{reportEntry.journalId}</td> : ""}
-                                {reportEntry.individId ? <td>{reportEntry.individId}</td> : ""}
-                                {reportEntry.contextId ? <td>{reportEntry.contextId}</td> : ""}
+                                {headers.includes(CASE_WORKER_HEADER) ? <td>{reportEntry.caseworker}</td> : ""}
+                                {headers.includes(JOURNAL_ID_HEADER) ? <td>{reportEntry.journalId}</td> : ""}
+                                {headers.includes(INDIVID_ID_HEADER) ? <td>{reportEntry.individId}</td> : ""}
+                                {headers.includes(CONTEXT_ID_HEADER) ? <td>{reportEntry.contextId}</td> : ""}
                                 <td>{reportEntry.ruleName}</td>
                                 <td>{reportEntry.messageText}</td>
-                                {reportEntry.lineNumbers ? <td>{reportEntry.lineNumbers.join(", ")}</td> : ""}
+                                {headers.includes(LINES_HEADER) ? <td>{reportEntry.lineNumbers?.join(", ")}</td> : ""}
                             </tr>)}
                         </tbody>
                     </table>

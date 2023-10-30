@@ -25,7 +25,7 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
             contextId = it.contextId,
             ruleName = it.ruleName,
             messageText = it.messageText.replace("<br/>", ""),
-            lineNumbers = it.lineNumbers.distinct().sorted()
+            lineNumbers = it.lineNumbers
         )
     }.let { reportEntries ->
         FileReportVm(

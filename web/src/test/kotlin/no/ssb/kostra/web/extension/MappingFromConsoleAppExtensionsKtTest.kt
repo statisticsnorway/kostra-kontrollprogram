@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.web.extension.MappingToConsoleAppExtensionsKtTest.Companion.generateCompanyIdInTest
-import no.ssb.kostra.web.extensions.reduceReportEntries
+import no.ssb.kostra.web.extensions.groupReportEntries
 import no.ssb.kostra.web.extensions.toErrorReportVm
 import no.ssb.kostra.web.extensions.toKostraArguments
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
@@ -18,7 +18,7 @@ import java.time.Year
 
 class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
 
-    Given("List<ValidationReportEntry>.reduceReportEntries") {
+    Given("List<ValidationReportEntry>.groupReportEntries") {
         val firstValidationReportEntry = ValidationReportEntry(
             severity = Severity.ERROR,
             caseworker = "caseworker",
@@ -31,10 +31,6 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
         )
 
         val secondValidationReportEntry = firstValidationReportEntry.copy(
-            caseworker = "caseworker2",
-            journalId = "journalId2",
-            individId = "individId2",
-            contextId = "contextId2",
             lineNumbers = listOf(4, 5, 6)
         )
 
@@ -46,16 +42,15 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             lineNumbers = emptyList()
         )
 
-        When("reduceReportEntries") {
-            val reducedList = listOf(
+        When("groupReportEntries") {
+            val groupedList = listOf(
                 firstValidationReportEntry,
                 secondValidationReportEntry,
                 thirdValidationReportEntry
-            ).reduceReportEntries()
-
-            Then("reducedList should be as expected") {
-                reducedList.size shouldBe 2
-                assertSoftly(reducedList.first()) {
+            ).groupReportEntries()
+            Then("groupedList should be as expected") {
+                groupedList.size shouldBe 2
+                assertSoftly(groupedList.first()) {
                     severity shouldBe firstValidationReportEntry.severity
                     caseworker shouldBe firstValidationReportEntry.caseworker
                     journalId shouldBe firstValidationReportEntry.journalId
@@ -63,10 +58,10 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     contextId shouldBe firstValidationReportEntry.contextId
                     ruleName shouldBe firstValidationReportEntry.ruleName
                     messageText shouldBe firstValidationReportEntry.messageText
-                    lineNumbers shouldBe listOf(3, 2, 1, 4, 4, 5, 6)
+                    lineNumbers shouldBe listOf(1, 2, 3, 4, 5, 6)
                 }
 
-                assertSoftly(reducedList.last()) {
+                assertSoftly(groupedList.last()) {
                     severity shouldBe thirdValidationReportEntry.severity
                     caseworker shouldBe thirdValidationReportEntry.caseworker
                     journalId shouldBe thirdValidationReportEntry.journalId
@@ -138,7 +133,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                 assertSoftly(fileReportVm) {
                     antallKontroller shouldBe validationResult.numberOfControls
                     severity shouldBe Severity.ERROR
-                    feil.size shouldBe 1
+                    feil.size shouldBe 2
                 }
 
                 assertSoftly(fileReportVm.feil.first()) {
@@ -149,9 +144,18 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     contextId shouldBe firstValidationReportEntry.contextId
                     ruleName shouldBe firstValidationReportEntry.ruleName
                     messageText shouldBe firstValidationReportEntry.messageText.replace("<br/>", "")
-                    lineNumbers shouldBe listOf(1, 2, 3, 4, 5, 6)
+                    lineNumbers shouldBe listOf(1, 2, 3, 4)
                 }
             }
         }
     }
 })
+
+
+/*
+[
+ValidationReportEntry(severity=ERROR, caseworker=caseworker, journalId=journalId, individId=individId, contextId=contextId, ruleName=ruleName, messageText=messageText, lineNumbers=[1, 2, 3, 4, 5, 6]),
+ValidationReportEntry(severity=ERROR, caseworker=caseworker3, journalId=journalId3, individId=individId3, contextId=contextId3, ruleName=ruleName, messageText=messageText, lineNumbers=[])]
+FileReportVm(innparametere=KostraFormVm(aar=2023, skjema=0A, region=123456, navn=UOPPGITT, orgnrForetak=999999999, orgnrVirksomhet=[CompanyIdVm(orgnr=888888888), CompanyIdVm(orgnr=999999999)], filnavn=), antallKontroller=42, severity=ERROR, feil=[FileReportEntryVm(severity=ERROR, caseworker=caseworker, journalId=journalId, individId=individId, contextId=contextId, ruleName=ruleName, messageText=messageText, lineNumbers=[1, 2, 3, 4]), FileReportEntryVm(severity=ERROR, caseworker=caseworker2, journalId=journalId2, individId=individId2, contextId=contextId2, ruleName=ruleName, messageText=messageText, lineNumbers=[4, 5, 6])])
+
+* */

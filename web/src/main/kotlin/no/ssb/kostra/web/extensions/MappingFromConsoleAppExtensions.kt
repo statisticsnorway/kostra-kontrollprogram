@@ -9,27 +9,14 @@ import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
 
-fun List<ValidationReportEntry>.reduceReportEntries() = this.partition { it.lineNumbers.any() }
-    .let { (withLineNumbers, withoutLineNumbers) ->
-        withLineNumbers.fold(mutableMapOf<String, ValidationReportEntry>()) { acc, validationReportEntry ->
-            /** Group by ruleName + messageText and accumulate line numbers */
-            acc.also { accumulator ->
-                validationReportEntry.ruleName.plus(validationReportEntry.messageText).also { key ->
-                    when (val currentEntry = accumulator[key]) {
-                        null -> accumulator[key] = validationReportEntry
-                        else -> accumulator.replace(
-                            key, currentEntry.copy(
-                                lineNumbers = currentEntry.lineNumbers.plus(validationReportEntry.lineNumbers)
-                            )
-                        )
-                    }
-                }
-            }
-        }.values.plus(withoutLineNumbers)
+fun List<ValidationReportEntry>.groupReportEntries() = this
+    .groupBy { it.copy(lineNumbers = emptyList()) }
+    .map { (key, group) ->
+        key.copy(lineNumbers = group.flatMap { it.lineNumbers }.distinct().sorted())
     }
 
 fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
-    this.validationResult.reportEntries.reduceReportEntries().map {
+    this.validationResult.reportEntries.groupReportEntries().map {
         FileReportEntryVm(
             severity = it.severity,
             caseworker = it.caseworker,

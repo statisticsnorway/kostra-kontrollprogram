@@ -47,7 +47,6 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
                     aar = aargang.toInt(),
                     skjema = skjema,
                     region = region,
-                    kvartal = kvartal,
                     orgnrForetak = foretaknr,
                     orgnrVirksomhet = orgnr.split(",").map { CompanyIdVm(orgnr = it) },
                     navn = navn

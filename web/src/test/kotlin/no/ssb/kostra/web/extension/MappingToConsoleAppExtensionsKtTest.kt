@@ -43,25 +43,22 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                 KostraFormVm(
                     skjema = "0AK1",
                     aar = Year.now().value,
-                    region = "123456",
-                    kvartal = "1"
+                    region = "123456"
                 )
             )
         ) { sut ->
-            When("toKostraArguments ${sut}") {
-                val arguments = sut.toKostraArguments("".byteInputStream())
+            When("toKostraArguments $sut") {
+                val arguments = sut.toKostraArguments("".byteInputStream(), null)
 
                 Then("arguments should be as expected") {
                     assertSoftly(arguments) {
                         aargang shouldBe Year.now().value.toString()
                         region shouldBe sut.region
                         skjema shouldBe sut.skjema
+                        kvartal shouldBe QUARTER_FALLBACK_VALUE
 
                         foretaknr shouldBe generateCompanyIdInTest(' ')
                         orgnr shouldBe generateCompanyIdInTest(' ')
-
-                        if (sut.kvartal == null) kvartal shouldBe QUARTER_FALLBACK_VALUE
-                        else kvartal shouldBe sut.kvartal
 
                         if (sut.navn == null) navn shouldBe NAME_FALLBACK_VALUE
                         else navn shouldBe sut.navn
@@ -80,11 +77,14 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
         )
 
         When("toKostraArguments") {
-            val arguments = sut.toKostraArguments("".byteInputStream())
+            val arguments = sut.toKostraArguments(inputStream = "".byteInputStream(), kvartal = "1")
 
             Then("arguments should be as expected") {
-                arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
-                arguments.orgnr shouldBe generateCompanyIdInTest('9')
+                assertSoftly(arguments){
+                    foretaknr shouldBe generateCompanyIdInTest(' ')
+                    orgnr shouldBe generateCompanyIdInTest('9')
+                    kvartal shouldBe "1"
+                }
             }
         }
     }
@@ -102,7 +102,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
         )
 
         When("toKostraArguments") {
-            val arguments = sut.toKostraArguments("".byteInputStream())
+            val arguments = sut.toKostraArguments("".byteInputStream(), null)
 
             Then("arguments should be as expected") {
                 arguments.foretaknr shouldBe generateCompanyIdInTest('9')

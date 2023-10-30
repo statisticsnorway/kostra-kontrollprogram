@@ -90,7 +90,7 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                 CompanyIdVm(generateCompanyIdInTest('8')),
                 CompanyIdVm(generateCompanyIdInTest('9'))
             )
-        ).toKostraArguments("".byteInputStream())
+        ).toKostraArguments("".byteInputStream(), null)
 
         val firstValidationReportEntry = ValidationReportEntry(
             severity = Severity.ERROR,
@@ -129,7 +129,6 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     skjema shouldBe kotlinArguments.skjema
                     aar shouldBe kotlinArguments.aargang.toInt()
                     region shouldBe kotlinArguments.region
-                    kvartal shouldBe kotlinArguments.kvartal
                     orgnrForetak shouldBe kotlinArguments.foretaknr
                     navn shouldBe kotlinArguments.navn
                     orgnrVirksomhet shouldBe kotlinArguments.orgnr.split(",")

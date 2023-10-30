@@ -11,7 +11,8 @@ internal const val NAME_FALLBACK_VALUE = "UOPPGITT"
 private val FALLBACK_COMPANY_ID = " ".repeat(9)
 
 fun KostraFormVm.toKostraArguments(
-    inputStream: InputStream
+    inputStream: InputStream,
+    kvartal: String?
 ) = KotlinArguments(
     skjema = skjema,
     aargang = aar.toString(),

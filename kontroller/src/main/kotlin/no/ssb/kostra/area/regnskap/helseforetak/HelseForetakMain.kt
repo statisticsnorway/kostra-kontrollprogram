@@ -39,7 +39,10 @@ class HelseForetakMain(
     }
 
     // Kapitler
-    override val kapittelList: List<String> = listOf("    ")
+    override val kapittelList: List<String> = when (arguments.skjema) {
+        "0Y" -> listOf("    ")
+        else -> emptyList()
+    }
 
     // Arter
     private val arter = listOf(

@@ -5,12 +5,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.web.viewmodel.KostraErrorCode
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 
-class ControlRunnerTest : BehaviorSpec({
-    val sut = ControlRunner()
-
+@MicronautTest
+class ControlRunnerTest(
+    sut: ControlRunner
+) : BehaviorSpec({
     Given("request with non-fatal error") {
         val kostraForm = KostraFormVm(
             aar = 2022,
@@ -27,7 +29,7 @@ class ControlRunnerTest : BehaviorSpec({
             )
 
             Then("errorReportVm should be as expected") {
-                errorReport.feilkode shouldBe KostraErrorCode.NO_ERROR
+                errorReport.severity shouldBe Severity.OK
                 errorReport.antallKontroller.shouldBeGreaterThan(50)
                 errorReport.feil.shouldBeEmpty()
             }
@@ -36,8 +38,8 @@ class ControlRunnerTest : BehaviorSpec({
         When("validateDataFile without content") {
             shouldNotThrowAny {
                 sut.runControls(
-                    kostraForm,
-                    "".byteInputStream()
+                    kostraForm = kostraForm,
+                    inputStream = "".byteInputStream()
                 )
             }
         }

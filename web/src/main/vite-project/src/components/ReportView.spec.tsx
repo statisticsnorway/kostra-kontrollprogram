@@ -2,7 +2,7 @@ import {beforeEach, describe, expect, test} from 'vitest'
 import {render, screen} from '@testing-library/react'
 import ReportView from "./ReportView";
 import {appReleaseVersionInTest, fileReportInTest} from "../specData";
-import KostraErrorCode from "../kostratypes/kostraErrorCode";
+import KostraSeverity from "../kostratypes/kostraSeverity";
 
 
 describe("ReportView", () => {
@@ -12,7 +12,7 @@ describe("ReportView", () => {
                 appReleaseVersion={appReleaseVersionInTest}
                 fileReport={{
                     ...fileReportInTest,
-                    feilkode: KostraErrorCode.NO_ERROR,
+                    feilkode: KostraSeverity.OK,
                     feil: []
                 }}
             />)

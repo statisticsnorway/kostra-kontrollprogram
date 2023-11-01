@@ -1,20 +1,20 @@
 import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
 import ErrorLevel from "./ErrorLevel";
-import KostraErrorCode from "../../kostratypes/kostraErrorCode";
+import KostraSeverity from "../../kostratypes/kostraSeverity";
 
 interface ErrorAggregateEntry {
-    feilkode: KostraErrorCode
+    feilkode: KostraSeverity
     kontrollnummer: string,
     itemCount: number
 }
 
 const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAggregateEntry[] => reportEntries.reduce(
     (accumulator: ErrorAggregateEntry[], currentValue) => {
-        const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.kontrollnummer)
+        const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.ruleName)
         if (findIndex < 0) {
             accumulator.push({
-                feilkode: currentValue.feilkode,
-                kontrollnummer: currentValue.kontrollnummer,
+                feilkode: currentValue.severity,
+                kontrollnummer: currentValue.ruleName,
                 itemCount: 1
             })
         } else {
@@ -26,16 +26,16 @@ const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAgg
 const ErrorSummary = ({reportEntries}: {reportEntries: NonNullable<FileReportEntryVm[]>}) =>
     <div className="card mt-3">
         <div className="card-body">
-            <h5 className="card-title mb-0">Oversikt feilkoder og antall</h5>
+            <h5 className="card-title mb-0">Oppsummering</h5>
         </div>
         <ul className="list-group list-group-flush">
             <li className="list-group-item">
                 <table className="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Feilkode</th>
+                        <th scope="col">Grad</th>
                         <th scope="col">Antall</th>
-                        <th scope="col">Kontrolltype</th>
+                        <th scope="col">Kontroll</th>
                     </tr>
                     </thead>
                     <tbody data-testid="error-summary-table-tbody">

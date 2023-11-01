@@ -1,28 +1,31 @@
-import KostraErrorCode from "../../kostratypes/kostraErrorCode";
+import KostraSeverity from "../../kostratypes/kostraSeverity";
 
-const getClassName = (level: NonNullable<KostraErrorCode>) => {
+const getClassName = (level: NonNullable<KostraSeverity>) => {
     switch (level) {
-        case KostraErrorCode.NO_ERROR:
+        case KostraSeverity.INFO:
+        case KostraSeverity.OK:
             return "text-success"
-        case KostraErrorCode.NORMAL_ERROR:
+        case KostraSeverity.WARNING:
             return "text-warning"
         default:
             return "text-danger"
     }
 }
 
-const getErrorText = (level: NonNullable<KostraErrorCode>) => {
+const getErrorText = (level: NonNullable<KostraSeverity>) => {
     switch (level) {
-        case KostraErrorCode.NO_ERROR:
+        case KostraSeverity.OK:
             return "OK"
-        case KostraErrorCode.NORMAL_ERROR:
+        case KostraSeverity.INFO:
+            return "Info"
+        case KostraSeverity.WARNING:
             return "Advarsel"
         default:
             return "Kritisk"
     }
 }
 
-const ErrorLevel = ({level}: { level: NonNullable<KostraErrorCode> }) =>
+const ErrorLevel = ({level}: { level: NonNullable<KostraSeverity> }) =>
     <span className={getClassName(level)}>{getErrorText(level)}</span>
 
 export default ErrorLevel

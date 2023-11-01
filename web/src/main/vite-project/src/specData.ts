@@ -1,5 +1,5 @@
 import KostraFormVm from "./kostratypes/kostraFormVm";
-import KostraErrorCode from "./kostratypes/kostraErrorCode";
+import KostraSeverity from "./kostratypes/kostraSeverity";
 import FileReportVm from "./kostratypes/fileReportVm";
 import FileReportEntryVm from "./kostratypes/fileReportEntryVm";
 
@@ -30,17 +30,31 @@ export const kostraFormInTest: KostraFormVm = {
     skjemaFil: createMockFileList()
 }
 
-export const fileReportEntryInTest: FileReportEntryVm = {
-    journalnummer: "~journalnummer~",
-    saksbehandler: "~saksbehandler~",
-    kontrollnummer: "~kontrollnummer~",
-    kontrolltekst: "~kontrolltekst~",
-    feilkode: KostraErrorCode.NORMAL_ERROR
+export const fileReportEntryInTestWithRequiredPropsSet: FileReportEntryVm = {
+    severity: KostraSeverity.WARNING,
+    caseworker: null,
+    journalId: null,
+    individId: null,
+    contextId: null,
+    ruleName: "~kontrollnummer~",
+    messageText: "~kontrolltekst~",
+    lineNumbers: null
+}
+
+export const fileReportEntryInTestWithAllPropsSet: FileReportEntryVm = {
+    severity: KostraSeverity.WARNING,
+    caseworker: "~saksbehandler~",
+    journalId: "~journalnummer~",
+    individId: "~individId~",
+    contextId: "~contextId~",
+    ruleName: "~kontrollnummer~",
+    messageText: "~kontrolltekst~",
+    lineNumbers: [1, 2, 3]
 }
 
 export const fileReportInTest: FileReportVm = {
     innparametere: kostraFormInTest,
     antallKontroller: 42,
-    feilkode: KostraErrorCode.NORMAL_ERROR,
-    feil: [fileReportEntryInTest]
+    feilkode: KostraSeverity.WARNING,
+    feil: [fileReportEntryInTestWithAllPropsSet]
 }

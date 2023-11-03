@@ -93,6 +93,14 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 }
             }
         }
+
+        When("value without param") {
+            val exitCode = CommandLine(KostraKontrollprogramCommand()).execute("value-without param")
+
+            Then("exitCode should be as expected") {
+                exitCode.shouldBe(2)
+            }
+        }
     }
 }) {
     companion object {

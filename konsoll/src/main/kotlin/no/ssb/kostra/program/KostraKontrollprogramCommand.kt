@@ -2,13 +2,14 @@ package no.ssb.kostra.program
 
 import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
-import picocli.CommandLine.Command
-import picocli.CommandLine.Option
+import picocli.CommandLine.*
+import picocli.CommandLine.Model.CommandSpec
 import java.io.BufferedReader
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
+
 
 @Command(
     name = "kostra-kontrollprogram-konsoll", description = ["..."],
@@ -43,28 +44,53 @@ class KostraKontrollprogramCommand : Callable<Int> {
     @Option(names = ["-e", "--external-process"], description = ["..."])
     private var isRunAsExternalProcess: Boolean = false
 
-    override fun call(): Int = ControlDispatcher.validate(
-        KotlinArguments(
-            skjema = schema,
-            aargang = year,
-            kvartal = quarter,
-            region = region,
-            navn = name,
-            orgnr = unitId,
-            foretaknr = companyId,
-            harVedlegg = (hasAttachment == "1"),
-            isRunAsExternalProcess = isRunAsExternalProcess,
-            inputFileContent =
+    @Option(names = ["-v", "--verbose"], description = ["..."])
+    private var verbose: Boolean = false
+
+    @Spec
+    lateinit var spec: CommandSpec
+
+    override fun call(): Int {
+        if (verbose) dumpParamsToOutput()
+
+        return ControlDispatcher.validate(
+            KotlinArguments(
+                skjema = schema,
+                aargang = year,
+                kvartal = quarter,
+                region = region,
+                navn = name,
+                orgnr = unitId,
+                foretaknr = companyId,
+                harVedlegg = (hasAttachment == "1"),
+                isRunAsExternalProcess = isRunAsExternalProcess,
+                inputFileContent =
                 if (schema.isNotBlank() && hasAttachment == "1")
                     System.`in`.bufferedReader().use(BufferedReader::readText)
                 else
                     BLANK_CHAR
-        )
-    ).let { validationReportArguments ->
-        PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
-            printStream.print(ValidationReport(validationReportArguments))
+            )
+        ).let { validationReportArguments ->
+            PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
+                printStream.print(ValidationReport(validationReportArguments))
+            }
+            validationReportArguments.validationResult.severity.info.returnCode
         }
-        validationReportArguments.validationResult.severity.info.returnCode
+    }
+
+    private fun dumpParamsToOutput() {
+        val parseResult: ParseResult = spec.commandLine().parseResult
+
+        for (option in spec.options()) {
+            val name: String = option.longestName()
+            println("$name was specified: ${parseResult.hasMatchedOption(option)}")
+            println(
+                "$name=${parseResult.matchedOptionValue(name, -1)} " +
+                        "(-1 means this option was not matched on command line)"
+            )
+            System.out.printf("%s=%s (arg value or default)%n", name, option.getValue())
+            println()
+        }
     }
 
     companion object {

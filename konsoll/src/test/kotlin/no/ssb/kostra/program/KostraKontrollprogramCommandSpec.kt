@@ -78,11 +78,13 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 val outputStream = ByteArrayOutputStream()
                 System.setOut(PrintStream(outputStream))
 
-                val exitCode = CommandLine(KostraKontrollprogramCommand()).execute(*args)
+                val exitCode = CommandLine(KostraKontrollprogramCommand()).execute(*(args.plus("-v")))
                 val output = outputStream.toString()
 
                 System.setIn(originalSystemIn)
                 System.setOut(originalSystemOut)
+
+                println(output)
 
                 Then("exit code '$exitCode' should be '$expectedExitCode'") {
                     exitCode shouldBe expectedExitCode

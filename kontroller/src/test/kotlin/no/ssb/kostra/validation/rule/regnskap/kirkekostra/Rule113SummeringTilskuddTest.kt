@@ -23,7 +23,7 @@ class Rule113SummeringTilskuddTest : BehaviorSpec({
         forAll(
             row("420400", "0F", "3", "041 ", "590", "0", true), // art mismatch
             row("420400", "0F", "3", "041 ", "830", "0", true), // belop = 0
-            row("420400", "0F", "3", "041 ", "830", "1", false), // belop OK
+            row("420400", "0F", "3", "041 ", "830", "-1", false), // belop OK
             row("420400", "42", "3", "041 ", "830", "0", false), // skjema mismatch
         ) { region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(

@@ -16,7 +16,7 @@ class Rule113SummeringTilskudd : AbstractNoArgsRule<List<KostraRecord>>(
         .takeIf { it.any() }
         ?.filter { it[FIELD_ART] == "830" }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        ?.takeUnless { 0 < it }
+        ?.takeUnless { it < 0 }
         ?.let { tilskudd ->
             createSingleReportEntryList(
                 messageText = "Korrigér slik at fila inneholder tilskudd ($tilskudd) fra kommunen"

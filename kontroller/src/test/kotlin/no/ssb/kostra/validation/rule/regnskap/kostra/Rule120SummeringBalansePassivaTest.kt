@@ -18,10 +18,10 @@ class Rule120SummeringBalansePassivaTest : BehaviorSpec({
         val sut = Rule120SummeringBalansePassiva()
 
         forAll(
-            row("XX", "30  ", "1", false), // feil skjema
+            row("XX", "31  ", "1", false), // feil skjema
             row("0B", "10  ", "1", false), // feil kapittel
-            row("0B", "30  ", "0", true), // feil belop
-            row("0B", "30  ", "1", false), // ok
+            row("0B", "31  ", "0", true), // feil belop
+            row("0B", "31  ", "1", false), // ok
         ) { skjema, kapittel, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_SKJEMA to skjema,

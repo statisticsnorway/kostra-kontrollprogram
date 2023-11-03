@@ -61,7 +61,7 @@ fun KostraRecord.isAktiva() =
     fieldAsIntOrDefault(FIELD_KAPITTEL) in 10..29
 
 fun KostraRecord.isPassiva() =
-    fieldAsIntOrDefault(FIELD_KAPITTEL) in 30..5999
+    fieldAsIntOrDefault(FIELD_KAPITTEL) in 31..5999
 
 fun KostraRecord.isOsloInternRegnskap() =
     this.isOslo()

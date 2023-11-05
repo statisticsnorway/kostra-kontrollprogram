@@ -2,6 +2,7 @@ package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
@@ -13,6 +14,7 @@ class Rule220InterneOverforingerMidler : AbstractNoArgsRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBevilgningRegnskap() }
+        .filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord[FIELD_ART] in setOf("465", "865") }
         ?.partition { it[FIELD_ART] == "465" }

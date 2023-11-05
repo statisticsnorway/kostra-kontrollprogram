@@ -5,6 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
@@ -19,38 +20,38 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
             row(
                 "feil regnskap, ikke BevilgningRegnskap",
                 listOf(
-                    kostraRecordInTest("0X", "100", 0),
-                    kostraRecordInTest("0X", "780", -1000)
+                    kostraRecordInTest("0X", "41","100", 0),
+                    kostraRecordInTest("0X", "45","780", -1000)
                 ), false
             ),
             row(
                 "riktig regnskap, men feil art",
                 listOf(
-                    kostraRecordInTest("0F", "100", 0),
-                    kostraRecordInTest("0F", "710", -1000)
+                    kostraRecordInTest("0F", "41","100", 0),
+                    kostraRecordInTest("0F", "45","710", -1000)
                 ), false
             ),
             row(
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
                 listOf(
-                    kostraRecordInTest("0F", "465", 0),
-                    kostraRecordInTest("0F", "865", -1000)
+                    kostraRecordInTest("0F", "41","465", 0),
+                    kostraRecordInTest("0F", "45","865", -1000)
                 ),
                 true
             ),
             row(
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
                 listOf(
-                    kostraRecordInTest("0F", "465", 1000),
-                    kostraRecordInTest("0F", "865", 0)
+                    kostraRecordInTest("0F", "41","465", 1000),
+                    kostraRecordInTest("0F", "45","865", 0)
                 ),
                 true
             ),
             row(
                 "alt riktig, differanse = 0",
                 listOf(
-                    kostraRecordInTest("0F", "465", 1000),
-                    kostraRecordInTest("0F", "865", -1000)
+                    kostraRecordInTest("0F", "41","465", 1000),
+                    kostraRecordInTest("0F", "45","865", -1000)
                 ), false
             )
         ) { description, kostraRecordList, expectError ->
@@ -74,11 +75,13 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
     companion object {
         private fun kostraRecordInTest(
             skjema: String,
+            funksjon: String,
             art: String,
             belop: Int,
         ) = RegnskapTestUtils.regnskapRecordInTest(
             mapOf(
                 FIELD_SKJEMA to skjema,
+                FIELD_FUNKSJON to funksjon,
                 FIELD_ART to art,
                 FIELD_BELOP to belop.toString()
             )

@@ -20,38 +20,38 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
             row(
                 "feil regnskap, ikke BevilgningRegnskap",
                 listOf(
-                    kostraRecordInTest("0X", "41","100", 0),
-                    kostraRecordInTest("0X", "45","780", -1000)
+                    kostraRecordInTest("0X", "41", "100", 0),
+                    kostraRecordInTest("0X", "45", "780", -1000)
                 ), false
             ),
             row(
                 "riktig regnskap, men feil art",
                 listOf(
-                    kostraRecordInTest("0F", "41","100", 0),
-                    kostraRecordInTest("0F", "45","710", -1000)
+                    kostraRecordInTest("0F", "41", "100", 0),
+                    kostraRecordInTest("0F", "45", "710", -1000)
                 ), false
             ),
             row(
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
                 listOf(
-                    kostraRecordInTest("0F", "41","465", 0),
-                    kostraRecordInTest("0F", "45","865", -1000)
+                    kostraRecordInTest("0F", "41", "465", 0),
+                    kostraRecordInTest("0F", "45", "865", -1000)
                 ),
                 true
             ),
             row(
                 "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
                 listOf(
-                    kostraRecordInTest("0F", "41","465", 1000),
-                    kostraRecordInTest("0F", "45","865", 0)
+                    kostraRecordInTest("0F", "41", "465", 1000),
+                    kostraRecordInTest("0F", "45", "865", 0)
                 ),
                 true
             ),
             row(
                 "alt riktig, differanse = 0",
                 listOf(
-                    kostraRecordInTest("0F", "41","465", 1000),
-                    kostraRecordInTest("0F", "45","865", -1000)
+                    kostraRecordInTest("0F", "41", "465", 1000),
+                    kostraRecordInTest("0F", "45", "865", -1000)
                 ), false
             )
         ) { description, kostraRecordList, expectError ->

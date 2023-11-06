@@ -25,14 +25,21 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
                 ), false
             ),
             row(
-                "riktig regnskap, men feil art",
+                "riktig regnskap, men feil funksjon",
+                listOf(
+                    kostraRecordInTest("0F", "99", "100", 0),
+                    kostraRecordInTest("0F", "99", "780", -1000)
+                ), false
+            ),
+            row(
+                "riktig funksjon, men feil art",
                 listOf(
                     kostraRecordInTest("0F", "41", "100", 0),
                     kostraRecordInTest("0F", "45", "710", -1000)
                 ), false
             ),
             row(
-                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på -30",
+                "riktig regnskap, funksjon og art, men sum er utenfor interval på -30",
                 listOf(
                     kostraRecordInTest("0F", "41", "465", 0),
                     kostraRecordInTest("0F", "45", "865", -1000)
@@ -40,7 +47,7 @@ class Rule220InterneOverforingerMidlerTest : BehaviorSpec({
                 true
             ),
             row(
-                "riktig regnskap og art, men sum overforinger + innsamledeMidler er utenfor interval på +30",
+                "riktig regnskap, funksjon og art, men sum er utenfor interval på +30",
                 listOf(
                     kostraRecordInTest("0F", "41", "465", 1000),
                     kostraRecordInTest("0F", "45", "865", 0)

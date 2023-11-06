@@ -229,10 +229,10 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isAktiva") {
         forAll(
-            row("0009", false),
-            row("0030", false),
-            row("0010", true),
-            row("0029", true)
+            row("09  ", false),
+            row("10  ", true),
+            row("29  ", true),
+            row("30  ", false)
         ) { kapittel, expectedResult ->
             val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord(1, fieldDefinitions)
 
@@ -244,10 +244,10 @@ class KostraRecordRegnskapExtensionsTest : BehaviorSpec({
 
     Given("isPassiva") {
         forAll(
-            row("0029", false),
-            row("6000", false),
-            row("0030", true),
-            row("5999", true)
+            row("30  ", false),
+            row("31  ", true),
+            row("5999", true),
+            row("6000", false)
         ) { kapittel, expectedResult ->
             val kostraRecord = mapOf(FIELD_FUNKSJON_KAPITTEL to kapittel).toKostraRecord(1, fieldDefinitions)
 

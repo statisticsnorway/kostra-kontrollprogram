@@ -12,15 +12,14 @@ class Rule120SummeringBalansePassiva : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isBalanseRegnskap() }
-        .filter { it.isPassiva() }
+        .filter { it.isBalanseRegnskap() && it.isPassiva() }
         .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-        ?.takeUnless { 0 < it }
+        ?.takeUnless { it < 0 }
         ?.let { sumPassiva ->
             createSingleReportEntryList(
                 messageText = "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital " +
-                        "($sumPassiva), sum sektor 000-990 for kapittel 31-5990 i balanse."
+                        "($sumPassiva), sum kapittel 31-5990 i balanse."
             )
         }
 }

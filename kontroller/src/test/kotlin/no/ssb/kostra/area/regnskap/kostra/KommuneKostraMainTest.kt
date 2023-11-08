@@ -45,17 +45,17 @@ class KommuneKostraMainTest : BehaviorSpec({
                     }).plus(
                     mapOf(
                         "0A" to 2,
-                        "0B" to 3,
+                        "0B" to 4,
                         "0C" to 2,
-                        "0D" to 3,
+                        "0D" to 4,
                         "0I" to 1,
-                        "0J" to 3,
+                        "0J" to 4,
                         "0K" to 1,
-                        "0L" to 3,
+                        "0L" to 4,
                         "0M" to 2,
-                        "0N" to 3,
+                        "0N" to 4,
                         "0P" to 2,
-                        "0Q" to 3
+                        "0Q" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
                             "skjema = $skjema, region = $region -> validating a valid record string",

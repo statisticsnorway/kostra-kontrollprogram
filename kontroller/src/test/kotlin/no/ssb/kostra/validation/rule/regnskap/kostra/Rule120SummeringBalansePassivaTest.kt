@@ -21,7 +21,7 @@ class Rule120SummeringBalansePassivaTest : BehaviorSpec({
             row("XX", "31  ", "1", false), // feil skjema
             row("0B", "10  ", "1", false), // feil kapittel
             row("0B", "31  ", "0", true), // feil belop
-            row("0B", "31  ", "1", false), // ok
+            row("0B", "31  ", "-1", false), // ok
         ) { skjema, kapittel, belop, expectError ->
             val kostraRecordList = mapOf(
                 FIELD_SKJEMA to skjema,
@@ -35,7 +35,7 @@ class Rule120SummeringBalansePassivaTest : BehaviorSpec({
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér slik at fila inneholder registrering av passiva/gjeld og egenkapital " +
-                            "($belop), sum sektor 000-990 for kapittel 31-5990 i balanse."
+                            "($belop), sum kapittel 31-5990 i balanse."
                 )
             }
         }

@@ -12,7 +12,7 @@ class Rule031StonadssumMinimumTest : BehaviorSpec({
     include(
         validationRuleNoContextTest(
             sut = Rule031StonadssumMinimum(),
-            expectedSeverity = Severity.ERROR,
+            expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "bidrag = 1000, laan = 0",
                 kostraRecordInTest("1000", "0"),

@@ -47,7 +47,7 @@ class KirkeKostraMainTest : BehaviorSpec({
             }.toTypedArray(),
             *setOf(
                 "0F" to 0,
-                "0G" to 4
+                "0G" to 5
             ).map { (skjema, expectedNumberOfControls) ->
                 row(
                     "skjema $skjema -> validating a valid record string",

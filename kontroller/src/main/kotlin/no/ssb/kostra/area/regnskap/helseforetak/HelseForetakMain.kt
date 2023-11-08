@@ -131,9 +131,6 @@ class HelseForetakMain(
         else -> emptyList()
     }
 
-    private val art320Funksjoner = listOf("620", "630", "636", "637", "641", "642", "651", "681", "840")
-        .map { it.padEnd(4, ' ') }.sorted()
-
     private val artPositiveBelop = listOf("190", "192", "194", "195")
 
     override val validationRules = commonValidationRules()
@@ -146,4 +143,9 @@ class HelseForetakMain(
                 Rule540EiendelerErLikEgenkaptialPlussGjeld(),
             )
         )
+
+    companion object {
+        val art320Funksjoner = listOf("620", "630", "636", "637", "641", "642", "651", "681", "840")
+        .map { it.padEnd(4, ' ') }.sorted()
+    }
 }

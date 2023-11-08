@@ -158,18 +158,14 @@ class KommuneKostraMain(
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
         "100", "105", "110", "114", "115", "120", "130", "140", "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
         "200", "209", "210", "220", "230", "240", "250", "260", "270", "280", "285",
-        "300", "330", "350", "370",
-        "400", "429", "430", "450", "470",
+        "300", "330", "350", "370", "380",
+        "400", "429", "430", "450", "470", "480",
         "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
         "600", "620", "629", "630", "640", "650", "660", "670",
-        "700", "710", "729", "730", "750", "770",
-        "800", "810", "830", "850", "870", "890",
+        "700", "710", "729", "730", "750", "770", "780",
+        "800", "810", "830", "850", "870", "880", "890",
         "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "940", "950", "970", "980", "989", "990"
         // @formatter:on
-    )
-
-    private val konserninterneArter = listOf(
-        "380", "480", "780", "880"
     )
 
     private val osloArter = listOf(
@@ -177,7 +173,7 @@ class KommuneKostraMain(
     )
 
     private val kommunaleArter = listOf(
-        "871", "872", "873", "875", "876"
+        "871", "872", "873", "875", "876", "877"
     )
 
     private val fylkeskommunaleArter = listOf(
@@ -188,7 +184,6 @@ class KommuneKostraMain(
         ArrayList<String>(basisArter).apply {
             when (arguments.skjema) {
                 in listOf("0A", "0M") -> {
-                    addAll(konserninterneArter)
                     addAll(kommunaleArter)
 
                     if (arguments.region in osloKommuner) {
@@ -197,11 +192,8 @@ class KommuneKostraMain(
                 }
 
                 in listOf("0C", "0P") -> {
-                    addAll(konserninterneArter)
                     addAll(fylkeskommunaleArter)
                 }
-
-                else -> addAll(konserninterneArter)
             }
         }.sorted()
     } else emptyList()

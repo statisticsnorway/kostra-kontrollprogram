@@ -14,9 +14,11 @@ class Rule510Art320(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isResultatRegnskap()
+        .filter {
+            it.isResultatRegnskap()
                 && it[FIELD_ART] == "320"
-                && validFunksjonList.none { validFunksjon -> validFunksjon.trim() == it[FIELD_FUNKSJON].trim() } }
+                && validFunksjonList.none { validFunksjon -> validFunksjon.trim() == it[FIELD_FUNKSJON].trim() }
+        }
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Ugyldig funksjon. Kontokode 320 ISF inntekter kan kun benyttes av somatisk, psykisk " +

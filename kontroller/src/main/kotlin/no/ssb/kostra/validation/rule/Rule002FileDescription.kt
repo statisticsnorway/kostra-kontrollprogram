@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.report.ValidationReportEntry
 
 class Rule002FileDescription(
     val fieldDefinitions: List<FieldDefinition>
-) : AbstractNoArgsRule<List<String>>("Kontroll 002 : Filbeskrivelse", Severity.FATAL) {
+) : AbstractNoArgsRule<List<String>>("Kontroll 002 : Filbeskrivelse", Severity.ERROR) {
     override fun validate(context: List<String>) = context
         .withIndex()
         .map { (index, recordString) ->

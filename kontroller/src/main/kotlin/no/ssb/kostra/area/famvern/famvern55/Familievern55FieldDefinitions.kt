@@ -308,7 +308,7 @@ object Familievern55FieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = MEKLING_FLY_AVLYST_COL_NAME,
-            size = 4
+            size = 5
         ),
         FieldDefinition(
             name = MEKLING_TOT_1_COL_NAME,

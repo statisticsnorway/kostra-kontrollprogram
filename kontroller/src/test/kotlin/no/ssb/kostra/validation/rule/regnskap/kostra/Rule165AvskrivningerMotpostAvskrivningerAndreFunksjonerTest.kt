@@ -23,11 +23,11 @@ class Rule165AvskrivningerMotpostAvskrivningerAndreFunksjonerTest : BehaviorSpec
     Given("context") {
         forAll(
             row(
-                "matches !it.isOsloBydel(), isBevilgningDriftRegnskap, funksjon, art, belop",
+                "matches it.isNotOsloBydel(), isBevilgningDriftRegnskap, funksjon, art, belop",
                 "420400", "0A", "1", "100 ", "990", "1", true
             ),
             row(
-                "does not match !it.isOsloBydel()",
+                "does not match it.isNotOsloBydel()",
                 "030101", "0A", "1", "100 ", "990", "1", false
             ),
             row(

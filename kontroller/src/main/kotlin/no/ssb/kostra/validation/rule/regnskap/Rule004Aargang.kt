@@ -15,5 +15,6 @@ class Rule004Aargang : AbstractRule<List<KostraRecord>>("Kontroll 004 : Årgang"
                         "Korrigér aargang til '${arguments.aargang}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

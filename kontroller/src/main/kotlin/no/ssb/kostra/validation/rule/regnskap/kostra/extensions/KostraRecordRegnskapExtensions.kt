@@ -54,6 +54,8 @@ fun KostraRecord.isOsloBydel() =
     fieldAsString(FIELD_REGION).substring(0, 4) == OSLO_MUNICIPALITY_ID
             && fieldAsString(FIELD_REGION).substring(4, 6) != "00"
 
+fun KostraRecord.isNotOsloBydel() = !isOsloBydel()
+
 fun KostraRecord.isLongyearbyen() =
     fieldAsString(FIELD_REGION) == "211100"
 

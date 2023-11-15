@@ -15,5 +15,6 @@ class Rule006Region : AbstractRule<List<KostraRecord>>("Kontroll 006 : Region", 
                         "Korrigér region til '${arguments.region}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

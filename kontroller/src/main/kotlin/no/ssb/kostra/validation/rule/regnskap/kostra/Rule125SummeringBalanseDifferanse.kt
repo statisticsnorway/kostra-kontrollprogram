@@ -19,13 +19,16 @@ class Rule125SummeringBalanseDifferanse : AbstractNoArgsRule<List<KostraRecord>>
             Pair(
                 aktivaPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 passivaPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { it.areValidFigures() }?.let { (aktiva, passiva) ->
-                createSingleReportEntryList(
-                    messageText = "Korrigér differansen (${aktiva.plus(passiva)}) mellom eiendeler ($aktiva) " +
-                            "og gjeld og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)"
-                )
-            }
+            )
         }
+        ?.takeUnless { it.areValidFigures() }
+        ?.let { (aktiva, passiva) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér differansen (${aktiva.plus(passiva)}) mellom eiendeler ($aktiva) " +
+                        "og gjeld og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)"
+            )
+        }
+
 
     companion object {
         internal fun Pair<Int, Int>.areValidFigures() = this.let { (aktiva, passiva) ->

@@ -13,8 +13,7 @@ class Rule210InterneOverforingerKjopOgSalg : AbstractNoArgsRule<List<KostraRecor
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isBevilgningRegnskap() }
-        .filter { it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
+        .filter { it.isBevilgningRegnskap() && it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
         .takeIf { it.any() }
         ?.filter { it[FIELD_ART] in listOf("380", "780") }
         ?.partition { it[FIELD_ART] == "380" }

@@ -16,8 +16,8 @@ class Rule510Art320(
     override fun validate(context: List<KostraRecord>) = context
         .filter {
             it.isResultatRegnskap()
-                && it[FIELD_ART] == "320"
-                && validFunksjonList.none { validFunksjon -> validFunksjon.trim() == it[FIELD_FUNKSJON].trim() }
+                    && it[FIELD_ART] == "320"
+                    && validFunksjonList.none { validFunksjon -> validFunksjon.trim() == it[FIELD_FUNKSJON].trim() }
         }
         .map { kostraRecord ->
             createValidationReportEntry(

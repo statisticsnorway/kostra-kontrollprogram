@@ -16,5 +16,6 @@ class Rule009Kontoklasse(
                         "Korrigér kontoklasse til en av '${kontoklasseList.joinToString(", ")}'".trimMargin(),
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

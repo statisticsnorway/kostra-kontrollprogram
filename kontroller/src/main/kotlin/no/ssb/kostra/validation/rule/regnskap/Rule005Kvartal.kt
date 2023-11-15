@@ -15,5 +15,6 @@ class Rule005Kvartal : AbstractRule<List<KostraRecord>>("Kontroll 005 : Kvartal"
                         "Korrigér kvartal til '${arguments.kvartal}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

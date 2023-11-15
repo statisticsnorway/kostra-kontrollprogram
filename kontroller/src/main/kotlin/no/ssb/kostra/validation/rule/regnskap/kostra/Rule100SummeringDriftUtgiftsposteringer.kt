@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isUtgift
 
 class Rule100SummeringDriftUtgiftsposteringer : AbstractNoArgsRule<List<KostraRecord>>(
@@ -13,7 +13,7 @@ class Rule100SummeringDriftUtgiftsposteringer : AbstractNoArgsRule<List<KostraRe
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() && it.isBevilgningDriftRegnskap() }
+        .filter { it.isNotOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it.isUtgift() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }

@@ -5,7 +5,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isUtgift
 
 class Rule095SummeringInvesteringDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
@@ -13,8 +13,7 @@ class Rule095SummeringInvesteringDifferanse : AbstractNoArgsRule<List<KostraReco
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { !it.isOsloBydel() }
-        .filter { it.isBevilgningInvesteringRegnskap() }
+        .filter { it.isNotOsloBydel() && it.isBevilgningInvesteringRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isUtgift() }
         ?.let { (investeringUtgifterPosteringer, investeringInntekterPosteringer) ->

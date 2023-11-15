@@ -7,16 +7,16 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 
 class Rule160AvskrivningerAndreFunksjoner : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 160 : Avskrivninger, avskrivninger ført på andre funksjoner",
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot { it.isOsloBydel() }
         .filter {
-            it.isBevilgningDriftRegnskap()
+            it.isNotOsloBydel()
+                    && it.isBevilgningDriftRegnskap()
                     && it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 800..899
                     && it[FIELD_ART] == "590"
         }.takeIf { it.any() }
@@ -24,12 +24,13 @@ class Rule160AvskrivningerAndreFunksjoner : AbstractNoArgsRule<List<KostraRecord
             Pair(
                 kostraRecordList.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 kostraRecordList.map { it[FIELD_FUNKSJON].trim() }
-            ).takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
-                ?.let { (avskrivninger, funksjoner) ->
-                    createSingleReportEntryList(
-                        messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +
-                                "tjenestefunksjon og ikke på funksjonene ($funksjoner)"
-                    )
-                }
+            )
+        }
+        ?.takeUnless { (avskrivninger, _) -> avskrivninger == 0 }
+        ?.let { (avskrivninger, funksjoner) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at avskrivningene ($avskrivninger) føres på " +
+                        "tjenestefunksjon og ikke på funksjonene ($funksjoner)"
+            )
         }
 }

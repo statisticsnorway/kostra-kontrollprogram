@@ -12,23 +12,23 @@ class Rule190Memoriakonti : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter {
-            it.isBalanseRegnskap()
-                    && it.fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999
-        }.takeIf { it.any() }
+        .filter { it.isBalanseRegnskap() && it.fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999 }
+        .takeIf { it.any() }
         ?.partition { it.fieldAsIntOrDefault(FIELD_KAPITTEL) == 9999 }
         ?.let { (motpostMemoriakontiPosteringer, memoriakontiPosteringer) ->
             Pair(
                 motpostMemoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 memoriakontiPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (motpostMemoriakonti, memoriakonti) ->
-                memoriakonti + motpostMemoriakonti in -30..30
-            }?.let { (motpostMemoriakonti, memoriakonti) ->
-                createSingleReportEntryList(
-                    messageText = "Korrigér i fila slik at differansen (${memoriakonti + motpostMemoriakonti}) " +
-                            "mellom memoriakontiene ($memoriakonti) og motkonto for memoriakontiene " +
-                            "($motpostMemoriakonti) går i 0. (margin på +/- 10')"
-                )
-            }
+            )
+        }
+        ?.takeUnless { (motpostMemoriakonti, memoriakonti) ->
+            memoriakonti + motpostMemoriakonti in -30..30
+        }
+        ?.let { (motpostMemoriakonti, memoriakonti) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at differansen (${memoriakonti + motpostMemoriakonti}) " +
+                        "mellom memoriakontiene ($memoriakonti) og motkonto for memoriakontiene " +
+                        "($motpostMemoriakonti) går i 0. (margin på +/- 10')"
+            )
         }
 }

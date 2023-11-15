@@ -24,14 +24,16 @@ class Rule143Avskrivninger : AbstractNoArgsRule<List<KostraRecord>>(
                 driftPosteringer
                     .filter { it[FIELD_ART] == "990" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (avskrivninger, motpostAvskrivninger) ->
-                (avskrivninger + motpostAvskrivninger) in -30..30
-            }?.let { (avskrivninger, motpostAvskrivninger) ->
-                createSingleReportEntryList(
-                    messageText = "Korrigér i fila slik at differansen (${avskrivninger.plus(motpostAvskrivninger)}) " +
-                            "mellom art 590 ($avskrivninger) stemmer overens med art " +
-                            "990 ($motpostAvskrivninger) (margin på +/- 30')"
-                )
-            }
+            )
+        }
+        ?.takeUnless { (avskrivninger, motpostAvskrivninger) ->
+            (avskrivninger + motpostAvskrivninger) in -30..30
+        }
+        ?.let { (avskrivninger, motpostAvskrivninger) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at differansen (${avskrivninger.plus(motpostAvskrivninger)}) " +
+                        "mellom art 590 ($avskrivninger) stemmer overens med art " +
+                        "990 ($motpostAvskrivninger) (margin på +/- 30')"
+            )
         }
 }

@@ -18,5 +18,6 @@ class Rule013Sektor(
                                 Korrigér sektor til en av '${sektorList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )
-            }.ifEmpty { null }
+            }
+            .ifEmpty { null }
 }

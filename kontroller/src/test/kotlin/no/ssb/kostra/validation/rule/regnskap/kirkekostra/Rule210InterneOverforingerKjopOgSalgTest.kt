@@ -25,10 +25,17 @@ class Rule210InterneOverforingerKjopOgSalgTest : BehaviorSpec({
                 ), false
             ),
             row(
-                "riktig regnskap, men feil funksjon",
+                "riktig regnskap, men feil funksjon, under",
                 listOf(
-                    kostraRecordInTest("0F", "99", "100", 0),
-                    kostraRecordInTest("0F", "99", "780", -1000)
+                    kostraRecordInTest("0F", "40", "100", 0),
+                    kostraRecordInTest("0F", "40", "780", -1000)
+                ), false
+            ),
+            row(
+                "riktig regnskap, men feil funksjon, over",
+                listOf(
+                    kostraRecordInTest("0F", "46", "100", 0),
+                    kostraRecordInTest("0F", "46", "780", -1000)
                 ), false
             ),
             row(

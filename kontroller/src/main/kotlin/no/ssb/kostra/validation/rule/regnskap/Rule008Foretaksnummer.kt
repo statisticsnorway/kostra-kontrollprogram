@@ -15,5 +15,6 @@ class Rule008Foretaksnummer : AbstractRule<List<KostraRecord>>("Kontroll 008 : F
                         "Korrigér skjema til '${arguments.foretaknr}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

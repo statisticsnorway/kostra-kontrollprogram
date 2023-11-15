@@ -7,15 +7,14 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 
 class Rule155AvskrivningerDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 155 : Avskrivninger, differanse",
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot { it.isOsloBydel() }
-        .filter { it.isBevilgningDriftRegnskap() }
+        .filter { it.isNotOsloBydel() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.let { driftPosteringer ->
             Pair(
@@ -25,13 +24,16 @@ class Rule155AvskrivningerDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
                 driftPosteringer
                     .filter { it[FIELD_FUNKSJON].trim() == "860" && it[FIELD_ART] == "990" }
                     .sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
-            ).takeUnless { (avskrivninger, motpostAvskrivninger) ->
-                avskrivninger + motpostAvskrivninger in -30..30
-            }?.let { (avskrivninger, motpostAvskrivninger) ->
-                createSingleReportEntryList(
-                    messageText = "Korrigér i fila slik at avskrivninger ($avskrivninger) stemmer " +
-                            "overens med motpost avskrivninger ($motpostAvskrivninger) (margin på +/- 30')"
-                )
-            }
+            )
         }
+        ?.takeUnless { (avskrivninger, motpostAvskrivninger) ->
+            avskrivninger + motpostAvskrivninger in -30..30
+        }
+        ?.let { (avskrivninger, motpostAvskrivninger) ->
+            createSingleReportEntryList(
+                messageText = "Korrigér i fila slik at avskrivninger ($avskrivninger) stemmer " +
+                        "overens med motpost avskrivninger ($motpostAvskrivninger) (margin på +/- 30')"
+            )
+        }
+
 }

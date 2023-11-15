@@ -18,5 +18,6 @@ class Rule010Funksjon(
                                 Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )
-            }.ifEmpty { null }
+            }
+            .ifEmpty { null }
 }

@@ -18,5 +18,6 @@ class Rule012Art(
                                 Korrigér art til en av '${artList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )
-            }.ifEmpty { null }
+            }
+            .ifEmpty { null }
 }

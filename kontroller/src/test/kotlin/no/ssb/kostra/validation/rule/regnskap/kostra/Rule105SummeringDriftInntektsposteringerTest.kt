@@ -20,7 +20,6 @@ class Rule105SummeringDriftInntektsposteringerTest : BehaviorSpec({
     Given("context") {
         val sut = Rule105SummeringDriftInntektsposteringer()
 
-        /** TODO: Jon Ole, denne gir valideringsfeil row("420400", "0I", "3", "100 ", "990", "0", false), */
         forAll(
             row("420400", "0A", "1", "100 ", "600", "-1", false),
             row("420400", "0A", "1", "100 ", "990", "-1", false),

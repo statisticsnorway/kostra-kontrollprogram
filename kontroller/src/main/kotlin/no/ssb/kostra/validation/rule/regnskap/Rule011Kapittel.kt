@@ -18,5 +18,6 @@ class Rule011Kapittel(
                                 Korrigér kapittel til en av '${kapittelList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )
-            }.ifEmpty { null }
+            }
+            .ifEmpty { null }
 }

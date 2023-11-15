@@ -23,9 +23,11 @@ class Rule220InterneOverforingerMidler : AbstractNoArgsRule<List<KostraRecord>>(
                 overforingerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 innsamledeMidlerPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }?.takeUnless { (overforinger, innsamledeMidler) ->
+        }
+        ?.takeUnless { (overforinger, innsamledeMidler) ->
             (overforinger + innsamledeMidler) in -30..30
-        }?.let { (overforinger, innsamledeMidler) ->
+        }
+        ?.let { (overforinger, innsamledeMidler) ->
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at differansen (${overforinger.plus(innsamledeMidler)}) " +
                         "mellom overføringer av midler ($overforinger) og innsamlede midler ($innsamledeMidler) " +

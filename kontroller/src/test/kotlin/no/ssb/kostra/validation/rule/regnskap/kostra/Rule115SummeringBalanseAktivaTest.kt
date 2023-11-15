@@ -33,7 +33,7 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
                     expectError = expectError,
                     expectedSeverity = Severity.ERROR,
                     "Korrigér slik at fila inneholder registrering av aktiva/eiendeler " +
-                            "($belop), sum sektor 000-990 for kapittel 10-29 i balanse."
+                            "($belop), sum kapittel 10-29 i balanse."
                 )
             }
         }

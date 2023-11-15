@@ -16,5 +16,6 @@ class Rule007Organisasjonsnummer :
                         "Korrigér orgnr til en av '${arguments.orgnr.split(",")}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

@@ -33,10 +33,6 @@ object KostraBarnevernConverter {
     }
 
     @JvmStatic
-    fun unmarshallXml(xml: String): KostraBarnevernType =
-        XML_MAPPER.readValue(xml, KostraBarnevernType::class.java)
-
-    @JvmStatic
     fun marshallInstance(barnevernType: KostraBarnevernType): String =
         XML_MAPPER.writeValueAsString(barnevernType)
 

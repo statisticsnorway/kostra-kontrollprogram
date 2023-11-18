@@ -12,11 +12,12 @@ class Familievern52bMain(arguments: KotlinArguments) : PositionedFileValidator(a
     override val fieldDefinitions = Familievern52bFieldDefinitions
 
     override val preValidationRules: List<AbstractRule<List<String>>> = listOf(
-        Rule001RecordLength(fieldDefinitions.fieldDefinitions.last().to),
-        Rule002FileDescription(fieldDefinitions.fieldDefinitions)
+        Rule001RecordLength(fieldDefinitions.fieldDefinitions.last().to)
+
     )
 
     override val validationRules = listOf(
+        Rule002FileDescription(fieldDefinitions.fieldDefinitions),
         Rule003Regionsnummer(kontorFylkeRegionMappingList),
         Rule004Kontornummer(kontorFylkeRegionMappingList),
         Rule005RegionsnummerKontornummer(kontorFylkeRegionMappingList),

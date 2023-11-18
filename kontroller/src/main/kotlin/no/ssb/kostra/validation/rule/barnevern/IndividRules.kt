@@ -64,6 +64,9 @@ object IndividRules {
         Undersokelse07(),
         Undersokelse08(),
 
-        Vedtak02()
+        Vedtak02(),
+
+        Flytting02c(),
+        Flytting02f()
     )
 }

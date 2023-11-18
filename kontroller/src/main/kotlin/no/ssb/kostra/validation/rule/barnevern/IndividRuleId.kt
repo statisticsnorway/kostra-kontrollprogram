@@ -63,5 +63,8 @@ enum class IndividRuleId(val title: String) {
 
     LOVHJEMMEL_02("Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"),
     LOVHJEMMEL_03("Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak"),
-    LOVHJEMMEL_04("Lovhjemmel Kontroll 4: Lovhjemmel");
+    LOVHJEMMEL_04("Lovhjemmel Kontroll 4: Lovhjemmel"),
+
+    FLYTTING_02C("Flytting Kontroll 2c: Sluttdato mot individets sluttdato"),
+    FLYTTING_02F("Flytting kontroll 2f: Sluttdato mot individets startdato"),
 }

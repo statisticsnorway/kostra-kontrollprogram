@@ -1,6 +1,5 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.FORSTE_SAMT_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.HENV_DATO_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME

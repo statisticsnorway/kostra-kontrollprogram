@@ -20,7 +20,7 @@ class Rule036AvslutningsdatoForForsteSamtale : AbstractNoArgsRule<List<KostraRec
                     && it[DATO_AVSL_A_COL_NAME].isNotBlank()
         }
         .filterNot {
-             it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
+            it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
                     && it.fieldAs<LocalDate?>(DATO_AVSL_A_COL_NAME) != null
                     && it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME) <= it.fieldAs<LocalDate>(DATO_AVSL_A_COL_NAME)
         }

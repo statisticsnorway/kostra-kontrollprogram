@@ -12,6 +12,10 @@ class Rule021DatoForsteBehandlingssamtaleEtterHenvendelseTest : BehaviorSpec({
             sut = Rule021DatoForsteBehandlingssamtaleEtterHenvendelse(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
+                "all good, nothing to compare",
+                kostraRecordInTest(" ".repeat(8), " ".repeat(8)),
+            ),
+            ForAllRowItem(
                 "all good, no conversation",
                 kostraRecordInTest("01012023", " ".repeat(8)),
             ),

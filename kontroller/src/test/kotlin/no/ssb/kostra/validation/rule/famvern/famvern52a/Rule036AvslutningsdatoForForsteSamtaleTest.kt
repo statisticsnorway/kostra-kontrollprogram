@@ -12,14 +12,22 @@ class Rule036AvslutningsdatoForForsteSamtaleTest : BehaviorSpec({
             sut = Rule036AvslutningsdatoForForsteSamtale(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
+                "all good, no end",
+                kostraRecordInTest("01012023", " ".repeat(8)),
+            ),
+            ForAllRowItem(
                 "all good",
                 kostraRecordInTest("01012023", "02022023"),
             ),
             ForAllRowItem(
+                "same day",
+                kostraRecordInTest("01012023", "01012023"),
+            ),
+            ForAllRowItem(
                 "invalid order",
-                kostraRecordInTest("02022023", "01012023"),
+                kostraRecordInTest("02012023", "01012023"),
                 expectedErrorMessage = "Dato for avslutting av saken '01012023' kommer før " +
-                        "dato for første behandlingssamtale '02022023'."
+                        "dato for første behandlingssamtale '02012023'."
             ),
             ForAllRowItem(
                 "invalid date, invalid day",

@@ -37,7 +37,7 @@ object IndividRuleTestData {
     )
 
     val lovhjemmelTypeInTest = KostraLovhjemmelType(
-        lov = "BVL",
+        lov = BVL1992,
         kapittel = "2",
         paragraf = "3",
         ledd = "4",

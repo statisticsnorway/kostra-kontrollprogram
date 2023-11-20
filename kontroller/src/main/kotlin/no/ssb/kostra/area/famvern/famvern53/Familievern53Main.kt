@@ -12,11 +12,11 @@ class Familievern53Main(arguments: KotlinArguments) : PositionedFileValidator(ar
     override val fieldDefinitions = Familievern53FieldDefinitions
 
     override val preValidationRules: List<AbstractRule<List<String>>> = listOf(
-        Rule001RecordLength(fieldDefinitions.fieldDefinitions.last().to),
-        Rule002FileDescription(fieldDefinitions.fieldDefinitions)
+        Rule001RecordLength(fieldDefinitions.fieldDefinitions.last().to)
     )
 
     override val validationRules = listOf(
+        Rule002FileDescription(fieldDefinitions.fieldDefinitions),
         Rule003Fylkesnummer(FamilievernConstants.kontorFylkeRegionMappingList),
         Rule004Kontornummer(FamilievernConstants.kontorFylkeRegionMappingList),
         Rule005FylkesnummerKontornummer(FamilievernConstants.kontorFylkeRegionMappingList),

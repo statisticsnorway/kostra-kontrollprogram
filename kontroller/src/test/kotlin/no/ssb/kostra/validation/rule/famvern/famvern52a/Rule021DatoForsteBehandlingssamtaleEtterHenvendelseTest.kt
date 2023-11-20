@@ -12,14 +12,26 @@ class Rule021DatoForsteBehandlingssamtaleEtterHenvendelseTest : BehaviorSpec({
             sut = Rule021DatoForsteBehandlingssamtaleEtterHenvendelse(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
+                "all good, nothing to compare",
+                kostraRecordInTest(" ".repeat(8), " ".repeat(8)),
+            ),
+            ForAllRowItem(
+                "all good, no conversation",
+                kostraRecordInTest("01012023", " ".repeat(8)),
+            ),
+            ForAllRowItem(
                 "all good",
-                kostraRecordInTest("01012023", "02022023"),
+                kostraRecordInTest("01012023", "02012023"),
+            ),
+            ForAllRowItem(
+                "same day",
+                kostraRecordInTest("01012023", "01012023"),
             ),
             ForAllRowItem(
                 "invalid order",
-                kostraRecordInTest("02022023", "01012023"),
+                kostraRecordInTest("02012023", "01012023"),
                 expectedErrorMessage = "Dato for første behandlingssamtale '01012023' er før dato for " +
-                        "primærklientens henvendelse '02022023' til familievernkontoret."
+                        "primærklientens henvendelse '02012023' til familievernkontoret."
             ),
             ForAllRowItem(
                 "invalid date, invalid day",

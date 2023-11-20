@@ -22,7 +22,7 @@ class Familievern55MainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern55FieldDefinitions.fieldLength + 10)
                 ),
-                2,
+                1,
                 1
             ),
             row(
@@ -33,8 +33,8 @@ class Familievern55MainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern55FieldDefinitions.fieldLength)
                 ),
-                2,
-                12
+                15,
+                13
             ),
             row(
                 "validating a valid record string",

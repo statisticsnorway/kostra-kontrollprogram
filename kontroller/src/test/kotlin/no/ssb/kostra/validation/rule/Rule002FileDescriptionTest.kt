@@ -10,6 +10,7 @@ import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.DataType.*
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.toKostraRecord
 
 class Rule002FileDescriptionTest : BehaviorSpec({
     val templateFieldDefinition =
@@ -68,7 +69,11 @@ class Rule002FileDescriptionTest : BehaviorSpec({
             When(description) {
                 val sut = Rule002FileDescription(listOf(fieldDefinition))
                 val result = sut.validate(
-                    context = listOf(recordString),
+                    context = listOf(recordString)
+                        .withIndex()
+                        .map { (index, recordString) ->
+                            recordString.toKostraRecord(index = index, fieldDefinitions = listOf(fieldDefinition))
+                        },
                     arguments = kotlinArguments
                 )
 
@@ -106,7 +111,11 @@ class Rule002FileDescriptionTest : BehaviorSpec({
             When(description) {
                 val sut = Rule002FileDescription(listOf(fieldDefinition))
                 val result = sut.validate(
-                    context = listOf(recordString),
+                    context = listOf(recordString)
+                        .withIndex()
+                        .map { (index, recordString) ->
+                            recordString.toKostraRecord(index = index, fieldDefinitions = listOf(fieldDefinition))
+                        },
                     arguments = kotlinArguments
                 )
 

@@ -60,8 +60,12 @@ enum class IndividRuleId(val title: String) {
     TILTAK_07("Tiltak Kontroll 7: Kontroll av manglende presisering for tiltakskategori"),
     TILTAK_08("Tiltak Kontroll 8: Kontroll av kode og presisering for opphevelse"),
     TILTAK_09("Tiltak Kontroll 9: Flere plasseringstiltak i samme periode"),
+    TILTAK_24("Tiltak Kontroll 24: Lovhjemmel refererer til feil barnevernlov"),
 
     LOVHJEMMEL_02("Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"),
     LOVHJEMMEL_03("Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak"),
-    LOVHJEMMEL_04("Lovhjemmel Kontroll 4: Lovhjemmel");
+    LOVHJEMMEL_04("Lovhjemmel Kontroll 4: Lovhjemmel"),
+
+    FLYTTING_02C("Flytting Kontroll 2c: Sluttdato mot individets sluttdato"),
+    FLYTTING_02F("Flytting kontroll 2f: Sluttdato mot individets startdato"),
 }

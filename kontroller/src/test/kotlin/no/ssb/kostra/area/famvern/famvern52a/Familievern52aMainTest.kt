@@ -35,7 +35,7 @@ class Familievern52aMainTest : BehaviorSpec({
                     inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength)
                 ),
                 36,
-                42
+                41
             ),
             row(
                 "validating a valid record string",

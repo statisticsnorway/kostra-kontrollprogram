@@ -162,7 +162,6 @@ object Familievern52aFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = PRIMK_FODT_A_COL_NAME,
             size = 4,
-            mandatory = true,
         ),
         FieldDefinition(
             name = PRIMK_SIVILS_A_COL_NAME,

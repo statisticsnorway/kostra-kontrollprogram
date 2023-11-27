@@ -47,5 +47,5 @@ jobs:
       - name: Deploy artifact to Google artifact registry
         #if: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: |
-          mvn -DskipTests=true -Dmaven.javadoc.skip=true -U -P ssb-ga --batch-mode \
+          mvn -DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -P ssb-ga --batch-mode \
            -Djdk.tls.client.protocols="TLSv1.2" -Drevision=${{ env.ARTIFACT_REVISION }} deploy

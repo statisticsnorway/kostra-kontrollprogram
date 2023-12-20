@@ -1,4 +1,4 @@
-package no.ssb.kostra.validation.rule.sosial.rule
+package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME

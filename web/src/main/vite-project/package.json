@@ -10,7 +10,7 @@
     "webstorm-integration": "vitest --watch --reporter=dot --reporter=json --outputFile=.vitest"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.2",
+    "@hookform/resolvers": "^3.3.3",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",

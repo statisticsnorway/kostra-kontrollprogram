@@ -34,7 +34,7 @@ class SosialhjelpMainTest : BehaviorSpec({
             ),
             row(
                 "validating a valid record string",
-                recordStringInTest("22"),
+                recordStringInTest("23"),
                 43,
                 0
             ),

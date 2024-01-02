@@ -33,13 +33,12 @@ class KvalifiseringMainTest : BehaviorSpec({
                 33,
                 13
             ),
-// TODO: Fix me
-//            row(
-//                "validating a valid record string",
-//                recordStringInTest("22"),
-//                33,
-//                0
-//            ),
+            row(
+                "validating a valid record string",
+                recordStringInTest("23"),
+                33,
+                0
+            ),
             row(
                 "validating a valid record string with invalid data",
                 recordStringInTest("XX"),
@@ -104,9 +103,9 @@ class KvalifiseringMainTest : BehaviorSpec({
                 KvalifiseringColumnNames.EKTSTAT_COL_NAME to "1",
                 KvalifiseringColumnNames.HAR_BARN_UNDER_18_COL_NAME to "1",
                 KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME to "1",
-                KvalifiseringColumnNames.REG_DATO_COL_NAME to "010122",
-                KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME to "010122",
-                KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME to "010122",
+                KvalifiseringColumnNames.REG_DATO_COL_NAME to "010123",
+                KvalifiseringColumnNames.VEDTAK_DATO_COL_NAME to "010123",
+                KvalifiseringColumnNames.BEGYNT_DATO_COL_NAME to "010123",
                 KvalifiseringColumnNames.AVSL_DATO_COL_NAME to " ".repeat(6),
                 KvalifiseringColumnNames.KVP_KOMM_COL_NAME to "1",
                 KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME to "1",

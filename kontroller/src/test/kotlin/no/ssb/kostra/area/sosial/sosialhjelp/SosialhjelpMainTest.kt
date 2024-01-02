@@ -32,13 +32,12 @@ class SosialhjelpMainTest : BehaviorSpec({
                 43,
                 17
             ),
-// TODO: Fix me
-//            row(
-//                "validating a valid record string",
-//                recordStringInTest("22"),
-//                43,
-//                0
-//            ),
+            row(
+                "validating a valid record string",
+                recordStringInTest("23"),
+                43,
+                0
+            ),
             row(
                 "validating a valid record string with invalid data",
                 recordStringInTest("XX"),

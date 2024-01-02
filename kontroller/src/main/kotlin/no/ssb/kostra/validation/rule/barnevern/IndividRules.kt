@@ -34,7 +34,6 @@ object IndividRules {
         Melding05(),
 
         Plan02a(),
-//        Plan02b(),
         Plan02c(),
         Plan02d(),
         Plan02e(),

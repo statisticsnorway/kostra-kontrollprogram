@@ -144,7 +144,7 @@ class Individ01a : AbstractRule<KostraIndividType>(
 
     companion object {
         val minDate: LocalDate = LocalDate.of(1998, 1, 1)
-        val maxDate: LocalDate = LocalDate.of(2029, 12, 31)
+        val maxDate: LocalDate = LocalDate.of(2049, 12, 31)
 
         fun List<ValidationReportEntry>.plusIfNotNull(other: ValidationReportEntry?) =
             if (other != null) this.plus(other) else this

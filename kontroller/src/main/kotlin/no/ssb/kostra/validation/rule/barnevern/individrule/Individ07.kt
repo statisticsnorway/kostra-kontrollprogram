@@ -13,7 +13,7 @@ class Individ07 : AbstractRule<KostraIndividType>(
     severity = Severity.ERROR
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
-        context.also { println(arguments) }.fodselsnummer
+        context.fodselsnummer
             ?.ageInYears(arguments.aargang.toInt())
             ?.let { ageInYears ->
                 if (ageInYears > AGE_TWENTY_FIVE) {

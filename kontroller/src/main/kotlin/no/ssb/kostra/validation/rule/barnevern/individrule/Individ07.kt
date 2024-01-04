@@ -16,7 +16,7 @@ class Individ07 : AbstractRule<KostraIndividType>(
         context.also { println(arguments) }.fodselsnummer
             ?.ageInYears(arguments.aargang.toInt())
             ?.let { ageInYears ->
-                if (ageInYears >= AGE_TWENTY_FIVE) {
+                if (ageInYears > AGE_TWENTY_FIVE) {
                     createSingleReportEntryList(
                         contextId = context.id,
                         messageText = "Individet er $ageInYears år og skal avsluttes som klient"

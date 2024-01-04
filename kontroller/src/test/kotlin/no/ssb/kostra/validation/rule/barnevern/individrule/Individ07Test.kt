@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
+import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -26,19 +27,19 @@ class Individ07Test : BehaviorSpec({
             ForAllRowItem(
                 "individ with fodselsnummer, age below 25",
                 individInTest.copy(
-                    fodselsnummer = generateRandomSSN(
-                        LocalDate.now().minusYears(1),
-                        LocalDate.now()
-                    )
+                    fodselsnummer = RandomUtils.generateRandomSsn(24, LocalDate.now().year)
+                )
+            ),
+            ForAllRowItem(
+                "individ with fodselsnummer, age is 25",
+                individInTest.copy(
+                    fodselsnummer = RandomUtils.generateRandomSsn(25, LocalDate.now().year)
                 )
             ),
             ForAllRowItem(
                 "individ age above 25",
                 individInTest.copy(
-                    fodselsnummer = generateRandomSSN(
-                        Year.now().atDay(1).minusYears(26),
-                        Year.now().atDay(1).minusYears(25)
-                    )
+                    fodselsnummer = RandomUtils.generateRandomSsn(26, LocalDate.now().year)
                 ),
                 expectedErrorMessage = "Individet er 25 år og skal avsluttes som klient"
             )

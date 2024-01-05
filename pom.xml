@@ -31,6 +31,9 @@
         <slf4j.version>2.0.7</slf4j.version>
         <logback.version>1.4.11</logback.version>
 
+        <!-- kotest:5.7.x hangs the build for all apps -->
+        <kotestVersion>5.6.2</kotestVersion>
+
         <jacoco.version>0.8.11</jacoco.version>
         <checkstyle.version>10.12.7</checkstyle.version>
         <sonar.version>3.10.0.2594</sonar.version>
@@ -68,6 +71,15 @@
                 <artifactId>kotlin-stdlib-jdk7</artifactId>
                 <version>${kotlinVersion}</version>
             </dependency>
+
+            <!-- micronaut-test-kotest5 overrides -->
+            <dependency>
+                <groupId>io.kotest</groupId>
+                <artifactId>kotest-bom</artifactId>
+                <version>${kotestVersion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -94,11 +106,13 @@
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-assertions-core-jvm</artifactId>
+            <version>${kotestVersion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-runner-junit5-jvm</artifactId>
+            <version>${kotestVersion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

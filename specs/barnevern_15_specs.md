@@ -59,3 +59,34 @@ Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd
 
 ## Kontroller
 
+### <a name="avgiver">Avgiver</a>
+
+#### <a name="avgiver_02">Avgiver Kontroll 2: Årgang</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Versjon** og **rapporteringsåret** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+når @Versjon og rapporteringsår er forskjellige<br/>
+så gi feilmeldingen "Filen inneholder feil rapporteringsår {@Versjon}, forventet {rapporteringsåret}."
+
+#### <a name="avgiver_03">Avgiver Kontroll 3: Organisasjonnummer</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Organisasjonnummer** og **orgnr** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+når @Organisasjonnummer er blank<br/>
+så gi feilmeldingen "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '{orgnr}'"
+
+#### <a name="avgiver_04">Avgiver Kontroll 4: Kommunenummer</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenummer** og **kommunenr** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+når **@Kommunenummer** og **kommunenr** er forskjellige<br/>
+så gi feilmeldingen "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema (**{kommunenr}**) og filuttrekk (**{@Kommunenummer}**)."
+
+#### <a name="avgiver_06">Avgiver Kontroll 6: Kommunenavn</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenavn** finnes<br/>
+når **@Kommunenavn** er blank<br/>
+så gi feilmeldingen "Filen mangler kommunenavn."
+
+

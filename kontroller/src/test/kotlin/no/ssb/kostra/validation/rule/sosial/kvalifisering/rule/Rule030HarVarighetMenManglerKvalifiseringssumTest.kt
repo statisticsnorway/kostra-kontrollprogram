@@ -37,7 +37,7 @@ class Rule030HarVarighetMenManglerKvalifiseringssumTest : BehaviorSpec({
                 kostraRecordInTest("1", true, " "),
                 "Det er ikke oppgitt hvor mye deltakeren har fått i " +
                         "kvalifiseringsstønad ( ) i løpet av året, eller feltet inneholder andre tegn enn " +
-                        "tall. Feltet er obligatorisk å fylle ut.",
+                        "tall.",
             )
         )
     )

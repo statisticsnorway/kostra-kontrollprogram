@@ -21,7 +21,7 @@ class Rule028MaanederMedKvalifiseringsstonad : AbstractNoArgsRule<List<KostraRec
             createValidationReportEntry(
                 "Det er ikke krysset av for hvilke måneder deltakeren har fått utbetalt " +
                         "kvalifiseringsstønad (${it[KVP_STONAD_COL_NAME]}) i løpet " +
-                        "av rapporteringsåret. Feltet er obligatorisk å fylle ut.",
+                        "av rapporteringsåret.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],

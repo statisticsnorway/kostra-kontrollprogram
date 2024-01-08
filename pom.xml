@@ -32,7 +32,7 @@
         <logback.version>1.4.11</logback.version>
 
         <!-- kotest:5.7.x hangs the build for all apps -->
-        <kotestVersion>5.6.2</kotestVersion>
+        <kotestVersion>5.8.0</kotestVersion>
 
         <jacoco.version>0.8.11</jacoco.version>
         <checkstyle.version>10.12.7</checkstyle.version>

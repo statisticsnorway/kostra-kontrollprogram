@@ -82,7 +82,7 @@ så gi en **FEIL** med meldingen "Filen inneholder feil rapporteringsår {@Versj
 
 Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Organisasjonnummer**<br/>
 når @Organisasjonnummer er blank<br/>
-så gi en **FEIL** med meldingen "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '**{organisasjonsnummer}**'"<br/>
+så gi en **FEIL** med meldingen "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '{**organisasjonsnummer**}'"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/avgiverrule/Avgiver03.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/avgiverrule/Avgiver03Test.kt)
 
@@ -90,7 +90,7 @@ så gi en **FEIL** med meldingen "Filen mangler organisasjonsnummer. Oppgitt org
 
 Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenummer** og [**kommunenummer**](#kommunenummer) fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
 når **@Kommunenummer** og **kommunenummer** er forskjellige<br/>
-så gi en **FEIL** med meldingen "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema (**{kommunenummer}**) og filuttrekk (**{@Kommunenummer}**)."<br/>
+så gi en **FEIL** med meldingen "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema ({**kommunenummer**}) og filuttrekk ({**@Kommunenummer**})."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/avgiverrule/Avgiver04.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/avgiverrule/Avgiver04Test.kt)
 
@@ -109,58 +109,58 @@ så gi en **FEIL** med meldingen "Filen mangler kommunenavn."<br/>
 
 Gitt at **minimumsdato** er 1. januar 1998 og **maksimumsdato** er 31. desember 2049<br/>
 når /Barnevern/Individ/**@StartDato** er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Individ startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Individ startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/**@SluttDato** finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Individ sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Individ sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Melding/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Melding startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Melding startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Melding/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Melding sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Melding sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Undersokelse/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Undersøkelse startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Undersøkelse startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Undersokelse/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Undersøkelse sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Undersøkelse sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Plan/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Plan startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Plan startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Plan/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Plan sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Plan sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Tiltak/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Tiltak startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Tiltak startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Tiltak/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Tiltak sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+så gi en **FEIL** med meldingen "Tiltak sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
 når /Barnevern/Individ/Flytting/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
-så gi en **FEIL** med meldingen "Flytting sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"<br/>
+så gi en **FEIL** med meldingen "Flytting sluttDato: Dato ({**@SluttDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ01a.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ01aTest.kt)
 
 #### <a name="individ_02a">Individ Kontroll 02a: Startdato etter sluttdato</a>
 Gitt at /Barnevern/Individ/**@StartDato** og /Barnevern/Individ/**@SluttDato** finnes<br/>
 når @StartDato er etter @SluttDato<br/>
-så gi en **FEIL** med meldingen "Individets startdato (**{@StartDato}**) er etter sluttdato (**{@SluttDato}**)"<br/>
+så gi en **FEIL** med meldingen "Individets startdato ({**@StartDato**}) er etter sluttdato ({**@SluttDato**})"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02a.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02aTest.kt)
 
 #### <a name="individ_02b">Individ Kontroll 02b: Sluttdato mot versjon</a>
 Gitt at /Barnevern/Individ/**@SluttDato** finnes<br/>
 når @SluttDato er før **forrige_telledato**<br/>
-så gi en **FEIL** med meldingen "Individets sluttdato (**{@SluttDato}**) er før forrige telletidspunkt (**{forrige_telledato}**)"<br/>
+så gi en **FEIL** med meldingen "Individets sluttdato ({**@SluttDato**}) er før forrige telletidspunkt ({**forrige_telledato**})"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02b.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02bTest.kt)
 
 #### <a name="individ_02d">Individ Kontroll 02d: Avslutta 31.12 medfører at sluttdato skal være satt</a>
 Gitt at /Barnevern/Individ/**@Avslutta3112** finnes<br/>
 når **@Avslutta3112** = 1 (Ja) og @SluttDato mangler<br/>
-så gi en **FEIL** med meldingen "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er **{@SluttDato}**. Kode for avsluttet er '1'."<br/>
+så gi en **FEIL** med meldingen "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er {**@SluttDato**}. Kode for avsluttet er '1'."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02d.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02dTest.kt)
 
@@ -212,7 +212,7 @@ så gi en **FEIL** med meldingen "Individet har ingen meldinger, planer eller ti
 #### <a name="individ_07">Individ Kontroll 07: Klient over 25 år avsluttes</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer**<br/>
 når alder er større enn 25 år<br/>
-så gi en **FEIL** med meldingen "Individet er **{alder}** år og skal avsluttes som klient"<br/>
+så gi en **FEIL** med meldingen "Individet er {**alder**} år og skal avsluttes som klient"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ07.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ07Test.kt)
 
@@ -253,4 +253,84 @@ når **@DUFnummer** er ugyldig<br/>
 så gi en **FEIL** med meldingen "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ19.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ19Test.kt)
+
+### <a name="melding">Melding</a>
+
+#### <a name="melding_02a">Melding Kontroll 2a: Startdato etter sluttdato</a>
+Gitt at /Barnevern/Individ/Melding/**@Id**, <br/>/Barnevern/Individ/Melding/**@StartDato** og <br/>/Barnevern/Individ/Melding/**@SluttDato** finnes<br/>
+når @StartDato er etter @SluttDato<br/>
+så gi en **FEIL** med meldingen "Melding ({**@Id**}). Meldingens startdato ({**@StartDato**}) er etter meldingens sluttdato ({**@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02a.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02aTest.kt)
+
+#### <a name="melding_02c">Melding Kontroll 2c: Sluttdato mot individets sluttdato</a>
+Gitt at /Barnevern/**Individ/@SluttDato**, <br/>
+/Barnevern/Individ/**Melding/@Id**, <br/>
+/Barnevern/Individ/**Melding/@SluttDato** og <br/>
+/Barnevern/Individ/**Melding/@Konklusjon** finnes<br/>
+når **Melding/@SluttDato** er etter **Individ/@SluttDato** og **Melding/@Konklusjon** = 1 (Henlagt)<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}}). Meldingens sluttdato ({**Melding/@SluttDato**}) er etter individets sluttdato ({**Individ/@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02c.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02cTest.kt)
+
+#### <a name="melding_02d">Melding Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på</a>
+Gitt at /Barnevern/Individ/**@Avslutta3112** = 1 (Avsluttet)<br/>
+for hver Melding i /Barnevern/Individ/<br/>
+når Melding/@SluttDato mangler <br/>
+eller /Barnevern/Individ/@SluttDato mangler <br/>
+eller Melding/@SluttDato og er etter **telledato**<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}}). Individet er avsluttet hos barnevernet og dets meldinger skal dermed være avsluttet. Sluttdato  er {**Individ/@SluttDato** eller "uoppgitt"}"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02d.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02dTest.kt)
+
+#### <a name="melding_02e">Melding Kontroll 2e: Startdato mot individets startdato</a>
+Gitt at /Barnevern/**Individ/@StartDato** og <br/>/Barnevern/Individ/**Melding/@StartDato** finnes<br/>
+når **Melding/@StartDato** er før **Individ/@StartDato**<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}). Meldingens startdato ({**Melding/@StartDato**}) skal være lik eller " +
+"etter individets startdato ({**Individ/@StartDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02e.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02eTest.kt)
+
+#### <a name="melding_03">Melding Kontroll 3: Behandlingstid av melding</a>
+Gitt at /Barnevern/Individ/Melding/**@StartDato** og /Barnevern/Individ/Melding/**@SluttDato** finnes<br/>
+når **@SluttDato** er 8 eller flere dager etter **@StartDato**<br/>
+så gi en **ADVARSEL** med meldingen "Melding ({**@Id**}). Fristoverskridelse på behandlingstid for melding, ({**@StartDato**} -> {**@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding03.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding03Test.kt)
+
+#### <a name="melding_04">Melding Kontroll 4: Kontroll av konkludert melding, melder</a>
+Gitt at /Barnevern/Individ/Melding/**@SluttDato** finnes<br/>
+når **@SluttDato** er før **forrige_telledato**<br/>
+og @Konklusjon finnes<br/>
+og @Konklusjon er enten 1 eller 2<br/>
+og Melding/Melder/@Kode mangler<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}}). Konkludert melding mangler melder(e)."<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding04.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding04Test.kt)
+
+#### <a name="melding_05">Melding Kontroll 5: Kontroll av konkludert melding, saksinnhold</a>
+Gitt at /Barnevern/Individ/Melding/**@SluttDato** finnes<br/>
+når **@SluttDato** er før **forrige_telledato**<br/>
+og @Konklusjon finnes<br/>
+og @Konklusjon er enten 1 eller 2<br/>
+og Melding/Saksinnhold/@Kode mangler<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}}). Konkludert melding mangler saksinnhold."<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding05.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding05Test.kt)
+
+#### <a name="melder_02">Melder Kontroll 2: Kontroll av kode og presisering</a>
+Gitt at /Barnevern/Individ/**Melding/Melder** finnes<br/>
+for hver **Melder** i **Melding/Melder**
+når **Melder/@Kode** = 22 (Andre offentlige instanser)
+så gi en **FEIL** med meldingen "Melder med kode ({**Melder/@Kode**}) mangler presisering"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melder02.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melder02Test.kt)
+
+#### <a name="saksinnhold_02">Saksinnhold Kontroll 2: Kontroll av kode og presisering</a>
+Gitt at /Barnevern/Individ/**Melding/Saksinnhold** finnes<br/>
+for hver **Saksinnhold** i **Melding/Saksinnhold**
+når **Saksinnhold/@Kode** er enten 18 (Andre forhold ved foreldre/ familien) eller 19 (Andre forhold ved barnets situasjon)
+så gi en **FEIL** med meldingen "Saksinnhold med kode ({**Saksinnhold/@Kode**}) mangler presisering"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02Test.kt)
 

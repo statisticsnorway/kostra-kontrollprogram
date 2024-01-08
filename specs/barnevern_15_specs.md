@@ -58,29 +58,38 @@ Informasjonen i XSD brukes til å verifisere om hvert element, attributt eller d
 Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd](/kostra-barnevern/src/main/resources/KostraBarnevern.xsd), [Avgiver.xsd](/kostra-barnevern/src/main/resources/Avgiver.xsd) og [Individ.xsd](/kostra-barnevern/src/main/resources/Individ.xsd) og finnes under [/kostra-barnevern/src/main/resources/](/kostra-barnevern/src/main/resources/)
 
 ## Kontroller
+I forbindelse med kontrollering så blir noen varibler sendt med fra portalen og blir benyttet i noen av kontrollene. Disse er:
+* <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2023**
+* <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
+* <a name="kommunenavn">**kommunenavn**</a>, for eksempel **Oslo**
+* <a name="organisasjonsnummer">**organisasjonsnummer**</a>, for eksempel **958935420**
+
+Andre variabler:
+* <a name="telledato">**_telledato**</a> som er 31. desember i **rapporteringsår**, for eksempel **31. desember 2023**
+* <a name="forrigetelledato">**forrige_telledato**</a> som er 31. desember i året før **rapporteringsår**, for eksempel **31. desember 2022**
 
 ### <a name="avgiver">Avgiver</a>
 
 #### <a name="avgiver_02">Avgiver Kontroll 2: Årgang</a>
 Alvorlighetsgrad: FEIL
 
-Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Versjon** og **rapporteringsåret** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Versjon** og [**rapporteringsår**](#rapporteringsar) fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
 når @Versjon og rapporteringsår er forskjellige<br/>
 så gi feilmeldingen "Filen inneholder feil rapporteringsår {@Versjon}, forventet {rapporteringsåret}."
 
 #### <a name="avgiver_03">Avgiver Kontroll 3: Organisasjonnummer</a>
 Alvorlighetsgrad: FEIL
 
-Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Organisasjonnummer** og **orgnr** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Organisasjonnummer**<br/>
 når @Organisasjonnummer er blank<br/>
-så gi feilmeldingen "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '{orgnr}'"
+så gi feilmeldingen "Filen mangler organisasjonsnummer. Oppgitt organisasjonsnummer er '**{organisasjonsnummer}**'"
 
 #### <a name="avgiver_04">Avgiver Kontroll 4: Kommunenummer</a>
 Alvorlighetsgrad: FEIL
 
-Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenummer** og **kommunenr** fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
-når **@Kommunenummer** og **kommunenr** er forskjellige<br/>
-så gi feilmeldingen "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema (**{kommunenr}**) og filuttrekk (**{@Kommunenummer}**)."
+Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenummer** og [**kommunenummer**](#kommunenummer) fra skjema 15F. Barnevern YYYY - filuttrekk er like <br/>
+når **@Kommunenummer** og **kommunenummer** er forskjellige<br/>
+så gi feilmeldingen "Filen inneholder feil kommunenummer. Forskjellig kommunenummer i skjema (**{kommunenummer}**) og filuttrekk (**{@Kommunenummer}**)."
 
 #### <a name="avgiver_06">Avgiver Kontroll 6: Kommunenavn</a>
 Alvorlighetsgrad: FEIL
@@ -88,5 +97,66 @@ Alvorlighetsgrad: FEIL
 Gitt at en skal kontrollere at /Barnevern/Avgiver/**@Kommunenavn** finnes<br/>
 når **@Kommunenavn** er blank<br/>
 så gi feilmeldingen "Filen mangler kommunenavn."
+
+
+### Individ
+
+#### <a name="individ_01a">Individ Kontroll 01a: Validering av datoer</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at **minimumsdato** er 1. januar 1998 og **maksimumsdato** er 31. desember 2049<br/>
+når /Barnevern/Individ/**@StartDato** er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Individ startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/**@SluttDato** finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Individ sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Melding/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Melding startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Melding/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Melding sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Undersokelse/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Undersøkelse startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Undersokelse/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Undersøkelse sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Plan/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Plan startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Plan/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Plan sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Tiltak/@StartDato er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Tiltak startdato: Dato (**{@StartDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Tiltak/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Tiltak sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+når /Barnevern/Individ/Flytting/@SluttDato finnes og er før **minimumsdato** eller etter **maksimumsdato**<br/>
+så gi feilmeldingen "Flytting sluttDato: Dato (**{@SluttDato}**) må være mellom **{minimumsdato}** og **{maksimumsdato}**)"
+
+#### <a name="individ_02a">Individ Kontroll 02a: Startdato etter sluttdato</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at /Barnevern/Individ/**@StartDato** og /Barnevern/Individ/**@SluttDato** finnes<br/>
+når @StartDato er etter @SluttDato<br/>
+så gi feilmeldingen "Individets startdato (**{@StartDato}**) er etter sluttdato (**{@SluttDato}**)"
+
+#### <a name="individ_02b">Individ Kontroll 02b: Sluttdato mot versjon</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at /Barnevern/Individ/**@SluttDato** finnes<br/>
+når @SluttDato er før **forrige_telledato**<br/>
+så gi feilmeldingen "Individets sluttdato (**{@SluttDato}**) er før forrige telletidspunkt (**{forrige_telledato}**)"
+
+#### <a name="individ_02d">Individ Kontroll 02d: Avslutta 31.12 medfører at sluttdato skal være satt</a>
+Alvorlighetsgrad: FEIL
+
+Gitt at /Barnevern/Individ/**@Avslutta3112** finnes= 1 (Ja)<br/>
+når **@Avslutta3112** = 1 (Ja) og @SluttDato mangler<br/>
+så gi feilmeldingen "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er **{@SluttDato}**. Kode for avsluttet er '1'."
 
 

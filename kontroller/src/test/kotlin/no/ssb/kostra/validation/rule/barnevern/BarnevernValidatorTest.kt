@@ -49,7 +49,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_06.title,
                     messageText = "Individet har ingen meldinger, planer eller tiltak i løpet av året"
-                ), 56
+                ), 55
             ),
             row(
                 "invalid avgiver",
@@ -60,7 +60,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = AvgiverRuleId.AVGIVER_01.title,
                     messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
-                ), 52
+                ), 51
             ),
             row(
                 "invalid individ",
@@ -83,7 +83,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     ruleName = IndividRuleId.INDIVID_04.title,
                     journalId = "~journalnummer~",
                     messageText = "Fødselsnummeret i journalnummer ~journalnummer~ fins også i journalene ~journalnummer2~."
-                ), 108
+                ), 106
             ),
             row(
                 "duplicate individ #2",
@@ -94,7 +94,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_05.title,
                     messageText = "Journalnummer ~journalnummer~ forekommer 2 ganger."
-                ), 108
+                ), 106
             ),
             row(
                 "invalid XML",
@@ -125,7 +125,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.WARNING,
                     ruleName = IndividRuleId.INDIVID_11.title,
                     messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
-                ), 56
+                ), 55
             )
         ) { description, avgiver, individList, destroyXml, expectedResult, expectedNumberOfControls ->
 
@@ -162,7 +162,7 @@ class BarnevernValidatorTest : BehaviorSpec({
                         ruleName = AvgiverRuleId.AVGIVER_00.title,
                         messageText = "Antall avgivere skal være 1, fant 0"
                     )
-                    numberOfControls shouldBe 52
+                    numberOfControls shouldBe 51
                 }
             }
         }

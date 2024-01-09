@@ -19,7 +19,6 @@ object IndividRules {
         Individ12(),
         Individ19(),
 
-        Lovhjemmel02(),
         Lovhjemmel03(),
         Lovhjemmel04(),
 

@@ -15,7 +15,7 @@ class Tiltak04Test : BehaviorSpec({
     include(
         validationRuleWithArgsTest(
             sut = Tiltak04(),
-            expectedSeverity = Severity.WARNING,
+            expectedSeverity = Severity.ERROR,
             expectedContextId = tiltakTypeInTest.id,
             ForAllRowItem(
                 "individ without tiltak",

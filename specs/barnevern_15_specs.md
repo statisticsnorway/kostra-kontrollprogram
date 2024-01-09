@@ -5,7 +5,7 @@
 
 
 ## <a name="omfang">Omfang</a>
-Kontaktperson: Tone Dyrhaug, e-post: tone.dyrhaug@ssb.no
+Kontaktepost: **ssb-barnevern@ssb.no**
 
 Generell beskrivelse: Barnevernsstatistikken er en individstatistikk som hentes inn fra alle kommunale barnevernstjenester som et filuttrekk fra kommunens fagsystem for barnevern. Oppbyggingen er slik:
 
@@ -36,8 +36,8 @@ Rapportering til SSB skjer i 2 forskjellige kanaler:
 - **<a name="kostra_kanal">KOSTRA</a>**, klassisk og indirekte rapportering ved hjelp av filuttrekk.
 
 
-### <a name="omsorgsovertakelse">Omsorgsovertakelse</a>
-Et Tiltak er en Omsorgsovertakelse dersom en av følgende:
+### <a name="omsorgstiltak">Omsorgstiltak</a>
+Et Tiltak er en Omsorgstiltak dersom en av følgende:
 - Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 12
 - Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 8 og Lovhjemmel/Ledd er én av 2 eller 3
 - Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 8 og én av JmfrLovhjemmel/Kapittel = 4 og JmfrLovhjemmel/Paragraf = 12
@@ -206,7 +206,7 @@ så gi en :no_entry:**FEIL** med meldingen "Journalnummer {**@Journalnummer**} f
 
 #### <a name="individ_06">Individ Kontroll 06: Har meldinger, planer eller tiltak</a>
 Gitt at /Barnevern/Individ finnes<br/>
-når ingen /Barnevern/Individ/Melding finnes og ingen /Barnevern/Individ/Plan finnes og ingen /Barnevern/Individ/Tiltak finnes
+når ingen /Barnevern/Individ/Melding finnes og ingen /Barnevern/Individ/Plan finnes og ingen /Barnevern/Individ/Tiltak finnes<br/>
 så gi en :no_entry:**FEIL** med meldingen "Individet har ingen meldinger, planer eller tiltak i løpet av året"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ06.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ06Test.kt)
@@ -226,13 +226,13 @@ så gi en :no_entry:**FEIL** med meldingen "Individet er over 18 år og skal der
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ08Test.kt)
 
 #### <a name="individ_09">Individ Kontroll 09: Bydelsnummer</a>
-Gitt at **kommunenummer** starter med 0301 og /Barnevern/Individ/**@Bydelsnummer** mangler
+Gitt at **kommunenummer** starter med 0301 og /Barnevern/Individ/**@Bydelsnummer** mangler<br/>
 så gi en :no_entry:**FEIL** med meldingen "Filen mangler bydelsnummer."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ09.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ09Test.kt)
 
 #### <a name="individ_10">Individ Kontroll 10: Bydelsnavn</a>
-Gitt at **kommunenummer** starter med 0301 og /Barnevern/Individ/**@Bydelsnavn** mangler
+Gitt at **kommunenummer** starter med 0301 og /Barnevern/Individ/**@Bydelsnavn** mangler<br/>
 så gi en :no_entry:**FEIL** med meldingen "Filen mangler bydelsnavn."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ10.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ10Test.kt)
@@ -517,7 +517,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**Tiltak/@Id**}). Tiltakets
 
 #### <a name="tiltak_04">Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse</a>
 Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
-når **@SluttDato** finnes og **Tiltak** er en [Omsorgsovertakelse](#omsorgsovertakelse) og **@Opphevelse** mangler<br/>
+når **@SluttDato** finnes og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak) og **@Opphevelse** mangler<br/>
 så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Omsorgstiltak med sluttdato {**@SluttDato**} krever kode for opphevelse"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04Test.kt)
@@ -573,7 +573,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltak opprette
 
 #### <a name="lovhjemmel_03">Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
-når alder er 18 år eller eldre og **Tiltak** er en [Omsorgsovertakelse](#omsorgsovertakelse)<br/>
+når alder er 18 år eller eldre og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak)<br/>
 så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Individet er {**alder**} år år og skal dermed ikke ha omsorgstiltak"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03Test.kt)

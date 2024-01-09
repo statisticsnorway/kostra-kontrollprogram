@@ -518,7 +518,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**Tiltak/@Id**}). Tiltakets
 #### <a name="tiltak_04">Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse</a>
 Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
 når **@SluttDato** finnes og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak) og **@Opphevelse** mangler<br/>
-så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Omsorgstiltak med sluttdato {**@SluttDato**} krever kode for opphevelse"<br/>
+så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Omsorgstiltak med sluttdato {**@SluttDato**} krever kode for opphevelse"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04Test.kt)
 

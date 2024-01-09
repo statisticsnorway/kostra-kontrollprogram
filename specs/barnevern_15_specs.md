@@ -592,3 +592,23 @@ for alle **@Kapittel** eller **@Paragraf** i **Tiltak//@Paragraf**
 når **@Kapittel** er "0" eller **@Paragraf** er "0" <br/>
 så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Kapittel ({**@Kapittel**}) eller paragraf ({**@Paragraf**}) er rapportert med den ugyldige koden '0'"
 
+
+### <a name="flytting">Flytting</a>
+
+#### <a name="flytting_02c">Flytting Kontroll 2c: Sluttdato mot individets sluttdato</a>
+Gitt at /Barnevern/**Individ/@SluttDato**, <br/>
+/Barnevern/Individ/**Flytting/@Id**, <br/>
+/Barnevern/Individ/**Flytting/@SluttDato** finnes<br/>
+når **Flytting/@SluttDato** er etter **Individ/@SluttDato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Flytting ({**Flytting/@Id**}}). Flyttingens sluttdato ({**Flytting/@SluttDato**}) er etter individets sluttdato ({**Individ/@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Flytting02c.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Flytting02cTest.kt)
+
+#### <a name="flytting_02f">Flytting Kontroll 2f: Sluttdato mot individets startdato</a>
+Gitt at /Barnevern/**Individ/@StartDato**, <br/>
+/Barnevern/Individ/**Flytting/@Id**, <br/>
+/Barnevern/Individ/**Flytting/@SluttDato** finnes<br/>
+når **Flytting/@SluttDato** er før **Individ/@StartDato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Flytting ({**Flytting/@Id**}}). Flyttingens sluttdato ({**Flytting/@SluttDato**}) er før individets startdato ({**Individ/@StartDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Flytting02f.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Flytting02fTest.kt)

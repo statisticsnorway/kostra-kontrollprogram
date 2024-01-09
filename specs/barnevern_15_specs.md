@@ -552,8 +552,8 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltaksopphevel
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak08Test.kt)
 
 #### <a name="tiltak_09">Tiltak Kontroll 9: Flere plasseringstiltak i samme periode</a>
-Gitt at /Barnevern/Individ/**Tiltak** finnes der 2 eller flere **Tiltak** er [Plasseringstiltak](#plasseringstiltak)<br/>
-når **Plasseringstiltak** overlapper med mer enn 3 måneder med hverandre<br/>
+Gitt at /Barnevern/Individ/**Tiltak** finnes, og 2 eller flere **Tiltak** er [Plasseringstiltak](#plasseringstiltak)<br/>
+når 2 **Plasseringstiltak** overlapper med mer enn 3 måneder<br/>
 så gi en :warning:**ADVARSEL** med meldingen "Plasseringstiltak kan ikke overlappe med mer enn 3 måneder"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak09.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak09Test.kt)
@@ -578,7 +578,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Individet er {*
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03Test.kt)
 
-#### <a name="lovhjemmel_04">Lovhjemmel Kontroll 4: Lovhjemmelk</a>
+#### <a name="lovhjemmel_04">Lovhjemmel Kontroll 4: Lovhjemmel</a>
 Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
 for alle **@Kapittel** eller **@Paragraf** i **Tiltak//@Paragraf**
 når **@Kapittel** er "0" eller **@Paragraf** er "0" <br/>

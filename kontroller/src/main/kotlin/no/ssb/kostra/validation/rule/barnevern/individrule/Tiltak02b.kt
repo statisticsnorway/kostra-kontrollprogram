@@ -13,10 +13,10 @@ class Tiltak02b : AbstractRule<KostraIndividType>(
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.tiltak
         .filter {
             it.sluttDato?.let { sluttDato -> sluttDato.year != arguments.aargang.toInt() } ?: false
-        }.map { plan ->
+        }.map { tiltak ->
             createValidationReportEntry(
-                contextId = plan.id,
-                messageText = "Tiltak (${plan.id}). Sluttdato (${plan.sluttDato}) er ikke " +
+                contextId = tiltak.id,
+                messageText = "Tiltak (${tiltak.id}). Sluttdato (${tiltak.sluttDato}) er ikke " +
                         "i rapporteringsåret (${arguments.aargang})"
             )
         }.ifEmpty { null }

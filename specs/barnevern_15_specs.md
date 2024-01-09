@@ -3,11 +3,7 @@
 ## Innhold
 
 ## <a name="omfang">Omfang</a>
-Gjelder filuttrekk: Barnevern 2018
-
-Gjelder rapporteringsår: 2018
-
-Kontaktperson: Tone Dyrhaug, tlf. 21 09 47 71, e-post: tone.dyrhaug@ssb.no
+Kontaktperson: Tone Dyrhaug, e-post: tone.dyrhaug@ssb.no
 
 Generell beskrivelse: Barnevernsstatistikken er en individstatistikk som hentes inn fra alle kommunale barnevernstjenester som et filuttrekk fra kommunens fagsystem for barnevern. Oppbyggingen er slik:
 
@@ -58,7 +54,7 @@ Informasjonen i XSD brukes til å verifisere om hvert element, attributt eller d
 Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd](/kostra-barnevern/src/main/resources/KostraBarnevern.xsd), [Avgiver.xsd](/kostra-barnevern/src/main/resources/Avgiver.xsd) og [Individ.xsd](/kostra-barnevern/src/main/resources/Individ.xsd) og finnes under [/kostra-barnevern/src/main/resources/](/kostra-barnevern/src/main/resources/)
 
 ## Kontroller
-I forbindelse med kontrollering så blir noen varibler sendt med fra portalen og blir benyttet i noen av kontrollene. Disse er:
+I forbindelse med kontrollering så blir noen variabler sendt med fra portalen og blir benyttet i noen av kontrollene. Disse er:
 * <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2023**
 * <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
 * <a name="kommunenavn">**kommunenavn**</a>, for eksempel **Oslo**
@@ -286,8 +282,7 @@ så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}}). Individet er avs
 #### <a name="melding_02e">Melding Kontroll 2e: Startdato mot individets startdato</a>
 Gitt at /Barnevern/**Individ/@StartDato** og <br/>/Barnevern/Individ/**Melding/@StartDato** finnes<br/>
 når **Melding/@StartDato** er før **Individ/@StartDato**<br/>
-så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}). Meldingens startdato ({**Melding/@StartDato**}) skal være lik eller " +
-"etter individets startdato ({**Individ/@StartDato**})"<br/>
+så gi en **FEIL** med meldingen "Melding ({**Melding/@Id**}). Meldingens startdato ({**Melding/@StartDato**}) skal være lik eller etter individets startdato ({**Individ/@StartDato**})"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02e.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02eTest.kt)
 
@@ -333,4 +328,98 @@ når **Saksinnhold/@Kode** er enten 18 (Andre forhold ved foreldre/ familien) el
 så gi en **FEIL** med meldingen "Saksinnhold med kode ({**Saksinnhold/@Kode**}) mangler presisering"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02Test.kt)
+
+### <a name="undersokelse">Undersøkelse</a>
+
+#### <a name="undersokelse_02a">Undersøkelse Kontroll 2a: Startdato etter sluttdato</a>
+Gitt at /Barnevern/Individ/Undersokelse/**@Id**, <br/>
+/Barnevern/Individ/Undersokelse/**@StartDato** og <br/>
+/Barnevern/Individ/Undersokelse/**@SluttDato** finnes<br/>
+når **@StartDato** er etter **@SluttDato**<br/>
+så gi en :x:**FEIL** med meldingen "Undersokelse ({**@Id**}). Undersøkelsens startdato ({**@StartDato**}) er etter undersøkelsens sluttdato ({**@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02a.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02aTest.kt)
+
+#### <a name="undersokelse_02b">Undersøkelse Kontroll 2b: Sluttdato mot rapporteringsår</a>
+Gitt at /Barnevern/Individ/Undersokelse/**@SluttDato** finnes<br/>
+når året i **@SluttDato** og **rapporteringsår** er forskjellige<br/>
+så gi en **FEIL** med meldingen "Undersøkelse ({**@Id**}). Undersøkelsens sluttdato ({**@SluttDato**}) er ikke i rapporteringsåret ({**rapporteringsår**}) "<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02b.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02bTest.kt)
+
+#### <a name="undersokelse_02c">Undersøkelse Kontroll 2c: Sluttdato mot individets sluttdato</a>
+Gitt at /Barnevern/**Individ/@SluttDato**, <br/>
+/Barnevern/Individ/**Undersokelse/@Id**, <br/>
+/Barnevern/Individ/**Undersokelse/@SluttDato** og <br/>
+/Barnevern/Individ/**Undersokelse/@Konklusjon** finnes<br/>
+når **Undersokelse/@SluttDato** er etter **Individ/@SluttDato**<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}}). Undersøkelsens sluttdato ({**Undersokelse/@SluttDato**}) er etter individets sluttdato ({**Individ/@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02c.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02cTest.kt)
+
+#### <a name="undersokelse_02d">Undersøkelse Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på undersøkelsen</a>
+Gitt at /Barnevern/Individ/**@Avslutta3112** = 1 (Avsluttet)<br/>
+for hver Undersokelse i /Barnevern/Individ/<br/>
+når Undersokelse/@SluttDato mangler <br/>
+eller /Barnevern/Individ/@SluttDato mangler <br/>
+eller Undersokelse/@SluttDato og er etter **telledato**<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}}). Individet er avsluttet hos barnevernet og dets undersøkelser skal dermed være avsluttet. Sluttdato er {**Undersokelse/@SluttDato** eller "uoppgitt"}"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02d.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02dTest.kt)
+
+#### <a name="undersokelse_02e">Undersøkelse Kontroll 2e: Startdato mot individets startdato</a>
+Gitt at /Barnevern/**Individ/@StartDato** og <br/>
+/Barnevern/Individ/**Undersokelse/@StartDato** finnes<br/>
+når **Undersokelse/@StartDato** er før **Individ/@StartDato**<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelsens startdato ({**Undersokelse/@StartDato**}) skal være lik eller etter individets startdato ({**Individ/@StartDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02e.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02eTest.kt)
+
+#### <a name="undersokelse_03">Undersøkelse Kontroll 3: Kontroll av kode og presisering</a>
+Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
+for hver **Undersokelse** i **Melding/Undersokelse**<br/>
+når **Undersokelse/@Kode** er 5 (Undersøkelsen henlagt som følge av flytting)<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelse der kode for konklusjon er {**Undersokelse/@Konklusjon**} mangler presisering"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse03.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse03Test.kt)
+
+#### <a name="undersokelse_04">Undersøkelse Kontroll 4: Konklusjon av undersøkelse</a>
+Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
+for hver **Undersokelse** i **Melding/Undersokelse**<br/>
+når **Undersokelse/@SluttDato** finnes og **Undersokelse/@Konklusjon** mangler<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Avsluttet undersøkelse mangler konklusjon"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse04.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse04Test.kt)
+
+#### <a name="undersokelse_07">Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag</a>
+Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
+for hver **Undersokelse** i **Melding/Undersokelse**<br/>
+når **Undersokelse/@Konklusjon** er <br/>
+1 (Barneverntjenesten fatter vedtak om tiltak)<br/>
+eller 2 (Begjæring om tiltak for fylkesnemnda)<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelse konkludert med kode  {**Undersokelse/@Konklusjon**} skal ha vedtaksgrunnlag"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse07.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse07Test.kt)
+
+#### <a name="undersokelse_08">Undersøkelse Kontroll 8: Ukonkludert undersøkelse påbegynt før 1. juli er ikke konkludert</a>
+Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
+for hver **Undersokelse** i **Melding/Undersokelse**<br/>
+når **Undersokelse/@StartDato** er før 1. juli i **rapporteringsår** og **Undersokelse/@SluttDato** mangler<br/>
+så gi en **FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelsen startet {**Undersokelse/@SluttDato**} og skal konkluderes da den har pågått i mer enn 6 måneder"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08Test.kt)
+
+
+emoji test
+:stop: stop
+
+:x: x
+:warning: warning
+:no_entry: no_entry
+:white_check_mark: white_check_mark
+:bangbang: bangbang
+
+
+
+
 

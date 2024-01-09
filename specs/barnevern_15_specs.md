@@ -525,7 +525,7 @@ så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Omsorgstilta
 #### <a name="tiltak_05">Tiltak Kontroll 5: Barn over 7 år og i barnehage</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
 når alder er 7 år eller eldre og **Tiltak/Kategori/@Kode** er "4.1"<br/>
-så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Barnet er over 7 år og i barnehage. Barnets alder er {**alder**} år"<br/>
+så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Barnet er over 7 år og i barnehage. Barnets alder er {**alder**} år"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak05.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak05Test.kt)
 

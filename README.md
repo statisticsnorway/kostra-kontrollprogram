@@ -19,4 +19,4 @@
     * Økonomisk sosialhjelp
     * Kvalifiseringsstønad
 * XML-baserte filvedlegg
-  * Barnevern 
+  * [Barnevern](/specs/barnevern_15_specs.md) 

@@ -571,14 +571,6 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltak opprette
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak24.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak24Test.kt)
 
-#### <a name="lovhjemmel_02">Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse</a>
-##### TODO: DUBLETT AV Tiltak Kontroll 4? 
-Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
-når **Tiltak** er en [Omsorgsovertakelse](#omsorgsovertakelse) og **@SluttDato** finnes og **@Opphevelse** mangler<br/>
-så gi en :warning:**ADVARSEL** med meldingen "Lovhjemmel Kontroll 2: Omsorgstiltak med sluttdato krever årsak til opphevelse"<br/>
-[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel02.kt)
-[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel02Test.kt)
-
 #### <a name="lovhjemmel_03">Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
 når alder er 18 år eller eldre og **Tiltak** er en [Omsorgsovertakelse](#omsorgsovertakelse)<br/>

@@ -407,12 +407,62 @@ så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08Test.kt)
 
+#### <a name="vedtaksgrunnlag_02">Vedtaksgrunnlag Kontroll 2: Kontroll av kode og presisering</a>
+Gitt at /Barnevern/Individ/**Melding/Undersokelse/Vedtaksgrunnlag** finnes<br/>
+for hver **Vedtaksgrunnlag** i **Melding/Undersokelse/Vedtaksgrunnlag**<br/>
+når **Vedtaksgrunnlag/@Kode** er enten 18 (Andre forhold ved foreldre/ familien) eller 19 (Andre forhold ved barnets situasjon)<br/>
+så gi en :no_entry:**FEIL** med meldingen "Vedtaksgrunnlag med kode ({**Vedtaksgrunnlag/@Kode**}) mangler presisering"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Vedtak02.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Vedtak02Test.kt)
 
-emoji test
-:stop_sign: fatal
-:no_entry: error
-:warning: warning
-:white_check_mark:  ok
+### <a name="plan">Plan</a>
+
+#### <a name="plan_02a">Plan Kontroll 2a: Startdato etter sluttdato</a>
+Gitt at /Barnevern/Individ/Plan/**@Id**, <br/>
+/Barnevern/Individ/Plan/**@StartDato** og <br/>
+/Barnevern/Individ/Plan/**@SluttDato** finnes<br/>
+når **@StartDato** er etter **@SluttDato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Plan ({**@Id**}). Planens startdato ({**@StartDato**}) er etter planens sluttdato ({**@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02a.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02aTest.kt)
+
+#### <a name="plan_02b">Plan Kontroll 2b: Sluttdato mot rapporteringsår</a>
+Gitt at /Barnevern/Individ/Plan/**@SluttDato** finnes<br/>
+når året i **@SluttDato** og **rapporteringsår** er forskjellige<br/>
+så gi en :no_entry:**FEIL** med meldingen "Plan ({**@Id**}). Planens sluttdato ({**@SluttDato**}) er ikke i rapporteringsåret ({**rapporteringsår**}) "<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02b.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02bTest.kt)
+
+#### <a name="plan_02c">Plan Kontroll 2c: Sluttdato mot individets sluttdato</a>
+Gitt at /Barnevern/**Individ/@SluttDato**, <br/>
+/Barnevern/Individ/**Plan/@Id**, <br/>
+/Barnevern/Individ/**Plan/@SluttDato** og <br/>
+/Barnevern/Individ/**Plan/@Konklusjon** finnes<br/>
+når **Plan/@SluttDato** er etter **Individ/@SluttDato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Plan ({**Plan/@Id**}}). Planens sluttdato ({**Plan/@SluttDato**}) er etter individets sluttdato ({**Individ/@SluttDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02c.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02cTest.kt)
+
+#### <a name="plan_02d">Plan Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på plann</a>
+Gitt at /Barnevern/Individ/**@Avslutta3112** = 1 (Avsluttet)<br/>
+for hver Plan i /Barnevern/Individ/<br/>
+når Plan/@SluttDato mangler <br/>
+eller /Barnevern/Individ/@SluttDato mangler <br/>
+eller Plan/@SluttDato og er etter **telledato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Plan ({**Plan/@Id**}}). Individet er avsluttet hos barnevernet og dets planr skal dermed være avsluttet. Sluttdato er {**Plan/@SluttDato** eller "uoppgitt"}"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02d.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02dTest.kt)
+
+#### <a name="plan_02e">Plan Kontroll 2e: Startdato mot individets startdato</a>
+Gitt at /Barnevern/**Individ/@StartDato** og <br/>
+/Barnevern/Individ/**Plan/@StartDato** finnes<br/>
+når **Plan/@StartDato** er før **Individ/@StartDato**<br/>
+så gi en :no_entry:**FEIL** med meldingen "Plan ({**Plan/@Id**}). Planens startdato ({**Plan/@StartDato**}) skal være lik eller etter individets startdato ({**Individ/@StartDato**})"<br/>
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02e.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02eTest.kt)
+
+
+
 
 
 

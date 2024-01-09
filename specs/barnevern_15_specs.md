@@ -315,16 +315,16 @@ så gi en :no_entry:**FEIL** med meldingen "Melding ({**Melding/@Id**}}). Konklu
 
 #### <a name="melder_02">Melder Kontroll 2: Kontroll av kode og presisering</a>
 Gitt at /Barnevern/Individ/**Melding/Melder** finnes<br/>
-for hver **Melder** i **Melding/Melder**
-når **Melder/@Kode** = 22 (Andre offentlige instanser)
+for hver **Melder** i **Melding/Melder**<br/>
+når **Melder/@Kode** = 22 (Andre offentlige instanser)<br/>
 så gi en :no_entry:**FEIL** med meldingen "Melder med kode ({**Melder/@Kode**}) mangler presisering"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melder02.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melder02Test.kt)
 
 #### <a name="saksinnhold_02">Saksinnhold Kontroll 2: Kontroll av kode og presisering</a>
 Gitt at /Barnevern/Individ/**Melding/Saksinnhold** finnes<br/>
-for hver **Saksinnhold** i **Melding/Saksinnhold**
-når **Saksinnhold/@Kode** er enten 18 (Andre forhold ved foreldre/ familien) eller 19 (Andre forhold ved barnets situasjon)
+for hver **Saksinnhold** i **Melding/Saksinnhold**<br/>
+når **Saksinnhold/@Kode** er enten 18 (Andre forhold ved foreldre/ familien) eller 19 (Andre forhold ved barnets situasjon)<br/>
 så gi en :no_entry:**FEIL** med meldingen "Saksinnhold med kode ({**Saksinnhold/@Kode**}) mangler presisering"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Saksinnhold02Test.kt)
@@ -336,7 +336,7 @@ Gitt at /Barnevern/Individ/Undersokelse/**@Id**, <br/>
 /Barnevern/Individ/Undersokelse/**@StartDato** og <br/>
 /Barnevern/Individ/Undersokelse/**@SluttDato** finnes<br/>
 når **@StartDato** er etter **@SluttDato**<br/>
-så gi en :x::no_entry:**FEIL** med meldingen "Undersokelse ({**@Id**}). Undersøkelsens startdato ({**@StartDato**}) er etter undersøkelsens sluttdato ({**@SluttDato**})"<br/>
+så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**@Id**}). Undersøkelsens startdato ({**@StartDato**}) er etter undersøkelsens sluttdato ({**@SluttDato**})"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02a.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse02aTest.kt)
 
@@ -409,10 +409,10 @@ så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}
 
 
 emoji test
-:stop_sign: stop_sign -> fatal
-:no_entry: no_entry -> error
-:warning: warning -> warning
-:white_check_mark: white_check_mark -> ok
+:stop_sign: fatal
+:no_entry: error
+:warning: warning
+:white_check_mark:  ok
 
 
 

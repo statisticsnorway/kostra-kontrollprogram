@@ -3,8 +3,6 @@ package no.ssb.kostra.program
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 class FileDescriptionLoaderTest : BehaviorSpec({
@@ -15,17 +13,11 @@ class FileDescriptionLoaderTest : BehaviorSpec({
             row("non_existing_file.yaml", 0),
         ) { fileName, expectedFieldsCount ->
             When(fileName) {
-                val sut = FileDescriptionLoader.getResourceAsFileDescription(fileName)
+                val sut = FileDescriptionLoader.getResourceAsFieldDefinitionList(fileName)
 
                 Then("expected count should be $expectedFieldsCount") {
-                    if (expectedFieldsCount == 0) {
-                        sut.shouldBeNull()
+                    sut.size shouldBe expectedFieldsCount
 
-                    } else {
-                        sut.shouldNotBeNull()
-                        sut.fields.size shouldBe expectedFieldsCount
-
-                    }
                 }
             }
         }

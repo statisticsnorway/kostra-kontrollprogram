@@ -8,7 +8,10 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 object FileDescriptionLoader {
     private val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
-    fun getResourceAsFileDescription(fileName: String): FileDescription? =
-        this::class.java.classLoader.getResource(fileName)
+    fun getResourceAsFieldDefinitionList(fileName: String): List<FieldDefinition> {
+        val fileDescription: FileDescription? = this::class.java.classLoader.getResource(fileName)
             ?.let { mapper.readValue(it.readText()) }
+
+        return fileDescription?.fields ?: emptyList()
+    }
 }

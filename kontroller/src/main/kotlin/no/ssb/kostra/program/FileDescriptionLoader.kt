@@ -12,6 +12,8 @@ object FileDescriptionLoader {
         val fileDescription: FileDescription? = this::class.java.classLoader.getResource(fileName)
             ?.let { mapper.readValue(it.readText()) }
 
-        return fileDescription?.fields ?: emptyList()
+        return fileDescription
+            ?.fields
+            ?: emptyList()
     }
 }

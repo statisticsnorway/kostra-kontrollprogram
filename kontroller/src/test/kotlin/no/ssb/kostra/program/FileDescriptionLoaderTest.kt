@@ -6,13 +6,12 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class FileDescriptionLoaderTest : BehaviorSpec({
-
     Given("paths to file descriptions and expected counts") {
         forAll(
-            row("sosialhjelp_11_filedescription.yaml", 78),
-            row("emptyFileDescription.yaml", 0),
-            row("non_existing_file.yaml", 0),
-        ) { fileName, expectedFieldsCount ->
+            row("sosialhjelp_11_filedescription.yaml", "", 2023, "",78),
+            row("emptyFileDescription.yaml", "", 0 , "", 0),
+            row("non_existing_file.yaml", "", 0 , "", 0),
+        ) { fileName, expectedTitle, expectedReportingYear, expectedDescription, expectedFieldsCount ->
             When(fileName) {
                 val sut = FileDescriptionLoader.getResourceAsFieldDefinitionList(fileName)
 

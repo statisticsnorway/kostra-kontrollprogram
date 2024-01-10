@@ -146,6 +146,6 @@ class HelseForetakMain(
 
     companion object {
         val art320Funksjoner = listOf("620", "630", "636", "637", "641", "642", "651", "681", "840")
-        .map { it.padEnd(4, ' ') }.sorted()
+            .map { it.padEnd(4, ' ') }.sorted()
     }
 }

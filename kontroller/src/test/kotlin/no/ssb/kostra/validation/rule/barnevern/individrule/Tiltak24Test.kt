@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
-import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL2021
 import java.time.LocalDate

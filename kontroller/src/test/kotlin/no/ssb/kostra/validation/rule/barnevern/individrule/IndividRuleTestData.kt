@@ -2,7 +2,6 @@ package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barnevern.xsd.*
 import no.ssb.kostra.testutil.RandomUtils
-import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTEL_4
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRAF_12

@@ -9,10 +9,10 @@ import io.kotest.matchers.shouldBe
 
 class FileDescriptionLoaderTest : BehaviorSpec({
 
-    Given("SosialhjelpFieldDefinitions") {
+    Given("paths to file descriptions and expected counts") {
         forAll(
             row("sosialhjelp_11_filedescription.yaml", 78),
-            row("nonExistingFile.yaml", 0),
+            row("non_existing_file.yaml", 0),
         ) { fileName, expectedFieldsCount ->
             When(fileName) {
                 val sut = FileDescriptionLoader.getResourceAsFileDescription(fileName)

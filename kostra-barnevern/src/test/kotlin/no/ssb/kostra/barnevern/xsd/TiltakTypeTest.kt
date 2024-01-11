@@ -11,6 +11,7 @@ import no.ssb.kostra.barnevern.KostraValidationUtils.getSchemaValidator
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.EMPTY_DATE_ERROR
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.EMPTY_ID_ERROR
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.INVALID_DATE_ERROR
+import no.ssb.kostra.barnevern.xsd.XsdTestUtils.JMFR_LOVHJEMMEL_XML
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.LOVHJEMMEL_XML
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.TOO_LONG_ID_ERROR
 import no.ssb.kostra.barnevern.xsd.XsdTestUtils.buildIndividXml
@@ -21,13 +22,30 @@ class TiltakTypeTest : BehaviorSpec({
     Given("misc TiltakType XML") {
 
         /** make sure it's possible to make a valid test XML */
-        When("valid XML, expect no exceptions") {
+        When("minimal valid XML, expect no exceptions") {
             shouldNotThrowAny {
                 getSchemaValidator(INDIVID_XSD_RESOURCE).validate(
                     buildIndividXml(
                         "<Tiltak Id=\"42\" StartDato=\"2022-11-14\" SluttDato=\"2022-11-15\">" +
                                 LOVHJEMMEL_XML +
                                 "<Kategori Kode=\"1.1\"/>" +
+                                "</Tiltak>"
+                    ).toStreamSource()
+                )
+            }
+        }
+
+        /** make sure it's possible to make a valid test XML */
+        When("maximal valid XML, expect no exceptions") {
+            shouldNotThrowAny {
+                getSchemaValidator(INDIVID_XSD_RESOURCE).validate(
+                    buildIndividXml(
+                        "<Tiltak Id=\"42\" StartDato=\"2022-11-14\" SluttDato=\"2022-11-15\">" +
+                                LOVHJEMMEL_XML +
+                                JMFR_LOVHJEMMEL_XML +
+                                "<Kategori Kode=\"1.1\"/>" +
+                                "<Tiltaksgrunnlag Kode=\"1\"/>" +
+                                "<Opphevelse Kode=\"4\"><Presisering>~presisering~</Presisering></Opphevelse>" +
                                 "</Tiltak>"
                     ).toStreamSource()
                 )

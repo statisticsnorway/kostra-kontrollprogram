@@ -24,6 +24,10 @@ data class KostraTiltakType(
     @field:XmlElement(name = "Kategori", required = true)
     val kategori: KostraKategoriType,
 
+    @field:JacksonXmlProperty(localName = "Tiltaksgrunnlag")
+    @field:JacksonXmlElementWrapper(useWrapping = false)
+    val tiltaksgrunnlag: MutableList<KostraTiltaksgrunnlagType> = mutableListOf(),
+
     @field:XmlElement(name = "Lovhjemmel", required = true)
     val lovhjemmel: KostraLovhjemmelType,
 

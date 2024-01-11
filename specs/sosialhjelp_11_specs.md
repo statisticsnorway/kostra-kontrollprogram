@@ -17,3 +17,10 @@ I forbindelse med kontrollering så blir noen variabler sendt med fra portalen o
 * <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
 * <a name="bydelsnummer">**bydelsnummer**</a>, for eksempel **15**
 
+#### <a name="kontroll_03_Kommunenummer">Avgiver Kontroll 3: Kommunenummer</a>
+
+Gitt at en har en datafil for Økonomisk sosialhjelp med **KOMMUNE_NR** og [**kommunenummer**](#kommunenummer) <br/>
+når **KOMMUNE_NR** og **kommunenummer** er forskjellige<br/>
+så gi en :no_entry:**FEIL** med meldingen "Korrigér kommunenummer. Fant '{KOMMUNE_NR}', forventet '{**kommunenummer**}'
+[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule003Kommunenummer.kt)
+[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule003KommunenummerTest.kt)

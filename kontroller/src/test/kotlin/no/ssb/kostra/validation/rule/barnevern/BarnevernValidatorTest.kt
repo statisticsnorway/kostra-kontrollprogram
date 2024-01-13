@@ -18,7 +18,10 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.DefaultXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors
+import no.ssb.kostra.validation.rule.barnevern.xmlhandling.XmlElementHandlers
+import java.io.File
 import java.time.Year
 
 class BarnevernValidatorTest : BehaviorSpec({
@@ -59,7 +62,8 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = AvgiverRuleId.AVGIVER_01.title,
-                    messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
+                    messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon. " +
+                            "cvc-datatype-valid.1.2.1: '42' is not a valid value for 'gYear'."
                 ), 51
             ),
             row(
@@ -70,7 +74,9 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_01.title,
-                    messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+                    messageText = """Definisjon av Individ er feil i forhold til filspesifikasjonen. """ +
+                            """cvc-pattern-valid: Value 'abc' is not facet-valid with respect to pattern '\d{11}' """ +
+                            """for type '#AnonType_FodselsnummerIndividType'."""
                 ), 4
             ),
             row(

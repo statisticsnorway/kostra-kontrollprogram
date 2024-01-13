@@ -62,7 +62,7 @@ class DefaultXmlStreamHandler(
             validationErrors
         }
     } catch (thrown: Throwable) {
-        listOf(avgiverFileError)
+        listOf(avgiverFileError(thrown.message))
     }
 
     private fun processIndividElement(
@@ -78,7 +78,7 @@ class DefaultXmlStreamHandler(
             validationErrors
         }
     } catch (thrown: Throwable) {
-        listOf(individFileError)
+        listOf(individFileError(thrown.message))
     }
 
     companion object {

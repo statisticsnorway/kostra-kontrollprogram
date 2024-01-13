@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TiltakType", propOrder = ["lovhjemmel", "jmfrLovhjemmel", "kategori", "opphevelse"])
+@XmlType(name = "TiltakType", propOrder = ["lovhjemmel", "jmfrLovhjemmel", "kategori", "tiltaksgrunnlag", "opphevelse"])
 data class KostraTiltakType(
 
     @field:XmlAttribute(name = "Id", required = true)

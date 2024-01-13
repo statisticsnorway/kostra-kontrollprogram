@@ -74,7 +74,7 @@ class DefaultXmlStreamHandlerTest : BehaviorSpec({
 
             Then("result should be as expected") {
                 result.shouldNotBeNull()
-                result.shouldContain(avgiverFileError)
+                result.shouldContain(avgiverFileError("null"))
             }
         }
 
@@ -94,7 +94,7 @@ class DefaultXmlStreamHandlerTest : BehaviorSpec({
 
             Then("result should be as expected") {
                 result.shouldNotBeNull()
-                result.shouldContain(individFileError)
+                result.shouldContain(individFileError("null"))
             }
         }
     }

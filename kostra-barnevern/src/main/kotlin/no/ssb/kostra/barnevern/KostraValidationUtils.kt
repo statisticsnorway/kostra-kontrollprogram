@@ -17,14 +17,14 @@ object KostraValidationUtils {
     private const val DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl"
 
     @JvmStatic
-    fun validate(xml: String): Boolean = validate(StringReader(xml))
+    fun validate(xml: String): Boolean = validate(StringReader(xml)).first
 
     @JvmStatic
-    fun validate(xmlReader: Reader, xsdResource: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Boolean = try {
+    fun validate(xmlReader: Reader, xsdResource: String = KOSTRA_BARNEVERN_XSD_RESOURCE): Pair<Boolean, String> = try {
         getSchemaValidator(xsdResource).validate(StreamSource(xmlReader))
-        true
+        true to ""
     } catch (thrown: SAXParseException) {
-        false
+        false to "${thrown.message}"
     }
 
     @JvmStatic

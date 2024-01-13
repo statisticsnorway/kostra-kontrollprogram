@@ -6,7 +6,10 @@ import jakarta.xml.bind.annotation.*
 import java.time.LocalDate
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UndersokelseType", propOrder = ["presisering", "vedtaksgrunnlag"])
+@XmlType(
+    name = "UndersokelseType",
+    propOrder = ["id", "startDato", "sluttDato", "konklusjon", "presisering", "vedtaksgrunnlag"]
+)
 data class KostraUndersokelseType(
 
     @field:XmlAttribute(name = "Id", required = true)
@@ -28,5 +31,5 @@ data class KostraUndersokelseType(
 
     @field:JacksonXmlProperty(localName = "Vedtaksgrunnlag")
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val vedtaksgrunnlag: MutableList<KostraVedtaksgrunnlagType> = mutableListOf()
+    val vedtaksgrunnlag: MutableList<KostraSaksinnholdType> = mutableListOf()
 )

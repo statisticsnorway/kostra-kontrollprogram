@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.rule.barnevern.extension.erOmsorgsTiltak
 
 class Tiltak04 : AbstractRule<KostraIndividType>(
     ruleName = IndividRuleId.TILTAK_04.title,
-    severity = Severity.ERROR
+    severity = Severity.WARNING
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.tiltak
         .filter {

@@ -57,7 +57,7 @@ object IndividRuleTestData {
         presisering = "~presisering~"
     )
 
-    val vedtaksgrunnlagTypeInTest = KostraVedtaksgrunnlagType(
+    val vedtaksgrunnlagTypeInTest = KostraSaksinnholdType(
         kode = "~kode~",
         presisering = "~presisering~"
     )

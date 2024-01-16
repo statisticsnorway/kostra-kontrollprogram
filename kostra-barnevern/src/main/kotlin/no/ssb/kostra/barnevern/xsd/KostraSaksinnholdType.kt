@@ -3,7 +3,7 @@ package no.ssb.kostra.barnevern.xsd
 import jakarta.xml.bind.annotation.*
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SaksinnholdType", propOrder = ["presisering"])
+@XmlType(name = "SaksinnholdType", propOrder = ["kode", "presisering"])
 data class KostraSaksinnholdType(
 
     @field:XmlAttribute(name = "Kode", required = true)

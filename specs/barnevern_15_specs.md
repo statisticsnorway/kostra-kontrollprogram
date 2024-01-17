@@ -221,7 +221,7 @@ så gi en :no_entry:**FEIL** med meldingen "Individet er {**alder**} år og skal
 #### <a name="individ_08">Individ Kontroll 08: Alder i forhold til tiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer**<br/>
 når alder er større enn 17 år og /Barnevern/Individ/**Tiltak** mangler<br/>
-så gi en :no_entry:**FEIL** med meldingen "Individet er over 18 år og skal dermed ha tiltak"<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Individet er over 18 år og skal dermed ha tiltak"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ08.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ08Test.kt)
 
@@ -245,7 +245,7 @@ så gi en :no_entry:**FEIL** med meldingen "Individet har ufullstendig fødselsn
 
 #### <a name="individ_12">Individ Kontroll 12: Fødselsnummer</a>
 Gitt at /Barnevern/Individ/**@Fodselsnummer** mangler, eller at /Barnevern/Individ/**@Fodselsnummer** er et ugyldig fødselsnummer<br/>
-så gi en :no_entry:**FEIL** med meldingen "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ12.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ12Test.kt)
 

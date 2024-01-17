@@ -252,7 +252,7 @@ så gi en :warning:**ADVARSEL** med meldingen "Individet har ufullstendig fødse
 #### <a name="individ_19">Individ Kontroll 19: DUF-nummer</a>
 Gitt at /Barnevern/Individ/**@DUFnummer** finnes<br/>
 når **@DUFnummer** er ugyldig<br/>
-så gi en :no_entry:**FEIL** med meldingen "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Individet har ufullstendig DUF-nummer. Korriger DUF-nummer."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ19.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ19Test.kt)
 

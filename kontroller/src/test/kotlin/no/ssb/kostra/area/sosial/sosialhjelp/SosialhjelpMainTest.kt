@@ -22,32 +22,44 @@ class SosialhjelpMainTest : BehaviorSpec({
         forAll(
             row(
                 "validating an invalid record string",
+                true,
                 " ".repeat(SosialhjelpFieldDefinitions.fieldLength + 10),
-                1,
+                2,
                 1
             ),
             row(
                 "validating an empty record string",
+                true,
                 " ".repeat(SosialhjelpFieldDefinitions.fieldLength),
-                43,
+                44,
                 17
             ),
             row(
                 "validating a valid record string",
+                true,
                 recordStringInTest("23"),
-                43,
+                44,
                 0
             ),
             row(
                 "validating a valid record string with invalid data",
+                true,
                 recordStringInTest("XX"),
-                43,
+                44,
                 1
             ),
-        ) { description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
+            row(
+                "validating an empty attachment, only 1 space",
+                false,
+                " ",
+                2,
+                1
+            ),
+        ) { description, hasAttachment, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
                 val validationResult = SosialhjelpMain(
                     argumentsInTest(
+                        hasAttachment = hasAttachment,
                         inputFileContent = inputFileContent
                     )
                 ).validate()
@@ -55,6 +67,7 @@ class SosialhjelpMainTest : BehaviorSpec({
                 val validationReport = ValidationReport(
                     validationReportArguments = ValidationReportArguments(
                         kotlinArguments = argumentsInTest(
+                            hasAttachment = hasAttachment,
                             inputFileContent = inputFileContent
                         ),
                         validationResult = validationResult
@@ -135,12 +148,13 @@ class SosialhjelpMainTest : BehaviorSpec({
                 .toRecordString()
 
         private fun argumentsInTest(
+            hasAttachment: Boolean,
             inputFileContent: String
         ): KotlinArguments = KotlinArguments(
             aargang = (Year.now().value - 1).toString(),
             region = RuleTestData.argumentsInTest.region.municipalityIdFromRegion(),
             skjema = "11F",
-            harVedlegg = true,
+            harVedlegg = hasAttachment,
             inputFileContent = inputFileContent
         )
     }

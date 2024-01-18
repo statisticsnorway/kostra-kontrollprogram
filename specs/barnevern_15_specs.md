@@ -220,7 +220,7 @@ så gi en :no_entry:**FEIL** med meldingen "Individet er {**alder**} år og skal
 
 #### <a name="individ_08">Individ Kontroll 08: Alder i forhold til tiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer**<br/>
-når alder er større enn 17 år og /Barnevern/Individ/**Tiltak** mangler<br/>
+når alder er større enn 18 år og /Barnevern/Individ/**Tiltak** mangler<br/>
 så gi en :warning:**ADVARSEL** med meldingen "Individet er over 18 år og skal dermed ha tiltak"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ08.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ08Test.kt)
@@ -525,7 +525,7 @@ så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Omsorgstilta
 #### <a name="tiltak_05">Tiltak Kontroll 5: Barn over 7 år og i barnehage</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
 når alder er 7 år eller eldre og **Tiltak/Kategori/@Kode** er "4.1"<br/>
-så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Barnet er over 7 år og i barnehage. Barnets alder er {**alder**} år"<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Barnet er over 7 år og i barnehage. Barnets alder er {**alder**} år"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak05.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak05Test.kt)
 
@@ -539,7 +539,7 @@ så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Barnet er ov
 #### <a name="tiltak_07">Tiltak Kontroll 7: Kontroll av manglende presisering for tiltakskategori</a>
 Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
 når **Tiltak/Kategori/@Kode** er en av "1.99", "2.99", "3.7", "3.99", "4.99", "5.99", "6.99", "7.99", "8.99"<br/>
-og **Tiltak/Kategori/@Presisering** mangler
+og **Tiltak/Kategori/@Presisering** mangler<br/>
 så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltakskategori {**Tiltak/Kategori/@Kode**} mangler presisering"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak07.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak07Test.kt)
@@ -573,7 +573,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltak opprette
 
 #### <a name="lovhjemmel_03">Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
-når alder er 18 år eller eldre og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak)<br/>
+når alder er over 18 år og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak)<br/>
 så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Individet er {**alder**} år år og skal dermed ikke ha omsorgstiltak"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03Test.kt)

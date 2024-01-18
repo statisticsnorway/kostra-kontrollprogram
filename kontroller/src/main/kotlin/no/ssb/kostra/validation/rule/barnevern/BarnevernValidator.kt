@@ -2,6 +2,7 @@ package no.ssb.kostra.validation.rule.barnevern
 
 import no.ssb.kostra.barnevern.xsd.KostraIndividType
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.util.SsnValidationUtils
 import no.ssb.kostra.validation.Validator
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
@@ -68,6 +69,7 @@ class BarnevernValidator(
                 if (individCount < 1) reportEntries.add(individMissingError)
 
                 reportEntries.addAll(seenFodselsnummer
+                    .filterKeys { SsnValidationUtils.isValidSocialSecurityId(it) }
                     .filterValues { it.size > 1 }
                     .flatMap { entry ->
                         entry.value.map { currentJournalId ->

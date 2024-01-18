@@ -188,7 +188,7 @@ så gi en :no_entry:**FEIL** med meldingen "Fødselsnummer og DUF-nummer mangler
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ03Test.kt)
 
 #### <a name="individ_04">Individ Kontroll 04: Dublett på fødselsnummer</a>
-Gitt Individ Kontroll 07: Klient over 25 år avsluttes finnes og oppfyller én av følgende definisjoner:<br/>
+Gitt at /Barnevern/Individ/**@Fodselsnummer** oppfyller én av følgende definisjoner:<br/>
 * Fødselsnummer, beskrevet på  [https://www.udi.no/ord-og-begreper/fodselsnummer/](https://www.udi.no/ord-og-begreper/fodselsnummer/),
 * D-nummer, beskrevet på [https://www.udi.no/ord-og-begreper/d-nummer/](https://www.udi.no/ord-og-begreper/d-nummer/),
 

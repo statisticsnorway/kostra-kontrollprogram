@@ -411,7 +411,7 @@ så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}
 Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
 for hver **Undersokelse** i **Melding/Undersokelse**<br/>
 når **Undersokelse/@StartDato** er før 1. juli i **rapporteringsår** og **Undersokelse/@SluttDato** mangler<br/>
-så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelsen startet {**Undersokelse/@SluttDato**} og skal konkluderes da den har pågått i mer enn 6 måneder"<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelsen startet {**Undersokelse/@SluttDato**} og skal konkluderes da den har pågått i mer enn 6 måneder"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse08Test.kt)
 

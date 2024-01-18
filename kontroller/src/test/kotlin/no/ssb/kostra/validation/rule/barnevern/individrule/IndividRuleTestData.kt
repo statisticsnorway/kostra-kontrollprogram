@@ -10,7 +10,7 @@ import java.time.LocalDate
 object IndividRuleTestData {
 
     private const val KOSTRA_IS_CLOSED_FALSE = "2"
-    val dateInTest: LocalDate = LocalDate.now()
+    val dateInTest: LocalDate = LocalDate.now().minusYears(1L)
     private const val INDIVID_KOSTRA_ID = "C1"
 
     private const val KOSTRA_TILTAK_ID = "~tiltak~"

@@ -239,7 +239,7 @@ så gi en :no_entry:**FEIL** med meldingen "Filen mangler bydelsnavn."<br/>
 
 #### <a name="individ_11">Individ Kontroll 11: Fødselsnummer</a>
 Gitt at /Barnevern/Individ/**@Fodselsnummer** mangler eller er blank, eller at /Barnevern/Individ/**@Fodselsnummer** er et ugyldig fødselsnummer<br/>
-så gi en :no_entry:**FEIL** med meldingen "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."<br/>
+så gi en :warning:**ADVARSEL** med meldingen "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ11.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ11Test.kt)
 

@@ -69,15 +69,15 @@ class Plan02dTest : BehaviorSpec({
                 "avslutta3112 = '1', plan with sluttDato after reporting year",
                 individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
-                    sluttDato = dateInTest.minusYears(1).plusDays(1),
+                    sluttDato = dateInTest,
                     plan = mutableListOf(
                         planTypeInTest.copy(
-                            sluttDato = dateInTest
+                            sluttDato = dateInTest.plusYears(1)
                         )
                     )
                 ),
                 expectedErrorMessage = "Plan (${planTypeInTest.id}). Individet er avsluttet hos barnevernet og " +
-                        "dets planer skal dermed være avsluttet. Sluttdato er $dateInTest"
+                        "dets planer skal dermed være avsluttet. Sluttdato er ${dateInTest.plusYears(1)}"
             )
         )
     )

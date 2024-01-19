@@ -71,16 +71,16 @@ class Melding02dTest : BehaviorSpec({
                 "avslutta3112 = '1', melding with sluttDato after reporting year",
                 individInTest.copy(
                     avslutta3112 = KOSTRA_IS_CLOSED_TRUE,
-                    sluttDato = dateInTest.minusYears(1).plusDays(1),
+                    sluttDato = dateInTest,
                     melding = mutableListOf(
                         meldingTypeInTest.copy(
-                            sluttDato = dateInTest
+                            sluttDato = dateInTest.plusYears(1)
                         )
                     )
                 ),
                 expectedErrorMessage = "Melding (${meldingTypeInTest.id}). Individet er avsluttet hos " +
                         "barnevernet og dets meldinger skal dermed være avsluttet. " +
-                        "Sluttdato er $dateInTest"
+                        "Sluttdato er ${dateInTest.plusYears(1)}"
             )
         )
     )

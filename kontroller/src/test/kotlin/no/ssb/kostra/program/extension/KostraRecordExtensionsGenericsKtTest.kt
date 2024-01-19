@@ -3,9 +3,7 @@ package no.ssb.kostra.program.extension
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import no.ssb.kostra.program.DataType.DATE_TYPE
-import no.ssb.kostra.program.DataType.INTEGER_TYPE
-import no.ssb.kostra.program.DataType.STRING_TYPE
+import no.ssb.kostra.program.DataType.*
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import java.time.LocalDate

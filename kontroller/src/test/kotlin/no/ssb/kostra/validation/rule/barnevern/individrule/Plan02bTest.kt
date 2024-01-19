@@ -27,7 +27,7 @@ class Plan02bTest : BehaviorSpec({
                 "plan with sluttDato in reporting year",
                 individInTest.copy(
                     plan = mutableListOf(
-                        planTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
+                        planTypeInTest.copy(sluttDato = dateInTest)
                     )
                 )
             ),
@@ -35,12 +35,12 @@ class Plan02bTest : BehaviorSpec({
                 "plan with sluttDato before startDato",
                 individInTest.copy(
                     plan = mutableListOf(
-                        planTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
+                        planTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
                     )
                 ),
                 expectedErrorMessage = "Plan (${planTypeInTest.id}). Planens sluttdato " +
-                        "(${dateInTest.minusDays(1)}) er ikke i rapporteringsåret " +
-                        "(${argumentsInTest.aargang})"
+                        "(${dateInTest.minusYears(1)}) er ikke i rapporteringsåret " +
+                        "(${dateInTest.year})"
             )
         )
     )

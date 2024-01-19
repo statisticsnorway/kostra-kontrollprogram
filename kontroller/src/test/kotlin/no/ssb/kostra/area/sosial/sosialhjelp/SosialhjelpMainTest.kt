@@ -11,6 +11,7 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDe
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.*
 import no.ssb.kostra.testutil.RandomUtils
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReport
 import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.rule.RuleTestData
@@ -49,7 +50,7 @@ class SosialhjelpMainTest : BehaviorSpec({
                 1
             ),
             row(
-                "validating an empty attachment, only 1 space",
+                "validating an 'empty' attachment containing only 1 space",
                 false,
                 " ",
                 2,
@@ -85,6 +86,17 @@ class SosialhjelpMainTest : BehaviorSpec({
 
                 Then("validationReport should be as expected") {
                     reportString shouldContain "Kontrollrapport"
+                }
+
+                if (!hasAttachment){
+                    Then("validationResult.severity should be OK"){
+                        validationResult.severity shouldBe Severity.OK
+                    }
+
+                    Then("reportString should contain expected text"){
+                        reportString shouldContain "Det er krysset av i skjemaet at det ikke finnes deltakere " +
+                                "og fil som kun inneholder et mellomrom er levert."
+                    }
                 }
             }
         }

@@ -39,8 +39,8 @@ class Undersokelse02bTest : BehaviorSpec({
                     melding = mutableListOf(
                         meldingTypeInTest.copy(
                             undersokelse = undersokelseTypeInTest.copy(
-                                startDato = dateInTest.minusYears(1),
-                                sluttDato = dateInTest.minusYears(1).plusDays(1)
+                                startDato = dateInTest,
+                                sluttDato = dateInTest.plusDays(1)
                             )
                         )
                     )
@@ -52,14 +52,14 @@ class Undersokelse02bTest : BehaviorSpec({
                     melding = mutableListOf(
                         meldingTypeInTest.copy(
                             undersokelse = undersokelseTypeInTest.copy(
-                                startDato = dateInTest.minusYears(1),
-                                sluttDato = dateInTest
+                                startDato = dateInTest,
+                                sluttDato = dateInTest.plusYears(1)
                             )
                         )
                     )
                 ),
                 expectedErrorMessage = "Undersøkelse (${undersokelseTypeInTest.id}). Undersøkelsens sluttdato " +
-                        "($dateInTest) er ikke i rapporteringsåret (${argumentsInTest.aargang})"
+                        "(${dateInTest.plusYears(1)}) er ikke i rapporteringsåret (${argumentsInTest.aargang})"
             )
         )
     )

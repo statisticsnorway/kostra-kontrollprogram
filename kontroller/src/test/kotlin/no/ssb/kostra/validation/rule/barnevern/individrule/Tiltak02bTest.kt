@@ -27,7 +27,7 @@ class Tiltak02bTest : BehaviorSpec({
                 "tiltak with sluttDato in reporting year",
                 kostraIndividInTest1.copy(
                     tiltak = mutableListOf(
-                        tiltakTypeInTest.copy(sluttDato = dateInTest.minusYears(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest)
                     )
                 )
             ),
@@ -35,11 +35,11 @@ class Tiltak02bTest : BehaviorSpec({
                 "tiltak with sluttDato before startDato",
                 kostraIndividInTest1.copy(
                     tiltak = mutableListOf(
-                        tiltakTypeInTest.copy(sluttDato = dateInTest.minusDays(1))
+                        tiltakTypeInTest.copy(sluttDato = dateInTest.plusYears(1))
                     )
                 ),
                 expectedErrorMessage = "Tiltak (${tiltakTypeInTest.id}). Sluttdato " +
-                        "(${dateInTest.minusDays(1)}) er ikke i rapporteringsåret " +
+                        "(${dateInTest.plusYears(1)}) er ikke i rapporteringsåret " +
                         "(${argumentsInTest.aargang})"
             )
         )

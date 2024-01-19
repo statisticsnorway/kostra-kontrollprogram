@@ -8,6 +8,7 @@ import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.report.StatsEntry
 import no.ssb.kostra.validation.report.StatsEntryHeading
 import no.ssb.kostra.validation.report.StatsReportEntry
+import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.sosial.extensions.varighetAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.rule.*
@@ -19,6 +20,7 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
     override val fieldDefinitions = SosialhjelpFieldDefinitions
 
     override val preValidationRules = listOf(
+        Rule000HasAttachment(),
         Rule001RecordLength(SosialhjelpFieldDefinitions.fieldLength)
     )
 

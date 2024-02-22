@@ -52,6 +52,14 @@ class Rule135RammetilskuddTest : BehaviorSpec({
             row(
                 "belop does not match",
                 "420400", "0A", "1", "840 ", "800", "-1", false
+            ),
+            row(
+                "exception for Frøya municipality, belop does not match",
+                "501400", "0A", "1", "840 ", "800", "1", false
+            ),
+            row(
+                "exception for Frøya municipality, belop does not match",
+                "501400", "0A", "1", "840 ", "800", "-1", false
             )
         ) { description, region, skjema, kontoklasse, funksjon, art, belop, expectError ->
             val kostraRecordList = mapOf(

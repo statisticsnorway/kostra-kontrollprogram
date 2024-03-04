@@ -56,11 +56,11 @@ class KommuneKostraMain(
     )
 
     private val kommuneFinansielleFunksjoner = listOf(
-        "800", "840", "841", "850", "860", "870", "880", "899"
+        "290", "800", "840", "841", "850", "860", "870", "880", "899"
     )
 
     private val fylkeFinansielleFunksjoner = listOf(
-        "800", "840", "841", "860", "870", "880", "899"
+        "465", "800", "840", "841", "860", "870", "880", "899"
     )
 
     private val fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner = listOf(

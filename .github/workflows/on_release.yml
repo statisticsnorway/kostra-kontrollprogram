@@ -1,10 +1,9 @@
-name: Main
+name: Create release
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
-
+  release:
+    types:
+      - released
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +16,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'maven'
 
       - name: Set version with Maven
         run: mvn --batch-mode -U versions:set -DnewVersion=${{github.ref_name}}

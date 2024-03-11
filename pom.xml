@@ -26,7 +26,7 @@
         <release.version>17</release.version>
         <kotlinVersion>1.9.23</kotlinVersion>
 
-        <jackson.version>2.15.3</jackson.version>
+        <jackson.version>2.16.2</jackson.version>
         <reactorCoreVersion>3.6.2</reactorCoreVersion>
         <slf4j.version>2.0.7</slf4j.version>
         <logback.version>1.4.11</logback.version>

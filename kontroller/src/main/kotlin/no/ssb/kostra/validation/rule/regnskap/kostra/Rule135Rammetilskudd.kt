@@ -19,7 +19,7 @@ class Rule135Rammetilskudd : AbstractNoArgsRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>) = context
         .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
         // unhealthy exception, ask for a more stable approach
-        .filterNot { it[FIELD_REGION] == "501400"}
+        .filterNot { it[FIELD_REGION] == "501400" }
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { it[FIELD_FUNKSJON].trim() == "840" && it[FIELD_ART] == "800" }

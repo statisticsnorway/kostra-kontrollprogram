@@ -2,16 +2,17 @@ package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractNoArgsRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isAktiva
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
-class Rule125SummeringBalanseDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
+class Rule125SummeringBalanseDifferanse : AbstractRule<List<KostraRecord>>(
     "Kontroll 125 : Summeringskontroller balanseregnskapet, differanse i balanseregnskapet",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter { it.isBalanseRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isAktiva() }
@@ -25,7 +26,8 @@ class Rule125SummeringBalanseDifferanse : AbstractNoArgsRule<List<KostraRecord>>
         ?.let { (aktiva, passiva) ->
             createSingleReportEntryList(
                 messageText = "Korrigér differansen (${aktiva.plus(passiva)}) mellom eiendeler ($aktiva) " +
-                        "og gjeld og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)"
+                        "og gjeld og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)",
+                severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
             )
         }
 

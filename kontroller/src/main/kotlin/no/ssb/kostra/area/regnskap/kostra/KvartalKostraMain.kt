@@ -3,9 +3,8 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.rule.regnskap.kostra.Rule025KombinasjonDriftKontoklasseArt
-import no.ssb.kostra.validation.rule.regnskap.kostra.Rule040KombinasjonInvesteringKontoklasseFunksjon
-import no.ssb.kostra.validation.rule.regnskap.kostra.Rule050KombinasjonInvesteringKontoklasseArt
+import no.ssb.kostra.validation.rule.regnskap.Rule016KapittelFortegn
+import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 class KvartalKostraMain(
     arguments: KotlinArguments
@@ -65,10 +64,24 @@ class KvartalKostraMain(
         } else
             emptyList()
 
-    private fun getInvalidInvesteringFunksjonAsList() =
+    private val invalidDriftFunksjonList =
+        if (arguments.skjema in bevilgningRegnskap)
+        // Kun gyldig i investering og skal fjernes fra drift
+            listOf("841 ")
+        else
+            emptyList()
+
+    private val invalidInvesteringFunksjonAsList =
         if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i drift og skal fjernes fra investering
             listOf("800 ", "840 ", "860 ")
+        else
+            emptyList()
+
+    private val illogicalInvesteringFunksjonAsList: List<String> =
+        if (arguments.skjema in bevilgningRegnskap)
+        // Anses som ulogisk i investering
+            listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
         else
             emptyList()
 
@@ -150,7 +163,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i investering og skal fjernes fra drift
-    private fun getInvalidDriftArtList() = listOf(
+    private val invalidDriftArtList = listOf(
         // @formatter:off
         "529",
         "670",
@@ -160,7 +173,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i drift og skal fjernes fra investering
-    private fun getInvalidInvesteringArtList() = listOf(
+    private val invalidInvesteringArtList = listOf(
         // @formatter:off
         "509", "570", "590",
         "800", "870", "871", "872", "873", "875", "876", "877",
@@ -171,9 +184,27 @@ class KvartalKostraMain(
     override val validationRules = commonValidationRules()
         .plus(
             listOf(
-                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
-                Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = getInvalidInvesteringFunksjonAsList()),
-                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
+                Rule016KapittelFortegn(),
+                Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
+                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
+                Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
+                Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
+                Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList),
+                Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonAsList),
+                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
+                Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
+                Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
+                Rule065KombinasjonBevilgningFunksjonArt(),
+                Rule070KombinasjonBevilgningFunksjonArt(),
+                Rule075KombinasjonBevilgningFunksjonArt(),
+                Rule080KombinasjonBevilgningFunksjonArt(),
+                Rule100SummeringDriftUtgiftsposteringer(),
+                Rule105SummeringDriftInntektsposteringer(),
+                Rule115SummeringBalanseAktiva(),
+                Rule120SummeringBalansePassiva(),
+                Rule125SummeringBalanseDifferanse(),
+                Rule130SkatteInntekter(),
+                Rule135Rammetilskudd(),
             )
         )
 }

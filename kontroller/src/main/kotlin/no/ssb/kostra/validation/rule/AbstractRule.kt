@@ -27,6 +27,19 @@ abstract class AbstractRule<in T : Any>(
     )
 
     protected fun createValidationReportEntry(
+        messageText: String,
+        lineNumbers: List<Int> = emptyList(),
+        contextId: String = "",
+        severity: Severity = this.severity
+    ) = ValidationReportEntry(
+        severity = severity,
+        ruleName = ruleName,
+        messageText = messageText,
+        lineNumbers = lineNumbers,
+        contextId = contextId,
+    )
+
+    protected fun createValidationReportEntry(
         ruleName: String,
         messageText: String,
         lineNumbers: List<Int>

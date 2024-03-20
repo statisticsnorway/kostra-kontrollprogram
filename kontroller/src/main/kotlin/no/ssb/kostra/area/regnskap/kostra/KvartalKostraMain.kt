@@ -48,6 +48,7 @@ class KvartalKostraMain(
         "800", "840", "841", "850", "860", "870", "880", "899", "Z", "z", "~"
     )
 
+    @SuppressWarnings
     override val funksjonList =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>()
@@ -68,6 +69,7 @@ class KvartalKostraMain(
         } else
             emptyList()
 
+    @SuppressWarnings
     private val invalidDriftFunksjonList =
         if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i investering og skal fjernes fra drift
@@ -75,6 +77,7 @@ class KvartalKostraMain(
         else
             emptyList()
 
+    @SuppressWarnings
     private val invalidInvesteringFunksjonAsList =
         if (arguments.skjema in bevilgningRegnskap)
         // Kun gyldig i drift og skal fjernes fra investering
@@ -82,6 +85,7 @@ class KvartalKostraMain(
         else
             emptyList()
 
+    @SuppressWarnings
     private val illogicalInvesteringFunksjonAsList: List<String> =
         if (arguments.skjema in bevilgningRegnskap)
         // Anses som ulogisk i investering
@@ -91,6 +95,7 @@ class KvartalKostraMain(
 
 
     // Kapitler
+    @SuppressWarnings
     override val kapittelList: List<String> =
         if (arguments.skjema in balanseRegnskap) {
             val result = mutableListOf(
@@ -109,6 +114,7 @@ class KvartalKostraMain(
 
 
     // Arter
+    @SuppressWarnings
     private val basisArter = listOf(
         // @formatter:off
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
@@ -125,14 +131,17 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings
     private val konserninterneArter = listOf(
         "380", "480", "780", "880"
     )
 
+    @SuppressWarnings
     private val osloArter = listOf(
         "298", "379", "798"
     )
 
+    @SuppressWarnings
     override val artList: List<String> =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>(basisArter + konserninterneArter)
@@ -145,6 +154,7 @@ class KvartalKostraMain(
             emptyList()
 
 
+    @SuppressWarnings
     override val sektorList: List<String> =
         if (arguments.skjema in balanseRegnskap)
         // Sektorer
@@ -167,6 +177,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i investering og skal fjernes fra drift
+    @SuppressWarnings
     private val invalidDriftArtList = listOf(
         // @formatter:off
         "529",
@@ -177,6 +188,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i drift og skal fjernes fra investering
+    @SuppressWarnings
     private val invalidInvesteringArtList = listOf(
         // @formatter:off
         "509", "570", "590",
@@ -185,6 +197,7 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings
     override val validationRules = commonValidationRules()
         .plus(
             listOf(

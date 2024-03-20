@@ -197,7 +197,7 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
-    @SuppressWarnings
+    @SuppressWarnings("all")
     override val validationRules = commonValidationRules()
         .plus(
             listOf(

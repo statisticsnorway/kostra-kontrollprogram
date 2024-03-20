@@ -12,6 +12,7 @@ class KvartalKostraMain(
     private val bevilgningRegnskap = listOf("0AK1", "0AK2", "0AK3", "0AK4", "0CK1", "0CK2", "0CK3", "0CK4")
     private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
 
+    @SuppressWarnings
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -23,6 +24,7 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings
     private val fylkeskommunaleFunksjoner = listOf(
         // @formatter:off
         "400", "410", "420", "421", "430",
@@ -36,10 +38,12 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings
     private val osloFunksjoner = listOf(
         "691", "692", "693", "694", "696"
     )
 
+    @SuppressWarnings
     private val finansielleFunksjoner = listOf(
         "800", "840", "841", "850", "860", "870", "880", "899", "Z", "z", "~"
     )

@@ -3,8 +3,6 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.rule.regnskap.Rule016KapittelFortegn
-import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 class KvartalKostraMain(
     arguments: KotlinArguments
@@ -200,28 +198,12 @@ class KvartalKostraMain(
     @SuppressWarnings("all")
     override val validationRules = commonValidationRules()
         .plus(
-            listOf(
-                Rule016KapittelFortegn(),
-                Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
-                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
-                Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
-                Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
-                Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList),
-                Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonAsList),
-                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
-                Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
-                Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
-                Rule065KombinasjonBevilgningFunksjonArt(),
-                Rule070KombinasjonBevilgningFunksjonArt(),
-                Rule075KombinasjonBevilgningFunksjonArt(),
-                Rule080KombinasjonBevilgningFunksjonArt(),
-                Rule100SummeringDriftUtgiftsposteringer(),
-                Rule105SummeringDriftInntektsposteringer(),
-                Rule115SummeringBalanseAktiva(),
-                Rule120SummeringBalansePassiva(),
-                Rule125SummeringBalanseDifferanse(),
-                Rule130SkatteInntekter(),
-                Rule135Rammetilskudd(),
+            commonKostraValidationRules(
+                invalidDriftFunksjonList = invalidDriftFunksjonList,
+                invalidDriftArtList = invalidDriftArtList,
+                invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList,
+                illogicalInvesteringFunksjonList = illogicalInvesteringFunksjonAsList,
+                invalidInvesteringArtList = invalidInvesteringArtList
             )
         )
 }

@@ -12,6 +12,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
+import no.ssb.kostra.validation.rule.RuleTestData
 
 class Rule040KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
     include(
@@ -19,23 +20,54 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             sut = Rule040KombinasjonInvesteringKontoklasseFunksjon(listOf("800")),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
-                "isBevilgningInvesteringRegnskap = true, funksjon match, belop match",
-                kostraRecordsInTest("0", "800", "1"),
+                description = "annually, isBevilgningInvesteringRegnskap = true, funksjon match, belop match",
+                context = kostraRecordsInTest("0", "800", "1"),
                 expectedErrorMessage = "Korrigér ugyldig funksjon '800' i " +
                         "investeringsregnskapet til en gyldig funksjon i investeringsregnskapet eller " +
                         "overfør posteringen til driftsregnskapet.",
+                arguments = kostraArguments(" "),
             ),
             ForAllRowItem(
-                "isBevilgningInvesteringRegnskap = false, funksjon match, belop match",
-                kostraRecordsInTest("1", "800", "1"),
+                description = "annually, isBevilgningInvesteringRegnskap = false, funksjon match, belop match",
+                context = kostraRecordsInTest("1", "800", "1"),
+                arguments = kostraArguments(" "),
             ),
             ForAllRowItem(
-                "isBevilgningInvesteringRegnskap = true, funksjon mismatch, belop match",
-                kostraRecordsInTest("0", "801", "1"),
+                description = "annually, isBevilgningInvesteringRegnskap = true, funksjon mismatch, belop match",
+                context = kostraRecordsInTest("0", "801", "1"),
+                arguments = kostraArguments(" "),
             ),
             ForAllRowItem(
-                "isBevilgningInvesteringRegnskap = true, funksjon match, belop mismatch",
-                kostraRecordsInTest("0", "800", "0"),
+                description = "annually, isBevilgningInvesteringRegnskap = true, funksjon match, belop mismatch",
+                context = kostraRecordsInTest("0", "800", "0"),
+                arguments = kostraArguments(" "),
+            ),
+            ForAllRowItem(
+                description = "quarterly, isBevilgningInvesteringRegnskap = true, funksjon match, belop match",
+                context = kostraRecordsInTest("0", "800", "1"),
+                expectedErrorMessage = "Korrigér ugyldig funksjon '800' i " +
+                        "investeringsregnskapet til en gyldig funksjon i investeringsregnskapet eller " +
+                        "overfør posteringen til driftsregnskapet.",
+                arguments = kostraArguments("1"),
+                expectedSeverity = Severity.WARNING,
+            ),
+            ForAllRowItem(
+                description = "quarterly, isBevilgningInvesteringRegnskap = false, funksjon match, belop match",
+                context = kostraRecordsInTest("1", "800", "1"),
+                arguments = kostraArguments("1"),
+                expectedSeverity = Severity.WARNING,
+            ),
+            ForAllRowItem(
+                description = "quarterly, isBevilgningInvesteringRegnskap = true, funksjon mismatch, belop match",
+                context = kostraRecordsInTest("0", "801", "1"),
+                arguments = kostraArguments("1"),
+                expectedSeverity = Severity.WARNING,
+            ),
+            ForAllRowItem(
+                description = "quarterly, isBevilgningInvesteringRegnskap = true, funksjon match, belop mismatch",
+                context = kostraRecordsInTest("0", "800", "0"),
+                arguments = kostraArguments("1"),
+                expectedSeverity = Severity.WARNING,
             )
         )
     )
@@ -51,5 +83,7 @@ class Rule040KombinasjonInvesteringKontoklasseFunksjonTest : BehaviorSpec({
             FIELD_FUNKSJON to funksjon,
             FIELD_BELOP to belop,
         ).toKostraRecord(1, fieldDefinitions).asList()
+
+        private fun kostraArguments(kvartal: String) = RuleTestData.argumentsInTest.copy(kvartal = kvartal)
     }
 }

@@ -3,8 +3,6 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.rule.regnskap.Rule016KapittelFortegn
-import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostraMain(

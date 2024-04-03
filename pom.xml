@@ -34,7 +34,7 @@
         <!-- kotest:5.7.x hangs the build for all apps -->
         <kotestVersion>5.6.2</kotestVersion>
 
-        <jacoco.version>0.8.11</jacoco.version>
+        <jacoco.version>0.8.12</jacoco.version>
         <checkstyle.version>10.15.0</checkstyle.version>
         <sonar.version>3.11.0.3922</sonar.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>

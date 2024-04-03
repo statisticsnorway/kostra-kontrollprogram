@@ -9,9 +9,9 @@ import java.time.Year
 
 object RegnskapTestUtils {
     fun regnskapRecordInTest(
-        valuesByName: Map<String, String> = emptyMap()
+        valuesByName: Map<String, String> = emptyMap(), index: Int = 1
     ) = " ".repeat(fieldDefinitions.last().to)
-        .toKostraRecord(index = 1, fieldDefinitions)
+        .toKostraRecord(index = index, fieldDefinitions)
         .plus(FIELD_AARGANG to (Year.now().value - 1).toString())
         .plus(FIELD_REGION to "1234  ")
         .plus(valuesByName)

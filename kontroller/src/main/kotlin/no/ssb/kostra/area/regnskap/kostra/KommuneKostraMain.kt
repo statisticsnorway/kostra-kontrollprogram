@@ -3,8 +3,6 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.rule.regnskap.Rule016KapittelFortegn
-import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostraMain(
@@ -234,45 +232,15 @@ class KommuneKostraMain(
 
     override val validationRules = commonValidationRules()
         .plus(
-            listOf(
-                Rule016KapittelFortegn(),
-                Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
-                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
-                Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
-                Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
-                Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList),
-                Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonAsList),
-                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
-                Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
-                Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
-                Rule065KombinasjonBevilgningFunksjonArt(),
-                Rule070KombinasjonBevilgningFunksjonArt(),
-                Rule075KombinasjonBevilgningFunksjonArt(),
-                Rule080KombinasjonBevilgningFunksjonArt(),
-                Rule085SummeringInvesteringUtgiftsposteringer(),
-                Rule090SummeringInvesteringInntektsposteringer(),
-                Rule095SummeringInvesteringDifferanse(),
-                Rule100SummeringDriftUtgiftsposteringer(),
-                Rule105SummeringDriftInntektsposteringer(),
-                Rule110SummeringDriftDifferanse(),
-                Rule115SummeringBalanseAktiva(),
-                Rule120SummeringBalansePassiva(),
-                Rule125SummeringBalanseDifferanse(),
-                Rule126SummeringDriftOsloInternDifferanse(),
-                Rule127SummeringInvesteringOsloInternDifferanse(),
-                Rule130SkatteInntekter(),
-                Rule135Rammetilskudd(),
-                Rule140OverforingerDriftInvestering(),
-                Rule145AvskrivningerMotpostAvskrivninger(),
-                Rule150Avskrivninger(),
-                Rule155AvskrivningerDifferanse(),
-                Rule160AvskrivningerAndreFunksjoner(),
-                Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner(),
-                Rule170Funksjon290Investering(),
-                Rule175Funksjon290Drift(),
-                Rule180Funksjon465Investering(),
-                Rule185Funksjon465Drift(),
-                Rule190Memoriakonti()
+            commonKostraValidationRules(
+                invalidDriftFunksjonList = invalidDriftFunksjonList,
+                invalidDriftArtList = invalidDriftArtList,
+                invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList,
+                illogicalInvesteringFunksjonList = illogicalInvesteringFunksjonAsList,
+                invalidInvesteringArtList = invalidInvesteringArtList
             )
+        )
+        .plus(
+            specificKostraValidationRules()
         )
 }

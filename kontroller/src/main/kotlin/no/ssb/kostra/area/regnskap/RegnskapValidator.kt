@@ -7,6 +7,7 @@ import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
+import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 abstract class RegnskapValidator(
     final override val arguments: KotlinArguments,
@@ -38,5 +39,55 @@ abstract class RegnskapValidator(
         Rule013Sektor(sektorList = sektorList),
         Rule014Belop(),
         Rule015Duplicates(RegnskapConstants.mappingDuplicates(arguments = arguments))
+    )
+
+    protected fun commonKostraValidationRules(
+        invalidDriftFunksjonList: List<String>,
+        invalidDriftArtList: List<String>,
+        invalidInvesteringFunksjonList: List<String>,
+        illogicalInvesteringFunksjonList: List<String>,
+        invalidInvesteringArtList: List<String>
+    ): List<AbstractRule<List<KostraRecord>>> = listOf(
+        Rule016KapittelFortegn(),
+        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
+        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
+        Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
+        Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
+        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonList),
+        Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonList),
+        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
+        Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
+        Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
+        Rule065KombinasjonBevilgningFunksjonArt(),
+        Rule070KombinasjonBevilgningFunksjonArt(),
+        Rule075KombinasjonBevilgningFunksjonArt(),
+        Rule080KombinasjonBevilgningFunksjonArt(),
+        Rule100SummeringDriftUtgiftsposteringer(),
+        Rule105SummeringDriftInntektsposteringer(),
+        Rule115SummeringBalanseAktiva(),
+        Rule120SummeringBalansePassiva(),
+        Rule125SummeringBalanseDifferanse(),
+        Rule130SkatteInntekter(),
+        Rule135Rammetilskudd(),
+    )
+
+    protected fun specificKostraValidationRules(): List<AbstractRule<List<KostraRecord>>> = listOf(
+        Rule085SummeringInvesteringUtgiftsposteringer(),
+        Rule090SummeringInvesteringInntektsposteringer(),
+        Rule095SummeringInvesteringDifferanse(),
+        Rule110SummeringDriftDifferanse(),
+        Rule126SummeringDriftOsloInternDifferanse(),
+        Rule127SummeringInvesteringOsloInternDifferanse(),
+        Rule140OverforingerDriftInvestering(),
+        Rule145AvskrivningerMotpostAvskrivninger(),
+        Rule150Avskrivninger(),
+        Rule155AvskrivningerDifferanse(),
+        Rule160AvskrivningerAndreFunksjoner(),
+        Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner(),
+        Rule170Funksjon290Investering(),
+        Rule175Funksjon290Drift(),
+        Rule180Funksjon465Investering(),
+        Rule185Funksjon465Drift(),
+        Rule190Memoriakonti()
     )
 }

@@ -7,6 +7,10 @@ updates:
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
+    groups:
+      maven-dependencies:
+        patterns:
+          - "*"
   - package-ecosystem: npm
     versioning-strategy: increase
     directory: "/web/src/main/vite-project"
@@ -14,6 +18,11 @@ updates:
       interval: daily
       time: "03:00"
       timezone: Europe/Oslo
+    open-pull-requests-limit: 10
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -21,3 +30,7 @@ updates:
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - "*"

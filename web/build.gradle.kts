@@ -9,9 +9,6 @@ plugins {
 
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
-
-repositories { mavenCentral() }
-kotlin { jvmToolchain(17) }
 application { mainClass.set("no.ssb.kostra.web.ApplicationKt") }
 
 dependencies {

@@ -1,3 +1,6 @@
+version = project.findProperty("artifactRevision") ?: "LOCAL-SNAPSHOT"
+// java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT.jar --verbose
+
 plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp") version "1.9.23-1.0.19"
@@ -43,4 +46,14 @@ micronaut {
         incremental(true)
         annotations("no.ssb.kostra.*")
     }
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = application.mainClass
+    val dependencies = configurations
+        .runtimeClasspath
+        .get()
+        .map { zipTree(it) }
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

@@ -27,6 +27,8 @@ variables:
       value: "$(Build.SourceBranchName)"
     ${{ else }}:
       value: "$(Build.SourceBranchName)-SNAPSHOT"
+  - name: sonarCloud
+    value: 'bipSonarCloud-Barnevernsregisteret'
 
 resources:
   repositories:

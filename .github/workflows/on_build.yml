@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: List Gradle Wrapper Files
-        run: ls -alt ./gradle/wrapper/ > wrapper-files.txt
+        run: ls -alt > wrapper-files.txt
 
       - name: Display contents of wrapper files
         run: cat wrapper-files.txt

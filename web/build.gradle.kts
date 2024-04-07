@@ -59,6 +59,7 @@ tasks.register<Copy>("processFrontendResources") {
     into(backendTargetDir)
 }
 
+tasks.build { dependsOn("shadowJar") }
 tasks.named<Task>("processResources") {
     dependsOn("processFrontendResources")
 }

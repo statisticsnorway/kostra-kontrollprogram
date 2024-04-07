@@ -8,6 +8,7 @@ plugins {
 
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
+tasks.build { dependsOn("shadowJar") }
 tasks.test { useJUnitPlatform() }
 
 dependencies {

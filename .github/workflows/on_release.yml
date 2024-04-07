@@ -16,13 +16,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Set version with Gradle
-        run: ./gradlew setVersion -Pgithub.ref_name=${{github.ref_name}}
+        run: gradle setVersion -Pgithub.ref_name=${{github.ref_name}}
 
       - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+        run: gradle build
 
       - name: Release
         uses: softprops/action-gh-release@v2

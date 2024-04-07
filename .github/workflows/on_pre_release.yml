@@ -26,6 +26,8 @@ jobs:
 
       - name: Build with Gradle
         run: gradle build
+        env:
+          GRADLE_OPTS: -Dorg.gradle.logging.level=info
 
       - name: Release
         uses: softprops/action-gh-release@v2

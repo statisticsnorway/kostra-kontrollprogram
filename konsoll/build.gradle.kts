@@ -1,7 +1,12 @@
 version = project.findProperty("artifactRevision") ?: "LOCAL-SNAPSHOT"
-// java -jar ./konsoll/build/libs/kostra-kontrollprogram-LOCAL-SNAPSHOT.jar --verbose
+// ./gradlew -p konsoll clean shadowJar
+// java -jar ./konsoll/build/libs/kostra-kontrollprogram-LOCAL-SNAPSHOT-all.jar --verbose
 
-plugins { kotlin("jvm") }
+plugins {
+    kotlin("jvm")
+    id("com.github.johnrengelman.shadow")
+}
+
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
 tasks.test { useJUnitPlatform() }

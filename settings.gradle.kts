@@ -15,3 +15,6 @@ project(":kostra-barnevern").projectDir = file("kostra-barnevern")
 
 include("kostra-kontrollprogram-web")
 project(":kostra-kontrollprogram-web").projectDir = file("web")
+
+include("kostra-kontrollprogram-web-frontend")
+project(":kostra-kontrollprogram-web-frontend").projectDir = file("web-frontend")

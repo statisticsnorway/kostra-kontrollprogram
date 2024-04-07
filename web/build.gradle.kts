@@ -1,10 +1,14 @@
+group = "no.ssb.kostra"
 version = project.findProperty("artifactRevision") ?: "LOCAL-SNAPSHOT"
-// java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT.jar --verbose
+
+// ./gradlew -p web clean shadowJar
+// java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 
 plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp") version "1.9.23-1.0.19"
     id("io.micronaut.application") version "4.3.5"
+    id("com.github.johnrengelman.shadow")
 }
 
 kotlin { jvmToolchain(17) }
@@ -45,12 +49,19 @@ micronaut {
     }
 }
 
-tasks.jar {
-    manifest.attributes["Main-Class"] = application.mainClass
-    val dependencies = configurations
-        .runtimeClasspath
-        .get()
-        .map { zipTree(it) }
-    from(dependencies)
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+tasks.register<Copy>("processFrontendResources") {
+    val backendTargetDir = project.layout.buildDirectory.dir("resources/main/static")
+    val frontendBuildDir =
+        project(":kostra-kontrollprogram-web-frontend").layout.projectDirectory.dir("dist")
+
+    group = "Frontend"
+    description = "Process frontend resources"
+    dependsOn(":kostra-kontrollprogram-web-frontend:assembleFrontend")
+
+    from(frontendBuildDir)
+    into(backendTargetDir)
+}
+
+tasks.named<Task>("processResources") {
+    dependsOn("processFrontendResources")
 }

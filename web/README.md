@@ -41,7 +41,7 @@ IntelliJ har som standard plugins for Typescript-utvikling.
 
 Starte React/Vite utviklingsmiljø
 ```bash
-cd ./web/src/main/vite-project
+cd ./web-frontend
 npm install
 npm run dev
 ```

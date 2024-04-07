@@ -4,11 +4,13 @@ plugins {
     kotlin("jvm") version libs.versions.kotlin apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("org.sonarqube") version "5.0.0.4638"
-    id("jacoco")
+    jacoco
 }
 repositories { mavenCentral() }
 
 subprojects {
+    apply(plugin = "jacoco")
+
     sonarqube {
         properties {
             property("sonar.organization", "statisticsnorway")

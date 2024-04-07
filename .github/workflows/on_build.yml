@@ -18,8 +18,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'maven'
+          cache: 'gradle'
 
-      - name: Build with Maven
-        run: mvn --batch-mode -P github package
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
 

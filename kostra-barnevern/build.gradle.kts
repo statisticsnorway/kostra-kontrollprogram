@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     id("io.spring.dependency-management") version "1.1.4"
+    `maven-publish`
 }
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
@@ -26,4 +27,10 @@ dependencies {
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
+}
+
+publishing {
+    repositories {
+        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases")
+    }
 }

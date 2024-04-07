@@ -31,8 +31,8 @@ jobs:
             ~/.gradle/wrapper
           key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+#      - name: Setup Gradle
+#        uses: gradle/actions/setup-gradle@v3
 
 #      - name: Setup Gradle wrapper
 #        run: gradle wrapper

@@ -26,4 +26,11 @@ subprojects {
             )
         }
     }
+
+    tasks.withType<JacocoReport>().configureEach {
+        dependsOn(tasks.withType<Test>())
+        reports {
+            xml.required.set(true)
+        }
+    }
 }

@@ -27,8 +27,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew -Pversion=${{github.ref_name}} build shadowJar
-        env:
-          GRADLE_OPTS: -Dorg.gradle.logging.level=info
 
       - name: Release
         uses: softprops/action-gh-release@v2

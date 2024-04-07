@@ -11,12 +11,6 @@ jobs:
       - name: Checkout project sources
         uses: actions/checkout@v4
 
-      - name: List Gradle Wrapper Files
-        run: ls -alt > wrapper-files.txt
-
-      - name: Display contents of wrapper files
-        run: cat wrapper-files.txt
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -30,12 +24,6 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
-
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@v3
-
-#      - name: Setup Gradle wrapper
-#        run: gradle wrapper
 
       - name: Run build with Gradle Wrapper
         run: ./gradlew build

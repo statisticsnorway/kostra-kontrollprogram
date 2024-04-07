@@ -1,4 +1,3 @@
-version = project.findProperty("artifactRevision") ?: "LOCAL-SNAPSHOT"
 // ./gradlew -p konsoll clean shadowJar
 // java -jar ./konsoll/build/libs/kostra-kontrollprogram-LOCAL-SNAPSHOT-all.jar --verbose
 

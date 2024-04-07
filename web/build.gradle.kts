@@ -1,6 +1,3 @@
-group = "no.ssb.kostra"
-version = project.findProperty("artifactRevision") ?: "LOCAL-SNAPSHOT"
-
 // ./gradlew -p web clean shadowJar
 // java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 

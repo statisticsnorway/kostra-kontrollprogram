@@ -3,6 +3,7 @@ name: Run checks
 on:
   push:
 
+
 jobs:
   build-gradle-project:
     runs-on: ubuntu-latest

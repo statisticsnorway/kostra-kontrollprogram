@@ -4,7 +4,7 @@
 plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp") version "1.9.23-1.0.19"
-    id("io.micronaut.application") version "4.3.5"
+    id("io.micronaut.application") version "4.3.6"
     id("com.github.johnrengelman.shadow")
 }
 

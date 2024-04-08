@@ -27,7 +27,6 @@ class Rule125SummeringBalanseDifferanse : AbstractRule<List<KostraRecord>>(
             createSingleReportEntryList(
                 messageText = "Korrigér differansen (${aktiva.plus(passiva)}) mellom eiendeler ($aktiva) " +
                         "og gjeld og egenkapital ($passiva) i fila (Differanser opptil ±10' godtas)",
-                severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
             )
         }
 

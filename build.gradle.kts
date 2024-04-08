@@ -14,7 +14,7 @@ subprojects {
     sonarqube {
         properties {
             property("sonar.organization", "statisticsnorway")
-            property("sonar.projectKey", "tatisticsnorway_kostra-kontrollprogram-parent")
+            property("sonar.projectKey", "statisticsnorway_kostra-kontrollprogram-parent")
             property("sonar.host.url", "https://sonarcloud.io")
             property(
                 "sonar.exclusions", """

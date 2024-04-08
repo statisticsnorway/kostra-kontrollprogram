@@ -77,7 +77,7 @@ jobs:
         displayName: 'Gradle check'
         inputs:
           tasks: 'check jacocoTestReport sonar'
-          options: '--build-cache'
+          options: '--build-cache --info'
           gradleWrapperFile: 'gradlew'
           javaHomeOption: 'JDKVersion'
           jdkVersionOption: '17'

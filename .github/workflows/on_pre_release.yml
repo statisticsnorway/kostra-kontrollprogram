@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Build with Gradle
-        run: ./gradlew -Pversion=${{github.ref_name}} build shadowJar
+        run: ./gradlew -Pversion=${{github.ref_name}} build shadowJar --info
 
       - name: Release
         uses: softprops/action-gh-release@v2

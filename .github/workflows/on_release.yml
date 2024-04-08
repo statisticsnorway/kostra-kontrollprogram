@@ -24,6 +24,9 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-
 
       - name: Build with Gradle
         run: ./gradlew -Pversion=${{github.ref_name}} build shadowJar

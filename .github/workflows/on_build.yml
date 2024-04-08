@@ -31,4 +31,4 @@ jobs:
             ${{ runner.os }}-
 
       - name: Run build with Gradle Wrapper
-        run: ./gradlew build --info
+        run: ./gradlew check --info

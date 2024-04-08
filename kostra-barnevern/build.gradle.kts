@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm")
     id("io.spring.dependency-management") version "1.1.4"
+    `maven-publish`
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.1"
 }
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
@@ -26,4 +28,19 @@ dependencies {
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "no.ssb.kostra"
+            artifactId = "kostra-barnevern"
+            version = rootProject.version.toString()
+
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases")
+    }
 }

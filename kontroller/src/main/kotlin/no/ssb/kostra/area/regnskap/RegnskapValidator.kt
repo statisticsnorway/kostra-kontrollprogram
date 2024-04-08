@@ -66,7 +66,6 @@ abstract class RegnskapValidator(
         Rule105SummeringDriftInntektsposteringer(),
         Rule115SummeringBalanseAktiva(),
         Rule120SummeringBalansePassiva(),
-        Rule125SummeringBalanseDifferanse(),
         Rule130SkatteInntekter(),
         Rule135Rammetilskudd(),
     )
@@ -76,6 +75,7 @@ abstract class RegnskapValidator(
         Rule090SummeringInvesteringInntektsposteringer(),
         Rule095SummeringInvesteringDifferanse(),
         Rule110SummeringDriftDifferanse(),
+        Rule125SummeringBalanseDifferanse(),
         Rule126SummeringDriftOsloInternDifferanse(),
         Rule127SummeringInvesteringOsloInternDifferanse(),
         Rule140OverforingerDriftInvestering(),

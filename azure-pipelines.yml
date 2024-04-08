@@ -28,7 +28,7 @@ variables:
     ${{ else }}:
       value: "$(Build.SourceBranchName)-SNAPSHOT"
   - name: MAVEN_OPTS
-    value: '-DnewVersion=$(ArtifactRevision) -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram'
+    value: '-DnewVersion=$(ArtifactRevision) -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram-parent'
 
 
 resources:

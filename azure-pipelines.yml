@@ -65,10 +65,11 @@ jobs:
           scannerMode: 'Other'
 
       - task: Cache@2
-        displayName: 'Configure gradle caching'
+        displayName: 'Configure Gradle caching'
         inputs:
           key: 'gradle | "$(Agent.OS)" | **/build.gradle.kts'
           restoreKeys: |
+            gradle | "$(Agent.OS)" | **/build.gradle.kts
             gradle | "$(Agent.OS)"
             gradle
           path: $(GRADLE_USER_HOME)

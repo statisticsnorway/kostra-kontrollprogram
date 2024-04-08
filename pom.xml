@@ -39,7 +39,7 @@
         <sonar.version>3.11.0.3922</sonar.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>statisticsnorway</sonar.organization>
-        <sonar.projectKey>statisticsnorway_kostra-kontrollprogram</sonar.projectKey>
+        <sonar.projectKey>statisticsnorway_kostra-kontrollprogram-parent</sonar.projectKey>
         <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
         <sonar.exclusions>
             **/Application.kt,

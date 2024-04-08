@@ -131,6 +131,10 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    private val kommunaleArter = listOf(
+        "871", "872", "873", "875", "876"
+    )
+
     @SuppressWarnings
     private val konserninterneArter = listOf(
         "380", "480", "780", "880"
@@ -142,16 +146,19 @@ class KvartalKostraMain(
     )
 
     @SuppressWarnings
-    override val artList: List<String> =
-        if (arguments.skjema in bevilgningRegnskap) {
-            val result = ArrayList<String>(basisArter + konserninterneArter)
+    override val artList: List<String> = if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
+        ArrayList<String>(basisArter).apply {
+            when (arguments.skjema) {
+                in listOf("0A", "0M") -> {
+                    addAll(kommunaleArter)
 
-            if (arguments.region in osloKommuner) {
-                result.addAll(osloArter)
+                    if (arguments.region in osloKommuner) {
+                        addAll(osloArter)
+                    }
+                }
             }
-            result.map { it.padEnd(fieldArtSektorLength, ' ') }.distinct().sorted()
-        } else
-            emptyList()
+        }.distinct().sorted()
+    } else emptyList()
 
 
     @SuppressWarnings

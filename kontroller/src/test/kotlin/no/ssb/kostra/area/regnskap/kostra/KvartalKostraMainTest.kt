@@ -18,9 +18,9 @@ class KvartalKostraMainTest : BehaviorSpec({
         forAll(
             *regions.flatMap { region ->
                 mapOf(
-                    "0AK1" to 7,
+                    "0AK1" to 6,
                     "0BK1" to 6,
-                    "0CK1" to 7,
+                    "0CK1" to 6,
                     "0DK1" to 6
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
@@ -50,9 +50,9 @@ class KvartalKostraMainTest : BehaviorSpec({
                     }).plus(
                     mapOf(
                         "0AK1" to 1,
-                        "0BK1" to 4,
+                        "0BK1" to 3,
                         "0CK1" to 2,
-                        "0DK1" to 4
+                        "0DK1" to 3
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
                             "skjema = $skjema, region = $region -> validating a valid record string",
@@ -69,9 +69,9 @@ class KvartalKostraMainTest : BehaviorSpec({
                 ).plus(
                     mapOf(
                         "0AK1" to 2,
-                        "0BK1" to 5,
+                        "0BK1" to 4,
                         "0CK1" to 3,
-                        "0DK1" to 5
+                        "0DK1" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
                             "skjema = $skjema, region = $region -> validating a valid record string with invalid data",
@@ -105,7 +105,7 @@ class KvartalKostraMainTest : BehaviorSpec({
     companion object {
         private val regions = setOf("123400", "030100", "040000")
         private val validSkjemaTyper = setOf("0AK1", "0BK1", "0CK1", "0DK1")
-        private const val NUMBER_OF_VALIDATIONS = 35
+        private const val NUMBER_OF_VALIDATIONS = 34
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,

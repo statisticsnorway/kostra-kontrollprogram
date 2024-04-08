@@ -8,16 +8,13 @@ plugins {
 }
 repositories { mavenCentral() }
 
-subprojects {
-    apply(plugin = "jacoco")
-
-    sonarqube {
-        properties {
-            property("sonar.organization", "statisticsnorway")
-            property("sonar.projectKey", "statisticsnorway_kostra-kontrollprogram-parent")
-            property("sonar.host.url", "https://sonarcloud.io")
-            property(
-                "sonar.exclusions", """
+sonarqube {
+    properties {
+        property("sonar.organization", "statisticsnorway")
+        property("sonar.projectKey", "statisticsnorway_kostra-kontrollprogram-parent")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property(
+            "sonar.exclusions", """
                 **/Application.kt,
                 **/node_modules/**/*,
                 **/KostraRecordExtensionsGenerics.kt,
@@ -25,9 +22,12 @@ subprojects {
                 **/MappingToConsoleAppExtensions.kt,
                 **/kostra/barnevern/**/*
                 """.trimIndent()
-            )
-        }
+        )
     }
+}
+
+subprojects {
+    apply(plugin = "jacoco")
 
     tasks.withType<JacocoReport>().configureEach {
         dependsOn(tasks.withType<Test>())

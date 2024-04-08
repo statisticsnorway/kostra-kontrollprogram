@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version libs.versions.kotlin apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("org.sonarqube") version "5.0.0.4638"
+    `maven-publish`
     jacoco
 }
 repositories { mavenCentral() }
@@ -33,6 +34,15 @@ subprojects {
         dependsOn(tasks.withType<Test>())
         reports {
             xml.required.set(true)
+        }
+    }
+
+    if (name == "kostra-barnevern") {
+        apply(plugin = "maven-publish")
+        publishing {
+            repositories {
+                maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases")
+            }
         }
     }
 }

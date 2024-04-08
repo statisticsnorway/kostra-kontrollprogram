@@ -88,17 +88,17 @@ jobs:
         inputs:
           pollingTimeoutSec: '300'
 
-#      - task: Gradle@3
-#        displayName: 'Publish to Artifact Registry'
-#        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
-#        inputs:
-#          tasks: 'publish -Pversion=$(ArtifactRevision)'
-#          options: '--build-cache'
-#          gradleWrapperFile: 'gradlew'
-#          javaHomeOption: 'JDKVersion'
-#          jdkVersionOption: '17'
-#          jdkArchitectureOption: 'x64'
-#          publishJUnitResults: false
+      - task: Gradle@3
+        displayName: 'Publish to Artifact Registry'
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+        inputs:
+          tasks: 'publish -p kostra-barnevern -Pversion=$(ArtifactRevision)'
+          options: '--build-cache --info'
+          gradleWrapperFile: 'gradlew'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '17'
+          jdkArchitectureOption: 'x64'
+          publishJUnitResults: false
 
       - script: |
           # stop the Gradle daemon to ensure no files are left open (impacting the save cache operation later)

@@ -20,16 +20,15 @@ variables:
   # Azure Pipelines
   - group: Hemmeligheter
   # Variables defined here
-  - name: MAVEN_CACHE_FOLDER
-    value: $(Pipeline.Workspace)/.m2/repository
+  - name: GRADLE_USER_HOME
+    value: $(Pipeline.Workspace)/.gradle
   - name: ArtifactRevision
     ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags/') }}:
       value: "$(Build.SourceBranchName)"
     ${{ else }}:
       value: "$(Build.SourceBranchName)-SNAPSHOT"
-  - name: MAVEN_OPTS
-    value: '-DnewVersion=$(ArtifactRevision) -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER) -Drevision=$(ArtifactRevision) -Dsonar.projectKey=statisticsnorway_kostra-kontrollprogram-parent'
-
+  - name: sonarCloud
+    value: 'bipSonarCloud-Barnevernsregisteret'
 
 resources:
   repositories:
@@ -37,61 +36,72 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
       # The version of the repo on GitHub. Change to needed version
-      ref: refs/tags/1.1.44
-      # Service connection in the barn project on Pipelines
-      # with access to the template repository.
+      ref: refs/tags/1.1.45
+      # Service connection in the barn project on Pipelines with access to the template repository.
       endpoint: 'github-Barnevernsregisteret'
 
 # Job which runs mvn test and verify, Sonar Analysis (if branch is master), mvn install,
 # builds Docker image, pushes this to GCR and checks for any image vulnerabilities
 jobs:
-  - job: buildTestDockerBuildDockerPush
+  - job: buildTest
     displayName: 'Test/build app and deploy artifact'
+
+    # Job condition: Run these jobs on any branch, also tags
+    condition: not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
 
     # Steps in this Job
     steps:
       - script: 'echo "Artifact revision: $(ArtifactRevision)"'
         displayName: 'Print ArtifactRevision'
 
-      - task: JavaToolInstaller@0
-        inputs:
-          versionSpec: '17'
-          jdkArchitectureOption: 'x64'
-          jdkSourceOption: 'PreInstalled'
-
-      # Maven caching to speed up pipeline build time
-      - template: maven/task-cache.yml@templates
-
       # Authenticate to google artifact registry
       # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-authenticate-gar.yml
       - template: maven/task-authenticate-gar.yml@templates
 
-      # Verify and run sonarcloud, for non-tag-builds
-      # See https://github.com/statisticsnorway/azure-pipelines-templates/blob/master/maven/task-verify.yml
-      - template: maven/task-verify.yml@templates
-        parameters:
-          sonarCloud: 'bipSonarCloud-Barnevernsregisteret'
-          checkStyleRunAnalysis: false
-          pmdRunAnalysis: false
-
-      - task: Maven@3
-        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
-        displayName: Set POM-version
+      - task: SonarCloudPrepare@1
         inputs:
-          goals: 'versions:set'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true --batch-mode  $(MAVEN_OPTS)'
-          mavenVersionOption: 'Default'
-          javaHomeOption: 'JDKVersion'
+          SonarCloud: $(sonarCloud)
+          organization: 'statisticsnorway'
+          scannerMode: 'Other'
 
-      # Deploy artifact to artifact registry
-      # Note: Only kostra-barnevern is deployed to artifact registry
-      - task: Maven@3
-        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
-        displayName: 'Maven install and deploy'
+      - task: Cache@2
+        displayName: 'Configure Gradle caching'
         inputs:
-          goals: 'deploy'
-          mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-          options: '-DskipTests=true -Dmaven.javadoc.skip=true -U -pl kostra-barnevern -P ssb-bip --batch-mode -Djdk.tls.client.protocols="TLSv1.2"'
-          mavenPomFile: 'pom.xml'
+          key: 'gradle | "$(Agent.OS)" | **/build.gradle.kts'
+          restoreKeys: |
+            gradle | "$(Agent.OS)" | **/build.gradle.kts
+            gradle | "$(Agent.OS)"
+            gradle
+          path: $(GRADLE_USER_HOME)
+
+      - task: Gradle@3
+        displayName: 'Gradle build'
+        inputs:
+          tasks: 'check jacocoTestReport sonar'
+          options: '--build-cache --info'
+          gradleWrapperFile: 'gradlew'
           javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '17'
           jdkArchitectureOption: 'x64'
+
+      # Task to display the quality gate status in the build summary. This tasks is optional, as it can increase the overall build time.
+      - task: SonarCloudPublish@1
+        inputs:
+          pollingTimeoutSec: '300'
+
+      - task: Gradle@3
+        displayName: 'Publish to Artifact Registry'
+        condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+        inputs:
+          tasks: 'publishMavenPublicationToMavenRepository -p kostra-barnevern -Pversion=$(ArtifactRevision)'
+          options: '--build-cache --info'
+          gradleWrapperFile: 'gradlew'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '17'
+          jdkArchitectureOption: 'x64'
+          publishJUnitResults: false
+
+      - script: |
+          # stop the Gradle daemon to ensure no files are left open (impacting the save cache operation later)
+          ./gradlew --stop
+        displayName: Stop the Gradle daemon

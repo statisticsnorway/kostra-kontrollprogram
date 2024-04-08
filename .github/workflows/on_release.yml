@@ -16,17 +16,24 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'maven'
 
-      - name: Set version with Maven
-        run: mvn --batch-mode -U versions:set -DnewVersion=${{github.ref_name}}
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-
 
-      - name: Build with Maven
-        run: mvn --batch-mode -P github -Drevision=${{github.ref_name}} package
+      - name: Build with Gradle
+        run: ./gradlew -Pversion=${{github.ref_name}} build shadowJar --info
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./konsoll/target/jar/kostra-kontrollprogram-${{github.ref_name}}.jar
-            ./web/target/jar/kostra-kontrollprogram-web-${{github.ref_name}}.jar
+            ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar
+            ./web/build/libs/kostra-kontrollprogram-web-${{github.ref_name}}-all.jar

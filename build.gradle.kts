@@ -29,8 +29,10 @@ sonarqube {
 subprojects {
     apply(plugin = "jacoco")
 
-    tasks.withType<JacocoReport> {
+    tasks.withType<JacocoReport>().configureEach {
         dependsOn(tasks.withType<Test>())
-        reports { xml.required = true }
+        reports {
+            xml.required.set(true)
+        }
     }
 }

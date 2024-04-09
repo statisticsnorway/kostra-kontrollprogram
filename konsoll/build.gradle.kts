@@ -4,9 +4,11 @@
 plugins {
     kotlin("jvm")
     id("com.github.johnrengelman.shadow")
+    application
 }
 
 kotlin { jvmToolchain(17) }
+application { mainClass = "no.ssb.kostra.program.KostraKontrollprogramCommand" }
 repositories { mavenCentral() }
 tasks.test { useJUnitPlatform() }
 

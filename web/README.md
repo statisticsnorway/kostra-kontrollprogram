@@ -23,12 +23,22 @@ API-dokumentasjon finnes på http://localhost:8080/swagger/kostra-kontrollprogra
 
 Bygge app fra rot
 ```bash
-./mvnw clean -pl web -am install
+./gradlew -p web clean build
 ```
 
 Starte app fra rot
 ```bash
-./mvnw -pl web exec:exec
+./gradlew -p web run
+```
+
+Bygge kjørbar JAR-fil
+```bash
+./gradlew -p web shadowJar
+```
+
+Starte app fra JAR-fil
+```bash
+java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 ```
 
 ## Komme i gang med utvikling frontend
@@ -45,9 +55,10 @@ cd ./web-frontend
 npm install
 npm run dev
 ```
-Backend må være tilgjengelig på port 8080. http://localhost/8081 med hot reload benyttes for frontend.
+Backend må være tilgjengelig på port 8080. 
+Frontend vil være tilgjengelig på http://localhost/8081.
 
-Kjøre frontend-tester (også en del av `mvn verify`)
+Kjøre frontend-tester (også en del av `./gradlew check`)
 ```bash
 npx vitest run
 ```

@@ -69,13 +69,20 @@ Programmet benytter standard in/out for henholdsvis kilde- og rapportfil.
 
 Bygge app fra rot
 ```bash
-./mvnw clean -pl konsoll -am install
+./gradlew -p konsoll clean build
 ```
 
-## Bruk (utviklere)
-
---verbose vil printe meldingen "Hi!"
-
+Starte app fra rot (merk at dette vil kaste IllegalArgumentException, se påkrevde argumenter over)
 ```bash
-java -jar ./konsoll/target/kostra-kontrollprogram-LOCAL-SNAPSHOT.jar --verbose
+./gradlew -p konsoll run
+```
+
+Bygge kjørbar JAR-fil
+```bash
+./gradlew -p konsoll shadowJar
+```
+
+Starte app fra JAR-fil (merk at dette vil kaste IllegalArgumentException, se påkrevde argumenter over)
+```bash
+java -jar ./konsoll/build/libs/kostra-kontrollprogram-LOCAL-SNAPSHOT-all.jar
 ```

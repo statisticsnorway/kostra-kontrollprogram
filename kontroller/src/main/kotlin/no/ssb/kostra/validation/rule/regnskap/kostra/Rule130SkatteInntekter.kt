@@ -4,18 +4,19 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.rule.AbstractNoArgsRule
+import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isLongyearbyen
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isRegional
 
-class Rule130SkatteInntekter : AbstractNoArgsRule<List<KostraRecord>>(
+class Rule130SkatteInntekter : AbstractRule<List<KostraRecord>>(
     "Kontroll 130 : Skatteinntekter",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filterNot { it.isOsloBydel() || it.isLongyearbyen() }
         .filter { it.isRegional() && it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
@@ -24,7 +25,8 @@ class Rule130SkatteInntekter : AbstractNoArgsRule<List<KostraRecord>>(
         ?.takeUnless { skatteInntekter -> skatteInntekter < 0 }
         ?.let { skatteInntekter ->
             createSingleReportEntryList(
-                messageText = "Korrigér slik at fila inneholder skatteinntekter ($skatteInntekter)."
+                messageText = "Korrigér slik at fila inneholder skatteinntekter ($skatteInntekter).",
+                severity = if (arguments.kvartal.first() == ' ') Severity.ERROR else Severity.WARNING
             )
         }
 }

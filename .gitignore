@@ -25,9 +25,10 @@ hs_err_pid*
 
 .idea*
 *.iml
-/web-frontend/dist/
-/web-frontend/node_modules/
+dist/
+node_modules/
 
 build/
+.gradle
 
 .DS_Store

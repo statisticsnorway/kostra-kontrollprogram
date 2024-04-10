@@ -27,12 +27,12 @@ sonarqube {
 }
 
 subprojects {
-    apply(plugin = "jacoco")
+    if (name != "kostra-kontrollprogram-web-frontend") {
+        apply(plugin = "jacoco")
 
-    tasks.withType<JacocoReport>().configureEach {
-        dependsOn(tasks.withType<Test>())
-        reports {
-            xml.required.set(true)
+        tasks.withType<JacocoReport> {
+            dependsOn(tasks.withType<Test>())
+            reports { xml.required = true }
         }
     }
 }

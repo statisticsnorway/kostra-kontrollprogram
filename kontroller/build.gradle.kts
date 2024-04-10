@@ -1,10 +1,6 @@
 plugins {
-    kotlin("jvm")
     id("com.gorylenko.gradle-git-properties") version "2.4.1"
 }
-kotlin { jvmToolchain(17) }
-repositories { mavenCentral() }
-tasks.test { useJUnitPlatform() }
 
 dependencies {
     api(project(":kostra-barnevern"))

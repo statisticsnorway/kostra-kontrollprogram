@@ -1,12 +1,8 @@
 plugins {
-    kotlin("jvm")
     id("io.spring.dependency-management") version "1.1.4"
-    `maven-publish`
     id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.1"
+    `maven-publish`
 }
-kotlin { jvmToolchain(17) }
-repositories { mavenCentral() }
-tasks.test { useJUnitPlatform() }
 
 dependencyManagement {
     dependencies {

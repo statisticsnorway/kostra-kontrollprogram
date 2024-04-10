@@ -10,7 +10,7 @@ plugins {
 
 kotlin { jvmToolchain(17) }
 repositories { mavenCentral() }
-application { mainClass.set("no.ssb.kostra.web.ApplicationKt") }
+application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 dependencies {
     ksp("io.micronaut:micronaut-http-validation")

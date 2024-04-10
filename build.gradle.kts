@@ -30,7 +30,7 @@ subprojects {
     if (name != "kostra-kontrollprogram-web-frontend") {
         apply(plugin = "jacoco")
 
-        tasks.withType<JacocoReport> {
+        tasks.withType<JacocoReport>().all {
             dependsOn(tasks.withType<Test>())
             reports { xml.required = true }
         }

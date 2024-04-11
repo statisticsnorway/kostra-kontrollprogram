@@ -13,6 +13,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
+import no.ssb.kostra.validation.rule.RuleTestData
 
 class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
     include(
@@ -20,29 +21,38 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             sut = Rule100SummeringDriftUtgiftsposteringer(),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
-                "all conditions match",
-                kostraRecordsInTest("420400", 1, 100, 590, 0),
+                description = "all conditions match",
+                context = kostraRecordsInTest("420400", 1, 100, 590, 0),
                 expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
                         "(0) i driftsregnskapet",
             ),
             ForAllRowItem(
-                "isOsloBydel() = true",
-                kostraRecordsInTest("030114", 1, 100, 590, 0),
+                description = "isOsloBydel() = true",
+                context = kostraRecordsInTest("030114", 1, 100, 590, 0),
             ),
             ForAllRowItem(
-                "isBevilgningDriftRegnskap = false",
-                kostraRecordsInTest("420400", 0, 100, 590, 0),
+                description = "isBevilgningDriftRegnskap = false",
+                context = kostraRecordsInTest("420400", 0, 100, 590, 0),
             ),
             ForAllRowItem(
-                "isUtgift = false",
-                kostraRecordsInTest("420400", 1, 100, 600, 0),
+                description = "isUtgift = false",
+                context = kostraRecordsInTest("420400", 1, 100, 600, 0),
                 expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
                         "(0) i driftsregnskapet",
             ),
             ForAllRowItem(
-                "belop > 0",
-                kostraRecordsInTest("420400", 1, 100, 590, 1),
-            )
+                description = "belop > 0",
+                context = kostraRecordsInTest("420400", 1, 100, 590, 1),
+            ),
+            ForAllRowItem(
+                description = "isUtgift = false for quarterly reporting",
+                context = kostraRecordsInTest("420400", 1, 100, 600, 0),
+                arguments = kostraArguments("1"),
+
+                expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
+                        "(0) i driftsregnskapet",
+                expectedSeverity = Severity.WARNING
+            ),
         )
     )
 }) {
@@ -61,5 +71,7 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
         ).toKostraRecord(1, fieldDefinitions).asList()
+
+        private fun kostraArguments(kvartal: String) = RuleTestData.argumentsInTest.copy(kvartal = kvartal)
     }
 }

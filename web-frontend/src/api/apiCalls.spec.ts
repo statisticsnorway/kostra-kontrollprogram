@@ -9,7 +9,7 @@ describe('apiCalls', () => {
 
             const uiDataVmJson = {
                 releaseVersion: "N/A",
-                years: [2022,2023],
+                years: [2023,2024],
                 formTypes: [{
                     id: "~id~",
                     tittel: "~tittel~",

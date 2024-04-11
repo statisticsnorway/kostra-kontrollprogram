@@ -1,12 +1,13 @@
 group = "no.ssb.kostra"
 
+repositories { mavenCentral() }
+
 plugins {
-    kotlin("jvm") version libs.versions.kotlin apply false
+    kotlin("jvm") version libs.versions.kotlin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("org.sonarqube") version "5.0.0.4638"
     jacoco
 }
-repositories { mavenCentral() }
 
 sonarqube {
     properties {
@@ -28,7 +29,13 @@ sonarqube {
 
 subprojects {
     if (name != "kostra-kontrollprogram-web-frontend") {
+        apply(plugin = "kotlin")
         apply(plugin = "jacoco")
+
+        kotlin { jvmToolchain(17) }
+        repositories { mavenCentral() }
+
+        tasks.withType<Test> { useJUnitPlatform() }
 
         tasks.withType<JacocoReport> {
             dependsOn(tasks.withType<Test>())

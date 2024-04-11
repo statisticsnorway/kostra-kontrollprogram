@@ -1,16 +1,10 @@
-// ./gradlew -p web clean shadowJar
-// java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
+application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 plugins {
-    kotlin("jvm")
     id("com.google.devtools.ksp") version "1.9.23-1.0.20"
     id("io.micronaut.application") version "4.3.6"
     id("com.github.johnrengelman.shadow")
 }
-
-kotlin { jvmToolchain(17) }
-repositories { mavenCentral() }
-application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 dependencies {
     ksp("io.micronaut:micronaut-http-validation")

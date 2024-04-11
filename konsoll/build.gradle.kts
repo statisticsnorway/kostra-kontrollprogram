@@ -1,16 +1,9 @@
-// ./gradlew -p konsoll clean shadowJar
-// java -jar ./konsoll/build/libs/kostra-kontrollprogram-LOCAL-SNAPSHOT-all.jar --verbose
+application { mainClass = "no.ssb.kostra.program.KostraKontrollprogramCommand" }
 
 plugins {
-    kotlin("jvm")
     id("com.github.johnrengelman.shadow")
     application
 }
-
-kotlin { jvmToolchain(17) }
-application { mainClass = "no.ssb.kostra.program.KostraKontrollprogramCommand" }
-repositories { mavenCentral() }
-tasks.test { useJUnitPlatform() }
 
 dependencies {
     implementation(project(":kostra-kontroller"))

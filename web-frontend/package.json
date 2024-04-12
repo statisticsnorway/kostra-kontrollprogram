@@ -20,20 +20,20 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.2",
+    "react-hook-form": "^7.51.3",
     "react-query": "^3.5.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "mkdirp": "~3",
-    "@testing-library/react": "^15.0.0",
-    "@types/react": "^18.2.75",
-    "@types/react-dom": "^18.2.24",
+    "@testing-library/react": "^15.0.1",
+    "@types/react": "^18.2.77",
+    "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react": "^4.2.1",
     "jsdom": "^24.0.0",
-    "sass": "^1.74.1",
+    "sass": "^1.75.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.8",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   }
 }

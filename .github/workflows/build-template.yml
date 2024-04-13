@@ -62,7 +62,7 @@ jobs:
 
       - id: "auth"
         name: Authenticate to Google Cloud
-        if: ${{ inputs.publish && github.event.ref_type == 'tag' }}
+        if: ${{ inputs.publish-kostra-barnevern }}
         uses: "google-github-actions/auth@v2.1.2"
         with:
           workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
@@ -70,11 +70,11 @@ jobs:
           token_format: "access_token"
 
       - name: Deploy artifact to Google artifact registry
-        if: ${{ inputs.publish-kostra-barnevern && github.event.ref_type == 'tag' }}
+        if: ${{ inputs.publish-kostra-barnevern }}
         run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
 
       - name: Release
-        if : ${{ github.event.ref_type == 'tag' && contains(inputs.gradle-targets, 'shadowJar') }}
+        if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
         uses: softprops/action-gh-release@v2
         with:
           files: |

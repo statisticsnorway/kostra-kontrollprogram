@@ -32,7 +32,7 @@ env:
   SONAR_PARAMS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
 
 jobs:
-  build:
+  build-with-gradle:
     permissions:
       contents: "read"
       id-token: "write"

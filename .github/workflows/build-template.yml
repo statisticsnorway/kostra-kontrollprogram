@@ -26,7 +26,7 @@ on:
       GAR_PROJECT_ID:
         required: true
       SONAR_TOKEN:
-        required: false
+        required: true
 
 env:
   SONAR_PARAMS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
@@ -55,10 +55,10 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           gradle-version: wrapper
           arguments: |
-            ${{ inputs.gradle-targets }}
+            ${{ inputs.gradle-targets }} jacocoTestReport sonar
             ${{ inputs.gradle-args }}
+            -Dsonar.token=secrets.SONAR_TOKEN 
             --daemon --parallel --build-cache --info 
-            ${{ env.SONAR_PARAMS }} 
 
       - id: "auth"
         name: Authenticate to Google Cloud

@@ -4,31 +4,12 @@ on:
   push:
     branches:
       - master
+
   pull_request:
 
 jobs:
-  build-gradle-project:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project sources
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-            ${{ runner.os }}-
-
-      - name: Run build with Gradle Wrapper
-        run: ./gradlew check --info
+  build:
+    uses: ./.github/workflows/build-template.yml
+    secrets: inherit
+    with:
+      gradle-targets: check

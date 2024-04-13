@@ -55,8 +55,8 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           gradle-version: wrapper
           arguments: |
-            {{ inputs.gradle-targets }}
-            {{ inputs.gradle-args }}
+            ${{ inputs.gradle-targets }}
+            ${{ inputs.gradle-args }}
             --daemon --parallel --build-cache --info 
             ${{ env.SONAR_PARAMS }} 
 

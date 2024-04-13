@@ -28,9 +28,6 @@ on:
       SONAR_TOKEN:
         required: true
 
-env:
-  SONAR_PARAMS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
-
 jobs:
   build-with-gradle:
     permissions:
@@ -57,7 +54,7 @@ jobs:
           arguments: |
             ${{ inputs.gradle-targets }} jacocoTestReport sonar
             ${{ inputs.gradle-args }}
-            -Dsonar.token=secrets.SONAR_TOKEN 
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} 
             --daemon --parallel --build-cache --info 
 
       - id: "auth"

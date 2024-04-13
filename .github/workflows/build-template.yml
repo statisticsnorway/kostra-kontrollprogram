@@ -21,8 +21,6 @@ on:
         type: boolean
 
     secrets:
-      GITHUB_TOKEN:
-        required: true
       GAR_PROJECT_NUMBER:
         required: true
       GAR_PROJECT_ID:

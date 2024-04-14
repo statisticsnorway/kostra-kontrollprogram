@@ -1,0 +1,79 @@
+name: Build artifact and push
+
+on:
+  workflow_call:
+    inputs:
+      gradle-targets:
+        description: "Gradle targets to run"
+        required: true
+        type: string
+
+      gradle-args:
+        description: "Additional arguments to pass to Gradle"
+        required: false
+        default: ""
+        type: string
+
+      publish-kostra-barnevern:
+        description: "Publish artifact to Google Artifact Registry"
+        required: false
+        default: false
+        type: boolean
+
+    secrets:
+      GAR_PROJECT_NUMBER:
+        required: true
+      GAR_PROJECT_ID:
+        required: true
+      SONAR_TOKEN:
+        required: true
+
+jobs:
+  build-with-gradle:
+    permissions:
+      contents: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          gradle-build-scan-report: false
+          concurrent: true
+          gradle-distribution-sha-256-sum-warning: false
+          gradle-version: wrapper
+          arguments: |
+            ${{ inputs.gradle-targets }} jacocoTestReport sonar
+            ${{ inputs.gradle-args }}
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} 
+            --daemon --parallel --build-cache --info 
+
+      - id: "auth"
+        name: Authenticate to Google Cloud
+        if: ${{ inputs.publish-kostra-barnevern }}
+        uses: "google-github-actions/auth@v2.1.2"
+        with:
+          workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+          token_format: "access_token"
+
+      - name: Deploy artifact to Google artifact registry
+        if: ${{ inputs.publish-kostra-barnevern }}
+        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
+
+      - name: Release
+        if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar
+            ./web/build/libs/kostra-kontrollprogram-web-${{github.ref_name}}-all.jar

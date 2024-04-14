@@ -22,9 +22,9 @@ on:
 
     secrets:
       GAR_PROJECT_NUMBER:
-        required: true
+        required: false
       GAR_PROJECT_ID:
-        required: true
+        required: false
       SONAR_TOKEN:
         required: true
 

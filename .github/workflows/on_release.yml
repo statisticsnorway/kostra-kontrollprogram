@@ -12,4 +12,4 @@ jobs:
     with:
       gradle-targets: build shadowJar
       gradle-args: -Pversion=${{github.ref_name}}
-      # publish-kostra-barnevern: true # wait with this until we have a proper artifact registry
+      publish-kostra-barnevern: true

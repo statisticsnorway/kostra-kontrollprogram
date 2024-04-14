@@ -30,10 +30,11 @@ hs_err_pid*
 # Node
 dist/
 node_modules/
+node/
 
 #Gradle
 build/
 buildSrc/
 .gradle/
-
+.frontend-gradle-plugin/
 .DS_Store

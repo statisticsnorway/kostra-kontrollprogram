@@ -63,7 +63,7 @@ jobs:
         uses: "google-github-actions/auth@v2.1.2"
         with:
           workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
-          service_account: "gh-actions-barnevern@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+          service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
           token_format: "access_token"
 
       - name: Deploy artifact to Google artifact registry

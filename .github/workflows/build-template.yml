@@ -26,7 +26,10 @@ on:
       GAR_PROJECT_ID:
         required: false
       SONAR_TOKEN:
-        required: true
+        required: false
+
+env:
+  SONAR_TARGETS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
 
 jobs:
   build-with-gradle:
@@ -52,9 +55,9 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           gradle-version: wrapper
           arguments: |
-            ${{ inputs.gradle-targets }} jacocoTestReport sonar
-            ${{ inputs.gradle-args }}
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }} 
+            ${{ inputs.gradle-targets }} 
+            ${{ inputs.gradle-args }} 
+            ${{ env.SONAR_TARGETS }} 
             --daemon --parallel --build-cache --info 
 
       - id: "auth"

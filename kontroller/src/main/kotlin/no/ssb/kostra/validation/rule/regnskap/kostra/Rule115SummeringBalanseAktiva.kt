@@ -20,8 +20,7 @@ class Rule115SummeringBalanseAktiva : AbstractRule<List<KostraRecord>>(
         ?.let { sumAktiva ->
             createSingleReportEntryList(
                 messageText = "Korrigér slik at fila inneholder registrering av aktiva/eiendeler " +
-                        "($sumAktiva), sum kapittel 10-29 i balanse.",
-                severity = if (arguments.kvartal.first() == ' ') Severity.ERROR else Severity.WARNING
+                        "($sumAktiva), sum kapittel 10-29 i balanse."
             )
         }
 }

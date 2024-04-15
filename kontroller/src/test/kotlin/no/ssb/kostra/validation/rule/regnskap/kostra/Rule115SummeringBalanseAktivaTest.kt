@@ -33,14 +33,6 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
                 description = "0 < belop",
                 context = kostraRecordsInTest("420400", "0B", 2, 10, 1),
             ),
-            ForAllRowItem(
-                description = "isAktiva = false for quarterly reporting",
-                context = kostraRecordsInTest("420400", "0B", 2, 10, 0),
-                arguments = kostraArguments("1"),
-                expectedErrorMessage = "Korrigér slik at fila inneholder registrering av aktiva/eiendeler " +
-                        "(0), sum kapittel 10-29 i balanse.",
-                expectedSeverity = Severity.WARNING
-            ),
         )
     )
 }) {
@@ -58,7 +50,5 @@ class Rule115SummeringBalanseAktivaTest : BehaviorSpec({
             RegnskapConstants.FIELD_KAPITTEL to "$kapittel",
             RegnskapConstants.FIELD_BELOP to "$belop"
         ).toKostraRecord(1, fieldDefinitions).asList()
-
-        private fun kostraArguments(kvartal: String) = argumentsInTest.copy(kvartal = kvartal)
     }
 }

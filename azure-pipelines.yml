@@ -10,6 +10,11 @@ trigger:
     include:
       - 'v*'
 
+pr:
+  branches:
+    exclude:
+      - '*'
+
 # Pipeline will be run on this base image
 pool:
   vmImage: ubuntu-latest

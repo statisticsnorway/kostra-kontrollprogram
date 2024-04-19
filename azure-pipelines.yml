@@ -10,10 +10,7 @@ trigger:
     include:
       - 'v*'
 
-pr:
-  branches:
-    exclude:
-      - '*'
+pr: none
 
 # Pipeline will be run on this base image
 pool:

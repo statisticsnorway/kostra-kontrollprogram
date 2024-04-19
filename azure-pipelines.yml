@@ -2,6 +2,10 @@ name: $(Build.SourceBranch)-$(date:yyyyMMdd)$(rev:.r)
 
 # Pipeline triggers on any branch and tag
 trigger:
+  branches:
+    exclude:
+      - '*'
+
   tags:
     include:
       - 'v*'

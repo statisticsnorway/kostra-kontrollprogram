@@ -4,10 +4,10 @@ name: $(Build.SourceBranch)-$(date:yyyyMMdd)$(rev:.r)
 trigger:
   branches:
     include:
-      - '*'
+      - 'master'
   tags:
     include:
-      - '*'
+      - 'v*'
 
 # Pipeline will be run on this base image
 pool:

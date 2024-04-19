@@ -37,8 +37,6 @@ publishing {
         }
     }
     repositories {
-        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-14da/maven-releases")
-        // when switching to new repository
-        //maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/kostra-maven")
+        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/kostra-maven")
     }
 }

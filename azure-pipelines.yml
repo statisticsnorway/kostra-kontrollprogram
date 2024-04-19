@@ -2,9 +2,12 @@ name: $(Build.SourceBranch)-$(date:yyyyMMdd)$(rev:.r)
 
 # Pipeline triggers on any branch and tag
 trigger:
+  branches:
+    include:
+      - '*'
   tags:
     include:
-      - 'v*'
+      - '*'
 
 # Pipeline will be run on this base image
 pool:
@@ -40,6 +43,9 @@ resources:
 jobs:
   - job: buildTest
     displayName: 'Test/build app and deploy artifact'
+
+    # Job condition: Run these jobs on any branch, also tags
+    condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
 
     # Steps in this Job
     steps:

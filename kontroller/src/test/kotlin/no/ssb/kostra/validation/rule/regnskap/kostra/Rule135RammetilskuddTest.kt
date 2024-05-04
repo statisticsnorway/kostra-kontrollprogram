@@ -57,7 +57,7 @@ class Rule135RammetilskuddTest : BehaviorSpec({
             ForAllRowItem(
                 description = "isInntekt = false for quarterly reporting",
                 context = kostraRecordsInTest("420400", "0A", 1, 840, 800, 0),
-                arguments = kostraArguments("1"),
+                arguments = argumentsInTest.copy(kvartal = "1"),
                 expectedErrorMessage = "Korrigér slik at fila inneholder rammetilskudd (0).",
                 expectedSeverity = Severity.WARNING
             ),
@@ -80,8 +80,6 @@ class Rule135RammetilskuddTest : BehaviorSpec({
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
         ).toKostraRecord(1, fieldDefinitions).asList()
-
-        private fun kostraArguments(kvartal: String) = argumentsInTest.copy(kvartal = kvartal)
     }
 }
 

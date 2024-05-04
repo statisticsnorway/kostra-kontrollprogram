@@ -1,8 +1,6 @@
 package no.ssb.kostra.validation.rule.regnskap.kostra
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
@@ -16,7 +14,6 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
-import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
 
 class Rule130SkatteInntekterTest : BehaviorSpec({
     include(
@@ -51,7 +48,7 @@ class Rule130SkatteInntekterTest : BehaviorSpec({
             ForAllRowItem(
                 description = "belop = 0 for quarterly reporting",
                 context = kostraRecordsInTest("420400", "0A", 1, 800, 870, 0),
-                arguments = kostraArguments("1"),
+                arguments = argumentsInTest.copy(kvartal = "1"),
                 expectedErrorMessage = "Korrigér slik at fila inneholder skatteinntekter (0).",
                 expectedSeverity = Severity.WARNING
             ),
@@ -74,7 +71,5 @@ class Rule130SkatteInntekterTest : BehaviorSpec({
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
         ).toKostraRecord(1, fieldDefinitions).asList()
-
-        private fun kostraArguments(kvartal: String) = argumentsInTest.copy(kvartal = kvartal)
     }
 }

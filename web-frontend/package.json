@@ -26,12 +26,12 @@
   },
   "devDependencies": {
     "mkdirp": "~3",
-    "@testing-library/react": "^15.0.6",
+    "@testing-library/react": "^15.0.7",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.1",
     "jsdom": "^24.0.0",
-    "sass": "^1.76.0",
+    "sass": "^1.77.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11",
     "vitest": "^1.6.0"

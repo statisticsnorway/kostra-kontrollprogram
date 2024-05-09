@@ -18,11 +18,14 @@ const TabRow = (
     <ul className="nav nav-tabs" role={"navigation"}>
         {/** BACK TO FORM */}
         <TabItem
-            text={activeTabIndex == 0 ?"Skjema" : "Tilbake til skjema"}
+            text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
             image={FilterLeft}
             tabIsActive={activeTabIndex === 0}
             onSelect={() => onTabSelect(0)}
-            showCloseButton={false}/>
+            showCloseButton={false}
+            onClose={() => {
+            }}
+        />
 
         {/** REPORT TABS */}
         {fileReports.map((fileReport, index) =>
@@ -33,7 +36,9 @@ const TabRow = (
                 image={ListTask}
                 tabIsActive={activeTabIndex == index + 1}
                 onSelect={() => onTabSelect(index + 1)}
-                onClose={() => onReportDelete(index)}/>
+                showCloseButton={true}
+                onClose={() => onReportDelete(index)}
+            />
         )}
     </ul>
 

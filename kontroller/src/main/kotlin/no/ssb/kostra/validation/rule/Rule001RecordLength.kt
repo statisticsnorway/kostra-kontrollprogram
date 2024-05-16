@@ -3,7 +3,7 @@ package no.ssb.kostra.validation.rule
 import no.ssb.kostra.validation.report.Severity
 
 class Rule001RecordLength(
-    val length: Int
+    private val length: Int
 ) : AbstractNoArgsRule<List<String>>("Kontroll 001 : Recordlengde", Severity.FATAL) {
     override fun validate(context: List<String>) = context
         .withIndex()

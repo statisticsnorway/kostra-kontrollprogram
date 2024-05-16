@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
 import no.ssb.kostra.testutil.RandomUtils.generateRandomSsn
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
@@ -9,7 +8,6 @@ import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleWithArgsTes
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.individInTest
 import no.ssb.kostra.validation.rule.barnevern.individrule.IndividRuleTestData.tiltakTypeInTest
-import java.time.LocalDate
 
 class Individ08Test : BehaviorSpec({
     include(

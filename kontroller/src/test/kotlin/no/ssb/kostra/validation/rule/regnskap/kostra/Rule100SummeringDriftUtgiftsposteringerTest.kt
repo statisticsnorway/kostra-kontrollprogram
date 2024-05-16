@@ -13,7 +13,7 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoArgsTest
-import no.ssb.kostra.validation.rule.RuleTestData
+import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
     include(
@@ -47,7 +47,7 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             ForAllRowItem(
                 description = "isUtgift = false for quarterly reporting",
                 context = kostraRecordsInTest("420400", 1, 100, 600, 0),
-                arguments = kostraArguments("1"),
+                arguments = argumentsInTest.copy(kvartal = "1"),
 
                 expectedErrorMessage = "Korrigér slik at fila inneholder utgiftsposteringene " +
                         "(0) i driftsregnskapet",
@@ -71,7 +71,5 @@ class Rule100SummeringDriftUtgiftsposteringerTest : BehaviorSpec({
             FIELD_ART to "$art",
             FIELD_BELOP to "$belop"
         ).toKostraRecord(1, fieldDefinitions).asList()
-
-        private fun kostraArguments(kvartal: String) = RuleTestData.argumentsInTest.copy(kvartal = kvartal)
     }
 }

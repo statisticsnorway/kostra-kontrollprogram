@@ -259,9 +259,8 @@ class ApiControllerIntegrationTest(
                         errorType shouldBe ApiErrorType.VALIDATION_ERROR
                         httpStatusCode shouldBe HttpStatus.BAD_REQUEST.code
                         url shouldBe urlInTest
-
                         validationErrors.shouldNotBeNull()
-                        @Suppress("USELESS_CAST")
+
                         (assertSoftly(validationErrors as Map<String, String>) {
                             it[propertyPath] shouldBe expectedValidationError
                         })

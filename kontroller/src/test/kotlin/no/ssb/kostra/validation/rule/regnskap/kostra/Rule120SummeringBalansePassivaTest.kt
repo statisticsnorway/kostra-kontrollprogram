@@ -10,7 +10,6 @@ import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 
 class Rule120SummeringBalansePassivaTest : BehaviorSpec({
     include(

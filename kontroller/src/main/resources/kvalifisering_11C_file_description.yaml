@@ -1,0 +1,558 @@
+description: Filbeskrivelse for 11C Kvalifiseringsstønad
+reportingYear: 2024
+fieldDescriptions:
+  - name: KOMMUNE_NR
+    dataType: String
+    length: 4
+    from: 1
+    to: 4
+    description: Kommunenummer
+    mandatory: true
+
+  - name: VERSION
+    dataType: String
+    length: 2
+    from: 5
+    to: 6
+    description: Oppgaveår
+    mandatory: true
+
+  - name: BYDELSNR
+    dataType: String
+    length: 2
+    from: 7
+    to: 8
+    description: Bydelsnummer
+
+  - name: DISTRIKTSNR
+    dataType: String
+    length: 2
+    from: 9
+    to: 10
+    description: Distriktsnummer
+
+  - name: PERSON_JOURNALNR
+    dataType: String
+    length: 8
+    from: 11
+    to: 18
+    description: Journalnummer
+    mandatory: true
+
+  - name: PERSON_FODSELSNR
+    dataType: String
+    length: 11
+    from: 19
+    to: 29
+    description: Hva er deltakerens fødselsnummer
+    mandatory: true
+
+  - name: KJONN
+    dataType: String
+    length: 1
+    from: 30
+    to: 30
+    description: Hva er deltakerens kjønn?
+    codeList:
+      - code: 1
+        description: Mann
+      - code: 2
+        description: Kvinne
+    mandatory: true
+
+  - name: EKTSTAT
+    dataType: String
+    length: 1
+    from: 31
+    to: 31
+    description: Hva er deltakerens sivilstand/sivilstatus per kvartal?
+    codeList:
+      - code: 1
+        description: Ugift
+      - code: 2
+        description: Gift
+      - code: 3
+        description: Samboer
+      - code: 4
+        description: Skilt/separert
+      - code: 5
+        description: Enke/enkemann
+
+  - name: BU
+    dataType: String
+    length: 1
+    from: 32
+    to: 32
+    description: Har deltakeren barn under 18 år som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?
+    codeList:
+      - code: 1
+        description: Ja
+      - code: 2
+        description: Nei
+    mandatory: true
+
+  - name: ANTBU18
+    dataType: Integer
+    length: 2
+    from: 33
+    to: 34
+    description: Hvis ja, hvor mange?
+
+  - name: REG_DATO
+    dataType: DATE
+    datePattern: DDMMYY
+    length: 6
+    from: 35
+    to: 40
+    description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ
+    mandatory: true
+
+  - name: VEDTAK_DATO
+    dataType: DATE
+    datePattern: DDMMYY
+    length: 6
+    from: 41
+    to: 46
+    description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ
+    mandatory: true
+
+  - name: BEGYNT_DATO
+    dataType: DATE
+    datePattern: DDMMYY
+    length: 6
+    from: 47
+    to: 52
+    description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ
+    mandatory: true
+
+  - name: KVP_KOMM
+    dataType: String
+    length: 1
+    from: 53
+    to: 53
+    description: Kommer deltakeren fra kvalifiseringsprogram i annen kommune?
+    codeList:
+      - code: 1
+        description: Ja
+      - code: 2
+        description: Nei
+
+  - name: KOMMNR_KVP_KOMM
+    dataType: String
+    length: 4
+    from: 54
+    to: 57
+    description: Hvis ja, velg kommunenummer fra liste
+# Legg til kodeliste over gyldig kommunenummer
+
+  - name: YTELSE_SOSHJELP
+    dataType: String
+    length: 1
+    from: 58
+    to: 58
+    description: Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser? Kan krysse av for flere svaralternativer)
+    codeList:
+      - code: 1
+        description: Sosialhjelp
+
+  - name: YTELSE_TYPE_SOSHJ
+    dataType: String
+    length: 1
+    from: 59
+    to: 59
+    description: Hvis sosialhjelp, hvilken?
+    codeList:
+      - code: 2
+        description: Sosialhjelp som viktigste kilde til livsopphold
+      - code: 3
+        description: Supplerende sosialhjelp
+
+  - name: YTELSE_INTRO
+    dataType: String
+    length: 1
+    from: 60
+    to: 60
+    description: Andre ytelser
+    codeList:
+      - code: 4
+        description: Introduksjonsstønad
+
+  - name: YTELSE_INDIVIDSTONAD
+    dataType: String
+    length: 1
+    from: 61
+    to: 61
+    description: ""
+    codeList:
+      - code: 5
+        description: Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak
+
+  - name: YTELSE_FOLKETRYGDL
+    dataType: String
+    length: 1
+    from: 62
+    to: 62
+    description: ""
+    codeList:
+      - code: 6
+        description: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
+
+  - name: KVP_MED_ASTONAD
+    dataType: String
+    length: 1
+    from: 63
+    to: 63
+    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller Husbankens bostøtte?
+    codeList:
+      - code: 1
+        description: Ja
+      - code: 2
+        description: Nei
+
+  - name: KVP_MED_KOMMBOS
+    dataType: String
+    length: 1
+    from: 64
+    to: 64
+    description: Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    codeList:
+      - code: 4
+        description: Kommunal bostøtte
+
+  - name: KVP_MED_HUSBANKBOS
+    dataType: String
+    length: 1
+    from: 65
+    to: 65
+    description: ""
+    codeList:
+      - code: 5
+        description: Husbankens bostøtte
+
+  - name: KVP_MED_SOSHJ_ENGANG
+    dataType: String
+    length: 1
+    from: 66
+    to: 66
+    description: ""
+    codeList:
+      - code: 9
+        description: Mottok økonomisk sosialhjelp som engangsstønad
+
+  - name: KVP_MED_SOSHJ_PGM
+    dataType: String
+    length: 1
+    from: 67
+    to: 67
+    description: ""
+    codeList:
+      - code: 8
+        description: Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet
+
+  - name: KVP_MED_SOSHJ_SUP
+    dataType: String
+    length: 1
+    from: 68
+    to: 68
+    description: ""
+    codeList:
+      - code: 7
+        description: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter
+
+  - name: STMND_1
+    dataType: String
+    length: 2
+    from: 69
+    to: 70
+    description: For hvilke måneder per kvartal i løpet av 2024 har deltakeren fått kvalifiseringsstønad?
+    codeList:
+      - code: 01
+        description: Januar
+
+  - name: STMND_2
+    dataType: String
+    length: 2
+    from: 71
+    to: 72
+    description: ""
+    codeList:
+      - code: 02
+        description: Februar
+
+  - name: STMND_3
+    dataType: String
+    length: 2
+    from: 73
+    to: 74
+    description: ""
+    codeList:
+      - code: 03
+        description: Mars
+
+  - name: STMND_4
+    dataType: String
+    length: 2
+    from: 75
+    to: 76
+    description: ""
+    codeList:
+      - code: 04
+        description: April
+
+  - name: STMND_5
+    dataType: String
+    length: 2
+    from: 77
+    to: 78
+    description: ""
+    codeList:
+      - code: 05
+        description: Mai
+
+  - name: STMND_6
+    dataType: String
+    length: 2
+    from: 79
+    to: 80
+    description: ""
+    codeList:
+      - code: 06
+        description: Juni
+
+  - name: STMND_7
+    dataType: String
+    length: 2
+    from: 81
+    to: 82
+    description: ""
+    codeList:
+      - code: 07
+        description: Juli
+
+  - name: STMND_8
+    dataType: String
+    length: 2
+    from: 83
+    to: 84
+    description: ""
+    codeList:
+      - code: 08
+        description: August
+
+  - name: STMND_9
+    dataType: String
+    length: 2
+    from: 85
+    to: 86
+    description: ""
+    codeList:
+      - code: 09
+        description: September
+
+  - name: STMND_10
+    dataType: String
+    length: 2
+    from: 87
+    to: 88
+    description: ""
+    codeList:
+      - code: 10
+        description: Oktober
+
+  - name: STMND_11
+    dataType: String
+    length: 2
+    from: 89
+    to: 90
+    description: ""
+    codeList:
+      - code: 11
+        description: November
+
+  - name: STMND_12
+    dataType: String
+    length: 2
+    from: 91
+    to: 92
+    description: ""
+    codeList:
+      - code: 12
+        description: Desember
+
+  - name: KVP_STONAD
+    dataType: Integer
+    length: 7
+    from: 93
+    to: 99
+    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2024
+    codeList:
+      - code: 1
+        description: Ja
+
+  - name: STATUS
+    dataType: String
+    length: 1
+    from: 100
+    to: 100
+    description: Hva er status for deltakelsen i kvalifiseringsprogrammet per kvartal?
+    codeList:
+      - code: 1
+        description: Deltakeren er fortsatt i program (skjema er ferdig utfylt)
+      - code: 2
+        description: Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)
+      - code: 3
+        description: Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)
+      - code: 4
+        description: Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)
+      - code: 5
+        description: Deltakerens program ble avbrutt på grunn av flytting til annen kommune
+      - code: 6
+        description: Kun for Oslos bydeler. Deltakeren flyttet til annen bydel før programperioden var over
+      - code: 7
+        description: Deltakerens program er avsluttet etter avbrudd
+    mandatory: true
+
+  - name: AVSL_DATO
+    dataType: DATE
+    datePattern: DDMMYY
+    length: 6
+    from: 101
+    to: 106
+    description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
+
+  - name: AVSL_ORDINAERTARB
+    dataType: String
+    length: 2
+    from: 107
+    to: 108
+    description: Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)
+    codeList:
+      - code: 01
+        description: Ordinært arbeid (heltid/deltid)
+
+  - name: AVSL_ARBLONNSTILS
+    dataType: String
+    length: 2
+    from: 109
+    to: 110
+    description: ""
+    codeList:
+      - code: 11
+        description: Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)
+
+  - name: AVSL_ARBMARK
+    dataType: String
+    length: 2
+    from: 111
+    to: 112
+    description: ""
+    codeList:
+      - code: 03
+        description: Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksfororskriften)
+
+  - name: AVSL_SKOLE
+    dataType: String
+    length: 2
+    from: 113
+    to: 114
+    description: ""
+    codeList:
+      - code: 04
+        description: Skole/utdanning
+
+  - name: AVSL_UFORE
+    dataType: String
+    length: 2
+    from: 115
+    to: 116
+    description: ""
+    codeList:
+      - code: 13
+        description: Uføretrygd
+
+  - name: AVSL_AAP
+    dataType: String
+    length: 2
+    from: 117
+    to: 118
+    description: ""
+    codeList:
+      - code: 14
+        description: Arbeidsavklaringspenger
+
+  - name: AVSL_OK_AVKLAR
+    dataType: String
+    length: 2
+    from: 119
+    to: 120
+    description: ""
+    codeList:
+      - code: 15
+        description: Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP
+
+  - name: AVSL_UTEN_OK_AVKLAR
+    dataType: String
+    length: 2
+    from: 121
+    to: 122
+    description: ""
+    codeList:
+      - code: 16
+        description: Økonomisk sosialhjelp uten slik avklaring
+
+  - name: AVSL_ANNET
+    dataType: String
+    length: 2
+    from: 123
+    to: 124
+    description: ""
+    codeList:
+      - code: 10
+        description: Annet
+
+  - name: AVSL_UKJENT
+    dataType: String
+    length: 2
+    from: 125
+    to: 126
+    description: ""
+    codeList:
+      - code: 17
+        description: Ukjent
+
+  - name: AVSL_VIKTIGSTE_INNTEKT
+    dataType: String
+    length: 2
+    from: 127
+    to: 128
+    description: Hva var deltakerens viktigste inntektskilde umiddelbart etter avslutningen? (Kun ett kryss)
+    codeList:
+      - code: 01
+        description: Ordinært arbeid (heltid/deltid)
+      - code: 11
+        description: Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)
+      - code: 03
+        description: Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksfororskriften)
+      - code: 04
+        description: Skole/utdanning (studiestønad)
+      - code: 13
+        description: Uføretrygd
+      - code: 14
+        description: Arbeidsavklaringspenger
+      - code: 15
+        description: Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP
+      - code: 16
+        description: Økonomisk sosialhjelp uten slik avklaring
+      - code: 10
+        description: Annet
+      - code: 17
+        description: Ukjent
+
+
+  - name: SAKSBEHANDLER
+    dataType: String
+    length: 10
+    from: 129
+    to: 138
+    description: Saksbehandlernummer
+

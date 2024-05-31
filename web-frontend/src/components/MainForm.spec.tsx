@@ -1,5 +1,5 @@
-import {beforeEach, describe, expect, test} from 'vitest'
-import {fireEvent, render, screen} from '@testing-library/react'
+import {afterEach, beforeEach, describe, expect, test} from 'vitest'
+import {cleanup, fireEvent, render, screen} from '@testing-library/react'
 import MainForm from "./MainForm"
 
 describe("MainForm", () => {
@@ -52,6 +52,10 @@ describe("MainForm", () => {
                 }}/>)
 
             formTypeSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
+        })
+
+        afterEach(() => {
+            cleanup()
         })
 
         test("when a form type without company-id and sub-company-id is selected", () => {

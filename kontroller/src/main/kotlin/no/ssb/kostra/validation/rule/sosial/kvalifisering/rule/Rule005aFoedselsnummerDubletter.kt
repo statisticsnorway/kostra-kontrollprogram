@@ -17,6 +17,7 @@ class Rule005aFoedselsnummerDubletter : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
+        .asSequence()
         .filter { kostraRecord ->
             kostraRecord[KOMMUNE_NR_COL_NAME] != OSLO_MUNICIPALITY_ID
                     && SsnValidationUtils.isValidSocialSecurityIdOrDnr(kostraRecord[PERSON_FODSELSNR_COL_NAME])
@@ -41,5 +42,6 @@ class Rule005aFoedselsnummerDubletter : AbstractNoArgsRule<List<KostraRecord>>(
                     journalId = journalId,
                 )
             }
-        }.ifEmpty { null }
+        }
+        .toList().ifEmpty { null }
 }

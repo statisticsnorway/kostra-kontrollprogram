@@ -46,7 +46,7 @@ java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 IntelliJ har som standard plugins for Typescript-utvikling.
 
 - Node.js 18 eller nyere er påkrevet
-- React Developer Tools plugin i Chrome anbefales
+- Chrome React Developer Tools plugin anbefales
 - Vitest Runner kan være en nyttig IntelliJ-plugin
 
 Starte React/Vite utviklingsmiljø

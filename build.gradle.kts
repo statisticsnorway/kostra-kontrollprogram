@@ -32,7 +32,7 @@ subprojects {
         apply(plugin = "kotlin")
         apply(plugin = "jacoco")
 
-        kotlin { jvmToolchain(17) }
+        kotlin { jvmToolchain(21) }
         repositories { mavenCentral() }
 
         tasks.withType<Test> { useJUnitPlatform() }

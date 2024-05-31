@@ -21,10 +21,4 @@ const TabItem = (props: {
         </div>
     </li>
 
-// Set default props
-TabItem.defaultProps = {
-    showCloseButton: true,
-    onClose: () => {}
-}
-
 export default TabItem

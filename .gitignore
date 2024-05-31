@@ -26,6 +26,8 @@ hs_err_pid*
 # Intellij
 .idea*
 *.iml
+/web-frontend/dist/
+/web-frontend/node_modules/
 
 # Node
 dist/

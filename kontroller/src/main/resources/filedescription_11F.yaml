@@ -14,6 +14,7 @@ fields:
     dataType: STRING_TYPE
     from: 5
     size: 2
+    mandatory: true
   - name: BYDELSNR
     description: Bydelsnummer
     dataType: STRING_TYPE
@@ -29,11 +30,13 @@ fields:
     dataType: STRING_TYPE
     from: 11
     size: 8
+    mandatory: true
   - name: PERSON_FODSELSNR
     description: Hva er mottakerens fødselsnummer?
     dataType: STRING_TYPE
     from: 19
     size: 11
+    mandatory: true
   - name: PERSON_DUFNR
     description: Hva er mottakerens DUF-nummer?
     dataType: STRING_TYPE
@@ -44,6 +47,7 @@ fields:
     dataType: STRING_TYPE
     from: 42
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Mann
@@ -54,6 +58,7 @@ fields:
     dataType: STRING_TYPE
     from: 43
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ugift
@@ -70,6 +75,7 @@ fields:
     dataType: STRING_TYPE
     from: 44
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ja
@@ -85,6 +91,7 @@ fields:
     dataType: STRING_TYPE
     from: 47
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Arbeidsinntekt
@@ -109,6 +116,7 @@ fields:
     dataType: STRING_TYPE
     from: 48
     size: 2
+    mandatory: true
     codeList:
       - code: 01
         value: Sykepenger
@@ -135,6 +143,7 @@ fields:
     dataType: STRING_TYPE
     from: 50
     size: 2
+    mandatory: true
     codeList:
       - code: 01
         value: Arbeid, heltid
@@ -387,6 +396,7 @@ fields:
     dataType: STRING_TYPE
     from: 258
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ja
@@ -397,6 +407,7 @@ fields:
     dataType: STRING_TYPE
     from: 259
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ja
@@ -407,11 +418,13 @@ fields:
     dataType: STRING_TYPE
     from: 260
     size: 10
+    mandatory: true
   - name: BOSIT
     description: Hva er mottakerens bosituasjon ved siste kontakt?
     dataType: STRING_TYPE
     from: 270
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Bor i leid privat bolig
@@ -430,6 +443,7 @@ fields:
     dataType: STRING_TYPE
     from: 271
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ja
@@ -440,6 +454,7 @@ fields:
     dataType: STRING_TYPE
     from: 272
     size: 1
+    mandatory: true
     codeList:
       - code: 1
         value: Ja

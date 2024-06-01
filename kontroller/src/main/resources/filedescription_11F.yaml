@@ -1,38 +1,46 @@
 ---
-title: Økonomisk sosialhjelp, Kostra-skjema 11
-reportingYear: 2023
-description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2023
+title: Økonomisk sosialhjelp, Kostra-skjema 11F
+reportingYear: 2024
+description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2024
 fields:
   - name: KOMMUNE_NR
+    description: Kommunenummer
     dataType: STRING_TYPE
     from: 1
     size: 4
     mandatory: true
   - name: VERSION
+    description: Rapporteringsår / versjon / Oppgaveår
     dataType: STRING_TYPE
     from: 5
     size: 2
   - name: BYDELSNR
+    description: Bydelsnummer
     dataType: STRING_TYPE
     from: 7
     size: 2
   - name: DISTRIKTSNR
+    description: Distriktsnummer
     dataType: STRING_TYPE
     from: 9
     size: 2
   - name: PERSON_JOURNALNR
+    description: Journalnummer
     dataType: STRING_TYPE
     from: 11
     size: 8
   - name: PERSON_FODSELSNR
+    description: Hva er mottakerens fødselsnummer?
     dataType: STRING_TYPE
     from: 19
     size: 11
   - name: PERSON_DUFNR
+    description: Hva er mottakerens DUF-nummer?
     dataType: STRING_TYPE
     from: 30
     size: 12
   - name: KJONN
+    description: Hva er mottakerens kjønn?
     dataType: STRING_TYPE
     from: 42
     size: 1
@@ -42,6 +50,7 @@ fields:
       - code: 2
         value: Kvinne
   - name: EKTSTAT
+    description: Hva er mottakerens sivilstand/sivilstatus ved siste kontakt?
     dataType: STRING_TYPE
     from: 43
     size: 1
@@ -57,6 +66,7 @@ fields:
       - code: 5
         value: Enke/enkemann
   - name: BU18
+    description: Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?
     dataType: STRING_TYPE
     from: 44
     size: 1
@@ -66,10 +76,12 @@ fields:
       - code: 2
         value: Nei
   - name: ANTBU18
+    description: Hvis ja, hvor mange?
     dataType: INTEGER_TYPE
     from: 45
     size: 2
   - name: VKLO
+    description: Hva er mottakerens viktigste kilde til livsopphold ved siste kontakt?
     dataType: STRING_TYPE
     from: 47
     size: 1
@@ -93,6 +105,7 @@ fields:
       - code: 9
         value: Annen inntekt
   - name: TRYGDESIT
+    description: Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt
     dataType: STRING_TYPE
     from: 48
     size: 2
@@ -118,6 +131,7 @@ fields:
       - code: 12
         value: Har ingen trygd/pensjon
   - name: ARBSIT
+    description: Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt?
     dataType: STRING_TYPE
     from: 50
     size: 2
@@ -143,6 +157,7 @@ fields:
       - code: 10
         value: Kvalifiseringsprogram
   - name: STMND_1
+    description: Har mottakeren fått økonomisk stønad i januar?
     dataType: STRING_TYPE
     from: 52
     size: 2
@@ -150,6 +165,7 @@ fields:
       - code: 01
         value: Januar
   - name: STMND_2
+    description: Har mottakeren fått økonomisk stønad i februar?
     dataType: STRING_TYPE
     from: 54
     size: 2
@@ -157,6 +173,7 @@ fields:
       - code: 02
         value: Februar
   - name: STMND_3
+    description: Har mottakeren fått økonomisk stønad i mars?
     dataType: STRING_TYPE
     from: 56
     size: 2
@@ -164,6 +181,7 @@ fields:
       - code: 03
         value: Mars
   - name: STMND_4
+    description: Har mottakeren fått økonomisk stønad i april?
     dataType: STRING_TYPE
     from: 58
     size: 2
@@ -171,6 +189,7 @@ fields:
       - code: 04
         value: April
   - name: STMND_5
+    description: Har mottakeren fått økonomisk stønad i mai?
     dataType: STRING_TYPE
     from: 60
     size: 2
@@ -178,6 +197,7 @@ fields:
       - code: 05
         value: Mai
   - name: STMND_6
+    description: Har mottakeren fått økonomisk stønad i juni?
     dataType: STRING_TYPE
     from: 62
     size: 2
@@ -185,6 +205,7 @@ fields:
       - code: 06
         value: Juni
   - name: STMND_7
+    description: Har mottakeren fått økonomisk stønad i juli?
     dataType: STRING_TYPE
     from: 64
     size: 2
@@ -192,6 +213,7 @@ fields:
       - code: 07
         value: Juli
   - name: STMND_8
+    description: Har mottakeren fått økonomisk stønad i august?
     dataType: STRING_TYPE
     from: 66
     size: 2
@@ -199,6 +221,7 @@ fields:
       - code: 08
         value: August
   - name: STMND_9
+    description: Har mottakeren fått økonomisk stønad i september?
     dataType: STRING_TYPE
     from: 68
     size: 2
@@ -206,6 +229,7 @@ fields:
       - code: 09
         value: September
   - name: STMND_10
+    description: Har mottakeren fått økonomisk stønad i oktober?
     dataType: STRING_TYPE
     from: 70
     size: 2
@@ -213,6 +237,7 @@ fields:
       - code: 10
         value: Oktober
   - name: STMND_11
+    description: Har mottakeren fått økonomisk stønad i november?
     dataType: STRING_TYPE
     from: 72
     size: 2
@@ -220,6 +245,7 @@ fields:
       - code: 11
         value: November
   - name: STMND_12
+    description: Har mottakeren fått økonomisk stønad i desember?
     dataType: STRING_TYPE
     from: 74
     size: 2
@@ -227,110 +253,137 @@ fields:
       - code: 12
         value: Desember
   - name: BIDRAG
+    description: Bidrag
     dataType: INTEGER_TYPE
     from: 76
     size: 7
   - name: LAAN
+    description: Lån
     dataType: INTEGER_TYPE
     from: 83
     size: 7
   - name: BIDRAG_1
+    description: Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag
     dataType: INTEGER_TYPE
     from: 90
     size: 7
   - name: LAAN_1
+    description: Januar, lån
     dataType: INTEGER_TYPE
     from: 97
     size: 7
   - name: BIDRAG_2
+    description: Februar, bidrag
     dataType: INTEGER_TYPE
     from: 104
     size: 7
   - name: LAAN_2
+    description: Februar, lån
     dataType: INTEGER_TYPE
     from: 111
     size: 7
   - name: BIDRAG_3
+    description: Mars, bidrag
     dataType: INTEGER_TYPE
     from: 118
     size: 7
   - name: LAAN_3
+    description: Mars, lån
     dataType: INTEGER_TYPE
     from: 125
     size: 7
   - name: BIDRAG_4
+    description: April, bidrag
     dataType: INTEGER_TYPE
     from: 132
     size: 7
   - name: LAAN_4
+    description: April, lån
     dataType: INTEGER_TYPE
     from: 139
     size: 7
   - name: BIDRAG_5
+    description: Mai, bidrag
     dataType: INTEGER_TYPE
     from: 146
     size: 7
   - name: LAAN_5
+    description: Mai, lån
     dataType: INTEGER_TYPE
     from: 153
     size: 7
   - name: BIDRAG_6
+    description: Juni, bidrag
     dataType: INTEGER_TYPE
     from: 160
     size: 7
   - name: LAAN_6
+    description: Juni, lån
     dataType: INTEGER_TYPE
     from: 167
     size: 7
   - name: BIDRAG_7
+    description: Juli, bidrag
     dataType: INTEGER_TYPE
     from: 174
     size: 7
   - name: LAAN_7
+    description: Juli, lån
     dataType: INTEGER_TYPE
     from: 181
     size: 7
   - name: BIDRAG_8
+    description: August, bidrag
     dataType: INTEGER_TYPE
     from: 188
     size: 7
   - name: LAAN_8
+    description: August, lån
     dataType: INTEGER_TYPE
     from: 195
     size: 7
   - name: BIDRAG_9
+    description: September, bidrag
     dataType: INTEGER_TYPE
     from: 202
     size: 7
   - name: LAAN_9
+    description: September, lån
     dataType: INTEGER_TYPE
     from: 209
     size: 7
   - name: BIDRAG_10
+    description: Oktober, bidrag
     dataType: INTEGER_TYPE
     from: 216
     size: 7
   - name: LAAN_10
+    description: Oktober, lån
     dataType: INTEGER_TYPE
     from: 223
     size: 7
   - name: BIDRAG_11
+    description: November, bidrag
     dataType: INTEGER_TYPE
     from: 230
     size: 7
   - name: LAAN_11
+    description: November, lån
     dataType: INTEGER_TYPE
     from: 237
     size: 7
   - name: BIDRAG_12
+    description: Desember, bidrag
     dataType: INTEGER_TYPE
     from: 244
     size: 7
   - name: LAAN_12
+    description: Desember, lån
     dataType: INTEGER_TYPE
     from: 251
     size: 7
   - name: GITT_OKONOMIRAD
+    description: Er det gitt økonomisk rådgivning på nivå II (midlertidig betalingsudyktighet) eller III (varig betalingsudyktighet) i forbindelse med utbetaling? (Se NAVs veileder til bruk ved økonomisk rådgivning)
     dataType: STRING_TYPE
     from: 258
     size: 1
@@ -340,6 +393,7 @@ fields:
       - code: 2
         value: Nei
   - name: FAAT_INDIVIDUELL_PLAN
+    description: Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)?
     dataType: STRING_TYPE
     from: 259
     size: 1
@@ -349,10 +403,12 @@ fields:
       - code: 2
         value: Nei
   - name: SAKSBEHANDLER
+    description: Saksbehandlernummer
     dataType: STRING_TYPE
     from: 260
     size: 10
   - name: BOSIT
+    description: Hva er mottakerens bosituasjon ved siste kontakt?
     dataType: STRING_TYPE
     from: 270
     size: 1
@@ -370,6 +426,7 @@ fields:
       - code: 6
         value: Bor i institusjon
   - name: VILKARSOSLOV
+    description: Stilles det vilkår til mottakeren etter sosialtjenesteloven?
     dataType: STRING_TYPE
     from: 271
     size: 1
@@ -379,6 +436,7 @@ fields:
       - code: 2
         value: Nei
   - name: VILKARSAMEKT
+    description: Stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven?
     dataType: STRING_TYPE
     from: 272
     size: 1
@@ -388,16 +446,19 @@ fields:
       - code: 2
         value: Nei
   - name: UTBETDATO
+    description: Oppgi utbetalingsvedtakets dato (DDMMÅÅ)
     dataType: DATE_TYPE
     from: 273
     size: 6
     datePattern: ddMMyy
   - name: UTBETTOMDATO
+    description: Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅ)
     dataType: DATE_TYPE
     from: 279
     size: 6
     datePattern: ddMMyy
   - name: VILKARARBEID
+    description: Oppgi hvilke vilkår det stilles til mottakeren. Flere kryss mulig
     dataType: STRING_TYPE
     from: 285
     size: 2
@@ -405,6 +466,7 @@ fields:
       - code: 16
         value: Delta på arbeidstrening/arbeidspraksis
   - name: VILKARKURS
+    description:
     dataType: STRING_TYPE
     from: 287
     size: 2
@@ -412,6 +474,7 @@ fields:
       - code: 17
         value: Delta på arbeidsrettede kurs, opplæring eller jobbsøkingskurs
   - name: VILKARUTD
+    description:
     dataType: STRING_TYPE
     from: 289
     size: 2
@@ -419,6 +482,7 @@ fields:
       - code: 04
         value: Benytte rett til skole
   - name: VILKARJOBBLOG
+    description:
     dataType: STRING_TYPE
     from: 291
     size: 2
@@ -426,6 +490,7 @@ fields:
       - code: 06
         value: Registrere seg som arbeidssøker/føre jobblogg
   - name: VILKARJOBBTILB
+    description:
     dataType: STRING_TYPE
     from: 293
     size: 2
@@ -433,6 +498,7 @@ fields:
       - code: 07
         value: Ta imot et konkret jobbtilbud
   - name: VILKARSAMT
+    description:
     dataType: STRING_TYPE
     from: 295
     size: 2
@@ -440,6 +506,7 @@ fields:
       - code: 08
         value: Møte til veiledningssamtaler
   - name: VILKAROKRETT
+    description:
     dataType: STRING_TYPE
     from: 297
     size: 2
@@ -447,6 +514,7 @@ fields:
       - code: 10
         value: Gjøre gjeldende andre økonomiske rettigheter
   - name: VILKARLIVSH
+    description:
     dataType: STRING_TYPE
     from: 299
     size: 2
@@ -454,6 +522,7 @@ fields:
       - code: 18
         value: Realisere formuesgoder/ redusere boutgifter
   - name: VILKARHELSE
+    description:
     dataType: STRING_TYPE
     from: 301
     size: 2
@@ -461,6 +530,7 @@ fields:
       - code: 14
         value: Oppsøke helsetjenester/ lege
   - name: VILKARANNET
+    description:
     dataType: STRING_TYPE
     from: 303
     size: 2
@@ -468,6 +538,7 @@ fields:
       - code: 15
         value: Annet
   - name: VILKARDIGPLAN
+    description: Bruke og følge opp digital aktivitetsplan
     dataType: STRING_TYPE
     from: 305
     size: 2
@@ -475,11 +546,13 @@ fields:
       - code: 19
         value: Bruke og følge opp digital aktivitetsplan
   - name: VEDTAKDATO
+    description: Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)
     dataType: DATE_TYPE
     from: 307
     size: 6
     datePattern: ddMMyy
   - name: VEDTAKARB
+    description: Begrunnelse for første unntak fra sosialtjenestelovens § 20a
     dataType: STRING_TYPE
     from: 313
     size: 2
@@ -487,6 +560,7 @@ fields:
       - code: 01
         value: Mottaker er i arbeid
   - name: VEDTAKAKT
+    description:
     dataType: STRING_TYPE
     from: 315
     size: 2
@@ -494,6 +568,7 @@ fields:
       - code: 02
         value: Mottaker er allerede i aktivitet knyttet til mottak av statlig eller annen kommunal ytelse
   - name: VEDTAKHELSE
+    description:
     dataType: STRING_TYPE
     from: 317
     size: 2
@@ -501,6 +576,7 @@ fields:
       - code: 03
         value: Mottakers helsemessige eller sosiale situasjon hindrer deltakelse i aktivitet
   - name: VEDTAKGRUNN
+    description:
     dataType: STRING_TYPE
     from: 319
     size: 2
@@ -508,6 +584,7 @@ fields:
       - code: 04
         value: Andre tungtveiende grunner taler mot at det stilles vilkår om aktivitet
   - name: SANKSJONRED
+    description: Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20a
     dataType: STRING_TYPE
     from: 321
     size: 2
@@ -515,6 +592,7 @@ fields:
       - code: 01
         value: Redusert stønad
   - name: SANKSJONANDRE
+    description:
     dataType: STRING_TYPE
     from: 323
     size: 2

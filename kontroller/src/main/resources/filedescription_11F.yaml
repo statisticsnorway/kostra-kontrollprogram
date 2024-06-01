@@ -1,0 +1,523 @@
+---
+title: Økonomisk sosialhjelp, Kostra-skjema 11
+reportingYear: 2023
+description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2023
+fields:
+  - name: KOMMUNE_NR
+    dataType: STRING_TYPE
+    from: 1
+    size: 4
+    mandatory: true
+  - name: VERSION
+    dataType: STRING_TYPE
+    from: 5
+    size: 2
+  - name: BYDELSNR
+    dataType: STRING_TYPE
+    from: 7
+    size: 2
+  - name: DISTRIKTSNR
+    dataType: STRING_TYPE
+    from: 9
+    size: 2
+  - name: PERSON_JOURNALNR
+    dataType: STRING_TYPE
+    from: 11
+    size: 8
+  - name: PERSON_FODSELSNR
+    dataType: STRING_TYPE
+    from: 19
+    size: 11
+  - name: PERSON_DUFNR
+    dataType: STRING_TYPE
+    from: 30
+    size: 12
+  - name: KJONN
+    dataType: STRING_TYPE
+    from: 42
+    size: 1
+    codeList:
+      - code: 1
+        value: Mann
+      - code: 2
+        value: Kvinne
+  - name: EKTSTAT
+    dataType: STRING_TYPE
+    from: 43
+    size: 1
+    codeList:
+      - code: 1
+        value: Ugift
+      - code: 2
+        value: Gift
+      - code: 3
+        value: Samboer
+      - code: 4
+        value: Skilt/separert
+      - code: 5
+        value: Enke/enkemann
+  - name: BU18
+    dataType: STRING_TYPE
+    from: 44
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: ANTBU18
+    dataType: INTEGER_TYPE
+    from: 45
+    size: 2
+  - name: VKLO
+    dataType: STRING_TYPE
+    from: 47
+    size: 1
+    codeList:
+      - code: 1
+        value: Arbeidsinntekt
+      - code: 2
+        value: Kursstønad/lønn i arbeidsmarkedstiltak
+      - code: 3
+        value: Trygd/pensjon
+      - code: 4
+        value: Stipend/lån
+      - code: 5
+        value: Sosialhjelp
+      - code: 6
+        value: Introduksjonsstøtte
+      - code: 7
+        value: Ektefelle/samboers arbeidsinntekt
+      - code: 8
+        value: Kvalifiseringsstønad
+      - code: 9
+        value: Annen inntekt
+  - name: TRYGDESIT
+    dataType: STRING_TYPE
+    from: 48
+    size: 2
+    codeList:
+      - code: 01
+        value: Sykepenger
+      - code: 02
+        value: Dagpenger
+      - code: 04
+        value: Uføretrygd
+      - code: 05
+        value: Overgangsstønad
+      - code: 06
+        value: Etterlattepensjon
+      - code: 07
+        value: Alderspensjon
+      - code: 09
+        value: Supplerende stønad (kort botid)
+      - code: 10
+        value: Annen trygd
+      - code: 11
+        value: Arbeidsavklaringspenger
+      - code: 12
+        value: Har ingen trygd/pensjon
+  - name: ARBSIT
+    dataType: STRING_TYPE
+    from: 50
+    size: 2
+    codeList:
+      - code: 01
+        value: Arbeid, heltid
+      - code: 02
+        value: Arbeid, deltid
+      - code: 03
+        value: Under utdanning
+      - code: 04
+        value: Ikke arbeidssøker
+      - code: 05
+        value: Arbeidsmarkedstiltak (statlig)
+      - code: 06
+        value: Kommunalt tiltak
+      - code: 07
+        value: Registrert arbeidsledig
+      - code: 08
+        value: Arbeidsledig, men ikke registrert hos NAV
+      - code: 09
+        value: Introduksjonsordning
+      - code: 10
+        value: Kvalifiseringsprogram
+  - name: STMND_1
+    dataType: STRING_TYPE
+    from: 52
+    size: 2
+    codeList:
+      - code: 01
+        value: Januar
+  - name: STMND_2
+    dataType: STRING_TYPE
+    from: 54
+    size: 2
+    codeList:
+      - code: 02
+        value: Februar
+  - name: STMND_3
+    dataType: STRING_TYPE
+    from: 56
+    size: 2
+    codeList:
+      - code: 03
+        value: Mars
+  - name: STMND_4
+    dataType: STRING_TYPE
+    from: 58
+    size: 2
+    codeList:
+      - code: 04
+        value: April
+  - name: STMND_5
+    dataType: STRING_TYPE
+    from: 60
+    size: 2
+    codeList:
+      - code: 05
+        value: Mai
+  - name: STMND_6
+    dataType: STRING_TYPE
+    from: 62
+    size: 2
+    codeList:
+      - code: 06
+        value: Juni
+  - name: STMND_7
+    dataType: STRING_TYPE
+    from: 64
+    size: 2
+    codeList:
+      - code: 07
+        value: Juli
+  - name: STMND_8
+    dataType: STRING_TYPE
+    from: 66
+    size: 2
+    codeList:
+      - code: 08
+        value: August
+  - name: STMND_9
+    dataType: STRING_TYPE
+    from: 68
+    size: 2
+    codeList:
+      - code: 09
+        value: September
+  - name: STMND_10
+    dataType: STRING_TYPE
+    from: 70
+    size: 2
+    codeList:
+      - code: 10
+        value: Oktober
+  - name: STMND_11
+    dataType: STRING_TYPE
+    from: 72
+    size: 2
+    codeList:
+      - code: 11
+        value: November
+  - name: STMND_12
+    dataType: STRING_TYPE
+    from: 74
+    size: 2
+    codeList:
+      - code: 12
+        value: Desember
+  - name: BIDRAG
+    dataType: INTEGER_TYPE
+    from: 76
+    size: 7
+  - name: LAAN
+    dataType: INTEGER_TYPE
+    from: 83
+    size: 7
+  - name: BIDRAG_1
+    dataType: INTEGER_TYPE
+    from: 90
+    size: 7
+  - name: LAAN_1
+    dataType: INTEGER_TYPE
+    from: 97
+    size: 7
+  - name: BIDRAG_2
+    dataType: INTEGER_TYPE
+    from: 104
+    size: 7
+  - name: LAAN_2
+    dataType: INTEGER_TYPE
+    from: 111
+    size: 7
+  - name: BIDRAG_3
+    dataType: INTEGER_TYPE
+    from: 118
+    size: 7
+  - name: LAAN_3
+    dataType: INTEGER_TYPE
+    from: 125
+    size: 7
+  - name: BIDRAG_4
+    dataType: INTEGER_TYPE
+    from: 132
+    size: 7
+  - name: LAAN_4
+    dataType: INTEGER_TYPE
+    from: 139
+    size: 7
+  - name: BIDRAG_5
+    dataType: INTEGER_TYPE
+    from: 146
+    size: 7
+  - name: LAAN_5
+    dataType: INTEGER_TYPE
+    from: 153
+    size: 7
+  - name: BIDRAG_6
+    dataType: INTEGER_TYPE
+    from: 160
+    size: 7
+  - name: LAAN_6
+    dataType: INTEGER_TYPE
+    from: 167
+    size: 7
+  - name: BIDRAG_7
+    dataType: INTEGER_TYPE
+    from: 174
+    size: 7
+  - name: LAAN_7
+    dataType: INTEGER_TYPE
+    from: 181
+    size: 7
+  - name: BIDRAG_8
+    dataType: INTEGER_TYPE
+    from: 188
+    size: 7
+  - name: LAAN_8
+    dataType: INTEGER_TYPE
+    from: 195
+    size: 7
+  - name: BIDRAG_9
+    dataType: INTEGER_TYPE
+    from: 202
+    size: 7
+  - name: LAAN_9
+    dataType: INTEGER_TYPE
+    from: 209
+    size: 7
+  - name: BIDRAG_10
+    dataType: INTEGER_TYPE
+    from: 216
+    size: 7
+  - name: LAAN_10
+    dataType: INTEGER_TYPE
+    from: 223
+    size: 7
+  - name: BIDRAG_11
+    dataType: INTEGER_TYPE
+    from: 230
+    size: 7
+  - name: LAAN_11
+    dataType: INTEGER_TYPE
+    from: 237
+    size: 7
+  - name: BIDRAG_12
+    dataType: INTEGER_TYPE
+    from: 244
+    size: 7
+  - name: LAAN_12
+    dataType: INTEGER_TYPE
+    from: 251
+    size: 7
+  - name: GITT_OKONOMIRAD
+    dataType: STRING_TYPE
+    from: 258
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: FAAT_INDIVIDUELL_PLAN
+    dataType: STRING_TYPE
+    from: 259
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: SAKSBEHANDLER
+    dataType: STRING_TYPE
+    from: 260
+    size: 10
+  - name: BOSIT
+    dataType: STRING_TYPE
+    from: 270
+    size: 1
+    codeList:
+      - code: 1
+        value: Bor i leid privat bolig
+      - code: 2
+        value: Bor i leid kommunal bolig
+      - code: 3
+        value: Bor i eid bolig
+      - code: 4
+        value: Er uten bolig
+      - code: 5
+        value: Annet
+      - code: 6
+        value: Bor i institusjon
+  - name: VILKARSOSLOV
+    dataType: STRING_TYPE
+    from: 271
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: VILKARSAMEKT
+    dataType: STRING_TYPE
+    from: 272
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: UTBETDATO
+    dataType: DATE_TYPE
+    from: 273
+    size: 6
+    datePattern: ddMMyy
+  - name: UTBETTOMDATO
+    dataType: DATE_TYPE
+    from: 279
+    size: 6
+    datePattern: ddMMyy
+  - name: VILKARARBEID
+    dataType: STRING_TYPE
+    from: 285
+    size: 2
+    codeList:
+      - code: 16
+        value: Delta på arbeidstrening/arbeidspraksis
+  - name: VILKARKURS
+    dataType: STRING_TYPE
+    from: 287
+    size: 2
+    codeList:
+      - code: 17
+        value: Delta på arbeidsrettede kurs, opplæring eller jobbsøkingskurs
+  - name: VILKARUTD
+    dataType: STRING_TYPE
+    from: 289
+    size: 2
+    codeList:
+      - code: 04
+        value: Benytte rett til skole
+  - name: VILKARJOBBLOG
+    dataType: STRING_TYPE
+    from: 291
+    size: 2
+    codeList:
+      - code: 06
+        value: Registrere seg som arbeidssøker/føre jobblogg
+  - name: VILKARJOBBTILB
+    dataType: STRING_TYPE
+    from: 293
+    size: 2
+    codeList:
+      - code: 07
+        value: Ta imot et konkret jobbtilbud
+  - name: VILKARSAMT
+    dataType: STRING_TYPE
+    from: 295
+    size: 2
+    codeList:
+      - code: 08
+        value: Møte til veiledningssamtaler
+  - name: VILKAROKRETT
+    dataType: STRING_TYPE
+    from: 297
+    size: 2
+    codeList:
+      - code: 10
+        value: Gjøre gjeldende andre økonomiske rettigheter
+  - name: VILKARLIVSH
+    dataType: STRING_TYPE
+    from: 299
+    size: 2
+    codeList:
+      - code: 18
+        value: Realisere formuesgoder/ redusere boutgifter
+  - name: VILKARHELSE
+    dataType: STRING_TYPE
+    from: 301
+    size: 2
+    codeList:
+      - code: 14
+        value: Oppsøke helsetjenester/ lege
+  - name: VILKARANNET
+    dataType: STRING_TYPE
+    from: 303
+    size: 2
+    codeList:
+      - code: 15
+        value: Annet
+  - name: VILKARDIGPLAN
+    dataType: STRING_TYPE
+    from: 305
+    size: 2
+    codeList:
+      - code: 19
+        value: Bruke og følge opp digital aktivitetsplan
+  - name: VEDTAKDATO
+    dataType: DATE_TYPE
+    from: 307
+    size: 6
+    datePattern: ddMMyy
+  - name: VEDTAKARB
+    dataType: STRING_TYPE
+    from: 313
+    size: 2
+    codeList:
+      - code: 01
+        value: Mottaker er i arbeid
+  - name: VEDTAKAKT
+    dataType: STRING_TYPE
+    from: 315
+    size: 2
+    codeList:
+      - code: 02
+        value: Mottaker er allerede i aktivitet knyttet til mottak av statlig eller annen kommunal ytelse
+  - name: VEDTAKHELSE
+    dataType: STRING_TYPE
+    from: 317
+    size: 2
+    codeList:
+      - code: 03
+        value: Mottakers helsemessige eller sosiale situasjon hindrer deltakelse i aktivitet
+  - name: VEDTAKGRUNN
+    dataType: STRING_TYPE
+    from: 319
+    size: 2
+    codeList:
+      - code: 04
+        value: Andre tungtveiende grunner taler mot at det stilles vilkår om aktivitet
+  - name: SANKSJONRED
+    dataType: STRING_TYPE
+    from: 321
+    size: 2
+    codeList:
+      - code: 01
+        value: Redusert stønad
+  - name: SANKSJONANDRE
+    dataType: STRING_TYPE
+    from: 323
+    size: 2
+    codeList:
+      - code: 02
+        value: Andre konsekvenser

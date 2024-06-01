@@ -4,6 +4,7 @@ import no.ssb.kostra.program.DataType.*
 
 data class FieldDefinition(
     val name: String,
+    val description: String = "",
     val dataType: DataType = INTEGER_TYPE,
     val from: Int = 0,
     val codeList: List<Code> = emptyList(),

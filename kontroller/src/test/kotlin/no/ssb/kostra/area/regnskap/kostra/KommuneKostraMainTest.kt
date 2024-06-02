@@ -45,17 +45,17 @@ class KommuneKostraMainTest : BehaviorSpec({
                     }).plus(
                     mapOf(
                         "0A" to 2,
-                        "0B" to 3,
+                        "0B" to 4,
                         "0C" to 2,
-                        "0D" to 3,
+                        "0D" to 4,
                         "0I" to 1,
-                        "0J" to 3,
+                        "0J" to 4,
                         "0K" to 1,
-                        "0L" to 3,
+                        "0L" to 4,
                         "0M" to 2,
-                        "0N" to 3,
+                        "0N" to 4,
                         "0P" to 2,
-                        "0Q" to 3
+                        "0Q" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
                             "skjema = $skjema, region = $region -> validating a valid record string",
@@ -99,7 +99,7 @@ class KommuneKostraMainTest : BehaviorSpec({
     companion object {
         private val regions = listOf("123400", "030100", "040000")
         private val validSkjemaTypes = listOf("0A", "0B", "0C", "0D", "0I", "0J", "0K", "0L", "0M", "0N", "0P", "0Q")
-        private const val NUMBER_OF_VALIDATIONS = 51
+        private const val NUMBER_OF_VALIDATIONS = 52
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,

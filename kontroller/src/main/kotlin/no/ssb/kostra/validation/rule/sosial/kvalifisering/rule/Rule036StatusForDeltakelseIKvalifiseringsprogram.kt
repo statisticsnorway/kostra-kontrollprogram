@@ -20,7 +20,7 @@ class Rule036StatusForDeltakelseIKvalifiseringsprogram : AbstractNoArgsRule<List
         .map {
             createValidationReportEntry(
                 "Korrigér status. Fant '${it[STATUS_COL_NAME]}', forventet én av " +
-                        "'${fieldDefinitions.byColumnName(STATUS_COL_NAME).codeListToString()}'. " +
+                        "'${fieldDefinition.codeListToString()}'. " +
                         "Feltet er obligatorisk å fylle ut."
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],

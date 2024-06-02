@@ -23,7 +23,7 @@ class Familievern52bMainTest : BehaviorSpec({
                     region = REGION,
                     inputFileContent = " ".repeat(Familievern52bFieldDefinitions.fieldLength + 10)
                 ),
-                2,
+                1,
                 1
             ),
             row(

@@ -13,12 +13,14 @@ import no.ssb.kostra.BarnevernTestData.kostraAvgiverTypeInTest
 import no.ssb.kostra.BarnevernTestData.kostraIndividInTest
 import no.ssb.kostra.barnevern.convert.KostraBarnevernConverter.marshallInstance
 import no.ssb.kostra.barnevern.xsd.KostraBarnevernType
+import no.ssb.kostra.barnevern.xsd.KostraPlanType
 import no.ssb.kostra.testutil.RandomUtils.generateRandomDuf
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.BarnevernXmlStreamHandler
 import no.ssb.kostra.validation.rule.barnevern.xmlhandling.FixedValidationErrors
+import java.time.LocalDate
 import java.time.Year
 
 class BarnevernValidatorTest : BehaviorSpec({
@@ -59,7 +61,8 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = AvgiverRuleId.AVGIVER_01.title,
-                    messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
+                    messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon. " +
+                            "cvc-datatype-valid.1.2.1: '42' is not a valid value for 'gYear'."
                 ), 51
             ),
             row(
@@ -70,7 +73,9 @@ class BarnevernValidatorTest : BehaviorSpec({
                 ValidationReportEntry(
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_01.title,
-                    messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+                    messageText = """Definisjon av Individ er feil i forhold til filspesifikasjonen. """ +
+                            """cvc-pattern-valid: Value 'abc' is not facet-valid with respect to pattern '\d{11}' """ +
+                            """for type '#AnonType_FodselsnummerIndividType'."""
                 ), 4
             ),
             row(
@@ -94,6 +99,36 @@ class BarnevernValidatorTest : BehaviorSpec({
                     severity = Severity.ERROR,
                     ruleName = IndividRuleId.INDIVID_05.title,
                     messageText = "Journalnummer ~journalnummer~ forekommer 2 ganger."
+                ), 106
+            ),
+            row(
+                "duplicate individ #3",
+                kostraAvgiverTypeInTest,
+                mutableListOf(
+                    kostraIndividInTest.copy(
+                        journalnummer = "123",
+                        fodselsnummer = "11111100100",
+                        plan = mutableListOf(
+                            KostraPlanType(id = "1", startDato = LocalDate.now(), plantype = "1")
+                        )
+                    ),
+                    kostraIndividInTest.copy(
+                        journalnummer = "321",
+                        fodselsnummer = "11111100100",
+                        plan = mutableListOf(
+                            KostraPlanType(id = "2", startDato = LocalDate.now(), plantype = "1")
+                        )
+                    )
+                ),
+                false,
+                ValidationReportEntry(
+                    caseworker = kostraIndividInTest.saksbehandler,
+                    journalId = "123",
+                    individId = kostraIndividInTest.id,
+                    contextId = kostraIndividInTest.id,
+                    severity = Severity.WARNING,
+                    ruleName = IndividRuleId.INDIVID_11.title,
+                    messageText = "Individet har ufullstendig fødselsnummer. Korriger fødselsnummer."
                 ), 106
             ),
             row(
@@ -186,3 +221,15 @@ class BarnevernValidatorTest : BehaviorSpec({
         }
     }
 })
+//Collection should contain element
+// [
+// ] based on object equality; but the collection is [
+// ValidationReportEntry(severity=WARNING, caseworker=~saksbehandler~, journalId=123, individId=C1, contextId=C1,
+// ValidationReportEntry(severity=WARNING, caseworker=~saksbehandler~, journalId=123, individId=C1, contextId=C1,
+// ruleName=Individ Kontroll 11: Fødselsnummer, messageText=Individet har ufullstendig fødselsnummer. Korriger fødselsnummer., lineNumbers=[]),
+// ruleName=Individ Kontroll 11: Fødselsnummer, messageText=Individet har ufullstendig fødselsnummer. Korriger fødselsnummer., lineNumbers=[]),
+// ValidationReportEntry(severity=WARNING, caseworker=~saksbehandler~, journalId=321, individId=C1, contextId=C1,
+// ValidationReportEntry(severity=WARNING, caseworker=~saksbehandler~, journalId=321, individId=C1, contextId=C1,
+// ruleName=Individ Kontroll 11: Fødselsnummer, messageText=Individet har ufullstendig fødselsnummer. Korriger fødselsnummer., lineNumbers=[])
+// ruleName=Individ Kontroll 11: Fødselsnummer, messageText=Individet har ufullstendig fødselsnummer. Korriger fødselsnummer., lineNumbers=[])
+// ]

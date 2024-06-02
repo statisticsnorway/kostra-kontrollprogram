@@ -5,29 +5,24 @@ import no.ssb.kostra.program.DataType.INTEGER_TYPE
 import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.codeIsMissing
-import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportEntry
 
 
 class Rule002FileDescription(
     val fieldDefinitions: List<FieldDefinition>
-) : AbstractNoArgsRule<List<String>>("Kontroll 002 : Filbeskrivese", Severity.FATAL) {
-    override fun validate(context: List<String>) = context
-        .withIndex()
-        .map { (index, recordString) ->
-            recordString.toKostraRecord(
-                index = index + 1,
-                fieldDefinitions = fieldDefinitions
-            )
-        }.flatMap records@{ kostraRecord ->
+) : AbstractNoArgsRule<List<KostraRecord>>("Kontroll 002 : Filbeskrivelse", Severity.ERROR) {
+    override fun validate(context: List<KostraRecord>) = context
+        .flatMap records@{ kostraRecord ->
             fieldDefinitions
                 .map { fieldDefinition ->
                     kostraRecord to fieldDefinition
                 }
-        }.mapNotNull { (kostraRecord, fieldDefinition) ->
+        }
+        .mapNotNull { (kostraRecord, fieldDefinition) ->
             validateValue(kostraRecord, fieldDefinition)
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 
     private fun validateValue(
         kostraRecord: KostraRecord,

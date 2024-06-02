@@ -14,7 +14,6 @@ import no.ssb.kostra.barnevern.xsd.KostraBarnevernType
 import no.ssb.kostra.barnevern.xsd.KostraIndividType
 
 object KostraBarnevernConverter {
-
     private val kotlinModule: KotlinModule = KotlinModule.Builder()
         .configure(KotlinFeature.StrictNullChecks, false)
         // needed, else it will break for null https://github.com/FasterXML/jackson-module-kotlin/issues/130#issuecomment-546625625
@@ -32,6 +31,7 @@ object KostraBarnevernConverter {
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
     }
 
+    @Suppress("unused")
     @JvmStatic
     fun unmarshallXml(xml: String): KostraBarnevernType =
         XML_MAPPER.readValue(xml, KostraBarnevernType::class.java)

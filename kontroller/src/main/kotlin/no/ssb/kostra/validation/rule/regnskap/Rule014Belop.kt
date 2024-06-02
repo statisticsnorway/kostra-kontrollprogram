@@ -6,14 +6,17 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule014Belop : AbstractNoArgsRule<List<KostraRecord>>("Kontroll 014 : Beløp", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
-        with(kostraRecord[FIELD_BELOP]) {
-            contains("\t") || !matches("^\\s*?-?\\d+$".toRegex())
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { kostraRecord ->
+            with(kostraRecord[FIELD_BELOP]) {
+                contains("\t") || !matches("^\\s*?-?\\d+$".toRegex())
+            }
         }
-    }.map { kostraRecord ->
-        createValidationReportEntry(
-            messageText = "Fant ugyldig beløp '${kostraRecord[FIELD_BELOP]}'. Korrigér beløp",
-            lineNumbers = listOf(kostraRecord.lineNumber)
-        )
-    }.ifEmpty { null }
+        .map { kostraRecord ->
+            createValidationReportEntry(
+                messageText = "Fant ugyldig beløp '${kostraRecord[FIELD_BELOP]}'. Korrigér beløp",
+                lineNumbers = listOf(kostraRecord.lineNumber)
+            )
+        }
+        .ifEmpty { null }
 }

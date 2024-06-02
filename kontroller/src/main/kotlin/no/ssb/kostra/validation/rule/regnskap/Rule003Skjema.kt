@@ -14,5 +14,6 @@ class Rule003Skjema : AbstractRule<List<KostraRecord>>("Kontroll 003 : Skjema", 
                 messageText = "Fant ugyldig skjema '${kostraRecord[FIELD_SKJEMA]}'. Korrigér skjema til '${arguments.skjema}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

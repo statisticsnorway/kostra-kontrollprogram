@@ -19,7 +19,6 @@ object IndividRules {
         Individ12(),
         Individ19(),
 
-        Lovhjemmel02(),
         Lovhjemmel03(),
         Lovhjemmel04(),
 
@@ -34,7 +33,6 @@ object IndividRules {
         Melding05(),
 
         Plan02a(),
-        Plan02b(),
         Plan02c(),
         Plan02d(),
         Plan02e(),
@@ -64,6 +62,9 @@ object IndividRules {
         Undersokelse07(),
         Undersokelse08(),
 
-        Vedtak02()
+        Vedtak02(),
+
+        Flytting02c(),
+        Flytting02f()
     )
 }

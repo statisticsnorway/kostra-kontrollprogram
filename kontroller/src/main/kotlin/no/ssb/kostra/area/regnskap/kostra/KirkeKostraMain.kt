@@ -3,19 +3,14 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_BEVILGNING
 import no.ssb.kostra.area.regnskap.RegnskapConstants.ACCOUNTING_TYPE_REGIONALE
-import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.program.FieldDefinitions
+import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.PositionedFileValidator
-import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.regnskap.*
 import no.ssb.kostra.validation.rule.regnskap.kirkekostra.*
 import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 class KirkeKostraMain(
     arguments: KotlinArguments
-) : PositionedFileValidator(arguments) {
+) : RegnskapValidator(arguments) {
 
     private val funksjoner = listOf(
         //@formatter:off
@@ -24,7 +19,7 @@ class KirkeKostraMain(
         // @formatter:on
     )
 
-    private fun getFunksjonAsList(): List<String> =
+    override val funksjonList: List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == ACCOUNTING_TYPE_BEVILGNING
             }
@@ -41,7 +36,7 @@ class KirkeKostraMain(
     )
 
     // Kapitler
-    private fun getKapittelAsList(): List<String> =
+    override val kapittelList: List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
             }
@@ -65,7 +60,7 @@ class KirkeKostraMain(
         // @formatter:on
     )
 
-    private fun getArtAsList(): List<String> = if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
+    override val artList: List<String> = if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
             it in setOf(
                 ACCOUNTING_TYPE_BEVILGNING,
                 ACCOUNTING_TYPE_REGIONALE
@@ -74,7 +69,7 @@ class KirkeKostraMain(
     ) emptyList()
     else arter.sorted()
 
-    private fun getSektorAsList(): List<String> =
+    override val sektorList: List<String> =
         if (RegnskapConstants.getRegnskapTypeBySkjema(arguments.skjema).none {
                 it == RegnskapConstants.ACCOUNTING_TYPE_BALANSE
             }
@@ -87,41 +82,25 @@ class KirkeKostraMain(
     // Kun gyldig i drift og skal fjernes fra investering
     private fun getInvalidInvesteringArtList() = listOf("570", "590", "990")
 
-    override val fieldDefinitions: FieldDefinitions = RegnskapFieldDefinitions
-
-    override val preValidationRules = listOf(
-        Rule001RecordLength(RegnskapFieldDefinitions.fieldLength)
-    )
-
-    override val validationRules = listOf(
-        Rule003Skjema(),
-        Rule004Aargang(),
-        Rule005Kvartal(),
-        Rule006Region(),
-        Rule007Organisasjonsnummer(),
-        Rule008Foretaksnummer(),
-        Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
-        Rule010Funksjon(funksjonList = getFunksjonAsList()),
-        Rule011Kapittel(kapittelList = getKapittelAsList()),
-        Rule012Art(artList = getArtAsList()),
-        Rule013Sektor(sektorList = getSektorAsList()),
-        Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
-        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
-        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
-        Rule095SummeringInvesteringDifferanse(),
-        Rule100SummeringDriftUtgiftsposteringer(),
-        Rule105SummeringDriftInntektsposteringer(),
-        Rule110SummeringDriftDifferanse(),
-        Rule113SummeringTilskudd(),
-        Rule115SummeringBalanseAktiva(),
-        Rule120SummeringBalansePassiva(),
-        Rule125SummeringBalanseDifferanse(),
-        Rule140OverforingerDriftInvestering(),
-        Rule143Avskrivninger(),
-        Rule200Funksjon089Finansieringstransaksjoner(),
-        Rule210InterneOverforingerKjopOgSalg(),
-        Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter(),
-        Rule220InterneOverforingerMidler(),
-    )
+    override val validationRules = commonValidationRules()
+        .plus(
+            listOf(
+                Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = getInvalidDriftArtList()),
+                Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = getInvalidInvesteringArtList()),
+                Rule095SummeringInvesteringDifferanse(),
+                Rule100SummeringDriftUtgiftsposteringer(),
+                Rule105SummeringDriftInntektsposteringer(),
+                Rule110SummeringDriftDifferanse(),
+                Rule113SummeringTilskudd(),
+                Rule115SummeringBalanseAktiva(),
+                Rule120SummeringBalansePassiva(),
+                Rule125SummeringBalanseDifferanse(),
+                Rule140OverforingerDriftInvestering(),
+                Rule143Avskrivninger(),
+                Rule200Funksjon089Finansieringstransaksjoner(),
+                Rule210InterneOverforingerKjopOgSalg(),
+                Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter(),
+                Rule220InterneOverforingerMidler(),
+            )
+        )
 }

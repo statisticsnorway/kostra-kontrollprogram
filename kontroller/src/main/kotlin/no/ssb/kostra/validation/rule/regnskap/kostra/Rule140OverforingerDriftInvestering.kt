@@ -7,15 +7,14 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 
 class Rule140OverforingerDriftInvestering : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 140 : Overføring mellom drifts- og investeringsregnskap",
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot { it.isOsloBydel() }
-        .filter { it.isBevilgningRegnskap() }
+        .filter { it.isNotOsloBydel() && it.isBevilgningRegnskap() }
         .takeIf { it.any() }
         ?.partition { it.isBevilgningDriftRegnskap() }
         ?.let { (driftPosteringer, investeringPosteringer) ->

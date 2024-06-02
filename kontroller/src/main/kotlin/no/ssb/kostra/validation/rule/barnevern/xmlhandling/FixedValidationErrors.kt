@@ -12,10 +12,10 @@ object FixedValidationErrors {
         messageText = "Klarer ikke å lese fil. Får feilmeldingen: $exceptionMessage"
     )
 
-    val individFileError = ValidationReportEntry(
+    fun individFileError(exceptionMessage: String?) = ValidationReportEntry(
         severity = Severity.ERROR,
         ruleName = IndividRuleId.INDIVID_01.title,
-        messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen"
+        messageText = "Definisjon av Individ er feil i forhold til filspesifikasjonen. $exceptionMessage"
     )
 
     val individMissingError = ValidationReportEntry(
@@ -24,10 +24,10 @@ object FixedValidationErrors {
         messageText = "Filen mangler individer"
     )
 
-    val avgiverFileError = ValidationReportEntry(
+    fun avgiverFileError(exceptionMessage: String?) = ValidationReportEntry(
         severity = Severity.ERROR,
         ruleName = AvgiverRuleId.AVGIVER_01.title,
-        messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon"
+        messageText = "Klarer ikke å validere Avgiver mot filspesifikasjon. $exceptionMessage"
     )
 
     fun singleAvgiverError(found: Int) = ValidationReportEntry(

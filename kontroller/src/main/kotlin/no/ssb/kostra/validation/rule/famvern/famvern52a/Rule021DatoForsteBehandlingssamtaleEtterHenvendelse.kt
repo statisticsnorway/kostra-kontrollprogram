@@ -14,18 +14,25 @@ class Rule021DatoForsteBehandlingssamtaleEtterHenvendelse : AbstractNoArgsRule<L
     Familievern52aRuleId.FAMILIEVERN52A_RULE021.title,
     Severity.WARNING
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null
-                && it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
-                && it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME) < it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME)
-    }.map {
-        createValidationReportEntry(
-            messageText = "Dato for første behandlingssamtale '${it[FORSTE_SAMT_A_COL_NAME]}' er før dato for " +
-                    "primærklientens henvendelse '${it[HENV_DATO_A_COL_NAME]}' til familievernkontoret.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_A_COL_NAME],
-            journalId = it[JOURNAL_NR_A_COL_NAME]
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter {
+            it[HENV_DATO_A_COL_NAME].isNotBlank()
+                    && it[FORSTE_SAMT_A_COL_NAME].isNotBlank()
+        }
+        .filterNot {
+            it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null
+                    && it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
+                    && it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME) <= it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME)
+        }
+        .map {
+            createValidationReportEntry(
+                messageText = "Dato for første behandlingssamtale '${it[FORSTE_SAMT_A_COL_NAME]}' er før dato for " +
+                        "primærklientens henvendelse '${it[HENV_DATO_A_COL_NAME]}' til familievernkontoret.",
+                lineNumbers = listOf(it.lineNumber)
+            ).copy(
+                caseworker = it[KONTOR_NR_A_COL_NAME],
+                journalId = it[JOURNAL_NR_A_COL_NAME]
+            )
+        }
+        .ifEmpty { null }
 }

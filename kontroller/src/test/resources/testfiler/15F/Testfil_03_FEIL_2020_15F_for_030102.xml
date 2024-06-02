@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <Barnevern>
     <Avgiver Versjon="2020" Kommunenummer="0301" Kommunenavn="Oslo" Organisasjonsnummer="958935420"/>
-    <Individ Bydelsnavn="Gamle Oslo" Saksbehandler="Siri Saksbehandlersen" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 09" Fodselsnummer="08011688153">
+    <Individ Bydelsnavn="Gamle Oslo" Saksbehandler="Siri Saksbehandlersen" Avslutta3112="2" StartDato="2000-01-01"
+             Id="I10" Journalnummer="Individ K 09" Fodselsnummer="08011688153">
         <Plan StartDato="2000-02-02" Id="T7" Plantype="1"/>
     </Individ>
-    <Individ Bydelsnummer="02" Saksbehandler="Siri Saksbehandlersen" Avslutta3112="2" StartDato="2000-01-01" Id="I10" Journalnummer="Individ K 10" Fodselsnummer="09011799121">
+    <Individ Bydelsnummer="02" Saksbehandler="Siri Saksbehandlersen" Avslutta3112="2" StartDato="2000-01-01" Id="I10"
+             Journalnummer="Individ K 10" Fodselsnummer="09011799121">
         <Plan StartDato="2000-02-02" Id="T7" Plantype="1"/>
     </Individ>
 </Barnevern>

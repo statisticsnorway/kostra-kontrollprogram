@@ -22,33 +22,20 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
                     kostraRecordInTest(it, endDateInTest),
                 )
             }.toTypedArray(),
-            ForAllRowItem(
-                "status that disallows date",
-                kostraRecordInTest("1", " ".repeat(6)),
-            ),
             *codesThatRequiresDate.map {
                 ForAllRowItem(
                     "status that requires date $it, expect error",
                     kostraRecordInTest(it, " ".repeat(6)),
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
-                            "dersom det er krysset av for svaralternativ [3=Deltakeren har fullført program eller " +
-                            "avsluttet program etter avtale (gjelder ikke flytting), 4=Deltakerens program er varig " +
-                            "avbrutt på grunn av uteblivelse (gjelder ikke flytting), 5=Deltakerens program ble " +
-                            "avbrutt på grunn av flytting til annen kommune] under feltet for 'Hva er status for " +
+                            "dersom det er krysset av for svaralternativ [" +
+                            "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
+                            "(gjelder ikke flytting), " +
+                            "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
+                            "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                            "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                             "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                 )
-            }.toTypedArray(),
-            ForAllRowItem(
-                "status that disallows date, expect error",
-                kostraRecordInTest("1", endDateInTest),
-                "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', fant " +
-                        "($endDateInTest), skal være blankt dersom det er krysset av for svaralternativ " +
-                        "[1=Deltakeren er fortsatt i program (skjema er ferdig utfylt), 2=Deltakeren er i " +
-                        "permisjon fra program (skjemaet er ferdig utfylt), 6=Kun for Oslos bydeler: " +
-                        "Deltakeren flyttet til annen bydel før programperioden var over] under feltet for " +
-                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet " +
-                        "per 31.12.${argumentsInTest.aargang}'?",
-            )
+            }.toTypedArray()
         )
     )
 }) {

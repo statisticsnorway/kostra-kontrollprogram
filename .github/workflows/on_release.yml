@@ -1,0 +1,15 @@
+name: Create release
+
+on:
+  release:
+    types:
+      - released
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-template.yml
+    secrets: inherit
+    with:
+      gradle-targets: build shadowJar
+      gradle-args: -Pversion=${{github.ref_name}}
+      # publish-kostra-barnevern: true # wait with this until we have a proper artifact registry

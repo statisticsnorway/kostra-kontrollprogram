@@ -27,51 +27,67 @@ api:
   description: "API for Kostra Kontrollprogram web-applikasjon"
 
 iu-innstillinger:
-  aarganger: [ 2022,2023 ]
+  aarganger: [ 2023,2024 ]
   skjematyper:
     - id: 0A
       tittel: "0A. Bevilgningsregnskap for kommuner"
     - id: 0AK1
       tittel: "0AK1. Bevilgningsregnskap - 1. kvartal for kommuner"
+      kvartal: 1
     - id: 0AK2
       tittel: "0AK2. Bevilgningsregnskap - 2. kvartal for kommuner"
+      kvartal: 2
     - id: 0AK3
       tittel: "0AK3. Bevilgningsregnskap - 3. kvartal for kommuner"
+      kvartal: 3
     - id: 0AK4
       tittel: "0AK4. Bevilgningsregnskap - 4. kvartal for kommuner"
+      kvartal: 4
 
     - id: 0B
       tittel: "0B. Balanseregnskap for kommuner"
     - id: 0BK1
       tittel: "0BK1. Balanseregnskap - 1. kvartal for kommuner"
+      kvartal: 1
     - id: 0BK2
       tittel: "0BK2. Balanseregnskap - 2. kvartal for kommuner"
+      kvartal: 2
     - id: 0BK3
       tittel: "0BK3. Balanseregnskap - 3. kvartal for kommuner"
+      kvartal: 3
     - id: 0BK4
       tittel: "0BK4. Balanseregnskap - 4. kvartal for kommuner"
+      kvartal: 4
 
     - id: 0C
       tittel: "0C. Bevilgningsregnskap for fylkeskommuner"
     - id: 0CK1
       tittel: "0CK1. Bevilgningsregnskap - 1. kvartal for fylkeskommune"
+      kvartal: 1
     - id: 0CK2
       tittel: "0CK2. Bevilgningsregnskap - 2. kvartal for fylkeskommuner"
+      kvartal: 2
     - id: 0CK3
       tittel: "0CK3. Bevilgningsregnskap - 3. kvartal for fylkeskommuner"
+      kvartal: 3
     - id: 0CK4
       tittel: "0CK4. Bevilgningsregnskap - 4. kvartal for fylkeskommuner"
+      kvartal: 4
 
     - id: 0D
       tittel: "0D. Balanseregnskap for fylkeskommuner"
     - id: 0DK1
       tittel: "0DK1. Balanseregnskap - 1. kvartal for fylkeskommuner"
+      kvartal: 1
     - id: 0DK2
       tittel: "0DK2. Balanseregnskap - 2. kvartal for fylkeskommuner"
+      kvartal: 2
     - id: 0DK3
       tittel: "0DK3. Balanseregnskap - 3. kvartal for fylkeskommuner"
+      kvartal: 3
     - id: 0DK4
       tittel: "0DK4. Balanseregnskap - 4. kvartal for fylkeskommuner"
+      kvartal: 4
 
     - id: 0F
       tittel: "0F. Bevilgningsregnskap for kirkelig fellesråd"

@@ -19,7 +19,7 @@ class Rule029KvalifiseringssumMangler : AbstractNoArgsRule<List<KostraRecord>>(
             createValidationReportEntry(
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +
                         "(${it.fieldAsTrimmedString(KVP_STONAD_COL_NAME)}) i løpet av " +
-                        "året, eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut.",
+                        "året, eller feltet inneholder andre tegn enn tall.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],

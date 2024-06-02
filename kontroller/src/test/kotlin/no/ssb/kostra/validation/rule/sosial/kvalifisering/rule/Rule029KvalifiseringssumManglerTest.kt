@@ -26,21 +26,21 @@ class Rule029KvalifiseringssumManglerTest : BehaviorSpec({
                 kostraRecordInTest("1", "0"),
                 "Det er ikke oppgitt hvor mye deltakeren har fått i " +
                         "kvalifiseringsstønad (0) i løpet av året, eller feltet inneholder andre tegn enn " +
-                        "tall. Feltet er obligatorisk å fylle ut."
+                        "tall."
             ),
             ForAllRowItem(
                 "Status = 1, kvpStonad is empty",
                 kostraRecordInTest("1", " "),
                 "Det er ikke oppgitt hvor mye deltakeren har fått i " +
                         "kvalifiseringsstønad () i løpet av året, eller feltet inneholder andre tegn enn " +
-                        "tall. Feltet er obligatorisk å fylle ut.",
+                        "tall.",
             ),
             ForAllRowItem(
                 "Status = 1, kvpStonad is invalid",
                 kostraRecordInTest("1", "X"),
                 "Det er ikke oppgitt hvor mye deltakeren har fått i " +
                         "kvalifiseringsstønad (X) i løpet av året, eller feltet inneholder andre tegn enn " +
-                        "tall. Feltet er obligatorisk å fylle ut.",
+                        "tall.",
             )
         )
     )

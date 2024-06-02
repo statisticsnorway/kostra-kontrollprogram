@@ -1,10 +1,12 @@
 package no.ssb.kostra.web.extension
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.web.extensions.NAME_FALLBACK_VALUE
+import no.ssb.kostra.web.extensions.QUARTER_FALLBACK_VALUE
 import no.ssb.kostra.web.extensions.toKostraArguments
 import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -34,30 +36,33 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
                     skjema = "0A",
                     aar = Year.now().value,
                     region = "123456",
-                    orgnrVirksomhet = emptyList()
+                    navn = "~navn~"
                 )
             ),
             row(
                 KostraFormVm(
-                    skjema = "0A",
+                    skjema = "0AK1",
                     aar = Year.now().value,
-                    region = "123456",
-                    navn = "~navn~"
+                    region = "123456"
                 )
             )
         ) { sut ->
-            When("toKostraArguments ${sut.orgnrForetak} ${sut.orgnrVirksomhet} ${sut.navn}") {
-                val arguments = sut.toKostraArguments("".byteInputStream())
+            When("toKostraArguments $sut") {
+                val arguments = sut.toKostraArguments("".byteInputStream(), null)
 
                 Then("arguments should be as expected") {
-                    arguments.aargang shouldBe Year.now().value.toString()
-                    arguments.region shouldBe "123456"
+                    assertSoftly(arguments) {
+                        aargang shouldBe Year.now().value.toString()
+                        region shouldBe sut.region
+                        skjema shouldBe sut.skjema
+                        kvartal shouldBe QUARTER_FALLBACK_VALUE
 
-                    arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
-                    arguments.orgnr shouldBe generateCompanyIdInTest(' ')
+                        foretaknr shouldBe generateCompanyIdInTest(' ')
+                        orgnr shouldBe generateCompanyIdInTest(' ')
 
-                    if (sut.navn == null) arguments.navn shouldBe NAME_FALLBACK_VALUE
-                    else arguments.navn shouldBe sut.navn
+                        if (sut.navn == null) navn shouldBe NAME_FALLBACK_VALUE
+                        else navn shouldBe sut.navn
+                    }
                 }
             }
         }
@@ -72,11 +77,14 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
         )
 
         When("toKostraArguments") {
-            val arguments = sut.toKostraArguments("".byteInputStream())
+            val arguments = sut.toKostraArguments(inputStream = "".byteInputStream(), kvartal = "1")
 
             Then("arguments should be as expected") {
-                arguments.foretaknr shouldBe generateCompanyIdInTest(' ')
-                arguments.orgnr shouldBe generateCompanyIdInTest('9')
+                assertSoftly(arguments){
+                    foretaknr shouldBe generateCompanyIdInTest(' ')
+                    orgnr shouldBe generateCompanyIdInTest('9')
+                    kvartal shouldBe "1"
+                }
             }
         }
     }
@@ -94,7 +102,7 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
         )
 
         When("toKostraArguments") {
-            val arguments = sut.toKostraArguments("".byteInputStream())
+            val arguments = sut.toKostraArguments("".byteInputStream(), null)
 
             Then("arguments should be as expected") {
                 arguments.foretaknr shouldBe generateCompanyIdInTest('9')
@@ -105,6 +113,6 @@ class MappingToConsoleAppExtensionsKtTest : BehaviorSpec({
     }
 }) {
     companion object {
-        private fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
+        internal fun generateCompanyIdInTest(charToRepeat: Char): String = "$charToRepeat".repeat(9)
     }
 }

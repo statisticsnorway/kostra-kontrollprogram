@@ -17,7 +17,8 @@ class Rule185Funksjon465Drift : AbstractNoArgsRule<List<KostraRecord>>(
             it.isFylkeRegnskap()
                     && it.isBevilgningDriftRegnskap()
                     && it[FIELD_FUNKSJON].trim() == "465"
-        }.takeIf { it.any() }
+        }
+        .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { funksjon465Drift -> funksjon465Drift in -30..30 }
         ?.let { funksjon465Drift ->

@@ -1,0 +1,14 @@
+name: Create pre-release
+
+on:
+  release:
+    types:
+      - prereleased
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-template.yml
+    secrets: inherit
+    with:
+      gradle-targets: build shadowJar
+      gradle-args: -Pversion=${{github.ref_name}}

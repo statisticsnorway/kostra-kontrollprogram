@@ -10,7 +10,7 @@ import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
 class Rule030StonadssumMaksimum : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K030_STONADSSUMMAX.title,
-    Severity.ERROR
+    Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filterNot {

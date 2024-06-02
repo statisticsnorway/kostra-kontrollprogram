@@ -1,9 +1,0 @@
-enum KostraErrorCode {
-    NO_ERROR = "NO_ERROR",
-    NORMAL_ERROR = "NORMAL_ERROR",
-    CRITICAL_ERROR = "CRITICAL_ERROR",
-    SYSTEM_ERROR = "SYSTEM_ERROR",
-    PARAMETER_ERROR = "PARAMETER_ERROR"
-}
-
-export default KostraErrorCode

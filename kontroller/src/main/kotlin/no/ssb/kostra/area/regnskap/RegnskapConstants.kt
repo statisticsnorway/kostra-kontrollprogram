@@ -35,6 +35,8 @@ object RegnskapConstants {
     const val ACCOUNT_TYPE_INVESTERING = "I"
     private const val ACCOUNT_TYPE_RESULTAT = "R"
 
+    const val DEFAULT_MISSING_VALUE = "MISSING"
+
     val osloKommuner = listOf(
         // @formatter:off
         "030100",
@@ -136,11 +138,11 @@ object RegnskapConstants {
         mappingBasis
             .filter { it.skjema == skjema && it.kontoklasse == kontoklasse }
             .map { it.kontoType }
-            .first()
+            .firstOrNull() ?: DEFAULT_MISSING_VALUE
 
     fun mappingDuplicates(arguments: KotlinArguments): Pair<List<String>, List<String>> =
-        when (getRegnskapTypeBySkjema(arguments.skjema)) {
-            listOf(ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE) ->
+        when (getRegnskapTypeBySkjema(arguments.skjema).firstOrNull()) {
+            ACCOUNTING_TYPE_BEVILGNING, ACCOUNTING_TYPE_REGIONALE ->
                 listOf(
                     FIELD_KONTOKLASSE,
                     FIELD_FUNKSJON,
@@ -151,7 +153,7 @@ object RegnskapConstants {
                     TITLE_ART
                 )
 
-            listOf(ACCOUNTING_TYPE_BALANSE) ->
+            ACCOUNTING_TYPE_BALANSE ->
                 listOf(
                     FIELD_KONTOKLASSE,
                     FIELD_KAPITTEL,
@@ -162,7 +164,7 @@ object RegnskapConstants {
                     TITLE_SEKTOR
                 )
 
-            listOf(ACCOUNTING_TYPE_RESULTAT) ->
+            ACCOUNTING_TYPE_RESULTAT ->
                 listOf(
                     FIELD_ORGNR,
                     FIELD_KONTOKLASSE,

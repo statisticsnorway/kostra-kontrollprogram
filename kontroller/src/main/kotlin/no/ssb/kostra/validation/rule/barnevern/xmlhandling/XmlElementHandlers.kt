@@ -18,19 +18,24 @@ object XmlElementHandlers {
             xmlStreamReader,
             KostraIndividType::class.java
         ).let { individType ->
-            if (KostraValidationUtils.validate(
-                    xmlReader = StringReader(KostraBarnevernConverter.marshallInstance(individType)),
-                    xsdResource = KostraValidationUtils.INDIVID_XSD_RESOURCE
-                )
-            ) IndividRules.individRules.mapNotNull { it.validate(individType, arguments) }.flatten()
-                .map { reportEntry ->
-                    reportEntry.copy(
-                        caseworker = individType.saksbehandler,
-                        journalId = individType.journalnummer,
-                        individId = individType.id
-                    )
-                } to individType
-            else listOf(individFileError) to null
+            val (valid, errorMessage) = KostraValidationUtils.validate(
+                xmlReader = StringReader(KostraBarnevernConverter.marshallInstance(individType)),
+                xsdResource = KostraValidationUtils.INDIVID_XSD_RESOURCE
+            )
+            if (valid)
+                IndividRules.individRules
+                    .mapNotNull { it.validate(individType, arguments) }
+                    .flatten()
+                    .map { reportEntry ->
+                        reportEntry.copy(
+                            caseworker = individType.saksbehandler,
+                            journalId = individType.journalnummer,
+                            individId = individType.id
+                        )
+                    } to individType
+            else {
+                listOf(individFileError(errorMessage)) to null
+            }
         }
     }
 
@@ -39,12 +44,15 @@ object XmlElementHandlers {
             xmlStreamReader,
             KostraAvgiverType::class.java
         ).let { avgiverType ->
-            if (KostraValidationUtils.validate(
-                    xmlReader = StringReader(KostraBarnevernConverter.marshallInstance(avgiverType)),
-                    xsdResource = KostraValidationUtils.AVGIVER_XSD_RESOURCE
-                )
-            ) AvgiverRules.avgiverRules.mapNotNull { it.validate(avgiverType, arguments) }.flatten() to avgiverType
-            else listOf(avgiverFileError) to null
+            val (valid, errorMessage) = KostraValidationUtils.validate(
+                xmlReader = StringReader(KostraBarnevernConverter.marshallInstance(avgiverType)),
+                xsdResource = KostraValidationUtils.AVGIVER_XSD_RESOURCE
+            )
+            if (valid)
+                AvgiverRules.avgiverRules
+                    .mapNotNull { it.validate(avgiverType, arguments) }
+                    .flatten() to avgiverType
+            else listOf(avgiverFileError(errorMessage)) to null
         }
     }
 }

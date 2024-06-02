@@ -7,7 +7,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningInvesteringRegnskap
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isKommuneRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isNotOsloBydel
 
 class Rule170Funksjon290Investering : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 170 : Funksjon 290, investeringsregnskapet",
@@ -15,11 +15,12 @@ class Rule170Funksjon290Investering : AbstractNoArgsRule<List<KostraRecord>>(
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter {
-            !it.isOsloBydel()
+            it.isNotOsloBydel()
                     && it.isKommuneRegnskap()
                     && it.isBevilgningInvesteringRegnskap()
                     && it[FIELD_FUNKSJON].trim() == "290"
-        }.takeIf { it.any() }
+        }
+        .takeIf { it.any() }
         ?.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
         ?.takeUnless { funksjon290Investering -> funksjon290Investering in -30..30 }
         ?.let { funksjon290Investering ->

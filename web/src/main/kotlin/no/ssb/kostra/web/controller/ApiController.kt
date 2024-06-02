@@ -71,7 +71,6 @@ open class ApiController(
         /**  we'll have to deserialize and validate our self because of multipart request */
         val kostraForm = objectMapper.readValue<KostraFormVm>(kostraFormAsJson)
         validator.validate(kostraForm).takeIf { it.isNotEmpty() }?.apply {
-            println("Validation errors: ${iterator().asSequence().toSet()}")
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 

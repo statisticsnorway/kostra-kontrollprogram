@@ -11,16 +11,17 @@ class Rule200Funksjon089Finansieringstransaksjoner : AbstractNoArgsRule<List<Kos
     "Kontroll 200 : Funksjon 089, Finansieringstransaksjoner",
     Severity.ERROR
 ) {
-    override fun validate(context: List<KostraRecord>) = context.filter {
-        it.isBevilgningRegnskap()
-                && it[FIELD_FUNKSJON].trim() == "089"
-    }.filterNot { it.fieldAsIntOrDefault(FIELD_ART) in artStopList }.map {
-        createValidationReportEntry(
-            messageText = "Korrigér i fila slik at art (${it[FIELD_ART]}) " +
-                    "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
-            lineNumbers = listOf(it.lineNumber)
-        )
-    }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) = context
+        .filter { it.isBevilgningRegnskap() && it[FIELD_FUNKSJON].trim() == "089" }
+        .filterNot { it.fieldAsIntOrDefault(FIELD_ART) in artStopList }
+        .map {
+            createValidationReportEntry(
+                messageText = "Korrigér i fila slik at art (${it[FIELD_ART]}) " +
+                        "er gyldig mot funksjon 089. Gyldige arter er 500-580, 830 og 900-980.",
+                lineNumbers = listOf(it.lineNumber)
+            )
+        }
+        .ifEmpty { null }
 
     companion object {
         private val artStopList = (500..580)

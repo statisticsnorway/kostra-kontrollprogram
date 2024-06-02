@@ -1,7 +1,7 @@
 package no.ssb.kostra.validation.rule.barnevern.individrule
 
 import no.ssb.kostra.barnevern.xsd.*
-import no.ssb.kostra.testutil.RandomUtils.generateRandomSSN
+import no.ssb.kostra.testutil.RandomUtils
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.BVL1992
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.KAPITTEL_4
 import no.ssb.kostra.validation.rule.barnevern.SharedValidationConstants.PARAGRAF_12
@@ -10,7 +10,7 @@ import java.time.LocalDate
 object IndividRuleTestData {
 
     private const val KOSTRA_IS_CLOSED_FALSE = "2"
-    val dateInTest: LocalDate = LocalDate.now()
+    val dateInTest: LocalDate = LocalDate.now().minusYears(1L)
     private const val INDIVID_KOSTRA_ID = "C1"
 
     private const val KOSTRA_TILTAK_ID = "~tiltak~"
@@ -37,7 +37,7 @@ object IndividRuleTestData {
     )
 
     val lovhjemmelTypeInTest = KostraLovhjemmelType(
-        lov = "BVL",
+        lov = BVL1992,
         kapittel = "2",
         paragraf = "3",
         ledd = "4",
@@ -56,7 +56,7 @@ object IndividRuleTestData {
         presisering = "~presisering~"
     )
 
-    val vedtaksgrunnlagTypeInTest = KostraVedtaksgrunnlagType(
+    val vedtaksgrunnlagTypeInTest = KostraSaksinnholdType(
         kode = "~kode~",
         presisering = "~presisering~"
     )
@@ -69,10 +69,7 @@ object IndividRuleTestData {
         startDato = dateInTest,
         sluttDato = null,
         avslutta3112 = KOSTRA_IS_CLOSED_FALSE,
-        fodselsnummer = generateRandomSSN(
-            LocalDate.now().minusYears(1),
-            LocalDate.now()
-        ),
+        fodselsnummer = RandomUtils.generateRandomSsn(1, LocalDate.now().year),
         duFnummer = null,
         saksbehandler = "~saksbehandler~",
         bydelsnummer = "11",

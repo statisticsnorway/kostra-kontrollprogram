@@ -1,19 +1,25 @@
 version: 2
 updates:
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: daily
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
+
   - package-ecosystem: npm
     versioning-strategy: increase
-    directory: "/web/src/main/vite-project"
+    directory: "/web-frontend"
     schedule:
       interval: daily
       time: "03:00"
       timezone: Europe/Oslo
+    open-pull-requests-limit: 10
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -21,3 +27,7 @@ updates:
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - "*"

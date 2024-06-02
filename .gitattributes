@@ -35,3 +35,4 @@
 *.ez binary
 *.bz2 binary
 *.swp binary
+*.jar binary

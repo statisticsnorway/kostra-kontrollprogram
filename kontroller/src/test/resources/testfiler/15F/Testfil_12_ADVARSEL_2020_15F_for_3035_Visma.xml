@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Barnevern>
     <Avgiver Organisasjonsnummer="920125298" Versjon="2020" Kommunenummer="3035" Kommunenavn="Asker"/>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="1995-04-03" Id="30001" Fodselsnummer="20010700200" Journalnummer="30001">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="1995-04-03" Id="30001"
+             Fodselsnummer="20010700200" Journalnummer="30001">
         <Melding SluttDato="2020-07-08" Konklusjon="2" Id="30360" StartDato="2020-07-07">
             <Melder Kode="4"/>
             <Melder Kode="5"/>
@@ -18,20 +19,23 @@
             <Kategori Kode="3.1"/>
         </Tiltak>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2011-10-15" Id="78791" Fodselsnummer="15040500200" Journalnummer="78791">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2011-10-15" Id="78791"
+             Fodselsnummer="15040500200" Journalnummer="78791">
         <Tiltak StartDato="2012-01-01" Id="12396">
             <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="8" Ledd="2"/>
             <JmfrLovhjemmel Lov="bvl" Kapittel="4" Paragraf="24"/>
             <Kategori Kode="2.1"/>
         </Tiltak>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2014-11-05" Id="78796" Fodselsnummer="15040299999" Journalnummer="78796">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2014-11-05" Id="78796"
+             Fodselsnummer="15040299999" Journalnummer="78796">
         <Tiltak SluttDato="2020-01-30" StartDato="2020-01-01" Id="12467">
             <Lovhjemmel Lov="bvl" Kapittel="4" Paragraf="20a"/>
             <Kategori Kode="4.6"/>
         </Tiltak>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2016-03-29" Id="78855" Fodselsnummer="01010700200" Journalnummer="78855">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2016-03-29" Id="78855"
+             Fodselsnummer="01010700200" Journalnummer="78855">
         <Melding SluttDato="2020-03-23" Konklusjon="3" Id="30334" StartDato="2019-12-19">
             <Melder Kode="4"/>
             <Saksinnhold Kode="4"/>
@@ -58,7 +62,8 @@
             <Kategori Kode="4.4"/>
         </Tiltak>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2020-04-30" Id="78940" Fodselsnummer="01012000200" Journalnummer="78940">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2020-04-30" Id="78940"
+             Fodselsnummer="01012000200" Journalnummer="78940">
         <Melding SluttDato="2020-10-08" Konklusjon="3" Id="30373" StartDato="2020-10-01">
             <Melder Kode="2"/>
             <Saksinnhold Kode="7"/>
@@ -69,13 +74,15 @@
             <Undersokelse Id="30351" StartDato="2020-04-30"/>
         </Melding>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2020-04-30" Id="78939" Fodselsnummer="30010900200" Journalnummer="78939">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2020-04-30" Id="78939"
+             Fodselsnummer="30010900200" Journalnummer="78939">
         <Melding SluttDato="2020-09-15" Konklusjon="4" Id="30375" StartDato="2020-09-07">
             <Melder Kode="2"/>
             <Saksinnhold Kode="7"/>
         </Melding>
     </Individ>
-    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2016-05-31" Id="78859" Fodselsnummer="23071000200" Journalnummer="78859">
+    <Individ Avslutta3112="2" Saksbehandler="Kersti Maren Halvorsen" StartDato="2016-05-31" Id="78859"
+             Fodselsnummer="23071000200" Journalnummer="78859">
         <Melding SluttDato="2020-10-08" Konklusjon="4" Id="30372" StartDato="2020-10-01">
             <Melder Kode="2"/>
             <Saksinnhold Kode="7"/>

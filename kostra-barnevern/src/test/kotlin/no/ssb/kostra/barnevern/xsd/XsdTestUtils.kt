@@ -10,6 +10,7 @@ fun String.toStreamSource() = StreamSource(StringReader(this))
 object XsdTestUtils {
 
     const val LOVHJEMMEL_XML = "<Lovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" Ledd=\"3\"/>"
+    const val JMFR_LOVHJEMMEL_XML = "<JmfrLovhjemmel Lov=\"BVL\" Kapittel=\"4\" Paragraf=\"8\" Ledd=\"2\"/>"
 
     const val EMPTY_DATE_ERROR = "cvc-datatype-valid.1.2.1: '' is not a valid value for 'date'."
     const val INVALID_DATE_ERROR = "cvc-datatype-valid.1.2.1: '2022' is not a valid value for 'date'."

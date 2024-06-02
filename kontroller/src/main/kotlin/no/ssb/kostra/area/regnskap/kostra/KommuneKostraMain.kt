@@ -1,20 +1,13 @@
 package no.ssb.kostra.area.regnskap.kostra
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
-import no.ssb.kostra.area.regnskap.RegnskapConstants.mappingDuplicates
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
-import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions.fieldLength
+import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
-import no.ssb.kostra.validation.PositionedFileValidator
-import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.regnskap.*
-import no.ssb.kostra.validation.rule.regnskap.kostra.*
 
 
 class KommuneKostraMain(
     arguments: KotlinArguments
-) : PositionedFileValidator(arguments) {
+) : RegnskapValidator(arguments) {
     private val bevilgningRegnskap = listOf("0A", "0C", "0I", "0K", "0M", "0P")
     private val balanseRegnskap = listOf("0B", "0D", "0J", "0L", "0N", "0Q")
 
@@ -76,7 +69,7 @@ class KommuneKostraMain(
         "841", "850", "860", "870", "880", "899"
     )
 
-    private val funksjonList =
+    override val funksjonList =
         if (arguments.skjema in bevilgningRegnskap) {
             val result = ArrayList<String>()
 
@@ -136,7 +129,7 @@ class KommuneKostraMain(
 
 
     // Kapitler
-    private val kapittelList =
+    override val kapittelList =
         if (arguments.skjema in balanseRegnskap) {
             val result = mutableListOf(
                 // @formatter:off
@@ -164,18 +157,14 @@ class KommuneKostraMain(
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
         "100", "105", "110", "114", "115", "120", "130", "140", "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
         "200", "209", "210", "220", "230", "240", "250", "260", "270", "280", "285",
-        "300", "330", "350", "370",
-        "400", "429", "430", "450", "470",
+        "300", "330", "350", "370", "380",
+        "400", "429", "430", "450", "470", "480",
         "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
         "600", "620", "629", "630", "640", "650", "660", "670",
-        "700", "710", "729", "730", "750", "770",
-        "800", "810", "830", "850", "870", "890",
+        "700", "710", "729", "730", "750", "770", "780",
+        "800", "810", "830", "850", "870", "877", "880", "890",
         "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "940", "950", "970", "980", "989", "990"
         // @formatter:on
-    )
-
-    private val konserninterneArter = listOf(
-        "380", "480", "780", "880"
     )
 
     private val osloArter = listOf(
@@ -186,33 +175,21 @@ class KommuneKostraMain(
         "871", "872", "873", "875", "876"
     )
 
-    private val fylkeskommunaleArter = listOf(
-        "877"
-    )
-
-    private val artList: List<String> = if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
+    override val artList: List<String> = if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
         ArrayList<String>(basisArter).apply {
             when (arguments.skjema) {
                 in listOf("0A", "0M") -> {
-                    addAll(konserninterneArter)
                     addAll(kommunaleArter)
 
                     if (arguments.region in osloKommuner) {
                         addAll(osloArter)
                     }
                 }
-
-                in listOf("0C", "0P") -> {
-                    addAll(konserninterneArter)
-                    addAll(fylkeskommunaleArter)
-                }
-
-                else -> addAll(konserninterneArter)
             }
         }.sorted()
     } else emptyList()
 
-    private val sektorList =
+    override val sektorList =
         if (arguments.skjema in listOf("0B", "0D", "0J", "0L", "0N", "0Q"))
         // Sektorer
             listOf(
@@ -248,67 +225,22 @@ class KommuneKostraMain(
         "240",
         "509", "570", "590",
         "600", "629", "630", "640",
-        "800", "870", "874", "875", "877",
+        "800", "870", "871", "872", "873", "875", "876", "877",
         "909", "990"
         // @formatter:on
     )
 
-    override val fieldDefinitions = RegnskapFieldDefinitions
-
-    override val preValidationRules = listOf(
-        Rule001RecordLength(fieldLength)
-    )
-
-    override val validationRules = listOf(
-        Rule003Skjema(),
-        Rule004Aargang(),
-        Rule005Kvartal(),
-        Rule006Region(),
-        Rule007Organisasjonsnummer(),
-        Rule008Foretaksnummer(),
-        Rule009Kontoklasse(kontoklasseList = RegnskapConstants.getKontoklasseBySkjema(arguments.skjema)),
-        Rule010Funksjon(funksjonList = funksjonList),
-        Rule011Kapittel(kapittelList = kapittelList),
-        Rule012Art(artList = artList),
-        Rule013Sektor(sektorList = sektorList),
-        Rule014Belop(),
-        Rule015Duplicates(mappingDuplicates(arguments = arguments)),
-        Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
-        Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
-        Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
-        Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
-        Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList),
-        Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonAsList),
-        Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),
-        Rule055KombinasjonInvesteringKontoklasseArt(illogicalInvesteringArtList = listOf("620", "650", "900")),
-        Rule060KombinasjonInvesteringKontoklasseFunksjonArt(),
-        Rule065KombinasjonBevilgningFunksjonArt(),
-        Rule070KombinasjonBevilgningFunksjonArt(),
-        Rule075KombinasjonBevilgningFunksjonArt(),
-        Rule080KombinasjonBevilgningFunksjonArt(),
-        Rule085SummeringInvesteringUtgiftsposteringer(),
-        Rule090SummeringInvesteringInntektsposteringer(),
-        Rule095SummeringInvesteringDifferanse(),
-        Rule100SummeringDriftUtgiftsposteringer(),
-        Rule105SummeringDriftInntektsposteringer(),
-        Rule110SummeringDriftDifferanse(),
-        Rule115SummeringBalanseAktiva(),
-        Rule120SummeringBalansePassiva(),
-        Rule125SummeringBalanseDifferanse(),
-        Rule126SummeringDriftOsloInternDifferanse(),
-        Rule127SummeringInvesteringOsloInternDifferanse(),
-        Rule130SkatteInntekter(),
-        Rule135Rammetilskudd(),
-        Rule140OverforingerDriftInvestering(),
-        Rule145AvskrivningerMotpostAvskrivninger(),
-        Rule150Avskrivninger(),
-        Rule155AvskrivningerDifferanse(),
-        Rule160AvskrivningerAndreFunksjoner(),
-        Rule165AvskrivningerMotpostAvskrivningerAndreFunksjoner(),
-        Rule170Funksjon290Investering(),
-        Rule175Funksjon290Drift(),
-        Rule180Funksjon465Investering(),
-        Rule185Funksjon465Drift(),
-        Rule190Memoriakonti(),
-    )
+    override val validationRules = commonValidationRules()
+        .plus(
+            commonKostraValidationRules(
+                invalidDriftFunksjonList = invalidDriftFunksjonList,
+                invalidDriftArtList = invalidDriftArtList,
+                invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList,
+                illogicalInvesteringFunksjonList = illogicalInvesteringFunksjonAsList,
+                invalidInvesteringArtList = invalidInvesteringArtList
+            )
+        )
+        .plus(
+            specificKostraValidationRules()
+        )
 }

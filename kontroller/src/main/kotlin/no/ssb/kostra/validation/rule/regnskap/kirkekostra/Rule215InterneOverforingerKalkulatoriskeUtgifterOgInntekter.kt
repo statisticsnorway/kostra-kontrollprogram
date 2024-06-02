@@ -2,6 +2,7 @@ package no.ssb.kostra.validation.rule.regnskap.kirkekostra
 
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_ART
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
@@ -12,7 +13,7 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractNoAr
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isBevilgningRegnskap() }
+        .filter { it.isBevilgningRegnskap() && it.fieldAsIntOrDefault(FIELD_FUNKSJON) in 41..45 }
         .takeIf { it.any() }
         ?.filter { it[FIELD_ART] in listOf("390", "790") }
         ?.partition { it[FIELD_ART] == "390" }
@@ -21,9 +22,11 @@ class Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter : AbstractNoAr
                 utgifterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) },
                 inntekterPosteringer.sumOf { it.fieldAsIntOrDefault(FIELD_BELOP) }
             )
-        }?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+        }
+        ?.takeUnless { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
             (kalkulatoriskeUtgifter + kalkulatoriskeInntekter) in -30..30
-        }?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
+        }
+        ?.let { (kalkulatoriskeUtgifter, kalkulatoriskeInntekter) ->
             val kalkulatoriskeDifferanse = kalkulatoriskeUtgifter + kalkulatoriskeInntekter
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at differansen ($kalkulatoriskeDifferanse) mellom " +

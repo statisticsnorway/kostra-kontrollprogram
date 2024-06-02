@@ -2,8 +2,8 @@
 
 ## Veiledninger
 
-* [Kom i gang på kommandolinja med Kostra kontrollprogram](docs/veiledning_kostra_kontrollprogram.md)
-* [Kom i gang i nettleseren med Kostra kontrollprogram](docs/veiledning_kostra_kontrollprogram_web.md)
+* [Kom i gang på kommandolinja med Kostra kontrollprogram](konsoll/README.md)
+* [Kom i gang i nettleseren med Kostra kontrollprogram](web/README.md)
 
 ## Kravspesifikasjoner
 
@@ -19,4 +19,4 @@
     * Økonomisk sosialhjelp
     * Kvalifiseringsstønad
 * XML-baserte filvedlegg
-  * Barnevern 
+  * [Barnevern](/specs/barnevern_15_specs.md) 

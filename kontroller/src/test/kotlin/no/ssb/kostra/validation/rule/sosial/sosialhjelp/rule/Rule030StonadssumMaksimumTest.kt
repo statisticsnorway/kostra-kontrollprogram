@@ -12,7 +12,7 @@ class Rule030StonadssumMaksimumTest : BehaviorSpec({
     include(
         validationRuleNoContextTest(
             sut = Rule030StonadssumMaksimum(),
-            expectedSeverity = Severity.ERROR,
+            expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "bidrag = 1000, laan = 0",
                 kostraRecordInTest("1000", "0"),

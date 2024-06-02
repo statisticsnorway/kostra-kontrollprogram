@@ -10,17 +10,14 @@ const setupForLayoutTests = (fileReports: FileReportVm[], activeTabIndex: number
     render(<TabRow
         fileReports={fileReports}
         activeTabIndex={activeTabIndex}
-        onTabSelect={() => {
-        }}
         onDeleteFileReport={() => {
         }}/>)
 }
 
-const setupForInteractionTests = (onTabSelect: () => void, onReportDelete: () => void) => {
+const setupForInteractionTests = (onReportDelete: () => void) => {
     render(<TabRow
         fileReports={[fileReportInTest]}
         activeTabIndex={1}
-        onTabSelect={onTabSelect}
         onDeleteFileReport={onReportDelete}/>)
 }
 
@@ -49,7 +46,7 @@ describe("TabRow", () => {
         test("clicking report name button calls onTabSelect", () => {
             const onTabSelect = vi.fn().mockImplementation(() => {
             })
-            setupForInteractionTests(onTabSelect, () => {
+            setupForInteractionTests(() => {
             })
 
             screen.getByTitle<HTMLButtonElement>(expectedTabTitle).click()
@@ -59,8 +56,7 @@ describe("TabRow", () => {
         test("clicking close button calls onReportDelete", () => {
             const onReportDelete = vi.fn().mockImplementation(() => {
             })
-            setupForInteractionTests(() => {
-            }, onReportDelete)
+            setupForInteractionTests(onReportDelete)
 
             screen.getByTitle<HTMLButtonElement>("Slett rapport").click()
 

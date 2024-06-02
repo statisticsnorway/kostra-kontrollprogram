@@ -24,7 +24,9 @@ const TabRow = (
             image={FilterLeft}
             tabIsActive={activeTabIndex === 0}
             onSelect={() => navigate("/")}
-            showCloseButton={false}/>
+            onClose = {() => {}}
+            showCloseButton={false}
+        />
 
         {/** REPORT TABS */}
         {fileReports.map((fileReport, index) =>
@@ -35,6 +37,7 @@ const TabRow = (
                 image={ListTask}
                 tabIsActive={activeTabIndex == index + 1}
                 onSelect={() => navigate(`file-reports/${index}`)}
+                showCloseButton={true}
                 onClose={() => {
                     onDeleteFileReport(index)
                     navigate("/")

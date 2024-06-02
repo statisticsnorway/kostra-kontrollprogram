@@ -15,6 +15,7 @@ import PlusCircle from "../assets/icon/plus-circle.svg"
 // @ts-ignore
 import DashCircle from "../assets/icon/dash-circle.svg"
 import CompanyIdVm from "../kostratypes/companyIdVm";
+import useFormPersist from "react-hook-form-persist";
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
@@ -22,8 +23,7 @@ const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffe
 const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 
-const MainForm = ({showForm, formTypes, years, onSubmit}: {
-    showForm: boolean,
+const MainForm = ({formTypes, years, onSubmit}: {
     formTypes: KostraFormTypeVm[],
     years: number[],
     onSubmit: (form: KostraFormVm) => void,
@@ -71,14 +71,26 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
         register,
         resetField,
         handleSubmit,
-        formState: {errors, dirtyFields, touchedFields},
+        formState: {
+            errors,
+            dirtyFields,
+            touchedFields
+        },
         formState,
         watch,
-        getValues
+        getValues,
+        setValue
     } = useForm<KostraFormVm>({
         mode: "onChange",
         resolver: yupResolver(validationSchema)
     })
+
+    useFormPersist("kostra-form", {
+        watch,
+        setValue,
+        storage: window.localStorage,
+        exclude: ['skjemaFil']
+    });
 
     // array for orgnrVirksomhet
     const {
@@ -91,11 +103,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
     })
 
     // submit-handler, redirects call to parent
-    const localOnSubmit = handleSubmit(data => {
-        onSubmit(data)
-        // prevent re-submission of file
-        resetField("skjemaFil", {keepTouched: false})
-    })
+    const localOnSubmit = handleSubmit(data => onSubmit(data))
 
     // change skjema handling
     useEffect(() => {
@@ -123,8 +131,7 @@ const MainForm = ({showForm, formTypes, years, onSubmit}: {
         return () => subscription.unsubscribe()
     }, [formTypes, watch])
 
-    /** if active view is a file report, hide this component */
-    return !showForm ? <></> : <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
+    return <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
         <div className="row g-3 mt-2">
 
             {/** SKJEMATYPE */}

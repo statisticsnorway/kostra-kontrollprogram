@@ -5,26 +5,27 @@ import TabItem from "./TabItem";
 import FilterLeft from "../../assets/icon/filter-left.svg";
 // @ts-ignore
 import ListTask from "../../assets/icon/list-task.svg";
+import {useNavigate} from "react-router-dom";
 
 
 const TabRow = (
-    {fileReports, activeTabIndex, onTabSelect, onReportDelete}: {
+    {fileReports, activeTabIndex, onDeleteFileReport}: {
         fileReports: FileReportVm[],
         activeTabIndex: number,
-        onTabSelect: (index: number) => void,
-        onReportDelete: (index: number) => void
+        onDeleteFileReport: (index: number) => void
     }
-) =>
-    <ul className="nav nav-tabs" role={"navigation"}>
+) => {
+    const navigate = useNavigate()
+
+    return <ul className="nav nav-tabs" role={"navigation"}>
         {/** BACK TO FORM */}
         <TabItem
             text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
             image={FilterLeft}
             tabIsActive={activeTabIndex === 0}
-            onSelect={() => onTabSelect(0)}
+            onSelect={() => navigate("/")}
+            onClose = {() => {}}
             showCloseButton={false}
-            onClose={() => {
-            }}
         />
 
         {/** REPORT TABS */}
@@ -35,11 +36,13 @@ const TabRow = (
                     + ` region ${fileReport.innparametere.region}`}
                 image={ListTask}
                 tabIsActive={activeTabIndex == index + 1}
-                onSelect={() => onTabSelect(index + 1)}
+                onSelect={() => navigate(`file-reports/${index}`)}
                 showCloseButton={true}
-                onClose={() => onReportDelete(index)}
-            />
+                onClose={() => {
+                    onDeleteFileReport(index)
+                    navigate("/")
+                }}/>
         )}
     </ul>
-
+}
 export default TabRow

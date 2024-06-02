@@ -74,18 +74,17 @@ open class ApiController(
             throw ConstraintViolationException(iterator().asSequence().toSet())
         }
 
-        /** target stream, file content will end up here */
-        val outputStream = ByteArrayOutputStream()
-
-        return Mono.from(file.transferTo(outputStream)).handle { success, sink ->
-            if (success) sink.next(
-                HttpResponse.ok(
-                    controlRunner.runControls(
-                        kostraForm,
-                        outputStream.toByteArray().inputStream()
+        ByteArrayOutputStream().use { outputStream ->
+            return Mono.from(file.transferTo(outputStream)).handle { success, sink ->
+                if (success) sink.next(
+                    HttpResponse.ok(
+                        controlRunner.runControls(
+                            kostraForm,
+                            outputStream.toByteArray().inputStream()
+                        )
                     )
-                )
-            ) else sink.error(RuntimeException("Failed to read file at backend"))
+                ) else sink.error(RuntimeException("Failed to read file at backend"))
+            }
         }
     }
 

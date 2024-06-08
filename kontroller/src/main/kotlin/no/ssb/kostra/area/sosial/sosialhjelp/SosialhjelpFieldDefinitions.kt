@@ -80,41 +80,49 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
             name = KOMMUNE_NR_COL_NAME,
+            description = "Kommunenummer",
             dataType = STRING_TYPE,
             size = 4
         ),
         FieldDefinition(
             name = VERSION_COL_NAME,
+            description = "Rapporteringsår / versjon / oppgaveår",
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
             name = BYDELSNR_COL_NAME,
+            description = "Bydelsnummer",
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
             name = DISTRIKTSNR_COL_NAME,
+            description = "Distriktsnummer",
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
             name = PERSON_JOURNALNR_COL_NAME,
+            description = "Journalnummer",
             dataType = STRING_TYPE,
             size = 8
         ),
         FieldDefinition(
             name = PERSON_FODSELSNR_COL_NAME,
+            description = "Hva er mottakerens fødselsnummer?",
             dataType = STRING_TYPE,
             size = 11
         ),
         FieldDefinition(
             name = PERSON_DUF_COL_NAME,
+            description = "Hva er mottakerens DUF-nummer?",
             dataType = STRING_TYPE,
             size = 12
         ),
         FieldDefinition(
             name = KJONN_COL_NAME,
+            description = "Hva er mottakerens kjønn?",
             codes = listOf(
                 Code("1", "Mann"),
                 Code("2", "Kvinne")
@@ -122,6 +130,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = EKTSTAT_COL_NAME,
+            description = "Hva er mottakerens sivilstand/sivilstatus ved siste kontakt?",
             codes = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
@@ -132,14 +141,17 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
+            description = "Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = ANT_BARN_UNDER_18_COL_NAME,
+            description = "Hvis ja, hvor mange?",
             size = 2
         ),
         FieldDefinition(
             name = VKLO_COL_NAME,
+            description = "Hva er mottakerens viktigste kilde til livsopphold ved siste kontakt?",
             codes = listOf(
                 Code("1", "Arbeidsinntekt"),
                 Code("2", "Kursstønad/lønn i arbeidsmarkedstiltak"),
@@ -154,6 +166,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = TRYGDESIT_COL_NAME,
+            description = "Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt",
             size = 2,
             codes = listOf(
                 Code("01", "Sykepenger"),
@@ -170,6 +183,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = ARBSIT_COL_NAME,
+            description = "Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt?",
             size = 2,
             codes = listOf(
                 Code("01", "Arbeid, heltid"),
@@ -184,128 +198,227 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
                 Code("10", "Kvalifiseringsprogram")
             )
         ),
-
-        *calendarMonths,
-
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_1_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i januar?",
+            size = 2,
+            code = Code("01", "Januar")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_2_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i februar?",
+            size = 2,
+            code = Code("02", "Februar")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_3_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i mars?",
+            size = 2,
+            code = Code("03", "Mars")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_4_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i april?",
+            size = 2,
+            code = Code("04", "April")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_5_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i mai?",
+            size = 2,
+            code = Code("05", "Mai")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_6_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i juni?",
+            size = 2,
+            code = Code("06", "Juni")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_7_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i juli?",
+            size = 2,
+            code = Code("07", "Juli")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_8_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i august?",
+            size = 2,
+            code = Code("08", "August")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_9_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i september?",
+            size = 2,
+            code = Code("09", "September")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_10_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i oktober?",
+            size = 2,
+            code = Code("10", "Oktober")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_11_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i november?",
+            size = 2,
+            code = Code("11", "November")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_12_COL_NAME,
+            description = "Har mottakeren fått økonomisk stønad i desember?",
+            size = 2,
+            code = Code("12", "Desember")
+        ),
         FieldDefinition(
             name = BIDRAG_COL_NAME,
+            description = "Bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_COL_NAME,
+            description = "Lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_1_COL_NAME,
+            description = "Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_1_COL_NAME,
+            description = "Januar, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_2_COL_NAME,
+            description = "Februar, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_2_COL_NAME,
+            description = "Februar, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_3_COL_NAME,
+            description = "Mars, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_3_COL_NAME,
+            description = "Mars, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_4_COL_NAME,
+            description = "April, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_4_COL_NAME,
+            description = "April, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_5_COL_NAME,
+            description = "Mai, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_5_COL_NAME,
+            description = "Mai, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_6_COL_NAME,
+            description = "Juni, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_6_COL_NAME,
+            description = "Juni, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_7_COL_NAME,
+            description = "Juli, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_7_COL_NAME,
+            description = "Juli, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_8_COL_NAME,
+            description = "August, bidrag",
             size = 7
         ),
         FieldDefinition(
+            description = "August, lån",
             name = LAAN_8_COL_NAME,
             size = 7
         ),
         FieldDefinition(
+            description = "September, bidrag",
             name = BIDRAG_9_COL_NAME,
             size = 7
         ),
         FieldDefinition(
             name = LAAN_9_COL_NAME,
+            description = "September, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_10_COL_NAME,
+            description = "Oktober, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_10_COL_NAME,
+            description = "Oktober, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_11_COL_NAME,
+            description = "November, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_11_COL_NAME,
+            description = "November, lån",
             size = 7
         ),
         FieldDefinition(
             name = BIDRAG_12_COL_NAME,
+            description = "Desember, bidrag",
             size = 7
         ),
         FieldDefinition(
             name = LAAN_12_COL_NAME,
+            description = "Desember, lån",
             size = 7
         ),
         FieldDefinition(
             name = GITT_OKONOMIRAD_COL_NAME,
+            description = "Er det gitt økonomisk rådgivning på nivå II (midlertidig betalingsudyktighet) eller III (varig betalingsudyktighet) i forbindelse med utbetaling? (Se NAVs veileder til bruk ved økonomisk rådgivning)",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = FAAT_INDIVIDUELL_PLAN_COL_NAME,
+            description = "Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)?",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = SAKSBEHANDLER_COL_NAME,
+            description = "Saksbehandlernummer",
             dataType = STRING_TYPE,
             size = 10
         ),
         FieldDefinition(
             name = BOSIT_COL_NAME,
+            description = "Hva er mottakerens bosituasjon ved siste kontakt?",
             codes = listOf(
                 Code("1", "Bor i leid privat bolig"),
                 Code("2", "Bor i leid kommunal bolig"),
@@ -317,26 +430,31 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = VILKARSOSLOV_COL_NAME,
+            description = "Stilles det vilkår til mottakeren etter sosialtjenesteloven?",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = VILKARSAMEKT_COL_NAME,
+            description = "Stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven?",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = UTBETDATO_COL_NAME,
+            description = "Oppgi utbetalingsvedtakets dato (DDMMÅÅ)",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
         ),
         FieldDefinition(
             name = UTBETTOMDATO_COL_NAME,
+            description = "Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅ)",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
             name = VILKARARBEID_COL_NAME,
+            description = "Oppgi hvilke vilkår det stilles til mottakeren. Flere kryss mulig",
             size = 2,
             code = Code("16", "Delta på arbeidstrening/arbeidspraksis")
         ),
@@ -387,17 +505,20 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = VILKARDIGPLAN_COL_NAME,
+            description = "Bruke og følge opp digital aktivitetsplan",
             size = 2,
             code = Code("19", "Bruke og følge opp digital aktivitetsplan")
         ),
         FieldDefinition(
             name = VEDTAKDATO_COL_NAME,
+            description = "Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
         ),
         FieldDefinition(
             name = VEDTAKARB_COL_NAME,
+            description = "Begrunnelse for første unntak fra sosialtjenestelovens § 20a",
             size = 2,
             code = Code("01", "Mottaker er i arbeid")
         ),
@@ -421,6 +542,7 @@ object SosialhjelpFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = SANKSJONRED_COL_NAME,
+            description = "Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20a",
             size = 2,
             code = Code("01", "Redusert stønad")
         ),

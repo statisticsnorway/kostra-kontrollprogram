@@ -32,22 +32,22 @@ class SosialhjelpMainTest : BehaviorSpec({
                 "validating an empty record string",
                 true,
                 " ".repeat(SosialhjelpFieldDefinitions.fieldLength),
-                44,
-                17
+                45,
+                18
             ),
             row(
                 "validating a valid record string",
                 true,
                 recordStringInTest("23"),
-                44,
-                0
+                45,
+                2
             ),
             row(
                 "validating a valid record string with invalid data",
                 true,
                 recordStringInTest("XX"),
-                44,
-                1
+                45,
+                3
             ),
             row(
                 "validating an 'empty' attachment containing only 1 space",
@@ -130,7 +130,7 @@ class SosialhjelpMainTest : BehaviorSpec({
                         SosialhjelpColumnNames.VKLO_COL_NAME to fieldDefinitions
                             .byColumnName(SosialhjelpColumnNames.VKLO_COL_NAME).codeList.first().code,
                         SosialhjelpColumnNames.ARBSIT_COL_NAME to fieldDefinitions
-                            .byColumnName(SosialhjelpColumnNames.ARBSIT_COL_NAME).codeList.first().code,
+                            .byColumnName(SosialhjelpColumnNames.ARBSIT_COL_NAME).codeList.last().code,
                         SosialhjelpColumnNames.BIDRAG_COL_NAME to "1000",
                         SosialhjelpColumnNames.GITT_OKONOMIRAD_COL_NAME to fieldDefinitions
                             .byColumnName(

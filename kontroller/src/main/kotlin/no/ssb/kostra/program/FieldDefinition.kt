@@ -4,7 +4,7 @@ import no.ssb.kostra.program.DataType.*
 
 data class FieldDefinition(
     val name: String,
-    val description: String = "",
+    val description: String? = "",
     val dataType: DataType = INTEGER_TYPE,
     val from: Int = 0,
     val codeList: List<Code> = emptyList(),
@@ -14,10 +14,12 @@ data class FieldDefinition(
 ) {
     constructor(
         name: String,
+        description: String? = null,
         size: Int = 1,
         code: Code
     ) : this(
         name = name,
+        description = description,
         dataType = STRING_TYPE,
         from = 0,
         codeList = listOf(code),
@@ -28,11 +30,13 @@ data class FieldDefinition(
 
     constructor(
         name: String,
+        description: String? = null,
         size: Int = 1,
         mandatory: Boolean = false,
         codes: List<Code>
     ) : this(
         name = name,
+        description = description,
         dataType = STRING_TYPE,
         from = 0,
         codeList = codes,

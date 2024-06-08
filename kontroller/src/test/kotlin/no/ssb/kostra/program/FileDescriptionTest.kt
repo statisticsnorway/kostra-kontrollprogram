@@ -48,7 +48,7 @@ class FileDescriptionTest : BehaviorSpec({
 //            row("0F"),
 //            row("0X"),
             row("11F Økonomisk sosialhjelp", "11F", SosialhjelpFieldDefinitions),
-//            row("11CF Kvalifiseringsstønad", "11CF", KvalifiseringFieldDefinitions),
+            row("11CF Kvalifiseringsstønad", "11CF", KvalifiseringFieldDefinitions),
 //            row("52AF"),
 //            row("52BF"),
 //            row("53F"),

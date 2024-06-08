@@ -1,7 +1,6 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 import no.ssb.kostra.SharedConstants.OSLO_MUNICIPALITY_ID
-import no.ssb.kostra.area.sosial.SosialCommon.calendarMonths
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.ANT_BARN_UNDER_18_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_AAP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.AVSL_ANNET_COL_NAME
@@ -25,7 +24,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMNR_K
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KOMMUNE_NR_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_KOMM_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANKBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
@@ -44,6 +43,7 @@ import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_I
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_SOSHJELP_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.YTELSE_TYPE_SOSHJ_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringConstants.FULLFORT_PROGRAM
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
 import no.ssb.kostra.program.Code
 import no.ssb.kostra.program.DATE6_PATTERN
 import no.ssb.kostra.program.DataType.DATE_TYPE
@@ -58,40 +58,47 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> = listOf(
         FieldDefinition(
             name = KOMMUNE_NR_COL_NAME,
+            description = "Kommunenummer",
             dataType = STRING_TYPE,
             size = 4,
             mandatory = true
         ),
         FieldDefinition(
             name = VERSION_COL_NAME,
+            description = "Rapporteringsår / versjon / oppgaveår",
             dataType = STRING_TYPE,
             size = 2,
             mandatory = true
         ),
         FieldDefinition(
             name = BYDELSNR_COL_NAME,
+            description = "Bydelsnummer",
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
             name = DISTRIKTSNR_COL_NAME,
+            description = "Distriktsnummer",
             dataType = STRING_TYPE,
             size = 2
         ),
         FieldDefinition(
             name = PERSON_JOURNALNR_COL_NAME,
+            description = "Journalnummer",
             dataType = STRING_TYPE,
             size = 8,
             mandatory = true
         ),
         FieldDefinition(
             name = PERSON_FODSELSNR_COL_NAME,
+            description = "Fødsels- og personnummer",
             dataType = STRING_TYPE,
             size = 11,
             mandatory = true
         ),
         FieldDefinition(
             name = KJONN_COL_NAME,
+            description = "Kjønn",
             codes = listOf(
                 Code("1", "Mann"),
                 Code("2", "Kvinne")
@@ -100,25 +107,30 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = EKTSTAT_COL_NAME,
+            description = "Sivilstand",
             codes = listOf(
                 Code("1", "Ugift"),
                 Code("2", "Gift"),
                 Code("3", "Samboer"),
                 Code("4", "Skilt/separert"),
                 Code("5", "Enke/enkemann")
-            )
+            ),
+            mandatory = true
         ),
         FieldDefinition(
             name = HAR_BARN_UNDER_18_COL_NAME,
+            description = "Har deltakeren barn under 18 år som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?",
             codes = yesNoCodeList,
             mandatory = true
         ),
         FieldDefinition(
             name = ANT_BARN_UNDER_18_COL_NAME,
+            description = "Hvis ja, hvor mange?",
             size = 2
         ),
         FieldDefinition(
             name = REG_DATO_COL_NAME,
+            description = "Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
@@ -126,6 +138,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = VEDTAK_DATO_COL_NAME,
+            description = "Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
@@ -133,6 +146,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = BEGYNT_DATO_COL_NAME,
+            description = "Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN,
@@ -140,10 +154,12 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_KOMM_COL_NAME,
+            description = "Kommer deltakeren fra kvalifiseringsprogram i annen kommune?",
             codes = yesNoCodeList
         ),
         FieldDefinition(
             name = KOMMNR_KVP_KOMM_COL_NAME,
+            description = "Hvis ja, velg kommunenummer fra liste",
             size = 4, // hentet fra https://www.ssb.no/klass/klassifikasjoner/131
             codes = listOf(
                 Code(OSLO_MUNICIPALITY_ID, "Oslo"),
@@ -172,7 +188,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1160", "Vindafjord"),
                 Code("1505", "Kristiansund"),
                 Code("1506", "Molde"),
-                Code("1507", "Ålesund"),
+                Code("1508", "Ålesund"),
                 Code("1511", "Vanylven"),
                 Code("1514", "Sande"),
                 Code("1515", "Herøy (Møre og Romsdal)"),
@@ -196,6 +212,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1577", "Volda"),
                 Code("1578", "Fjord"),
                 Code("1579", "Hustadvika"),
+                Code("1580", "Haram"),
                 Code("1804", "Bodø"),
                 Code("1806", "Narvik"),
                 Code("1811", "Bindal"),
@@ -212,7 +229,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1827", "Dønna"),
                 Code("1828", "Nesna"),
                 Code("1832", "Hemnes"),
-                Code("1833", "Rana"),
+                Code("1833", "Rana - Raane"),
                 Code("1834", "Lurøy"),
                 Code("1835", "Træna"),
                 Code("1836", "Rødøy"),
@@ -221,10 +238,10 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1839", "Beiarn"),
                 Code("1840", "Saltdal"),
                 Code("1841", "Fauske - Fuossko"),
-                Code("1845", "Sørfold"),
+                Code("1845", "Sørfold - Fuolldá"),
                 Code("1848", "Steigen"),
                 Code("1851", "Lødingen"),
-                Code("1853", "Evenes"),
+                Code("1853", "Evenes - Evená??i"),
                 Code("1856", "Røst"),
                 Code("1857", "Værøy"),
                 Code("1859", "Flakstad"),
@@ -233,61 +250,61 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("1866", "Hadsel"),
                 Code("1867", "Bø"),
                 Code("1868", "Øksnes"),
-                Code("1870", "Sortland"),
+                Code("1870", "Sortland - Suortá"),
                 Code("1871", "Andøy"),
                 Code("1874", "Moskenes"),
-                Code("1875", "Hamarøy"),
-                Code("3001", "Halden"),
-                Code("3002", "Moss"),
-                Code("3003", "Sarpsborg"),
-                Code("3004", "Fredrikstad"),
-                Code("3005", "Drammen"),
-                Code("3006", "Kongsberg"),
-                Code("3007", "Ringerike"),
-                Code("3011", "Hvaler"),
-                Code("3012", "Aremark"),
-                Code("3013", "Marker"),
-                Code("3014", "Indre Østfold"),
-                Code("3015", "Skiptvet"),
-                Code("3016", "Rakkestad"),
-                Code("3017", "Råde"),
-                Code("3018", "Våler (Viken)"),
-                Code("3019", "Vestby"),
-                Code("3020", "Nordre Follo"),
-                Code("3021", "Ås"),
-                Code("3022", "Frogn"),
-                Code("3023", "Nesodden"),
-                Code("3024", "Bærum"),
-                Code("3025", "Asker"),
-                Code("3026", "Aurskog-Høland"),
-                Code("3027", "Rælingen"),
-                Code("3028", "Enebakk"),
-                Code("3029", "Lørenskog"),
-                Code("3030", "Lillestrøm"),
-                Code("3031", "Nittedal"),
-                Code("3032", "Gjerdrum"),
-                Code("3033", "Ullensaker"),
-                Code("3034", "Nes"),
-                Code("3035", "Eidsvoll"),
-                Code("3036", "Nannestad"),
-                Code("3037", "Hurdal"),
-                Code("3038", "Hole"),
-                Code("3039", "Flå"),
-                Code("3040", "Nesbyen"),
-                Code("3041", "Gol"),
-                Code("3042", "Hemsedal"),
-                Code("3043", "Ål"),
-                Code("3044", "Hol"),
-                Code("3045", "Sigdal"),
-                Code("3046", "Krødsherad"),
-                Code("3047", "Modum"),
-                Code("3048", "Øvre Eiker"),
-                Code("3049", "Lier"),
-                Code("3050", "Flesberg"),
-                Code("3051", "Rollag"),
-                Code("3052", "Nore og Uvdal"),
-                Code("3053", "Jevnaker"),
-                Code("3054", "Lunner"),
+                Code("1875", "Hábmer - Hamarøy"),
+                Code("3101", "Halden"),
+                Code("3103", "Moss"),
+                Code("3105", "Sarpsborg"),
+                Code("3107", "Fredrikstad"),
+                Code("3110", "Hvaler"),
+                Code("3112", "Råde"),
+                Code("3114", "Våler (Østfold)"),
+                Code("3116", "Skiptvet"),
+                Code("3118", "Indre Østfold"),
+                Code("3120", "Rakkestad"),
+                Code("3122", "Marker"),
+                Code("3124", "Aremark"),
+                Code("3201", "Bærum"),
+                Code("3203", "Asker"),
+                Code("3205", "Lillestrøm"),
+                Code("3207", "Nordre Follo"),
+                Code("3209", "Ullensaker"),
+                Code("3212", "Nesodden"),
+                Code("3214", "Frogn"),
+                Code("3216", "Vestby"),
+                Code("3218", "Ås"),
+                Code("3220", "Enebakk"),
+                Code("3222", "Lørenskog"),
+                Code("3224", "Rælingen"),
+                Code("3226", "Aurskog-Høland"),
+                Code("3228", "Nes"),
+                Code("3230", "Gjerdrum"),
+                Code("3232", "Nittedal"),
+                Code("3234", "Lunner"),
+                Code("3236", "Jevnaker"),
+                Code("3238", "Nannestad"),
+                Code("3240", "Eidsvoll"),
+                Code("3242", "Hurdal"),
+                Code("3301", "Drammen"),
+                Code("3303", "Kongsberg"),
+                Code("3305", "Ringerike"),
+                Code("3310", "Hole"),
+                Code("3312", "Lier"),
+                Code("3314", "Øvre Eiker"),
+                Code("3316", "Modum"),
+                Code("3318", "Krødsherad"),
+                Code("3320", "Flå"),
+                Code("3322", "Nesbyen"),
+                Code("3324", "Gol"),
+                Code("3326", "Hemsedal"),
+                Code("3328", "Ål"),
+                Code("3330", "Hol"),
+                Code("3332", "Sigdal"),
+                Code("3334", "Flesberg"),
+                Code("3336", "Rollag"),
+                Code("3338", "Nore og Uvdal"),
                 Code("3401", "Kongsvinger"),
                 Code("3403", "Hamar"),
                 Code("3405", "Lillehammer"),
@@ -334,29 +351,29 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("3452", "Vestre Slidre"),
                 Code("3453", "Øystre Slidre"),
                 Code("3454", "Vang"),
-                Code("3801", "Horten"),
-                Code("3802", "Holmestrand"),
-                Code("3803", "Tønsberg"),
-                Code("3804", "Sandefjord"),
-                Code("3805", "Larvik"),
-                Code("3806", "Porsgrunn"),
-                Code("3807", "Skien"),
-                Code("3808", "Notodden"),
-                Code("3811", "Færder"),
-                Code("3812", "Siljan"),
-                Code("3813", "Bamble"),
-                Code("3814", "Kragerø"),
-                Code("3815", "Drangedal"),
-                Code("3816", "Nome"),
-                Code("3817", "Midt-Telemark"),
-                Code("3818", "Tinn"),
-                Code("3819", "Hjartdal"),
-                Code("3820", "Seljord"),
-                Code("3821", "Kviteseid"),
-                Code("3822", "Nissedal"),
-                Code("3823", "Fyresdal"),
-                Code("3824", "Tokke"),
-                Code("3825", "Vinje"),
+                Code("3901", "Horten"),
+                Code("3903", "Holmestrand"),
+                Code("3905", "Tønsberg"),
+                Code("3907", "Sandefjord"),
+                Code("3909", "Larvik"),
+                Code("3911", "Færder"),
+                Code("4001", "Porsgrunn"),
+                Code("4003", "Skien"),
+                Code("4005", "Notodden"),
+                Code("4010", "Siljan"),
+                Code("4012", "Bamble"),
+                Code("4014", "Kragerø"),
+                Code("4016", "Drangedal"),
+                Code("4018", "Nome"),
+                Code("4020", "Midt-Telemark"),
+                Code("4022", "Seljord"),
+                Code("4024", "Hjartdal"),
+                Code("4026", "Tinn"),
+                Code("4028", "Kviteseid"),
+                Code("4030", "Nissedal"),
+                Code("4032", "Fyresdal"),
+                Code("4034", "Tokke"),
+                Code("4036", "Vinje"),
                 Code("4201", "Risør"),
                 Code("4202", "Grimstad"),
                 Code("4203", "Arendal"),
@@ -425,14 +442,14 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("4649", "Stad"),
                 Code("4650", "Gloppen"),
                 Code("4651", "Stryn"),
-                Code("5001", "Trondheim"),
+                Code("5001", "Trondheim - Tråante"),
                 Code("5006", "Steinkjer"),
-                Code("5007", "Namsos"),
+                Code("5007", "Namsos - Nåavmesjenjaelmie"),
                 Code("5014", "Frøya"),
                 Code("5020", "Osen"),
                 Code("5021", "Oppdal"),
                 Code("5022", "Rennebu"),
-                Code("5025", "Røros"),
+                Code("5025", "Røros - Rossen"),
                 Code("5026", "Holtålen"),
                 Code("5027", "Midtre Gauldal"),
                 Code("5028", "Melhus"),
@@ -443,7 +460,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("5034", "Meråker"),
                 Code("5035", "Stjørdal"),
                 Code("5036", "Frosta"),
-                Code("5037", "Levanger"),
+                Code("5037", "Levanger - Levangke"),
                 Code("5038", "Verdal"),
                 Code("5041", "Snåase - Snåsa"),
                 Code("5042", "Lierne"),
@@ -463,53 +480,55 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 Code("5059", "Orkland"),
                 Code("5060", "Nærøysund"),
                 Code("5061", "Rindal"),
-                Code("5401", "Tromsø"),
-                Code("5402", "Harstad"),
-                Code("5403", "Alta"),
-                Code("5404", "Vardø"),
-                Code("5405", "Vadsø"),
-                Code("5406", "Hammerfest"),
-                Code("5411", "Kvæfjord"),
-                Code("5412", "Tjeldsund"),
-                Code("5413", "Ibestad"),
-                Code("5414", "Gratangen"),
-                Code("5415", "Loabák - Lavangen"),
-                Code("5416", "Bardu"),
-                Code("5417", "Salangen"),
-                Code("5418", "Målselv"),
-                Code("5419", "Sørreisa"),
-                Code("5420", "Dyrøy"),
-                Code("5421", "Senja"),
-                Code("5422", "Balsfjord"),
-                Code("5423", "Karlsøy"),
-                Code("5424", "Lyngen"),
-                Code("5425", "Storfjord - Omasvuotna - Omasvuono"),
-                Code("5426", "Gáivuotna - Kåfjord - Kaivuono"),
-                Code("5427", "Skjervøy"),
-                Code("5428", "Nordreisa"),
-                Code("5429", "Kvænangen"),
-                Code("5430", "Guovdageaidnu - Kautokeino"),
-                Code("5432", "Loppa"),
-                Code("5433", "Hasvik"),
-                Code("5434", "Måsøy"),
-                Code("5435", "Nordkapp"),
-                Code("5436", "Porsanger - Porsáŋgu - Porsanki"),
-                Code("5437", "Kárášjohka - Karasjok"),
-                Code("5438", "Lebesby"),
-                Code("5439", "Gamvik"),
-                Code("5440", "Berlevåg"),
-                Code("5441", "Deatnu - Tana"),
-                Code("5442", "Unjárga - Nesseby"),
-                Code("5443", "Båtsfjord"),
-                Code("5444", "Sør-Varanger")
+                Code("5501", "Tromsø"),
+                Code("5503", "Harstad - Hárstták"),
+                Code("5510", "Kvæfjord"),
+                Code("5512", "Dielddanuorri - Tjeldsund"),
+                Code("5514", "Ibestad"),
+                Code("5516", "Gratangen - Rivtták"),
+                Code("5518", "Loabák - Lavangen"),
+                Code("5520", "Bardu"),
+                Code("5522", "Salangen"),
+                Code("5524", "Målselv"),
+                Code("5526", "Sørreisa"),
+                Code("5528", "Dyrøy"),
+                Code("5530", "Senja"),
+                Code("5532", "Balsfjord"),
+                Code("5534", "Karlsøy"),
+                Code("5536", "Lyngen"),
+                Code("5538", "Storfjord - Omasvuotna - Omasvuono"),
+                Code("5540", "Gáivuotna - Kåfjord - Kaivuono"),
+                Code("5542", "Skjervøy"),
+                Code("5544", "Nordreisa - Ráisa - Raisi"),
+                Code("5546", "Kvænangen"),
+                Code("5601", "Alta"),
+                Code("5603", "Hammerfest - Hámmerfeasta"),
+                Code("5605", "Sør-Varanger"),
+                Code("5607", "Vadsø"),
+                Code("5610", "Kárášjohka - Karasjok"),
+                Code("5612", "Guovdageaidnu - Kautokeino"),
+                Code("5614", "Loppa"),
+                Code("5616", "Hasvik"),
+                Code("5618", "Måsøy"),
+                Code("5620", "Nordkapp"),
+                Code("5622", "Porsanger - Porsángu - Porsanki"),
+                Code("5624", "Lebesby"),
+                Code("5626", "Gamvik"),
+                Code("5628", "Deatnu - Tana"),
+                Code("5630", "Berlevåg"),
+                Code("5632", "Båtsfjord"),
+                Code("5634", "Vardø"),
+                Code("5636", "Unjárga - Nesseby"),
             )
         ),
         FieldDefinition(
             name = YTELSE_SOSHJELP_COL_NAME,
+            description = "Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser? Kan krysse av for flere svaralternativer)",
             code = Code("1", "Sosialhjelp")
         ),
         FieldDefinition(
             name = YTELSE_TYPE_SOSHJ_COL_NAME,
+            description = "Hvis sosialhjelp",
             codes = listOf(
                 Code("2", "Sosialhjelp som viktigste kilde til livsopphold"),
                 Code("3", "Supplerende sosialhjelp")
@@ -517,6 +536,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = YTELSE_INTRO_COL_NAME,
+            description = "Andre ytelser",
             code = Code("4", "Introduksjonsstønad")
         ),
         FieldDefinition(
@@ -529,6 +549,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = KVP_MED_ASTONAD_COL_NAME,
+            description = "Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)",
             codes = yesNoCodeList
         ),
         FieldDefinition(
@@ -536,7 +557,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             code = Code("4", "Kommunal bostøtte")
         ),
         FieldDefinition(
-            name = KVP_MED_HUSBANK_COL_NAME,
+            name = KVP_MED_HUSBANKBOS_COL_NAME,
             code = Code("5", "Husbankens bostøtte")
         ),
         FieldDefinition(
@@ -558,14 +579,76 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
             )
         ),
 
-        *calendarMonths,
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_1_COL_NAME,
+            description = "For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?",
+            size = 2,
+            code = Code("01", "Januar")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_2_COL_NAME,
+            size = 2,
+            code = Code("02", "Februar")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_3_COL_NAME,
+            size = 2,
+            code = Code("03", "Mars")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_4_COL_NAME,
+            size = 2,
+            code = Code("04", "April")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_5_COL_NAME,
+            size = 2,
+            code = Code("05", "Mai")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_6_COL_NAME,
+            size = 2,
+            code = Code("06", "Juni")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_7_COL_NAME,
+            size = 2,
+            code = Code("07", "Juli")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_8_COL_NAME,
+            size = 2,
+            code = Code("08", "August")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_9_COL_NAME,
+            size = 2,
+            code = Code("09", "September")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_10_COL_NAME,
+            size = 2,
+            code = Code("10", "Oktober")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_11_COL_NAME,
+            size = 2,
+            code = Code("11", "November")
+        ),
+        FieldDefinition(
+            name = SosialhjelpColumnNames.STMND_12_COL_NAME,
+            size = 2,
+            code = Code("12", "Desember")
+        ),
 
         FieldDefinition(
             name = KVP_STONAD_COL_NAME,
+            description = "Samlet utbetalt kvalifiseringsstønad i løpet av 2024",
             size = 7
         ),
         FieldDefinition(
             name = STATUS_COL_NAME,
+            description = "Hva er status for deltakelsen i kvalifiseringsprogrammet?",
             codes = listOf(
                 Code("1", "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"),
                 Code("2", "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"),
@@ -575,19 +658,21 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
                 ),
                 Code("4", "Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)"),
                 Code("5", "Deltakerens program ble avbrutt på grunn av flytting til annen kommune"),
-                Code("6", "Kun for Oslos bydeler: Deltakeren flyttet til annen bydel før programperioden var over"),
+                Code("6", "Kun for Oslos bydeler, Deltakeren flyttet til annen bydel før programperioden var over"),
                 Code("7", "Deltakerens program er avsluttet etter avbrudd")
             ),
             mandatory = true
         ),
         FieldDefinition(
             name = AVSL_DATO_COL_NAME,
+            description = "Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)",
             dataType = DATE_TYPE,
             size = 6,
             datePattern = DATE6_PATTERN
         ),
         FieldDefinition(
             name = AVSL_ORDINAERTARB_COL_NAME,
+            description = "Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)",
             size = 2,
             code = Code("01", "Ordinært arbeid (heltid/deltid)")
         ),
@@ -602,7 +687,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         FieldDefinition(
             name = AVSL_ARBMARK_COL_NAME,
             size = 2,
-            code = Code("03", " Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
+            code = Code("03", "Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)")
         ),
         FieldDefinition(
             name = AVSL_SKOLE_COL_NAME,
@@ -641,6 +726,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = AVSL_VIKTIGSTE_INNTEKT_COL_NAME,
+            description = "Hva var deltakerens viktigste inntektskilde umiddelbart etter avslutningen? (Kun ett kryss)",
             size = 2,
             codes = listOf(
                 Code("01", "Ordinært arbeid (heltid/deltid)"),
@@ -663,6 +749,7 @@ object KvalifiseringFieldDefinitions : FieldDefinitions {
         ),
         FieldDefinition(
             name = SAKSBEHANDLER_COL_NAME,
+            description = "Saksbehandlernummer",
             dataType = STRING_TYPE,
             size = 10
         )

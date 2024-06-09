@@ -18,6 +18,17 @@ abstract class PositionedFileValidator(
     abstract val validationRules: List<AbstractRule<List<KostraRecord>>>
     abstract val fieldDefinitions: FieldDefinitions
 
+    open fun getRecordsList(arguments: KotlinArguments) =
+        arguments
+            .getInputContentAsStringList()
+            .withIndex()
+            .map { (index, recordString) ->
+                recordString.toKostraRecord(
+                    index = index + 1,
+                    fieldDefinitions = fieldDefinitions.fieldDefinitions
+                )
+            }
+
     override fun validate(): ValidationResult {
         if (fieldDefinitions.fieldDefinitions.isEmpty())
             throw IndexOutOfBoundsException("validate(): fieldDefinitions are missing")
@@ -32,15 +43,7 @@ abstract class PositionedFileValidator(
                 numberOfControls = preValidationRules.size
             )
 
-        val kostraRecordList = arguments
-            .getInputContentAsStringList()
-            .withIndex()
-            .map { (index, recordString) ->
-                recordString.toKostraRecord(
-                    index = index + 1,
-                    fieldDefinitions = fieldDefinitions.fieldDefinitions
-                )
-            }
+        val kostraRecordList = getRecordsList(arguments)
 
         val validationReportEntries = validationRules
             .mapNotNull { it.validate(context = kostraRecordList, arguments = arguments) }

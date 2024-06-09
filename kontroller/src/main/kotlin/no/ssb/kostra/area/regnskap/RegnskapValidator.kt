@@ -1,9 +1,13 @@
 package no.ssb.kostra.area.regnskap
 
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.PositionedFileValidator
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*
@@ -90,4 +94,15 @@ abstract class RegnskapValidator(
         Rule185Funksjon465Drift(),
         Rule190Memoriakonti()
     )
+
+    override fun getRecordsList(arguments: KotlinArguments): List<KostraRecord> = arguments
+        .getInputContentAsStringList()
+        .withIndex()
+        .map { (index, recordString) ->
+            recordString.toKostraRecord(
+                index = index + 1,
+                fieldDefinitions = fieldDefinitions.fieldDefinitions
+            )
+        }
+        .filterNot { kostraRecord -> kostraRecord.fieldAsTrimmedString(FIELD_BELOP) == "0" }
 }

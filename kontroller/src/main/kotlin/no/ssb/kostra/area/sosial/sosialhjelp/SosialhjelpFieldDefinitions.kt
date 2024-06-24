@@ -71,10 +71,9 @@ import no.ssb.kostra.program.DataType.DATE_TYPE
 import no.ssb.kostra.program.DataType.STRING_TYPE
 import no.ssb.kostra.program.FieldDefinition.Companion.yesNoCodeList
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import no.ssb.kostra.program.extension.toFileDescription
 
 object SosialhjelpFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> =
-        FileDescriptionLoader
-            .getResourceAsFieldDefinitionList("filedescription_11F.yaml")
-            .buildFieldDefinitions()
+        "11F".toFileDescription().fields.buildFieldDefinitions()
 }

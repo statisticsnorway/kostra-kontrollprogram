@@ -23,7 +23,6 @@ class FileDescriptionTest : BehaviorSpec({
                     fields.size shouldBe 7
                     fields[0].dataType shouldBe DataType.STRING_TYPE
                 }
-                println(sut)
             }
         }
     }
@@ -73,6 +72,4 @@ class FileDescriptionTest : BehaviorSpec({
             }
         }
     }
-
-
 })

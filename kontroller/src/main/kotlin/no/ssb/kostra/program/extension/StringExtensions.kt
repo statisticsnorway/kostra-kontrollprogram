@@ -22,4 +22,4 @@ fun String.ageInYears(reportingYear: Int): Int? =
 
 fun String.toFileDescription(): FileDescription =
     ObjectMapper(YAMLFactory()).registerKotlinModule()
-        .readValue(File(ClassLoader.getSystemResource("filedescription_${this}.yaml").file)) as FileDescription
+        .readValue(File(ClassLoader.getSystemResource("file_description_${this}.yaml").file)) as FileDescription

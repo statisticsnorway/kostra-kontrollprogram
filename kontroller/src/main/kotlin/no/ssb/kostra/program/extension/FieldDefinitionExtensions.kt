@@ -1,6 +1,7 @@
 package no.ssb.kostra.program.extension
 
 import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.program.FieldDescription
 import java.util.concurrent.atomic.AtomicInteger
 
 fun FieldDefinition.codeListToString() = this.codeList.map { it.toString() }

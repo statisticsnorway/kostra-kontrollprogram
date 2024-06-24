@@ -20,27 +20,22 @@ fields:
     dataType: STRING_TYPE
     from: 7
     size: 2
-  - name: DISTRIKTSNR
-    description: Distriktsnummer
-    dataType: STRING_TYPE
-    from: 9
-    size: 2
   - name: PERSON_JOURNALNR
     description: Journalnummer
     dataType: STRING_TYPE
-    from: 11
+    from: 9
     size: 8
     mandatory: true
   - name: PERSON_FODSELSNR
     description: Fødsels- og personnummer
     dataType: STRING_TYPE
-    from: 19
+    from: 17
     size: 11
     mandatory: true
   - name: KJONN
     description: Kjønn
     dataType: STRING_TYPE
-    from: 30
+    from: 28
     size: 1
     mandatory: true
     codeList:
@@ -51,7 +46,7 @@ fields:
   - name: EKTSTAT
     description: Sivilstand
     dataType: STRING_TYPE
-    from: 31
+    from: 29
     size: 1
     mandatory: true
     codeList:
@@ -68,7 +63,7 @@ fields:
   - name: BU18
     description: Har deltakeren barn under 18 år som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?
     dataType: STRING_TYPE
-    from: 32
+    from: 30
     size: 1
     mandatory: true
     codeList:
@@ -79,38 +74,33 @@ fields:
   - name: ANTBU18
     description: Hvis ja, hvor mange?
     dataType: INTEGER_TYPE
-    from: 33
+    from: 31
     size: 2
-
-
-
-
-
   - name: REG_DATO
     description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ
     dataType: DATE_TYPE
-    from: 35
+    from: 33
     size: 6
     mandatory: true
     datePattern: ddMMyy
   - name: VEDTAK_DATO
     description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ
     dataType: DATE_TYPE
-    from: 41
+    from: 39
     size: 6
     mandatory: true
     datePattern: ddMMyy
   - name: BEGYNT_DATO
     description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ
     dataType: DATE_TYPE
-    from: 47
+    from: 45
     size: 6
     mandatory: true
     datePattern: ddMMyy
   - name: KVP_KOMM
     description: Kommer deltakeren fra kvalifiseringsprogram i annen kommune?
     dataType: STRING_TYPE
-    from: 53
+    from: 51
     size: 1
     codeList:
       - code: 1
@@ -120,7 +110,7 @@ fields:
   - name: KOMMNR_KVP_KOMM
     description: Hvis ja, velg kommunenummer fra liste
     dataType: STRING_TYPE
-    from: 54
+    from: 52
     size: 4
     codeList:
 # basert på kommuneinndelingen for 2024, https://www.ssb.no/klass/klassifikasjoner/131
@@ -841,7 +831,7 @@ fields:
   - name: YTELSE_SOSHJELP
     description: Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser? Kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
-    from: 58
+    from: 56
     size: 1
     codeList:
       - code: 1
@@ -849,7 +839,7 @@ fields:
   - name: YTELSE_TYPE_SOSHJ
     description: Hvis sosialhjelp
     dataType: STRING_TYPE
-    from: 59
+    from: 57
     size: 1
     codeList:
       - code: 2
@@ -859,21 +849,21 @@ fields:
   - name: YTELSE_INTRO
     description: Andre ytelser
     dataType: STRING_TYPE
-    from: 60
+    from: 58
     size: 1
     codeList:
       - code: 4
         value: Introduksjonsstønad
   - name: YTELSE_INDIVIDSTONAD
     dataType: STRING_TYPE
-    from: 61
+    from: 59
     size: 1
     codeList:
       - code: 5
         value: Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak
   - name: YTELSE_FOLKETRYGDL
     dataType: STRING_TYPE
-    from: 62
+    from: 60
     size: 1
     codeList:
       - code: 6
@@ -881,7 +871,7 @@ fields:
   - name: KVP_MED_ASTONAD
     description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
-    from: 63
+    from: 61
     size: 1
     codeList:
       - code: 1
@@ -891,7 +881,7 @@ fields:
   - name: KVP_MED_KOMMBOS
     description:
     dataType: STRING_TYPE
-    from: 64
+    from: 62
     size: 1
     codeList:
       - code: 4
@@ -899,7 +889,7 @@ fields:
   - name: KVP_MED_HUSBANKBOS
     description:
     dataType: STRING_TYPE
-    from: 65
+    from: 63
     size: 1
     codeList:
       - code: 5
@@ -907,7 +897,7 @@ fields:
   - name: KVP_MED_SOSHJ_ENGANG
     description:
     dataType: STRING_TYPE
-    from: 66
+    from: 64
     size: 1
     codeList:
       - code: 9
@@ -915,7 +905,7 @@ fields:
   - name: KVP_MED_SOSHJ_PGM
     description:
     dataType: STRING_TYPE
-    from: 67
+    from: 65
     size: 1
     codeList:
       - code: 8
@@ -923,7 +913,7 @@ fields:
   - name: KVP_MED_SOSHJ_SUP
     description:
     dataType: STRING_TYPE
-    from: 68
+    from: 66
     size: 1
     codeList:
       - code: 7
@@ -931,7 +921,7 @@ fields:
   - name: STMND_1
     description: For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?
     dataType: STRING_TYPE
-    from: 69
+    from: 67
     size: 2
     codeList:
       - code: 01
@@ -939,7 +929,7 @@ fields:
   - name: STMND_2
     description:
     dataType: STRING_TYPE
-    from: 71
+    from: 69
     size: 2
     codeList:
       - code: 02
@@ -947,7 +937,7 @@ fields:
   - name: STMND_3
     description:
     dataType: STRING_TYPE
-    from: 73
+    from: 71
     size: 2
     codeList:
       - code: 03
@@ -955,7 +945,7 @@ fields:
   - name: STMND_4
     description:
     dataType: STRING_TYPE
-    from: 75
+    from: 73
     size: 2
     codeList:
       - code: 04
@@ -963,7 +953,7 @@ fields:
   - name: STMND_5
     description:
     dataType: STRING_TYPE
-    from: 77
+    from: 75
     size: 2
     codeList:
       - code: 05
@@ -971,7 +961,7 @@ fields:
   - name: STMND_6
     description:
     dataType: STRING_TYPE
-    from: 79
+    from: 77
     size: 2
     codeList:
       - code: 06
@@ -979,7 +969,7 @@ fields:
   - name: STMND_7
     description:
     dataType: STRING_TYPE
-    from: 81
+    from: 79
     size: 2
     codeList:
       - code: 07
@@ -987,7 +977,7 @@ fields:
   - name: STMND_8
     description:
     dataType: STRING_TYPE
-    from: 83
+    from: 81
     size: 2
     codeList:
       - code: 08
@@ -995,7 +985,7 @@ fields:
   - name: STMND_9
     description:
     dataType: STRING_TYPE
-    from: 85
+    from: 83
     size: 2
     codeList:
       - code: 09
@@ -1003,7 +993,7 @@ fields:
   - name: STMND_10
     description:
     dataType: STRING_TYPE
-    from: 87
+    from: 85
     size: 2
     codeList:
       - code: 10
@@ -1011,7 +1001,7 @@ fields:
   - name: STMND_11
     description:
     dataType: STRING_TYPE
-    from: 89
+    from: 87
     size: 2
     codeList:
       - code: 11
@@ -1019,7 +1009,7 @@ fields:
   - name: STMND_12
     description:
     dataType: STRING_TYPE
-    from: 91
+    from: 89
     size: 2
     codeList:
       - code: 12
@@ -1027,12 +1017,12 @@ fields:
   - name: KVP_STONAD
     description: Samlet utbetalt kvalifiseringsstønad i løpet av 2024
     dataType: INTEGER_TYPE
-    from: 93
+    from: 91
     size: 7
   - name: STATUS
     description: Hva er status for deltakelsen i kvalifiseringsprogrammet?
     dataType: STRING_TYPE
-    from: 100
+    from: 98
     size: 1
     mandatory: true
     codeList:
@@ -1053,13 +1043,13 @@ fields:
   - name: AVSL_DATO
     description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
     dataType: DATE_TYPE
-    from: 101
+    from: 99
     size: 6
     datePattern: ddMMyy
   - name: AVSL_ORDINAERTARB
     description: Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
-    from: 107
+    from: 105
     size: 2
     codeList:
       - code: 01
@@ -1067,7 +1057,7 @@ fields:
   - name: AVSL_ARBLONNSTILS
     description:
     dataType: STRING_TYPE
-    from: 109
+    from: 107
     size: 2
     codeList:
       - code: 11
@@ -1075,7 +1065,7 @@ fields:
   - name: AVSL_ARBMARK
     description:
     dataType: STRING_TYPE
-    from: 111
+    from: 109
     size: 2
     codeList:
       - code: 03
@@ -1083,7 +1073,7 @@ fields:
   - name: AVSL_SKOLE
     description:
     dataType: STRING_TYPE
-    from: 113
+    from: 111
     size: 2
     codeList:
       - code: 04
@@ -1091,7 +1081,7 @@ fields:
   - name: AVSL_UFORE
     description:
     dataType: STRING_TYPE
-    from: 115
+    from: 113
     size: 2
     codeList:
       - code: 13
@@ -1099,7 +1089,7 @@ fields:
   - name: AVSL_AAP
     description:
     dataType: STRING_TYPE
-    from: 117
+    from: 115
     size: 2
     codeList:
       - code: 14
@@ -1107,7 +1097,7 @@ fields:
   - name: AVSL_OK_AVKLAR
     description:
     dataType: STRING_TYPE
-    from: 119
+    from: 117
     size: 2
     codeList:
       - code: 15
@@ -1115,7 +1105,7 @@ fields:
   - name: AVSL_UTEN_OK_AVKLAR
     description:
     dataType: STRING_TYPE
-    from: 121
+    from: 119
     size: 2
     codeList:
       - code: 16
@@ -1123,7 +1113,7 @@ fields:
   - name: AVSL_ANNET
     description:
     dataType: STRING_TYPE
-    from: 123
+    from: 121
     size: 2
     codeList:
       - code: 10
@@ -1131,7 +1121,7 @@ fields:
   - name: AVSL_UKJENT
     description:
     dataType: STRING_TYPE
-    from: 125
+    from: 123
     size: 2
     codeList:
       - code: 17
@@ -1139,7 +1129,7 @@ fields:
   - name: AVSL_VIKTIGSTE_INNTEKT
     description: Hva var deltakerens viktigste inntektskilde umiddelbart etter avslutningen? (Kun ett kryss)
     dataType: STRING_TYPE
-    from: 127
+    from: 125
     size: 2
     codeList:
       - code: 01
@@ -1165,5 +1155,5 @@ fields:
   - name: SAKSBEHANDLER
     description: Saksbehandlernummer
     dataType: STRING_TYPE
-    from: 129
+    from: 127
     size: 10

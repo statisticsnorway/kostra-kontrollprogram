@@ -6,8 +6,6 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.validation.PositionedFileValidator
-import no.ssb.kostra.validation.report.Severity
-import no.ssb.kostra.validation.report.ValidationResult
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.Rule001RecordLength
 import no.ssb.kostra.validation.rule.regnskap.*

@@ -88,12 +88,12 @@ class SosialhjelpMainTest : BehaviorSpec({
                     reportString shouldContain "Kontrollrapport"
                 }
 
-                if (!hasAttachment){
-                    Then("validationResult.severity should be OK"){
+                if (!hasAttachment) {
+                    Then("validationResult.severity should be OK") {
                         validationResult.severity shouldBe Severity.OK
                     }
 
-                    Then("reportString should contain expected text"){
+                    Then("reportString should contain expected text") {
                         reportString shouldContain "Det er krysset av i skjemaet at det ikke finnes deltakere " +
                                 "og fil som kun inneholder et mellomrom er levert."
                     }

@@ -8,8 +8,8 @@ fun List<FieldDescription>.buildFieldDefinitions(): List<FieldDefinition> =
     AtomicInteger(1)
         .let { columnIndex ->
             this.map {
-                    it.toFieldDefinition(from = columnIndex.getAndAdd(it.size))
-                }
+                it.toFieldDefinition(from = columnIndex.getAndAdd(it.size))
+            }
         }
 
 

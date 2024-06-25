@@ -19,8 +19,3 @@ fun String.ageInYears(reportingYear: Int): Int? =
     SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId = this)?.let { dateOfBirth ->
         reportingYear - dateOfBirth.year
     }
-
-// TODO: to be removed
-fun String.toFileDescription(): FileDescription =
-    ObjectMapper(YAMLFactory()).registerKotlinModule()
-        .readValue(File(ClassLoader.getSystemResource("file_description_${this}.yaml").file)) as FileDescription

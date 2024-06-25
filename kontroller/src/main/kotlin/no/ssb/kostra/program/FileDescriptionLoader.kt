@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -12,7 +13,7 @@ object FileDescriptionLoader {
     private val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
     fun getResourceAsFieldDefinitionList(fileName: String): List<FieldDefinition> =
-        getResourceAsFileDescription(fileName).fields
+        getResourceAsFileDescription(fileName).fields.buildFieldDefinitions()
 
 
     fun getResourceAsFileDescription(fileName: String): FileDescription =

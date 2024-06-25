@@ -9,17 +9,35 @@ import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringFieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions
+import no.ssb.kostra.program.extension.buildFieldDefinitions
 import no.ssb.kostra.program.extension.toFileDescription
 
 class FileDescriptionTest : BehaviorSpec({
 
     Given("FileDescription with default values") {
-        val sut = "test".toFileDescription()
+        val sut = FileDescription()
 
         When("FileDescription is created") {
             Then("FileDescription should be as expected") {
                 assertSoftly(sut) {
-                    title shouldBe "Filebeskrivelse"
+                    title shouldBe "File description"
+                    reportingYear shouldBe 0
+                    description shouldBe "Default file description"
+                    fields.size shouldBe 0
+
+                }
+            }
+        }
+    }
+
+    Given("FileDescription with test values") {
+        val sut = FileDescriptionLoader
+            .getResourceAsFileDescription("file_description_test.yaml")
+
+        When("FileDescription is created") {
+            Then("FileDescription should be as expected") {
+                assertSoftly(sut) {
+                    title shouldBe "Filbeskrivelse"
                     fields.size shouldBe 7
                     fields[0].dataType shouldBe DataType.STRING_TYPE
                 }

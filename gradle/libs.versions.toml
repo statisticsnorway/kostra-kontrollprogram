@@ -1,5 +1,5 @@
 [versions]
-micronautPlatform = "4.4.3"
+micronautPlatform = "4.5.0"
 kotlin = "2.0.0"
 jackson = "2.17.1"
 kotest = "5.9.1"

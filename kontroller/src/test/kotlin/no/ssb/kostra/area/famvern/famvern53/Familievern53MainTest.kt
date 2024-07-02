@@ -38,7 +38,7 @@ class Familievern53MainTest : BehaviorSpec({
             ),
             row(
                 "validating a valid record string",
-                argumentsInTest(fylke = "30"),
+                argumentsInTest(fylke = "03"),
                 NUMBER_OF_VALIDATIONS,
                 0
             ),
@@ -76,7 +76,7 @@ class Familievern53MainTest : BehaviorSpec({
                 .plus(
                     mapOf(
                         Familievern53ColumnNames.FYLKE_NR_COL_NAME to fylke,
-                        Familievern53ColumnNames.KONTORNR_COL_NAME to "017",
+                        Familievern53ColumnNames.KONTORNR_COL_NAME to "038",
                     )
                 )
                 .plus(

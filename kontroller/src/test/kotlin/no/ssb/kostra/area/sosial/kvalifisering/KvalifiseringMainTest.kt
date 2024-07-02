@@ -114,7 +114,7 @@ class KvalifiseringMainTest : BehaviorSpec({
                 KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME to "1",
 
                 KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME to "1",
-                KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME to "5",
+                KvalifiseringColumnNames.KVP_MED_HUSBANKBOS_COL_NAME to "5",
                 KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME to "9",
                 KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME to "8",
                 KvalifiseringColumnNames.KVP_MED_SOSHJ_SUP_COL_NAME to "7",

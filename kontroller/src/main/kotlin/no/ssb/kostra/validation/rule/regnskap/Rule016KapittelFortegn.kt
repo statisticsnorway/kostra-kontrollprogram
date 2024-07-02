@@ -12,8 +12,10 @@ class Rule016KapittelFortegn : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { kostraRecord -> kostraRecord.isBalanseRegnskap()
-                && kostraRecord[FIELD_KAPITTEL] in setOf("5900", "5970") }
+        .filter { kostraRecord ->
+            kostraRecord.isBalanseRegnskap()
+                    && kostraRecord[FIELD_KAPITTEL] in setOf("5900", "5970")
+        }
         .filterNot { 0 <= it.fieldAsIntOrDefault(FIELD_BELOP) }
         .map { kostraRecord ->
             val belop5900 = if (kostraRecord[FIELD_KAPITTEL] == "5900")

@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANKBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
@@ -63,7 +63,7 @@ class Rule027MottattOkonomiskSosialhjelp : AbstractRule<List<KostraRecord>>(
     companion object {
         private val fieldNamesToCheck = setOf(
             KVP_MED_KOMMBOS_COL_NAME,
-            KVP_MED_HUSBANK_COL_NAME,
+            KVP_MED_HUSBANKBOS_COL_NAME,
             KVP_MED_SOSHJ_ENGANG_COL_NAME,
             KVP_MED_SOSHJ_PGM_COL_NAME,
             KVP_MED_SOSHJ_SUP_COL_NAME

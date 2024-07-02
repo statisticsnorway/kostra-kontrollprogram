@@ -102,6 +102,16 @@ class Rule002FileDescriptionTest : BehaviorSpec({
                 "FAIL!",
             ),
             row(
+                "Field is integer, but incorrect content. Defined as Float with comma as separator",
+                templateFieldDefinition.copy(dataType = INTEGER_TYPE),
+                "  3,5",
+            ),
+            row(
+                "Field is integer, but incorrect content. Defined as Float with period as separator",
+                templateFieldDefinition.copy(dataType = INTEGER_TYPE),
+                "  3.5",
+            ),
+            row(
                 "Field is date, but incorrect content",
                 templateFieldDefinition.copy(dataType = DATE_TYPE, from = 1, size = 8, datePattern = "ddMMyyyy"),
                 "BIG FAIL",

@@ -1,0 +1,55 @@
+---
+title: TEST Filbeskrivelse
+reportingYear: 2024
+description: Beskrivelse for filbeskrivelse
+fields:
+  - name: FIELD1
+    description: description
+    dataType: STRING_TYPE
+    from: 1
+    size: 4
+    mandatory: true
+  - name: FIELD2
+    description: Rapporteringsår / versjon / Oppgaveår
+    dataType: STRING_TYPE
+    from: 5
+    size: 2
+    mandatory: true
+  - name: BYDELSNR
+    description: Bydelsnummer
+    dataType: STRING_TYPE
+    from: 7
+    size: 2
+  - name: DISTRIKTSNR
+    description: Distriktsnummer
+    dataType: STRING_TYPE
+    from: 9
+    size: 2
+  - name: EKTSTAT
+    description: Hva er mottakerens sivilstand/sivilstatus ved siste kontakt?
+    dataType: STRING_TYPE
+    from: 11
+    size: 1
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Ugift
+      - code: 2
+        value: Gift
+      - code: 3
+        value: Samboer
+      - code: 4
+        value: Skilt/separert
+      - code: 5
+        value: Enke/enkemann
+  - name: ANTBU18
+    description: Hvis ja, hvor mange?
+    dataType: INTEGER_TYPE
+    from: 12
+    size: 2
+  - name: VEDTAKDATO
+    description: Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)
+    dataType: DATE_TYPE
+    from: 14
+    size: 6
+    datePattern: ddMMyy

@@ -13,6 +13,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 import java.time.LocalDate
+import java.time.Month
 
 class Rule016BegyntDato : AbstractRule<List<KostraRecord>>(
     KvalifiseringRuleId.BEGYNT_DATO_16.title,
@@ -23,10 +24,13 @@ class Rule016BegyntDato : AbstractRule<List<KostraRecord>>(
         .filter {
             it.fieldAs<LocalDate?>(BEGYNT_DATO_COL_NAME) == null
                     ||
-                    it.fieldAs<Int>(VERSION_COL_NAME).yearWithCentury()
-                        .minus(it.fieldAs<LocalDate>(BEGYNT_DATO_COL_NAME).year) > 4
+                    arguments.aargang.toInt().minus(it.fieldAs<LocalDate>(BEGYNT_DATO_COL_NAME).year) > 4
+                    ||
+                    it.fieldAs<LocalDate>(BEGYNT_DATO_COL_NAME) >
+                    LocalDate.of(arguments.aargang.toInt(), Month.DECEMBER, 31)
 
-        }.map {
+        }
+        .map {
             createValidationReportEntry(
                 "Feltet for 'Hvilken dato begynte deltakeren i program? (iverksettelse)' med " +
                         "verdien (${it[BEGYNT_DATO_COL_NAME]}) enten mangler utfylling, har " +
@@ -37,5 +41,6 @@ class Rule016BegyntDato : AbstractRule<List<KostraRecord>>(
                 caseworker = it[SAKSBEHANDLER_COL_NAME],
                 journalId = it[PERSON_JOURNALNR_COL_NAME],
             )
-        }.ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

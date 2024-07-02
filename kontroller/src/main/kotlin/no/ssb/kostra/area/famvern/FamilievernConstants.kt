@@ -8,11 +8,11 @@ object FamilievernConstants {
     )
 
     val kontorFylkeRegionMappingList = listOf(
-        KontorFylkeRegionMapping("017", "30", "667600"),
-        KontorFylkeRegionMapping("023", "30", "667600"),
-        KontorFylkeRegionMapping("024", "30", "667600"),
-        KontorFylkeRegionMapping("025", "30", "667600"),
-        KontorFylkeRegionMapping("027", "30", "667600"),
+        KontorFylkeRegionMapping("017", "31", "667600"),
+        KontorFylkeRegionMapping("023", "32", "667600"),
+        KontorFylkeRegionMapping("024", "32", "667600"),
+        KontorFylkeRegionMapping("025", "32", "667600"),
+        KontorFylkeRegionMapping("027", "32", "667600"),
         KontorFylkeRegionMapping("030", "03", "667600"),
         KontorFylkeRegionMapping("037", "03", "667600"),
         KontorFylkeRegionMapping("038", "03", "667600"),
@@ -20,12 +20,12 @@ object FamilievernConstants {
         KontorFylkeRegionMapping("046", "34", "667600"),
         KontorFylkeRegionMapping("047", "34", "667600"),
         KontorFylkeRegionMapping("052", "34", "667600"),
-        KontorFylkeRegionMapping("061", "30", "667500"),
-        KontorFylkeRegionMapping("065", "30", "667500"),
-        KontorFylkeRegionMapping("071", "38", "667500"),
-        KontorFylkeRegionMapping("073", "38", "667500"),
-        KontorFylkeRegionMapping("081", "38", "667500"),
-        KontorFylkeRegionMapping("082", "38", "667500"),
+        KontorFylkeRegionMapping("061", "33", "667500"),
+        KontorFylkeRegionMapping("065", "33", "667500"),
+        KontorFylkeRegionMapping("071", "39", "667500"),
+        KontorFylkeRegionMapping("073", "39", "667500"),
+        KontorFylkeRegionMapping("081", "40", "667500"),
+        KontorFylkeRegionMapping("082", "40", "667500"),
         KontorFylkeRegionMapping("091", "42", "667500"),
         KontorFylkeRegionMapping("101", "42", "667500"),
         KontorFylkeRegionMapping("111", "11", "667400"),
@@ -44,11 +44,11 @@ object FamilievernConstants {
         KontorFylkeRegionMapping("183", "18", "667200"),
         KontorFylkeRegionMapping("184", "18", "667200"),
         KontorFylkeRegionMapping("185", "18", "667200"),
-        KontorFylkeRegionMapping("192", "54", "667200"),
-        KontorFylkeRegionMapping("193", "54", "667200"),
-        KontorFylkeRegionMapping("194", "54", "667200"),
-        KontorFylkeRegionMapping("202", "54", "667200"),
-        KontorFylkeRegionMapping("203", "54", "667200"),
-        KontorFylkeRegionMapping("205", "54", "667200")
+        KontorFylkeRegionMapping("192", "55", "667200"),
+        KontorFylkeRegionMapping("193", "55", "667200"),
+        KontorFylkeRegionMapping("194", "55", "667200"),
+        KontorFylkeRegionMapping("202", "56", "667200"),
+        KontorFylkeRegionMapping("203", "56", "667200"),
+        KontorFylkeRegionMapping("205", "56", "667200")
     )
 }

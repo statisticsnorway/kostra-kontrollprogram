@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.sosial.SosialRuleId
 
 class Rule005Fodselsnummer : AbstractNoArgsRule<List<KostraRecord>>(
     SosialRuleId.FODSELSNUMMER_05.title,
-    Severity.WARNING
+    Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filterNot { isValidSocialSecurityIdOrDnr(it.fieldAs(PERSON_FODSELSNR_COL_NAME)) }

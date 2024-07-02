@@ -25,6 +25,7 @@ class KommuneKostraMain(
         "500000",  // Trøndelag
     )
 
+    @SuppressWarnings("Duplicates")
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -36,6 +37,7 @@ class KommuneKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings("Duplicates")
     private val fylkeskommunaleFunksjoner = listOf(
         // @formatter:off
         "400", "410", "420", "421", "430",
@@ -152,6 +154,7 @@ class KommuneKostraMain(
 
 
     // Arter
+    @SuppressWarnings("Duplicates")
     private val basisArter = listOf(
         // @formatter:off
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
@@ -189,6 +192,7 @@ class KommuneKostraMain(
         }.sorted()
     } else emptyList()
 
+    @SuppressWarnings("Duplicates")
     override val sektorList =
         if (arguments.skjema in listOf("0B", "0D", "0J", "0L", "0N", "0Q"))
         // Sektorer
@@ -230,6 +234,7 @@ class KommuneKostraMain(
         // @formatter:on
     )
 
+    @SuppressWarnings("Duplicates")
     override val validationRules = commonValidationRules()
         .plus(
             commonKostraValidationRules(

@@ -52,15 +52,15 @@ class FileDescriptionLoaderTest : BehaviorSpec({
 //            row("0Q"),
 //            row("0F"),
 //            row("0X"),
-            row("11F Økonomisk sosialhjelp", "11F"),
-            row("11CF Kvalifiseringsstønad", "11CF"),
-//            row("52AF"),
+            row("11F Økonomisk sosialhjelp", "11F", 322),
+            row("11CF Kvalifiseringsstønad", "11CF", 136),
+//            row("52AF Familievernsaker, klientrapportering", "52AF", 144),
 //            row("52BF"),
 //            row("53F"),
 //            row("55F"),
 //            row("FAIL"),
 
-        ) { description, schema ->
+        ) { description, schema, recordLength ->
             When("comparing consecutive FieldDefinitions for $description") {
                 val sut = FileDescriptionLoader
                     .getResourceAsFileDescription("file_description_$schema.yaml")
@@ -71,6 +71,19 @@ class FileDescriptionLoaderTest : BehaviorSpec({
                         all { (a, b) -> a.from + a.size == b.from }
                     }
                 }
+            }
+
+            When("last field definition is found for $description"){
+                val sut = FileDescriptionLoader
+                    .getResourceAsFileDescription("file_description_$schema.yaml")
+                val fieldDefinition = sut.fields.buildFieldDefinitions().last()
+
+                Then("length of all fields should be as expected, $recordLength") {
+                    assertSoftly(fieldDefinition) {
+                        it.to shouldBe recordLength
+                    }
+                }
+
             }
         }
     }

@@ -19,6 +19,12 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
             *codesThatRequiresDate.map {
                 ForAllRowItem(
                     "status that requires date, $it",
+                    kostraRecordInTest(it, startDateInTest),
+                )
+            }.toTypedArray(),
+            *codesThatRequiresDate.map {
+                ForAllRowItem(
+                    "status that requires date, $it",
                     kostraRecordInTest(it, endDateInTest),
                 )
             }.toTypedArray(),
@@ -35,12 +41,43 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
                             "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                             "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                 )
+            }.toTypedArray(),
+            *codesThatRequiresDate.map {
+                ForAllRowItem(
+                    "status that requires date $it, expect error",
+                    kostraRecordInTest(it, previousYearDateInTest),
+                    "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
+                            "dersom det er krysset av for svaralternativ [" +
+                            "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
+                            "(gjelder ikke flytting), " +
+                            "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
+                            "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                            "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
+                            "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
+                )
+            }.toTypedArray(),
+            *codesThatRequiresDate.map {
+                ForAllRowItem(
+                    "status that requires date $it, expect error",
+                    kostraRecordInTest(it, nextYearDateInTest),
+                    "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
+                            "dersom det er krysset av for svaralternativ [" +
+                            "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
+                            "(gjelder ikke flytting), " +
+                            "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
+                            "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                            "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
+                            "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
+                )
             }.toTypedArray()
         )
     )
 }) {
     companion object {
-        private val endDateInTest = "0101$twoDigitReportingYear"
+        private val startDateInTest = "0101$twoDigitReportingYear"
+        private val endDateInTest = "3112$twoDigitReportingYear"
+        private val previousYearDateInTest = "0101${twoDigitReportingYear - 1}"
+        private val nextYearDateInTest = "0101${twoDigitReportingYear + 1}"
 
         private fun kostraRecordInTest(
             status: String,

@@ -12,6 +12,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.kvalifisering.KvalifiseringRuleId
 import java.time.LocalDate
+import java.time.Month
 
 class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
     KvalifiseringRuleId.DATO_FOR_AVSLUTTET_PROGRAM_37.title,
@@ -20,7 +21,15 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
         .filter {
             it[STATUS_COL_NAME] in codesThatRequiresDate
-                    && it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
+                    && (
+                    it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
+                            ||
+                            it.fieldAs<LocalDate>(AVSL_DATO_COL_NAME) <
+                                    LocalDate.of(arguments.aargang.toInt(), Month.JANUARY, 1)
+                            ||
+                            it.fieldAs<LocalDate>(AVSL_DATO_COL_NAME) >
+                            LocalDate.of(arguments.aargang.toInt(), Month.DECEMBER, 31)
+                    )
         }
         .map {
             createValidationReportEntry(

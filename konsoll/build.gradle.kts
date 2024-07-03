@@ -1,8 +1,8 @@
 application { mainClass = "no.ssb.kostra.program.KostraKontrollprogramCommand" }
 
 plugins {
-    id("com.github.johnrengelman.shadow")
     application
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 dependencies {

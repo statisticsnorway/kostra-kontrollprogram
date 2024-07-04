@@ -113,7 +113,7 @@ fields:
     from: 52
     size: 4
     codeList:
-# basert på kommuneinndelingen for 2024, https://www.ssb.no/klass/klassifikasjoner/131
+      # basert på kommuneinndelingen for 2024, https://www.ssb.no/klass/klassifikasjoner/131
       - code: 0301
         value: Oslo
       - code: 1101

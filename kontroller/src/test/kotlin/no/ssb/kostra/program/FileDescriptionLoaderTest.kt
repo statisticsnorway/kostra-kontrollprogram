@@ -73,7 +73,7 @@ class FileDescriptionLoaderTest : BehaviorSpec({
                 }
             }
 
-            When("last field definition is found for $description"){
+            When("last field definition is found for $description") {
                 val sut = FileDescriptionLoader
                     .getResourceAsFileDescription("file_description_$schema.yaml")
                 val fieldDefinition = sut.fields.buildFieldDefinitions().last()

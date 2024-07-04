@@ -25,7 +25,7 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
                     it.fieldAs<LocalDate?>(AVSL_DATO_COL_NAME) == null
                             ||
                             it.fieldAs<LocalDate>(AVSL_DATO_COL_NAME) <
-                                    LocalDate.of(arguments.aargang.toInt(), Month.JANUARY, 1)
+                            LocalDate.of(arguments.aargang.toInt(), Month.JANUARY, 1)
                             ||
                             it.fieldAs<LocalDate>(AVSL_DATO_COL_NAME) >
                             LocalDate.of(arguments.aargang.toInt(), Month.DECEMBER, 31)

@@ -1,12 +1,6 @@
 package no.ssb.kostra.program.extension
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import no.ssb.kostra.program.FileDescription
 import no.ssb.kostra.program.util.SsnValidationUtils
-import java.io.File
 
 fun String.valueOrNull() = if (this.trim() in setOf("", "0")) null else this
 

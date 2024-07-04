@@ -11,20 +11,19 @@ dependencies {
     ksp("io.micronaut.validation:micronaut-validation-processor")
     ksp("io.micronaut.openapi:micronaut-openapi")
 
+    implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.validation:micronaut-validation")
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
+    implementation("io.projectreactor:reactor-core")
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.logback.classic)
+    implementation(libs.swagger.annotations)
 
     implementation(project(":kostra-kontroller"))
 
     runtimeOnly("org.yaml:snakeyaml")
     runtimeOnly("io.micronaut:micronaut-jackson-databind")
-    implementation("io.micronaut.validation:micronaut-validation")
-    implementation("io.micronaut:micronaut-http-server-netty")
-    implementation("io.micronaut.views:micronaut-views-thymeleaf")
-
-    implementation("io.projectreactor:reactor-core")
-    implementation(libs.swagger.annotations)
-    implementation(libs.logback.classic)
 
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("io.projectreactor:reactor-test")

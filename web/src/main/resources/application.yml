@@ -27,7 +27,6 @@ api:
   description: "API for Kostra Kontrollprogram web-applikasjon"
 
 iu-innstillinger:
-  aarganger: [ 2023,2024 ]
   skjematyper:
     - id: 0A
       tittel: "0A. Bevilgningsregnskap for kommuner"

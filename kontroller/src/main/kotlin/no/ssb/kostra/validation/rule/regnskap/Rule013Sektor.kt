@@ -5,7 +5,6 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isAktiva
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
 class Rule013Sektor(
@@ -18,13 +17,13 @@ class Rule013Sektor(
             if (sektorList.first() == "   ")
                 createValidationReportEntry(
                     messageText = "Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. " +
-                                "Posisjoner for sektorkoder skal være blanke",
+                            "Posisjoner for sektorkoder skal være blanke",
                     lineNumbers = listOf(kostraRecord.lineNumber)
                 )
             else
                 createValidationReportEntry(
                     messageText = "Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. " +
-                                "Korrigér sektor til en av '${sektorList.joinToString(", ")}'",
+                            "Korrigér sektor til en av '${sektorList.joinToString(", ")}'",
                     lineNumbers = listOf(kostraRecord.lineNumber),
                     severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
                 )

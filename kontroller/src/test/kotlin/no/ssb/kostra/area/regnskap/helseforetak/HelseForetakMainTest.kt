@@ -25,8 +25,8 @@ class HelseForetakMainTest : BehaviorSpec({
             }.toTypedArray(),
 
             *setOf(
-                "0X" to 7,
-                "0Y" to 5
+                "0X" to 6,
+                "0Y" to 4,
             ).map { (skjema, expectedNumberOfControls) ->
                 row(
                     "For $skjema, validating an empty record string",

@@ -18,21 +18,21 @@ class KommuneKostraMainTest : BehaviorSpec({
         forAll(
             *regions.flatMap { region ->
                 mapOf(
-                    "0A" to 8,
-                    "0B" to 7,
-                    "0C" to 8,
-                    "0D" to 7,
-                    "0I" to 8,
-                    "0J" to 7,
-                    "0K" to 8,
-                    "0L" to 7,
-                    "0M" to 8,
-                    "0N" to 7,
-                    "0P" to 8,
-                    "0Q" to 7,
+                    "0A" to 7,
+                    "0B" to 6,
+                    "0C" to 7,
+                    "0D" to 6,
+                    "0I" to 7,
+                    "0J" to 6,
+                    "0K" to 7,
+                    "0L" to 6,
+                    "0M" to 7,
+                    "0N" to 6,
+                    "0P" to 7,
+                    "0Q" to 6,
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
-                        "skjema = $skjema, region = $region -> validating an empty record string",
+                        "validating an empty record string -> skjema = $skjema, region = $region",
                         KotlinArguments(
                             skjema = skjema,
                             aargang = RuleTestData.argumentsInTest.aargang,
@@ -45,7 +45,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                 }.plus(
                     validSkjemaTypes.map { skjema ->
                         row(
-                            "skjema = $skjema, region = $region -> validating an invalid record string",
+                            "validating an invalid record string -> skjema = $skjema, region = $region",
                             KotlinArguments(
                                 skjema = skjema,
                                 aargang = RuleTestData.argumentsInTest.aargang,
@@ -57,21 +57,21 @@ class KommuneKostraMainTest : BehaviorSpec({
                         )
                     }).plus(
                     mapOf(
-                        "0A" to 3,
+                        "0A" to 2,
                         "0B" to 4,
-                        "0C" to 3,
+                        "0C" to 2,
                         "0D" to 4,
-                        "0I" to 2,
+                        "0I" to 1,
                         "0J" to 4,
-                        "0K" to 2,
+                        "0K" to 1,
                         "0L" to 4,
-                        "0M" to 3,
+                        "0M" to 2,
                         "0N" to 4,
-                        "0P" to 3,
+                        "0P" to 2,
                         "0Q" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
-                            "skjema = $skjema, region = $region -> validating a valid record string",
+                            "validating a valid record string -> skjema = $skjema, region = $region",
                             argumentsInTest(
                                 argumentsSkjema = skjema,
                                 recordSkjema = skjema,
@@ -84,7 +84,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                     })
             }.toTypedArray(),
             row(
-                "skjema = 0A, region = 123400 -> validating a valid record string with invalid data",
+                "validating a valid record string with invalid data -> skjema = 0A, region = 123400",
                 argumentsInTest(
                     argumentsSkjema = "0A",
                     recordSkjema = "0A",
@@ -93,7 +93,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                     recordVersion = "XXXX"
                 ),
                 NUMBER_OF_VALIDATIONS,
-                4
+                3
             )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {

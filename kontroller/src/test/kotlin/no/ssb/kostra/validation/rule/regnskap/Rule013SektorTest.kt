@@ -1,67 +1,65 @@
 package no.ssb.kostra.validation.rule.regnskap
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_BELOP
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SEKTOR
-import no.ssb.kostra.program.FieldDefinition
+import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_SKJEMA
+import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.extension.asList
 import no.ssb.kostra.program.extension.toKostraRecord
-import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.rule.ForAllRowItem
+import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule013SektorTest : BehaviorSpec({
-    Given("context") {
-        val sut = Rule013Sektor(
-            sektorList = listOf("100", "400")
-        )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, size = 3))
+    include("Content",
+        KostraTestFactory.validationRuleNoArgsTest(
+            sut = Rule013Sektor(sektorList = listOf("100", "400")),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "wrong skjema",
+                kostraRecordsInTest("0A", "999")
+            ),
+            ForAllRowItem(
+                "correct skjema, wrong sektor",
+                kostraRecordsInTest("0B", "999"),
+                expectedErrorMessage = "Fant ugyldig sektor '999'. Korrigér sektor til en av '100, 400'"
+            ),
+            ForAllRowItem(
+                "correct skjema, correct sektor from list",
+                kostraRecordsInTest("0B", "100")
+            ),
+        ),
+    )
 
-        When("valid list of KostraRecord") {
-            val kostraRecordList = listOf(
-                "100".toKostraRecord(1, fieldDefinitions),
-                "400".toKostraRecord(2, fieldDefinitions)
-            )
-
-            Then("validation should pass with no errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldBeNull()
-            }
-        }
-
-        When("invalid list of KostraRecord") {
-            val kostraRecordList = listOf(
-                "XXX".toKostraRecord(1, fieldDefinitions)
-            )
-
-            Then("validation should result in errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
-            }
-        }
+    include("No content",
+        KostraTestFactory.validationRuleNoArgsTest(
+            sut = Rule013Sektor(sektorList = listOf("   ")),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "wrong skjema",
+                kostraRecordsInTest("0A", "888")
+            ),
+            ForAllRowItem(
+                "correct skjema, wrong sektor",
+                kostraRecordsInTest("0B", "888"),
+                expectedErrorMessage = "Fant ugyldig sektor '888'. Posisjoner for sektorkoder skal være blanke"
+            ),
+            ForAllRowItem(
+                "correct skjema, correct blank sektor from empty list",
+                kostraRecordsInTest("0B", "   ")
+            ),
+        ),
+    )
+}) {
+    companion object {
+        private fun kostraRecordsInTest(
+            skjema: String,
+            sektor: String,
+        ) = mapOf(
+            FIELD_SKJEMA to skjema,
+            FIELD_SEKTOR to sektor,
+            FIELD_BELOP to "0"
+        ).toKostraRecord(1, RegnskapFieldDefinitions.fieldDefinitions).asList()
     }
-
-    Given("no context") {
-        val sut = Rule013Sektor(
-            sektorList = emptyList()
-        )
-        val fieldDefinitions = listOf(FieldDefinition(name = FIELD_SEKTOR, from = 1, size = 3))
-
-        When("valid list of KostraRecord") {
-            val kostraRecordList = listOf(
-                "100".toKostraRecord(1, fieldDefinitions),
-                "400".toKostraRecord(2, fieldDefinitions)
-            )
-
-            Then("validation should pass with no errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
-            }
-        }
-
-        When("invalid list of KostraRecord") {
-            val kostraRecordList = listOf(
-                "XXX".toKostraRecord(1, fieldDefinitions)
-            )
-
-            Then("validation should result in errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
-            }
-        }
-    }
-})
+}

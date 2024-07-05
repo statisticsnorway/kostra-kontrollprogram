@@ -17,7 +17,20 @@ class KommuneKostraMainTest : BehaviorSpec({
     Given("KommuneKostraMain") {
         forAll(
             *regions.flatMap { region ->
-                validSkjemaTypes.map { skjema ->
+                mapOf(
+                    "0A" to 8,
+                    "0B" to 7,
+                    "0C" to 8,
+                    "0D" to 7,
+                    "0I" to 8,
+                    "0J" to 7,
+                    "0K" to 8,
+                    "0L" to 7,
+                    "0M" to 8,
+                    "0N" to 7,
+                    "0P" to 8,
+                    "0Q" to 7,
+                ).map { (skjema, expectedNumberOfControls) ->
                     row(
                         "skjema = $skjema, region = $region -> validating an empty record string",
                         KotlinArguments(
@@ -27,7 +40,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                             inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
                         ),
                         NUMBER_OF_VALIDATIONS,
-                        7
+                        expectedNumberOfControls
                     )
                 }.plus(
                     validSkjemaTypes.map { skjema ->
@@ -44,17 +57,17 @@ class KommuneKostraMainTest : BehaviorSpec({
                         )
                     }).plus(
                     mapOf(
-                        "0A" to 2,
+                        "0A" to 3,
                         "0B" to 4,
-                        "0C" to 2,
+                        "0C" to 3,
                         "0D" to 4,
-                        "0I" to 1,
+                        "0I" to 2,
                         "0J" to 4,
-                        "0K" to 1,
+                        "0K" to 2,
                         "0L" to 4,
-                        "0M" to 2,
+                        "0M" to 3,
                         "0N" to 4,
-                        "0P" to 2,
+                        "0P" to 3,
                         "0Q" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
@@ -80,7 +93,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                     recordVersion = "XXXX"
                 ),
                 NUMBER_OF_VALIDATIONS,
-                3
+                4
             )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {

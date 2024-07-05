@@ -31,7 +31,7 @@ class Rule140OverforingerDriftInvestering : AbstractNoArgsRule<List<KostraRecord
             createSingleReportEntryList(
                 messageText = "Korrigér i fila slik at differansen ($overforingDifferanse) i " +
                         "overføringer mellom drifts- ($driftOverforinger) og investeringsregnskapet " +
-                        "($investeringOverforinger) stemmer overens."
+                        "($investeringOverforinger) stemmer overens (margin på +/- 30')"
             )
         }
 }

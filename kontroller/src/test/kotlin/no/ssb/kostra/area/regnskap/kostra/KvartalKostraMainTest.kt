@@ -18,9 +18,9 @@ class KvartalKostraMainTest : BehaviorSpec({
         forAll(
             *regions.flatMap { region ->
                 mapOf(
-                    "0AK1" to 6,
+                    "0AK1" to 7,
                     "0BK1" to 6,
-                    "0CK1" to 6,
+                    "0CK1" to 7,
                     "0DK1" to 6
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
@@ -49,9 +49,9 @@ class KvartalKostraMainTest : BehaviorSpec({
                         )
                     }).plus(
                     mapOf(
-                        "0AK1" to 1,
+                        "0AK1" to 2,
                         "0BK1" to 2,
-                        "0CK1" to 2,
+                        "0CK1" to 3,
                         "0DK1" to 2
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
@@ -68,9 +68,9 @@ class KvartalKostraMainTest : BehaviorSpec({
                     }
                 ).plus(
                     mapOf(
-                        "0AK1" to 2,
+                        "0AK1" to 3,
                         "0BK1" to 3,
-                        "0CK1" to 3,
+                        "0CK1" to 4,
                         "0DK1" to 3
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(

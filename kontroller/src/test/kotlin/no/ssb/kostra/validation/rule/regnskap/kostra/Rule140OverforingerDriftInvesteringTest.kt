@@ -62,7 +62,7 @@ class Rule140OverforingerDriftInvesteringTest : BehaviorSpec({
                     kostraRecordInTest("420400", "0A", 0, 970, -131)
                 ),
                 expectedErrorMessage = "Korrigér i fila slik at differansen (-31) i overføringer mellom " +
-                        "drifts- (100) og investeringsregnskapet (-131) stemmer overens."
+                        "drifts- (100) og investeringsregnskapet (-131) stemmer overens (margin på +/- 30')"
             ),
             ForAllRowItem(
                 "sum of belop is 31",
@@ -71,7 +71,7 @@ class Rule140OverforingerDriftInvesteringTest : BehaviorSpec({
                     kostraRecordInTest("420400", "0A", 0, 970, -100)
                 ),
                 expectedErrorMessage = "Korrigér i fila slik at differansen (31) i overføringer mellom " +
-                        "drifts- (131) og investeringsregnskapet (-100) stemmer overens."
+                        "drifts- (131) og investeringsregnskapet (-100) stemmer overens (margin på +/- 30')"
             )
         )
     )

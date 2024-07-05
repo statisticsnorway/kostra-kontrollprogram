@@ -27,7 +27,8 @@ class Rule095SummeringInvesteringDifferanse : AbstractNoArgsRule<List<KostraReco
             val investeringDifferanse = investeringUtgifter + investeringInntekter
             createSingleReportEntryList(
                 messageText = "Korrigér differansen ($investeringDifferanse) mellom inntekter " +
-                        "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet"
+                        "($investeringInntekter) og utgifter ($investeringUtgifter) i investeringsregnskapet " +
+                        "(margin på +/- 30')"
             )
         }
 }

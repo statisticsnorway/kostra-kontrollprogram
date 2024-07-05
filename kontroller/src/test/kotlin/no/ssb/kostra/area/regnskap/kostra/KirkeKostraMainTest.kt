@@ -30,7 +30,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 )
             }.toTypedArray(),
             *setOf(
-                "0F" to 7,
+                "0F" to 8,
                 "0G" to 6
             ).map { (skjema, expectedNumberOfControls) ->
                 row(
@@ -46,7 +46,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                 )
             }.toTypedArray(),
             *setOf(
-                "0F" to 0,
+                "0F" to 1,
                 "0G" to 5
             ).map { (skjema, expectedNumberOfControls) ->
                 row(
@@ -61,7 +61,7 @@ class KirkeKostraMainTest : BehaviorSpec({
                     "skjema $skjema -> validating a valid record string with invalid data",
                     argumentsInTest(recordVersion = "XXXX"),
                     NUMBER_OF_VALIDATIONS,
-                    1
+                    2
                 )
             }.toTypedArray(),
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->

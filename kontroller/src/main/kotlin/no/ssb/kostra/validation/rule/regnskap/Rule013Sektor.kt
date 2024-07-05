@@ -9,17 +9,22 @@ import no.ssb.kostra.validation.rule.AbstractRule
 class Rule013Sektor(
     val sektorList: List<String>
 ) : AbstractRule<List<KostraRecord>>("Kontroll 013 : Sektor", Severity.ERROR) {
-    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) =
-        if (sektorList.isEmpty()) null
-        else context
-            .filter { kostraRecord -> sektorList.none { it == kostraRecord[FIELD_SEKTOR] } }
-            .map { kostraRecord ->
+    override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
+        .filter { kostraRecord -> sektorList.none { it == kostraRecord[FIELD_SEKTOR] } }
+        .map { kostraRecord ->
+            if (sektorList.isEmpty())
+                createValidationReportEntry(
+                    messageText = "Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. " +
+                                "Posisjoner for sektorkoder skal være blanke",
+                    lineNumbers = listOf(kostraRecord.lineNumber)
+                )
+            else
                 createValidationReportEntry(
                     messageText = """Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. 
                                 Korrigér sektor til en av '${sektorList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber),
                     severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
                 )
-            }
-            .ifEmpty { null }
+        }
+        .ifEmpty { null }
 }

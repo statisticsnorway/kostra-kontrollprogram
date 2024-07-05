@@ -50,7 +50,7 @@ class Rule013SektorTest : BehaviorSpec({
             )
 
             Then("validation should pass with no errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldBeNull()
+                sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
             }
         }
 
@@ -60,7 +60,7 @@ class Rule013SektorTest : BehaviorSpec({
             )
 
             Then("validation should result in errors") {
-                sut.validate(kostraRecordList, argumentsInTest).shouldBeNull()
+                sut.validate(kostraRecordList, argumentsInTest).shouldNotBeNull()
             }
         }
     }

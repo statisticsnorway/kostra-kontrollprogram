@@ -41,6 +41,24 @@ class FileDescriptionLoaderTest : BehaviorSpec({
             }
         }
     }
+
+    Given("a file description that is empty") {
+        val sut = FileDescriptionLoader
+            .getResourceAsFileDescription("file_description_empty.yml")
+
+        When("FileDescription is created") {
+            Then("FileDescription should be as expected") {
+                assertSoftly(sut) {
+                    title shouldBe "File description"
+                    reportingYear shouldBe 0
+                    description shouldBe "Default file description"
+                    fields.size shouldBe 0
+
+                }
+            }
+        }
+    }
+
     Given("a set of FileDescription") {
         forAll(
 //            row("0AK1"),

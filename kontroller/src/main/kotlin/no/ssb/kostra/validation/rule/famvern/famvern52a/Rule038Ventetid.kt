@@ -9,7 +9,6 @@ import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import java.time.LocalDate
-import java.time.Period
 
 class Rule038Ventetid : AbstractNoArgsRule<List<KostraRecord>>(
     Familievern52aRuleId.FAMILIEVERN52A_RULE038.title,
@@ -24,9 +23,9 @@ class Rule038Ventetid : AbstractNoArgsRule<List<KostraRecord>>(
             it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null
                     && it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
                     && it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME)
-                        .plusYears(1L)
-                        .plusDays(1L)
-                        .isAfter(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
+                .plusYears(1L)
+                .plusDays(1L)
+                .isAfter(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
         }
         .map {
             createValidationReportEntry(

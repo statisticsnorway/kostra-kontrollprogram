@@ -18,6 +18,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         .filterNot { it[VKLO_COL_NAME] == "3" }
         .filterNot { it[TRYGDESIT_COL_NAME] in validCodes }
         .map {
+            require(fieldDefinitions.isNotEmpty())
             val vklo = fieldDefinitions
                 .byColumnName(VKLO_COL_NAME)
                 .codeList

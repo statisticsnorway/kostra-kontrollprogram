@@ -18,7 +18,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         .filterNot { it[VKLO_COL_NAME] == "3" }
         .filterNot { it[TRYGDESIT_COL_NAME] in validCodes }
         .map {
-            val value = fieldDefinitions
+            val vklo = fieldDefinitions
                 .byColumnName(VKLO_COL_NAME)
                 .codeList
                 .firstOrNull { item -> item.code == it[VKLO_COL_NAME] }
@@ -30,7 +30,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
                 .filter { item -> item.code in validCodes }
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${value}. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
+                        "er ${vklo}. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
                         "forventet én av '(${codeList})'. Feltet er obligatorisk å fylle ut."
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],

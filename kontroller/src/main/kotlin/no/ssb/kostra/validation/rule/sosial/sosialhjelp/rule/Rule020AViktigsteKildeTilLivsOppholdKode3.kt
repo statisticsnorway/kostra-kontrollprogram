@@ -3,7 +3,6 @@ package no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VKLO_COL_NAME
-import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.byColumnName

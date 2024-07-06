@@ -27,7 +27,15 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
                         "sosial-/NAV-kontoret er Arbeidsinntekt. " +
                         "Trygdesituasjonen er '(00)', forventet én av '([12=Har ingen trygd/pensjon])'. " +
                         "Feltet er obligatorisk å fylle ut.",
-            )
+            ),
+            ForAllRowItem(
+                "vkloCode = ' ', trygdesitCode = 00",
+                kostraRecordInTest(" ", "00"),
+                expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
+                        "sosial-/NAV-kontoret er ukjent. " +
+                        "Trygdesituasjonen er '(00)', forventet én av '([12=Har ingen trygd/pensjon])'. " +
+                        "Feltet er obligatorisk å fylle ut.",
+            ),
         )
     )
 }) {

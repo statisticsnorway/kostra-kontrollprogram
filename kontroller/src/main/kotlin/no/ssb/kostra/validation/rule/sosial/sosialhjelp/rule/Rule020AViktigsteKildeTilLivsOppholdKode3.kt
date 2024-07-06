@@ -4,6 +4,7 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.TRYGDESIT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VKLO_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.validation.report.Severity
@@ -18,15 +19,13 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         .filterNot { it[VKLO_COL_NAME] == "3" }
         .filterNot { it[TRYGDESIT_COL_NAME] in validCodes }
         .map {
-            val value = SosialhjelpFieldDefinitions
-                .fieldDefinitions
+            val value = fieldDefinitions
                 .byColumnName(VKLO_COL_NAME)
                 .codeList
                 .firstOrNull { item -> item.code == it[VKLO_COL_NAME] }
                 ?.value
                 ?: "ukjent"
-            val codeList = SosialhjelpFieldDefinitions
-                .fieldDefinitions
+            val codeList = fieldDefinitions
                 .byColumnName(TRYGDESIT_COL_NAME)
                 .codeList
                 .filter { item -> item.code in validCodes }

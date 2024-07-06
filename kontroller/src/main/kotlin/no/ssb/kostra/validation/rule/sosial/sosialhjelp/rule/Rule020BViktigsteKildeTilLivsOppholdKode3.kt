@@ -20,10 +20,7 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         .map {
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${
-                            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
-                                .firstOrNull { item -> item.code == it[VKLO_COL_NAME] }?.value ?: "Ukjent"
-                        }. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
+                        "er Trygd/pensjon. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
                         "forventet én av '(${
                             fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList
                                 .filter { item -> item.code in validCodes }

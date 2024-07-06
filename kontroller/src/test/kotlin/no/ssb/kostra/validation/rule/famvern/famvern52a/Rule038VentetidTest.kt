@@ -37,6 +37,18 @@ class Rule038VentetidTest: BehaviorSpec({
                 expectedErrorMessage = "Dato for primærklientens henvendelse '31122021' til " +
                         "familievernkontoret er mer enn 1 år før første behandlingssamtale '01012023'."
             ),
+            ForAllRowItem(
+                "invalid date, invalid day",
+                kostraRecordInTest("32102023", "02022023"),
+                expectedErrorMessage = "Dato for primærklientens henvendelse '32102023' til " +
+                        "familievernkontoret er mer enn 1 år før første behandlingssamtale '02022023'."
+            ),
+            ForAllRowItem(
+                "invalid date, illegal characters",
+                kostraRecordInTest("XXXXXXXX", "02022023"),
+                expectedErrorMessage = "Dato for primærklientens henvendelse 'XXXXXXXX' til " +
+                        "familievernkontoret er mer enn 1 år før første behandlingssamtale '02022023'."
+            ),
         )
     )
 }) {

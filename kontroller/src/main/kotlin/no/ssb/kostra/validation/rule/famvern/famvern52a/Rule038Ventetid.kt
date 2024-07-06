@@ -20,22 +20,19 @@ class Rule038Ventetid : AbstractNoArgsRule<List<KostraRecord>>(
             it[HENV_DATO_A_COL_NAME].isNotBlank()
                     && it[FORSTE_SAMT_A_COL_NAME].isNotBlank()
         }
-        .filter {
+        .filterNot {
             it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null
                     && it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null
                     && it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME)
                         .plusYears(1L)
-                        .isBefore(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
+                        .plusDays(1L)
+                        .isAfter(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
         }
         .map {
-            val henvendelsesDato = it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME)
-            val samtaleDato = it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME)
-            val period = Period.between(henvendelsesDato, samtaleDato)
-
             createValidationReportEntry(
                 messageText = "Dato for primærklientens henvendelse '${it[HENV_DATO_A_COL_NAME]}' " +
                         "til familievernkontoret er mer enn 1 år før første behandlingssamtale " +
-                        "'${it[FORSTE_SAMT_A_COL_NAME]}'." + period.toString(),
+                        "'${it[FORSTE_SAMT_A_COL_NAME]}'.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KONTOR_NR_A_COL_NAME],

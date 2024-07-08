@@ -10,10 +10,10 @@ import java.nio.file.NoSuchFileException
 
 class FamilievernConstantsTest : BehaviorSpec({
 
-    Given("a file name of an NON-exsisting mapping file") {
+    Given("a file name of an NON-existing mapping file") {
         val fileName = "non_existing_mapping_file.yaml"
 
-        When("opening NON-exsisting mapping file") {
+        When("opening the NON-existing mapping file") {
             val thrown = shouldThrow<NoSuchFileException> {
                 FamilievernConstants.getResourceAsMappingDescription(fileName)
             }
@@ -23,8 +23,8 @@ class FamilievernConstantsTest : BehaviorSpec({
         }
     }
 
-    Given("an empty mapping file") {
-        When("opening empty mapping filen") {
+    Given("a file name of an empty mapping file") {
+        When("opening the empty mapping file") {
             val thrown = shouldThrow<MismatchedInputException> {
                 FamilievernConstants.getResourceAsMappingDescription("empty_file.yaml")
             }
@@ -34,10 +34,37 @@ class FamilievernConstantsTest : BehaviorSpec({
         }
     }
 
+    Given("a file name of a mapping file") {
+        val fileName = "mapping_familievern_region_fylke_kontor.yaml"
+
+        When("opening the mapping file") {
+
+            val result = FamilievernConstants.getResourceAsMappingDescription(fileName)
+
+            Then("result is not empty and should contain data") {
+                result.isNotEmpty()
+                result.shouldContain(
+                    FamilievernConstants.KontorFylkeRegionMapping(
+                        region = "667200",
+                        fylke = "03",
+                        kontor = "030",
+                    ),
+                )
+                result.shouldContain(
+                    FamilievernConstants.KontorFylkeRegionMapping(
+                        region = "667600",
+                        fylke = "56",
+                        kontor = "205",
+                    ),
+                )
+            }
+        }
+    }
+
     Given("FamilievernConstants.kontorFylkeRegionMappingList") {
         val sut = FamilievernConstants.kontorFylkeRegionMappingList
 
-        Then("kontorFylkeRegionMappingList should not be empty") {
+        Then("kontorFylkeRegionMappingList should not be empty and should contain data") {
             sut.isNotEmpty()
             sut.shouldContain(
                 FamilievernConstants.KontorFylkeRegionMapping(

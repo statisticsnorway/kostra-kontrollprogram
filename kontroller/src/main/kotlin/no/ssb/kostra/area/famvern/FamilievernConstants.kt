@@ -43,7 +43,5 @@ object FamilievernConstants {
             }
             ?: throw NoSuchFileException("Famvern mapping file not found. File name = $fileName")
 
-
-    val kontorFylkeRegionMappingList =
-        getResourceAsMappingDescription(FILENAME)
+    val kontorFylkeRegionMappingList = getResourceAsMappingDescription(FILENAME)
 }

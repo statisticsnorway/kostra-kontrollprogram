@@ -61,23 +61,13 @@ class FileDescriptionLoaderTest : BehaviorSpec({
 
     Given("a set of FileDescription") {
         forAll(
-//            row("0AK1"),
-//            row("0A"),
-//            row("0B"),
-//            row("0I"),
-//            row("0J"),
-//            row("0N"),
-//            row("0Q"),
-//            row("0F"),
-//            row("0X"),
             row("11F Økonomisk sosialhjelp", "11F", 322),
             row("11CF Kvalifiseringsstønad", "11CF", 136),
-//            row("52AF Familievernsaker, klientrapportering", "52AF", 144),
-//            row("52BF"),
-//            row("53F"),
-//            row("55F"),
-//            row("FAIL"),
-
+            row("52AF Familievernsaker, klientrapportering", "52AF", 151),
+            row("52BF Gruppeskjema for familievernet", "52BF", 86),
+            row("53F Utadrettet virksomhet i familieverntjenesten", "53F", 61),
+            row("55F Meklingssaker i familieverntjenesten", "55F", 986),
+            row("Alle regnskapsskjema", "Regnskap", 48),
         ) { description, schema, recordLength ->
             When("comparing consecutive FieldDefinitions for $description") {
                 val sut = FileDescriptionLoader
@@ -98,12 +88,11 @@ class FileDescriptionLoaderTest : BehaviorSpec({
 
                 Then("length of all fields should be as expected, $recordLength") {
                     assertSoftly(fieldDefinition) {
-                        it.to shouldBe recordLength
+                        it.from + it.size - 1 shouldBe recordLength
                     }
                 }
 
             }
         }
     }
-
 })

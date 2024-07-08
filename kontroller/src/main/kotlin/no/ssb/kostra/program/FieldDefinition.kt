@@ -5,12 +5,12 @@ import no.ssb.kostra.program.DataType.*
 data class FieldDefinition(
     val name: String,
     val description: String? = null,
-    val dataType: DataType = INTEGER_TYPE,
     val from: Int = 0,
-    val codeList: List<Code> = emptyList(),
+    val size: Int = 1,
+    val dataType: DataType = INTEGER_TYPE,
     val datePattern: String = "",
     val mandatory: Boolean = false,
-    val size: Int = 1
+    val codeList: List<Code> = emptyList(),
 ) {
     constructor(
         name: String,

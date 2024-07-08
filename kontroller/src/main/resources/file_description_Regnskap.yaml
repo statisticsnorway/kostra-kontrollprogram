@@ -1,0 +1,48 @@
+title: Regnskap
+reportingYear: 2024
+description: Filbeskrivelse for alle regnskap for 2024 som blir rapportert via skjema.ssb.no
+fields:
+  - name: skjema
+    from: 1
+    size: 2
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: aargang
+    from: 3
+    size: 4
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: kvartal
+    from: 7
+    size: 1
+    dataType: STRING_TYPE
+  - name: region
+    from: 8
+    size: 6
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: orgnr
+    from: 14
+    size: 9
+    dataType: STRING_TYPE
+  - name: foretaksnr
+    from: 23
+    size: 9
+    dataType: STRING_TYPE
+  - name: kontoklasse
+    from: 32
+    size: 1
+    dataType: STRING_TYPE
+  - name: funksjon_kapittel
+    from: 33
+    size: 4
+    dataType: STRING_TYPE
+  - name: art_sektor
+    from: 37
+    size: 3
+    dataType: STRING_TYPE
+  - name: belop
+    from: 40
+    size: 9
+    dataType: INTEGER_TYPE
+    mandatory: true

@@ -1,0 +1,118 @@
+title: 52BF Gruppeskjema for familievernet
+reportingYear: 2024
+description: Filbeskrivelse for 52BF Gruppeskjema for familievernet for 2024
+fields:
+  - name: REGION_NR_B
+    from: 1
+    size: 6
+    dataType: STRING_TYPE
+  - name: KONTOR_NR_B
+    from: 7
+    size: 3
+    dataType: STRING_TYPE
+  - name: GRUPPE_NR_B
+    from: 10
+    size: 6
+    dataType: STRING_TYPE
+  - name: GRUPPE_NAVN_B
+    from: 16
+    size: 30
+    dataType: STRING_TYPE
+  - name: DATO_GRSTART_B
+    from: 46
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy
+  - name: STRUKTUR_GR_B
+    from: 54
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Par
+      - code: 2
+        value: Barn (under 18 år)
+      - code: 3
+        value: Individ
+      - code: 4
+        value: Familie
+      - code: 5
+        value: Foreldre
+  - name: HOVEDI_GR_B
+    from: 55
+    size: 2
+    dataType: STRING_TYPE
+    codeList:
+      - code: 01
+        value: Samlivskurs
+      - code: 02
+        value: Samlivsbrudd
+      - code: 03
+        value: Samarbeid om barn etter brudd
+      - code: 04
+        value: Barn som har opplevd brudd i familien
+      - code: 05
+        value: Vold/overgrep
+      - code: 06
+        value: Sinnemestring
+      - code: 07
+        value: Kultur-/Minoritetsspørsmål
+      - code: 08
+        value: Foreldreveiledning
+      - code: 09
+        value: Foreldre som har mistet omsorgen for egne barn
+      - code: 10
+        value: Andre alvorlige hendelser
+      - code: 11
+        value: "Annet, spesifiser"
+  - name: ANTMOTERTOT_IARET_B
+    from: 57
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTMOTERTOT_OPPR_B
+    from: 60
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TIMERTOT_IARET_B
+    from: 63
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TIMERTOT_OPPR_B
+    from: 66
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTDELT_IARET_B
+    from: 69
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTDELT_OPPR_B
+    from: 72
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTTER_GRUPPEB_B
+    from: 75
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: TOLK_B
+    from: 77
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: STATUS_ARETSSL_B
+    from: 78
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Gruppebehandlingen ikke avsluttet i inneværende år
+      - code: 2
+        value: Avsluttet
+  - name: DATO_GRAVSLUTN_B
+    from: 79
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy

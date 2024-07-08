@@ -6,7 +6,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Rule038VentetidTest: BehaviorSpec({
+class Rule038VentetidTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule038Ventetid(),

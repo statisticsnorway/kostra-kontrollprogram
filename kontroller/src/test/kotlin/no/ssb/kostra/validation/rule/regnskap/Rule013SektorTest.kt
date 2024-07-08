@@ -12,7 +12,8 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
 class Rule013SektorTest : BehaviorSpec({
-    include("Content",
+    include(
+        "Content",
         KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule013Sektor(sektorList = listOf("100", "400")),
             expectedSeverity = Severity.ERROR,
@@ -32,7 +33,8 @@ class Rule013SektorTest : BehaviorSpec({
         ),
     )
 
-    include("No content",
+    include(
+        "No content",
         KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule013Sektor(sektorList = listOf("   ")),
             expectedSeverity = Severity.ERROR,

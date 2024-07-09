@@ -1,5 +1,6 @@
 package no.ssb.kostra.program
 
+import java.nio.file.NoSuchFileException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -12,6 +13,7 @@ data class KostraRecord(
 ) {
     operator fun get(field: String) = fieldAsString(field)
 
+    @Throws(NoSuchFieldException::class)
     fun fieldAsString(field: String): String = valuesByName.getOrElse(field) {
         throw NoSuchFieldException("fieldAsString(): $field is missing")
     }
@@ -33,6 +35,7 @@ data class KostraRecord(
         defaultValue
     }
 
+    @Throws(IndexOutOfBoundsException::class)
     fun fieldAsLocalDate(field: String): LocalDate? {
         val definition = fieldDefinition(field)
         val pattern = definition.datePattern.trim()
@@ -48,6 +51,7 @@ data class KostraRecord(
         }
     }
 
+    @Throws(NoSuchFieldException::class)
     internal fun fieldDefinition(name: String): FieldDefinition =
         fieldDefinitionByName.getOrElse(name) {
             throw NoSuchFieldException("fieldDefinitionByName(): $name is missing")

@@ -36,8 +36,12 @@ object FamilievernConstants {
 
     data class KontorFylkeRegionMapping(val kontor: String, val fylke: String, val region: String)
 
+    @Throws(NoSuchFileException::class)
     fun getResourceAsMappingDescription(fileName: String): MappingDescription =
-        this::class.java.classLoader.getResourceAsStream(fileName)
+        FamilievernConstants::class
+            .java
+            .classLoader
+            .getResourceAsStream(fileName)
             ?.let { inputStream -> InputStreamReader(inputStream) }
             ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
             ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as MappingDescription? }

@@ -17,7 +17,7 @@ object FamilievernConstants {
         val description: String,
         val year: Int,
         val regions: List<MappingRegion>
-    ){
+    ) {
         fun toKontorFylkeRegionMapping(): List<KontorFylkeRegionMapping> =
             this.regions.flatMap { region ->
                 region.counties.flatMap { county ->
@@ -26,7 +26,6 @@ object FamilievernConstants {
                     }
                 }
             }
-
     }
 
     data class MappingRegion(val code: String, val name: String, val counties: List<MappingCounty>)

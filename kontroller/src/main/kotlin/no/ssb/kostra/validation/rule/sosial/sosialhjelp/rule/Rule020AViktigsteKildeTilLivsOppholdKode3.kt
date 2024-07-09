@@ -17,26 +17,32 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
     override fun validate(context: List<KostraRecord>) = context
         .filterNot { it[VKLO_COL_NAME] == "3" }
         .filterNot { it[TRYGDESIT_COL_NAME] in validCodes }
-        .map {
-            val vklo = SosialhjelpFieldDefinitions
-                .fieldDefinitions
-                .byColumnName(VKLO_COL_NAME)
-                .codeList
-                .firstOrNull { item -> item.code == it[VKLO_COL_NAME] }
-                ?.value
-                ?: "ukjent"
+        .map { kostraRecord ->
+
+            val vklo = when (
+                val vkloNullable = SosialhjelpFieldDefinitions
+                    .fieldDefinitions
+                    .byColumnName(VKLO_COL_NAME)
+                    .codeList
+                    .firstOrNull { item -> item.code == kostraRecord[VKLO_COL_NAME] }
+            ) {
+                null -> "ukjent"
+                else -> vkloNullable.value
+            }
+
             val codeList = SosialhjelpFieldDefinitions
                 .fieldDefinitions
                 .byColumnName(TRYGDESIT_COL_NAME)
                 .codeList
                 .filter { item -> item.code in validCodes }
+
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${vklo}. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
+                        "er ${vklo}. Trygdesituasjonen er '(${kostraRecord[TRYGDESIT_COL_NAME]})', " +
                         "forventet én av '(${codeList})'. Feltet er obligatorisk å fylle ut."
             ).copy(
-                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                caseworker = kostraRecord[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = kostraRecord[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 

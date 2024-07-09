@@ -10,7 +10,7 @@ fields:
     mandatory: true
     codeList:
       - code: "0A"
-        value: 0A. Bevilgningsregnskap
+        value: 0A. Bevilgningsregnskap kommunekasse
       - code: "0B"
         value: 0B. Balanse kommunekasse
       - code: "0C"
@@ -63,6 +63,7 @@ fields:
         value: 3. Kvartal
       - code: "4"
         value: 4. Kvartal
+    mandatory: true
   - name: region
     description: |
       Alle rapporterer med 6-sifret nummer for region.

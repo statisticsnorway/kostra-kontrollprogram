@@ -45,7 +45,7 @@ object FamilievernConstants {
             ?.let { inputStream -> InputStreamReader(inputStream) }
             ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
             ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as MappingDescription? }
-            ?: throw NoSuchFileException("Famvern mapping file not found")
+            ?: throw NoSuchFileException("Familievern mapping file not found")
 
     val kontorFylkeRegionMappingList: List<KontorFylkeRegionMapping> =
         getResourceAsMappingDescription(FILENAME).toKontorFylkeRegionMapping()

@@ -1,11 +1,15 @@
 package no.ssb.kostra.program
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.program.extension.buildFieldDefinitions
+import java.nio.file.NoSuchFileException
 
 class FileDescriptionLoaderTest : BehaviorSpec({
     Given("a file description with test values") {
@@ -19,42 +23,31 @@ class FileDescriptionLoaderTest : BehaviorSpec({
                     reportingYear shouldBe 2024
                     description shouldBe "Beskrivelse for filbeskrivelse"
                     fields.size shouldBe 7
-
                 }
             }
         }
     }
 
-    Given("a file description that does not exist") {
-        val sut = FileDescriptionLoader
-            .getResourceAsFileDescription("file_description_that_does_not_exist.yml")
+    Given("a file name of an NON-existing mapping file") {
+        val fileName = "non_existing.yaml"
 
-        When("FileDescription is created") {
-            Then("FileDescription should be as expected") {
-                assertSoftly(sut) {
-                    title shouldBe "File description"
-                    reportingYear shouldBe 0
-                    description shouldBe "Default file description"
-                    fields.size shouldBe 0
-
-                }
+        When("opening the NON-existing mapping file") {
+            val thrown = shouldThrow<NoSuchFileException> {
+                FileDescriptionLoader.getResourceAsFileDescription(fileName)
+            }
+            Then("NoSuchFileException is thrown") {
+                thrown.message shouldContain "File description not found"
             }
         }
     }
 
-    Given("a file description that is empty") {
-        val sut = FileDescriptionLoader
-            .getResourceAsFileDescription("file_description_empty.yml")
-
-        When("FileDescription is created") {
-            Then("FileDescription should be as expected") {
-                assertSoftly(sut) {
-                    title shouldBe "File description"
-                    reportingYear shouldBe 0
-                    description shouldBe "Default file description"
-                    fields.size shouldBe 0
-
-                }
+    Given("a file name of an empty mapping file") {
+        When("opening the empty mapping file") {
+            val thrown = shouldThrow<MismatchedInputException> {
+                FileDescriptionLoader.getResourceAsFileDescription("empty.yaml")
+            }
+            Then("MismatchedInputException is thrown") {
+                thrown.message shouldContain "No content to map due to end-of-input"
             }
         }
     }

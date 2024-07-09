@@ -11,14 +11,14 @@ import java.nio.file.NoSuchFileException
 class FamilievernConstantsTest : BehaviorSpec({
 
     Given("a file name of an NON-existing mapping file") {
-        val fileName = "non_existing_mapping_file.yaml"
+        val fileName = "non_existing.yaml"
 
         When("opening the NON-existing mapping file") {
             val thrown = shouldThrow<NoSuchFileException> {
                 FamilievernConstants.getResourceAsMappingDescription(fileName)
             }
             Then("NoSuchFileException is thrown") {
-                thrown.message shouldContain "Famvern mapping file not found"
+                thrown.message shouldContain "Familievern mapping file not found"
             }
         }
     }
@@ -26,7 +26,7 @@ class FamilievernConstantsTest : BehaviorSpec({
     Given("a file name of an empty mapping file") {
         When("opening the empty mapping file") {
             val thrown = shouldThrow<MismatchedInputException> {
-                FamilievernConstants.getResourceAsMappingDescription("empty_file.yaml")
+                FamilievernConstants.getResourceAsMappingDescription("empty.yaml")
             }
             Then("MismatchedInputException is thrown") {
                 thrown.message shouldContain "No content to map due to end-of-input"

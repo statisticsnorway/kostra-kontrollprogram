@@ -18,19 +18,19 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
             expectedSeverity = Severity.ERROR,
             *codesThatRequiresDate.map {
                 ForAllRowItem(
-                    "status that requires date, $it",
+                    "status that requires date, $it, start date",
                     kostraRecordInTest(it, startDateInTest),
                 )
             }.toTypedArray(),
             *codesThatRequiresDate.map {
                 ForAllRowItem(
-                    "status that requires date, $it",
+                    "status that requires date, $it, end date",
                     kostraRecordInTest(it, endDateInTest),
                 )
             }.toTypedArray(),
             *codesThatRequiresDate.map {
                 ForAllRowItem(
-                    "status that requires date $it, expect error",
+                    "status that requires date $it, end date is blank, expect error",
                     kostraRecordInTest(it, " ".repeat(6)),
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                             "dersom det er krysset av for svaralternativ [" +
@@ -44,7 +44,7 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
             }.toTypedArray(),
             *codesThatRequiresDate.map {
                 ForAllRowItem(
-                    "status that requires date $it, expect error",
+                    "status that requires date $it, end date is in previous year, expect error",
                     kostraRecordInTest(it, previousYearDateInTest),
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                             "dersom det er krysset av for svaralternativ [" +
@@ -58,7 +58,7 @@ class Rule037DatoForAvsluttetProgramTest : BehaviorSpec({
             }.toTypedArray(),
             *codesThatRequiresDate.map {
                 ForAllRowItem(
-                    "status that requires date $it, expect error",
+                    "status that requires date $it, end date is in next year, expect error",
                     kostraRecordInTest(it, nextYearDateInTest),
                     "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                             "dersom det er krysset av for svaralternativ [" +

@@ -11,10 +11,10 @@ import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.program.extension.buildFieldDefinitions
 import java.nio.file.NoSuchFileException
 
-class FileDescriptionLoaderTest : BehaviorSpec({
+class FileLoaderTest : BehaviorSpec({
     Given("a file description with test values") {
-        val sut = FileDescriptionLoader
-            .getResourceAsFileDescription("file_description_test.yaml")
+        val sut = FileLoader
+            .getResource<FileDescription>("file_description_test.yaml")
 
         When("FileDescription is created") {
             Then("FileDescription should be as expected") {
@@ -33,10 +33,10 @@ class FileDescriptionLoaderTest : BehaviorSpec({
 
         When("opening the NON-existing mapping file") {
             val thrown = shouldThrow<NoSuchFileException> {
-                FileDescriptionLoader.getResourceAsFileDescription(fileName)
+                FileLoader.getResource<FileDescription>(fileName)
             }
             Then("NoSuchFileException is thrown") {
-                thrown.message shouldContain "File description not found"
+                thrown.message shouldContain "File not found"
             }
         }
     }
@@ -44,7 +44,7 @@ class FileDescriptionLoaderTest : BehaviorSpec({
     Given("a file name of an empty mapping file") {
         When("opening the empty mapping file") {
             val thrown = shouldThrow<MismatchedInputException> {
-                FileDescriptionLoader.getResourceAsFileDescription("empty.yaml")
+                FileLoader.getResource<FileDescription>("empty.yaml")
             }
             Then("MismatchedInputException is thrown") {
                 thrown.message shouldContain "No content to map due to end-of-input"
@@ -63,8 +63,8 @@ class FileDescriptionLoaderTest : BehaviorSpec({
             row("Alle regnskapsskjema", "Regnskap", 48),
         ) { description, schema, recordLength ->
             When("comparing consecutive FieldDefinitions for $description") {
-                val sut = FileDescriptionLoader
-                    .getResourceAsFileDescription("file_description_$schema.yaml")
+                val sut = FileLoader
+                    .getResource<FileDescription>("file_description_$schema.yaml")
                 val fieldDefinitionPairs = sut.fields.buildFieldDefinitions().zipWithNext()
 
                 Then("from plus size should be equal to the next from") {
@@ -75,8 +75,8 @@ class FileDescriptionLoaderTest : BehaviorSpec({
             }
 
             When("last field definition is found for $description") {
-                val sut = FileDescriptionLoader
-                    .getResourceAsFileDescription("file_description_$schema.yaml")
+                val sut = FileLoader
+                    .getResource<FileDescription>("file_description_$schema.yaml")
                 val fieldDefinition = sut.fields.buildFieldDefinitions().last()
 
                 Then("length of all fields should be as expected, $recordLength") {
@@ -84,7 +84,6 @@ class FileDescriptionLoaderTest : BehaviorSpec({
                         it.from + it.size - 1 shouldBe recordLength
                     }
                 }
-
             }
         }
     }

@@ -6,41 +6,17 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.area.famvern.FamilievernConstants
+import no.ssb.kostra.program.FileLoader
 import java.nio.file.NoSuchFileException
 
 class FamilievernConstantsTest : BehaviorSpec({
-
-    Given("a file name of an NON-existing mapping file") {
-        val fileName = "non_existing.yaml"
-
-        When("opening the NON-existing mapping file") {
-            val thrown = shouldThrow<NoSuchFileException> {
-                FamilievernConstants.getResourceAsMappingDescription(fileName)
-            }
-            Then("NoSuchFileException is thrown") {
-                thrown.message shouldContain "Familievern mapping file not found"
-            }
-        }
-    }
-
-    Given("a file name of an empty mapping file") {
-        When("opening the empty mapping file") {
-            val thrown = shouldThrow<MismatchedInputException> {
-                FamilievernConstants.getResourceAsMappingDescription("empty.yaml")
-            }
-            Then("MismatchedInputException is thrown") {
-                thrown.message shouldContain "No content to map due to end-of-input"
-            }
-        }
-    }
-
     Given("a file name of a mapping file") {
         val fileName = "mapping_familievern_region_fylke_kontor.yaml"
 
         When("opening the mapping file") {
 
-            val result = FamilievernConstants
-                .getResourceAsMappingDescription(fileName)
+            val result = FileLoader
+                .getResource<FamilievernConstants.MappingDescription>(fileName)
 
             Then("result is not empty and should contain data") {
                 result.title.isNotEmpty()

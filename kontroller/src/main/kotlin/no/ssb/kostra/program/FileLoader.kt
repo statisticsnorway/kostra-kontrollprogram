@@ -10,18 +10,18 @@ import java.io.InputStreamReader
 import java.nio.file.NoSuchFileException
 
 
-object FileDescriptionLoader {
-    private val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+object FileLoader {
+    val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
     fun getResourceAsFieldDefinitionList(fileName: String): List<FieldDefinition> =
-        getResourceAsFileDescription(fileName).fields.buildFieldDefinitions()
+        getResource<FileDescription>(fileName).fields.buildFieldDefinitions()
 
 
-    fun getResourceAsFileDescription(fileName: String): FileDescription =
+    inline fun <reified T> getResource(fileName: String): T =
         this::class.java.classLoader.getResourceAsStream(fileName)
             ?.let { inputStream -> InputStreamReader(inputStream) }
             ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
-            ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as FileDescription? }
-            ?: throw NoSuchFileException("File description not found")
+            ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as T? }
+            ?: throw NoSuchFileException("File not found")
 
 }

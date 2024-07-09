@@ -1,15 +1,8 @@
 package no.ssb.kostra.area.famvern
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.file.NoSuchFileException
+import no.ssb.kostra.program.FileLoader
 
 object FamilievernConstants {
-    private val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
     private const val FILENAME = "mapping_familievern_region_fylke_kontor.yaml"
 
     data class MappingDescription(
@@ -36,17 +29,6 @@ object FamilievernConstants {
 
     data class KontorFylkeRegionMapping(val kontor: String, val fylke: String, val region: String)
 
-    @Throws(NoSuchFileException::class)
-    fun getResourceAsMappingDescription(fileName: String): MappingDescription =
-        {}
-            .javaClass
-            .classLoader
-            .getResourceAsStream(fileName)
-            ?.let { inputStream -> InputStreamReader(inputStream) }
-            ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
-            ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as MappingDescription? }
-            ?: throw NoSuchFileException("Familievern mapping file not found")
-
     val kontorFylkeRegionMappingList: List<KontorFylkeRegionMapping> =
-        getResourceAsMappingDescription(FILENAME).toKontorFylkeRegionMapping()
+        FileLoader.getResource<MappingDescription>(FILENAME).toKontorFylkeRegionMapping()
 }

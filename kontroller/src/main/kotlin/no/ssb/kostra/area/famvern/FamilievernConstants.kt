@@ -38,8 +38,8 @@ object FamilievernConstants {
 
     @Throws(NoSuchFileException::class)
     fun getResourceAsMappingDescription(fileName: String): MappingDescription =
-        FamilievernConstants::class
-            .java
+        object {}
+            .javaClass
             .classLoader
             .getResourceAsStream(fileName)
             ?.let { inputStream -> InputStreamReader(inputStream) }

@@ -24,7 +24,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
                 .codeList
                 .firstOrNull { item -> item.code == kostraRecord[VKLO_COL_NAME] }
 
-            val vklo = vkloNullable?.value ?: "ukjent"
+            val vklo = if (vkloNullable == null) "ukjent" else vkloNullable.value
 
             val codeList = SosialhjelpFieldDefinitions
                 .fieldDefinitions

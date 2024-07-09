@@ -9,13 +9,11 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.file.NoSuchFileException
 
-
 object FileLoader {
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
     fun getResourceAsFieldDefinitionList(fileName: String): List<FieldDefinition> =
         getResource<FileDescription>(fileName).fields.buildFieldDefinitions()
-
 
     inline fun <reified T> getResource(fileName: String): T =
         this::class.java.classLoader.getResourceAsStream(fileName)
@@ -23,5 +21,4 @@ object FileLoader {
             ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
             ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as T? }
             ?: throw NoSuchFileException("File not found")
-
 }

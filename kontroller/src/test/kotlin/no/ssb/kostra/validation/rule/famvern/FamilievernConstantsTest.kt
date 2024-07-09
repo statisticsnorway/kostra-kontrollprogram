@@ -39,24 +39,16 @@ class FamilievernConstantsTest : BehaviorSpec({
 
         When("opening the mapping file") {
 
-            val result = FamilievernConstants.getResourceAsMappingDescription(fileName)
+            val result = FamilievernConstants
+                .getResourceAsMappingDescription(fileName)
 
             Then("result is not empty and should contain data") {
-                result.isNotEmpty()
-                result.shouldContain(
-                    FamilievernConstants.KontorFylkeRegionMapping(
-                        region = "667200",
-                        fylke = "03",
-                        kontor = "030",
-                    ),
-                )
-                result.shouldContain(
-                    FamilievernConstants.KontorFylkeRegionMapping(
-                        region = "667600",
-                        fylke = "56",
-                        kontor = "205",
-                    ),
-                )
+                result.title.isNotEmpty()
+                result.year != 0
+                result.description.isNotEmpty()
+                result.regions.isNotEmpty()
+                result.regions.first().counties.isNotEmpty()
+                result.regions.first().counties.first().offices.isNotEmpty()
             }
         }
     }

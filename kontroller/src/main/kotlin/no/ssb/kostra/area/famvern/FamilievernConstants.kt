@@ -17,7 +17,17 @@ object FamilievernConstants {
         val description: String,
         val year: Int,
         val regions: List<MappingRegion>
-    )
+    ){
+        fun toKontorFylkeRegionMapping(): List<KontorFylkeRegionMapping> =
+            this.regions.flatMap { region ->
+                region.counties.flatMap { county ->
+                    county.offices.map { office ->
+                        KontorFylkeRegionMapping(office.code, county.code, region.code)
+                    }
+                }
+            }
+
+    }
 
     data class MappingRegion(val code: String, val name: String, val counties: List<MappingCounty>)
 
@@ -27,21 +37,13 @@ object FamilievernConstants {
 
     data class KontorFylkeRegionMapping(val kontor: String, val fylke: String, val region: String)
 
-    fun getResourceAsMappingDescription(fileName: String): List<KontorFylkeRegionMapping> =
+    fun getResourceAsMappingDescription(fileName: String): MappingDescription =
         this::class.java.classLoader.getResourceAsStream(fileName)
             ?.let { inputStream -> InputStreamReader(inputStream) }
             ?.let { inputStreamReader -> BufferedReader(inputStreamReader) }
             ?.let { bufferedReader -> mapper.readValue(bufferedReader.readText()) as MappingDescription? }
-            ?.let { mappingDescription ->
-                mappingDescription.regions.flatMap { region ->
-                    region.counties.flatMap { county ->
-                        county.offices.map { office ->
-                            KontorFylkeRegionMapping(office.code, county.code, region.code)
-                        }
-                    }
-                }
-            }
-            ?: throw NoSuchFileException("Famvern mapping file not found. File name = $fileName")
+            ?: throw NoSuchFileException("Famvern mapping file not found")
 
-    val kontorFylkeRegionMappingList = getResourceAsMappingDescription(FILENAME)
+    val kontorFylkeRegionMappingList: List<KontorFylkeRegionMapping> =
+        getResourceAsMappingDescription(FILENAME).toKontorFylkeRegionMapping()
 }

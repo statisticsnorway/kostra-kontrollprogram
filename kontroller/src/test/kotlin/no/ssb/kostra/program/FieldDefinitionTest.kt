@@ -5,7 +5,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.DataType.*
@@ -26,51 +25,6 @@ class FieldDefinitionTest : BehaviorSpec({
                     codeList shouldBe emptyList()
                     datePattern shouldBe ""
                     mandatory shouldBe false
-                    size shouldBe 1
-                    to shouldBe 0
-                }
-            }
-        }
-    }
-
-    Given("FieldDefinition some values set, test constructor") {
-        val sut = FieldDefinition(name = "~name~", code = Code("1", "Value"))
-        When("FieldDefinition is created") {
-            Then("FieldDefinition should be as expected") {
-                assertSoftly(sut) {
-                    name shouldBe "~name~"
-                    description.shouldBeNull()
-                    dataType shouldBe STRING_TYPE
-                    from shouldBe 0
-                    codeList shouldHaveSize 1
-                    datePattern shouldBe ""
-                    mandatory shouldBe false
-                    size shouldBe 1
-                    to shouldBe 0
-                }
-            }
-        }
-    }
-
-    Given("FieldDefinition more values set, test constructor") {
-        val sut = FieldDefinition(
-            "~name~",
-            null,
-            1,
-            true,
-            listOf(Code("1", "Value"))
-        )
-
-        When("FieldDefinition is created") {
-            Then("FieldDefinition should be as expected") {
-                assertSoftly(sut) {
-                    name shouldBe "~name~"
-                    description.shouldBeNull()
-                    dataType shouldBe STRING_TYPE
-                    from shouldBe 0
-                    codeList shouldHaveSize 1
-                    datePattern shouldBe ""
-                    mandatory shouldBe true
                     size shouldBe 1
                     to shouldBe 0
                 }

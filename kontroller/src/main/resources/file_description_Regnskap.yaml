@@ -42,7 +42,7 @@ fields:
       - code: "0Y"
         value: 0Y. Balanse helseforetak
   - name: aargang
-    description: Rapporteringsår / oppgaveår
+    description: Rapporteringsår / oppgaveår / årgang
     from: 3
     size: 4
     dataType: STRING_TYPE

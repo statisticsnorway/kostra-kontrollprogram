@@ -1,10 +1,10 @@
 # Kravspesifikasjon til kontrollene for KOSTRA-Barnevern
 
 
-## Innhold
-
-
 ## <a name="omfang">Omfang</a>
+Gjelder filuttrekk: Barnevern
+Gjelder rapporteringsår: Gjeldende rapporteringsår
+
 Kontaktepost: **ssb-barnevern@ssb.no**
 
 Generell beskrivelse: Barnevernsstatistikken er en individstatistikk som hentes inn fra alle kommunale barnevernstjenester som et filuttrekk fra kommunens fagsystem for barnevern. Oppbyggingen er slik:
@@ -55,10 +55,10 @@ Informasjonen i XSD brukes til å verifisere om hvert element, attributt eller d
 
 
 ## Filbeskrivelse
-Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd](/kostra-barnevern/src/main/resources/KostraBarnevern.xsd), [Avgiver.xsd](/kostra-barnevern/src/main/resources/Avgiver.xsd) og [Individ.xsd](/kostra-barnevern/src/main/resources/Individ.xsd) og finnes under [/kostra-barnevern/src/main/resources/](/kostra-barnevern/src/main/resources/)
+Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd](/kostra-barnevern/src/main/resources/KostraBarnevern.xsd), [Avgiver.xsd](/kostra-barnevern/src/main/resources/Avgiver.xsd) og [Individ.xsd](/kostra-barnevern/src/main/resources/Individ.xsd).
 
 
-## Kontroller
+## Variabler fra skjema
 I forbindelse med kontrollering så blir noen variabler sendt med fra portalen og blir benyttet i noen av kontrollene. Disse er:
 * <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2023**
 * <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
@@ -66,8 +66,8 @@ I forbindelse med kontrollering så blir noen variabler sendt med fra portalen o
 * <a name="organisasjonsnummer">**organisasjonsnummer**</a>, for eksempel **958935420**
 
 Andre variabler:
-* <a name="telledato">**telledato**</a> som er 31. desember i **rapporteringsår**, for eksempel **31. desember 2023**
-* <a name="forrigetelledato">**forrige_telledato**</a> som er 31. desember i året før **rapporteringsår**, for eksempel **31. desember 2022**
+* <a name="telledato">**telledato**</a> som er 31. desember i **rapporteringsår**, for eksempel **31. desember 2024**
+* <a name="forrigetelledato">**forrige_telledato**</a> som er 31. desember i året før **rapporteringsår**, for eksempel **31. desember 2023**
 
 
 ### <a name="avgiver">Avgiver</a>

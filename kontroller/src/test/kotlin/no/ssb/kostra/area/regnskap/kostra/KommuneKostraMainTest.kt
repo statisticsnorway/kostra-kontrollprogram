@@ -17,9 +17,22 @@ class KommuneKostraMainTest : BehaviorSpec({
     Given("KommuneKostraMain") {
         forAll(
             *regions.flatMap { region ->
-                validSkjemaTypes.map { skjema ->
+                mapOf(
+                    "0A" to 7,
+                    "0B" to 6,
+                    "0C" to 7,
+                    "0D" to 6,
+                    "0I" to 7,
+                    "0J" to 6,
+                    "0K" to 7,
+                    "0L" to 6,
+                    "0M" to 7,
+                    "0N" to 6,
+                    "0P" to 7,
+                    "0Q" to 6,
+                ).map { (skjema, expectedNumberOfControls) ->
                     row(
-                        "skjema = $skjema, region = $region -> validating an empty record string",
+                        "validating an empty record string -> skjema = $skjema, region = $region",
                         KotlinArguments(
                             skjema = skjema,
                             aargang = RuleTestData.argumentsInTest.aargang,
@@ -27,12 +40,12 @@ class KommuneKostraMainTest : BehaviorSpec({
                             inputFileContent = " ".repeat(RegnskapFieldDefinitions.fieldLength)
                         ),
                         NUMBER_OF_VALIDATIONS,
-                        7
+                        expectedNumberOfControls
                     )
                 }.plus(
                     validSkjemaTypes.map { skjema ->
                         row(
-                            "skjema = $skjema, region = $region -> validating an invalid record string",
+                            "validating an invalid record string -> skjema = $skjema, region = $region",
                             KotlinArguments(
                                 skjema = skjema,
                                 aargang = RuleTestData.argumentsInTest.aargang,
@@ -58,7 +71,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                         "0Q" to 4
                     ).map { (skjema, expectedNumberOfControls) ->
                         row(
-                            "skjema = $skjema, region = $region -> validating a valid record string",
+                            "validating a valid record string -> skjema = $skjema, region = $region",
                             argumentsInTest(
                                 argumentsSkjema = skjema,
                                 recordSkjema = skjema,
@@ -71,7 +84,7 @@ class KommuneKostraMainTest : BehaviorSpec({
                     })
             }.toTypedArray(),
             row(
-                "skjema = 0A, region = 123400 -> validating a valid record string with invalid data",
+                "validating a valid record string with invalid data -> skjema = 0A, region = 123400",
                 argumentsInTest(
                     argumentsSkjema = "0A",
                     recordSkjema = "0A",

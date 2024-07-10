@@ -1,0 +1,760 @@
+title: 55F Meklingssaker i familieverntjenesten
+reportingYear: 2024
+description: Filbeskrivelse for 55F Meklingssaker i familieverntjenesten for 2024
+fields:
+  - name: FYLKE_NR
+    from: 1
+    size: 2
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: FYLKE_NAVN
+    from: 3
+    size: 34
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: KONTOR_NR
+    from: 37
+    size: 3
+    dataType: STRING_TYPE
+  - name: MEKLING_SEP_1
+    from: 40
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_2
+    from: 45
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_3
+    from: 50
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_TOT
+    from: 55
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_AVLYST
+    from: 61
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_1
+    from: 65
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_2
+    from: 70
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_3
+    from: 75
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_TOT
+    from: 80
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_AVLYST
+    from: 86
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_1
+    from: 90
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_2
+    from: 95
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_3
+    from: 100
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_TOT
+    from: 105
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_AVLYST
+    from: 111
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_1
+    from: 115
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_2
+    from: 119
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_3
+    from: 123
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_TOT
+    from: 127
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_AVLYST
+    from: 132
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_1
+    from: 136
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_2
+    from: 141
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_3
+    from: 146
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_TOT
+    from: 151
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_AVLYST
+    from: 157
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_1
+    from: 162
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_2
+    from: 168
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_3
+    from: 174
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_ALLE
+    from: 180
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: MEKLING_TOT_AVLYST
+    from: 186
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_BEGGE
+    from: 191
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_EN
+    from: 196
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_TOT
+    from: 201
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: SAM_BEGGE
+    from: 207
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAM_EN
+    from: 212
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAM_TOT
+    from: 217
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: SAK_BEGGE
+    from: 223
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAK_EN
+    from: 228
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAK_TOT
+    from: 233
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: TILB_BEGGE
+    from: 239
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILB_EN
+    from: 243
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILB_TOT
+    from: 247
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_BEGGE
+    from: 252
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_EN
+    from: 257
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_TOT
+    from: 262
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEGGE_TOT
+    from: 268
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: EN_TOT
+    from: 274
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: ENBEGGE_TOT
+    from: 280
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: VENTETID_SEP_1
+    from: 286
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_2
+    from: 291
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_3
+    from: 296
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_4
+    from: 301
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_TOT
+    from: 306
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_1
+    from: 312
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_2
+    from: 317
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_3
+    from: 322
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_4
+    from: 327
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_TOT
+    from: 332
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_1
+    from: 338
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_2
+    from: 343
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_3
+    from: 348
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_4
+    from: 353
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_TOT
+    from: 358
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_1
+    from: 364
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_2
+    from: 368
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_3
+    from: 372
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_4
+    from: 376
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_TOT
+    from: 380
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_1
+    from: 385
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_2
+    from: 390
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_3
+    from: 395
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_4
+    from: 400
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_TOT
+    from: 405
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_1
+    from: 411
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_2
+    from: 417
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_3
+    from: 423
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_4
+    from: 429
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_TOT
+    from: 435
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: FORHOLD_MEKLER
+    from: 441
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FORHOLD_KLIENT
+    from: 446
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FORHOLD_TOT
+    from: 451
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: VARIGHET_SEP_1
+    from: 457
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_2
+    from: 462
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_3
+    from: 467
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_TOT
+    from: 472
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_1
+    from: 478
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_2
+    from: 483
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_3
+    from: 488
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_TOT
+    from: 493
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_1
+    from: 499
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_2
+    from: 504
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_3
+    from: 509
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_TOT
+    from: 514
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_1
+    from: 520
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_2
+    from: 524
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_3
+    from: 528
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_TOT
+    from: 532
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_1
+    from: 537
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_2
+    from: 542
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_3
+    from: 547
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_TOT
+    from: 552
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_1
+    from: 558
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_2
+    from: 564
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_3
+    from: 570
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_TOT
+    from: 576
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BARNDELT_SEP_TOT
+    from: 582
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BARNDELT_SAM_TOT
+    from: 587
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BARNDELT_SAK_TOT
+    from: 592
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BARNDELT_TILB_TOT
+    from: 597
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: BARNDELT_FLY_TOT
+    from: 601
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BARNDELT_TOT_TOT
+    from: 606
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: RESULT_SEP_1
+    from: 612
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SEP_2
+    from: 617
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SEP_3
+    from: 622
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SEP_TOT
+    from: 627
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAM_1
+    from: 633
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAM_2
+    from: 638
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAM_3
+    from: 643
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAM_TOT
+    from: 648
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAK_1
+    from: 654
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAK_2
+    from: 659
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAK_3
+    from: 664
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_SAK_TOT
+    from: 669
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TILB_1
+    from: 675
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: RESULT_TILB_2
+    from: 679
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: RESULT_TILB_3
+    from: 683
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: RESULT_TILB_TOT
+    from: 687
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_FLY_1
+    from: 692
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_FLY_2
+    from: 697
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_FLY_3
+    from: 702
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: RESULT_FLY_TOT
+    from: 707
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_1
+    from: 713
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_2
+    from: 719
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_3
+    from: 725
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_TOT
+    from: 731
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: AVTALE_SEP_1
+    from: 737
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SEP_2
+    from: 742
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SEP_3
+    from: 747
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SEP_TOT
+    from: 752
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAM_1
+    from: 758
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAM_2
+    from: 763
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAM_3
+    from: 768
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAM_TOT
+    from: 773
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAK_1
+    from: 779
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAK_2
+    from: 784
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAK_3
+    from: 789
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_SAK_TOT
+    from: 794
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TILB_1
+    from: 800
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TILB_2
+    from: 804
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TILB_3
+    from: 808
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TILB_TOT
+    from: 812
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_FLY_1
+    from: 817
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_FLY_2
+    from: 822
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_FLY_3
+    from: 827
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: AVTALE_FLY_TOT
+    from: 832
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TOT_1
+    from: 838
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TOT_2
+    from: 844
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TOT_3
+    from: 850
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: AVTALE_TOT_TOT
+    from: 856
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BEKYMR_SEP_1
+    from: 862
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SEP_2
+    from: 867
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SEP_TOT
+    from: 872
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAM_1
+    from: 878
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAM_2
+    from: 883
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAM_TOT
+    from: 888
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAK_1
+    from: 894
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAK_2
+    from: 899
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_SAK_TOT
+    from: 904
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TILB_1
+    from: 910
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TILB_2
+    from: 914
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TILB_TOT
+    from: 918
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_FLY_1
+    from: 923
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_FLY_2
+    from: 928
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_FLY_TOT
+    from: 933
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TOT_1
+    from: 939
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TOT_2
+    from: 945
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TOT_TOT
+    from: 951
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: UTEN_OPPM_1
+    from: 957
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: UTEN_OPPM_2
+    from: 962
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: UTEN_OPPM_3
+    from: 967
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: UTEN_OPPM_4
+    from: 972
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: UTEN_OPPM_5
+    from: 976
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: UTEN_OPPM_TOT
+    from: 981
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true

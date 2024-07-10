@@ -26,7 +26,7 @@ class Rule110SummeringDriftDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
         ?.let { (driftUtgifter, driftInntekter) ->
             createSingleReportEntryList(
                 messageText = "Korrigér differansen (${driftUtgifter.plus(driftInntekter)}) mellom inntekter " +
-                        "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet"
+                        "($driftInntekter) og utgifter ($driftUtgifter) i driftsregnskapet (margin på +/- 30')"
             )
         }
 

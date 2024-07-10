@@ -12,7 +12,7 @@ class Rule008Foretaksnummer : AbstractRule<List<KostraRecord>>("Kontroll 008 : F
         .map { kostraRecord ->
             createValidationReportEntry(
                 messageText = "Fant ugyldig foretaksnummer '${kostraRecord[FIELD_FORETAKSNR]}'. " +
-                        "Korrigér skjema til '${arguments.foretaknr}'",
+                        "Korrigér foretaksnummer til '${arguments.foretaknr}'",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             )
         }

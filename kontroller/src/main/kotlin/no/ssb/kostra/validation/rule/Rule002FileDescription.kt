@@ -71,7 +71,7 @@ class Rule002FileDescription(
             && fieldDefinition.codeIsMissing(kostraRecord[fieldDefinition.name])
         )
             createValidationReportEntry(
-                ruleName = "$ruleName, feltdefinisjonlengde",
+                ruleName = "$ruleName, feil kode",
                 messageText = "Korrigér felt '${fieldDefinition.name}', " +
                         "posisjon fra og med ${fieldDefinition.from} til og med ${fieldDefinition.to}, " +
                         "sin kode '${kostraRecord[fieldDefinition.name]}' fins ikke i ${fieldDefinition.codeList}.",

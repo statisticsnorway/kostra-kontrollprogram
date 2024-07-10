@@ -11,6 +11,10 @@ fun FieldDefinition.codeExists(code: String) = this.codeList.any { it.code == co
 
 fun Collection<FieldDefinition>.byColumnName(columnName: String) = this.first { it.name == columnName }
 
-fun List<FieldDefinition>.buildFieldDefinitions() = AtomicInteger(1).let { columnIndex ->
-    this.map { it.copy(from = columnIndex.getAndAdd(it.size)) }
-}
+fun List<FieldDefinition>.buildFieldDefinitions() =
+    AtomicInteger(1)
+        .let { columnIndex ->
+            this.map {
+                it.copy(from = columnIndex.getAndAdd(it.size))
+            }
+        }

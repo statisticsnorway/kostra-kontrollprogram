@@ -1,0 +1,68 @@
+title: 53F Utadrettet virksomhet i familieverntjenesten
+reportingYear: 2024
+description: Filbeskrivelse for 53F Utadrettet virksomhet i familieverntjenesten for 2024
+fields:
+  - name: FYLKE_NR
+    from: 1
+    size: 2
+    dataType: STRING_TYPE
+  - name: KONTORNR
+    from: 3
+    size: 3
+    dataType: STRING_TYPE
+  - name: TILTAK_PUBLIKUM_TILTAK
+    from: 6
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILTAK_PUBLIKUM_TIMER
+    from: 10
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VEILEDNING_STUDENTER_TILTAK
+    from: 14
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VEILEDNING_STUDENTER_TIMER
+    from: 18
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VEILEDNING_HJELPEAP_TILTAK
+    from: 22
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VEILEDNING_HJELPEAP_TIMER
+    from: 26
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: INFO_MEDIA_TILTAK
+    from: 30
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: INFO_MEDIA_TIMER
+    from: 34
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILSYN_TILTAK
+    from: 38
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILSYN_TIMER
+    from: 42
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: FORELDREVEIL_TILTAK
+    from: 46
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: FORELDREVEIL_TIMER
+    from: 50
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: ANNET_TILTAK
+    from: 54
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: ANNET_TIMER
+    from: 58
+    size: 4
+    dataType: INTEGER_TYPE

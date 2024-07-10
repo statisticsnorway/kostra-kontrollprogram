@@ -310,6 +310,8 @@
 					13 = Psykisk helsevern for barn og unge (kommune og stat)
 					14 = Psykisk helsevern for voksne (kommune og stat)
 					15 = Lege/ sykehus/ tannlege
+                    24 = Lege / Sykehus
+                    25 = Tannlege
 					16 = Familievernkontor
 					17 = Tjenester og instanser med ansvar for oppfølging av personers rusproblemer (kommune og stat)
 					18 = Krisesenter
@@ -399,6 +401,13 @@
 					26 = Barnets kriminelle handlinger
 					27 = Barnet utsatt for menneskehandel
 					30 = Barnets kognitive vansker
+					32 = Barnet er utsatt for negativ sosial kontroll
+
+					Koder om den unge voksne:
+					33 = Den unge voksne mangler dagaktivitet/utdanning /arbeid
+					34 = Den unge voksne mangler støtte og oppfølging fra egen familie
+					35 = Den unge voksne mangler nettverk og/eller nære relasjoner
+					36 = Behov for bistand i kontakt med andre deler av hjelpeapparatet
 
 					Koder om annet:
 					18 = Andre forhold ved foreldre/ familien (krever presisering) (Denne kategorien skal kunne benyttes
@@ -442,6 +451,11 @@
 					<xs:enumeration value="29"/>
 					<xs:enumeration value="30"/>
 					<xs:enumeration value="31"/>
+					<xs:enumeration value="32"/>
+					<xs:enumeration value="33"/>
+					<xs:enumeration value="34"/>
+					<xs:enumeration value="35"/>
+					<xs:enumeration value="36"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
@@ -498,7 +512,7 @@
 					1.99 = Andre tiltak (krever presisering)
 					2.1 = Fosterhjem i familie og nære nettverk
 					2.2 = Fosterhjem utenfor familie og nære nettverk
-					2.3 = Statlige familiehjem (gjelder fosterhjem som staten har ansvar for)
+					2.3 = Spesialiserte fosterhjem
 					2.4 = Fosterhjem etter § 4-27
 					2.5 = Beredskapshjem utenom familie og nære nettverk
 					2.6 = Midlertidig hjem i familie og nære nettverk

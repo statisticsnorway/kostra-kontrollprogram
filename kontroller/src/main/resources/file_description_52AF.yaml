@@ -1,0 +1,714 @@
+title: 52AF Familievernsaker, klientrapportering
+reportingYear: 2024
+description: Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2024
+fields:
+  - name: REGION_NR_A
+    from: 1
+    size: 6
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: KONTOR_NR_A
+    from: 7
+    size: 3
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: JOURNAL_NR_A
+    from: 10
+    size: 9
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: HENV_DATO_A
+    from: 19
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy
+    mandatory: true
+  - name: KONTAKT_TIDL_A
+    from: 27
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: under 6 md siden
+      - code: 2
+        value: mellom 6 md og 3 år siden
+      - code: 3
+        value: 3 år eller mer siden
+      - code: 4
+        value: har ikke vært i kontakt med familievernet tidligere
+  - name: HENV_GRUNN_A
+    from: 28
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Parforholdet
+      - code: 2
+        value: Foreldresamarbeid/- veiledning
+      - code: 3
+        value: Andre eller sammensatte problemer i familien
+      - code: 4
+        value: Hjelp til barn og ungdom
+  - name: PRIMK_KJONN_A
+    from: 29
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Mann/gutt
+      - code: 2
+        value: Kvinne/jente
+  - name: PRIMK_FODT_A
+    from: 30
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: PRIMK_SIVILS_A
+    from: 34
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Gift
+      - code: 2
+        value: Registrert partner
+      - code: 3
+        value: Samboer
+      - code: 4
+        value: Lever ikke i samliv
+  - name: FORMELL_SIVILS_A
+    from: 35
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ugift
+      - code: 2
+        value: Gift
+      - code: 3
+        value: Registrert partner
+      - code: 4
+        value: Separert / separert partner
+      - code: 5
+        value: Skilt / skilt partner
+      - code: 6
+        value: Enke / enkemann / gjenlevende partner
+  - name: PRIMK_SAMBO_A
+    from: 36
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Partner (og eventuelt barn)
+      - code: 2
+        value: Barn
+      - code: 3
+        value: Foreldre / Andre omsorgspersoner
+      - code: 4
+        value: Andre
+      - code: 5
+        value: Ikke sammen med andre
+  - name: PRIMK_ARBSIT_A
+    from: 37
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Arbeid heltid
+      - code: 2
+        value: Arbeid deltid
+      - code: 3
+        value: Arbeidssøker
+      - code: 4
+        value: Under utdanning
+      - code: 5
+        value: Fødselspermisjon / Fedrekvote
+      - code: 6
+        value: Annen inntekt fre NAV
+      - code: 7
+        value: Uten inntekt
+  - name: PRIMK_VSRELASJ_A
+    from: 38
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Partner
+      - code: 2
+        value: Ekspartner
+      - code: 3
+        value: Forelder
+      - code: 4
+        value: Sønn/datter under 18 år
+      - code: 5
+        value: Sønn/datter 18 år eller eldre
+      - code: 6
+        value: Øvrig familie
+      - code: 7
+        value: Venn
+      - code: 8
+        value: Annet
+  - name: PART_LENGDE_A
+    from: 39
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Har ikke bodd sammen
+      - code: 2
+        value: Under 2 år
+      - code: 3
+        value: 2 - 4 år
+      - code: 4
+        value: 5 - 9 år
+      - code: 5
+        value: 10 - 19 år
+      - code: 6
+        value: 20 år eller mer
+  - name: EKSPART_LENGDE_A
+    from: 40
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Har ikke bodd sammen
+      - code: 2
+        value: Under 2 år
+      - code: 3
+        value: 2 - 4 år
+      - code: 4
+        value: 5 - 9 år
+      - code: 5
+        value: 10 - 19 år
+      - code: 6
+        value: 20 år eller mer
+  - name: EKSPART_VARIGH_A
+    from: 41
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Har ikke bodd sammen
+      - code: 2
+        value: Under 2 år
+      - code: 3
+        value: 2 - 4 år
+      - code: 4
+        value: 5 - 9 år
+      - code: 5
+        value: 10 - 19 år
+      - code: 6
+        value: 20 år eller mer
+  - name: PRIMKREL_PART_A
+    from: 42
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Partner
+  - name: PRIMKREL_EKSPART_A
+    from: 43
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ekspartner
+  - name: PRIMKREL_FORELD_A
+    from: 44
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Forelder
+  - name: PRIMKREL_BU18_A
+    from: 45
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Sønn/datter (under 18 år)
+  - name: PRIMKREL_B18_A
+    from: 46
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Sønn/datter (18 år eller eldre)
+  - name: PRIMKREL_OVRIG_A
+    from: 47
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Øvrig familie
+  - name: PRIMKREL_VENN_A
+    from: 48
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Venner
+  - name: PRIMKREL_ANDRE_A
+    from: 49
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Annet
+  - name: FORSTE_SAMT_A
+    from: 50
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy
+    mandatory: true
+  - name: SAMT_FORHOLD_A
+    from: 58
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Forhold hos kontoret
+      - code: 2
+        value: Forhold hos klient/klientene
+  - name: TEMA_PARREL_A
+    from: 59
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Styrke parforholdet
+  - name: TEMA_AVKLAR_A
+    from: 60
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Avklare/avslutte parforholdet
+  - name: TEMA_SAMLBRUDD_A
+    from: 61
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Samlivsbrudd i familien
+  - name: TEMA_SAMSPILL_A
+    from: 62
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Samspillsvansker
+  - name: TEMA_BARNSIT_A
+    from: 63
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Barnets opplevelse av sin livssituasjon
+  - name: TEMA_BARNFOR_A
+    from: 64
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Barnets situasjon i foreldrenes konflikt
+  - name: TEMA_BOSTED_A
+    from: 65
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: bostedsavklaring/samvær
+  - name: TEMA_FORELDRE_A
+    from: 66
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: foreldrerollen
+  - name: TEMA_FORBARN_A
+    from: 67
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: foreldre-barn-relasjonen
+  - name: TEMA_FLERGEN_A
+    from: 68
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: flergenerasjonsproblematikk
+  - name: TEMA_SAMBARN_A
+    from: 69
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: samarb. om felles barn (foreldre bor ikke sammen)
+  - name: TEMA_SÆRBARN_A
+    from: 70
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: særkullsbarn og/eller ny familie
+  - name: TEMA_KULTUR_A
+    from: 71
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: kultur-/minoritetsspørsmål
+  - name: TEMA_TVANG_A
+    from: 72
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: tvangsekteskap
+  - name: TEMA_RUS_A
+    from: 73
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: bruk av rusmidler
+  - name: TEMA_SYKD_A
+    from: 74
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: sykdom / nedsatt funksjonsevne
+  - name: TEMA_VOLD_A
+    from: 75
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: fysisk / psykisk vold / seksuelt misbruk
+  - name: TEMA_ALVH_A
+    from: 76
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: annen alvorlig hendelse
+  - name: HOVEDF_BEHAND_A
+    from: 77
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Parsamtale
+      - code: 2
+        value: Foreldresamtale
+      - code: 3
+        value: Familiesamtale
+      - code: 4
+        value: Individualsamtale
+  - name: BEKYMR_MELD_A
+    from: 78
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_PARTNER_A
+    from: 79
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_EKSPART_A
+    from: 80
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_BARNU18_A
+    from: 81
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_BARNO18_A
+    from: 82
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_FORELDRE_A
+    from: 83
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_OVRFAM_A
+    from: 84
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_VENN_A
+    from: 85
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: DELT_ANDR_A
+    from: 86
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: SAMT_PRIMK_A
+    from: 87
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_PARTNER_A
+    from: 89
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_EKSPART_A
+    from: 91
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_BARNU18_A
+    from: 93
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_BARNO18_A
+    from: 95
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_FORELDRE_A
+    from: 97
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_OVRFAM_A
+    from: 99
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_VENN_A
+    from: 101
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: SAMT_ANDRE_A
+    from: 103
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: ANTSAMT_HOVEDT_A
+    from: 105
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTSAMT_ANDREANS_A
+    from: 108
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTSAMT_IARET_A
+    from: 111
+    size: 3
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: ANTSAMT_OPPR_A
+    from: 114
+    size: 3
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: TLFSAMT_IARET_A
+    from: 117
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TLFSAMT_OPPR_A
+    from: 120
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TIMER_IARET_A
+    from: 123
+    size: 3
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: TIMER_OPPR_A
+    from: 126
+    size: 3
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: TOLK_A
+    from: 129
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: SAMARB_INGEN_A
+    from: 130
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Ikke samarbeid med med annen instans
+  - name: SAMARB_LEGE_A
+    from: 131
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Fastlege
+  - name: SAMARB_HELSE_A
+    from: 132
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Helsestasjon / Familiesenter
+  - name: SAMARB_PSYKH_A
+    from: 133
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Psykisk helsevern
+  - name: SAMARB_JURIST_A
+    from: 134
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Jurist
+  - name: SAMARB_KRISES_A
+    from: 135
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Krisesenter
+  - name: SAMARB_SKOLE_A
+    from: 136
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Skole/PP-tjeneste
+  - name: SAMARB_SOS_A
+    from: 137
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: NAV
+  - name: SAMARB_KOMMB_A
+    from: 138
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Kommunalt barnevern
+  - name: SAMARB_STATB_A
+    from: 139
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Statlig barnevern
+  - name: SAMARB_ANDRE_A
+    from: 140
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Annet
+  - name: STATUS_ARETSSL_A
+    from: 141
+    size: 1
+    dataType: STRING_TYPE
+    codeList:
+      - code: 1
+        value: Avsluttet etter avtale med klient
+      - code: 2
+        value: Klient uteblitt
+      - code: 3
+        value: Saken ikke avsluttet i inneværende år
+  - name: HOVEDTEMA_A
+    from: 142
+    size: 2
+    dataType: STRING_TYPE
+    codeList:
+      - code: 01
+        value: styrke parforholdet
+      - code: 02
+        value: avklare/avslutte parforholdet
+      - code: 03
+        value: samlivsbrudd i familien
+      - code: 04
+        value: samspillvansker
+      - code: 05
+        value: barnets opplevelse av sin livssituasjon
+      - code: 06
+        value: barnets situasjon i foreldrenes konflikt
+      - code: 07
+        value: bostedsavklaring/ samvær
+      - code: 08
+        value: foreldrerollen
+      - code: 09
+        value: foreldre-barn-relasjonen
+      - code: 10
+        value: flergenerasjons- problematikk
+      - code: 11
+        value: samarb. om felles barn (foreldre bor ikke sammen)
+      - code: 12
+        value: særkullsbarn og/eller ny familie
+      - code: 13
+        value: kultur-/minoritetsspørsmål
+      - code: 14
+        value: tvangsekteskap
+      - code: 15
+        value: bruk av rusmidler
+      - code: 16
+        value: sykdom / nedsatt funksjonsevne
+      - code: 17
+        value: fysisk / psykisk vold / seksuelt misbruk
+      - code: 18
+        value: annen alvorlig hendelse
+  - name: DATO_AVSL_A
+    from: 144
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy

@@ -7,7 +7,7 @@
 
 ## Kravspesifikasjoner
 
-* [Posisjonsbaserte filvedlegg](/kravspesifikasjon/posisjonsbaserte_filvedlegg)
+* [Posisjonsbaserte filvedlegg](/kravspesifikasjon/posisjonsbaserte_filvedlegg.md)
   * [Felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
     * KOSTRA
       * Kommune (årlig)

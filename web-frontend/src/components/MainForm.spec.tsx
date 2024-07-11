@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, test} from 'vitest'
-import {cleanup, fireEvent, render, screen} from '@testing-library/react'
+import {cleanup, fireEvent, render, screen, act} from '@testing-library/react'
 import MainForm from "./MainForm"
 
 describe("MainForm", () => {
@@ -58,8 +58,10 @@ describe("MainForm", () => {
             cleanup()
         })
 
-        test("when a form type without company-id and sub-company-id is selected", () => {
-            fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
+        test("when a form type without company-id and sub-company-id is selected", async () => {
+            await act(async () => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
+            })
 
             // verify that inputs are not in the document
             expect(() => screen.getByLabelText(formTypeTwo.labelOrgnr)).toThrow()
@@ -67,12 +69,14 @@ describe("MainForm", () => {
             expect(() => screen.getByText(formTypeThree.labelOrgnrVirksomhetene)).toThrow()
         })
 
-        test("when a form type with company-id is selected", () => {
+        test("when a form type with company-id is selected", async () => {
 
             // verify that input is not in the document
             expect(() => screen.getByLabelText(formTypeTwo.labelOrgnr)).toThrow()
 
-            fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
+            await act(async () => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
+            })
 
             // verify that input is in the document
             expect(screen.getByLabelText(formTypeTwo.labelOrgnr)).toBeDefined()
@@ -81,13 +85,15 @@ describe("MainForm", () => {
             expect(() => screen.getByLabelText(formTypeThree.labelOrgnr)).toThrow()
         })
 
-        test("when a form type with company-id and sub-company-id is selected", () => {
+        test("when a form type with company-id and sub-company-id is selected", async () => {
 
             // verify that inputs are not in the document
             expect(() => screen.getByLabelText(formTypeThree.labelOrgnr)).toThrow()
             expect(() => screen.getByText(formTypeThree.labelOrgnrVirksomhetene)).toThrow()
 
-            fireEvent.change(formTypeSelect, {target: {value: formTypeThree.id}})
+            await act(async () => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeThree.id}})
+            })
 
             // verify that inputs are in the document
             expect(screen.getByLabelText(formTypeThree.labelOrgnr)).toBeDefined()

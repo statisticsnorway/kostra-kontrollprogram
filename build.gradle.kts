@@ -34,10 +34,13 @@ subprojects {
         kotlin { jvmToolchain(21) }
         repositories { mavenCentral() }
 
-        tasks.withType<Test> { useJUnitPlatform() }
+        tasks.test {
+            useJUnitPlatform()
+            jvmArgs("-Xshare:off", "-XX:+EnableDynamicAgentLoading")
+        }
 
-        tasks.withType<JacocoReport> {
-            dependsOn(tasks.withType<Test>())
+        tasks.jacocoTestReport {
+            dependsOn(tasks.test)
             reports { xml.required = true }
         }
     }

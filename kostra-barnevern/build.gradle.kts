@@ -1,7 +1,11 @@
 plugins {
     id("io.spring.dependency-management") version "1.1.6"
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.2"
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.2" apply false
     `maven-publish`
+}
+
+if (!project.version.toString().contains("SNAPSHOT")) {
+    apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
 }
 
 dependencyManagement {
@@ -24,6 +28,12 @@ dependencies {
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
+}
+
+afterEvaluate {
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
 
 publishing {

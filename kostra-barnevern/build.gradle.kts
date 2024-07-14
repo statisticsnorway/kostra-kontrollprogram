@@ -30,12 +30,6 @@ dependencies {
     testImplementation(libs.mockk.jvm)
 }
 
-afterEvaluate {
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {

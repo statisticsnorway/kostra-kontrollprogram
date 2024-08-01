@@ -46,6 +46,4 @@ jobs:
 
       - name: Docker push
         run: |
-          docker tag ${{env.DOCKER_IMAGE}} ${{env.REGISTRY}}/${{env.IMAGE}}:${{ env.TAG }}
-          docker tag ${{env.DOCKER_IMAGE}} ${{env.REGISTRY}}/${{env.IMAGE}}:latest
           docker push ${{env.REGISTRY}}/${{env.IMAGE}} --all-tags

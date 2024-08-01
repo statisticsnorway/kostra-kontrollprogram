@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.0.0-1.0.24"
     id("io.micronaut.application") version "4.4.2"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.google.cloud.tools.jib") version "3.4.3"
 }
 
 dependencies {
@@ -54,4 +55,9 @@ tasks.register<Copy>("processFrontendResources") {
 
 tasks.named<Task>("processResources") {
     dependsOn("processFrontendResources")
+}
+
+jib {
+    from.image = "bellsoft/liberica-openjdk-alpine:21"
+    container { creationTime = "USE_CURRENT_TIMESTAMP" }
 }

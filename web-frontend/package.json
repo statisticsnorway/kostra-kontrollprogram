@@ -15,12 +15,12 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@popperjs/core": "^2.11.8",
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.52.1",
+    "react-hook-form": "^7.52.2",
     "react-query": "^3.5.0",
     "yup": "^1.4.0"
   },

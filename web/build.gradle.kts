@@ -52,6 +52,6 @@ tasks.register<Copy>("processFrontendResources") {
     into(backendTargetDir)
 }
 
-tasks.named<Task>("processResources") {
+tasks.named("processResources") {
     dependsOn("processFrontendResources")
 }

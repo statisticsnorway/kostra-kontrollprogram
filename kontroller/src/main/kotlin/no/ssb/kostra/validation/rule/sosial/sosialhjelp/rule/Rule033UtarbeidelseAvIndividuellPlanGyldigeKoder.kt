@@ -23,7 +23,8 @@ class Rule033UtarbeidelseAvIndividuellPlanGyldigeKoder : AbstractNoArgsRule<List
 
             createValidationReportEntry(
                 "Det er ikke krysset av for om mottakeren har fått utarbeidet individuell plan. " +
-                        "Utfylt verdi er '($utfylt)'. Feltet er obligatorisk å fylle ut."
+                        "Utfylt verdi er '($utfylt)'. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

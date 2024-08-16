@@ -24,7 +24,8 @@ class Rule032OkonomiskRaadgivningGyldigeKoder : AbstractNoArgsRule<List<KostraRe
             createValidationReportEntry(
                 "Det er ikke krysset av for om mottakeren er gitt økonomisk rådgiving i forbindelse med " +
                         "utbetaling av økonomisk sosialhjelp. Utfylt verdi er '($utfylt)'. " +
-                        "Feltet er obligatorisk å fylle ut."
+                        "Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

@@ -124,6 +124,8 @@ fields:
         value: Arbeidsavklaringspenger
       - code: 12
         value: Har ingen trygd/pensjon
+      - code: 13
+        value: Barnetrygd
   - name: ARBSIT
     description: Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt?
     dataType: STRING_TYPE
@@ -539,16 +541,24 @@ fields:
     codeList:
       - code: 19
         value: Bruke og følge opp digital aktivitetsplan
+  - name: VILKARNORSKSAMISKOPPL
+    description: Norsk- eller samiskopplæring
+    dataType: STRING_TYPE
+    from: 305
+    size: 2
+    codeList:
+      - code: 20
+        value: Norsk- eller samiskopplæring
   - name: VEDTAKDATO
     description: Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)
     dataType: DATE_TYPE
-    from: 305
+    from: 307
     size: 6
     datePattern: ddMMyy
   - name: VEDTAKARB
     description: Begrunnelse for første unntak fra sosialtjenestelovens § 20a
     dataType: STRING_TYPE
-    from: 311
+    from: 313
     size: 2
     codeList:
       - code: 01
@@ -556,7 +566,7 @@ fields:
   - name: VEDTAKAKT
     description:
     dataType: STRING_TYPE
-    from: 313
+    from: 315
     size: 2
     codeList:
       - code: 02
@@ -564,7 +574,7 @@ fields:
   - name: VEDTAKHELSE
     description:
     dataType: STRING_TYPE
-    from: 315
+    from: 317
     size: 2
     codeList:
       - code: 03
@@ -572,7 +582,7 @@ fields:
   - name: VEDTAKGRUNN
     description:
     dataType: STRING_TYPE
-    from: 317
+    from: 319
     size: 2
     codeList:
       - code: 04
@@ -580,7 +590,7 @@ fields:
   - name: SANKSJONRED
     description: Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20a
     dataType: STRING_TYPE
-    from: 319
+    from: 321
     size: 2
     codeList:
       - code: 01
@@ -588,7 +598,7 @@ fields:
   - name: SANKSJONANDRE
     description:
     dataType: STRING_TYPE
-    from: 321
+    from: 323
     size: 2
     codeList:
       - code: 02

@@ -37,7 +37,8 @@ class Rule038FullforteAvsluttedeProgramSituasjon : AbstractRule<List<KostraRecor
                         "flytting) – hva var deltakerens situasjon umiddelbart etter avslutningen'? " +
                         "Må fylles ut dersom det er krysset av for svaralternativ 3 = Deltakeren har fullført " +
                         "program eller avsluttet program etter avtale (gjelder ikke flytting) under feltet for " +
-                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],

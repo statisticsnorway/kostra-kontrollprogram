@@ -19,7 +19,8 @@ class Rule027StonadssumMangler : AbstractNoArgsRule<List<KostraRecord>>(
             createValidationReportEntry(
                 "Det er ikke oppgitt hvor mye mottakeren har fått i økonomisk sosialhjelp " +
                         "(bidrag (${it[BIDRAG_COL_NAME]}) eller lån (${it[LAAN_COL_NAME]})) i løpet av året, " +
-                        "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut."
+                        "eller feltet inneholder andre tegn enn tall. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

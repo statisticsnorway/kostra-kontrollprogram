@@ -21,7 +21,8 @@ class Rule014ViktigsteKildeTilLivsOppholdGyldigeVerdier : AbstractNoArgsRule<Lis
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
                         "skal oppgis. Fant '(${it[VKLO_COL_NAME]})', forventet én av " +
-                        "'(${fieldDefinitions.byColumnName(VKLO_COL_NAME).codeListToString()})'."
+                        "'(${fieldDefinitions.byColumnName(VKLO_COL_NAME).codeListToString()})'.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

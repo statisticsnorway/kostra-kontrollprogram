@@ -54,7 +54,7 @@ class FileLoaderTest : BehaviorSpec({
 
     Given("a set of FileDescription") {
         forAll(
-            row("11F Økonomisk sosialhjelp", "11F", 322),
+            row("11F Økonomisk sosialhjelp", "11F", 324),
             row("11CF Kvalifiseringsstønad", "11CF", 136),
             row("52AF Familievernsaker, klientrapportering", "52AF", 151),
             row("52BF Gruppeskjema for familievernet", "52BF", 86),

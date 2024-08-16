@@ -19,7 +19,8 @@ class Rule023TilknytningTilTrygdesystemetOgBarn : AbstractNoArgsRule<List<Kostra
         .filterNot { it[HAR_BARN_UNDER_18_COL_NAME] == "1" && it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME) > 0 }
         .map {
             createValidationReportEntry(
-                "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen."
+                "Mottakeren mottar overgangsstønad, men det er ikke oppgitt barn under 18 år i husholdningen.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

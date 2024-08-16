@@ -35,7 +35,8 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
                         "er ${vklo}. Trygdesituasjonen er '(${kostraRecord[TRYGDESIT_COL_NAME]})', " +
-                        "forventet én av '(${codeList})'. Feltet er obligatorisk å fylle ut."
+                        "forventet én av '(${codeList})'. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(kostraRecord.lineNumber)
             ).copy(
                 caseworker = kostraRecord[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = kostraRecord[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

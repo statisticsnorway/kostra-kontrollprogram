@@ -17,7 +17,8 @@ class Rule032KvalifiseringssumOverMaksimum : AbstractNoArgsRule<List<KostraRecor
             createValidationReportEntry(
                 "Kvalifiseringsstønaden (${it[KVP_STONAD_COL_NAME]}) " +
                         "som deltakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +
-                        "kontrollgrense på NOK $STONAD_SUM_MAX,-."
+                        "kontrollgrense på NOK $STONAD_SUM_MAX,-.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],

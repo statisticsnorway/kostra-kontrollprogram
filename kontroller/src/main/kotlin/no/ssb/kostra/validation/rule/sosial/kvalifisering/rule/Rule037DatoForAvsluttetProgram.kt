@@ -35,7 +35,8 @@ class Rule037DatoForAvsluttetProgram : AbstractRule<List<KostraRecord>>(
             createValidationReportEntry(
                 "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles " +
                         "ut dersom det er krysset av for svaralternativ $codeListThatRequiredDate under feltet for " +
-                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?"
+                        "'Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.${arguments.aargang}'?",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],

@@ -24,7 +24,8 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
                         "forventet én av '(${
                             fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList
                                 .filter { item -> item.code in validCodes }
-                        })'. Feltet er obligatorisk å fylle ut."
+                        })'. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

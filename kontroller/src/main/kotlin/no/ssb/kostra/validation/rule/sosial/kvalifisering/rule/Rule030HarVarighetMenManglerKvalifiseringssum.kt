@@ -24,7 +24,8 @@ class Rule030HarVarighetMenManglerKvalifiseringssum : AbstractNoArgsRule<List<Ko
             createValidationReportEntry(
                 "Det er ikke oppgitt hvor mye deltakeren har fått i kvalifiseringsstønad " +
                         "(${it[KVP_STONAD_COL_NAME]}) i løpet av " +
-                        "året, eller feltet inneholder andre tegn enn tall."
+                        "året, eller feltet inneholder andre tegn enn tall.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],

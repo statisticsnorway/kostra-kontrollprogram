@@ -21,7 +21,8 @@ class Rule022TilknytningTilTrygdesystemetOgAlder : AbstractRule<List<KostraRecor
             createValidationReportEntry(
                 "Mottakeren (${
                     (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)
-                } år) er 62 år eller yngre og mottar alderspensjon."
+                } år) er 62 år eller yngre og mottar alderspensjon.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

@@ -24,7 +24,8 @@ class Rule025ArbeidssituasjonGyldigeKoder : AbstractNoArgsRule<List<KostraRecord
             createValidationReportEntry(
                 "Mottakerens arbeidssituasjon ved siste kontakt med sosial-/NAV-kontoret er ikke fylt ut, " +
                         "eller feil kode er benyttet. Utfylt verdi er '($arbeidssituasjon)'. " +
-                        "Feltet er obligatorisk å fylle ut."
+                        "Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

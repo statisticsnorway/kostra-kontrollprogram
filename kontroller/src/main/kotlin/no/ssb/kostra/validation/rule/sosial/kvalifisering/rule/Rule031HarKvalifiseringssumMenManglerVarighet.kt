@@ -20,7 +20,8 @@ class Rule031HarKvalifiseringssumMenManglerVarighet : AbstractNoArgsRule<List<Ko
             createValidationReportEntry(
                 "Deltakeren har fått kvalifiseringsstønad (${it[KVP_STONAD_COL_NAME]}) " +
                         "i løpet av året, men mangler utfylling for hvilke måneder stønaden gjelder. Feltet er " +
-                        "obligatorisk å fylle ut."
+                        "obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],

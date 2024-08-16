@@ -33,7 +33,8 @@ class Rule026Stonadsmaaneder : AbstractNoArgsRule<List<KostraRecord>>(
             createValidationReportEntry(
                 "Det er ikke krysset av for hvilke måneder mottakeren har fått utbetalt økonomisk " +
                         "sosialhjelp (bidrag (${it[BIDRAG_COL_NAME]}) eller lån (${it[LAAN_COL_NAME]})) i løpet " +
-                        "av rapporteringsåret. Feltet er obligatorisk å fylle ut."
+                        "av rapporteringsåret. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

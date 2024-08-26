@@ -33,9 +33,6 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         }.ifEmpty { null }
 
     companion object {
-        private val validCodes = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList
-            .filter { item -> item.code != "12" }
-            .map { item -> item.code }
-
+        private val validCodes = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.map { it.code }.minus("12")
     }
 }

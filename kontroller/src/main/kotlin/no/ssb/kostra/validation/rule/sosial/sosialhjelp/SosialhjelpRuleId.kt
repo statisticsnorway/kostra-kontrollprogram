@@ -12,6 +12,7 @@ enum class SosialhjelpRuleId(val title: String) {
     SOSIALHJELP_K021_SOSIALHJELP("Kontroll 21: Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Sosialhjelp."),
     SOSIALHJELP_K022_TRYGDESYSTEMET_ALDER("Kontroll 22: Tilknytning til trygdesystemet og alder. 62 år eller yngre med alderspensjon."),
     SOSIALHJELP_K023_TRYGDESYSTEMET_BARN("Kontroll 23: Tilknytning til trygdesystemet og barn. Overgangsstønad."),
+    SOSIALHJELP_K023B_TRYGDESYSTEMET_BARN("Kontroll 23B: Tilknytning til trygdesystemet og barn. Barnetrygd."),
     SOSIALHJELP_K024_TRYGDESYSTEMET_ARBEIDSSITUASJON("Kontroll 24: Tilknytning til trygdesystemet og arbeidssituasjon. Uføretrygd/alderspensjon og ikke arbeidssøker."),
     SOSIALHJELP_K024B_TRYGDESYSTEMET_ARBEIDSSITUASJON("Kontroll 24B: Tilknytning til trygdesystemet og arbeidssituasjon. Arbeidsavklaringspenger."),
     SOSIALHJELP_K025_ARBEIDSSITUASJON("Kontroll 25: Arbeidssituasjon. Gyldige koder."),

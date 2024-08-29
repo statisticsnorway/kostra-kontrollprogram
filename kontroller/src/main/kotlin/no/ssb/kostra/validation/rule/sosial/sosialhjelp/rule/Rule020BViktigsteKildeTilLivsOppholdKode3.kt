@@ -33,6 +33,6 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         }.ifEmpty { null }
 
     companion object {
-        private val validCodes = listOf("01", "02", "04", "05", "06", "07", "09", "10", "11")
+        private val validCodes = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.map { it.code }.minus("12")
     }
 }

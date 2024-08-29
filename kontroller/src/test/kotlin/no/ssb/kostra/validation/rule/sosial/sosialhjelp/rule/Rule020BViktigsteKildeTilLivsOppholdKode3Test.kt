@@ -29,7 +29,7 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
                         "Trygdesituasjonen er '(00)', forventet én av '([" +
                         "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, 06=Etterlattepensjon, " +
                         "07=Alderspensjon, 09=Supplerende stønad (kort botid), 10=Annen trygd, " +
-                        "11=Arbeidsavklaringspenger" +
+                        "11=Arbeidsavklaringspenger, 13=Barnetrygd" +
                         "])'. Feltet er obligatorisk å fylle ut.",
             )
         )

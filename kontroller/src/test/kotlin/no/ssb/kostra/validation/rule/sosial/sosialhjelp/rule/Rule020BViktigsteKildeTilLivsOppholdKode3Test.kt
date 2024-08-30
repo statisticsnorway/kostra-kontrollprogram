@@ -8,10 +8,10 @@ import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTest
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
-class Rule020ViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
+class Rule020BViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
     include(
         validationRuleNoContextTest(
-            sut = Rule020ViktigsteKildeTilLivsOppholdKode3(),
+            sut = Rule020BViktigsteKildeTilLivsOppholdKode3(),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
                 "vkloCode = 0, trygdesitCode = 00",
@@ -26,10 +26,10 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
                 kostraRecordInTest("3", "00"),
                 expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                         "sosial-/NAV-kontoret er Trygd/pensjon. " +
-                        "Arbeidssituasjonen er '(00)', forventet én av '([" +
+                        "Trygdesituasjonen er '(00)', forventet én av '([" +
                         "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, 06=Etterlattepensjon, " +
                         "07=Alderspensjon, 09=Supplerende stønad (kort botid), 10=Annen trygd, " +
-                        "11=Arbeidsavklaringspenger" +
+                        "11=Arbeidsavklaringspenger, 13=Barnetrygd" +
                         "])'. Feltet er obligatorisk å fylle ut.",
             )
         )

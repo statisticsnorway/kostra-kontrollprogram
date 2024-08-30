@@ -21,8 +21,6 @@ fun KostraFormVm.toKostraArguments(
     navn = navn ?: NAME_FALLBACK_VALUE,
     orgnr = unitOrgnr(),
     foretaknr = orgnrForetak(),
-    harVedlegg = false,
-    isRunAsExternalProcess = false,
     inputFileContent = inputStream.bufferedReader().use(BufferedReader::readText)
 )
 

@@ -38,7 +38,7 @@ class Familievern55MainTest : BehaviorSpec({
             ),
             row(
                 "validating a valid record string",
-                argumentsInTest("30"),
+                argumentsInTest("03"),
                 NUMBER_OF_VALIDATIONS,
                 0
             ),

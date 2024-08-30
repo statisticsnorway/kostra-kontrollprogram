@@ -1,9 +1,9 @@
 application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 plugins {
-    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
-    id("io.micronaut.application") version "4.4.0"
-    id("com.github.johnrengelman.shadow")
+    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
+    id("io.micronaut.application") version "4.4.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 dependencies {
@@ -11,20 +11,19 @@ dependencies {
     ksp("io.micronaut.validation:micronaut-validation-processor")
     ksp("io.micronaut.openapi:micronaut-openapi")
 
+    implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.validation:micronaut-validation")
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
+    implementation("io.projectreactor:reactor-core")
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.logback.classic)
+    implementation(libs.swagger.annotations)
 
     implementation(project(":kostra-kontroller"))
 
     runtimeOnly("org.yaml:snakeyaml")
     runtimeOnly("io.micronaut:micronaut-jackson-databind")
-    implementation("io.micronaut.validation:micronaut-validation")
-    implementation("io.micronaut:micronaut-http-server-netty")
-    implementation("io.micronaut.views:micronaut-views-thymeleaf")
-
-    implementation("io.projectreactor:reactor-core")
-    implementation(libs.swagger.annotations)
-    implementation(libs.logback.classic)
 
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("io.projectreactor:reactor-test")
@@ -53,6 +52,6 @@ tasks.register<Copy>("processFrontendResources") {
     into(backendTargetDir)
 }
 
-tasks.named<Task>("processResources") {
+tasks.named("processResources") {
     dependsOn("processFrontendResources")
 }

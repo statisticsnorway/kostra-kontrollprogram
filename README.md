@@ -7,16 +7,15 @@
 
 ## Kravspesifikasjoner
 
-* Posisjonsbaserte filvedlegg
-  * Regnskap
-    * Felles for alle regnskap
-      * KOSTRA
-        * Kommune (årlig)
-        * Kirke (årlig)
-        * Kvartal (kvartal)
-      * Helseforetak
+* [Posisjonsbaserte filvedlegg](/kravspesifikasjon/posisjonsbaserte_filvedlegg.md)
+  * [Felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
+    * KOSTRA
+      * Kommune (årlig)
+      * Kirke (årlig)
+      * Kvartal (kvartal)
+    * Helseforetak
   * Sosial
     * Økonomisk sosialhjelp
     * Kvalifiseringsstønad
 * XML-baserte filvedlegg
-  * [Barnevern](/specs/barnevern_15_specs.md) 
+  * [Barnevern](/kravspesifikasjon/barnevern_15_specs.md) 

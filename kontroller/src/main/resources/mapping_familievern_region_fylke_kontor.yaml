@@ -1,0 +1,148 @@
+title: Familievern koblingshierarki
+description: Kobling mellom familievernsregion, fylker og familievernskontorer
+year: 2024
+regions:
+  - code: 667200
+    name: Region øst
+    counties:
+      - code: 03
+        name: Oslo
+        offices:
+          - code: 030
+            name: Familiekontoret Oslo Nord
+          - code: 037
+            name: Familievernkontoret Homansbyen
+          - code: 038
+            name: Familievernkontoret Enerhaugen
+          - code: 039
+            name: Familievernkontoret Christiania
+      - code: 31
+        name: Østfold
+        offices:
+          - code: 017
+            name: Familievernkontoret Østfold
+      - code: 32
+        name: Akershus
+        offices:
+          - code: 023
+            name: Familievernkontoret Asker Bærum
+          - code: 024
+            name: Familievernkontoret Follo
+          - code: 025
+            name: Familievernkontoret Nedre Romerike
+          - code: 027
+            name: Familievernkontoret Øvre Romerike Glåmdal
+      - code: 34
+        name: Innlandet
+        offices:
+          - code: 046
+            name: Familievernkontoret Innlandet vest
+          - code: 047
+            name: Familievernkontoret Innlandet øst
+          - code: 052
+            name: Familievernkontoret Otta SKF
+  - code: 667300
+    name: Region sør
+    counties:
+      - code: 33
+        name: Buskerud
+        offices:
+          - code: 061
+            name: Familievernkontorene Drammen - Kongsberg
+          - code: 065
+            name: Familievernkontoret Ringerike - Hallingdal
+      - code: 39
+        name: Vestfold
+        offices:
+          - code: 071
+            name: Familievernkontoret i Vestfold
+          - code: 073
+            name: Familievernkontoret i Søndre Vestfold
+      - code: 40
+        name: Telemark
+        offices:
+          - code: 081
+            name: Grenland familievernkontor
+          - code: 082
+            name: Familiekontoret Øvre Telemark
+      - code: 42
+        name: Agder
+        offices:
+          - code: 091
+            name: Familievernkontoret i Arendal
+          - code: 101
+            name: Familiekontoret i Vest-Agder
+  - code: 667400
+    name: Region vest
+    counties:
+      - code: 11
+        name: Rogaland
+        offices:
+          - code: 111
+            name: Familievernkontoret i Sør-Rogaland
+          - code: 112
+            name: Familievernkontoret Haugalandet
+      - code: 46
+        name: Vestland
+        offices:
+          - code: 125
+            name: Bergen og omland familiekontor
+          - code: 127
+            name: Bjørgvin familiekontor
+          - code: 141
+            name: Familiekontora for Sunnfjord og Sogn
+          - code: 142
+            name: Nordfjord familiekontor
+  - code: 667500
+    name: Region Midt-Norge
+    counties:
+      - code: 15
+        name: Møre og Romsdal
+        offices:
+          - code: 151
+            name: Familievernkontoret i Molde
+          - code: 152
+            name: Familievernkontoret i Ålesund
+          - code: 153
+            name: Familievernkontoret i Kristiansund
+      - code: 50
+        name: Trøndelag
+        offices:
+          - code: 162
+            name: Familiervernkontoret i Trondheim
+          - code: 171
+            name: Familievernkontoret i Levanger
+          - code: 172
+            name: Familievernkontoret i Namsos
+  - code: 667600
+    name: Region nord
+    counties:
+      - code: 18
+        name: Nordland
+        offices:
+          - code: 181
+            name: Bodø familievernkontor
+          - code: 183
+            name: Familievernkontoret i Mo i Rana
+          - code: 184
+            name: Familievernkontoret i Mosjøen
+          - code: 185
+            name: Lofoten og Vesterålen Familievernkontor
+      - code: 55
+        name: Troms
+        offices:
+          - code: 192
+            name: Tromsø familievernkontor
+          - code: 193
+            name: Finnsnes familievernkontor
+          - code: 194
+            name: Harstad og Narvik familievernkontor
+      - code: 56
+        name: Finnmark
+        offices:
+          - code: 202
+            name: Familievernkontoret i Øst-Finnmark
+          - code: 203
+            name: Indre Finnmark familievernkontor - Sis Finnmarkku Bearassuojalanguovddas
+          - code: 205
+            name: Alta og Hammerfest familievernkontor

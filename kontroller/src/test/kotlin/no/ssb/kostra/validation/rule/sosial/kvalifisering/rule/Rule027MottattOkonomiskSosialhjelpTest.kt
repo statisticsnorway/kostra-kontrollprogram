@@ -2,7 +2,7 @@ package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_ASTONAD_COL_NAME
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANK_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_HUSBANKBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_KOMMBOS_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_ENGANG_COL_NAME
 import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.KVP_MED_SOSHJ_PGM_COL_NAME
@@ -65,7 +65,7 @@ class Rule027MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 mapOf(
                     KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
                     KVP_MED_KOMMBOS_COL_NAME to "4",
-                    KVP_MED_HUSBANK_COL_NAME to "5",
+                    KVP_MED_HUSBANKBOS_COL_NAME to "5",
                     KVP_MED_SOSHJ_ENGANG_COL_NAME to "9",
                     KVP_MED_SOSHJ_PGM_COL_NAME to "8",
                     KVP_MED_SOSHJ_SUP_COL_NAME to "7"
@@ -78,7 +78,7 @@ class Rule027MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 mapOf(
                     KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
                     KVP_MED_KOMMBOS_COL_NAME to " ",
-                    KVP_MED_HUSBANK_COL_NAME to " ",
+                    KVP_MED_HUSBANKBOS_COL_NAME to " ",
                     KVP_MED_SOSHJ_ENGANG_COL_NAME to " ",
                     KVP_MED_SOSHJ_PGM_COL_NAME to " ",
                     KVP_MED_SOSHJ_SUP_COL_NAME to " "
@@ -91,7 +91,7 @@ class Rule027MottattOkonomiskSosialhjelpTest : BehaviorSpec({
                 mapOf(
                     KVP_MED_ASTONAD_COL_NAME to kvpMedAStonad.toString(),
                     KVP_MED_KOMMBOS_COL_NAME to "0",
-                    KVP_MED_HUSBANK_COL_NAME to "0",
+                    KVP_MED_HUSBANKBOS_COL_NAME to "0",
                     KVP_MED_SOSHJ_ENGANG_COL_NAME to "0",
                     KVP_MED_SOSHJ_PGM_COL_NAME to "0",
                     KVP_MED_SOSHJ_SUP_COL_NAME to "0"

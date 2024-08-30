@@ -19,9 +19,9 @@ class KvartalKostraMainTest : BehaviorSpec({
             *regions.flatMap { region ->
                 mapOf(
                     "0AK1" to 6,
-                    "0BK1" to 6,
+                    "0BK1" to 5,
                     "0CK1" to 6,
-                    "0DK1" to 6
+                    "0DK1" to 5
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
                         "skjema = $skjema, region = $region -> validating an empty record string",

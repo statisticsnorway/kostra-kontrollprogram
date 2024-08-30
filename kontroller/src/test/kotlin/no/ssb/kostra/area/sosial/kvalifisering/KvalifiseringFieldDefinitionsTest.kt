@@ -15,6 +15,7 @@ class KvalifiseringFieldDefinitionsTest : BehaviorSpec({
         When("reading record strings") {
             val kostraRecords = javaClass.getResource("/testfiler/11CF/kvalifisering_minimal.dat")!!.readText()
                 .lines()
+                .filter { it.length == 136 }
                 .mapIndexed { index, line ->
                     line.toKostraRecord(index + 1, KvalifiseringFieldDefinitions.fieldDefinitions)
                 }

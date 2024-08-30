@@ -4,8 +4,7 @@ repositories { mavenCentral() }
 
 plugins {
     kotlin("jvm") version libs.versions.kotlin
-    id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("org.sonarqube") version "5.0.0.4638"
+    id("org.sonarqube") version "5.1.0.4882"
     jacoco
 }
 
@@ -35,10 +34,13 @@ subprojects {
         kotlin { jvmToolchain(21) }
         repositories { mavenCentral() }
 
-        tasks.withType<Test> { useJUnitPlatform() }
+        tasks.test {
+            useJUnitPlatform()
+            jvmArgs("-Xshare:off", "-XX:+EnableDynamicAgentLoading")
+        }
 
-        tasks.withType<JacocoReport> {
-            dependsOn(tasks.withType<Test>())
+        tasks.jacocoTestReport {
+            dependsOn(tasks.test)
             reports { xml.required = true }
         }
     }

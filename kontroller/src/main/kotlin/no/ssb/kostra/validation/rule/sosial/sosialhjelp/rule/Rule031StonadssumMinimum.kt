@@ -21,7 +21,8 @@ class Rule031StonadssumMinimum : AbstractNoArgsRule<List<KostraRecord>>(
                 "Det samlede stønadsbeløpet (summen ($stonad) " +
                         "av bidrag (${it[BIDRAG_COL_NAME]}) og lån (${it[LAAN_COL_NAME]})) som mottakeren " +
                         "har fått i løpet av rapporteringsåret er lik/lavere enn Statistisk sentralbyrås " +
-                        "kontrollgrense på kr. (${MIN}),-."
+                        "kontrollgrense på kr. (${MIN}),-.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

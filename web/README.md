@@ -63,3 +63,25 @@ Kjøre frontend-tester (også en del av `./gradlew check`)
 npx vitest run
 ```
 
+Bygge Docker-image, kostra-kontrollprogram-web
+```bash
+./gradlew clean -p web jibDockerBuild --image=kostra-kontrollprogram
+```
+
+Liste alle Docker-images
+```bash
+docker images
+```
+kostra-kontrollprogram:latest vil vises i listen.
+
+Kjør Docker
+```bash
+docker run --name kostra-kontrollprogram -p 8080:8080 kostra-kontrollprogram:latest
+```
+Applikasjonen vil være tilgjengelig på http://localhost:8080/
+
+Rydde opp
+```bash
+docker rm kostra-kontrollprogram # fjerne stanset container
+docker rmi kostra-kontrollprogram # fjerne Docker-image
+```

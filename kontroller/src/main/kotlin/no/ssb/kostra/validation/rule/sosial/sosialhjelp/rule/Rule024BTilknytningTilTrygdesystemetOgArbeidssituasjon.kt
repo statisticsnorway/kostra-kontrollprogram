@@ -31,7 +31,8 @@ class Rule024BTilknytningTilTrygdesystemetOgArbeidssituasjon : AbstractNoArgsRul
 
             createValidationReportEntry(
                 "Mottakeren mottar trygd ($trygdesituasjon), " +
-                        "men det er oppgitt ugyldig kode ($arbeidssituasjon) på arbeidssituasjon."
+                        "men det er oppgitt ugyldig kode ($arbeidssituasjon) på arbeidssituasjon.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

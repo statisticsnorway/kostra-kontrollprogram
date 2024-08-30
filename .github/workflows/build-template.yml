@@ -47,23 +47,18 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Build with Gradle
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          gradle-build-scan-report: false
-          concurrent: true
-          gradle-distribution-sha-256-sum-warning: false
-          gradle-version: wrapper
-          arguments: |
-            ${{ inputs.gradle-targets }} 
-            ${{ inputs.gradle-args }} 
-            ${{ env.SONAR_TARGETS }} 
-            --daemon --parallel --build-cache --info 
+        run: |
+          ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
+          --daemon --parallel --build-cache --info
 
       - id: "auth"
         name: Authenticate to Google Cloud
         if: ${{ inputs.publish-kostra-barnevern }}
-        uses: "google-github-actions/auth@v2.1.3"
+        uses: "google-github-actions/auth@v2.1.5"
         with:
           workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"

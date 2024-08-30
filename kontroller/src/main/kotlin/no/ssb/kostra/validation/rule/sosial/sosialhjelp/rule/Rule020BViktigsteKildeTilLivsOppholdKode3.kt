@@ -10,8 +10,8 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule020ViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraRecord>>(
-    SosialhjelpRuleId.SOSIALHJELP_K020_TRYGD.title,
+class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraRecord>>(
+    SosialhjelpRuleId.SOSIALHJELP_K020B_TRYGD.title,
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
@@ -20,14 +20,12 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraR
         .map {
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${
-                            fieldDefinitions.byColumnName(VKLO_COL_NAME).codeList
-                                .first { item -> item.code == it[VKLO_COL_NAME] }.value
-                        }. Arbeidssituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
+                        "er Trygd/pensjon. Trygdesituasjonen er '(${it[TRYGDESIT_COL_NAME]})', " +
                         "forventet én av '(${
                             fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList
                                 .filter { item -> item.code in validCodes }
-                        })'. Feltet er obligatorisk å fylle ut."
+                        })'. Feltet er obligatorisk å fylle ut.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
@@ -35,6 +33,6 @@ class Rule020ViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraR
         }.ifEmpty { null }
 
     companion object {
-        private val validCodes = listOf("01", "02", "04", "05", "06", "07", "09", "10", "11")
+        private val validCodes = fieldDefinitions.byColumnName(TRYGDESIT_COL_NAME).codeList.map { it.code }.minus("12")
     }
 }

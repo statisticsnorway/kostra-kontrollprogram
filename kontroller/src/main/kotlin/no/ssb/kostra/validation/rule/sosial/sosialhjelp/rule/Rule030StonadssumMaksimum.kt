@@ -21,7 +21,8 @@ class Rule030StonadssumMaksimum : AbstractNoArgsRule<List<KostraRecord>>(
                 "Det samlede stønadsbeløpet (summen ($stonad) " +
                         "av bidrag (${it[BIDRAG_COL_NAME]}) og lån (${it[LAAN_COL_NAME]})) som mottakeren " +
                         "har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +
-                        "kontrollgrense på kr. (${MAX}),-."
+                        "kontrollgrense på kr. (${MAX}),-.",
+                lineNumbers = listOf(it.lineNumber)
             ).copy(
                 caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
                 journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],

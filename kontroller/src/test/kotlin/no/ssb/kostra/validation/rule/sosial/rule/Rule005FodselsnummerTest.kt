@@ -16,10 +16,18 @@ class Rule005FodselsnummerTest : BehaviorSpec({
     include(
         validationRuleNoContextTest(
             sut = Rule005Fodselsnummer(),
-            expectedSeverity = Severity.WARNING,
+            expectedSeverity = Severity.ERROR,
             ForAllRowItem(
                 "record with valid fodselsnummer",
                 kostraRecordInTest(generateRandomSSN(LocalDate.now().minusYears(1), LocalDate.now())),
+            ),
+            ForAllRowItem(
+                "record with 'adapted' fodselsnummer, male",
+                kostraRecordInTest("01010100100"),
+            ),
+            ForAllRowItem(
+                "record with 'adapted' fodselsnummer, female",
+                kostraRecordInTest("01010100200"),
             ),
             ForAllRowItem(
                 "record with invalid fodselsnummer",

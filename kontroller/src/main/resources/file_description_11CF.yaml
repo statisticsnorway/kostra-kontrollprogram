@@ -1,0 +1,1159 @@
+---
+title: Kvalifiseringsstønd, Kostra-skjema 11CF
+reportingYear: 2024
+description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2024
+fields:
+  - name: KOMMUNE_NR
+    description: Kommunenummer
+    dataType: STRING_TYPE
+    from: 1
+    size: 4
+    mandatory: true
+  - name: VERSION
+    description: Rapporteringsår / versjon / oppgaveår
+    dataType: STRING_TYPE
+    from: 5
+    size: 2
+    mandatory: true
+  - name: BYDELSNR
+    description: Bydelsnummer
+    dataType: STRING_TYPE
+    from: 7
+    size: 2
+  - name: PERSON_JOURNALNR
+    description: Journalnummer
+    dataType: STRING_TYPE
+    from: 9
+    size: 8
+    mandatory: true
+  - name: PERSON_FODSELSNR
+    description: Fødsels- og personnummer
+    dataType: STRING_TYPE
+    from: 17
+    size: 11
+    mandatory: true
+  - name: KJONN
+    description: Kjønn
+    dataType: STRING_TYPE
+    from: 28
+    size: 1
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Mann
+      - code: 2
+        value: Kvinne
+  - name: EKTSTAT
+    description: Sivilstand
+    dataType: STRING_TYPE
+    from: 29
+    size: 1
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Ugift
+      - code: 2
+        value: Gift
+      - code: 3
+        value: Samboer
+      - code: 4
+        value: Skilt/separert
+      - code: 5
+        value: Enke/enkemann
+  - name: BU18
+    description: Har deltakeren barn under 18 år som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?
+    dataType: STRING_TYPE
+    from: 30
+    size: 1
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: ANTBU18
+    description: Hvis ja, hvor mange?
+    dataType: INTEGER_TYPE
+    from: 31
+    size: 2
+  - name: REG_DATO
+    description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ
+    dataType: DATE_TYPE
+    from: 33
+    size: 6
+    mandatory: true
+    datePattern: ddMMyy
+  - name: VEDTAK_DATO
+    description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ
+    dataType: DATE_TYPE
+    from: 39
+    size: 6
+    mandatory: true
+    datePattern: ddMMyy
+  - name: BEGYNT_DATO
+    description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ
+    dataType: DATE_TYPE
+    from: 45
+    size: 6
+    mandatory: true
+    datePattern: ddMMyy
+  - name: KVP_KOMM
+    description: Kommer deltakeren fra kvalifiseringsprogram i annen kommune?
+    dataType: STRING_TYPE
+    from: 51
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: KOMMNR_KVP_KOMM
+    description: Hvis ja, velg kommunenummer fra liste
+    dataType: STRING_TYPE
+    from: 52
+    size: 4
+    codeList:
+      # basert på kommuneinndelingen for 2024, https://www.ssb.no/klass/klassifikasjoner/131
+      - code: 0301
+        value: Oslo
+      - code: 1101
+        value: Eigersund
+      - code: 1103
+        value: Stavanger
+      - code: 1106
+        value: Haugesund
+      - code: 1108
+        value: Sandnes
+      - code: 1111
+        value: Sokndal
+      - code: 1112
+        value: Lund
+      - code: 1114
+        value: Bjerkreim
+      - code: 1119
+        value: Hå
+      - code: 1120
+        value: Klepp
+      - code: 1121
+        value: Time
+      - code: 1122
+        value: Gjesdal
+      - code: 1124
+        value: Sola
+      - code: 1127
+        value: Randaberg
+      - code: 1130
+        value: Strand
+      - code: 1133
+        value: Hjelmeland
+      - code: 1134
+        value: Suldal
+      - code: 1135
+        value: Sauda
+      - code: 1144
+        value: Kvitsøy
+      - code: 1145
+        value: Bokn
+      - code: 1146
+        value: Tysvær
+      - code: 1149
+        value: Karmøy
+      - code: 1151
+        value: Utsira
+      - code: 1160
+        value: Vindafjord
+      - code: 1505
+        value: Kristiansund
+      - code: 1506
+        value: Molde
+      - code: 1508
+        value: Ålesund
+      - code: 1511
+        value: Vanylven
+      - code: 1514
+        value: Sande
+      - code: 1515
+        value: Herøy (Møre og Romsdal)
+      - code: 1516
+        value: Ulstein
+      - code: 1517
+        value: Hareid
+      - code: 1520
+        value: Ørsta
+      - code: 1525
+        value: Stranda
+      - code: 1528
+        value: Sykkylven
+      - code: 1531
+        value: Sula
+      - code: 1532
+        value: Giske
+      - code: 1535
+        value: Vestnes
+      - code: 1539
+        value: Rauma
+      - code: 1547
+        value: Aukra
+      - code: 1554
+        value: Averøy
+      - code: 1557
+        value: Gjemnes
+      - code: 1560
+        value: Tingvoll
+      - code: 1563
+        value: Sunndal
+      - code: 1566
+        value: Surnadal
+      - code: 1573
+        value: Smøla
+      - code: 1576
+        value: Aure
+      - code: 1577
+        value: Volda
+      - code: 1578
+        value: Fjord
+      - code: 1579
+        value: Hustadvika
+      - code: 1580
+        value: Haram
+      - code: 1804
+        value: Bodø
+      - code: 1806
+        value: Narvik
+      - code: 1811
+        value: Bindal
+      - code: 1812
+        value: Sømna
+      - code: 1813
+        value: Brønnøy
+      - code: 1815
+        value: Vega
+      - code: 1816
+        value: Vevelstad
+      - code: 1818
+        value: Herøy (Nordland)
+      - code: 1820
+        value: Alstahaug
+      - code: 1822
+        value: Leirfjord
+      - code: 1824
+        value: Vefsn
+      - code: 1825
+        value: Grane
+      - code: 1826
+        value: Aarborte - Hattfjelldal
+      - code: 1827
+        value: Dønna
+      - code: 1828
+        value: Nesna
+      - code: 1832
+        value: Hemnes
+      - code: 1833
+        value: Rana - Raane
+      - code: 1834
+        value: Lurøy
+      - code: 1835
+        value: Træna
+      - code: 1836
+        value: Rødøy
+      - code: 1837
+        value: Meløy
+      - code: 1838
+        value: Gildeskål
+      - code: 1839
+        value: Beiarn
+      - code: 1840
+        value: Saltdal
+      - code: 1841
+        value: Fauske - Fuossko
+      - code: 1845
+        value: Sørfold - Fuolldá
+      - code: 1848
+        value: Steigen
+      - code: 1851
+        value: Lødingen
+      - code: 1853
+        value: Evenes - Evená??i
+      - code: 1856
+        value: Røst
+      - code: 1857
+        value: Værøy
+      - code: 1859
+        value: Flakstad
+      - code: 1860
+        value: Vestvågøy
+      - code: 1865
+        value: Vågan
+      - code: 1866
+        value: Hadsel
+      - code: 1867
+        value: Bø
+      - code: 1868
+        value: Øksnes
+      - code: 1870
+        value: Sortland - Suortá
+      - code: 1871
+        value: Andøy
+      - code: 1874
+        value: Moskenes
+      - code: 1875
+        value: Hábmer - Hamarøy
+      - code: 3101
+        value: Halden
+      - code: 3103
+        value: Moss
+      - code: 3105
+        value: Sarpsborg
+      - code: 3107
+        value: Fredrikstad
+      - code: 3110
+        value: Hvaler
+      - code: 3112
+        value: Råde
+      - code: 3114
+        value: Våler (Østfold)
+      - code: 3116
+        value: Skiptvet
+      - code: 3118
+        value: Indre Østfold
+      - code: 3120
+        value: Rakkestad
+      - code: 3122
+        value: Marker
+      - code: 3124
+        value: Aremark
+      - code: 3201
+        value: Bærum
+      - code: 3203
+        value: Asker
+      - code: 3205
+        value: Lillestrøm
+      - code: 3207
+        value: Nordre Follo
+      - code: 3209
+        value: Ullensaker
+      - code: 3212
+        value: Nesodden
+      - code: 3214
+        value: Frogn
+      - code: 3216
+        value: Vestby
+      - code: 3218
+        value: Ås
+      - code: 3220
+        value: Enebakk
+      - code: 3222
+        value: Lørenskog
+      - code: 3224
+        value: Rælingen
+      - code: 3226
+        value: Aurskog-Høland
+      - code: 3228
+        value: Nes
+      - code: 3230
+        value: Gjerdrum
+      - code: 3232
+        value: Nittedal
+      - code: 3234
+        value: Lunner
+      - code: 3236
+        value: Jevnaker
+      - code: 3238
+        value: Nannestad
+      - code: 3240
+        value: Eidsvoll
+      - code: 3242
+        value: Hurdal
+      - code: 3301
+        value: Drammen
+      - code: 3303
+        value: Kongsberg
+      - code: 3305
+        value: Ringerike
+      - code: 3310
+        value: Hole
+      - code: 3312
+        value: Lier
+      - code: 3314
+        value: Øvre Eiker
+      - code: 3316
+        value: Modum
+      - code: 3318
+        value: Krødsherad
+      - code: 3320
+        value: Flå
+      - code: 3322
+        value: Nesbyen
+      - code: 3324
+        value: Gol
+      - code: 3326
+        value: Hemsedal
+      - code: 3328
+        value: Ål
+      - code: 3330
+        value: Hol
+      - code: 3332
+        value: Sigdal
+      - code: 3334
+        value: Flesberg
+      - code: 3336
+        value: Rollag
+      - code: 3338
+        value: Nore og Uvdal
+      - code: 3401
+        value: Kongsvinger
+      - code: 3403
+        value: Hamar
+      - code: 3405
+        value: Lillehammer
+      - code: 3407
+        value: Gjøvik
+      - code: 3411
+        value: Ringsaker
+      - code: 3412
+        value: Løten
+      - code: 3413
+        value: Stange
+      - code: 3414
+        value: Nord-Odal
+      - code: 3415
+        value: Sør-Odal
+      - code: 3416
+        value: Eidskog
+      - code: 3417
+        value: Grue
+      - code: 3418
+        value: Åsnes
+      - code: 3419
+        value: Våler (Innlandet)
+      - code: 3420
+        value: Elverum
+      - code: 3421
+        value: Trysil
+      - code: 3422
+        value: Åmot
+      - code: 3423
+        value: Stor-Elvdal
+      - code: 3424
+        value: Rendalen
+      - code: 3425
+        value: Engerdal
+      - code: 3426
+        value: Tolga
+      - code: 3427
+        value: Tynset
+      - code: 3428
+        value: Alvdal
+      - code: 3429
+        value: Folldal
+      - code: 3430
+        value: Os
+      - code: 3431
+        value: Dovre
+      - code: 3432
+        value: Lesja
+      - code: 3433
+        value: Skjåk
+      - code: 3434
+        value: Lom
+      - code: 3435
+        value: Vågå
+      - code: 3436
+        value: Nord-Fron
+      - code: 3437
+        value: Sel
+      - code: 3438
+        value: Sør-Fron
+      - code: 3439
+        value: Ringebu
+      - code: 3440
+        value: Øyer
+      - code: 3441
+        value: Gausdal
+      - code: 3442
+        value: Østre Toten
+      - code: 3443
+        value: Vestre Toten
+      - code: 3446
+        value: Gran
+      - code: 3447
+        value: Søndre Land
+      - code: 3448
+        value: Nordre Land
+      - code: 3449
+        value: Sør-Aurdal
+      - code: 3450
+        value: Etnedal
+      - code: 3451
+        value: Nord-Aurdal
+      - code: 3452
+        value: Vestre Slidre
+      - code: 3453
+        value: Øystre Slidre
+      - code: 3454
+        value: Vang
+      - code: 3901
+        value: Horten
+      - code: 3903
+        value: Holmestrand
+      - code: 3905
+        value: Tønsberg
+      - code: 3907
+        value: Sandefjord
+      - code: 3909
+        value: Larvik
+      - code: 3911
+        value: Færder
+      - code: 4001
+        value: Porsgrunn
+      - code: 4003
+        value: Skien
+      - code: 4005
+        value: Notodden
+      - code: 4010
+        value: Siljan
+      - code: 4012
+        value: Bamble
+      - code: 4014
+        value: Kragerø
+      - code: 4016
+        value: Drangedal
+      - code: 4018
+        value: Nome
+      - code: 4020
+        value: Midt-Telemark
+      - code: 4022
+        value: Seljord
+      - code: 4024
+        value: Hjartdal
+      - code: 4026
+        value: Tinn
+      - code: 4028
+        value: Kviteseid
+      - code: 4030
+        value: Nissedal
+      - code: 4032
+        value: Fyresdal
+      - code: 4034
+        value: Tokke
+      - code: 4036
+        value: Vinje
+      - code: 4201
+        value: Risør
+      - code: 4202
+        value: Grimstad
+      - code: 4203
+        value: Arendal
+      - code: 4204
+        value: Kristiansand
+      - code: 4205
+        value: Lindesnes
+      - code: 4206
+        value: Farsund
+      - code: 4207
+        value: Flekkefjord
+      - code: 4211
+        value: Gjerstad
+      - code: 4212
+        value: Vegårshei
+      - code: 4213
+        value: Tvedestrand
+      - code: 4214
+        value: Froland
+      - code: 4215
+        value: Lillesand
+      - code: 4216
+        value: Birkenes
+      - code: 4217
+        value: Åmli
+      - code: 4218
+        value: Iveland
+      - code: 4219
+        value: Evje og Hornnes
+      - code: 4220
+        value: Bygland
+      - code: 4221
+        value: Valle
+      - code: 4222
+        value: Bykle
+      - code: 4223
+        value: Vennesla
+      - code: 4224
+        value: Åseral
+      - code: 4225
+        value: Lyngdal
+      - code: 4226
+        value: Hægebostad
+      - code: 4227
+        value: Kvinesdal
+      - code: 4228
+        value: Sirdal
+      - code: 4601
+        value: Bergen
+      - code: 4602
+        value: Kinn
+      - code: 4611
+        value: Etne
+      - code: 4612
+        value: Sveio
+      - code: 4613
+        value: Bømlo
+      - code: 4614
+        value: Stord
+      - code: 4615
+        value: Fitjar
+      - code: 4616
+        value: Tysnes
+      - code: 4617
+        value: Kvinnherad
+      - code: 4618
+        value: Ullensvang
+      - code: 4619
+        value: Eidfjord
+      - code: 4620
+        value: Ulvik
+      - code: 4621
+        value: Voss
+      - code: 4622
+        value: Kvam
+      - code: 4623
+        value: Samnanger
+      - code: 4624
+        value: Bjørnafjorden
+      - code: 4625
+        value: Austevoll
+      - code: 4626
+        value: Øygarden
+      - code: 4627
+        value: Askøy
+      - code: 4628
+        value: Vaksdal
+      - code: 4629
+        value: Modalen
+      - code: 4630
+        value: Osterøy
+      - code: 4631
+        value: Alver
+      - code: 4632
+        value: Austrheim
+      - code: 4633
+        value: Fedje
+      - code: 4634
+        value: Masfjorden
+      - code: 4635
+        value: Gulen
+      - code: 4636
+        value: Solund
+      - code: 4637
+        value: Hyllestad
+      - code: 4638
+        value: Høyanger
+      - code: 4639
+        value: Vik
+      - code: 4640
+        value: Sogndal
+      - code: 4641
+        value: Aurland
+      - code: 4642
+        value: Lærdal
+      - code: 4643
+        value: Årdal
+      - code: 4644
+        value: Luster
+      - code: 4645
+        value: Askvoll
+      - code: 4646
+        value: Fjaler
+      - code: 4647
+        value: Sunnfjord
+      - code: 4648
+        value: Bremanger
+      - code: 4649
+        value: Stad
+      - code: 4650
+        value: Gloppen
+      - code: 4651
+        value: Stryn
+      - code: 5001
+        value: Trondheim - Tråante
+      - code: 5006
+        value: Steinkjer
+      - code: 5007
+        value: Namsos - Nåavmesjenjaelmie
+      - code: 5014
+        value: Frøya
+      - code: 5020
+        value: Osen
+      - code: 5021
+        value: Oppdal
+      - code: 5022
+        value: Rennebu
+      - code: 5025
+        value: Røros - Rossen
+      - code: 5026
+        value: Holtålen
+      - code: 5027
+        value: Midtre Gauldal
+      - code: 5028
+        value: Melhus
+      - code: 5029
+        value: Skaun
+      - code: 5031
+        value: Malvik
+      - code: 5032
+        value: Selbu
+      - code: 5033
+        value: Tydal
+      - code: 5034
+        value: Meråker
+      - code: 5035
+        value: Stjørdal
+      - code: 5036
+        value: Frosta
+      - code: 5037
+        value: Levanger - Levangke
+      - code: 5038
+        value: Verdal
+      - code: 5041
+        value: Snåase - Snåsa
+      - code: 5042
+        value: Lierne
+      - code: 5043
+        value: Raarvihke - Røyrvik
+      - code: 5044
+        value: Namsskogan
+      - code: 5045
+        value: Grong
+      - code: 5046
+        value: Høylandet
+      - code: 5047
+        value: Overhalla
+      - code: 5049
+        value: Flatanger
+      - code: 5052
+        value: Leka
+      - code: 5053
+        value: Inderøy
+      - code: 5054
+        value: Indre Fosen
+      - code: 5055
+        value: Heim
+      - code: 5056
+        value: Hitra
+      - code: 5057
+        value: Ørland
+      - code: 5058
+        value: Åfjord
+      - code: 5059
+        value: Orkland
+      - code: 5060
+        value: Nærøysund
+      - code: 5061
+        value: Rindal
+      - code: 5501
+        value: Tromsø
+      - code: 5503
+        value: Harstad - Hárstták
+      - code: 5510
+        value: Kvæfjord
+      - code: 5512
+        value: Dielddanuorri - Tjeldsund
+      - code: 5514
+        value: Ibestad
+      - code: 5516
+        value: Gratangen - Rivtták
+      - code: 5518
+        value: Loabák - Lavangen
+      - code: 5520
+        value: Bardu
+      - code: 5522
+        value: Salangen
+      - code: 5524
+        value: Målselv
+      - code: 5526
+        value: Sørreisa
+      - code: 5528
+        value: Dyrøy
+      - code: 5530
+        value: Senja
+      - code: 5532
+        value: Balsfjord
+      - code: 5534
+        value: Karlsøy
+      - code: 5536
+        value: Lyngen
+      - code: 5538
+        value: Storfjord - Omasvuotna - Omasvuono
+      - code: 5540
+        value: Gáivuotna - Kåfjord - Kaivuono
+      - code: 5542
+        value: Skjervøy
+      - code: 5544
+        value: Nordreisa - Ráisa - Raisi
+      - code: 5546
+        value: Kvænangen
+      - code: 5601
+        value: Alta
+      - code: 5603
+        value: Hammerfest - Hámmerfeasta
+      - code: 5605
+        value: Sør-Varanger
+      - code: 5607
+        value: Vadsø
+      - code: 5610
+        value: Kárášjohka - Karasjok
+      - code: 5612
+        value: Guovdageaidnu - Kautokeino
+      - code: 5614
+        value: Loppa
+      - code: 5616
+        value: Hasvik
+      - code: 5618
+        value: Måsøy
+      - code: 5620
+        value: Nordkapp
+      - code: 5622
+        value: Porsanger - Porsángu - Porsanki
+      - code: 5624
+        value: Lebesby
+      - code: 5626
+        value: Gamvik
+      - code: 5628
+        value: Deatnu - Tana
+      - code: 5630
+        value: Berlevåg
+      - code: 5632
+        value: Båtsfjord
+      - code: 5634
+        value: Vardø
+      - code: 5636
+        value: Unjárga - Nesseby
+  - name: YTELSE_SOSHJELP
+    description: Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser? Kan krysse av for flere svaralternativer)
+    dataType: STRING_TYPE
+    from: 56
+    size: 1
+    codeList:
+      - code: 1
+        value: Sosialhjelp
+  - name: YTELSE_TYPE_SOSHJ
+    description: Hvis sosialhjelp
+    dataType: STRING_TYPE
+    from: 57
+    size: 1
+    codeList:
+      - code: 2
+        value: Sosialhjelp som viktigste kilde til livsopphold
+      - code: 3
+        value: Supplerende sosialhjelp
+  - name: YTELSE_INTRO
+    description: Andre ytelser
+    dataType: STRING_TYPE
+    from: 58
+    size: 1
+    codeList:
+      - code: 4
+        value: Introduksjonsstønad
+  - name: YTELSE_INDIVIDSTONAD
+    dataType: STRING_TYPE
+    from: 59
+    size: 1
+    codeList:
+      - code: 5
+        value: Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak
+  - name: YTELSE_FOLKETRYGDL
+    dataType: STRING_TYPE
+    from: 60
+    size: 1
+    codeList:
+      - code: 6
+        value: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
+  - name: KVP_MED_ASTONAD
+    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    dataType: STRING_TYPE
+    from: 61
+    size: 1
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
+  - name: KVP_MED_KOMMBOS
+    description:
+    dataType: STRING_TYPE
+    from: 62
+    size: 1
+    codeList:
+      - code: 4
+        value: Kommunal bostøtte
+  - name: KVP_MED_HUSBANKBOS
+    description:
+    dataType: STRING_TYPE
+    from: 63
+    size: 1
+    codeList:
+      - code: 5
+        value: Husbankens bostøtte
+  - name: KVP_MED_SOSHJ_ENGANG
+    description:
+    dataType: STRING_TYPE
+    from: 64
+    size: 1
+    codeList:
+      - code: 9
+        value: Mottok økonomisk sosialhjelp som engangsstønad
+  - name: KVP_MED_SOSHJ_PGM
+    description:
+    dataType: STRING_TYPE
+    from: 65
+    size: 1
+    codeList:
+      - code: 8
+        value: Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet
+  - name: KVP_MED_SOSHJ_SUP
+    description:
+    dataType: STRING_TYPE
+    from: 66
+    size: 1
+    codeList:
+      - code: 7
+        value: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter
+  - name: STMND_1
+    description: For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?
+    dataType: STRING_TYPE
+    from: 67
+    size: 2
+    codeList:
+      - code: 01
+        value: Januar
+  - name: STMND_2
+    description:
+    dataType: STRING_TYPE
+    from: 69
+    size: 2
+    codeList:
+      - code: 02
+        value: Februar
+  - name: STMND_3
+    description:
+    dataType: STRING_TYPE
+    from: 71
+    size: 2
+    codeList:
+      - code: 03
+        value: Mars
+  - name: STMND_4
+    description:
+    dataType: STRING_TYPE
+    from: 73
+    size: 2
+    codeList:
+      - code: 04
+        value: April
+  - name: STMND_5
+    description:
+    dataType: STRING_TYPE
+    from: 75
+    size: 2
+    codeList:
+      - code: 05
+        value: Mai
+  - name: STMND_6
+    description:
+    dataType: STRING_TYPE
+    from: 77
+    size: 2
+    codeList:
+      - code: 06
+        value: Juni
+  - name: STMND_7
+    description:
+    dataType: STRING_TYPE
+    from: 79
+    size: 2
+    codeList:
+      - code: 07
+        value: Juli
+  - name: STMND_8
+    description:
+    dataType: STRING_TYPE
+    from: 81
+    size: 2
+    codeList:
+      - code: 08
+        value: August
+  - name: STMND_9
+    description:
+    dataType: STRING_TYPE
+    from: 83
+    size: 2
+    codeList:
+      - code: 09
+        value: September
+  - name: STMND_10
+    description:
+    dataType: STRING_TYPE
+    from: 85
+    size: 2
+    codeList:
+      - code: 10
+        value: Oktober
+  - name: STMND_11
+    description:
+    dataType: STRING_TYPE
+    from: 87
+    size: 2
+    codeList:
+      - code: 11
+        value: November
+  - name: STMND_12
+    description:
+    dataType: STRING_TYPE
+    from: 89
+    size: 2
+    codeList:
+      - code: 12
+        value: Desember
+  - name: KVP_STONAD
+    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2024
+    dataType: INTEGER_TYPE
+    from: 91
+    size: 7
+  - name: STATUS
+    description: Hva er status for deltakelsen i kvalifiseringsprogrammet?
+    dataType: STRING_TYPE
+    from: 98
+    size: 1
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Deltakeren er fortsatt i program (skjema er ferdig utfylt)
+      - code: 2
+        value: Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)
+      - code: 3
+        value: Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)
+      - code: 4
+        value: Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)
+      - code: 5
+        value: Deltakerens program ble avbrutt på grunn av flytting til annen kommune
+      - code: 6
+        value: Kun for Oslos bydeler, Deltakeren flyttet til annen bydel før programperioden var over
+      - code: 7
+        value: Deltakerens program er avsluttet etter avbrudd
+  - name: AVSL_DATO
+    description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
+    dataType: DATE_TYPE
+    from: 99
+    size: 6
+    datePattern: ddMMyy
+  - name: AVSL_ORDINAERTARB
+    description: Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)
+    dataType: STRING_TYPE
+    from: 105
+    size: 2
+    codeList:
+      - code: 01
+        value: Ordinært arbeid (heltid/deltid)
+  - name: AVSL_ARBLONNSTILS
+    description:
+    dataType: STRING_TYPE
+    from: 107
+    size: 2
+    codeList:
+      - code: 11
+        value: Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)
+  - name: AVSL_ARBMARK
+    description:
+    dataType: STRING_TYPE
+    from: 109
+    size: 2
+    codeList:
+      - code: 03
+        value: Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)
+  - name: AVSL_SKOLE
+    description:
+    dataType: STRING_TYPE
+    from: 111
+    size: 2
+    codeList:
+      - code: 04
+        value: Skole/utdanning
+  - name: AVSL_UFORE
+    description:
+    dataType: STRING_TYPE
+    from: 113
+    size: 2
+    codeList:
+      - code: 13
+        value: Uføretrygd
+  - name: AVSL_AAP
+    description:
+    dataType: STRING_TYPE
+    from: 115
+    size: 2
+    codeList:
+      - code: 14
+        value: Arbeidsavklaringspenger
+  - name: AVSL_OK_AVKLAR
+    description:
+    dataType: STRING_TYPE
+    from: 117
+    size: 2
+    codeList:
+      - code: 15
+        value: Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP
+  - name: AVSL_UTEN_OK_AVKLAR
+    description:
+    dataType: STRING_TYPE
+    from: 119
+    size: 2
+    codeList:
+      - code: 16
+        value: Økonomisk sosialhjelp uten slik avklaring
+  - name: AVSL_ANNET
+    description:
+    dataType: STRING_TYPE
+    from: 121
+    size: 2
+    codeList:
+      - code: 10
+        value: Annet
+  - name: AVSL_UKJENT
+    description:
+    dataType: STRING_TYPE
+    from: 123
+    size: 2
+    codeList:
+      - code: 17
+        value: Ukjent
+  - name: AVSL_VIKTIGSTE_INNTEKT
+    description: Hva var deltakerens viktigste inntektskilde umiddelbart etter avslutningen? (Kun ett kryss)
+    dataType: STRING_TYPE
+    from: 125
+    size: 2
+    codeList:
+      - code: 01
+        value: Ordinært arbeid (heltid/deltid)
+      - code: 11
+        value: Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)
+      - code: 03
+        value: Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksfororskriften) (tiltakspenger)
+      - code: 04
+        value: Skole/utdanning (studiestønad)
+      - code: 13
+        value: Uføretrygd
+      - code: 14
+        value: Arbeidsavklaringspenger
+      - code: 15
+        value: Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP
+      - code: 16
+        value: Økonomisk sosialhjelp uten slik avklaring
+      - code: 10
+        value: Annet
+      - code: 17
+        value: Ukjent
+  - name: SAKSBEHANDLER
+    description: Saksbehandlernummer
+    dataType: STRING_TYPE
+    from: 127
+    size: 10

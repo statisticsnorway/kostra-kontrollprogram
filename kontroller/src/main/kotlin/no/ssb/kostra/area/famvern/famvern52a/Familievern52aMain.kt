@@ -51,5 +51,6 @@ class Familievern52aMain(arguments: KotlinArguments) : PositionedFileValidator(a
         Rule035SakenAvsluttetManglerAvslutningsdato(),
         Rule036AvslutningsdatoForForsteSamtale(),
         Rule037BekymringsmeldingSendtBarnevernet(),
+        Rule038Ventetid(),
     )
 }

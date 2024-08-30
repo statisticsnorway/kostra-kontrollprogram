@@ -349,6 +349,8 @@
 					<xs:enumeration value="21"/>
 					<xs:enumeration value="22"/>
 					<xs:enumeration value="23"/>
+					<xs:enumeration value="24"/>
+					<xs:enumeration value="25"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>

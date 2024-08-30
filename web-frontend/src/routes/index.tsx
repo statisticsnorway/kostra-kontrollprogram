@@ -7,7 +7,8 @@ import FileReportVm from "../kostratypes/fileReportVm"
 import {useNavigate} from "react-router-dom"
 
 const Index = ({onAddFileReport}: {
-    onAddFileReport: (fileReport: NonNullable<FileReportVm>) => number }) => {
+    onAddFileReport: (fileReport: NonNullable<FileReportVm>) => number
+}) => {
 
     const navigate = useNavigate()
     const [isPostError, setIsPostError] = useState<boolean>(false)
@@ -16,15 +17,13 @@ const Index = ({onAddFileReport}: {
     const {
         isError: isUiDataLoadError,
         data: uiData
-    } = useQuery("uiData", () => {
-            console.log("Fetching UI-data")
-            return uiDataAsync().then(uiData => uiData)
-        }
+    } = useQuery("uiData", async () =>
+        uiDataAsync().then(uiData => uiData)
     )
 
     // Form submit handler.
     // Submits form to backend and stores returned report at start of fileReports array state.
-    const onSubmit = (form: KostraFormVm) => {
+    const onSubmit = (form: KostraFormVm) =>
         kontrollerSkjemaAsync(form)
             .then(fileReport => {
                 setIsPostError(false)
@@ -35,7 +34,6 @@ const Index = ({onAddFileReport}: {
                 if (error.response) console.log(error.response)
                 setIsPostError(true)
             })
-    }
 
     return !uiData ? <></> : <main>
         {isPostError && <span className="text-danger">Feil ved kontroll av fil</span>}

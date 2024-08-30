@@ -19,13 +19,13 @@ describe("ReportView", () => {
         })
 
         test("expect 'OK'", () => {
-            expect(screen.getByText("OK")).toBeDefined()
+            expect(screen.queryByText("OK")).toBeInTheDocument()
         })
         test("expect no error summary in document", () => {
-            expect(() => screen.getByTestId("error-summary-table-tbody")).toThrow()
+            expect(screen.queryByText("error-summary-table-tbody")).not.toBeInTheDocument()
         })
         test("expect no error details in document", () => {
-            expect(() => screen.getByTestId("error-details-table-tbody")).toThrow()
+            expect(screen.queryByTestId("error-details-table-tbody")).not.toBeInTheDocument()
         })
     })
 
@@ -38,10 +38,10 @@ describe("ReportView", () => {
         })
 
         test("expect error summary in document", () => {
-            expect(screen.getByTestId("error-summary-table-tbody")).toBeDefined()
+            expect(screen.queryByTestId("error-summary-table-tbody")).toBeInTheDocument()
         })
         test("expect error details in document", () => {
-            expect(screen.getByTestId("error-details-table-tbody")).toBeDefined()
+            expect(screen.queryByTestId("error-details-table-tbody")).toBeInTheDocument()
         })
     })
 })

@@ -1,5 +1,5 @@
-import {afterEach, beforeEach, describe, expect, test} from 'vitest'
-import {cleanup, fireEvent, render, screen} from '@testing-library/react'
+import {beforeEach, describe, expect, test} from 'vitest'
+import {act, fireEvent, render, screen} from '@testing-library/react'
 import MainForm from "./MainForm"
 
 describe("MainForm", () => {
@@ -14,13 +14,12 @@ describe("MainForm", () => {
             expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg skjematype"}).selected).toBeTruthy()
             expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg årgang"}).selected).toBeTruthy()
             expect(screen.getByLabelText<HTMLInputElement>("Regionsnummer").placeholder).toBe("6 siffer")
-            expect(screen.getByLabelText<HTMLInputElement>("Datafil (.dat eller .xml)")).toBeDefined()
+            expect(screen.getByLabelText<HTMLInputElement>("Datafil (.dat eller .xml)")).toBeInTheDocument()
             expect(screen.getByRole<HTMLButtonElement>("button", {name: "Kontroller fil"}).disabled).toBeTruthy()
         })
     })
 
     describe("Interactions", () => {
-
         const formTypeOne = {
             id: "~id~",
             tittel: "~tittel1~",
@@ -52,44 +51,45 @@ describe("MainForm", () => {
             formTypeSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
         })
 
-        afterEach(() => {
-            cleanup()
-        })
-
         test("when a form type without company-id and sub-company-id is selected", () => {
-            fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
+            act(() => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
+            })
 
             // verify that inputs are not in the document
-            expect(() => screen.getByLabelText(formTypeTwo.labelOrgnr)).toThrow()
-            expect(() => screen.getByLabelText(formTypeThree.labelOrgnr)).toThrow()
-            expect(() => screen.getByText(formTypeThree.labelOrgnrVirksomhetene)).toThrow()
+            expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
+            expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
+            expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
         })
 
         test("when a form type with company-id is selected", () => {
 
             // verify that input is not in the document
-            expect(() => screen.getByLabelText(formTypeTwo.labelOrgnr)).toThrow()
+            expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
 
-            fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
+            act(() => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
+            })
 
             // verify that input is in the document
-            expect(screen.getByLabelText(formTypeTwo.labelOrgnr)).toBeDefined()
+            expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).toBeInTheDocument()
 
             // ... and not the other one
-            expect(() => screen.getByLabelText(formTypeThree.labelOrgnr)).toThrow()
+            expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
         })
 
         test("when a form type with company-id and sub-company-id is selected", () => {
-
             // verify that inputs are not in the document
-            expect(() => screen.getByLabelText(formTypeThree.labelOrgnr)).toThrow()
-            expect(() => screen.getByText(formTypeThree.labelOrgnrVirksomhetene)).toThrow()
+            expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument
+            expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument
 
-            fireEvent.change(formTypeSelect, {target: {value: formTypeThree.id}})
+            act(() => {
+                fireEvent.change(formTypeSelect, {target: {value: formTypeThree.id}})
+            })
 
             // verify that inputs are in the document
-            expect(screen.getByLabelText(formTypeThree.labelOrgnr)).toBeDefined()
-            expect(screen.getByText(formTypeThree.labelOrgnrVirksomhetene)).toBeDefined()
+            expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).toBeInTheDocument()
+            expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).toBeInTheDocument()
         })
     })
 })

@@ -7,13 +7,12 @@ const imagePropsInTest = {
     image: "~image~"
 }
 
-const setup = (onClick: () => void) => {
+const setup = (onClick: () => void) =>
     render(<ImageNameButton
         onClick={onClick}
         text={imagePropsInTest.text}
         image={imagePropsInTest.image}
     />)
-}
 
 describe("ImageNameButton", () => {
     describe("Layout", () => {
@@ -23,13 +22,13 @@ describe("ImageNameButton", () => {
         })
 
         test("has button", () => {
-            expect(screen.getByRole("button")).toBeDefined()
+            expect(screen.queryByRole("button")).toBeInTheDocument()
         })
         test("has image", () => {
             expect(screen.getByRole<HTMLImageElement>("img").src).toContain(imagePropsInTest.image)
         })
         test("has text", () => {
-            expect(screen.getByText(imagePropsInTest.text)).toBeDefined()
+            expect(screen.queryByText(imagePropsInTest.text)).toBeInTheDocument()
         })
     })
 

@@ -10,32 +10,28 @@ const tabItemPropsInTest = {
 const setupForLayoutTests = (
     tabIsActive: boolean,
     showCloseButton: boolean
-) => {
-    render(<TabItem {...tabItemPropsInTest}
-                    tabIsActive={tabIsActive}
-                    showCloseButton={showCloseButton}
-                    onSelect={() => {
-                    }}
-                    onClose={() => {
-                    }}/>)
-}
+) => render(<TabItem {...tabItemPropsInTest}
+                     tabIsActive={tabIsActive}
+                     showCloseButton={showCloseButton}
+                     onSelect={() => {
+                     }}
+                     onClose={() => {
+                     }}/>)
 
 const setupForInteractionTests = (
     onSelect: () => void,
     onClose: () => void
-) => {
-    render(<TabItem {...tabItemPropsInTest}
-                    tabIsActive={true}
-                    showCloseButton={true}
-                    onSelect={onSelect}
-                    onClose={onClose}/>)
-}
+) => render(<TabItem {...tabItemPropsInTest}
+                     tabIsActive={true}
+                     showCloseButton={true}
+                     onSelect={onSelect}
+                     onClose={onClose}/>)
 
 describe("TabItem", () => {
     describe("Layout", () => {
         test("expect text to appear in document", () => {
             setupForLayoutTests(false, false)
-            expect(screen.getByText(tabItemPropsInTest.text)).toBeDefined()
+            expect(screen.queryByText(tabItemPropsInTest.text)).toBeInTheDocument()
         })
         test("when tabIsActive is false", () => {
             setupForLayoutTests(false, false)
@@ -47,11 +43,11 @@ describe("TabItem", () => {
         })
         test("expect no close button when showCloseButton is false", () => {
             setupForLayoutTests(true, false)
-            expect(screen.getAllByRole("button").length).toBe(1)
+            expect(screen.queryAllByRole("button").length).toBe(1)
         })
         test("expect close button when showCloseButton is true", () => {
             setupForLayoutTests(true, true)
-            expect(screen.getAllByRole("button").length).toBe(2)
+            expect(screen.queryAllByRole("button").length).toBe(2)
         })
     })
 

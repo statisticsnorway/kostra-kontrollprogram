@@ -19,13 +19,13 @@ describe("ErrorSummary", () => {
             expect(screen.getByTestId("error-summary-table-tbody").children.length).toBe(1)
         })
         test("expect 'Feilkode' to be in the document", () => {
-            expect(screen.getByText("Advarsel")).toBeDefined()
+            expect(screen.queryByText("Advarsel")).toBeInTheDocument()
         })
         test("expect 'Antall' to be in the document", () => {
-            expect(screen.getByText("1")).toBeDefined()
+            expect(screen.queryByText("1")).toBeInTheDocument()
         })
         test("expect 'Kontrolltype' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeInTheDocument()
         })
     })
 })

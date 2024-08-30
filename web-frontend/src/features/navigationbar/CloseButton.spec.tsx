@@ -10,10 +10,10 @@ describe("CloseButton", () => {
         })
 
         test("has button", () => {
-            expect(screen.getByRole("button")).toBeDefined()
+            expect(screen.queryByRole("button")).toBeInTheDocument()
         })
         test("has close character as button text", () => {
-            expect(screen.getByText(CHAR_MULTIPLICATION_X)).toBeDefined()
+            expect(screen.queryByText(CHAR_MULTIPLICATION_X)).toBeInTheDocument()
         })
     })
 

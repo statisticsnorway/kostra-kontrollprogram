@@ -1,6 +1,3 @@
-// @ts-ignore
-import IconKostra from "./assets/icon/ikon-kostra.svg"
-
 import './scss/buttons.scss'
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import Root from "./routes/root"

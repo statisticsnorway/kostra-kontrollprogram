@@ -7,7 +7,7 @@ describe("ErrorLevel", () => {
     describe("Layout", () => {
         test("no error, expect text 'OK'", () => {
             render(<ErrorLevel level={KostraSeverity.OK}/>)
-            expect(screen.getByText("OK")).toBeDefined()
+            expect(screen.queryByText("OK")).toBeInTheDocument()
         })
         test("no error, expect cssClass 'text-success'", () => {
             render(<ErrorLevel level={KostraSeverity.OK}/>)
@@ -16,7 +16,7 @@ describe("ErrorLevel", () => {
 
         test("warning, expect text 'Info'", () => {
             render(<ErrorLevel level={KostraSeverity.INFO}/>)
-            expect(screen.getByText("Info")).toBeDefined()
+            expect(screen.queryByText("Info")).toBeInTheDocument()
         })
         test("warning, expect cssClass 'text-success'", () => {
             render(<ErrorLevel level={KostraSeverity.INFO}/>)
@@ -25,7 +25,7 @@ describe("ErrorLevel", () => {
 
         test("warning, expect text 'Advarsel'", () => {
             render(<ErrorLevel level={KostraSeverity.WARNING}/>)
-            expect(screen.getByText("Advarsel")).toBeDefined()
+            expect(screen.queryByText("Advarsel")).toBeInTheDocument()
         })
         test("warning, expect cssClass 'text-warning'", () => {
             render(<ErrorLevel level={KostraSeverity.WARNING}/>)
@@ -34,7 +34,7 @@ describe("ErrorLevel", () => {
 
         test("critical error, expect text 'Kritisk'", () => {
             render(<ErrorLevel level={KostraSeverity.ERROR}/>)
-            expect(screen.getByText("Kritisk")).toBeDefined()
+            expect(screen.queryByText("Kritisk")).toBeInTheDocument()
         })
         test("critical error, expect cssClass 'text-danger'", () => {
             render(<ErrorLevel level={KostraSeverity.ERROR}/>)
@@ -43,7 +43,7 @@ describe("ErrorLevel", () => {
 
         test("fatal error, expect text 'Kritisk'", () => {
             render(<ErrorLevel level={KostraSeverity.FATAL}/>)
-            expect(screen.getByText("Kritisk")).toBeDefined()
+            expect(screen.queryByText("Kritisk")).toBeInTheDocument()
         })
         test("critical error, expect cssClass 'text-danger'", () => {
             render(<ErrorLevel level={KostraSeverity.FATAL}/>)

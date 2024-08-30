@@ -11,9 +11,8 @@ const FileReport = ({fileReports}: {
     const fileReport = reportId ? fileReports[+reportId] : null
 
     // Fetch UI-data from backend
-    const {
-        data: uiData
-    } = useQuery("uiData", () => uiDataAsync().then(uiData => uiData))
+    const {data: uiData} =
+        useQuery("uiData", () => uiDataAsync().then(uiData => uiData))
 
     return uiData && fileReport ? <ReportView
         fileReport={fileReport}

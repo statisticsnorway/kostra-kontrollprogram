@@ -24,28 +24,28 @@ describe("ErrorDetailsTable", () => {
             expect(screen.getByTestId("error-details-table-tbody").children.length).toBe(1)
         })
         test("expect 'Feilkode' to be in the document", () => {
-            expect(screen.getByText("Advarsel")).toBeDefined()
+            expect(screen.queryByText("Advarsel")).toBeInTheDocument()
         })
         test("expect 'Saksbehandler' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.caseworker as string)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.caseworker as string)).toBeInTheDocument()
         })
         test("expect 'Journalnummer' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.journalId as string)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.journalId as string)).toBeInTheDocument()
         })
         test("expect 'Individ-ID' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.individId as string)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.individId as string)).toBeInTheDocument()
         })
         test("expect 'Kontekst-ID' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.contextId as string)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.contextId as string)).toBeInTheDocument()
         })
         test("expect 'Kontroll' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeInTheDocument()
         })
         test("expect 'Melding' to be in the document", () => {
-            expect(screen.getByText(fileReportEntryInTestWithAllPropsSet.messageText)).toBeDefined()
+            expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.messageText)).toBeInTheDocument()
         })
         test("expect 'Linje' to be in the document", () => {
-            expect(screen.getByText((fileReportEntryInTestWithAllPropsSet.lineNumbers as number[]).join(", "))).toBeDefined()
+            expect(screen.queryByText((fileReportEntryInTestWithAllPropsSet.lineNumbers as number[]).join(", "))).toBeInTheDocument()
         })
     })
 
@@ -55,23 +55,23 @@ describe("ErrorDetailsTable", () => {
         })
 
         test("expect 'Feilkode' to be in the document", () => {
-            expect(screen.queryByText(SEVERITY_HEADER)).toBeDefined()
+            expect(screen.queryByText(SEVERITY_HEADER)).toBeInTheDocument()
         })
 
         test("expect 'Saksbehandler' not to be in the document", () => {
-            expect(screen.queryByText(CASE_WORKER_HEADER)).toBeNull()
+            expect(screen.queryByText(CASE_WORKER_HEADER)).not.toBeInTheDocument()
         })
         test("expect 'Journalnummer' not to be in the document", () => {
-            expect(screen.queryByText(JOURNAL_ID_HEADER)).toBeNull()
+            expect(screen.queryByText(JOURNAL_ID_HEADER)).not.toBeInTheDocument()
         })
         test("expect 'Individ-ID' not to be in the document", () => {
-            expect(screen.queryByText(INDIVID_ID_HEADER)).toBeNull()
+            expect(screen.queryByText(INDIVID_ID_HEADER)).not.toBeInTheDocument()
         })
         test("expect 'Kontekst-ID' not to be in the document", () => {
-            expect(screen.queryByText(CONTEXT_ID_HEADER)).toBeNull()
+            expect(screen.queryByText(CONTEXT_ID_HEADER)).not.toBeInTheDocument()
         })
         test("expect 'Linje' not to be in the document", () => {
-            expect(screen.queryByText(LINES_HEADER)).toBeNull()
+            expect(screen.queryByText(LINES_HEADER)).not.toBeInTheDocument()
         })
     })
 })

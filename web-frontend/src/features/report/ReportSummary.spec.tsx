@@ -13,29 +13,29 @@ describe("ReportSummary", () => {
         })
 
         test("'Programvareversjon' should be in the document", () => {
-            expect(screen.getByText(`Programvareversjon: ${appReleaseVersionInTest}`)).toBeDefined()
+            expect(screen.queryByText(`Programvareversjon: ${appReleaseVersionInTest}`)).toBeInTheDocument()
         })
         test("'Skjema' should be in the document", () => {
-            expect(screen.getByText(`Skjema: ${kostraFormInTest.skjema}`)).toBeDefined()
+            expect(screen.queryByText(`Skjema: ${kostraFormInTest.skjema}`)).toBeInTheDocument()
         })
         test("'Årgang' should be in the document", () => {
-            expect(screen.getByText(`Årgang: ${kostraFormInTest.aar}`)).toBeDefined()
+            expect(screen.queryByText(`Årgang: ${kostraFormInTest.aar}`)).toBeInTheDocument()
         })
         test("'Regionsnummer' should be in the document", () => {
-            expect(screen.getByText(`Regionsnummer: ${kostraFormInTest.region}`)).toBeDefined()
+            expect(screen.queryByText(`Regionsnummer: ${kostraFormInTest.region}`)).toBeInTheDocument()
         })
         test("'Organisasjonsnummer' should be in the document", () => {
-            expect(screen.getByText(`Organisasjonsnummer: ${kostraFormInTest.orgnrForetak}`)).toBeDefined()
+            expect(screen.queryByText(`Organisasjonsnummer: ${kostraFormInTest.orgnrForetak}`)).toBeInTheDocument()
         })
         test("'Organisasjonsnummer virksomhet(er)' should be in the document", () => {
-            expect(screen.getByText(
-                `Organisasjonsnummer virksomhet(er): ${kostraFormInTest.orgnrVirksomhet?.[0].orgnr}`)).toBeDefined()
+            expect(screen.queryByText(
+                `Organisasjonsnummer virksomhet(er): ${kostraFormInTest.orgnrVirksomhet?.[0].orgnr}`)).toBeInTheDocument()
         })
         test("'Høyeste alvorlighetsgrad' should be in the document", () => {
             expect(screen.getByText("Høyeste alvorlighetsgrad:").children[0].textContent).toBe("Advarsel")
         })
         test("'Antall kontroller utført' should be in the document", () => {
-            expect(screen.getByText(`Antall kontroller utført: ${fileReportInTest.antallKontroller}`)).toBeDefined()
+            expect(screen.queryByText(`Antall kontroller utført: ${fileReportInTest.antallKontroller}`)).toBeInTheDocument()
         })
     })
 
@@ -55,7 +55,8 @@ describe("ReportSummary", () => {
                 }}
             />)
 
-            expect(() => screen.getByText(`Organisasjonsnummer: ${localKostraFormInTest.orgnrForetak}`)).toThrow()
+            expect(screen.queryByText(`Organisasjonsnummer: ${localKostraFormInTest.orgnrForetak}`))
+                .not.toBeInTheDocument()
         })
     })
 })

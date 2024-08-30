@@ -51,8 +51,8 @@ describe("MainForm", () => {
             formTypeSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
         })
 
-        test("when a form type without company-id and sub-company-id is selected", () => {
-            act(() => {
+        test("when a form type without company-id and sub-company-id is selected", async () => {
+            await act(async () => {
                 fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
             })
 
@@ -62,12 +62,12 @@ describe("MainForm", () => {
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
         })
 
-        test("when a form type with company-id is selected", () => {
+        test("when a form type with company-id is selected", async () => {
 
             // verify that input is not in the document
             expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
 
-            act(() => {
+            await act(async () => {
                 fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
             })
 
@@ -78,12 +78,12 @@ describe("MainForm", () => {
             expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
         })
 
-        test("when a form type with company-id and sub-company-id is selected", () => {
+        test("when a form type with company-id and sub-company-id is selected", async () => {
             // verify that inputs are not in the document
             expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument
 
-            act(() => {
+            await act(async () => {
                 fireEvent.change(formTypeSelect, {target: {value: formTypeThree.id}})
             })
 

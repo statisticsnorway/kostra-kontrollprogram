@@ -1,9 +1,8 @@
-import {beforeEach, describe, expect, test} from 'vitest'
+import {beforeEach, describe, expect, it} from 'vitest'
 import {render, screen} from '@testing-library/react'
 import ReportView from "./ReportView";
 import {appReleaseVersionInTest, fileReportInTest} from "../specData";
 import KostraSeverity from "../kostratypes/kostraSeverity";
-
 
 describe("ReportView", () => {
     describe("Layout without report entries", () => {
@@ -18,13 +17,13 @@ describe("ReportView", () => {
             />)
         })
 
-        test("expect 'OK'", () => {
+        it("expect 'OK'", () => {
             expect(screen.queryByText("OK")).toBeInTheDocument()
         })
-        test("expect no error summary in document", () => {
+        it("expect no error summary in document", () => {
             expect(screen.queryByText("error-summary-table-tbody")).not.toBeInTheDocument()
         })
-        test("expect no error details in document", () => {
+        it("expect no error details in document", () => {
             expect(screen.queryByTestId("error-details-table-tbody")).not.toBeInTheDocument()
         })
     })
@@ -37,10 +36,10 @@ describe("ReportView", () => {
             />)
         })
 
-        test("expect error summary in document", () => {
+        it("expect error summary in document", () => {
             expect(screen.queryByTestId("error-summary-table-tbody")).toBeInTheDocument()
         })
-        test("expect error details in document", () => {
+        it("expect error details in document", () => {
             expect(screen.queryByTestId("error-details-table-tbody")).toBeInTheDocument()
         })
     })

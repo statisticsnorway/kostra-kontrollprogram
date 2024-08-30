@@ -1,4 +1,4 @@
-import {describe, expect, test, vi} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import FileReportVm from "../../kostratypes/fileReportVm";
 import {fireEvent, render, screen} from "@testing-library/react";
 import TabRow from "./TabRow";
@@ -26,27 +26,27 @@ const setupForInteractionTests = (onReportDelete: () => void) =>
 
 describe("TabRow", () => {
     describe("Layout", () => {
-        test("when no file reports, expect tab title 'Skjema'", () => {
+        it("when no file reports, expect tab title 'Skjema'", () => {
             setupForLayoutTests([], 0)
             expect(screen.queryByText("Skjema")).toBeInTheDocument()
         })
-        test("delete button is not displayed for left-most tab", () => {
+        it("delete button is not displayed for left-most tab", () => {
             setupForLayoutTests([], 0)
             expect(screen.getAllByRole("button").length).toBe(1)
         })
-        test("when one file report and file report selected, back to form button changes text", () => {
+        it("when one file report and file report selected, back to form button changes text", () => {
             setupForLayoutTests([fileReportInTest], 1)
             expect(screen.queryByText("Skjema")).not.toBeInTheDocument()
             expect(screen.queryByText("Tilbake til skjema")).toBeInTheDocument()
         })
-        test("when one file report, report info is displayed as tab", () => {
+        it("when one file report, report info is displayed as tab", () => {
             setupForLayoutTests([fileReportInTest], 1)
             expect(screen.queryByText(expectedTabTitle)).toBeInTheDocument()
         })
     })
 
     describe("Interactions", () => {
-        test("clicking close button calls onReportDelete", () => {
+        it("clicking close button calls onReportDelete", () => {
             const onReportDelete = vi.fn()
             setupForInteractionTests(onReportDelete)
 

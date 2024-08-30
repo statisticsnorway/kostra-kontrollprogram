@@ -1,4 +1,4 @@
-import {describe, expect, test, vi} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {fireEvent, render, screen} from '@testing-library/react'
 import TabItem from "./TabItem";
 
@@ -29,30 +29,30 @@ const setupForInteractionTests = (
 
 describe("TabItem", () => {
     describe("Layout", () => {
-        test("expect text to appear in document", () => {
+        it("expect text to appear in document", () => {
             setupForLayoutTests(false, false)
             expect(screen.queryByText(tabItemPropsInTest.text)).toBeInTheDocument()
         })
-        test("when tabIsActive is false", () => {
+        it("when tabIsActive is false", () => {
             setupForLayoutTests(false, false)
             expect(screen.getByTestId("tab-item-div").classList.contains("active")).toBeFalsy()
         })
-        test("when tabIsActive is true", () => {
+        it("when tabIsActive is true", () => {
             setupForLayoutTests(true, false)
             expect(screen.getByTestId("tab-item-div").classList.contains("active")).toBeTruthy()
         })
-        test("expect no close button when showCloseButton is false", () => {
+        it("expect no close button when showCloseButton is false", () => {
             setupForLayoutTests(true, false)
             expect(screen.queryAllByRole("button").length).toBe(1)
         })
-        test("expect close button when showCloseButton is true", () => {
+        it("expect close button when showCloseButton is true", () => {
             setupForLayoutTests(true, true)
             expect(screen.queryAllByRole("button").length).toBe(2)
         })
     })
 
     describe("Interactions", () => {
-        test("clicking image button calls onSelect", () => {
+        it("clicking image button calls onSelect", () => {
             const onSelect = vi.fn().mockImplementation(() => {
             })
             setupForInteractionTests(onSelect, () => {
@@ -62,7 +62,7 @@ describe("TabItem", () => {
 
             expect(onSelect).toHaveBeenCalled()
         })
-        test("clicking close button calls onClose", () => {
+        it("clicking close button calls onClose", () => {
             const onClose = vi.fn().mockImplementation(() => {
             })
             setupForInteractionTests(() => {

@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, test, vi} from "vitest";
+import {beforeEach, describe, expect, it, vi} from "vitest";
 import {fireEvent, render, screen} from '@testing-library/react'
 import CloseButton, {CHAR_MULTIPLICATION_X} from "./CloseButton";
 
@@ -9,16 +9,16 @@ describe("CloseButton", () => {
             }}/>)
         })
 
-        test("has button", () => {
+        it("has button", () => {
             expect(screen.queryByRole("button")).toBeInTheDocument()
         })
-        test("has close character as button text", () => {
+        it("has close character as button text", () => {
             expect(screen.queryByText(CHAR_MULTIPLICATION_X)).toBeInTheDocument()
         })
     })
 
     describe("Interaction", () => {
-        test("clicking button calls onClick", () => {
+        it("clicking button calls onClick", () => {
             const onClick = vi.fn().mockImplementation(() => {
             })
             render(<CloseButton onClick={onClick}/>)

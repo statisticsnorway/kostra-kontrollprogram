@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, test, vi} from "vitest";
+import {beforeEach, describe, expect, it, vi} from "vitest";
 import {fireEvent, render, screen} from '@testing-library/react'
 import ImageNameButton from "./ImageNameButton";
 
@@ -21,19 +21,19 @@ describe("ImageNameButton", () => {
             })
         })
 
-        test("has button", () => {
+        it("has button", () => {
             expect(screen.queryByRole("button")).toBeInTheDocument()
         })
-        test("has image", () => {
+        it("has image", () => {
             expect(screen.getByRole<HTMLImageElement>("img").src).toContain(imagePropsInTest.image)
         })
-        test("has text", () => {
+        it("has text", () => {
             expect(screen.queryByText(imagePropsInTest.text)).toBeInTheDocument()
         })
     })
 
     describe("Interactions", () => {
-        test("clicking button calls onClick", () => {
+        it("clicking button calls onClick", () => {
             const onClick = vi.fn().mockImplementation(() => {
             })
             setup(onClick)

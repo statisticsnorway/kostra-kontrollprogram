@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, test} from "vitest";
+import {beforeEach, describe, expect, it} from "vitest";
 import {render, screen} from '@testing-library/react'
 import ErrorDetailsTable, {
     CASE_WORKER_HEADER, CONTEXT_ID_HEADER,
@@ -10,7 +10,7 @@ import {fileReportEntryInTestWithAllPropsSet, fileReportEntryInTestWithRequiredP
 
 describe("ErrorDetailsTable", () => {
     describe("Layout without entries", () => {
-        test("there are no errors", () => {
+        it("there are no errors", () => {
             render(<ErrorDetailsTable reportEntries={[]}/>)
             expect(screen.getByTestId("error-details-table-tbody").children.length).toBe(0)
         })
@@ -20,31 +20,31 @@ describe("ErrorDetailsTable", () => {
             render(<ErrorDetailsTable reportEntries={[fileReportEntryInTestWithAllPropsSet]}/>)
         })
 
-        test("there are one error, expect one entry in table", () => {
+        it("there are one error, expect one entry in table", () => {
             expect(screen.getByTestId("error-details-table-tbody").children.length).toBe(1)
         })
-        test("expect 'Feilkode' to be in the document", () => {
+        it("expect 'Feilkode' to be in the document", () => {
             expect(screen.queryByText("Advarsel")).toBeInTheDocument()
         })
-        test("expect 'Saksbehandler' to be in the document", () => {
+        it("expect 'Saksbehandler' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.caseworker as string)).toBeInTheDocument()
         })
-        test("expect 'Journalnummer' to be in the document", () => {
+        it("expect 'Journalnummer' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.journalId as string)).toBeInTheDocument()
         })
-        test("expect 'Individ-ID' to be in the document", () => {
+        it("expect 'Individ-ID' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.individId as string)).toBeInTheDocument()
         })
-        test("expect 'Kontekst-ID' to be in the document", () => {
+        it("expect 'Kontekst-ID' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.contextId as string)).toBeInTheDocument()
         })
-        test("expect 'Kontroll' to be in the document", () => {
+        it("expect 'Kontroll' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.ruleName)).toBeInTheDocument()
         })
-        test("expect 'Melding' to be in the document", () => {
+        it("expect 'Melding' to be in the document", () => {
             expect(screen.queryByText(fileReportEntryInTestWithAllPropsSet.messageText)).toBeInTheDocument()
         })
-        test("expect 'Linje' to be in the document", () => {
+        it("expect 'Linje' to be in the document", () => {
             expect(screen.queryByText((fileReportEntryInTestWithAllPropsSet.lineNumbers as number[]).join(", "))).toBeInTheDocument()
         })
     })
@@ -54,23 +54,23 @@ describe("ErrorDetailsTable", () => {
             render(<ErrorDetailsTable reportEntries={[fileReportEntryInTestWithRequiredPropsSet]}/>)
         })
 
-        test("expect 'Feilkode' to be in the document", () => {
+        it("expect 'Feilkode' to be in the document", () => {
             expect(screen.queryByText(SEVERITY_HEADER)).toBeInTheDocument()
         })
 
-        test("expect 'Saksbehandler' not to be in the document", () => {
+        it("expect 'Saksbehandler' not to be in the document", () => {
             expect(screen.queryByText(CASE_WORKER_HEADER)).not.toBeInTheDocument()
         })
-        test("expect 'Journalnummer' not to be in the document", () => {
+        it("expect 'Journalnummer' not to be in the document", () => {
             expect(screen.queryByText(JOURNAL_ID_HEADER)).not.toBeInTheDocument()
         })
-        test("expect 'Individ-ID' not to be in the document", () => {
+        it("expect 'Individ-ID' not to be in the document", () => {
             expect(screen.queryByText(INDIVID_ID_HEADER)).not.toBeInTheDocument()
         })
-        test("expect 'Kontekst-ID' not to be in the document", () => {
+        it("expect 'Kontekst-ID' not to be in the document", () => {
             expect(screen.queryByText(CONTEXT_ID_HEADER)).not.toBeInTheDocument()
         })
-        test("expect 'Linje' not to be in the document", () => {
+        it("expect 'Linje' not to be in the document", () => {
             expect(screen.queryByText(LINES_HEADER)).not.toBeInTheDocument()
         })
     })

@@ -1,10 +1,10 @@
-import {beforeEach, describe, expect, test} from 'vitest'
+import {beforeEach, describe, expect, it} from 'vitest'
 import {act, fireEvent, render, screen} from '@testing-library/react'
 import MainForm from "./MainForm"
 
 describe("MainForm", () => {
     describe("Layout", () => {
-        test("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
+        it("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
             render(<MainForm
                 formTypes={[]}
                 years={[(new Date()).getFullYear()]}
@@ -51,7 +51,7 @@ describe("MainForm", () => {
             formTypeSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
         })
 
-        test("when a form type without company-id and sub-company-id is selected", async () => {
+        it("when a form type without company-id and sub-company-id is selected", async () => {
             await act(async () => {
                 fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
             })
@@ -62,7 +62,7 @@ describe("MainForm", () => {
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
         })
 
-        test("when a form type with company-id is selected", async () => {
+        it("when a form type with company-id is selected", async () => {
 
             // verify that input is not in the document
             expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
@@ -78,7 +78,7 @@ describe("MainForm", () => {
             expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
         })
 
-        test("when a form type with company-id and sub-company-id is selected", async () => {
+        it("when a form type with company-id and sub-company-id is selected", async () => {
             // verify that inputs are not in the document
             expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument

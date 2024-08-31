@@ -14,8 +14,8 @@ import Nullable from "../kostratypes/nullable"
 import PlusCircle from "../assets/icon/plus-circle.svg"
 // @ts-ignore
 import DashCircle from "../assets/icon/dash-circle.svg"
-import CompanyIdVm from "../kostratypes/companyIdVm";
-import useFormPersist from "react-hook-form-persist";
+import CompanyIdVm from "../kostratypes/companyIdVm"
+import useFormPersist from "react-hook-form-persist"
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
@@ -90,7 +90,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
         setValue,
         storage: window.localStorage,
         exclude: ['skjemaFil']
-    });
+    })
 
     // array for orgnrVirksomhet
     const {

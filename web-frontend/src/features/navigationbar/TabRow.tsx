@@ -1,48 +1,39 @@
-import FileReportVm from "../../kostratypes/fileReportVm";
-import TabItem from "./TabItem";
+import FileReportVm from "../../kostratypes/fileReportVm"
+import TabItem from "./TabItem"
 
 // @ts-ignore
-import FilterLeft from "../../assets/icon/filter-left.svg";
-// @ts-ignore
-import ListTask from "../../assets/icon/list-task.svg";
-import {useNavigate} from "react-router-dom";
+import FilterLeft from "../../assets/icon/filter-left.svg"
+import {Link, useNavigate, useParams} from "react-router-dom"
 
 
 const TabRow = (
-    {fileReports, activeTabIndex, onDeleteFileReport}: {
+    {fileReports, onDeleteFileReport}: {
         fileReports: FileReportVm[],
-        activeTabIndex: number,
         onDeleteFileReport: (index: number) => void
     }
 ) => {
     const navigate = useNavigate()
+    const {reportId} = useParams()
 
-    return <ul className="nav nav-tabs" role={"navigation"}>
-        {/** BACK TO FORM */}
-        <TabItem
-            text={activeTabIndex == 0 ? "Skjema" : "Tilbake til skjema"}
-            image={FilterLeft}
-            tabIsActive={activeTabIndex === 0}
-            onSelect={() => navigate("/")}
-            onClose = {() => {}}
-            showCloseButton={false}
-        />
-
-        {/** REPORT TABS */}
-        {fileReports.map((fileReport, index) =>
-            <TabItem
-                key={index}
-                text={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
-                    + ` region ${fileReport.innparametere.region}`}
-                image={ListTask}
-                tabIsActive={activeTabIndex == index + 1}
-                onSelect={() => navigate(`file-reports/${index}`)}
-                showCloseButton={true}
-                onClose={() => {
-                    onDeleteFileReport(index)
-                    navigate("/")
-                }}/>
-        )}
-    </ul>
+    return <nav className="navbar navbar-light navbar-expand">
+        <Link to="/" className="navbar-brand">
+            <img src={FilterLeft} alt="Skjema"/>{reportId ? "Tilbake til skjema" : "Skjema"}
+        </Link>
+        <ul className="navbar-nav me-auto">
+            {/** REPORT TABS*/}
+            {fileReports.map((fileReport, index) =>
+                <TabItem
+                    key={index}
+                    id={index}
+                    reportName={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
+                        + ` region ${fileReport.innparametere.region}`}
+                    tabIsActive={reportId == String(index)}
+                    onClose={() => {
+                        onDeleteFileReport(index)
+                        navigate("/")
+                    }}/>
+            )}
+        </ul>
+    </nav>
 }
 export default TabRow

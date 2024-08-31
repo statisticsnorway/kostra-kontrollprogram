@@ -1,7 +1,7 @@
-import {beforeEach, describe, expect, it} from "vitest";
-import {render, screen} from "@testing-library/react";
-import ErrorSummary from "./ErrorSummary";
-import {fileReportEntryInTestWithAllPropsSet} from "../../specData";
+import {beforeEach, describe, expect, it} from "vitest"
+import {render, screen} from "@testing-library/react"
+import ErrorSummary from "./ErrorSummary"
+import {fileReportEntryInTestWithAllPropsSet} from "../../specData"
 
 describe("ErrorSummary", () => {
     describe("Layout without entries", () => {

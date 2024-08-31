@@ -1,12 +1,12 @@
-import {beforeEach, describe, expect, it} from "vitest";
+import {beforeEach, describe, expect, it} from "vitest"
 import {render, screen} from '@testing-library/react'
 import ErrorDetailsTable, {
     CASE_WORKER_HEADER, CONTEXT_ID_HEADER,
     INDIVID_ID_HEADER,
     JOURNAL_ID_HEADER, LINES_HEADER,
     SEVERITY_HEADER
-} from "./ErrorDetailsTable";
-import {fileReportEntryInTestWithAllPropsSet, fileReportEntryInTestWithRequiredPropsSet} from "../../specData";
+} from "./ErrorDetailsTable"
+import {fileReportEntryInTestWithAllPropsSet, fileReportEntryInTestWithRequiredPropsSet} from "../../specData"
 
 describe("ErrorDetailsTable", () => {
     describe("Layout without entries", () => {

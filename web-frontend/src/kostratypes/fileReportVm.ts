@@ -1,7 +1,7 @@
 import KostraFormVm from "./kostraFormVm"
 import FileReportEntryVm from "./fileReportEntryVm"
 import KostraSeverity from "./kostraSeverity"
-import Nullable from "./nullable";
+import Nullable from "./nullable"
 
 interface FileReportVm {
     readonly innparametere: NonNullable<KostraFormVm>

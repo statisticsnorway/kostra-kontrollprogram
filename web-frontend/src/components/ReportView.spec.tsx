@@ -1,8 +1,8 @@
 import {beforeEach, describe, expect, it} from 'vitest'
 import {render, screen} from '@testing-library/react'
-import ReportView from "./ReportView";
-import {appReleaseVersionInTest, fileReportInTest} from "../specData";
-import KostraSeverity from "../kostratypes/kostraSeverity";
+import ReportView from "./ReportView"
+import {appReleaseVersionInTest, fileReportInTest} from "../specData"
+import KostraSeverity from "../kostratypes/kostraSeverity"
 
 describe("ReportView", () => {
     describe("Layout without report entries", () => {

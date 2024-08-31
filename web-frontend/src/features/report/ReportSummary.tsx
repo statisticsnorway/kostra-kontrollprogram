@@ -1,5 +1,5 @@
-import FileReportVm from "../../kostratypes/fileReportVm";
-import ErrorLevel from "./ErrorLevel";
+import FileReportVm from "../../kostratypes/fileReportVm"
+import ErrorLevel from "./ErrorLevel"
 
 
 const ReportSummary = ({appReleaseVersion, fileReport}: {

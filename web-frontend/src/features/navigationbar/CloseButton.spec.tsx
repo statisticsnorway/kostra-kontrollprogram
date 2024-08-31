@@ -1,6 +1,6 @@
-import {beforeEach, describe, expect, it, vi} from "vitest";
+import {beforeEach, describe, expect, it, vi} from "vitest"
 import {fireEvent, render, screen} from '@testing-library/react'
-import CloseButton, {CHAR_MULTIPLICATION_X} from "./CloseButton";
+import CloseButton, {CHAR_MULTIPLICATION_X} from "./CloseButton"
 
 describe("CloseButton", () => {
     describe("Layout", () => {
@@ -19,12 +19,10 @@ describe("CloseButton", () => {
 
     describe("Interaction", () => {
         it("clicking button calls onClick", () => {
-            const onClick = vi.fn().mockImplementation(() => {
-            })
+            const onClick = vi.fn()
             render(<CloseButton onClick={onClick}/>)
 
             fireEvent.click(screen.getByRole("button"))
-
             expect(onClick).toHaveBeenCalled()
         })
     })

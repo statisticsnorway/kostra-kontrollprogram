@@ -1,7 +1,7 @@
-import {beforeEach, describe, expect, it} from "vitest";
+import {beforeEach, describe, expect, it} from "vitest"
 import {render, screen} from '@testing-library/react'
-import ReportSummary from "./ReportSummary";
-import {appReleaseVersionInTest, fileReportInTest, kostraFormInTest} from "../../specData";
+import ReportSummary from "./ReportSummary"
+import {appReleaseVersionInTest, fileReportInTest, kostraFormInTest} from "../../specData"
 
 describe("ReportSummary", () => {
     describe("Layout with all fields set", () => {

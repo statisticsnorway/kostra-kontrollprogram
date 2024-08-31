@@ -1,6 +1,6 @@
-import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
-import ErrorLevel from "./ErrorLevel";
-import KostraSeverity from "../../kostratypes/kostraSeverity";
+import FileReportEntryVm from "../../kostratypes/fileReportEntryVm"
+import ErrorLevel from "./ErrorLevel"
+import KostraSeverity from "../../kostratypes/kostraSeverity"
 
 interface ErrorAggregateEntry {
     feilkode: KostraSeverity

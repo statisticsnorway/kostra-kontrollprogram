@@ -1,7 +1,7 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it} from "vitest"
 import {render, screen} from '@testing-library/react'
-import ErrorLevel from "./ErrorLevel";
-import KostraSeverity from "../../kostratypes/kostraSeverity";
+import ErrorLevel from "./ErrorLevel"
+import KostraSeverity from "../../kostratypes/kostraSeverity"
 
 describe("ErrorLevel", () => {
     describe("Layout", () => {

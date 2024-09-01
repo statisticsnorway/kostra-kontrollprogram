@@ -217,7 +217,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
                             <Form.Control
                                 {...register(`orgnrVirksomhet.${index}.orgnr`)}
                                 isValid={
-                                    getValues(`orgnrVirksomhet.${index}.orgnr`) != ""
+                                    getValues(`orgnrVirksomhet.${index}.orgnr`) !== ""
                                     && errors.orgnrVirksomhet?.[index]?.orgnr == null
                                 }
                                 isInvalid={errors.orgnrVirksomhet?.[index]?.orgnr != null

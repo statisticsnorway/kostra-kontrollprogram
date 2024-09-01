@@ -19,7 +19,7 @@ const App = () => {
     const deleteReport = (incomingIndex: NonNullable<number>): void => {
         // put all reports back to state except for the one that matches selected index
         setFileReports(prevState =>
-            prevState.filter((_, index) => index != incomingIndex))
+            prevState.filter((_, index) => index !== incomingIndex))
     }
 
     const router = createHashRouter([{

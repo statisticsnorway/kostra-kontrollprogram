@@ -17,7 +17,8 @@ const TabRow = (
 
     return <nav className="navbar navbar-light navbar-expand">
         <Link to="/" className="navbar-brand">
-            <img src={FilterLeft} alt="Skjema"/>{reportId ? "Tilbake til skjema" : "Skjema"}
+            <img src={FilterLeft} alt="Skjema" className="me-2" />
+            {reportId ? "Tilbake til skjema" : "Skjema"}
         </Link>
         <ul className="navbar-nav me-auto">
             {/** REPORT TABS*/}

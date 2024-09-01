@@ -35,7 +35,7 @@ const Index = ({onAddFileReport}: {
                 setIsPostError(true)
             })
 
-    return !uiData ? <></> : <main>
+    return !uiData ? <></> : <>
         {isPostError && <span className="text-danger">Feil ved kontroll av fil</span>}
         {isUiDataLoadError && <span className="text-danger">Feil ved lasting av data</span>}
 
@@ -45,7 +45,7 @@ const Index = ({onAddFileReport}: {
             years={uiData.years}
             onSubmit={onSubmit}
         />
-    </main>
+    </>
 }
 
 export default Index

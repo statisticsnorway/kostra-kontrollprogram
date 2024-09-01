@@ -1,5 +1,5 @@
 import './scss/buttons.scss'
-import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import {createHashRouter, RouterProvider} from "react-router-dom"
 import Root from "./routes/root"
 import ErrorPage from "./error-page"
 import Index from "./routes"
@@ -22,7 +22,7 @@ const App = () => {
             prevState.filter((_, index) => index != incomingIndex))
     }
 
-    const router = createBrowserRouter([{
+    const router = createHashRouter([{
         path: "/",
         element: <Root
             fileReports={fileReports}

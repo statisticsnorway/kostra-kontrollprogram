@@ -129,7 +129,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
                 resetField("skjemaFil", {keepDirty: false})
 
                 // get and set next skjemaType
-                const newSkjemaType = formTypes.find(it => it.id == value.skjema)
+                const newSkjemaType = formTypes.find(it => it.id === value.skjema)
                 setValgtSkjematype(newSkjemaType)
 
                 if (newSkjemaType?.labelOrgnrVirksomhetene) {
@@ -231,7 +231,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
                         <div className="mt-auto mb-2 d-flex justify-content-between">
                             {/** show plus icon for last entry only, when last entry is touched and valid */}
                             {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
-                                && index == orgnrVirksomhetFields.length - 1
+                                && index === orgnrVirksomhetFields.length - 1
                                 && getValues(`orgnrVirksomhet.${index}.orgnr`)
                                 && errors.orgnrVirksomhet?.[index]?.orgnr == null
                                 && <Button

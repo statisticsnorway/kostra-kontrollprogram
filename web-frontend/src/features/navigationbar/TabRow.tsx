@@ -28,7 +28,7 @@ const TabRow = (
                     id={index}
                     reportName={`${fileReport.innparametere.skjema} ${fileReport.innparametere.aar},`
                         + ` region ${fileReport.innparametere.region}`}
-                    tabIsActive={reportId == String(index)}
+                    tabIsActive={reportId === String(index)}
                     onClose={() => {
                         onDeleteFileReport(index)
                         navigate("/")

@@ -10,7 +10,7 @@ interface ErrorAggregateEntry {
 
 const reduceErrors = (reportEntries: NonNullable<FileReportEntryVm[]>): ErrorAggregateEntry[] => reportEntries.reduce(
     (accumulator: ErrorAggregateEntry[], currentValue) => {
-        const findIndex = accumulator.findIndex(it => it.kontrollnummer == currentValue.ruleName)
+        const findIndex = accumulator.findIndex(it => it.kontrollnummer === currentValue.ruleName)
         if (findIndex < 0) {
             accumulator.push({
                 feilkode: currentValue.severity,

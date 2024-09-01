@@ -15,13 +15,13 @@ import PlusCircle from "../assets/icon/plus-circle.svg"
 // @ts-ignore
 import DashCircle from "../assets/icon/dash-circle.svg"
 import CompanyIdVm from "../kostratypes/companyIdVm"
-import useFormPersist from "react-hook-form-persist"
 
 // misc constants
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
 const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
+const FORM_LOCAL_STORAGE_KEY = "kostra-form"
 
 const MainForm = ({formTypes, years, onSubmit}: {
     formTypes: KostraFormTypeVm[],
@@ -69,6 +69,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
     const {
         control,
         register,
+        reset,
         resetField,
         handleSubmit,
         formState: {
@@ -78,18 +79,10 @@ const MainForm = ({formTypes, years, onSubmit}: {
         },
         formState,
         watch,
-        getValues,
-        setValue
+        getValues
     } = useForm<KostraFormVm>({
         mode: "onChange",
         resolver: yupResolver(validationSchema)
-    })
-
-    useFormPersist("kostra-form", {
-        watch,
-        setValue,
-        storage: window.localStorage,
-        exclude: ['skjemaFil']
     })
 
     // array for orgnrVirksomhet
@@ -105,21 +98,38 @@ const MainForm = ({formTypes, years, onSubmit}: {
     // submit-handler, redirects call to parent
     const localOnSubmit = handleSubmit(data => onSubmit(data))
 
+    // Restore form data from localStorage when component mounts
+    const loadFormFromLocalStorage = () => {
+        const savedData = localStorage.getItem(FORM_LOCAL_STORAGE_KEY)
+        if (!savedData) return;
+
+        const formData = JSON.parse(savedData)
+        reset(formData) // reset inits the form from formData
+
+        if (!formData.skjema) return;
+
+        const restoredSkjemaType = formTypes.find(
+            (it) => it.id === formData.skjema
+        )
+        setValgtSkjematype(restoredSkjemaType)
+    }
+
     // change skjema handling
     useEffect(() => {
-        const subscription = watch((value, {name, type}) => {
-            if (formTypes.length) {
-                if (!(name == "skjema" && type == "change")) return
+        loadFormFromLocalStorage()
 
+        const subscription = watch((value, {name, type}) => {
+            // Save form data to local storage whenever relevant fields change
+            localStorage.setItem(FORM_LOCAL_STORAGE_KEY, JSON.stringify(watch()));
+
+            if (formTypes.length && name === "skjema" && type === "change") {
                 // reset dirty state for individual fields
                 resetField("orgnrForetak", {keepDirty: false})
                 resetField("orgnrVirksomhet", {keepDirty: false})
                 resetField("skjemaFil", {keepDirty: false})
 
-                // get next skjemaType
+                // get and set next skjemaType
                 const newSkjemaType = formTypes.find(it => it.id == value.skjema)
-
-                // set new skjemaType
                 setValgtSkjematype(newSkjemaType)
 
                 if (newSkjemaType?.labelOrgnrVirksomhetene) {
@@ -129,10 +139,10 @@ const MainForm = ({formTypes, years, onSubmit}: {
             }
         })
         return () => subscription.unsubscribe()
-    }, [formTypes, watch])
+    }, []) // executed on mount only
 
     return <Form noValidate validated={formState.isValid} onSubmit={localOnSubmit}>
-        <div className="row g-3 mt-2">
+        <div className="row g-3">
 
             {/** SKJEMATYPE */}
             {formTypes && <Form.Group

@@ -23,47 +23,47 @@ const MEBIBYTE_10 = 10485760
 const MAX_VIRKSOMHET_FIELDS = 20
 const FORM_LOCAL_STORAGE_KEY = "kostra-form"
 
+const validationSchema = (valgtSkjematype: Nullable<KostraFormTypeVm> | undefined): yup.ObjectSchema<KostraFormVm> => yup.object().shape({
+    skjema: yup.string().required("Skjematype er påkrevet"),
+    aar: yup.number().required().positive("Årgang er påkrevet"),
+
+    region: yup.string()
+        .required("Region er påkrevet")
+        .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
+
+    orgnrForetak: yup.string().default<Nullable<string>>(null).when(([], schema) =>
+        valgtSkjematype?.labelOrgnr
+            ? schema
+                .required(COMPANY_ID_REQUIRED_MSG)
+                .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
+            : schema.nullable()
+    ),
+
+    orgnrVirksomhet: yup.array(
+        yup.object({
+            orgnr: yup.string()
+                .required(COMPANY_ID_REQUIRED_MSG)
+                .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
+        })).default<Nullable<CompanyIdVm[]>>(null).nullable(),
+
+    skjemaFil: yup.mixed<FileList>().defined()
+        .test(
+            "required",
+            "Vennligst velg fil",
+            (files: FileList) => files?.length > 0
+        ).test(
+            "file-size",
+            "Maks. filstørrelse er 10 MiB",
+            (files: FileList) => files?.[0]?.size < MEBIBYTE_10
+        )
+})
+
 const MainForm = ({formTypes, years, onSubmit}: {
     formTypes: KostraFormTypeVm[],
     years: number[],
     onSubmit: (form: KostraFormVm) => void,
 }) => {
     const [valgtSkjematype, setValgtSkjematype] = useState<Nullable<KostraFormTypeVm>>()
-
-    const validationSchema: yup.ObjectSchema<KostraFormVm> = yup.object().shape({
-        skjema: yup.string().required("Skjematype er påkrevet"),
-        aar: yup.number().required().positive("Årgang er påkrevet"),
-
-        region: yup.string()
-            .required("Region er påkrevet")
-            .matches(/^\d{6}$/, "Region må bestå av 6 siffer"),
-
-        orgnrForetak: yup.string().default<Nullable<string>>(null).when(([], schema) =>
-            valgtSkjematype?.labelOrgnr
-                ? schema
-                    .required(COMPANY_ID_REQUIRED_MSG)
-                    .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-                : schema.nullable()
-        ),
-
-        orgnrVirksomhet: yup.array(
-            yup.object({
-                orgnr: yup.string()
-                    .required(COMPANY_ID_REQUIRED_MSG)
-                    .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-            })).default<Nullable<CompanyIdVm[]>>(null).nullable(),
-
-        skjemaFil: yup.mixed<FileList>().defined()
-            .test(
-                "required",
-                "Vennligst velg fil",
-                (files: FileList) => files?.length > 0
-            ).test(
-                "file-size",
-                "Maks. filstørrelse er 10 MiB",
-                (files: FileList) => files?.[0]?.size < MEBIBYTE_10
-            )
-    })
 
     // main form
     const {
@@ -82,7 +82,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
         getValues
     } = useForm<KostraFormVm>({
         mode: "onChange",
-        resolver: yupResolver(validationSchema)
+        resolver: yupResolver(validationSchema(valgtSkjematype))
     })
 
     // array for orgnrVirksomhet

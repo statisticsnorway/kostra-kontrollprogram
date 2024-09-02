@@ -2,7 +2,7 @@ import MainForm from "../components/MainForm"
 import {useQuery} from "react-query"
 import {kontrollerSkjemaAsync, uiDataAsync} from "../api/apiCalls"
 import KostraFormVm from "../kostratypes/kostraFormVm"
-import {useState} from "react"
+import {useCallback, useState} from "react"
 import FileReportVm from "../kostratypes/fileReportVm"
 import {useNavigate} from "react-router-dom";
 
@@ -20,19 +20,18 @@ const Index = ({onAddFileReport}: {
         uiDataAsync().then(uiData => uiData)
     )
 
-    // Form submit handler.
     // Submits form to backend and stores returned report at start of fileReports array state.
-    const onSubmit = (form: KostraFormVm) =>
+    const onSubmit = useCallback((form: KostraFormVm) =>
         kontrollerSkjemaAsync(form)
             .then(fileReport => {
                 setIsPostError(false)
                 onAddFileReport(fileReport)
-                navigate("/file-reports/0") // new report has always index = 0
+                navigate("/file-reports/0") // new reports are added to beginning of list
             })
             .catch((error) => {
                 if (error.response) console.log(error.response)
                 setIsPostError(true)
-            })
+            }), [onAddFileReport, navigate])
 
     return !uiData ? <></> : <>
         {isPostError && <span className="text-danger">Feil ved kontroll av fil</span>}

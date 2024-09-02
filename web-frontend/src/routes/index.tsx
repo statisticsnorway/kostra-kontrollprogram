@@ -4,14 +4,13 @@ import {kontrollerSkjemaAsync, uiDataAsync} from "../api/apiCalls"
 import KostraFormVm from "../kostratypes/kostraFormVm"
 import {useState} from "react"
 import FileReportVm from "../kostratypes/fileReportVm"
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
 
 const Index = ({onAddFileReport}: {
-    onAddFileReport: (fileReport: NonNullable<FileReportVm>) => number
+    onAddFileReport: (fileReport: NonNullable<FileReportVm>) => void
 }) => {
-
-    const navigate = useNavigate()
     const [isPostError, setIsPostError] = useState<boolean>(false)
+    const navigate = useNavigate()
 
     // Fetch UI-data from backend
     const {
@@ -27,8 +26,8 @@ const Index = ({onAddFileReport}: {
         kontrollerSkjemaAsync(form)
             .then(fileReport => {
                 setIsPostError(false)
-                const fileReportId = onAddFileReport(fileReport)
-                navigate(`/file-reports/${fileReportId}`)
+                onAddFileReport(fileReport)
+                navigate("/file-reports/0") // new report has always index = 0
             })
             .catch((error) => {
                 if (error.response) console.log(error.response)

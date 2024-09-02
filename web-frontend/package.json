@@ -15,7 +15,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@popperjs/core": "^2.11.8",
-    "axios": "^1.7.5",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "match-sorter": "^6.3.4",
     "react": "^18.3.1",

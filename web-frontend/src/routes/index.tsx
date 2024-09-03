@@ -1,24 +1,17 @@
-import {useQuery} from "react-query"
-import {kontrollerSkjemaAsync, uiDataAsync} from "../api/apiCalls"
+import {kontrollerSkjemaAsync} from "../api/apiCalls"
 import KostraFormVm from "../kostratypes/kostraFormVm"
 import {useCallback, useState} from "react"
 import FileReportVm from "../kostratypes/fileReportVm"
 import {useNavigate} from "react-router-dom"
 import MainForm from "../features/mainForm/MainForm"
+import uiDataVm from "../kostratypes/uiDataVm";
 
-const Index = ({onAddFileReport}: {
+const Index = ({uiData, onAddFileReport}: {
+    uiData: uiDataVm,
     onAddFileReport: (fileReport: NonNullable<FileReportVm>) => void
 }) => {
     const [isPostError, setIsPostError] = useState<boolean>(false)
     const navigate = useNavigate()
-
-    // Fetch UI-data from backend
-    const {
-        isError: isUiDataLoadError,
-        data: uiData
-    } = useQuery("uiData", async () =>
-        uiDataAsync().then(uiData => uiData)
-    )
 
     // Submits form to backend and stores returned report at start of fileReports array state.
     const onSubmit = useCallback((form: KostraFormVm) =>
@@ -33,9 +26,8 @@ const Index = ({onAddFileReport}: {
                 setIsPostError(true)
             }), [onAddFileReport, navigate])
 
-    return !uiData ? <></> : <>
+    return <>
         {isPostError && <span className="text-danger">Feil ved kontroll av fil</span>}
-        {isUiDataLoadError && <span className="text-danger">Feil ved lasting av data</span>}
 
         {/** FORM */}
         <MainForm

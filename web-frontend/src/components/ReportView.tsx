@@ -6,7 +6,7 @@ import ErrorDetailsTable from "../features/report/ErrorDetailsTable"
 
 
 const ReportView = ({appReleaseVersion, fileReport}: {
-    appReleaseVersion: NonNullable<string>,
+    appReleaseVersion: string,
     fileReport: FileReportVm
 }) =>
     <>

@@ -4,11 +4,17 @@ import Root from "./routes/root"
 import ErrorPage from "./error-page"
 import Index from "./routes"
 import FileReport from "./routes/file-report"
-import {useCallback, useState} from "react"
+import {useCallback, useMemo, useState} from "react"
 import FileReportVm from "./kostratypes/fileReportVm"
+import {useQuery} from "react-query"
+import {uiDataAsync} from "./api/apiCalls"
 
 const App = () => {
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
+
+    // Fetch UI-data from backend
+    const {data: uiData, isLoading, isError} =
+        useQuery('uiData', uiDataAsync)
 
     const onAddFileReport = useCallback(
         (fileReport: FileReportVm) =>
@@ -25,20 +31,39 @@ const App = () => {
         []
     )
 
-    const router = createHashRouter([{
-        path: "/",
-        element: <Root
-            fileReports={fileReports}
-            onDeleteFileReport={onDeleteReport}/>,
-        errorElement: <ErrorPage/>,
-        children: [
-            {index: true, element: <Index onAddFileReport={onAddFileReport}/>},
+    // Memoize routing configuration to avoid unnecessary recalculation
+    const router = useMemo(() =>
+        uiData ? createHashRouter([
             {
-                path: "file-reports/:reportId",
-                element: <FileReport fileReports={fileReports}/>
+                path: '/',
+                errorElement: <ErrorPage/>,
+                element: <Root fileReports={fileReports}
+                               onDeleteFileReport={onDeleteReport}/>,
+                children: [
+                    {
+                        index: true,
+                        element: <Index uiData={uiData} onAddFileReport={onAddFileReport}/>,
+                    },
+                    {
+                        path: 'file-reports/:reportId',
+                        element: <FileReport
+                            fileReports={fileReports}
+                            releaseVersion={uiData.releaseVersion}
+                        />,
+                    },
+                ],
             },
-        ]
-    }])
+        ]) : null, [fileReports, uiData, onDeleteReport, onAddFileReport])
+
+    if (isLoading || !router) {
+        return <div>Laster data...</div>
+    }
+
+    if (isError || !uiData) {
+        return <div className="text-danger">
+            Feil ved lasting av data. Vennligst forsøk igjen.
+        </div>
+    }
 
     return <RouterProvider router={router}/>
 }

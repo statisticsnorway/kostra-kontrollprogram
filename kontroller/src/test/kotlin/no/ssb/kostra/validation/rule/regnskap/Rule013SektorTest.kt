@@ -34,7 +34,7 @@ class Rule013SektorTest : BehaviorSpec({
     )
 
     include(
-        "No content",
+        "Blank content",
         KostraTestFactory.validationRuleNoArgsTest(
             sut = Rule013Sektor(sektorList = listOf("   ")),
             expectedSeverity = Severity.ERROR,
@@ -46,6 +46,26 @@ class Rule013SektorTest : BehaviorSpec({
                 "correct skjema, wrong sektor",
                 kostraRecordsInTest("0B", "888"),
                 expectedErrorMessage = "Fant ugyldig sektor '888'. Posisjoner for sektorkoder skal være blanke"
+            ),
+            ForAllRowItem(
+                "correct skjema, correct blank sektor from empty list",
+                kostraRecordsInTest("0B", "   ")
+            ),
+        ),
+    )
+
+    include(
+        "No content",
+        KostraTestFactory.validationRuleNoArgsTest(
+            sut = Rule013Sektor(sektorList = emptyList()),
+            expectedSeverity = Severity.ERROR,
+            ForAllRowItem(
+                "wrong skjema",
+                kostraRecordsInTest("0A", "888")
+            ),
+            ForAllRowItem(
+                "correct skjema, wrong sektor",
+                kostraRecordsInTest("0B", "888")
             ),
             ForAllRowItem(
                 "correct skjema, correct blank sektor from empty list",

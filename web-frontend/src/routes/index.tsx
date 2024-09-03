@@ -4,7 +4,7 @@ import {useCallback, useState} from "react"
 import FileReportVm from "../kostratypes/fileReportVm"
 import {useNavigate} from "react-router-dom"
 import MainForm from "../features/mainForm/MainForm"
-import uiDataVm from "../kostratypes/uiDataVm";
+import uiDataVm from "../kostratypes/uiDataVm"
 
 const Index = ({uiData, onAddFileReport}: {
     uiData: uiDataVm,

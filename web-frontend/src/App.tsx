@@ -1,9 +1,9 @@
 import './scss/buttons.scss'
 import {createHashRouter, RouterProvider} from "react-router-dom"
 import Root from "./routes/root"
-import ErrorPage from "./error-page"
-import Index from "./routes"
+import ErrorPage from "./routes/error-page"
 import FileReport from "./routes/file-report"
+import Index from "./routes"
 import {useCallback, useMemo, useState} from "react"
 import FileReportVm from "./kostratypes/fileReportVm"
 import {useQuery} from "react-query"
@@ -55,14 +55,12 @@ const App = () => {
             },
         ]) : null, [fileReports, uiData, onDeleteReport, onAddFileReport])
 
-    if (isLoading || !router) {
+    if (isLoading) {
         return <div>Laster data...</div>
     }
 
-    if (isError || !uiData) {
-        return <div className="text-danger">
-            Feil ved lasting av data. Vennligst forsøk igjen.
-        </div>
+    if (isError || !uiData || !router) {
+        return <div className="text-danger">Kunne ikke initialisere applikasjonen.</div>
     }
 
     return <RouterProvider router={router}/>

@@ -9,10 +9,12 @@ const FileReport = ({fileReports, releaseVersion}: {
     const {reportId} = useParams()
     const fileReport = reportId ? fileReports[+reportId] : null
 
-    return fileReport ? <ReportView
+    if (!fileReport) throw new Error("Valgt rapport finnes ikke")
+
+    return <ReportView
         fileReport={fileReport}
         appReleaseVersion={releaseVersion}
-    /> : <></>
+    />
 }
 
 export default FileReport

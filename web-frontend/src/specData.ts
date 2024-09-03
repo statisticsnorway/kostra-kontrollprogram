@@ -1,7 +1,7 @@
-import KostraFormVm from "./kostratypes/kostraFormVm";
-import KostraSeverity from "./kostratypes/kostraSeverity";
-import FileReportVm from "./kostratypes/fileReportVm";
-import FileReportEntryVm from "./kostratypes/fileReportEntryVm";
+import KostraFormVm from "./kostratypes/kostraFormVm"
+import KostraSeverity from "./kostratypes/kostraSeverity"
+import FileReportVm from "./kostratypes/fileReportVm"
+import FileReportEntryVm from "./kostratypes/fileReportEntryVm"
 
 export const appReleaseVersionInTest = "~appReleaseVersion~"
 

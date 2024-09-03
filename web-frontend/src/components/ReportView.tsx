@@ -1,12 +1,12 @@
 import FileReportVm from "../kostratypes/fileReportVm"
 
-import ErrorSummary from "../features/report/ErrorSummary";
-import ReportSummary from "../features/report/ReportSummary";
-import ErrorDetailsTable from "../features/report/ErrorDetailsTable";
+import ErrorSummary from "../features/report/ErrorSummary"
+import ReportSummary from "../features/report/ReportSummary"
+import ErrorDetailsTable from "../features/report/ErrorDetailsTable"
 
 
 const ReportView = ({appReleaseVersion, fileReport}: {
-    appReleaseVersion: NonNullable<string>,
+    appReleaseVersion: string,
     fileReport: FileReportVm
 }) =>
     <>

@@ -1,69 +1,49 @@
-import {describe, expect, test, vi} from "vitest";
-import FileReportVm from "../../kostratypes/fileReportVm";
-import {render, screen} from "@testing-library/react";
-import TabRow from "./TabRow";
-import {fileReportInTest, kostraFormInTest} from "../../specData";
+import {describe, expect, it, vi} from "vitest"
+import FileReportVm from "../../kostratypes/fileReportVm"
+import {fireEvent, render, screen} from "@testing-library/react"
+import TabRow from "./TabRow"
+import {fileReportInTest, kostraFormInTest} from "../../specData"
+import {MemoryRouter, Route, Routes} from "react-router-dom"
 
-const expectedTabTitle = `${kostraFormInTest.skjema} ${kostraFormInTest.aar}, region ${kostraFormInTest.region}`
+const expectedReportTabTitle = `${kostraFormInTest.skjema} ${kostraFormInTest.aar}, region ${kostraFormInTest.region}`
 
-const setupForLayoutTests = (fileReports: FileReportVm[], activeTabIndex: number) => {
-    render(<TabRow
-        fileReports={fileReports}
-        activeTabIndex={activeTabIndex}
-        onTabSelect={() => {
-        }}
-        onReportDelete={() => {
-        }}/>)
-}
-
-const setupForInteractionTests = (onTabSelect: () => void, onReportDelete: () => void) => {
-    render(<TabRow
-        fileReports={[fileReportInTest]}
-        activeTabIndex={1}
-        onTabSelect={onTabSelect}
-        onReportDelete={onReportDelete}/>)
-}
+const setupTabRowForTests = (
+    fileReports: FileReportVm[] = [],
+    path = "/",
+    onDeleteFileReport = () => {
+    }
+) => render(<MemoryRouter initialEntries={[path]}>
+    <Routes>
+        <Route path="/" element={
+            <TabRow fileReports={fileReports} onDeleteFileReport={onDeleteFileReport}/>}/>
+        <Route path="/file-reports/:reportId" element={
+            <TabRow fileReports={fileReports} onDeleteFileReport={onDeleteFileReport}/>}/>
+    </Routes>
+</MemoryRouter>)
 
 describe("TabRow", () => {
     describe("Layout", () => {
-        test("when no file reports, expect tab title 'Skjema'", () => {
-            setupForLayoutTests([], 0)
-            expect(screen.getByText("Skjema")).toBeDefined()
+        it("displays tab title 'Skjema' when no file reports", () => {
+            setupTabRowForTests()
+            expect(screen.queryByText("Skjema")).toBeInTheDocument()
         })
-        test("delete button is not displayed for left-most tab", () => {
-            setupForLayoutTests([], 0)
-            expect(screen.getAllByRole("button").length).toBe(1)
+        it("displays 'Tilbake til skjema' when a file report selected", () => {
+            setupTabRowForTests([fileReportInTest], "/file-reports/0")
+            expect(screen.queryByText("Skjema")).not.toBeInTheDocument()
+            expect(screen.queryByText("Tilbake til skjema")).toBeInTheDocument()
         })
-        test("when one file report and file report selected, back to form button changes text", () => {
-            setupForLayoutTests([fileReportInTest], 1)
-            expect(() => screen.getByText("Skjema")).toThrow()
-            expect(screen.getByText("Tilbake til skjema")).toBeDefined()
-        })
-        test("when one file report, report info is displayed as tab", () => {
-            setupForLayoutTests([fileReportInTest], 1)
-            expect(screen.getByText(expectedTabTitle)).toBeDefined()
+        it("displays report info when report exists", () => {
+            setupTabRowForTests([fileReportInTest])
+            expect(screen.queryByText(expectedReportTabTitle)).toBeInTheDocument()
         })
     })
 
     describe("Interactions", () => {
-        test("clicking report name button calls onTabSelect", () => {
-            const onTabSelect = vi.fn().mockImplementation(() => {
-            })
-            setupForInteractionTests(onTabSelect, () => {
-            })
+        it("calls onReportDelete when 'Slett rapport' is clicked", () => {
+            const onReportDelete = vi.fn()
+            setupTabRowForTests([fileReportInTest], "/", onReportDelete)
 
-            screen.getByTitle<HTMLButtonElement>(expectedTabTitle).click()
-
-            expect(onTabSelect).toBeCalledWith(1)
-        })
-        test("clicking close button calls onReportDelete", () => {
-            const onReportDelete = vi.fn().mockImplementation(() => {
-            })
-            setupForInteractionTests(() => {
-            }, onReportDelete)
-
-            screen.getByTitle<HTMLButtonElement>("Slett rapport").click()
-
+            fireEvent.click(screen.getByTitle<HTMLButtonElement>("Slett rapport"))
             expect(onReportDelete).toBeCalledWith(0)
         })
     })

@@ -4,10 +4,8 @@ import {api, kontrollerSkjemaAsync, kostraFormToMultipartBody, MULTIPART_HEADER_
 
 describe('apiCalls', () => {
     describe("ui-data (GET)", () => {
-
         it("calls /ui-data", async () => {
-
-            const uiDataVmJson = {
+            const expectedUiDataVmJson = {
                 releaseVersion: "N/A",
                 years: [2023,2024],
                 formTypes: [{
@@ -19,22 +17,20 @@ describe('apiCalls', () => {
             }
 
             const mockGetResponseAsync = vi.fn().mockImplementation(
-                () => new Promise(resolve => resolve({data: uiDataVmJson}))
+                () => new Promise(resolve => resolve({data: expectedUiDataVmJson}))
             )
 
             // set mock
             api.get = mockGetResponseAsync
 
             // make call and verify result
-            await expect(uiDataAsync()).resolves.toEqual(uiDataVmJson)
+            await expect(uiDataAsync()).resolves.toEqual(expectedUiDataVmJson)
             expect(mockGetResponseAsync).toBeCalledWith("/ui-data")
         })
     })
 
     describe("kontroller-skjema (POST)", () => {
-
         it("calls /kontroller-skjema", async () => {
-
             const mockPostResponseAsync = vi.fn().mockImplementation(
                 () => new Promise(resolve => resolve({data: fileReportInTest}))
             )

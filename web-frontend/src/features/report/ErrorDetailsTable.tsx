@@ -1,5 +1,5 @@
-import ErrorLevel from "./ErrorLevel";
-import FileReportEntryVm from "../../kostratypes/fileReportEntryVm";
+import ErrorLevel from "./ErrorLevel"
+import FileReportEntryVm from "../../kostratypes/fileReportEntryVm"
 
 export const SEVERITY_HEADER = "Grad"
 export const CASE_WORKER_HEADER = "Saksbehandler"
@@ -51,7 +51,7 @@ const ErrorDetailsTable = ({reportEntries}: { reportEntries: NonNullable<FileRep
                 </div>
             </li>
         </ul>
-    </div>;
+    </div>
 }
 
 export default ErrorDetailsTable

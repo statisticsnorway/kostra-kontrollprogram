@@ -1,4 +1,4 @@
-import KostraSeverity from "../../kostratypes/kostraSeverity";
+import KostraSeverity from "../../kostratypes/kostraSeverity"
 
 const getClassName = (level: NonNullable<KostraSeverity>) => {
     switch (level) {

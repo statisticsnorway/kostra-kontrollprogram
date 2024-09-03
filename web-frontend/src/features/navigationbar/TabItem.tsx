@@ -1,24 +1,25 @@
-import ImageNameButton from "./ImageNameButton";
-import CloseButton from "./CloseButton";
+import {Link} from "react-router-dom"
 
-const TabItem = (props: {
-    text: string,
-    image: string,
+// @ts-ignore
+import ListTask from "../../assets/icon/list-task.svg"
+import CloseButton from "./CloseButton"
+
+const TabItem = ({id, reportName, tabIsActive, onClose}: {
+    id: number,
+    reportName: string,
     tabIsActive: boolean,
-    onSelect: () => void,
-    showCloseButton: boolean,
-    onClose: () => void
-}) =>
-    <li className="nav-item">
-        <div data-testid="tab-item-div" className={props.tabIsActive ? "nav-link active pt-1 pb-1" : "nav-link pt-1 pb-1"}>
-            <ImageNameButton
-                onClick={props.onSelect}
-                text={props.text}
-                image={props.image}
-            />
+    onClose: () => void,
+}) => {
+    let className = "nav-link pt-1 pb-1"
+    if (tabIsActive) className += " active"
 
-            {props.showCloseButton && <CloseButton onClick={props.onClose}/>}
-        </div>
+    return <li className="nav-item d-flex align-items-center">
+            <Link to={`/file-reports/${id}`} className={className} data-testid="tab-item-div">
+                <img src={ListTask} className="pe-2" alt="Kostra"/>
+                {reportName}
+            </Link>
+            <CloseButton onClick={onClose}/>
     </li>
+}
 
 export default TabItem

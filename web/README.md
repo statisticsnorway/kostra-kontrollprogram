@@ -41,6 +41,34 @@ Starte app fra JAR-fil
 java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 ```
 
+Bygge kostra-kontrollprogram-web
+```bash
+./gradlew build -p web
+```
+
+Bygge Docker-image basert på bygget av kostra-kontrollprogram-web
+```bash
+docker build -t kostra-kontrollprogram ./web
+```
+
+Liste alle Docker-images
+```bash
+docker images
+```
+kostra-kontrollprogram:latest vil vises i listen.
+
+Kjør Docker
+```bash
+docker run --name kostra-kontrollprogram -p 8080:8080 kostra-kontrollprogram:latest
+```
+Applikasjonen vil være tilgjengelig på http://localhost:8080/
+
+Rydde opp
+```bash
+docker rm kostra-kontrollprogram # fjerne stanset container
+docker rmi kostra-kontrollprogram # fjerne Docker-image
+```
+
 ## Komme i gang med utvikling frontend
 
 IntelliJ har som standard plugins for Typescript-utvikling.
@@ -61,27 +89,4 @@ Frontend vil være tilgjengelig på http://localhost/8081.
 Kjøre frontend-tester (også en del av `./gradlew check`)
 ```bash
 npx vitest run
-```
-
-Bygge Docker-image, kostra-kontrollprogram-web
-```bash
-./gradlew clean -p web jibDockerBuild --image=kostra-kontrollprogram
-```
-
-Liste alle Docker-images
-```bash
-docker images
-```
-kostra-kontrollprogram:latest vil vises i listen.
-
-Kjør Docker
-```bash
-docker run --name kostra-kontrollprogram -p 8080:8080 kostra-kontrollprogram:latest
-```
-Applikasjonen vil være tilgjengelig på http://localhost:8080/
-
-Rydde opp
-```bash
-docker rm kostra-kontrollprogram # fjerne stanset container
-docker rmi kostra-kontrollprogram # fjerne Docker-image
 ```

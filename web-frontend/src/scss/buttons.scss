@@ -1,3 +1,6 @@
+html {
+  overflow-y: scroll;
+}
 
 .rounded-circle {
   @extend .rounded-circle;
@@ -6,4 +9,3 @@
     background-color: lightgray !important;
   }
 }
-

@@ -24,6 +24,8 @@ export const kontrollerSkjemaAsync = (skjema: NonNullable<KostraFormVm>): Promis
 export const kostraFormToMultipartBody = (skjema: NonNullable<KostraFormVm>): FormData => {
     const bodyFormData = new FormData()
 
+    if (!skjema.skjemaFil) throw new Error("skjemaFil is required")
+
     // append form as JSON-string without file, add filename
     bodyFormData.append(
         "kostraFormAsJson",

@@ -1,5 +1,5 @@
 import KostraSeverity from "./kostraSeverity"
-import Nullable from "./nullable";
+import Nullable from "./nullable"
 
 interface FileReportEntryVm {
     readonly severity: NonNullable<KostraSeverity>

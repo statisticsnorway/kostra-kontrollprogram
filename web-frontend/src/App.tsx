@@ -1,108 +1,69 @@
-import {useQuery} from 'react-query'
-import {useState} from "react";
-
-// app components
-import MainForm from "./components/MainForm"
-import ReportView from "./components/ReportView"
-import TabRow from "./features/navigationbar/TabRow";
-
-// app types
-import KostraFormVm from "./kostratypes/kostraFormVm"
-import FileReportVm from "./kostratypes/fileReportVm"
-
-// API calls
-import {kontrollerSkjemaAsync, uiDataAsync} from "./api/apiCalls"
-
-// @ts-ignore
-import IconKostra from "./assets/icon/ikon-kostra.svg"
-
 import './scss/buttons.scss'
+import {createHashRouter, RouterProvider} from "react-router-dom"
+import Root from "./routes/root"
+import ErrorPage from "./routes/error-page"
+import FileReport from "./routes/file-report"
+import Index from "./routes"
+import {useCallback, useMemo, useState} from "react"
+import FileReportVm from "./kostratypes/fileReportVm"
+import {useQuery} from "react-query"
+import {uiDataAsync} from "./api/apiCalls"
 
 const App = () => {
-
-    const [isPostError, setIsPostError] = useState<boolean>(false)
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
-    const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
 
     // Fetch UI-data from backend
-    const {
-        isError: isUiDataLoadError,
-        data: uiData
-    } = useQuery("uiData", () => {
-            console.log("Fetching UI-data")
-            return uiDataAsync().then(uiData => uiData)
-        }
+    const {data: uiData, isLoading, isError} =
+        useQuery('uiData', uiDataAsync)
+
+    const onAddFileReport = useCallback(
+        (fileReport: FileReportVm) =>
+            // add new report to head (index = 0)
+            setFileReports(prevState => [fileReport, ...prevState]),
+        []
     )
 
-    // Form submit handler.
-    // Submits form to backend and stores returned report at start of fileReports array state.
-    const onSubmit = (form: KostraFormVm) => {
-        kontrollerSkjemaAsync(form)
-            .then(fileReport => {
-                setFileReports(prevState => [fileReport, ...prevState])
-                setActiveTabIndex(1)
-                setIsPostError(false)
-            })
-            .catch((error) => {
-                if (error.response) console.log(error.response)
-                setIsPostError(true)
-            })
+    const onDeleteReport = useCallback(
+        (incomingIndex: NonNullable<number>): void =>
+            // put all reports back to state except for the one that matches selected index
+            setFileReports(prevState =>
+                prevState.filter((_, index) => index !== incomingIndex)),
+        []
+    )
+
+    // Memoize routing configuration to avoid unnecessary recalculation
+    const router = useMemo(() =>
+        uiData ? createHashRouter([
+            {
+                path: '/',
+                errorElement: <ErrorPage/>,
+                element: <Root fileReports={fileReports}
+                               onDeleteFileReport={onDeleteReport}/>,
+                children: [
+                    {
+                        index: true,
+                        element: <Index uiData={uiData} onAddFileReport={onAddFileReport}/>,
+                    },
+                    {
+                        path: 'file-reports/:reportId',
+                        element: <FileReport
+                            fileReports={fileReports}
+                            releaseVersion={uiData.releaseVersion}
+                        />,
+                    },
+                ],
+            },
+        ]) : null, [fileReports, uiData, onDeleteReport, onAddFileReport])
+
+    if (isLoading) {
+        return <div>Laster data...</div>
     }
 
-    const deleteReport = (incomingIndex: NonNullable<number>): void => {
-        console.log(`Deleting report at index ${incomingIndex}`)
-
-        // there's always a tab to the left, go there
-        setActiveTabIndex(incomingIndex)
-
-        // put all reports back to state except for the one that matches selected index
-        setFileReports(prevState =>
-            prevState.filter((_, index) => index != incomingIndex))
+    if (isError || !uiData || !router) {
+        return <div className="text-danger">Kunne ikke initialisere applikasjonen.</div>
     }
 
-    return <>
-        <header className="py-3 text-center">
-            <h2>
-                <img src={IconKostra}
-                     height="70px"
-                     className="pe-4"
-                     alt="Kostra"/>
-                Kostra Kontrollprogram
-            </h2>
-
-            {isUiDataLoadError && <span className="text-danger">Feil ved lasting av UI-data</span>}
-            {isPostError && <span className="text-danger">"Feil ved kontroll av fil"</span>}
-
-            <hr className="my-0"/>
-        </header>
-
-        {/** TABS */}
-        {fileReports.length > 0 && <TabRow
-            fileReports={fileReports}
-            activeTabIndex={activeTabIndex}
-            onTabSelect={setActiveTabIndex}
-            onReportDelete={deleteReport}/>}
-
-        {/** show when UI-data is loaded */}
-        {uiData && <main>
-
-            {/** FORM */}
-            <MainForm
-                showForm={activeTabIndex == 0}
-                formTypes={uiData.formTypes}
-                years={uiData.years}
-                onSubmit={onSubmit}
-            />
-
-            {/** FILE REPORT */}
-            {activeTabIndex > 0 &&
-                <ReportView
-                    fileReport={fileReports[activeTabIndex - 1]}
-                    appReleaseVersion={uiData.releaseVersion}
-                />
-            }
-        </main>}
-    </>
+    return <RouterProvider router={router}/>
 }
 
 export default App

@@ -1,10 +1,10 @@
-import MainForm from "../components/MainForm"
 import {useQuery} from "react-query"
 import {kontrollerSkjemaAsync, uiDataAsync} from "../api/apiCalls"
 import KostraFormVm from "../kostratypes/kostraFormVm"
 import {useCallback, useState} from "react"
 import FileReportVm from "../kostratypes/fileReportVm"
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom"
+import MainForm from "../features/mainForm/MainForm"
 
 const Index = ({onAddFileReport}: {
     onAddFileReport: (fileReport: NonNullable<FileReportVm>) => void

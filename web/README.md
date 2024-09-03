@@ -41,9 +41,13 @@ Starte app fra JAR-fil
 java -jar ./web/build/libs/kostra-kontrollprogram-web-LOCAL-SNAPSHOT-all.jar
 ```
 
-Bygge Docker-image, kostra-kontrollprogram-web
+Bygge kostra-kontrollprogram-web
 ```bash
 ./gradlew build -p web
+```
+
+Bygge Docker-image basert på bygget av kostra-kontrollprogram-web
+```bash
 docker build -t kostra-kontrollprogram ./web
 ```
 

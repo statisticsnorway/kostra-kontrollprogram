@@ -11,7 +11,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule020AViktigsteKildeTilLivsOppholdKode3(),
-            expectedSeverity = Severity.ERROR,
+            expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "vkloCode = 3, trygdesitCode = 00",
                 kostraRecordInTest("3", "00"),

@@ -4,12 +4,12 @@ import MainForm from "./MainForm"
 
 describe("MainForm", () => {
     describe("Layout", () => {
-        it("initial screen, displays 2 selects, 1 text input, 1 file input and 1 button", () => {
-            render(<MainForm
+        it("displays displays 2 selects, 1 text input, 1 file input and 1 button", async () => {
+            await act(async () => render(<MainForm
                 formTypes={[]}
                 years={[(new Date()).getFullYear()]}
                 onSubmit={() => {
-                }}/>)
+                }}/>))
 
             expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg skjematype"}).selected).toBeTruthy()
             expect(screen.getByRole<HTMLOptionElement>("option", {name: "Velg årgang"}).selected).toBeTruthy()
@@ -51,7 +51,7 @@ describe("MainForm", () => {
             formTypeSelect = screen.getByLabelText<HTMLSelectElement>("Skjema")
         })
 
-        it("when a form type without company-id and sub-company-id is selected", async () => {
+        it("hides inputs for company-id and sub-company-id when a form type is selected", async () => {
             await act(async () => {
                 fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
             })
@@ -62,7 +62,7 @@ describe("MainForm", () => {
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
         })
 
-        it("when a form type with company-id is selected", async () => {
+        it("displays input for company-id when form type is selected", async () => {
 
             // verify that input is not in the document
             expect(screen.queryByLabelText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
@@ -78,7 +78,7 @@ describe("MainForm", () => {
             expect(screen.queryByLabelText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
         })
 
-        it("when a form type with company-id and sub-company-id is selected", async () => {
+        it("displays inputs for company-id and sub-company-id when form type is selected", async () => {
             // verify that inputs are not in the document
             expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument
             expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument

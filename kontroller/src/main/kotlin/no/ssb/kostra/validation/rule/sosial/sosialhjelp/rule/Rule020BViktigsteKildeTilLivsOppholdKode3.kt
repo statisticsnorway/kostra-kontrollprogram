@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
 class Rule020BViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<KostraRecord>>(
     SosialhjelpRuleId.SOSIALHJELP_K020B_TRYGD.title,
-    Severity.WARNING
+    Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it[VKLO_COL_NAME] == "3" }

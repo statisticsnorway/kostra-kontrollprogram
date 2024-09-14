@@ -196,6 +196,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
                                 }
                                 type="text"
                                 maxLength={9}
+                                data-testid={`orgnrVirksomhet.${index}.orgnr`}
                                 placeholder="9 siffer"/>
                         </Form.Group>
 

@@ -29,7 +29,7 @@ class Rule013Sektor(
                             messageText = "Fant ugyldig sektor '${kostraRecord[FIELD_SEKTOR]}'. " +
                                     "Korrigér sektor til en av '${sektorList.joinToString(", ")}'",
                             lineNumbers = listOf(kostraRecord.lineNumber),
-                            severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING
+                            severity = if (arguments.kvartal.first() in setOf('1', '2','3')) Severity.WARNING
                             else Severity.ERROR
                         )
                 }

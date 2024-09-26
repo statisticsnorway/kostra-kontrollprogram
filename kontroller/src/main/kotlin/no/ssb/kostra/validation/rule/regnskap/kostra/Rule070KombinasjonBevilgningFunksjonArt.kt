@@ -24,7 +24,7 @@ class Rule070KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
             createValidationReportEntry(
                 messageText = "Art 530 er kun tillat brukt i kombinasjon med funksjon 880",
                 lineNumbers = listOf(kostraRecord.lineNumber),
-                severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
+                severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING else Severity.ERROR
             )
         }
         .ifEmpty { null }

@@ -25,7 +25,7 @@ class Rule025KombinasjonDriftKontoklasseArt(
                 messageText = "Korrigér ugyldig art '${kostraRecord[FIELD_ART]}' i driftsregnskapet " +
                         "til en gyldig art i driftsregnskapet eller overfør posteringen til investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.lineNumber),
-                severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
+                severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING else Severity.ERROR
             )
         }
         .ifEmpty { null }

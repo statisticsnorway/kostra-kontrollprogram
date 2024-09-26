@@ -18,7 +18,8 @@ class Rule011Kapittel(
                     messageText = """Fant ugyldig kapittel '${kostraRecord[FIELD_KAPITTEL]}'. 
                                 Korrigér kapittel til en av '${kapittelList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber),
-                    severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
+                    severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING
+                    else Severity.ERROR
                 )
             }
             .ifEmpty { null }

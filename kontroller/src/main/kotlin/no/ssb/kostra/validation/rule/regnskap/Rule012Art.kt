@@ -18,7 +18,8 @@ class Rule012Art(
                     messageText = """Fant ugyldig art '${kostraRecord[FIELD_ART]}'. 
                                 Korrigér art til en av '${artList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber),
-                    severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
+                    severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING
+                    else Severity.ERROR
                 )
             }
             .ifEmpty { null }

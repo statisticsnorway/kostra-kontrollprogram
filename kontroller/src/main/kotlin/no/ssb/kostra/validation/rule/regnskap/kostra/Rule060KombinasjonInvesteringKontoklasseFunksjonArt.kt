@@ -25,7 +25,7 @@ class Rule060KombinasjonInvesteringKontoklasseFunksjonArt : AbstractRule<List<Ko
                 messageText = "Korrigér til riktig kombinasjon av kontoklasse, funksjon og art. Art 729 er kun " +
                         "gyldig i kombinasjon med funksjon 841 i investeringsregnskapet.",
                 lineNumbers = listOf(kostraRecord.lineNumber),
-                severity = if (arguments.kvartal.first() in setOf('1', '2')) Severity.WARNING else Severity.ERROR
+                severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING else Severity.ERROR
             )
         }
         .ifEmpty { null }

@@ -18,7 +18,8 @@ class Rule010Funksjon(
                     messageText = """Fant ugyldig funksjon '${kostraRecord[FIELD_FUNKSJON]}'. 
                                 Korrigér funksjon til en av '${funksjonList.joinToString(", ")}'""".trimMargin(),
                     lineNumbers = listOf(kostraRecord.lineNumber),
-                    severity = if (arguments.kvartal.first() in setOf('1', '2','3')) Severity.WARNING else Severity.ERROR
+                    severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING
+                    else Severity.ERROR
                 )
             }
             .ifEmpty { null }

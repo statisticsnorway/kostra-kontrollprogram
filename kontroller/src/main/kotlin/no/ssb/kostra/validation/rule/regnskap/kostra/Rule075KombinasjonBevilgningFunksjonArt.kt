@@ -25,7 +25,7 @@ class Rule075KombinasjonBevilgningFunksjonArt : AbstractRule<List<KostraRecord>>
                 messageText = "Artene ${qualifyingArtCodes.joinToString(", ")} er kun tillat brukt i " +
                         "kombinasjon med funksjon 800.",
                 lineNumbers = listOf(kostraRecord.lineNumber),
-                severity = if (arguments.kvartal.first() in setOf('1', '2','3')) Severity.WARNING else Severity.ERROR
+                severity = if (arguments.kvartal.first() in setOf('1', '2', '3')) Severity.WARNING else Severity.ERROR
             )
         }
         .ifEmpty { null }

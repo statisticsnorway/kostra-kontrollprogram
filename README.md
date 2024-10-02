@@ -9,10 +9,10 @@
 
 * [Posisjonsbaserte filvedlegg](/kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md)
   * Familievern
-    * [Familievernssaker](/kravspesifikasjon/specs_familievern_52AF_familievernsaker.md)
-    * [Gruppeskjema for familievernet](/kravspesifikasjon/specs_familievern_52BF_gruppeskjema.md)
-    * [Familievernssaker](/kravspesifikasjon/specs_familievern_53F_utadrettet_virksomhet_i_familievernet.md)
-    * [Meklingssaker i familieverntjenesten](/kravspesifikasjon/specs_familievern_55F_meklingssaker_i_familieverntjenesten.md)
+    * Familievernssaker [2024](/kravspesifikasjon/specs_familievern_52AF_familievernsaker_2024)
+    * Gruppeskjema for familievernet [2024](/kravspesifikasjon/specs_familievern_52BF_gruppeskjema_2024)
+    * Familievernssaker [2024](/kravspesifikasjon/specs_familievern_53F_utadrettet_virksomhet_i_familievernet_2024)
+    * Meklingssaker i familieverntjenesten [2024](/kravspesifikasjon/specs_familievern_55F_meklingssaker_i_familieverntjenesten_2024)
   * Regnskap
     * [Felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
       * KOSTRA
@@ -21,7 +21,7 @@
         * Kvartal (kvartal)
       * Helseforetak
   * Sosialtjenesten
-    * [Økonomisk sosialhjelp](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp.md)
-    * [Kvalifiseringsstønad](/kravspesifikasjon/specs_sosialtjenesten_11CF_kvalifiseringsstonad.md)
+    * Økonomisk sosialhjelp [2024](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp_2024)
+    * Kvalifiseringsstønad [2024](/kravspesifikasjon/specs_sosialtjenesten_11CF_kvalifiseringsstonad_2024)
 * XML-baserte filvedlegg
-  * [Barnevern](/kravspesifikasjon/specs_barnevernstjenesten_15F_barnevern.md) 
+  * [Barnevern](/kravspesifikasjon/specs_barnevernstjenesten_15F_barnevern_20YY) 

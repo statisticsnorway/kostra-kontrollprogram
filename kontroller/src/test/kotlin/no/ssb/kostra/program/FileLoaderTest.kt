@@ -54,12 +54,12 @@ class FileLoaderTest : BehaviorSpec({
 
     Given("a set of FileDescription") {
         forAll(
-            row("11F Økonomisk sosialhjelp", "11F", 324),
-            row("11CF Kvalifiseringsstønad", "11CF", 136),
-            row("52AF Familievernsaker, klientrapportering", "52AF", 151),
-            row("52BF Gruppeskjema for familievernet", "52BF", 86),
-            row("53F Utadrettet virksomhet i familieverntjenesten", "53F", 61),
-            row("55F Meklingssaker i familieverntjenesten", "55F", 986),
+            row("11F Økonomisk sosialhjelp", "11F_2024", 324),
+            row("11CF Kvalifiseringsstønad", "11CF_2024", 136),
+            row("52AF Familievernsaker, klientrapportering", "52AF_2024", 151),
+            row("52BF Gruppeskjema for familievernet", "52BF_2024", 86),
+            row("53F Utadrettet virksomhet i familieverntjenesten", "53F_2024", 61),
+            row("55F Meklingssaker i familieverntjenesten", "55F_2024", 986),
             row("Alle regnskapsskjema", "Regnskap", 48),
         ) { description, schema, recordLength ->
             When("comparing consecutive FieldDefinitions for $description") {

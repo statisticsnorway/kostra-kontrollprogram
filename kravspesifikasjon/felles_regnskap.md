@@ -3,17 +3,11 @@
 ## Begrep
 
 ### <a name="alvorligehetsgrader">Alvorlighetsgrader</a>
-
-* :skull: **FATAL**, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart.
-  FATAL hindrer da andre kontrollene i bli kjørt. Videre så hindrer denne innsending av filvedlegget til SSB.
-* :no_entry: **ERROR**, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne innsending av filvedlegget
-  til SSB.
-* :warning: **WARNING**, når en kontroll ender med alvorlighetsgraden WARNING så kan filvedlegget bli sendt inn til SSB
-  med advarsler.
-* :information_source: **INFO**, når en kontroll ender med alvorlighetsgraden INFO så kan filvedlegget bli sendt inn til SSB med
-  tilbakemeldinger som er til informasjon for avgiveren.
-* :white_check_mark:**OK**, når en kontroll ender med alvorlighetsgraden vises ingen tilbakemelding av noe slag da alt
-  er i orden.
+* :skull: **FATAL**, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart. FATAL hindrer da andre kontrollene i bli kjørt. Videre så hindrer denne innsending av filvedlegget til SSB.
+* :no_entry: **ERROR**, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne innsending av filvedlegget til SSB.
+* :warning: **WARNING**, når en kontroll ender med alvorlighetsgraden WARNING så kan filvedlegget bli sendt inn til SSB med advarsler.
+* :information_source: **INFO**, når en kontroll ender med alvorlighetsgraden INFO så kan filvedlegget bli sendt inn til SSB med tilbakemeldinger som er til informasjon for avgiveren.
+* :white_check_mark:**OK**, når en kontroll ender med alvorlighetsgraden vises ingen tilbakemelding av noe slag da alt er i orden.
 
 ### <a name="variabler">Variabler fra skjema</a>
 
@@ -127,10 +121,10 @@ til '(preutfylt)'"
 ### Kontroll 010 : Funksjon
 
 **Gitt at** skjema er én av 0A, 0C, 0I, 0K, 0M, 0P og 0X, samt 0AK* og 0CK*, en har en filbeskrivelse med feltdefinisjon for funksjon, en regnskapsfil med verdien for funksjon og en liste med gyldige funksjoner (de er oppgitt i underside/kravspek)<br/>
-**når** funksjon avviker fra gyldige funksjoner og kvartal er 1 eller 2<br/>
+**når** funksjon avviker fra gyldige funksjoner og kvartal er 1, 2 eller 3<br/>
 **så** gi en :warning:**ADVARSEL** med meldingen "Fant ugyldig funksjon '(funksjon)'. Korrigér funksjon til én av '(funksjoner)'"
 
-**når** funksjon avviker fra gyldige funksjoner og kvartal er 3, 4 eller blank for årsregnskap<br/>
+**når** funksjon avviker fra gyldige funksjoner og kvartal er 4 eller blank for årsregnskap<br/>
 **så** gi en :no_entry:**FEIL** med meldingen "Fant ugyldig funksjon '(funksjon)'. Korrigér funksjon til én av '(funksjoner)'"
 
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/regnskap/Rule010Funksjon.kt)
@@ -139,10 +133,10 @@ til '(preutfylt)'"
 ### Kontroll 011 : Kapittel
 
 **Gitt at** skjema er én av 0B, 0D, 0J, 0L, 0N, 0Q og 0Y, samt 0BK* og 0DK*, en har en filbeskrivelse med feltdefinisjon for kapittel, en regnskapsfil med verdien for kapittel og en liste med gyldige kapitler (de er oppgitt i underside/kravspek)<br/>
-**når** kapittel avviker fra gyldige kapitler og kvartal er 1 eller 2<br/>
+**når** kapittel avviker fra gyldige kapitler og kvartal er 1, 2 eller 3<br/>
 **så** gi en :warning:**ADVARSEL** med meldingen "Fant ugyldig kapittel '(kapittel)'. Korrigér kapittel til én av '(kapitler)'"
 
-**når** kapittel avviker fra gyldige kapitler<br/>
+**når** kapittel avviker fra gyldige kapitler og kvartal er 4 eller blank for årsregnskap<br/>
 **så** gi en :no_entry:**FEIL** med meldingen "Fant ugyldig kapittel '(kapittel)'. Korrigér kapittel til én av '(kapitler)'"
 
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/regnskap/Rule011Kapittel.kt)
@@ -151,10 +145,10 @@ til '(preutfylt)'"
 ### Kontroll 012 : Art
 
 **Gitt at** skjema er én av 0A, 0C, 0I, 0K, 0M, 0P og 0X, samt 0AK* og 0CK*, en har en filbeskrivelse med feltdefinisjon for art, en regnskapsfil med verdien for art og en liste med gyldige arter (de er oppgitt i underside/kravspek)<br/>
-**når** art avviker fra gyldige arter og kvartal er 1 eller 2<br/>
+**når** art avviker fra gyldige arter og kvartal er 1, 2 eller 3<br/>
 **så** gi en :warning:**ADVARSEL** med meldingen "Fant ugyldig art '(art)'. Korrigér art til én av '(arter)'"
 
-**når** art avviker fra gyldige arter og kvartal er 3, 4 eller blank for årsregnskap<br/>
+**når** art avviker fra gyldige arter og kvartal er 4 eller blank for årsregnskap<br/>
 **så** gi en :no_entry:**FEIL** med meldingen "Fant ugyldig art '(art)'. Korrigér art til én av '(arter)'"
 
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/regnskap/Rule012Art.kt)
@@ -163,10 +157,10 @@ til '(preutfylt)'"
 ### Kontroll 013 : Sektor
 
 **Gitt at** skjema er én av 0B, 0D, 0J, 0L, 0N, 0Q og 0Y, samt 0BK* og 0DK*, en har en filbeskrivelse med feltdefinisjon for sektor, en regnskapsfil med verdien for sektor og en liste med gyldige sektorer (de er oppgitt i underside/kravspek)<br/>
-**når** sektor avviker fra gyldige sektorer og kvartal er 1 eller 2<br/>
+**når** sektor avviker fra gyldige sektorer og kvartaler 1, 2 eller 3<br/>
 **så** gi en :warning:**ADVARSEL** med meldingen "Fant ugyldig sektor '(sektor)'. Korrigér sektor til én av '(sektorer)'"
 
-**når** sektor avviker fra gyldige sektorer<br/>
+**når** sektor avviker fra gyldige sektorer og kvartal er 4 eller blank for årsregnskap<br/>
 **så** gi en :no_entry:**FEIL** med meldingen "Fant ugyldig sektor '(sektor)'. Korrigér sektor til én av '(sektorer)'"
 
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/regnskap/Rule013Sektor.kt)

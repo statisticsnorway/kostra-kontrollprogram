@@ -1,5 +1,7 @@
 # Kravspesifikasjon for posisjonsbaserte filvedlegg
 
+## Begrep
+
 ### <a name="alvorligehetsgrader">Alvorlighetsgrader</a>
 * :skull: **FATAL**, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart. FATAL hindrer da andre kontrollene i bli kjørt. Videre så hindrer denne innsending av filvedlegget til SSB.
 * :no_entry: **ERROR**, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne innsending av filvedlegget til SSB.

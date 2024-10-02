@@ -25,7 +25,7 @@ Disse er:
 ## Filbeskrivelse
 
 Filbeskrivelse finnes som en mennesklig- og maskinlesbar
-yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_description_11CF.yaml).
+yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_description_11CF_2024.yaml).
 
 ## Krav
 

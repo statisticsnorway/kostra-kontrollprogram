@@ -16,7 +16,7 @@ woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", vers
 picocli = { group = "info.picocli", name = "picocli", version = "4.7.6"}
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.8" }
 micronautPlatform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronautPlatform" }
-swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.24" }
+swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.25" }
 
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }

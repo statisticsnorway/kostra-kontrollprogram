@@ -1,17 +1,13 @@
 package no.ssb.kostra.validation.rule.famvern
 
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.area.famvern.FamilievernConstants
 import no.ssb.kostra.program.FileLoader
-import java.nio.file.NoSuchFileException
 
 class FamilievernConstantsTest : BehaviorSpec({
     Given("a file name of a mapping file") {
-        val fileName = "mapping_familievern_region_fylke_kontor.yaml"
+        val fileName = "mapping_familievern_region_fylke_kontor_2024.yaml"
 
         When("opening the mapping file") {
 

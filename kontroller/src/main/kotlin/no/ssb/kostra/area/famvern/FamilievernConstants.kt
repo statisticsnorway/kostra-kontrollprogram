@@ -3,7 +3,7 @@ package no.ssb.kostra.area.famvern
 import no.ssb.kostra.program.FileLoader
 
 object FamilievernConstants {
-    private const val FILENAME = "mapping_familievern_region_fylke_kontor.yaml"
+    private const val FILENAME = "mapping_familievern_region_fylke_kontor_2024.yaml"
 
     data class MappingDescription(
         val title: String,

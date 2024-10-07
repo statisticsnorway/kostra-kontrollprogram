@@ -19,12 +19,13 @@ Generell beskrivelse: Barnevernsstatistikken er en individstatistikk som hentes 
 8. Er barnet klient ved utgangen av rapporteringsåret?
 
 ### <a name="kontrollrapport">Advarsler og feil</a>
-Kontrollprogrammet lager en kontrollrapport som er en liste med advarsler,og feil som hindrer innsending. Advarsler skal kommunens barnevernstjeneste sjekke og om mulig rette opp. Feil som hindrer innsending må rettes for å få sendt inn fil. I kontrollrapporten vil identifikasjon av hvilket individ kontrollen slår ut for være journalnummer. Journalnummer kan derfor ikke være noe som kan identifisere individet, for eksempel fødsels- og personnummer eller DUF-nummer.
+Kontrollprogrammet lager en kontrollrapport som er en liste med advarsler, og feil som hindrer innsending. Advarsler skal kommunens barnevernstjeneste sjekke og om mulig rette opp. Feil som hindrer innsending må rettes for å få sendt inn fil. I kontrollrapporten vil identifikasjon av hvilket individ kontrollen slår ut for være journalnummer. Journalnummer kan derfor ikke være noe som kan identifisere individet, for eksempel fødsels- og personnummer eller DUF-nummer.
+For kontrollene i kravspesifikasjonen der utfallet er feil som hindrer innsending merkes de med  :no_entry:**FEIL**. Der utfallet er en advarsel så er kontrollene merket med :warning:**ADVARSEL**
 
 
 ## Definisjoner
 
-### <a name="bvl">Barnevernloven</a>
+### <a name="bvl">Barnevernsloven</a>
 Barnevernloven brukes i to forskjellige versjoner:
 - Versjonen fra 1992 refereres som **<a name="bvl">BVL</a>** av historiske årsaker, eventuelt **<a name="bvl1992">BVL1992</a>** i dokumentasjonssammenheng, og gjelder til 31. desember 2022.<br/>
 - Versjonen fra 2021 refereres som **<a name="bvl2021">BVL2021</a>** og gjelder fra 1. januar 2023.
@@ -32,16 +33,16 @@ Barnevernloven brukes i to forskjellige versjoner:
 
 ### <a name="innrapporteringskanaler">Innrapporteringskanaler</a>
 Rapportering til SSB skjer i 2 forskjellige kanaler:
-- **<a name="fagsystem_kanal">FAGSYSTEM</a>**, direkte rapportering fra fagsystem via Fiks til SSB.
-- **<a name="kostra_kanal">KOSTRA</a>**, klassisk og indirekte rapportering ved hjelp av filuttrekk.
+- **<a name="fagsystem_kanal">FAGSYSTEM</a>**, direkte rapportering fra fagsystemene Modulus Barn og Flyt Barnevern via Fiks til Barnevernsregisteret (BVR).
+- **<a name="kostra_kanal">KOSTRA</a>**, klassisk og indirekte rapportering fra fagsystemene Visma Familia og DIPS Barnevern ved hjelp av filuttrekk.
 
 
 ### <a name="omsorgstiltak">Omsorgstiltak</a>
-Et Tiltak er en Omsorgstiltak dersom en av følgende:
-- Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 12
-- Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 8 og Lovhjemmel/Ledd er én av 2 eller 3
-- Lovhjemmel/Lov = **[BVL](#bvl)** og Lovhjemmel/Kapittel = 4 og Lovhjemmel/Paragraf = 8 og én av JmfrLovhjemmel/Kapittel = 4 og JmfrLovhjemmel/Paragraf = 12
-- Lovhjemmel/Lov = **[BVL2021](#bvl2021)** og Lovhjemmel/Kapittel = 5 og Lovhjemmel/Paragraf = 1
+Et Tiltak er en Omsorgstiltak dersom tiltak sin LovHjemmel er en av følgende:
+- Lov = **[BVL](#bvl)** og Kapittel = 4 og Paragraf = 12
+- Lov = **[BVL](#bvl)** og Kapittel = 4 og Paragraf = 8 og Ledd er én av 2 eller 3
+- Lov = **[BVL](#bvl)** og Kapittel = 4 og Paragraf = 8 og JmfrLovhjemmel/Kapittel = 4 og JmfrLovhjemmel/Paragraf = 12
+- Lov = **[BVL2021](#bvl2021)** og Kapittel = 5 og Paragraf = 1
 
 
 ### <a name="plasseringstiltak">Plasseringstiltak</a>
@@ -60,7 +61,7 @@ Filbeskrivelsen består av en 3-delt [XSD](#xsd). Filene er [KostraBarnevern.xsd
 
 ## Variabler fra skjema
 I forbindelse med kontrollering så blir noen variabler sendt med fra portalen og blir benyttet i noen av kontrollene. Disse er:
-* <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2023**
+* <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2024**
 * <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
 * <a name="kommunenavn">**kommunenavn**</a>, for eksempel **Oslo**
 * <a name="organisasjonsnummer">**organisasjonsnummer**</a>, for eksempel **958935420**
@@ -68,6 +69,8 @@ I forbindelse med kontrollering så blir noen variabler sendt med fra portalen o
 Andre variabler:
 * <a name="telledato">**telledato**</a> som er 31. desember i **rapporteringsår**, for eksempel **31. desember 2024**
 * <a name="forrigetelledato">**forrige_telledato**</a> som er 31. desember i året før **rapporteringsår**, for eksempel **31. desember 2023**
+* <a name="minimumsdato">**minimumsdato**</a> er 1. januar i rapporteringsåret minus 25 år, for eksempel 1 januar 1999
+* <a name="maximumsdato">**maximumsdato**</a> er **telledato** pluss 25 år, for eksempel 31. desember 2049
 
 
 ### <a name="avgiver">Avgiver</a>
@@ -109,7 +112,7 @@ så gi en :no_entry:**FEIL** med meldingen "Filen mangler kommunenavn."<br/>
 
 #### <a name="individ_01a">Individ Kontroll 01a: Validering av datoer</a>
 
-Gitt at **minimumsdato** er 1. januar 1998 og **maksimumsdato** er 31. desember 2049<br/>
+Gitt [**minimumsdato**](#minimumsdato) og [**maksimumsdato**](#minimiumsdato)<br/>
 når /Barnevern/Individ/**@StartDato** er før **minimumsdato** eller etter **maksimumsdato**<br/>
 så gi en :no_entry:**FEIL** med meldingen "Individ startdato: Dato ({**@StartDato**}) må være mellom {**minimumsdato**} og {**maksimumsdato**})"
 
@@ -159,7 +162,7 @@ så gi en :no_entry:**FEIL** med meldingen "Individets sluttdato ({**@SluttDato*
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02b.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ02bTest.kt)
 
-#### <a name="individ_02d">Individ Kontroll 02d: Avslutta 31.12 medfører at sluttdato skal være satt</a>
+#### <a name="individ_02d">Individ Kontroll 02d: Avslutta 31.12 medfører at sluttdato skal være satt på individet</a>
 Gitt at /Barnevern/Individ/**@Avslutta3112** finnes<br/>
 når **@Avslutta3112** = "1" (Ja) og @SluttDato mangler<br/>
 så gi en :no_entry:**FEIL** med meldingen "Individet er avsluttet hos barnevernet og skal dermed være avsluttet. Sluttdato er {**@SluttDato**}. Kode for avsluttet er '1'."<br/>
@@ -192,7 +195,7 @@ Gitt at /Barnevern/Individ/**@Fodselsnummer** oppfyller én av følgende definis
 * Fødselsnummer, beskrevet på  [https://www.udi.no/ord-og-begreper/fodselsnummer/](https://www.udi.no/ord-og-begreper/fodselsnummer/),
 * D-nummer, beskrevet på [https://www.udi.no/ord-og-begreper/d-nummer/](https://www.udi.no/ord-og-begreper/d-nummer/),
 
-når **@Fodselsnummer** forekommer flere ganger<br/>
+når samme **@Fodselsnummer** forekommer i flere journaler<br/>
 så gi en :no_entry:**FEIL** med meldingen "Fødselsnummeret i journalnummer {**@Journalnummer**} fins også i journalene {journalnummerliste}"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/BarnevernValidator.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/BarnevernValidatorTest.kt)
@@ -211,7 +214,7 @@ så gi en :no_entry:**FEIL** med meldingen "Individet har ingen meldinger, plane
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ06.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Individ06Test.kt)
 
-#### <a name="individ_07">Individ Kontroll 07: Klient over 25 år avsluttes</a>
+#### <a name="individ_07">Individ Kontroll 07: Klient over 25 år skal avsluttes</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer**<br/>
 når alder er større enn 25 år<br/>
 så gi en :no_entry:**FEIL** med meldingen "Individet er {**alder**} år og skal avsluttes som klient"<br/>
@@ -276,7 +279,7 @@ så gi en :no_entry:**FEIL** med meldingen "Melding ({**Melding/@Id**}}). Meldin
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02c.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Melding02cTest.kt)
 
-#### <a name="melding_02d">Melding Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på</a>
+#### <a name="melding_02d">Melding Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på meldingen</a>
 Gitt at /Barnevern/Individ/**@Avslutta3112** = "1" (Avsluttet)<br/>
 for hver Melding i /Barnevern/Individ/<br/>
 når Melding/@SluttDato mangler <br/>
@@ -402,12 +405,12 @@ så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}
 #### <a name="undersokelse_07">Undersøkelse Kontroll 7: Konkludert undersøkelse skal ha vedtaksgrunnlag</a>
 Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
 for hver **Undersokelse** i **Melding/Undersokelse**<br/>
-når **Undersokelse/@Konklusjon** er 1 (Barneverntjenesten fatter vedtak om tiltak) eller 2 (Begjæring om tiltak for fylkesnemnda)<br/>
+når **Undersokelse/@Konklusjon** er 1 (Barneverntjenesten fatter vedtak om tiltak) eller 2 (Begjæring om tiltak for barneverns- og helsenemnda)<br/>
 så gi en :no_entry:**FEIL** med meldingen "Undersokelse ({**Undersokelse/@Id**}). Undersøkelse konkludert med kode  {**Undersokelse/@Konklusjon**} skal ha vedtaksgrunnlag"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse07.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Undersokelse07Test.kt)
 
-#### <a name="undersokelse_08">Undersøkelse Kontroll 8: Ukonkludert undersøkelse påbegynt før 1. juli er ikke konkludert</a>
+#### <a name="undersokelse_08">Undersøkelse Kontroll 8: Undersøkelse påbegynt før 1. juli er ikke konkludert</a>
 Gitt at /Barnevern/Individ/**Melding/Undersokelse** finnes<br/>
 for hver **Undersokelse** i **Melding/Undersokelse**<br/>
 når **Undersokelse/@StartDato** er før 1. juli i **rapporteringsår** og **Undersokelse/@SluttDato** mangler<br/>
@@ -435,13 +438,6 @@ så gi en :no_entry:**FEIL** med meldingen "Plan ({**@Id**}). Planens startdato 
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02a.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02aTest.kt)
 
-#### <a name="plan_02b">Plan Kontroll 2b: Sluttdato mot rapporteringsår</a>
-Gitt at /Barnevern/Individ/Plan/**@SluttDato** finnes<br/>
-når året i **@SluttDato** og **rapporteringsår** er forskjellige<br/>
-så gi en :no_entry:**FEIL** med meldingen "Plan ({**@Id**}). Planens sluttdato ({**@SluttDato**}) er ikke i rapporteringsåret ({**rapporteringsår**}) "<br/>
-[Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02b.kt)
-[Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02bTest.kt)
-
 #### <a name="plan_02c">Plan Kontroll 2c: Sluttdato mot individets sluttdato</a>
 Gitt at /Barnevern/**Individ/@SluttDato**, <br/>
 /Barnevern/Individ/**Plan/@Id**, <br/>
@@ -451,7 +447,7 @@ så gi en :no_entry:**FEIL** med meldingen "Plan ({**Plan/@Id**}}). Planens slut
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02c.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Plan02cTest.kt)
 
-#### <a name="plan_02d">Plan Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på plann</a>
+#### <a name="plan_02d">Plan Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på plan</a>
 Gitt at /Barnevern/Individ/**@Avslutta3112** = "1" (Avsluttet)<br/>
 for hver Plan i /Barnevern/Individ/<br/>
 når Plan/@SluttDato mangler <br/>
@@ -497,7 +493,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**Tiltak/@Id**}}). Tiltaket
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak02c.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak02cTest.kt)
 
-#### <a name="tiltak_02d">Tiltak Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på tiltakn</a>
+#### <a name="tiltak_02d">Tiltak Kontroll 2d: Avslutta 31 12 medfører at sluttdato skal være satt på tiltak</a>
 Gitt at /Barnevern/Individ/**@Avslutta3112** = "1" (Avsluttet)<br/>
 for hver Tiltak i /Barnevern/Individ/<br/>
 når Tiltak/@SluttDato mangler <br/>
@@ -517,7 +513,7 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**Tiltak/@Id**}). Tiltakets
 
 #### <a name="tiltak_04">Tiltak Kontroll 4: Omsorgstiltak med sluttdato krever årsak til opphevelse</a>
 Gitt at /Barnevern/Individ/**Tiltak** finnes<br/>
-når **@SluttDato** finnes og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak) og **@Opphevelse** mangler<br/>
+når **@SluttDato** finnes og **Tiltak** er et [Omsorgstiltak](#omsorgstiltak) og **@Opphevelse** mangler<br/>
 så gi en :warning:**ADVARSEL** med meldingen "Tiltak ({**@Id**}}). Omsorgstiltak med sluttdato {**@SluttDato**} krever kode for opphevelse"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak04Test.kt)
@@ -558,7 +554,7 @@ så gi en :warning:**ADVARSEL** med meldingen "Plasseringstiltak kan ikke overla
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak09.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Tiltak09Test.kt)
 
-#### <a name="tiltak_24">Tiltak Kontroll 24: Lovhjemmel refererer til feil barnevernlov</a>
+#### <a name="tiltak_24">Tiltak Kontroll 24: Lovhjemmel refererer til feil barnevernslov</a>
 Gitt at **terskeldato** er 31. desember 2022 og /Barnevern/Individ/**Tiltak** finnes<br/>
 
 når **Tiltak/@StartDato** er lik eller før **terskeldato**<br/>
@@ -573,8 +569,8 @@ så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Tiltak opprette
 
 #### <a name="lovhjemmel_03">Lovhjemmel Kontroll 3: Individet er over 18 år og har omsorgstiltak</a>
 Gitt at **alder** i år er utledet fra forskjellen mellom telledato og dato-delen i /Barnevern/Individ/**@Fodselsnummer** og /Barnevern/Individ/**Tiltak** finnes<br/>
-når alder er over 18 år og **Tiltak** er en [Omsorgstiltak](#omsorgstiltak)<br/>
-så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Individet er {**alder**} år år og skal dermed ikke ha omsorgstiltak"<br/>
+når alder er over 18 år og **Tiltak** er et [Omsorgstiltak](#omsorgstiltak)<br/>
+så gi en :no_entry:**FEIL** med meldingen "Tiltak ({**@Id**}}). Individet er {**alder**} år og skal dermed ikke ha omsorgstiltak"<br/>
 [Kode](../kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03.kt)
 [Test](../kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/barnevern/individrule/Lovhjemmel03Test.kt)
 

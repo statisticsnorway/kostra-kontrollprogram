@@ -21,4 +21,4 @@ swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotation
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }
 kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
-mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.13.12" }
+mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.13.13" }

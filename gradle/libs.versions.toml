@@ -14,7 +14,7 @@ jackson-jakarta-rs-xml-provider = { group = "com.fasterxml.jackson.jakarta.rs", 
 jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jackson" }
 woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version = "7.0.0" }
 picocli = { group = "info.picocli", name = "picocli", version = "4.7.6"}
-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.9" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.10" }
 micronautPlatform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronautPlatform" }
 swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.25" }
 

@@ -1,13 +1,10 @@
 package no.ssb.kostra.validation.rule.regnskap
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KAPITTEL
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_KVARTAL
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
-import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
 
 class Rule011Kapittel(

@@ -25,7 +25,7 @@ class HelseForetakMainTest : BehaviorSpec({
             }.toTypedArray(),
 
             *setOf(
-                "0X" to 6,
+                "0X" to 4,
                 "0Y" to 4,
             ).map { (skjema, expectedNumberOfControls) ->
                 row(

@@ -18,18 +18,18 @@ class KommuneKostraMainTest : BehaviorSpec({
         forAll(
             *regions.flatMap { region ->
                 mapOf(
-                    "0A" to 7,
-                    "0B" to 6,
-                    "0C" to 7,
-                    "0D" to 6,
-                    "0I" to 7,
-                    "0J" to 6,
-                    "0K" to 7,
-                    "0L" to 6,
-                    "0M" to 7,
-                    "0N" to 6,
-                    "0P" to 7,
-                    "0Q" to 6,
+                    "0A" to 5,
+                    "0B" to 5,
+                    "0C" to 5,
+                    "0D" to 5,
+                    "0I" to 5,
+                    "0J" to 5,
+                    "0K" to 5,
+                    "0L" to 5,
+                    "0M" to 5,
+                    "0N" to 5,
+                    "0P" to 5,
+                    "0Q" to 5,
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
                         "validating an empty record string -> skjema = $skjema, region = $region",

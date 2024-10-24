@@ -11,6 +11,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.plus
 import no.ssb.kostra.program.extension.toKostraRecord
 import no.ssb.kostra.program.extension.toRecordString
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData
 
 class KvartalKostraMainTest : BehaviorSpec({
@@ -18,9 +19,9 @@ class KvartalKostraMainTest : BehaviorSpec({
         forAll(
             *regions.flatMap { region ->
                 mapOf(
-                    "0AK1" to 6,
+                    "0AK1" to 5,
                     "0BK1" to 5,
-                    "0CK1" to 6,
+                    "0CK1" to 5,
                     "0DK1" to 5
                 ).map { (skjema, expectedNumberOfControls) ->
                     row(
@@ -137,4 +138,5 @@ class KvartalKostraMainTest : BehaviorSpec({
                 ).toRecordString()
         )
     }
+
 }

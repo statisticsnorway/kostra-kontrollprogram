@@ -6,6 +6,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isResultatRegnskap
 
 class Rule012Art(
     val artList: List<String>
@@ -16,7 +17,7 @@ class Rule012Art(
     override fun validate(context: List<KostraRecord>) =
         if (artList.isEmpty()) null
         else context
-            .filter { it.isBevilgningRegnskap() }
+            .filter { it.isBevilgningRegnskap() || it.isResultatRegnskap() }
             .filter { kostraRecord -> artList.none { it == kostraRecord[FIELD_ART] } }
             .map { kostraRecord ->
                 val artListAsString = artList.joinToString(", ")

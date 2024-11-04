@@ -24,17 +24,30 @@ class Rule010FunksjonTest : BehaviorSpec({
             sut = Rule010Funksjon(funksjonList = listOf("100", "400")),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
-                "wrong skjema",
+                "wrong skjema 0B",
                 kostraRecordsInTest("0B", " ","999")
             ),
             ForAllRowItem(
-                "correct skjema, wrong funksjon, '999'",
+                "correct skjema 0A, wrong funksjon, '999'",
                 kostraRecordsInTest("0A", " ", "999"),
                 expectedErrorMessage = "Fant ugyldig funksjon '999'. Korrigér funksjon til en av '100, 400'"
             ),
             ForAllRowItem(
-                "correct skjema, correct funksjon from list",
+                "correct skjema 0A, correct funksjon from list",
                 kostraRecordsInTest("0A", " ", "100")
+            ),
+            ForAllRowItem(
+                "wrong skjema 0Y",
+                kostraRecordsInTest("0Y", " ","999")
+            ),
+            ForAllRowItem(
+                "correct skjema 0X, wrong funksjon, '999'",
+                kostraRecordsInTest("0X", " ", "999"),
+                expectedErrorMessage = "Fant ugyldig funksjon '999'. Korrigér funksjon til en av '100, 400'"
+            ),
+            ForAllRowItem(
+                "correct skjema 0X, correct funksjon from list",
+                kostraRecordsInTest("0X", " ", "100")
             ),
         ),
     )

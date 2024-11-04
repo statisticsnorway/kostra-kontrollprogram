@@ -24,17 +24,30 @@ class Rule012ArtTest : BehaviorSpec({
             sut = Rule012Art(artList = listOf("100", "400")),
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
-                "wrong skjema",
+                "wrong skjema 0B",
                 kostraRecordsInTest("0B", " ","999")
             ),
             ForAllRowItem(
-                "correct skjema, wrong art, '999'",
+                "correct skjema 0A, wrong art, '999'",
                 kostraRecordsInTest("0A", " ", "999"),
                 expectedErrorMessage = "Fant ugyldig art '999'. Korrigér art til en av '100, 400'"
             ),
             ForAllRowItem(
-                "correct skjema, correct art from list",
+                "correct skjema 0A, correct art from list",
                 kostraRecordsInTest("0A", " ", "100")
+            ),
+            ForAllRowItem(
+                "wrong skjema 0Y",
+                kostraRecordsInTest("0Y", " ","999")
+            ),
+            ForAllRowItem(
+                "correct skjema 0X, wrong art, '999'",
+                kostraRecordsInTest("0X", " ", "999"),
+                expectedErrorMessage = "Fant ugyldig art '999'. Korrigér art til en av '100, 400'"
+            ),
+            ForAllRowItem(
+                "correct skjema 0X, correct art from list",
+                kostraRecordsInTest("0X", " ", "100")
             ),
         ),
     )

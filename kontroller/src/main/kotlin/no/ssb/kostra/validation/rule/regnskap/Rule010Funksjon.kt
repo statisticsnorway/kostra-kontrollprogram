@@ -6,6 +6,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isResultatRegnskap
 
 class Rule010Funksjon(
     val funksjonList: List<String>
@@ -13,7 +14,7 @@ class Rule010Funksjon(
     override fun validate(context: List<KostraRecord>) =
         if (funksjonList.isEmpty()) null
         else context
-            .filter { it.isBevilgningRegnskap() }
+            .filter { it.isBevilgningRegnskap() || it.isResultatRegnskap() }
             .filter { kostraRecord -> funksjonList.none { it.trim() == kostraRecord[FIELD_FUNKSJON].trim() } }
             .map { kostraRecord ->
                 createValidationReportEntry(

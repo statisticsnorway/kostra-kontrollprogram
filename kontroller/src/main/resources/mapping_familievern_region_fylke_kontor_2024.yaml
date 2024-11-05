@@ -2,7 +2,7 @@ title: Familievern koblingshierarki
 description: Kobling mellom familievernsregion, fylker og familievernskontorer
 year: 2024
 regions:
-  - code: 667200
+  - code: 667600
     name: Region øst
     counties:
       - code: 03
@@ -41,7 +41,7 @@ regions:
             name: Familievernkontoret Innlandet øst
           - code: 052
             name: Familievernkontoret Otta SKF
-  - code: 667300
+  - code: 667500
     name: Region sør
     counties:
       - code: 33
@@ -93,7 +93,7 @@ regions:
             name: Familiekontora for Sunnfjord og Sogn
           - code: 142
             name: Nordfjord familiekontor
-  - code: 667500
+  - code: 667300
     name: Region Midt-Norge
     counties:
       - code: 15
@@ -114,7 +114,7 @@ regions:
             name: Familievernkontoret i Levanger
           - code: 172
             name: Familievernkontoret i Namsos
-  - code: 667600
+  - code: 667200
     name: Region nord
     counties:
       - code: 18

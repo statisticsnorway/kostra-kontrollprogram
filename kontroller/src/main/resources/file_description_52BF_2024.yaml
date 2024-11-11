@@ -12,19 +12,19 @@ fields:
     dataType: STRING_TYPE
   - name: GRUPPE_NR_B
     from: 10
-    size: 6
+    size: 8
     dataType: STRING_TYPE
   - name: GRUPPE_NAVN_B
-    from: 16
+    from: 18
     size: 30
     dataType: STRING_TYPE
   - name: DATO_GRSTART_B
-    from: 46
+    from: 48
     size: 8
     dataType: DATE_TYPE
     datePattern: ddMMyyyy
   - name: STRUKTUR_GR_B
-    from: 54
+    from: 56
     size: 1
     dataType: STRING_TYPE
     codeList:
@@ -39,7 +39,7 @@ fields:
       - code: 5
         value: Foreldre
   - name: HOVEDI_GR_B
-    from: 55
+    from: 57
     size: 2
     dataType: STRING_TYPE
     codeList:
@@ -66,35 +66,35 @@ fields:
       - code: 11
         value: "Annet, spesifiser"
   - name: ANTMOTERTOT_IARET_B
-    from: 57
+    from: 59
     size: 3
     dataType: INTEGER_TYPE
   - name: ANTMOTERTOT_OPPR_B
-    from: 60
+    from: 62
     size: 3
     dataType: INTEGER_TYPE
   - name: TIMERTOT_IARET_B
-    from: 63
+    from: 65
     size: 3
     dataType: INTEGER_TYPE
   - name: TIMERTOT_OPPR_B
-    from: 66
+    from: 68
     size: 3
     dataType: INTEGER_TYPE
   - name: ANTDELT_IARET_B
-    from: 69
+    from: 71
     size: 3
     dataType: INTEGER_TYPE
   - name: ANTDELT_OPPR_B
-    from: 72
+    from: 74
     size: 3
     dataType: INTEGER_TYPE
   - name: ANTTER_GRUPPEB_B
-    from: 75
+    from: 77
     size: 2
     dataType: INTEGER_TYPE
   - name: TOLK_B
-    from: 77
+    from: 79
     size: 1
     dataType: STRING_TYPE
     codeList:
@@ -103,7 +103,7 @@ fields:
       - code: 2
         value: Nei
   - name: STATUS_ARETSSL_B
-    from: 78
+    from: 80
     size: 1
     dataType: STRING_TYPE
     codeList:
@@ -112,7 +112,7 @@ fields:
       - code: 2
         value: Avsluttet
   - name: DATO_GRAVSLUTN_B
-    from: 79
+    from: 81
     size: 8
     dataType: DATE_TYPE
     datePattern: ddMMyyyy

@@ -10,52 +10,54 @@ import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTe
 import no.ssb.kostra.validation.rule.RuleTestData
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
-class Rule022TilknytningTilTrygdesystemetOgAlderTest : BehaviorSpec({
-    include(
-        validationRuleNoContextTest(
-            sut = Rule022TilknytningTilTrygdesystemetOgAlder(),
-            expectedSeverity = Severity.ERROR,
-            ForAllRowItem(
-                "trygdesitCode = 00, fodselsNummer = 00",
-                kostraRecordInTest(
-                    "00",
-                    RandomUtils.generateRandomSsn(age = 0, year = RuleTestData.argumentsInTest.aargang.toInt())
+class Rule022TilknytningTilTrygdesystemetOgAlderTest :
+    BehaviorSpec({
+        include(
+            validationRuleNoContextTest(
+                sut = Rule022TilknytningTilTrygdesystemetOgAlder(),
+                expectedSeverity = Severity.ERROR,
+                ForAllRowItem(
+                    "trygdesitCode = 00, fodselsNummer = 00",
+                    kostraRecordInTest(
+                        "00",
+                        RandomUtils.generateRandomSsn(age = 0, year = RuleTestData.argumentsInTest.aargang.toInt()),
+                    ),
+                ),
+                ForAllRowItem(
+                    "trygdesitCode = 07, alder = 60",
+                    kostraRecordInTest(
+                        "07",
+                        RandomUtils.generateRandomSsn(age = 60, year = RuleTestData.argumentsInTest.aargang.toInt()),
+                    ),
+                ),
+                ForAllRowItem(
+                    "trygdesitCode = 07, alder = 59",
+                    kostraRecordInTest(
+                        "07",
+                        RandomUtils.generateRandomSsn(age = 59, year = RuleTestData.argumentsInTest.aargang.toInt()),
+                    ),
+                    expectedErrorMessage = "Mottakeren (59 år) er yngre enn 60 år og mottar alderspensjon.",
+                ),
+                ForAllRowItem(
+                    "trygdesitCode = 07, alder = -1 (pga. feil dato-del i fnr)",
+                    kostraRecordInTest(
+                        "07",
+                        "32138800000",
+                    ),
+                    expectedErrorMessage = "Mottakeren (-1 år) er yngre enn 60 år og mottar alderspensjon.",
                 ),
             ),
-            ForAllRowItem(
-                "trygdesitCode = 07, alder = 63",
-                kostraRecordInTest(
-                    "07",
-                    RandomUtils.generateRandomSsn(age = 63, year = RuleTestData.argumentsInTest.aargang.toInt())
-                ),
-            ),
-            ForAllRowItem(
-                "trygdesitCode = 07, alder = 62",
-                kostraRecordInTest(
-                    "07",
-                    RandomUtils.generateRandomSsn(age = 62, year = RuleTestData.argumentsInTest.aargang.toInt())
-                ),
-                expectedErrorMessage = "Mottakeren (62 år) er 62 år eller yngre og mottar alderspensjon.",
-            ),
-            ForAllRowItem(
-                "trygdesitCode = 07, alder = -1 (pga. feil dato-del i fnr)",
-                kostraRecordInTest(
-                    "07", "32138800000"
-                ),
-                expectedErrorMessage = "Mottakeren (-1 år) er 62 år eller yngre og mottar alderspensjon.",
-            )
         )
-    )
-}) {
+    }) {
     companion object {
         private fun kostraRecordInTest(
             trygdesitCode: String,
-            fnr: String
+            fnr: String,
         ) = SosialhjelpTestUtils.sosialKostraRecordInTest(
             mapOf(
                 TRYGDESIT_COL_NAME to trygdesitCode,
-                PERSON_FODSELSNR_COL_NAME to fnr
-            )
+                PERSON_FODSELSNR_COL_NAME to fnr,
+            ),
         )
     }
 }

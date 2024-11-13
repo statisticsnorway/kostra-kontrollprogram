@@ -24,8 +24,6 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
                 .codeList
                 .firstOrNull { item -> item.code == kostraRecord[VKLO_COL_NAME] }
 
-            val vklo = if (vkloNullable == null) "ukjent" else vkloNullable.value
-
             val codeList = SosialhjelpFieldDefinitions
                 .fieldDefinitions
                 .byColumnName(TRYGDESIT_COL_NAME)
@@ -34,7 +32,7 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
 
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret " +
-                        "er ${vklo}. Trygdesituasjonen er '(${kostraRecord[TRYGDESIT_COL_NAME]})', " +
+                        "er ikke trygd/pensjon. Trygdesituasjonen er '(${kostraRecord[TRYGDESIT_COL_NAME]})', " +
                         "forventet én av '(${codeList})'. Feltet er obligatorisk å fylle ut.",
                 lineNumbers = listOf(kostraRecord.lineNumber)
             ).copy(

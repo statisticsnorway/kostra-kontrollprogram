@@ -9,6 +9,7 @@ import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARJOBBLO
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARJOBBTILB_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARKURS_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARLIVSH_COL_NAME
+import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARNORSKSAMISKOPPL_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKAROKRETT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSAMT_COL_NAME
 import no.ssb.kostra.area.sosial.sosialhjelp.SosialhjelpColumnNames.VILKARSOSLOV_COL_NAME
@@ -40,6 +41,7 @@ class Rule043UtfyltVilkar : AbstractNoArgsRule<List<KostraRecord>>(
                 VILKARHELSE_COL_NAME,
                 VILKARANNET_COL_NAME,
                 VILKARDIGPLAN_COL_NAME,
+                VILKARNORSKSAMISKOPPL_COL_NAME,
             ).any { vilkar ->
                 fieldDefinitions.byColumnName(vilkar).codeExists(it[vilkar])
             }

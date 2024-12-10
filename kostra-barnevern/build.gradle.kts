@@ -1,6 +1,6 @@
 plugins {
     id("io.spring.dependency-management") version "1.1.6"
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.3" apply false
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
     `maven-publish`
 }
 

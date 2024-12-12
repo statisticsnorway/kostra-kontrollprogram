@@ -1,7 +1,7 @@
 [versions]
 micronautPlatform = "4.7.1"
 kotlin = "2.1.0"
-jackson = "2.18.1"
+jackson = "2.18.2"
 kotest = "5.9.1"
 
 [libraries]

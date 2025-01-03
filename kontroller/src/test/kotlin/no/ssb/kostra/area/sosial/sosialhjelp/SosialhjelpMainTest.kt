@@ -41,7 +41,7 @@ class SosialhjelpMainTest :
                 row(
                     "validating a valid record string",
                     true,
-                    recordStringInTest("23"),
+                    recordStringInTest("24"),
                     45,
                     2,
                 ),

@@ -8,23 +8,26 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule004Kontornummer(
-    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>
+    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern52bRuleId.FAMILIEVERN52B_RULE004.title,
-    Severity.WARNING
-) {
-    private val kontorList = mappingList.map { item -> item.kontor }.distinct().sorted()
+        Familievern52bRuleId.FAMILIEVERN52B_RULE004.title,
+        Severity.WARNING,
+    ) {
+    private val kontorList =
+        mappingList.map { item -> item.kontor }.distinct().sorted()
 
-    override fun validate(context: List<KostraRecord>) = context
-        .filterNot { mappingList.any { mapping -> it[KONTOR_NR_B_COL_NAME] == mapping.kontor } }
-        .map {
-            createValidationReportEntry(
-                messageText = "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. " +
-                        "Fant '${it[KONTOR_NR_B_COL_NAME]}', forventet én av : ${kontorList}.",
-                lineNumbers = listOf(it.lineNumber)
-            ).copy(
-                caseworker = it[KONTOR_NR_B_COL_NAME],
-                journalId = it[GRUPPE_NR_B_COL_NAME]
-            )
-        }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .filterNot { mappingList.any { mapping -> it[KONTOR_NR_B_COL_NAME] == mapping.kontor } }
+            .map {
+                createValidationReportEntry(
+                    messageText =
+                        "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. " +
+                            "Fant '${it[KONTOR_NR_B_COL_NAME]}', forventet én av : $kontorList.",
+                    lineNumbers = listOf(it.lineNumber),
+                ).copy(
+                    caseworker = it[KONTOR_NR_B_COL_NAME],
+                    journalId = it[GRUPPE_NR_B_COL_NAME],
+                )
+            }.ifEmpty { null }
 }

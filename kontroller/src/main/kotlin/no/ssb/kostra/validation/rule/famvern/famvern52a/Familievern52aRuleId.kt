@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52a
 
-enum class Familievern52aRuleId(val title: String) {
+enum class Familievern52aRuleId(
+    val title: String,
+) {
     FAMILIEVERN52A_RULE003("Kontroll 003 : Regionsnummer"),
     FAMILIEVERN52A_RULE004("Kontroll 004 : Kontornummer"),
     FAMILIEVERN52A_RULE005("Kontroll 005 : Manglende samsvar mellom regions- og kontornummer"),
@@ -18,7 +20,9 @@ enum class Familievern52aRuleId(val title: String) {
 
     // CR Note: Only in use in tests
     FAMILIEVERN52A_RULE019B1("Kontroll 019 B1 : Tid siden brudd for primærklient og viktigste samtalepartner, ekspartnere, lengde"),
-    FAMILIEVERN52A_RULE019B2("Kontroll 019 B2 : Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet"),
+    FAMILIEVERN52A_RULE019B2(
+        "Kontroll 019 B2 : Varighet på relasjon mellom primærklient og viktigste samtalepartner, ekspartnere, varighet",
+    ),
 
     FAMILIEVERN52A_RULE020("Kontroll 020 : Dato for første behandlingssamtale"),
     FAMILIEVERN52A_RULE021("Kontroll 021 : Første behandlingssamtale er før henvendelsesdato"),

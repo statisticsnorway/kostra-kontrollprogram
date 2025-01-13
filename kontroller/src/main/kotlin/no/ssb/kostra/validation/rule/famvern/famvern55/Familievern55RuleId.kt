@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.famvern.famvern55
 
-enum class Familievern55RuleId(val title: String) {
+enum class Familievern55RuleId(
+    val title: String,
+) {
     FAMILIEVERN55_RULE003("Kontroll 003 : Fylkesnummer"),
     FAMILIEVERN55_RULE005("Kontroll 005 : Avsluttede meklinger etter tidsbruk, (sumfelt)"),
     FAMILIEVERN55_RULE006("Kontroll 006 : Avsluttede meklinger etter deltakere, (sumfelt)"),
@@ -13,5 +15,5 @@ enum class Familievern55RuleId(val title: String) {
     FAMILIEVERN55_RULE013("Kontroll 013 : Avsluttede meklinger og bekymringsmeldinger, (sumfelt)"),
     FAMILIEVERN55_RULE014("Kontroll 014 : Kontroll av totalsummer for meklinger"),
     FAMILIEVERN55_RULE015("Kontroll 015 : Kontroll av totalsummer for skriftlige avtaler"),
-    FAMILIEVERN55_RULE016("Kontroll 016 : Avsluttede meklinger uten oppmøte, (sumfelt)")
+    FAMILIEVERN55_RULE016("Kontroll 016 : Avsluttede meklinger uten oppmøte, (sumfelt)"),
 }

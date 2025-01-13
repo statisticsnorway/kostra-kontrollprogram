@@ -1,0 +1,17 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: kontrollprogram
+  namespace: kostra
+spec:
+  ingresses:
+    - https://kostra-kontrollprogram.test.ssb.no
+  image: {{image}}
+  port: 8080
+  replicas:
+    max: 1
+    min: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 160Mi

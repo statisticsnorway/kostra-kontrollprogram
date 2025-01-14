@@ -1,6 +1,5 @@
 package no.ssb.kostra.validation.rule.regnskap
 
-import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapConstants.FIELD_FUNKSJON
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
@@ -19,12 +18,12 @@ class Rule010UtgattFunksjon(
         } else {
             context
                 .filter { it.isBevilgningRegnskap() }
-                .filter { kostraRecord -> funksjonList.none { it.trim() == kostraRecord[FIELD_FUNKSJON].trim() } }
+                .filter { kostraRecord -> funksjonList.any { it.trim() == kostraRecord[FIELD_FUNKSJON].trim() } }
                 .map { kostraRecord ->
                     createValidationReportEntry(
                         messageText =
-                            "Fant utgått funksjon '${kostraRecord[FIELD_FUNKSJON]}'. " +
-                                "Se kontoplan for gyldige funksjoner.",
+                            "Fant utgått funksjon '${kostraRecord[FIELD_FUNKSJON]}', " +
+                                "men godtas midlertidig.",
                         lineNumbers = listOf(kostraRecord.lineNumber),
                     )
                 }.ifEmpty { null }

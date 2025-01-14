@@ -21,13 +21,13 @@ class Rule010UtgattFunksjonTest :
                     kostraRecordsInTest("0B", "999"),
                 ),
                 ForAllRowItem(
-                    "correct skjema, wrong funksjon, '999'",
-                    kostraRecordsInTest("0A", "999"),
-                    expectedErrorMessage = "Fant utgått funksjon '999'. Se kontoplan for gyldige funksjoner.",
+                    "correct skjema, wrong funksjon, '100'",
+                    kostraRecordsInTest("0A", "100"),
+                    expectedErrorMessage = "Fant utgått funksjon '100', men godtas midlertidig.",
                 ),
                 ForAllRowItem(
                     "correct skjema, correct funksjon from list",
-                    kostraRecordsInTest("0A", "100"),
+                    kostraRecordsInTest("0A", "999"),
                 ),
             ),
         )

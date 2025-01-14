@@ -5,27 +5,103 @@ on:
   push:
     branches:
       - main
+
+env:
+  REGISTRY: europe-north1-docker.pkg.dev/artifact-registry-5n/kostra-docker
+  IMAGE: kostra-kontrollprogram
+
 jobs:
-  build_and_deploy:
-    name: Build, push and deploy
-    runs-on: ubuntu-latest
+  docker_build:
+    name: Create Docker image
+    environment: build
     permissions:
-      contents: read
+      contents: write
+      id-token: write
+    runs-on: ubuntu-24.04
+    outputs:
+      image: ${{ env.DOCKER_IMAGE }}
+    steps:
+      - name: Create image tag
+        run: |
+          echo "TAG=$(date +'%Y%m%d')-${{github.run_number}}" >> $GITHUB_ENV
+
+      - name: Set docker image env var
+        run: |
+          echo "DOCKER_IMAGE=${REGISTRY}/${IMAGE}:${TAG}" >> $GITHUB_ENV
+
+      - name: Set docker image env var
+        run: |
+          echo "DOCKER_IMAGE=${REGISTRY}/${IMAGE}:${TAG}" >> $GITHUB_ENV
+
+      - name: Echo image tag
+        run: echo $DOCKER_IMAGE
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: Authenticate to Google Cloud
+        id: "auth"
+        uses: google-github-actions/auth@v2.1.7
+        with:
+          workload_identity_provider: "projects/${{ vars.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-kostra@${{ vars.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+          token_format: "access_token"
+
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: "oauth2accesstoken"
+          password: "${{ steps.auth.outputs.access_token }}"
+
+      - name: Build and push Docker image to Google Artifact Registry
+        run: >
+          ./gradlew
+          jib
+          --image=${{ env.DOCKER_IMAGE }}
+          --daemon --parallel --build-cache
+
+  test_deploy:
+    name: Deploy to NAIS test
+    environment: test
+    runs-on: ubuntu-24.04
+    needs: docker_build
+    permissions:
+      contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Build and push image and SBOM to OCI registry
-        uses: nais/docker-build-push@v0
-        id: docker-build-push
-        with:
-          team: ${{ vars.NAIS_TEAM }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-          project_id: ${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
-      - name: Deploy to Nais
+      - name: Recreate image tag
+        run: |
+          echo "TAG=$(date +'%Y%m%d')-${{github.run_number}}" >> $GITHUB_ENV
+
+      - name: Reset docker image env var
+        run: |
+          echo "DOCKER_IMAGE=${REGISTRY}/${IMAGE}:${TAG}" >> $GITHUB_ENV
+
+      - name: Echo image tag
+        run: echo $DOCKER_IMAGE
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Echo image tag
+        run: echo ${{ needs.docker_build.outputs.image }}
+
+      - name: Deploy to NAIS Test
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: test
           RESOURCE: .nais/test.yaml
-          VAR: image=${{ steps.docker-build-push.outputs.image }}
-          TELEMETRY: ${{ steps.docker-build-push.outputs.telemetry }}
+          VAR: image=${{ env.DOCKER_IMAGE }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

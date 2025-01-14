@@ -17,7 +17,10 @@ class Rule021AvslutningsdatoForForsteSamtale :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot {
+            .filter {
+                it[DATO_GRSTART_B_COL_NAME].isNotBlank() &&
+                    it[DATO_GRAVSLUTN_B_COL_NAME].isNotBlank()
+            }.filterNot {
                 it.fieldAs<LocalDate?>(DATO_GRSTART_B_COL_NAME) != null &&
                     it.fieldAs<LocalDate?>(DATO_GRAVSLUTN_B_COL_NAME) != null &&
                     it.fieldAs<LocalDate>(DATO_GRSTART_B_COL_NAME) <=

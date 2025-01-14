@@ -21,6 +21,18 @@ class Rule021AvslutningsdatoForForsteSamtaleTest :
                     kostraRecordInTest("01012023", "01012023"),
                 ),
                 ForAllRowItem(
+                    "missing start",
+                    kostraRecordInTest("        ", "01012023"),
+                ),
+                ForAllRowItem(
+                    "missing end",
+                    kostraRecordInTest("01012023", "        "),
+                ),
+                ForAllRowItem(
+                    "missing start and missing end",
+                    kostraRecordInTest("        ", "        "),
+                ),
+                ForAllRowItem(
                     "invalid order",
                     kostraRecordInTest("02022023", "01012023"),
                     expectedErrorMessage =

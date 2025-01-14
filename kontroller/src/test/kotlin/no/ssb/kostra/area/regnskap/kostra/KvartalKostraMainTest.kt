@@ -52,9 +52,9 @@ class KvartalKostraMainTest :
                             },
                         ).plus(
                             mapOf(
-                                "0AK1" to 2,
+                                "0AK1" to 1,
                                 "0BK1" to 2,
-                                "0CK1" to 3,
+                                "0CK1" to 2,
                                 "0DK1" to 2,
                             ).map { (skjema, expectedNumberOfControls) ->
                                 row(
@@ -71,9 +71,9 @@ class KvartalKostraMainTest :
                             },
                         ).plus(
                             mapOf(
-                                "0AK1" to 3,
+                                "0AK1" to 2,
                                 "0BK1" to 3,
-                                "0CK1" to 4,
+                                "0CK1" to 3,
                                 "0DK1" to 3,
                             ).map { (skjema, expectedNumberOfControls) ->
                                 row(

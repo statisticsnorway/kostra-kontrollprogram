@@ -1,5 +1,5 @@
 [versions]
-micronautPlatform = "4.7.3"
+micronautPlatform = "4.7.4"
 kotlin = "2.1.0"
 jackson = "2.18.2"
 kotest = "5.9.1"
@@ -21,4 +21,4 @@ swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotation
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }
 kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
-mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.13.14" }
+mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.13.16" }

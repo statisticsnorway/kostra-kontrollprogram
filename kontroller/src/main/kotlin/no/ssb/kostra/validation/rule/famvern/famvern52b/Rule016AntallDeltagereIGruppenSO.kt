@@ -7,20 +7,23 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule016AntallDeltagereIGruppenSO : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern52bRuleId.FAMILIEVERN52B_RULE016.title,
-    Severity.WARNING
-) {
-    override fun validate(context: List<KostraRecord>) = context
-        .filterNot { 0 < it.fieldAsIntOrDefault(ANTDELT_OPPR_B_COL_NAME) }
-        .map {
-            createValidationReportEntry(
-                messageText = "Det er ikke fylt ut hvor mange som har deltatt i gruppen " +
-                        "siden opprettelsen. Terapeuter holdes utenom.",
-                lineNumbers = listOf(it.lineNumber)
-            ).copy(
-                caseworker = it[KONTOR_NR_B_COL_NAME],
-                journalId = it[GRUPPE_NR_B_COL_NAME]
-            )
-        }.ifEmpty { null }
+class Rule016AntallDeltagereIGruppenSO :
+    AbstractNoArgsRule<List<KostraRecord>>(
+        Familievern52bRuleId.FAMILIEVERN52B_RULE016.title,
+        Severity.WARNING,
+    ) {
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .filterNot { 0 < it.fieldAsIntOrDefault(ANTDELT_OPPR_B_COL_NAME) }
+            .map {
+                createValidationReportEntry(
+                    messageText =
+                        "Det er ikke fylt ut hvor mange som har deltatt i gruppen " +
+                            "siden opprettelsen. Terapeuter holdes utenom.",
+                    lineNumbers = listOf(it.lineNumber),
+                ).copy(
+                    caseworker = it[KONTOR_NR_B_COL_NAME],
+                    journalId = it[GRUPPE_NR_B_COL_NAME],
+                )
+            }.ifEmpty { null }
 }

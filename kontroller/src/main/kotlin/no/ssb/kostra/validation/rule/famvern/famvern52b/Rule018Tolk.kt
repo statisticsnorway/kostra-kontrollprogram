@@ -10,24 +10,28 @@ import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule018Tolk : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern52bRuleId.FAMILIEVERN52B_RULE018.title,
-    Severity.WARNING
-) {
-    override fun validate(context: List<KostraRecord>) = context
-        .filterNot { fieldDefinition.codeExists(it[TOLK_B_COL_NAME]) }
-        .map {
-            createValidationReportEntry(
-                messageText = "Kontroller at feltet er utfylt. " +
-                        "Fant '${it[TOLK_B_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}.",
-                lineNumbers = listOf(it.lineNumber)
-            ).copy(
-                caseworker = it[KONTOR_NR_B_COL_NAME],
-                journalId = it[GRUPPE_NR_B_COL_NAME]
-            )
-        }.ifEmpty { null }
+class Rule018Tolk :
+    AbstractNoArgsRule<List<KostraRecord>>(
+        Familievern52bRuleId.FAMILIEVERN52B_RULE018.title,
+        Severity.WARNING,
+    ) {
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .filterNot { fieldDefinition.codeExists(it[TOLK_B_COL_NAME]) }
+            .map {
+                createValidationReportEntry(
+                    messageText =
+                        "Kontroller at feltet er utfylt. " +
+                            "Fant '${it[TOLK_B_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}.",
+                    lineNumbers = listOf(it.lineNumber),
+                ).copy(
+                    caseworker = it[KONTOR_NR_B_COL_NAME],
+                    journalId = it[GRUPPE_NR_B_COL_NAME],
+                )
+            }.ifEmpty { null }
 
     companion object {
-        private val fieldDefinition = fieldDefinitions.byColumnName(TOLK_B_COL_NAME)
+        private val fieldDefinition =
+            fieldDefinitions.byColumnName(TOLK_B_COL_NAME)
     }
 }

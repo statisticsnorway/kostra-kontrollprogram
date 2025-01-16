@@ -9,22 +9,26 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule003Regionsnummer(
-    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>
+    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern52bRuleId.FAMILIEVERN52B_RULE003.title,
-    Severity.WARNING
-) {
-    override fun validate(context: List<KostraRecord>) = context.filterNot {
-        mappingList.any { mapping -> it[REGION_NR_B_COL_NAME] == mapping.region }
-    }.map {
-        val regionList = mappingList.map { item -> item.region }.distinct().sorted()
-        createValidationReportEntry(
-            messageText = "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. "
-                    + "Fant '${it[REGION_NR_B_COL_NAME]}', forventet én av : $regionList.",
-            lineNumbers = listOf(it.lineNumber)
-        ).copy(
-            caseworker = it[KONTOR_NR_B_COL_NAME],
-            journalId = it[GRUPPE_NR_B_COL_NAME]
-        )
-    }.ifEmpty { null }
+        Familievern52bRuleId.FAMILIEVERN52B_RULE003.title,
+        Severity.WARNING,
+    ) {
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .filterNot {
+                mappingList.any { mapping -> it[REGION_NR_B_COL_NAME] == mapping.region }
+            }.map {
+                val regionList =
+                    mappingList.map { item -> item.region }.distinct().sorted()
+                createValidationReportEntry(
+                    messageText =
+                        "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. " +
+                            "Fant '${it[REGION_NR_B_COL_NAME]}', forventet én av : $regionList.",
+                    lineNumbers = listOf(it.lineNumber),
+                ).copy(
+                    caseworker = it[KONTOR_NR_B_COL_NAME],
+                    journalId = it[GRUPPE_NR_B_COL_NAME],
+                )
+            }.ifEmpty { null }
 }

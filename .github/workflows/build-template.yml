@@ -14,11 +14,11 @@ on:
         default: ""
         type: string
 
-      publish-kostra-barnevern:
-        description: "Publish artifact to Google Artifact Registry"
-        required: false
-        default: false
-        type: boolean
+#      publish-kostra-barnevern:
+#        description: "Publish artifact to Google Artifact Registry"
+#        required: false
+#        default: false
+#        type: boolean
 
     secrets:
       GAR_PROJECT_NUMBER:
@@ -55,18 +55,18 @@ jobs:
           ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
           --daemon --parallel --build-cache --info
 
-      - id: "auth"
-        name: Authenticate to Google Cloud
-        if: ${{ inputs.publish-kostra-barnevern }}
-        uses: "google-github-actions/auth@v2.1.7"
-        with:
-          workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
-          service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
-          token_format: "access_token"
-
-      - name: Deploy artifact to Google artifact registry
-        if: ${{ inputs.publish-kostra-barnevern }}
-        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
+#      - id: "auth"
+#        name: Authenticate to Google Cloud
+#        if: ${{ inputs.publish-kostra-barnevern }}
+#        uses: "google-github-actions/auth@v2.1.7"
+#        with:
+#          workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+#          service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+#          token_format: "access_token"
+#
+#      - name: Deploy artifact to Google artifact registry
+#        if: ${{ inputs.publish-kostra-barnevern }}
+#        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
 
       - name: Release
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}

@@ -5,7 +5,6 @@ repositories { mavenCentral() }
 plugins {
     kotlin("jvm") version libs.versions.kotlin
     id("org.sonarqube") version "6.0.1.5171"
-    id("com.google.cloud.tools.jib") version "3.4.4"
     jacoco
 }
 
@@ -46,9 +45,4 @@ subprojects {
             reports { xml.required = true }
         }
     }
-}
-
-jib {
-    from.image = "bellsoft/liberica-openjdk-alpine:21"
-    container.creationTime = "USE_CURRENT_TIMESTAMP"
 }

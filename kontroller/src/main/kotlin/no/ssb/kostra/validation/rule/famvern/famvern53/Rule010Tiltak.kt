@@ -8,25 +8,30 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule010Tiltak(
-    private val mappingList: List<Familievern53Constants.Rule010Mapping>
+    private val mappingList: List<Familievern53Constants.Rule010Mapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern53RuleId.FAMILIEVERN53_RULE010_TILTAK.title,
-    Severity.WARNING
-) {
-    override fun validate(context: List<KostraRecord>) = context.flatMap {
-        mappingList.mapNotNull { mapping ->
-            if (it.fieldAsIntOrDefault(mapping.tiltakField) == 0) {
-                createValidationReportEntry(
-                    ruleName = "$ruleName ${mapping.kategori}, tiltak",
-                    messageText = "Det er ikke fylt hvor mange tiltak (${it[mapping.tiltakField]}) " +
-                            "kontoret har gjennomført når det gjelder '${mapping.kategori}, tiltak'. " +
-                            "Sjekk om det er glemt å rapportere '${mapping.kategori}'.",
-                    lineNumbers = listOf(it.lineNumber)
-                ).copy(
-                    caseworker = it[FYLKE_NR_COL_NAME],
-                    journalId = it[KONTORNR_COL_NAME]
-                )
-            } else null
-        }
-    }.ifEmpty { null }
+        Familievern53RuleId.FAMILIEVERN53_RULE010_TILTAK.title,
+        Severity.WARNING,
+    ) {
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .flatMap {
+                mappingList.mapNotNull { mapping ->
+                    if (it.fieldAsIntOrDefault(mapping.tiltakField) == 0) {
+                        createValidationReportEntry(
+                            ruleName = "$ruleName ${mapping.kategori}, tiltak",
+                            messageText =
+                                "Det er ikke fylt hvor mange tiltak (${it[mapping.tiltakField]}) " +
+                                    "kontoret har gjennomført når det gjelder '${mapping.kategori}, tiltak'. " +
+                                    "Sjekk om det er glemt å rapportere '${mapping.kategori}'.",
+                            lineNumbers = listOf(it.lineNumber),
+                        ).copy(
+                            caseworker = it[FYLKE_NR_COL_NAME],
+                            journalId = it[KONTORNR_COL_NAME],
+                        )
+                    } else {
+                        null
+                    }
+                }
+            }.ifEmpty { null }
 }

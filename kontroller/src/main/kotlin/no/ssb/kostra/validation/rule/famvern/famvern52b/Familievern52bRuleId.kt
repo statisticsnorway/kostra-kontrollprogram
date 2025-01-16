@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.famvern.famvern52b
 
-enum class Familievern52bRuleId(val title: String) {
+enum class Familievern52bRuleId(
+    val title: String,
+) {
     FAMILIEVERN52B_RULE003("Kontroll 003 : Regionsnummer"),
     FAMILIEVERN52B_RULE004("Kontroll 004 : Kontornummer"),
     FAMILIEVERN52B_RULE005("Kontroll 005 : Manglende samsvar mellom regions- og kontornummer"),
@@ -19,5 +21,5 @@ enum class Familievern52bRuleId(val title: String) {
     FAMILIEVERN52B_RULE018("Kontroll 018 : Er det benyttet tolk i minst én gruppesamtale?"),
     FAMILIEVERN52B_RULE019("Kontroll 019 : Status ved året slutt"),
     FAMILIEVERN52B_RULE020("Kontroll 020 : Gruppebehandlingen er avsluttet, men avslutningsdato mangler"),
-    FAMILIEVERN52B_RULE021("Kontroll 021 : Avslutningsdato før første samtale")
+    FAMILIEVERN52B_RULE021("Kontroll 021 : Avslutningsdato før første samtale"),
 }

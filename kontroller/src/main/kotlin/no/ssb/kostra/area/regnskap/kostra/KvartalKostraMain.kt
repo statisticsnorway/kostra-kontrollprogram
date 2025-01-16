@@ -3,6 +3,7 @@ package no.ssb.kostra.area.regnskap.kostra
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
+import no.ssb.kostra.validation.rule.regnskap.Rule010UtgattFunksjon
 
 class KvartalKostraMain(
     arguments: KotlinArguments
@@ -19,6 +20,14 @@ class KvartalKostraMain(
         "251", "252", "253", "256", "257", "258", "261", "265", "273", "275", "276", "281", "283", "285", "290",
         "301", "302", "303", "315", "320", "321", "322", "325", "329", "330", "332", "335", "338", "339", "340", "345",
         "350", "353", "354", "355", "360", "365", "370", "373", "375", "377", "380", "381", "383", "385", "386", "390", "392", "393"
+        // @formatter:on
+    )
+
+    @SuppressWarnings
+    private val utgatteKommunaleFunksjoner = listOf(
+        //@formatter:off
+        "190",
+        "254",
         // @formatter:on
     )
 
@@ -54,6 +63,7 @@ class KvartalKostraMain(
 
             if (arguments.skjema in listOf("0AK1", "0AK2", "0AK3", "0AK4"))
                 result.addAll(kommunaleFunksjoner)
+                result.addAll(utgatteKommunaleFunksjoner)
 
             if (arguments.skjema in listOf("0CK1", "0CK2", "0CK3", "0CK4"))
                 result.addAll(fylkeskommunaleFunksjoner)
@@ -67,26 +77,26 @@ class KvartalKostraMain(
         } else
             emptyList()
 
+    // Kun gyldig i investering og skal fjernes fra drift
     @SuppressWarnings
     private val invalidDriftFunksjonList =
         if (arguments.skjema in bevilgningRegnskap)
-        // Kun gyldig i investering og skal fjernes fra drift
             listOf("841 ")
         else
             emptyList()
 
+    // Kun gyldig i drift og skal fjernes fra investering
     @SuppressWarnings
     private val invalidInvesteringFunksjonAsList =
         if (arguments.skjema in bevilgningRegnskap)
-        // Kun gyldig i drift og skal fjernes fra investering
             listOf("800 ", "840 ", "860 ")
         else
             emptyList()
 
+    // Anses som ulogisk i investering
     @SuppressWarnings
     private val illogicalInvesteringFunksjonAsList: List<String> =
         if (arguments.skjema in bevilgningRegnskap)
-        // Anses som ulogisk i investering
             listOf("100 ", "110 ", "121 ", "170 ", "171 ", "400 ", "410 ", "421 ", "470 ", "471 ")
         else
             emptyList()
@@ -118,15 +128,24 @@ class KvartalKostraMain(
     private val basisArter = listOf(
         // @formatter:off
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
-        "100", "105", "110", "114", "115", "120", "130", "140", "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
-        "200", "209", "210", "220", "230", "240", "250", "260", "270", "280", "285",
-        "300", "330", "350", "370",
-        "400", "429", "430", "450", "470",
-        "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540", "550", "570", "589", "590",
-        "600", "620", "629", "630", "640", "650", "660", "670",
-        "700", "710", "729", "730", "750", "770",
-        "800", "810", "830", "850", "870", "876", "877", "880", "890",
-        "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "940", "950", "970", "980", "989", "990",
+        "100", "105", "110", "114", "115", "120", "130", "140",
+        "150", "160", "165", "170", "180", "181", "182", "183", "184", "185", "190", "195",
+        "200", "209", "210", "220", "230", "240",
+        "250", "260", "270", "280", "285",
+        "300", "330",
+        "350", "370",
+        "400", "429", "430",
+        "450", "470",
+        "500", "501", "509", "510", "511", "512", "520", "521", "522", "529", "530", "540",
+        "550", "570", "589", "590",
+        "600", "620", "629", "630", "640",
+        "650", "660", "670",
+        "700", "710", "729", "730",
+        "750", "770",
+        "800", "810", "830",
+        "850", "870", "876", "877", "880", "890",
+        "900", "901", "905", "909", "910", "911", "912", "920", "921", "922", "929", "940", "950",
+        "970", "980", "989", "990",
         "Z", "z", "~"
         // @formatter:on
     )
@@ -161,10 +180,10 @@ class KvartalKostraMain(
     } else emptyList()
 
 
+    // Sektorer
     @SuppressWarnings
     override val sektorList: List<String> =
         if (arguments.skjema in balanseRegnskap)
-        // Sektorer
             listOf(
                 // @formatter:off
             "000", "070", "080",
@@ -214,5 +233,8 @@ class KvartalKostraMain(
                 illogicalInvesteringFunksjonList = illogicalInvesteringFunksjonAsList,
                 invalidInvesteringArtList = invalidInvesteringArtList
             )
+        )
+        .plus(
+            listOf(Rule010UtgattFunksjon(utgatteKommunaleFunksjoner))
         )
 }

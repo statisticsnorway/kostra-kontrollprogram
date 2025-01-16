@@ -8,23 +8,26 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule003Fylkesnummer(
-    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>
+    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
-    Familievern53RuleId.FAMILIEVERN53_RULE003.title,
-    Severity.WARNING
-) {
-    private val fylkeList = mappingList.map { item -> item.fylke }.distinct().sorted()
+        Familievern53RuleId.FAMILIEVERN53_RULE003.title,
+        Severity.WARNING,
+    ) {
+    private val fylkeList =
+        mappingList.map { item -> item.fylke }.distinct().sorted()
 
-    override fun validate(context: List<KostraRecord>) = context
-        .filterNot { mappingList.any { mapping -> it[FYLKE_NR_COL_NAME] == mapping.fylke } }
-        .map {
-            createValidationReportEntry(
-                messageText = "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige " +
-                        "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList.",
-                lineNumbers = listOf(it.lineNumber)
-            ).copy(
-                caseworker = it[FYLKE_NR_COL_NAME],
-                journalId = it[KONTORNR_COL_NAME]
-            )
-        }.ifEmpty { null }
+    override fun validate(context: List<KostraRecord>) =
+        context
+            .filterNot { mappingList.any { mapping -> it[FYLKE_NR_COL_NAME] == mapping.fylke } }
+            .map {
+                createValidationReportEntry(
+                    messageText =
+                        "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige " +
+                            "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList.",
+                    lineNumbers = listOf(it.lineNumber),
+                ).copy(
+                    caseworker = it[FYLKE_NR_COL_NAME],
+                    journalId = it[KONTORNR_COL_NAME],
+                )
+            }.ifEmpty { null }
 }

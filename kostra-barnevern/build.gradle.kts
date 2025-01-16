@@ -1,12 +1,12 @@
 plugins {
     id("io.spring.dependency-management") version "1.1.7"
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
-    `maven-publish`
+//    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
+//    `maven-publish`
 }
 
-if (!project.version.toString().contains("SNAPSHOT")) {
-    apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
-}
+// if (!project.version.toString().contains("SNAPSHOT")) {
+//    apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
+// }
 
 dependencyManagement {
     dependencies {
@@ -30,17 +30,17 @@ dependencies {
     testImplementation(libs.mockk.jvm)
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "no.ssb.kostra"
-            artifactId = "kostra-barnevern"
-            version = rootProject.version.toString()
-
-            from(components["java"])
-        }
-    }
-    repositories {
-        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/kostra-maven")
-    }
-}
+// publishing {
+//    publications {
+//        create<MavenPublication>("maven") {
+//            groupId = "no.ssb.kostra"
+//            artifactId = "kostra-barnevern"
+//            version = rootProject.version.toString()
+//
+//            from(components["java"])
+//        }
+//    }
+//    repositories {
+//        maven("artifactregistry://europe-north1-maven.pkg.dev/artifact-registry-5n/kostra-maven")
+//    }
+// }

@@ -90,7 +90,7 @@ jobs:
     name: Deploy to NAIS test
     environment: test
     runs-on: ubuntu-24.04
-    needs: docker_build
+    needs: [setup, docker_build]
     permissions:
       contents: write
       id-token: write

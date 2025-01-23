@@ -15,11 +15,8 @@ updates:
       interval: daily
       time: "03:00"
       timezone: Europe/Oslo
-    open-pull-requests-limit: 10
-    groups:
-      npm-dependencies:
-        patterns:
-          - "*"
+    open-pull-requests-limit: 20
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

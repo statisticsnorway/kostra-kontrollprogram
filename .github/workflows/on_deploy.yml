@@ -19,20 +19,12 @@ jobs:
     outputs:
       docker-image: ${{ steps.setup.outputs.image }}
     steps:
-      - name: Create image tag
-        run: |
-          echo "TAG=$(date +'%Y%m%d')-${{github.run_number}}" >> $GITHUB_ENV
-
-      - name: Set docker image env var
-        run: |
-          echo "DOCKER_IMAGE=${REGISTRY}/${IMAGE}:${TAG}" >> $GITHUB_ENV
-
-      - name: Store docker image env var
+      - name: Create and store image tag
         id: setup
-        run: echo "image=${{ env.DOCKER_IMAGE }}" >> "$GITHUB_OUTPUT"
+        run: echo "image=${REGISTRY}/${IMAGE}:$(date +'%Y%m%d')-${{github.run_number}}" >> "$GITHUB_OUTPUT"
 
       - name: Echo image tag
-        run: echo $DOCKER_IMAGE
+        run: echo ${{ steps.setup.outputs.image }}
 
   docker_build:
     name: Create Docker image
@@ -42,8 +34,6 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    env:
-      DOCKER_IMAGE: "${{needs.setup.outputs.docker-image}}"
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -84,7 +74,7 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ${{ env.DOCKER_IMAGE }}
+            ${{needs.setup.outputs.docker-image}}
 
   test_deploy:
     name: Deploy to NAIS test
@@ -94,19 +84,14 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    env:
-      DOCKER_IMAGE: "${{needs.setup.outputs.docker-image}}"
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
-      - name: Echo image tag
-        run: echo ${{ env.DOCKER_IMAGE }}
 
       - name: Deploy to NAIS Test
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: test
           RESOURCE: .nais/test.yaml
-          VAR: image=${{ env.DOCKER_IMAGE }}
+          VAR: image=${{needs.setup.outputs.docker-image}}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

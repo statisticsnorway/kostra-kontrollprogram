@@ -6,15 +6,18 @@ import FileReport from "./routes/file-report"
 import Index from "./routes"
 import {useCallback, useMemo, useState} from "react"
 import FileReportVm from "./kostratypes/fileReportVm"
-import {useQuery} from "react-query"
+import {useQuery} from "@tanstack/react-query"
 import {uiDataAsync} from "./api/apiCalls"
+import React from "react";
 
 const App = () => {
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
 
     // Fetch UI-data from backend
-    const {data: uiData, isLoading, isError} =
-        useQuery('uiData', uiDataAsync)
+    const { data: uiData, isLoading, isError } = useQuery({
+        queryKey: ['uiData'],  // Must be an array
+        queryFn: uiDataAsync,  // Pass function reference, not inside an array
+    });
 
     const onAddFileReport = useCallback(
         (fileReport: FileReportVm) =>
@@ -24,7 +27,7 @@ const App = () => {
     )
 
     const onDeleteReport = useCallback(
-        (incomingIndex: NonNullable<number>): void =>
+        (incomingIndex: number): void =>
             // put all reports back to state except for the one that matches selected index
             setFileReports(prevState =>
                 prevState.filter((_, index) => index !== incomingIndex)),
@@ -63,7 +66,7 @@ const App = () => {
         return <div className="text-danger">Kunne ikke initialisere applikasjonen.</div>
     }
 
-    return <RouterProvider router={router}/>
+    return router ? <RouterProvider router={router}/> : null;
 }
 
 export default App

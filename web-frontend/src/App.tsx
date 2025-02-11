@@ -8,7 +8,6 @@ import {useCallback, useMemo, useState} from "react"
 import FileReportVm from "./kostratypes/fileReportVm"
 import {useQuery} from "@tanstack/react-query"
 import {uiDataAsync} from "./api/apiCalls"
-import React from "react";
 
 const App = () => {
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])

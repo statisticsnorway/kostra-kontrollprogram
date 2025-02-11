@@ -12,7 +12,6 @@ import no.ssb.kostra.web.extension.MappingToConsoleAppExtensionsKtTest.Companion
 import no.ssb.kostra.web.extensions.groupReportEntries
 import no.ssb.kostra.web.extensions.toErrorReportVm
 import no.ssb.kostra.web.extensions.toKostraArguments
-import no.ssb.kostra.web.viewmodel.CompanyIdVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.time.Year
 
@@ -81,10 +80,6 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
             aar = Year.now().value,
             region = "123456",
             orgnrForetak = generateCompanyIdInTest('9'),
-            orgnrVirksomhet = listOf(
-                CompanyIdVm(generateCompanyIdInTest('8')),
-                CompanyIdVm(generateCompanyIdInTest('9'))
-            )
         ).toKostraArguments("".byteInputStream(), null)
 
         val firstValidationReportEntry = ValidationReportEntry(
@@ -126,8 +121,6 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
                     region shouldBe kotlinArguments.region
                     orgnrForetak shouldBe kotlinArguments.foretaknr
                     navn shouldBe kotlinArguments.navn
-                    orgnrVirksomhet shouldBe kotlinArguments.orgnr.split(",")
-                        .map { CompanyIdVm(orgnr = it) }
                 }
 
                 assertSoftly(fileReportVm) {
@@ -150,12 +143,3 @@ class MappingFromConsoleAppExtensionsKtTest : BehaviorSpec({
         }
     }
 })
-
-
-/*
-[
-ValidationReportEntry(severity=ERROR, caseworker=caseworker, journalId=journalId, individId=individId, contextId=contextId, ruleName=ruleName, messageText=messageText, lineNumbers=[1, 2, 3, 4, 5, 6]),
-ValidationReportEntry(severity=ERROR, caseworker=caseworker3, journalId=journalId3, individId=individId3, contextId=contextId3, ruleName=ruleName, messageText=messageText, lineNumbers=[])]
-FileReportVm(innparametere=KostraFormVm(aar=2023, skjema=0A, region=123456, navn=UOPPGITT, orgnrForetak=999999999, orgnrVirksomhet=[CompanyIdVm(orgnr=888888888), CompanyIdVm(orgnr=999999999)], filnavn=), antallKontroller=42, severity=ERROR, feil=[FileReportEntryVm(severity=ERROR, caseworker=caseworker, journalId=journalId, individId=individId, contextId=contextId, ruleName=ruleName, messageText=messageText, lineNumbers=[1, 2, 3, 4]), FileReportEntryVm(severity=ERROR, caseworker=caseworker2, journalId=journalId2, individId=individId2, contextId=contextId2, ruleName=ruleName, messageText=messageText, lineNumbers=[4, 5, 6])])
-
-* */

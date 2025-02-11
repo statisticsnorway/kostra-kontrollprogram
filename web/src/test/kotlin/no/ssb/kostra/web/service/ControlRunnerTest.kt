@@ -20,7 +20,6 @@ class ControlRunnerTest(
                     skjema = "52AF",
                     region = "667600",
                     filnavn = "fil.data",
-                    orgnrVirksomhet = emptyList(),
                 )
 
             When("validateDataFile with valid content") {

@@ -94,21 +94,21 @@ describe("MainForm", () => {
             expect(screen.getByRole("button", {name: "Kontroller fil"})).toBeDisabled()
         })
 
-        // it("displays validation errors initially", () => {
-        //     expect(screen.queryByText("Skjematype er påkrevet")).toBeInTheDocument()
-        //     expect(screen.queryByText("Årgang er påkrevet")).toBeInTheDocument()
-        //     expect(screen.queryByText("Region er påkrevet")).toBeInTheDocument()
-        //     expect(screen.queryByText("Vennligst velg fil")).toBeInTheDocument()
-        // })
-        //
-        // it("hides validation errors when provided valid inputs", async () => {
-        //     await setupForSubmit()
-        //
-        //     expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
-        //     expect(screen.queryByText("Årgang er påkrevet")).not.toBeInTheDocument()
-        //     expect(screen.queryByText("Region er påkrevet")).not.toBeInTheDocument()
-        //     expect(screen.queryByText("Vennligst velg fil")).not.toBeInTheDocument()
-        // })
+        it("displays validation errors initially", () => {
+            expect(screen.queryByText("Skjematype er påkrevet")).toBeInTheDocument()
+            expect(screen.queryByText("Årgang er påkrevet")).toBeInTheDocument()
+            expect(screen.queryByText("Region er påkrevet")).toBeInTheDocument()
+            expect(screen.queryByText("Vennligst velg fil")).toBeInTheDocument()
+        })
+
+        it("hides validation errors when provided valid inputs", async () => {
+            await setupForSubmit()
+
+            expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
+            expect(screen.queryByText("Årgang er påkrevet")).not.toBeInTheDocument()
+            expect(screen.queryByText("Region er påkrevet")).not.toBeInTheDocument()
+            expect(screen.queryByText("Vennligst velg fil")).not.toBeInTheDocument()
+        })
 
         it("displays invalid value validation error for Regionsnummer when provided invalid value", async () => {
             fireEvent.change(screen.getByLabelText("Regionsnummer"), {target: {value: "123"}})
@@ -158,20 +158,20 @@ describe("MainForm", () => {
         //         expect(screen.getByRole("button", {description: "Fjern virksomhetsnummer"})).toBeInTheDocument())
         // })
 
-        // it("hides inputs for company-id and sub-company-id when a form type is selected", async () => {
-        //     fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
-        //
-        //     // verify that inputs are not in the document
-        //     await waitFor(() => {
-        //         expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
-        //         expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
-        //         expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
-        //     })
-        // })
+        it("hides inputs for company-id and sub-company-id when a form type is selected", async () => {
+            fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
+
+            // verify that inputs are not in the document
+            await waitFor(() => {
+                expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
+                // expect(screen.queryByText(formTypeThree.labelOrgnr)).not.toBeInTheDocument()
+                // expect(screen.queryByText(formTypeThree.labelOrgnrVirksomhetene)).not.toBeInTheDocument()
+            })
+        })
 
         it("displays input for company-id when form type is selected", async () => {
             // verify that input is not in the document
-//            expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
+            expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
 
             fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
 

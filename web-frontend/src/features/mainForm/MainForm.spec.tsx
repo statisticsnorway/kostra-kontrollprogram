@@ -41,16 +41,11 @@ const setupForSubmit = async (formType: KostraFormTypeVm = formTypeOne) => {
     const regionInput = screen.getByLabelText("Regionsnummer")
     fireEvent.change(regionInput, {target: {value: "123456"}})
 
-    let orgnrInput: HTMLInputElement, orgnrVirksomhetInput: HTMLInputElement
+    let orgnrInput: HTMLInputElement
 
     if (formType.labelOrgnr) {
         orgnrInput = screen.getByLabelText(formType.labelOrgnr as string)
         fireEvent.change(orgnrInput, {target: {value: "999999999"}})
-    }
-
-    if (formType.labelOrgnrVirksomhetene) {
-        orgnrVirksomhetInput = screen.getByTestId("orgnrVirksomhet.0.orgnr")
-        fireEvent.change(orgnrVirksomhetInput, {target: {value: "888888888"}})
     }
 
     await waitFor(() => {
@@ -62,10 +57,6 @@ const setupForSubmit = async (formType: KostraFormTypeVm = formTypeOne) => {
 
         if (formType.labelOrgnr) {
             expect(orgnrInput).toHaveValue("999999999")
-        }
-
-        if (formType.labelOrgnrVirksomhetene) {
-            expect(orgnrVirksomhetInput).toHaveValue("888888888")
         }
     })
 }

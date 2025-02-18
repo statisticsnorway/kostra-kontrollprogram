@@ -26,7 +26,6 @@ export const kostraFormInTest: KostraFormVm = {
     skjema: "0X",
     region: "030100",
     orgnrForetak: "987654321",
-    orgnrVirksomhet: [{orgnr: "876543219"}],
     skjemaFil: createMockFileList()
 }
 

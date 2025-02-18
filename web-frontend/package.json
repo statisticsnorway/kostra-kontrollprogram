@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm i -g --force corepack && corepack enable",
     "build": "tsc && vite build",
     "clean": "npm ci",
     "preview": "vite preview",

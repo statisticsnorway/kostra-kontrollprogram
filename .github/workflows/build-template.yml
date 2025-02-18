@@ -47,10 +47,22 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Set up Node
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js
         uses: actions/setup-node@v4.2.0
         with:
+          registry-url: 'https://registry.npmjs.org'
           node-version: '22'
+          cache: 'pnpm'
+
+      - name: Enable Corepack
+        run: |
+          npm i -g --force corepack
+          corepack enable
+          pnpm -v
+        shell: bash
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4

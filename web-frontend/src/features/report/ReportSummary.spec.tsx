@@ -27,10 +27,6 @@ describe("ReportSummary", () => {
         it("'Organisasjonsnummer' should be in the document", () => {
             expect(screen.queryByText(`Organisasjonsnummer: ${kostraFormInTest.orgnrForetak}`)).toBeInTheDocument()
         })
-        it("'Organisasjonsnummer virksomhet(er)' should be in the document", () => {
-            expect(screen.queryByText(
-                `Organisasjonsnummer virksomhet(er): ${kostraFormInTest.orgnrVirksomhet?.[0].orgnr}`)).toBeInTheDocument()
-        })
         it("'Høyeste alvorlighetsgrad' should be in the document", () => {
             expect(screen.getByText("Høyeste alvorlighetsgrad:").children[0].textContent).toBe("Advarsel")
         })

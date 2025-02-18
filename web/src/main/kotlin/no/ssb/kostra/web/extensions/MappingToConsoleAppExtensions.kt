@@ -19,18 +19,11 @@ fun KostraFormVm.toKostraArguments(
     kvartal = kvartal ?: QUARTER_FALLBACK_VALUE,
     region = region,
     navn = navn ?: NAME_FALLBACK_VALUE,
-    orgnr = unitOrgnr(),
     foretaknr = orgnrForetak(),
     inputFileContent = inputStream.bufferedReader().use(BufferedReader::readText)
 )
 
-fun KostraFormVm.unitOrgnr() = this.orgnrForetak.let { orgnrForetak ->
-    if (this.orgnrVirksomhet.any())
-        this.orgnrVirksomhet.joinToString(separator = SEPARATOR_CHAR) { companyId -> companyId.orgnr }
-    else
-        orgnrForetak?.takeIf { it.isNotBlank() } ?: FALLBACK_COMPANY_ID
-}
 
 fun KostraFormVm.orgnrForetak() = this.orgnrForetak
-    ?.takeIf { it.isNotBlank() && this.orgnrVirksomhet.any() }
+    ?.takeIf { it.isNotBlank() }
     ?: FALLBACK_COMPANY_ID

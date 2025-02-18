@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from "react"
-import {useFieldArray, useForm} from "react-hook-form"
+import {useForm} from "react-hook-form"
 import {Button, Form} from "react-bootstrap"
 import {yupResolver} from "@hookform/resolvers/yup"
 
@@ -17,9 +17,6 @@ import PlusCircle from "../../assets/icon/plus-circle.svg"
 // @ts-ignore
 import DashCircle from "../../assets/icon/dash-circle.svg"
 
-// misc constants
-const MAX_VIRKSOMHET_FIELDS = 20
-
 const MainForm = ({formTypes, years, onSubmit}: {
     formTypes: KostraFormTypeVm[],
     years: number[],
@@ -33,7 +30,6 @@ const MainForm = ({formTypes, years, onSubmit}: {
 
     // main form
     const {
-        control,
         register,
         reset,
         resetField,
@@ -43,22 +39,10 @@ const MainForm = ({formTypes, years, onSubmit}: {
         },
         formState,
         watch,
-        getValues,
         trigger
     } = useForm<KostraFormVm>({
         mode: "onChange",
         resolver: yupResolver(validationSchema)
-    })
-
-    // array for orgnrVirksomhet
-    const {
-        fields: orgnrVirksomhetFields,
-        append: appendOrgnrVirksomhet,
-        remove: removeOrgnrVirksomhet,
-        replace: replaceOrgnrVirksomhet
-    } = useFieldArray<KostraFormVm>({
-        control,
-        name: "orgnrVirksomhet"
     })
 
     // submit-handler, redirects call to parent
@@ -97,14 +81,6 @@ const MainForm = ({formTypes, years, onSubmit}: {
         if (valgtSkjematype) {
             if (!valgtSkjematype?.labelOrgnr) {
                 resetField("orgnrForetak", {keepDirty: false})
-            }
-
-            if (valgtSkjematype?.labelOrgnrVirksomhetene) {
-                if (orgnrVirksomhetFields.length === 0) {
-                    appendOrgnrVirksomhet({orgnr: ""}, {shouldFocus: false})
-                }
-            } else {
-                replaceOrgnrVirksomhet([])
             }
         }
 
@@ -176,53 +152,6 @@ const MainForm = ({formTypes, years, onSubmit}: {
                         placeholder="9 siffer"/>
                     <Form.Control.Feedback type="invalid">{errors.orgnrForetak?.message}</Form.Control.Feedback>
                 </Form.Group>}
-
-            {/** ORGNR VIRKSOMHET */}
-            {valgtSkjematype?.labelOrgnrVirksomhetene && <div className="col-sm-6">
-                {orgnrVirksomhetFields.map((_, index) =>
-                    <div key={index} className="d-flex justify-content-between mb-2">
-                        <Form.Group className="col-sm-10 me-2">
-                            {/** show label for first entry only */}
-                            {index < 1 && <Form.Label>{valgtSkjematype.labelOrgnrVirksomhetene}</Form.Label>}
-                            <Form.Control
-                                {...register(`orgnrVirksomhet.${index}.orgnr`)}
-                                isValid={
-                                    getValues(`orgnrVirksomhet.${index}.orgnr`) !== ""
-                                    && errors.orgnrVirksomhet?.[index]?.orgnr == null
-                                }
-                                isInvalid={
-                                    errors.orgnrVirksomhet?.[index]?.orgnr != null
-                                    || getValues(`orgnrVirksomhet.${index}.orgnr`) === ""
-                                }
-                                type="text"
-                                maxLength={9}
-                                data-testid={`orgnrVirksomhet.${index}.orgnr`}
-                                placeholder="9 siffer"/>
-                        </Form.Group>
-
-                        <div className="mt-auto mb-2 d-flex justify-content-between">
-                            {/** show plus icon for last entry only, when last entry is touched and valid */}
-                            {orgnrVirksomhetFields.length <= MAX_VIRKSOMHET_FIELDS
-                                && index === orgnrVirksomhetFields.length - 1
-                                && getValues(`orgnrVirksomhet.${index}.orgnr`)
-                                && errors.orgnrVirksomhet?.[index]?.orgnr == null
-                                && <Button
-                                    onClick={() => appendOrgnrVirksomhet({orgnr: ""})}
-                                    className="btn bg-transparent btn-outline-light p-0 me-2"
-                                    title="Legg til virksomhetsnummer">
-                                    <img src={PlusCircle} alt="Legg tit virksomhetsnummer"/>
-                                </Button>}
-
-                            {/** show minus icon for index > 0 */}
-                            {index > 0 && <Button
-                                onClick={() => removeOrgnrVirksomhet(index)}
-                                className="btn bg-transparent btn-outline-light p-0 me-2"
-                                title="Fjern virksomhetsnummer">
-                                <img src={DashCircle} alt="Fjern virksomhetsnummer"/>
-                            </Button>}
-                        </div>
-                    </div>)}
-            </div>}
 
             {/** FILE UPLOAD */}
             <Form.Group

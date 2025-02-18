@@ -119,7 +119,6 @@ iu-innstillinger:
     - id: 0X
       tittel: "0X. Resultatregnskap for helseforetak"
       label-orgnr: "Organisasjonsnummer for foretaket"
-      label-orgnr-virksomhetene: "Organisasjonsnummer for virksomhetene"
 
     - id: 0Y
       tittel: "0Y. Balanseregnskap for helseforetak"

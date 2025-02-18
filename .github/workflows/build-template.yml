@@ -62,7 +62,7 @@ jobs:
         run: npm i -g --force corepack && corepack enable
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --dir ./web-frontend/
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4

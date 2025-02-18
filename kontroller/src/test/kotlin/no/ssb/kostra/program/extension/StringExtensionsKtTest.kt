@@ -83,7 +83,7 @@ class StringExtensionsKtTest :
                 When(description) {
                     val result = dateString.isValidDate(dateFormatString)
 
-                    Then("ageInYears should be as expected") {
+                    Then("result should be as expected") {
                         result shouldBe expected
                     }
                 }

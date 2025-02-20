@@ -10,11 +10,10 @@ data class KotlinArguments(
     val region: String,
     val navn: String = "Uoppgitt",
     val orgnr: String = BLANK_CHAR.repeat(9),
-    val foretaknr: String = BLANK_CHAR.repeat(9),
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
     val inputFileContent: String = BLANK_CHAR,
-    val startTime: LocalDateTime = LocalDateTime.now()
+    val startTime: LocalDateTime = LocalDateTime.now(),
 ) {
     init {
         require(skjema.isNotBlank()) {

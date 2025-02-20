@@ -36,7 +36,7 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
                             aar = aargang.toInt(),
                             skjema = skjema,
                             region = region,
-                            orgnrForetak = foretaknr,
+                            orgnrForetak = orgnr,
                             navn = navn,
                         )
                     },

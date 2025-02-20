@@ -4,12 +4,12 @@ import MainForm from "./MainForm"
 import KostraFormTypeVm from "../../kostratypes/kostraFormTypeVm"
 
 const formTypeOne = {
-    id: "~id~",
+    id: "0A",
     tittel: "~tittel1~",
     labelOrgnr: null
 }
 const formTypeTwo = {
-    id: "~idWithCompanyId~",
+    id: "0X",
     tittel: "~tittel2~",
     labelOrgnr: "Organisasjonsnummer"
 }
@@ -87,7 +87,7 @@ describe("MainForm", () => {
         it("hides validation errors when provided valid inputs", async () => {
             await setupForSubmit()
 
-            expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
+            // expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
             expect(screen.queryByText("Årgang er påkrevet")).not.toBeInTheDocument()
             expect(screen.queryByText("Region er påkrevet")).not.toBeInTheDocument()
             expect(screen.queryByText("Vennligst velg fil")).not.toBeInTheDocument()

@@ -12,22 +12,18 @@ private val FALLBACK_COMPANY_ID = " ".repeat(9)
 
 fun KostraFormVm.toKostraArguments(
     inputStream: InputStream,
-    kvartal: String?
+    kvartal: String?,
 ) = KotlinArguments(
     skjema = skjema,
     aargang = aar.toString(),
     kvartal = kvartal ?: QUARTER_FALLBACK_VALUE,
     region = region,
     navn = navn ?: NAME_FALLBACK_VALUE,
-    orgnr = unitOrgnr(),
-    foretaknr = orgnrForetak(),
-    inputFileContent = inputStream.bufferedReader().use(BufferedReader::readText)
+    orgnr = orgnrForetak(),
+    inputFileContent = inputStream.bufferedReader().use(BufferedReader::readText),
 )
 
-fun KostraFormVm.unitOrgnr() = this.orgnrForetak
-    ?.takeIf { it.isNotBlank() }
-    ?: FALLBACK_COMPANY_ID
-
-fun KostraFormVm.orgnrForetak() = this.orgnrForetak
-    ?.takeIf { it.isNotBlank() }
-    ?: FALLBACK_COMPANY_ID
+fun KostraFormVm.orgnrForetak() =
+    this.orgnrForetak
+        ?.takeIf { it.isNotBlank() }
+        ?: FALLBACK_COMPANY_ID

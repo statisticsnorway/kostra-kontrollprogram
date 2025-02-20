@@ -211,30 +211,6 @@ class ApiControllerIntegrationTest(
                     "orgnrForetak",
                     "Må starte med 8 eller 9 etterfulgt av 8 siffer",
                 ),
-                row(
-                    "empty orgnrVirksomhet",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0X",
-                        region = "667600",
-                        orgnrForetak = "987654321",
-                        filnavn = "test.dat",
-                    ),
-                    FALLBACK_PROPERTY_PATH,
-                    "Skjema krever ett eller flere orgnr for virksomhet(er)",
-                ),
-                row(
-                    "Invalid orgnrVirksomhet",
-                    KostraFormVm(
-                        aar = Year.now().value,
-                        skjema = "0X",
-                        region = "667600",
-                        orgnrForetak = "987654321",
-                        filnavn = "test.dat",
-                    ),
-                    "orgnr",
-                    "Må starte med 8 eller 9 etterfulgt av 8 siffer",
-                ),
             ) { description, kostraForm, propertyPath, expectedValidationError ->
                 When(description) {
                     val requestBody = buildMultipartRequest(kostraForm, objectMapper)

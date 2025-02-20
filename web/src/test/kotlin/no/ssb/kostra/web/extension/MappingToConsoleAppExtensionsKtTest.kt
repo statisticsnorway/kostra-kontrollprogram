@@ -57,7 +57,6 @@ class MappingToConsoleAppExtensionsKtTest :
                             skjema shouldBe sut.skjema
                             kvartal shouldBe QUARTER_FALLBACK_VALUE
 
-                            foretaknr shouldBe generateCompanyIdInTest(' ')
                             orgnr shouldBe generateCompanyIdInTest(' ')
 
                             if (sut.navn == null) {
@@ -85,30 +84,9 @@ class MappingToConsoleAppExtensionsKtTest :
 
                 Then("arguments should be as expected") {
                     assertSoftly(arguments) {
-                        foretaknr shouldBe generateCompanyIdInTest(' ')
                         orgnr shouldBe generateCompanyIdInTest('9')
                         kvartal shouldBe "1"
                     }
-                }
-            }
-        }
-
-        Given("KostraFormVm instance with both orgnrForetak and orgnrVirksomhet") {
-            val sut =
-                KostraFormVm(
-                    skjema = "0A",
-                    aar = Year.now().value,
-                    region = "123456",
-                    orgnrForetak = generateCompanyIdInTest('9'),
-                )
-
-            When("toKostraArguments") {
-                val arguments = sut.toKostraArguments("".byteInputStream(), null)
-
-                Then("arguments should be as expected") {
-                    arguments.foretaknr shouldBe generateCompanyIdInTest('9')
-                    arguments.orgnr shouldBe
-                        "${generateCompanyIdInTest('8')},${generateCompanyIdInTest('9')}"
                 }
             }
         }

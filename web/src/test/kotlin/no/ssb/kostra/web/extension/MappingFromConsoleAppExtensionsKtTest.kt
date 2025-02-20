@@ -129,7 +129,7 @@ class MappingFromConsoleAppExtensionsKtTest :
                         skjema shouldBe kotlinArguments.skjema
                         aar shouldBe kotlinArguments.aargang.toInt()
                         region shouldBe kotlinArguments.region
-                        orgnrForetak shouldBe kotlinArguments.foretaknr
+                        orgnrForetak shouldBe kotlinArguments.orgnr
                         navn shouldBe kotlinArguments.navn
                     }
 

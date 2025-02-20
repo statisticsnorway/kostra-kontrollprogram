@@ -6,14 +6,12 @@ import KostraFormTypeVm from "../../kostratypes/kostraFormTypeVm"
 const formTypeOne = {
     id: "~id~",
     tittel: "~tittel1~",
-    labelOrgnr: null,
-    labelOrgnrVirksomhetene: null
+    labelOrgnr: null
 }
 const formTypeTwo = {
     id: "~idWithCompanyId~",
     tittel: "~tittel2~",
-    labelOrgnr: "Organisasjonsnummer",
-    labelOrgnrVirksomhetene: null
+    labelOrgnr: "Organisasjonsnummer"
 }
 
 const yearInTests = (new Date()).getFullYear()

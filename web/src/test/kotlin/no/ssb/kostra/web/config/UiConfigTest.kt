@@ -36,7 +36,6 @@ class UiConfigTest(
                 assertSoftly(sut.skjematyper.first { it.id == "0X" }) {
                     tittel shouldBe "0X. Resultatregnskap for helseforetak"
                     labelOrgnr shouldBe "Organisasjonsnummer for foretaket"
-                    labelOrgnrVirksomhetene shouldBe "Organisasjonsnummer for virksomhetene"
                 }
             }
         }

@@ -33,7 +33,7 @@ const setupForSubmit = async (formType: KostraFormTypeVm = formTypeOne) => {
     const regionInput = screen.getByLabelText("Regionsnummer")
     fireEvent.change(regionInput, {target: {value: "123456"}})
 
-    let orgnrInput: HTMLInputElement, orgnrVirksomhetInput: HTMLInputElement
+    let orgnrInput: HTMLInputElement
 
     if (formType.labelOrgnr) {
         orgnrInput = screen.getByLabelText(formType.labelOrgnr)

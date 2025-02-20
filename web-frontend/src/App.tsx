@@ -1,31 +1,31 @@
 import './scss/buttons.scss'
-import {createHashRouter, RouterProvider} from "react-router-dom"
+import {createHashRouter, RouteObject, RouterProvider} from "react-router-dom"
 import Root from "./routes/root"
 import ErrorPage from "./routes/error-page"
 import FileReport from "./routes/file-report"
 import Index from "./routes"
-import {useCallback, useMemo, useState} from "react"
+import { useCallback, useMemo, useState } from "react"
 import FileReportVm from "./kostratypes/fileReportVm"
-import {useQuery} from "react-query"
-import {uiDataAsync} from "./api/apiCalls"
+import { useQuery } from "@tanstack/react-query"
+import { uiDataAsync } from "./api/apiCalls"
 
 const App = () => {
     const [fileReports, setFileReports] = useState<FileReportVm[]>([])
 
     // Fetch UI-data from backend
-    const {data: uiData, isLoading, isError} =
-        useQuery('uiData', uiDataAsync)
+    const { data: uiData, isLoading, isError } = useQuery({
+        queryKey: ['uiData'],
+        queryFn: uiDataAsync,
+    })
 
     const onAddFileReport = useCallback(
         (fileReport: FileReportVm) =>
-            // add new report to head (index = 0)
             setFileReports(prevState => [fileReport, ...prevState]),
         []
     )
 
     const onDeleteReport = useCallback(
-        (incomingIndex: NonNullable<number>): void =>
-            // put all reports back to state except for the one that matches selected index
+        (incomingIndex: number): void =>
             setFileReports(prevState =>
                 prevState.filter((_, index) => index !== incomingIndex)),
         []
@@ -53,7 +53,7 @@ const App = () => {
                     },
                 ],
             },
-        ]) : null, [fileReports, uiData, onDeleteReport, onAddFileReport])
+        ] as RouteObject[]) : null, [fileReports, uiData, onDeleteReport, onAddFileReport])
 
     if (isLoading) {
         return <div>Laster data...</div>
@@ -63,7 +63,7 @@ const App = () => {
         return <div className="text-danger">Kunne ikke initialisere applikasjonen.</div>
     }
 
-    return <RouterProvider router={router}/>
+    return <RouterProvider router={router} />
 }
 
 export default App

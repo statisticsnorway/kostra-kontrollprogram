@@ -27,9 +27,6 @@ data class KostraFormVm(
     @field:Pattern(regexp = "[8|9]\\d{8}", message = "Må starte med 8 eller 9 etterfulgt av 8 siffer")
     val orgnrForetak: String? = null,
 
-    @field:Valid
-    val orgnrVirksomhet: List<CompanyIdVm> = emptyList(),
-
     @field:NotBlank(message = "Filvedlegg er påkrevet")
     val filnavn: String = ""
 )

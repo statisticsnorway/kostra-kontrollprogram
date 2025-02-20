@@ -8,5 +8,4 @@ data class KostraFormTypeVm(
     val tittel: String,
     val kvartal: String?,
     val labelOrgnr: String?,
-    val labelOrgnrVirksomhetene: String?
 )

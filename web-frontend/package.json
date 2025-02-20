@@ -24,7 +24,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "@tanstack/react-query": "^5.66.7",
-    "react-router-dom": "^7.1.5",
+    "react-router-dom": "^7.2.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
@@ -37,8 +37,8 @@
     "mkdirp": "~3",
     "sass": "^1.85.0",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0",
-    "vitest": "^3.0.5"
+    "vite": "^6.1.1",
+    "vitest": "^3.0.6"
   },
   "overrides": {
     "eslint": {

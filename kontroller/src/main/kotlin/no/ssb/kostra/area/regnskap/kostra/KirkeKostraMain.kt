@@ -82,6 +82,12 @@ class KirkeKostraMain(
     // Kun gyldig i drift og skal fjernes fra investering
     private fun getInvalidInvesteringArtList() = listOf("570", "590", "990")
 
+    private fun getValidFunksjon089ArtList() = artList
+        .filter { art ->
+            art.toInt() in (500..580).plus(830).plus(900..980)
+        }
+
+
     override val validationRules = commonValidationRules()
         .plus(
             listOf(
@@ -97,7 +103,7 @@ class KirkeKostraMain(
                 Rule125SummeringBalanseDifferanse(),
                 Rule140OverforingerDriftInvestering(),
                 Rule143Avskrivninger(),
-                Rule200Funksjon089Finansieringstransaksjoner(),
+                Rule200Funksjon089Finansieringstransaksjoner(getValidFunksjon089ArtList()),
                 Rule210InterneOverforingerKjopOgSalg(),
                 Rule215InterneOverforingerKalkulatoriskeUtgifterOgInntekter(),
                 Rule220InterneOverforingerMidler(),

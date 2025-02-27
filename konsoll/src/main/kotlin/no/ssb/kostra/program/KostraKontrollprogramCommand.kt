@@ -2,7 +2,10 @@ package no.ssb.kostra.program
 
 import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
-import picocli.CommandLine.*
+import picocli.CommandLine.Command
+import picocli.CommandLine.ParseResult
+import picocli.CommandLine.Option
+import picocli.CommandLine.Spec
 import picocli.CommandLine.Model.CommandSpec
 import java.io.BufferedReader
 import java.io.PrintStream
@@ -33,9 +36,6 @@ class KostraKontrollprogramCommand : Callable<Int> {
     private var name: String = "Uoppgitt"
 
     @Option(names = ["-u", "--unit-orgnr"], defaultValue = "         ", description = ["..."])
-    private var unitId: String = BLANK_CHAR.repeat(9)
-
-    @Option(names = ["-c", "--company-orgnr"], defaultValue = "         ", description = ["..."])
     private var companyId: String = BLANK_CHAR.repeat(9)
 
     @Option(names = ["-a", "--attachment"], description = ["..."])
@@ -60,8 +60,7 @@ class KostraKontrollprogramCommand : Callable<Int> {
                 kvartal = quarter,
                 region = region,
                 navn = name,
-                orgnr = unitId,
-                foretaknr = companyId,
+                orgnr = companyId,
                 harVedlegg = (hasAttachment == "1"),
                 isRunAsExternalProcess = isRunAsExternalProcess,
                 inputFileContent =

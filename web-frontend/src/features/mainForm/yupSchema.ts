@@ -1,7 +1,6 @@
 import * as yup from "yup"
 import KostraFormVm from "../../kostratypes/kostraFormVm"
-import Nullable from "../../kostratypes/nullable"
-import CompanyIdVm from "../../kostratypes/companyIdVm"
+import {ObjectSchema} from "yup";
 
 const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
@@ -25,13 +24,6 @@ export const createValidationSchema = (includeCompanyId: boolean): yup.ObjectSch
                 : schema.nullable()
         ),
 
-        orgnrVirksomhet: yup.array(
-            yup.object({
-                orgnr: yup.string()
-                    .required(COMPANY_ID_REQUIRED_MSG)
-                    .matches(/^[8|9]\d{8}$/i, COMPANY_ID_REGEX_MSG)
-            })).default<Nullable<CompanyIdVm[]>>(null).nullable(),
-
         skjemaFil: yup.mixed<FileList>()
             .required("Vennligst velg fil")
             .test(
@@ -48,4 +40,4 @@ export const createValidationSchema = (includeCompanyId: boolean): yup.ObjectSch
                     return file ? file.size < MEBIBYTE_10 : false
                 }
             )
-    })
+    }) as ObjectSchema<KostraFormVm>

@@ -18,7 +18,6 @@ const Index = ({uiData, onAddFileReport}: {
     useEffect(() => {
         if (doNavigateToReport) {
             navigate("/file-reports/0")
-            setDoNavigateToReport(false)
         }
     }, [doNavigateToReport, navigate])
 

@@ -87,10 +87,12 @@ describe("MainForm", () => {
         it("hides validation errors when provided valid inputs", async () => {
             await setupForSubmit()
 
-            // expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
-            // expect(screen.queryByText("Årgang er påkrevet")).not.toBeInTheDocument()
-            // expect(screen.queryByText("Region er påkrevet")).not.toBeInTheDocument()
-            // expect(screen.queryByText("Vennligst velg fil")).not.toBeInTheDocument()
+            await waitFor(() => {
+                expect(screen.queryByText("Skjematype er påkrevet")).not.toBeInTheDocument()
+                expect(screen.queryByText("Årgang er påkrevet")).not.toBeInTheDocument()
+                expect(screen.queryByText("Region er påkrevet")).not.toBeInTheDocument()
+                expect(screen.queryByText("Vennligst velg fil")).not.toBeInTheDocument()
+            })
         })
 
         it("displays invalid value validation error for Regionsnummer when provided invalid value", async () => {
@@ -119,9 +121,8 @@ describe("MainForm", () => {
             fireEvent.change(formTypeSelect, {target: {value: formTypeOne.id}})
 
             // verify that inputs are not in the document
-            await waitFor(() => {
-                expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument()
-            })
+            await waitFor(() =>
+                expect(screen.queryByText(formTypeTwo.labelOrgnr)).not.toBeInTheDocument())
         })
 
         it("displays input for company-id when form type is selected", async () => {
@@ -130,59 +131,57 @@ describe("MainForm", () => {
 
             fireEvent.change(formTypeSelect, {target: {value: formTypeTwo.id}})
 
-            await waitFor(() => {
-                // verify that input is in the document
-                expect(screen.queryByText(formTypeTwo.labelOrgnr)).toBeInTheDocument()
-            })
+            // verify that input is in the document
+            await waitFor(() =>
+                expect(screen.queryByText(formTypeTwo.labelOrgnr)).toBeInTheDocument())
         })
 
-        // it("enables the submit button when provided valid form", async () => {
-        //     const submitButton = screen.getByRole("button", {name: "Kontroller fil"})
-        //     expect(submitButton).toBeDisabled()
-        //
-        //     await setupForSubmit()
-        //
-        //     expect(submitButton).toBeEnabled()
-        // })
+        it("enables the submit button when provided valid form", async () => {
+            const submitButton = screen.getByRole("button", {name: "Kontroller fil"})
+            expect(submitButton).toBeDisabled()
+
+            await setupForSubmit()
+
+            await waitFor(() => expect(submitButton).toBeEnabled())
+        })
     })
 
-    // describe("Interactions", () => {
-    //     const expectedBaseCallArgs = {
-    //         aar: yearInTests,
-    //         orgnrForetak: null,
-    //         region: "123456",
-    //         skjema: formTypeOne.id,
-    //         skjemaFil: [expect.objectContaining({
-    //             name: mockFile.name,
-    //             type: mockFile.type,
-    //         })]
-    //     }
-    //
-    //     const runSubmitTest = async (formType: KostraFormTypeVm, expectedCallArgs: object) => {
-    //         await setupForSubmit(formType)
-    //         const submitButton = screen.getByRole("button", {name: "Kontroller fil"})
-    //
-    //         fireEvent.click(submitButton)
-    //
-    //         await waitFor(() => {
-    //             // expect(mockOnSubmit).toHaveBeenCalledTimes(1)
-    //             expect(mockOnSubmit).toBeCalledWith(expectedCallArgs)
-    //         })
-    //     }
-    //
-    //     it("calls onSubmit when submit button is clicked", async () => {
-    //         await runSubmitTest(formTypeOne, expectedBaseCallArgs)
-    //     })
-    //
-    //     it("calls onSubmit with orgnrForetak when submit button is clicked", async () => {
-    //         await runSubmitTest(
-    //             formTypeTwo,
-    //             {
-    //                 ...expectedBaseCallArgs,
-    //                 skjema: formTypeTwo.id,
-    //                 orgnrForetak: "999999999"
-    //             }
-    //         )
-    //     })
-    // })
+    describe("Interactions", () => {
+        const expectedBaseCallArgs = {
+            aar: yearInTests,
+            orgnrForetak: null,
+            region: "123456",
+            skjema: formTypeOne.id,
+            skjemaFil: [expect.objectContaining({
+                name: mockFile.name,
+                type: mockFile.type,
+            })]
+        }
+
+        const runSubmitTest = async (formType: KostraFormTypeVm, expectedCallArgs: object) => {
+            await setupForSubmit(formType)
+            const submitButton = screen.getByRole("button", {name: "Kontroller fil"})
+
+            await waitFor(() => expect(submitButton).toBeEnabled())
+            fireEvent.click(submitButton)
+
+            await waitFor(() => {
+                expect(mockOnSubmit).toHaveBeenCalledTimes(1)
+                expect(mockOnSubmit).toBeCalledWith(expectedCallArgs)
+            })
+        }
+
+        it("calls onSubmit when submit button is clicked", async () =>
+            await runSubmitTest(formTypeOne, expectedBaseCallArgs))
+
+        it("calls onSubmit with orgnrForetak when submit button is clicked", async () =>
+            await runSubmitTest(
+                formTypeTwo,
+                {
+                    ...expectedBaseCallArgs,
+                    skjema: formTypeTwo.id,
+                    orgnrForetak: "999999999"
+                }
+            ))
+    })
 })

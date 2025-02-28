@@ -68,14 +68,6 @@ jobs:
 #        if: ${{ inputs.publish-kostra-barnevern }}
 #        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
 
-#      - name: SonarCloud Scan
-#        # No need to run SonarCloud analysis if dependabot update
-#        if: (github.actor != 'dependabot[bot]')
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        uses: SonarSource/sonarqube-scan-action@v4.1.0
-
       - name: Release
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
         uses: softprops/action-gh-release@v2

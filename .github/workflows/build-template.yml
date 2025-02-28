@@ -52,7 +52,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
+          ./gradlew ${{ inputs.gradle-targets }} jacocoTestReport ${{ inputs.gradle-args }} \
           --daemon --parallel --build-cache --info
 
 #      - id: "auth"
@@ -67,6 +67,14 @@ jobs:
 #      - name: Deploy artifact to Google artifact registry
 #        if: ${{ inputs.publish-kostra-barnevern }}
 #        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
+
+      - name: SonarCloud Scan
+        # No need to run SonarCloud analysis if dependabot update
+        if: (github.actor != 'dependabot[bot]')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        uses: SonarSource/sonarcloud-github-action@v4.0.0
 
       - name: Release
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}

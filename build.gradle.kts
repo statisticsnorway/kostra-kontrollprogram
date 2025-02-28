@@ -31,7 +31,6 @@ subprojects {
     if (name != "kostra-kontrollprogram-web-frontend") {
         apply(plugin = "kotlin")
         apply(plugin = "jacoco")
-        apply(plugin = "sonarcube")
 
         kotlin { jvmToolchain(21) }
         repositories { mavenCentral() }

@@ -52,7 +52,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew ${{ inputs.gradle-targets }} jacocoTestReport ${{ inputs.gradle-args }} \
+          ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
           --daemon --parallel --build-cache --info
 
 #      - id: "auth"

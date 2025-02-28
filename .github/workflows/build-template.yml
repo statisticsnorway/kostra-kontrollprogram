@@ -75,3 +75,4 @@ jobs:
           files: |
             ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar
             ./web/build/libs/kostra-kontrollprogram-web-${{github.ref_name}}-all.jar
+

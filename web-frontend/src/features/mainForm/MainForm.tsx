@@ -11,7 +11,11 @@ import Nullable from "../../kostratypes/nullable"
 import {FORM_LOCAL_STORAGE_KEY, loadFormFromLocalStorage} from "./formUtils"
 import {createValidationSchema} from "./yupSchema"
 
-const COMPANY_ID_FIELD_NAME = "orgnrForetak"
+// icons
+// @ts-ignore
+import PlusCircle from "../../assets/icon/plus-circle.svg"
+// @ts-ignore
+import DashCircle from "../../assets/icon/dash-circle.svg"
 
 const MainForm = ({formTypes, years, onSubmit}: {
     formTypes: KostraFormTypeVm[],
@@ -27,9 +31,8 @@ const MainForm = ({formTypes, years, onSubmit}: {
     // main form
     const {
         register,
-        unregister,
         reset,
-        getValues,
+        resetField,
         handleSubmit,
         formState: {
             errors,
@@ -75,10 +78,10 @@ const MainForm = ({formTypes, years, onSubmit}: {
     }, []) // executed on mount only
 
     useEffect(() => {
-        if (valgtSkjematype
-            && !valgtSkjematype.labelOrgnr
-            && COMPANY_ID_FIELD_NAME in getValues()) {
-            unregister(COMPANY_ID_FIELD_NAME)
+        if (valgtSkjematype) {
+            if (!valgtSkjematype?.labelOrgnr) {
+                resetField("orgnrForetak", {keepDirty: false})
+            }
         }
 
         // trigger form validation after form is configured
@@ -101,6 +104,8 @@ const MainForm = ({formTypes, years, onSubmit}: {
                     {formTypes.map((skjematype, index) =>
                         <option key={index} value={skjematype.id}>{skjematype.tittel}</option>)}
                 </Form.Select>
+
+
                 <Form.Control.Feedback type="invalid">{errors.skjema?.message}</Form.Control.Feedback>
             </Form.Group>}
 
@@ -137,10 +142,10 @@ const MainForm = ({formTypes, years, onSubmit}: {
 
             {/** ORGNR */}
             {valgtSkjematype?.labelOrgnr &&
-                <Form.Group className="col-sm-6" controlId={COMPANY_ID_FIELD_NAME}>
+                <Form.Group className="col-sm-6" controlId="orgnrForetak">
                     <Form.Label>{valgtSkjematype.labelOrgnr}</Form.Label>
                     <Form.Control
-                        {...register(COMPANY_ID_FIELD_NAME)}
+                        {...register("orgnrForetak")}
                         isValid={!errors.orgnrForetak}
                         isInvalid={errors.orgnrForetak != null}
                         type="text"

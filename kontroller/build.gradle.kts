@@ -1,5 +1,5 @@
 plugins {
-    id("com.gorylenko.gradle-git-properties") version "2.4.2"
+    id("com.gorylenko.gradle-git-properties") version "2.5.0"
 }
 
 dependencies {
@@ -11,4 +11,8 @@ dependencies {
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
+}
+
+gitProperties {
+    dotGitDirectory.set(file("${rootProject.projectDir}/.git"))
 }

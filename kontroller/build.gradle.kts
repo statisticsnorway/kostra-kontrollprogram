@@ -12,3 +12,7 @@ dependencies {
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
 }
+
+gitProperties {
+    dotGitDirectory.set(file("${rootProject.projectDir}/.git"))
+}

@@ -4,6 +4,7 @@ import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.rule.regnskap.Rule010UtgattFunksjon
+import no.ssb.kostra.validation.rule.regnskap.kostra.Rule081KombinasjonBevilgningFunksjonArt
 
 class KvartalKostraMain(
     arguments: KotlinArguments
@@ -36,8 +37,8 @@ class KvartalKostraMain(
         // @formatter:off
         "400", "410", "420", "421", "430",
         "460", "465", "470", "471", "472", "473", "480",
-        "510", "515", "520", "521", "522", "523", "525", "526", "527", "528", "529", "530", "531", "533", "534", "535", "536", "537",
-        "554", "559", "561", "562", "570", "581", "590",
+        "511", "515", "520", "521", "522", "523", "525", "526", "527", "528", "529", "530", "531", "533", "534", "535", "536", "537",
+        "553", "554", "559", "562", "563", "564", "570", "581", "590",
         "660",
         "665",
         "701", "710", "711", "713", "714", "716", "722", "730", "731", "732", "733", "734", "735", "740",
@@ -151,7 +152,7 @@ class KvartalKostraMain(
     )
 
     private val kommunaleArter = listOf(
-        "871", "872", "873", "875", "876"
+        "871", "872", "873", "876", "878", "879"
     )
 
     @SuppressWarnings
@@ -231,10 +232,13 @@ class KvartalKostraMain(
                 invalidDriftArtList = invalidDriftArtList,
                 invalidInvesteringFunksjonList = invalidInvesteringFunksjonAsList,
                 illogicalInvesteringFunksjonList = illogicalInvesteringFunksjonAsList,
-                invalidInvesteringArtList = invalidInvesteringArtList
+                invalidInvesteringArtList = invalidInvesteringArtList,
             )
         )
         .plus(
-            listOf(Rule010UtgattFunksjon(utgatteKommunaleFunksjoner))
+            listOf(
+                Rule010UtgattFunksjon(utgatteKommunaleFunksjoner),
+                Rule081KombinasjonBevilgningFunksjonArt(),
+            )
         )
 }

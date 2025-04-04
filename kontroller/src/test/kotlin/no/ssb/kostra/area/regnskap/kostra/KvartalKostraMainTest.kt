@@ -108,7 +108,7 @@ class KvartalKostraMainTest :
     companion object {
         private val regions = setOf("123400", "030100", "040000")
         private val validSkjemaTyper = setOf("0AK1", "0BK1", "0CK1", "0DK1")
-        private const val NUMBER_OF_VALIDATIONS = 33
+        private const val NUMBER_OF_VALIDATIONS = 34
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,

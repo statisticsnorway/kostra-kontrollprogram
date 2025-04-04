@@ -37,6 +37,8 @@ object RegnskapConstants {
 
     const val DEFAULT_MISSING_VALUE = "MISSING"
 
+    val WARNING_QUARTERS = setOf('1', '2')
+
     val osloKommuner = listOf(
         // @formatter:off
         "030100",

@@ -20,7 +20,7 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "match-sorter": "^8.0.0",
-    "react": "^19.0.0",
+    "react": "^19.1.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-    "@types/react": "^19.0.11",
+    "@types/react": "^19.1.0",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "jsdom": "^26.0.0",

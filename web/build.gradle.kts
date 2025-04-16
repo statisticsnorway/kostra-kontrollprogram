@@ -2,7 +2,7 @@ application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 plugins {
     id("com.google.devtools.ksp") version "2.1.10-1.0.31"
-    id("io.micronaut.application") version "4.5.1"
+    id("io.micronaut.application") version "4.5.2"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 

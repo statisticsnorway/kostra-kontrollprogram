@@ -46,11 +46,3 @@ subprojects {
         }
     }
 }
-
-configurations {
-    all {
-        resolutionStrategy {
-            disableDependencyVerification() // Sensitive: dependency verification is disabled
-        }
-    }
-}

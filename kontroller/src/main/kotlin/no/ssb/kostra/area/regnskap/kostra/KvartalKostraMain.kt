@@ -13,6 +13,7 @@ class KvartalKostraMain(
     private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
 
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
         "100", "110", "120", "121", "130",
@@ -33,6 +34,7 @@ class KvartalKostraMain(
     )
 
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val fylkeskommunaleFunksjoner = listOf(
         // @formatter:off
         "400", "410", "420", "421", "430",
@@ -105,6 +107,7 @@ class KvartalKostraMain(
 
     // Kapitler
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     override val kapittelList: List<String> =
         if (arguments.skjema in balanseRegnskap) {
             val result = mutableListOf(
@@ -126,6 +129,7 @@ class KvartalKostraMain(
 
     // Arter
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val basisArter = listOf(
         // @formatter:off
         "010", "020", "030", "040", "050", "070", "075", "080", "089", "090", "099",
@@ -183,6 +187,7 @@ class KvartalKostraMain(
 
     // Sektorer
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     override val sektorList: List<String> =
         if (arguments.skjema in balanseRegnskap)
             listOf(
@@ -205,6 +210,7 @@ class KvartalKostraMain(
 
     // Kun gyldig i investering og skal fjernes fra drift
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val invalidDriftArtList = listOf(
         // @formatter:off
         "529",
@@ -216,6 +222,7 @@ class KvartalKostraMain(
 
     // Kun gyldig i drift og skal fjernes fra investering
     @SuppressWarnings
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val invalidInvesteringArtList = listOf(
         // @formatter:off
         "509", "570", "590",

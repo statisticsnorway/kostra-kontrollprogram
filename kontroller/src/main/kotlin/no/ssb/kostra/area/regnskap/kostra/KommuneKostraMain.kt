@@ -187,7 +187,7 @@ class KommuneKostraMain(
         listOf("298", "379", "798")
 
     private val kommunaleArter =
-        listOf("871", "872", "873", "876", "875", "875")
+        listOf("871", "872", "873", "876", "878", "879")
 
     override val artList: List<String> =
         if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {

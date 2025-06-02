@@ -1,7 +1,7 @@
 [versions]
 micronautPlatform = "4.7.6"
 kotlin = "2.1.10"
-jackson = "2.18.3"
+jackson = "2.19.0"
 kotest = "5.9.1"
 
 [libraries]
@@ -13,12 +13,12 @@ jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackso
 jackson-jakarta-rs-xml-provider = { group = "com.fasterxml.jackson.jakarta.rs", name = "jackson-jakarta-rs-xml-provider", version.ref = "jackson" }
 jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jackson" }
 woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version = "7.1.0" }
-picocli = { group = "info.picocli", name = "picocli", version = "4.7.6"}
+picocli = { group = "info.picocli", name = "picocli", version = "4.7.7"}
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.18" }
 micronautPlatform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronautPlatform" }
-swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.29" }
+swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.32" }
 
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }
 kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
-mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.13.17" }
+mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.14.2" }

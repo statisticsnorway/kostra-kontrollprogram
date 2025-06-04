@@ -1,15 +1,14 @@
 package no.ssb.kostra.area.sosial.kvalifisering
 
 object KvalifiseringColumnNames {
-
     const val SAKSBEHANDLER_COL_NAME = "SAKSBEHANDLER"
     const val PERSON_JOURNALNR_COL_NAME = "PERSON_JOURNALNR"
     const val PERSON_FODSELSNR_COL_NAME = "PERSON_FODSELSNR"
 
     const val KOMMUNE_NR_COL_NAME = "KOMMUNE_NR"
     const val BYDELSNR_COL_NAME = "BYDELSNR"
-    const val DISTRIKTSNR_COL_NAME = "DISTRIKTSNR"
     const val VERSION_COL_NAME = "VERSION"
+    const val FODSELSDATO_COL_NAME = "FODSELSDATO"
 
     const val KJONN_COL_NAME = "KJONN"
     const val STATUS_COL_NAME = "STATUS"
@@ -38,7 +37,6 @@ object KvalifiseringColumnNames {
     const val YTELSE_INTRO_COL_NAME = "YTELSE_INTRO"
     const val YTELSE_INDIVIDSTONAD_COL_NAME = "YTELSE_INDIVIDSTONAD"
     const val YTELSE_FOLKETRYGDL_COL_NAME = "YTELSE_FOLKETRYGDL"
-
 
     const val AVSL_ORDINAERTARB_COL_NAME = "AVSL_ORDINAERTARB"
     const val AVSL_ARBLONNSTILS_COL_NAME = "AVSL_ARBLONNSTILS"

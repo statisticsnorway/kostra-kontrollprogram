@@ -71,6 +71,7 @@ abstract class RegnskapValidator(
     )
 
     protected fun specificKostraValidationRules(): List<AbstractRule<List<KostraRecord>>> = listOf(
+        Rule081KombinasjonBevilgningFunksjonArt(),
         Rule085SummeringInvesteringUtgiftsposteringer(),
         Rule090SummeringInvesteringInntektsposteringer(),
         Rule095SummeringInvesteringDifferanse(),

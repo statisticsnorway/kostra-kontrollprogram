@@ -12,6 +12,7 @@ class KirkeKostraMain(
     arguments: KotlinArguments
 ) : RegnskapValidator(arguments) {
 
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val funksjoner = listOf(
         //@formatter:off
         "041", "042", "043", "044", "045",
@@ -26,6 +27,7 @@ class KirkeKostraMain(
         ) emptyList()
         else funksjoner.map { it.padEnd(4, ' ') }.sorted()
 
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val kapitler = listOf(
         "10", "11", "12", "13", "18",
         "21", "22", "24", "27",
@@ -45,6 +47,7 @@ class KirkeKostraMain(
 
 
     // Arter
+    @Suppress("ktlint:standard:argument-list-wrapping")
     private val arter = listOf(
         // @formatter:off
         "010", "020", "030", "040", "050", "060", "080", "090", "095", "099",

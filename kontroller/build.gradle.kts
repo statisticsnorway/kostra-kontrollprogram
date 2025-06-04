@@ -5,11 +5,14 @@ plugins {
 dependencies {
     api(project(":kostra-barnevern"))
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${libs.versions.jackson.get()}")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${libs.versions.jackson.get()}")
+    implementation(libs.jackson.dataformat.yaml)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.micronaut.http.client)
+    implementation(libs.micronaut.serde.jackson)
 
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
+    testImplementation(libs.micronaut.test.junit5)
     testImplementation(libs.mockk.jvm)
 }
 

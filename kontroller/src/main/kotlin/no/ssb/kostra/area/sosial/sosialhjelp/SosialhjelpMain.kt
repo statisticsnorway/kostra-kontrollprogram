@@ -28,6 +28,7 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
         Rule003Kommunenummer(),
         Rule003Bydelsnummer(),
         Rule004OppgaveAar(),
+        Rule004AFodselsDato(),
         Rule005Fodselsnummer(),
         Rule005aFoedselsnummerDubletter(),
         Rule005bJournalnummerDubletter(),

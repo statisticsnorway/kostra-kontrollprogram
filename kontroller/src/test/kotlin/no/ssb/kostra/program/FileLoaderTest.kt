@@ -58,8 +58,8 @@ class FileLoaderTest :
 
         Given("a set of FileDescription") {
             forAll(
-                row("11F Økonomisk sosialhjelp", "11F_2024", 324),
-                row("11CF Kvalifiseringsstønad", "11CF_2024", 136),
+                row("11F Økonomisk sosialhjelp", "11F_2025", 338),
+                row("11CF Kvalifiseringsstønad", "11CF_2025", 152),
                 row("52AF Familievernsaker, klientrapportering", "52AF_2024", 151),
                 row("52BF Gruppeskjema for familievernet", "52BF_2024", 88),
                 row("53F Utadrettet virksomhet i familieverntjenesten", "53F_2024", 61),

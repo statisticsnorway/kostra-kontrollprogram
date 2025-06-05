@@ -35,7 +35,7 @@ class Rule037DatoForAvsluttetProgramTest :
                     .map {
                         ForAllRowItem(
                             "status that requires date $it, end date is blank, expect error",
-                            kostraRecordInTest(it, " ".repeat(6)),
+                            kostraRecordInTest(it, " ".repeat(8)),
                             "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                                 "dersom det er krysset av for svaralternativ [" +
                                 "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
@@ -95,11 +95,11 @@ class Rule037DatoForAvsluttetProgramTest :
         )
     }) {
     companion object {
-        private val startDateInTest = "0101$twoDigitReportingYear"
-        private val endDateInTest = "3112$twoDigitReportingYear"
-        private val previousYearDateInTest = "0101${twoDigitReportingYear - 1}"
-        private val nextYearDateInTest = "0101${twoDigitReportingYear + 1}"
-        private val invalidDateInTest = "3106$twoDigitReportingYear"
+        private val startDateInTest = "010120$twoDigitReportingYear"
+        private val endDateInTest = "311220$twoDigitReportingYear"
+        private val previousYearDateInTest = "010120${twoDigitReportingYear - 1}"
+        private val nextYearDateInTest = "010120${twoDigitReportingYear + 1}"
+        private val invalidDateInTest = "310620$twoDigitReportingYear"
 
         private fun kostraRecordInTest(
             status: String,

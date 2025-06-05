@@ -18,14 +18,14 @@ class Rule042TilOgMedDatoForUtbetalingsvedtakTest : BehaviorSpec({
                 kostraRecordInTest("X", ""),
             ),
             ForAllRowItem(
-                "vilkar = 1, utbettomdato = 0101${SosialhjelpTestUtils.twoDigitReportingYear}",
-                kostraRecordInTest("1", "0101${SosialhjelpTestUtils.twoDigitReportingYear}"),
+                "vilkar = 1, utbettomdato = 010120${SosialhjelpTestUtils.twoDigitReportingYear}",
+                kostraRecordInTest("1", "010120${SosialhjelpTestUtils.twoDigitReportingYear}"),
             ),
             ForAllRowItem(
                 "vilkar = 1, utbettomdato = blank",
-                kostraRecordInTest("1", "      "),
+                kostraRecordInTest("1", "        "),
                 expectedErrorMessage = "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
-                        "sosialtjenesteloven', så skal utbetalingsvedtakets til og med dato (      ) oppgis. " +
+                        "sosialtjenesteloven', så skal utbetalingsvedtakets til og med dato (        ) oppgis. " +
                         "Feltet er obligatorisk å fylle ut.",
             )
         )

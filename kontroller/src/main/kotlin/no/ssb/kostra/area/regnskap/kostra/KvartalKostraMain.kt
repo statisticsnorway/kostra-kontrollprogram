@@ -12,6 +12,7 @@ class KvartalKostraMain(
     private val bevilgningRegnskap = listOf("0AK1", "0AK2", "0AK3", "0AK4", "0CK1", "0CK2", "0CK3", "0CK4")
     private val balanseRegnskap = listOf("0BK1", "0BK2", "0BK3", "0BK4", "0DK1", "0DK2", "0DK3", "0DK4")
 
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val kommunaleFunksjoner = listOf(
         //@formatter:off
@@ -24,6 +25,7 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val utgatteKommunaleFunksjoner = listOf(
         //@formatter:off
@@ -32,6 +34,7 @@ class KvartalKostraMain(
         // @formatter:on
     )
 
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val fylkeskommunaleFunksjoner = listOf(
         // @formatter:off
@@ -104,6 +107,7 @@ class KvartalKostraMain(
 
 
     // Kapitler
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     override val kapittelList: List<String> =
         if (arguments.skjema in balanseRegnskap) {
@@ -125,6 +129,7 @@ class KvartalKostraMain(
 
 
     // Arter
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val basisArter = listOf(
         // @formatter:off
@@ -182,6 +187,7 @@ class KvartalKostraMain(
 
 
     // Sektorer
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     override val sektorList: List<String> =
         if (arguments.skjema in balanseRegnskap)
@@ -204,6 +210,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i investering og skal fjernes fra drift
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val invalidDriftArtList = listOf(
         // @formatter:off
@@ -215,6 +222,7 @@ class KvartalKostraMain(
 
 
     // Kun gyldig i drift og skal fjernes fra investering
+    @Suppress("ktlint:standard:argument-list-wrapping")
     @SuppressWarnings
     private val invalidInvesteringArtList = listOf(
         // @formatter:off

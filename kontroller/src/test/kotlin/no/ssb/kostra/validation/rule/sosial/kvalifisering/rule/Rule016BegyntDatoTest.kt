@@ -19,29 +19,29 @@ class Rule016BegyntDatoTest : BehaviorSpec({
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
                 "reportingYear = currentYear, valid date",
-                kostraRecordInTest(begyntDateString = "0101$twoDigitReportingYear"),
+                kostraRecordInTest(begyntDateString = "010120$twoDigitReportingYear"),
             ),
             ForAllRowItem(
                 "5 year diff between reportingYear and vedtakDato",
-                kostraRecordInTest(begyntDateString = "0101${twoDigitReportingYear - 5}"),
+                kostraRecordInTest(begyntDateString = "010120${twoDigitReportingYear - 5}"),
                 expectedErrorMessage = "Feltet for 'Hvilken dato begynte deltakeren i program? " +
-                        "(iverksettelse)' med verdien (${"0101${twoDigitReportingYear - 5}"}) enten mangler " +
+                        "(iverksettelse)' med verdien (${"010120${twoDigitReportingYear - 5}"}) enten mangler " +
                         "utfylling, har ugyldig dato eller dato som er eldre enn 4 år fra " +
                         "rapporteringsåret (${argumentsInTest.aargang}). Feltet er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "vedtakDato is in the future",
-                kostraRecordInTest(begyntDateString = "0101${twoDigitReportingYear + 1}"),
+                kostraRecordInTest(begyntDateString = "010120${twoDigitReportingYear + 1}"),
                 expectedErrorMessage = "Feltet for 'Hvilken dato begynte deltakeren i program? " +
-                        "(iverksettelse)' med verdien (${"0101${twoDigitReportingYear + 1}"}) enten mangler " +
+                        "(iverksettelse)' med verdien (${"010120${twoDigitReportingYear + 1}"}) enten mangler " +
                         "utfylling, har ugyldig dato eller dato som er eldre enn 4 år fra " +
                         "rapporteringsåret (${argumentsInTest.aargang}). Feltet er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "invalid begyntDato",
-                kostraRecordInTest(begyntDateString = "a".repeat(6)),
+                kostraRecordInTest(begyntDateString = "a".repeat(8)),
                 expectedErrorMessage = "Feltet for 'Hvilken dato begynte deltakeren i program? " +
-                        "(iverksettelse)' med verdien (${"a".repeat(6)}) enten mangler utfylling, har " +
+                        "(iverksettelse)' med verdien (${"a".repeat(8)}) enten mangler utfylling, har " +
                         "ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret " +
                         "(${argumentsInTest.aargang}). Feltet er obligatorisk å fylle ut.",
             ),
@@ -49,14 +49,14 @@ class Rule016BegyntDatoTest : BehaviorSpec({
                 "For Oslo, 5 year diff between reportingYear and vedtakDato",
                 kostraRecordInTest(
                     kommunenr = OSLO_MUNICIPALITY_ID,
-                    begyntDateString = "0101${twoDigitReportingYear - 5}"
+                    begyntDateString = "010120${twoDigitReportingYear - 5}"
                 )
             ),
             ForAllRowItem(
                 "For Oslo, invalid begyntDato",
                 kostraRecordInTest(
                     kommunenr = OSLO_MUNICIPALITY_ID,
-                    begyntDateString = "a".repeat(6)
+                    begyntDateString = "a".repeat(8)
                 )
             )
         )

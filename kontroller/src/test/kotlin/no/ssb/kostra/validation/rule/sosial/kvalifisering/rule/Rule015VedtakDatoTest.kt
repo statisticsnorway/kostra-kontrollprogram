@@ -16,21 +16,21 @@ class Rule015VedtakDatoTest : BehaviorSpec({
             expectedSeverity = Severity.ERROR,
             ForAllRowItem(
                 "reportingYear = currentYear, valid date",
-                kostraRecordInTest("0101${twoDigitReportingYear}"),
+                kostraRecordInTest("010120${twoDigitReportingYear}"),
             ),
             ForAllRowItem(
                 "invalid vedtakDato",
-                kostraRecordInTest("a".repeat(6)),
+                kostraRecordInTest("a".repeat(8)),
                 expectedErrorMessage = "Feltet for 'Hvilken dato det ble fattet vedtak om " +
-                        "program? (søknad innvilget)' med verdien (${"a".repeat(6)}) enten mangler utfylling, " +
+                        "program? (søknad innvilget)' med verdien (${"a".repeat(8)}) enten mangler utfylling, " +
                         "har ugyldig dato eller dato som er eldre enn 4 år fra rapporteringsåret " +
                         "(${argumentsInTest.aargang}). Feltet er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "5 year diff between reportingYear and vedtakDato",
-                kostraRecordInTest("0101${twoDigitReportingYear - 5}"),
+                kostraRecordInTest("010120${twoDigitReportingYear - 5}"),
                 expectedErrorMessage = "Feltet for 'Hvilken dato det ble fattet vedtak om " +
-                        "program? (søknad innvilget)' med verdien (0101${twoDigitReportingYear - 5}) enten " +
+                        "program? (søknad innvilget)' med verdien (010120${twoDigitReportingYear - 5}) enten " +
                         "mangler utfylling, har ugyldig dato eller dato som er eldre enn 4 år fra " +
                         "rapporteringsåret (${argumentsInTest.aargang}). Feltet er obligatorisk å fylle ut.",
             )

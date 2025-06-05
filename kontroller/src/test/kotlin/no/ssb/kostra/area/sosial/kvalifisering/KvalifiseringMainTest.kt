@@ -31,20 +31,20 @@ class KvalifiseringMainTest :
                 row(
                     "validating an empty record string",
                     " ".repeat(KvalifiseringFieldDefinitions.fieldLength),
-                    33,
-                    13,
+                    34,
+                    14,
                 ),
                 row(
                     "validating a valid record string",
                     recordStringInTest("24"),
-                    33,
-                    0,
+                    34,
+                    4,
                 ),
                 row(
                     "validating a valid record string with invalid data",
                     recordStringInTest("XX"),
-                    33,
-                    1,
+                    34,
+                    5,
                 ),
             ) { description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
                 When(description) {

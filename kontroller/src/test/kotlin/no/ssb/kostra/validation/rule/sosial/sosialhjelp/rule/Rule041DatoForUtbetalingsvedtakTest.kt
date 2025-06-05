@@ -19,14 +19,14 @@ class Rule041DatoForUtbetalingsvedtakTest : BehaviorSpec({
                 kostraRecordInTest("X", ""),
             ),
             ForAllRowItem(
-                "vilkar = 1, utbetdato = 0101$twoDigitReportingYear",
-                kostraRecordInTest("1", "0101$twoDigitReportingYear"),
+                "vilkar = 1, utbetdato = 010120$twoDigitReportingYear",
+                kostraRecordInTest("1", "010120$twoDigitReportingYear"),
             ),
             ForAllRowItem(
                 "vilkar = 1, utbetdato = blank",
-                kostraRecordInTest("1", "      "),
+                kostraRecordInTest("1", "        "),
                 expectedErrorMessage = "Feltet for 'Hvis ja på spørsmålet Stilles det vilkår til mottakeren etter " +
-                        "sosialtjenesteloven', så skal utbetalingsvedtakets dato (      ) oppgis. " +
+                        "sosialtjenesteloven', så skal utbetalingsvedtakets dato (        ) oppgis. " +
                         "Feltet er obligatorisk å fylle ut.",
             )
         )

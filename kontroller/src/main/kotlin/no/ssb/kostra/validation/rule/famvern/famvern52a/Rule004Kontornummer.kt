@@ -8,7 +8,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule004Kontornummer(
-    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>,
+    private val mappingList: List<FamilievernConstants.FamvernHierarchyKontorFylkeRegionMapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
         Familievern52aRuleId.FAMILIEVERN52A_RULE004.title,
         Severity.WARNING,

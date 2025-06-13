@@ -12,18 +12,18 @@ class Rule005RegionsnummerKontornummerTest : BehaviorSpec({
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule005RegionsnummerKontornummer(
                 listOf(
-                    FamilievernConstants.KontorFylkeRegionMapping("017", "30", "667600")
+                    FamilievernConstants.FamvernHierarchyKontorFylkeRegionMapping(kontor = "017", fylke = "31", region = "667200")
                 )
             ),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid region and kontor",
-                kostraRecordInTest("667600", "017"),
+                kostraRecordInTest("667200", "017"),
             ),
             ForAllRowItem(
                 "valid region and invalid kontor",
-                kostraRecordInTest("667600", "XXX"),
-                expectedErrorMessage = "Regionsnummer '667600' og kontornummer 'XXX' stemmer ikke overens.",
+                kostraRecordInTest("667200", "XXX"),
+                expectedErrorMessage = "Regionsnummer '667200' og kontornummer 'XXX' stemmer ikke overens.",
             ),
             ForAllRowItem(
                 "invalid region and valid kontor",

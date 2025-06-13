@@ -38,10 +38,9 @@ class Rule037DatoForAvsluttetProgramTest :
                             kostraRecordInTest(it, " ".repeat(8)),
                             "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                                 "dersom det er krysset av for svaralternativ [" +
-                                "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
-                                "(gjelder ikke flytting), " +
-                                "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
-                                "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                                "3=Fullført program eller avsluttet etter avtale, " +
+                                "4=Program er varig avbrutt på grunn av uteblivelse, " +
+                                "5=Program ble avbrutt på grunn av flytting til annen kommune, " +
                                 "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                                 "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                         )
@@ -53,10 +52,9 @@ class Rule037DatoForAvsluttetProgramTest :
                             kostraRecordInTest(it, previousYearDateInTest),
                             "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                                 "dersom det er krysset av for svaralternativ [" +
-                                "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
-                                "(gjelder ikke flytting), " +
-                                "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
-                                "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                                "3=Fullført program eller avsluttet etter avtale, " +
+                                "4=Program er varig avbrutt på grunn av uteblivelse, " +
+                                "5=Program ble avbrutt på grunn av flytting til annen kommune, " +
                                 "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                                 "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                         )
@@ -68,10 +66,9 @@ class Rule037DatoForAvsluttetProgramTest :
                             kostraRecordInTest(it, nextYearDateInTest),
                             "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                                 "dersom det er krysset av for svaralternativ [" +
-                                "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
-                                "(gjelder ikke flytting), " +
-                                "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
-                                "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                                "3=Fullført program eller avsluttet etter avtale, " +
+                                "4=Program er varig avbrutt på grunn av uteblivelse, " +
+                                "5=Program ble avbrutt på grunn av flytting til annen kommune, " +
                                 "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                                 "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                         )
@@ -83,10 +80,9 @@ class Rule037DatoForAvsluttetProgramTest :
                             kostraRecordInTest(it, invalidDateInTest),
                             "Feltet for 'Hvilken dato avsluttet deltakeren programmet?', må fylles ut " +
                                 "dersom det er krysset av for svaralternativ [" +
-                                "3=Deltakeren har fullført program eller avsluttet program etter avtale " +
-                                "(gjelder ikke flytting), " +
-                                "4=Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting), " +
-                                "5=Deltakerens program ble avbrutt på grunn av flytting til annen kommune, " +
+                                "3=Fullført program eller avsluttet etter avtale, " +
+                                "4=Program er varig avbrutt på grunn av uteblivelse, " +
+                                "5=Program ble avbrutt på grunn av flytting til annen kommune, " +
                                 "7=Deltakerens program er avsluttet etter avbrudd] under feltet for 'Hva er status for " +
                                 "deltakelsen i kvalifiseringsprogrammet per 31.12.${argumentsInTest.aargang}'?",
                         )

@@ -9,7 +9,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
 class Rule003Regionsnummer(
-    private val mappingList: List<FamilievernConstants.KontorFylkeRegionMapping>,
+    private val mappingList: List<FamilievernConstants.FamvernHierarchyKontorFylkeRegionMapping>,
 ) : AbstractNoArgsRule<List<KostraRecord>>(
         Familievern52bRuleId.FAMILIEVERN52B_RULE003.title,
         Severity.WARNING,

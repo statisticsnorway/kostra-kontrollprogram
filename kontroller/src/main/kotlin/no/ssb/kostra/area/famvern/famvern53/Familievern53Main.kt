@@ -17,9 +17,9 @@ class Familievern53Main(arguments: KotlinArguments) : PositionedFileValidator(ar
 
     override val validationRules = listOf(
         Rule002FileDescription(fieldDefinitions.fieldDefinitions),
-        Rule003Fylkesnummer(FamilievernConstants.kontorFylkeRegionMappingList),
-        Rule004Kontornummer(FamilievernConstants.kontorFylkeRegionMappingList),
-        Rule005FylkesnummerKontornummer(FamilievernConstants.kontorFylkeRegionMappingList),
+        Rule003Fylkesnummer(FamilievernConstants.famvernHierarchyKontorFylkeRegionMappingList),
+        Rule004Kontornummer(FamilievernConstants.famvernHierarchyKontorFylkeRegionMappingList),
+        Rule005FylkesnummerKontornummer(FamilievernConstants.famvernHierarchyKontorFylkeRegionMappingList),
         Rule010Tiltak(Familievern53Constants.rule010Mappings),
         Rule010Timer(Familievern53Constants.rule010Mappings),
     )

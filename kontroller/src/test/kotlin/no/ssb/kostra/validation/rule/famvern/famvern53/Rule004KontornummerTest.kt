@@ -12,7 +12,7 @@ class Rule004KontornummerTest : BehaviorSpec({
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule004Kontornummer(
                 listOf(
-                    FamilievernConstants.KontorFylkeRegionMapping("017", "30", "667600")
+                    FamilievernConstants.FamvernHierarchyKontorFylkeRegionMapping(kontor = "017", fylke = "31", region = "667200")
                 )
             ),
             expectedSeverity = Severity.WARNING,

@@ -21,8 +21,8 @@ class Rule014ViktigsteKildeTilLivsOppholdGyldigeVerdierTest : BehaviorSpec({
                 kostraRecordInTest("0"),
                 expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                         "sosial-/NAV-kontoret skal oppgis. Fant '(0)', forventet én av '([1=Arbeidsinntekt, " +
-                        "2=Kursstønad/lønn i arbeidsmarkedstiltak, 3=Trygd/pensjon, 4=Stipend/lån, 5=Sosialhjelp, " +
-                        "6=Introduksjonsstøtte, 7=Ektefelle/samboers arbeidsinntekt, 8=Kvalifiseringsstønad, 9=Annen inntekt])'.",
+                        "2=Kursstønad/lønn i arbeidsmarkedstiltak, 3=Trygd/stønad, 4=Stipend/lån, 5=Sosialhjelp, " +
+                        "6=Introduksjonsstøtte, 7=Ektefelle/samboers inntekt, 8=Kvalifiseringsstønad, 9=Annen inntekt])'.",
             )
         )
     )

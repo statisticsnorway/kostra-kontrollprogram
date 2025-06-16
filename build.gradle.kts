@@ -15,12 +15,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${libs.versions.jackson.get()}")
     implementation("io.micronaut.serde:micronaut-serde-jackson:${libs.versions.micronautSerde.get()}")
     implementation("io.micronaut:micronaut-http-client:${libs.versions.micronaut.get()}")
-    implementation("io.micronaut.test:micronaut-test-junit5:4.5.0")
+    implementation("io.micronaut.test:micronaut-test-junit5:${libs.versions.micronautTestJunit5.get()}")
 
     testImplementation(libs.kotest.assertions.core.jvm)
     testImplementation(libs.kotest.runner.junit5.jvm)
     testImplementation(libs.mockk.jvm)
-    testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.assertj:assertj-core:${libs.versions.assertj.get()}")
 }
 
 sonarqube {
@@ -62,6 +62,9 @@ subprojects {
     }
 }
 
+tasks.test {
+    useJUnitPlatform() // IMPORTANT for Kotest 5+
+}
 
 tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
     group = "documentation"

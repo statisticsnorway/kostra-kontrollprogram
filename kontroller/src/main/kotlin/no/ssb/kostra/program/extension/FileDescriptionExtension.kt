@@ -14,8 +14,8 @@ fun FileDescription.toMarkdown(): String = buildString {
     for (field in fields) {
         val desc =
             field.description
-                ?.replace("\n", "<br/>")
                 ?.take(300)
+                ?.replace("\n", "<br/>")
                 ?.let { if (it.length == 300) "$it..." else it } ?: ""
         val codes =
             field.codeList

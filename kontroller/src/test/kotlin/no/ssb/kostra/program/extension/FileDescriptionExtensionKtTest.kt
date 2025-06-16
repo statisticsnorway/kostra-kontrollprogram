@@ -124,7 +124,6 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
                     sut.toMarkdown() shouldBe expectedMarkdown
                 }
             }
-
         }
     }
 })

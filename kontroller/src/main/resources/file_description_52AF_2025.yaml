@@ -1,0 +1,1071 @@
+---
+title: "52AF Familievernsaker, klientrapportering"
+reportingYear: 2025
+description: "Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2025"
+fields:
+- name: "REGION_NR_A"
+  description: "Familievernregionnummer"
+  from: 1
+  size: 6
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "667200"
+    value: "Region øst"
+  - code: "667300"
+    value: "Region sør"
+  - code: "667400"
+    value: "Region vest"
+  - code: "667500"
+    value: "Region Midt-Norge"
+  - code: "667600"
+    value: "Region nord"
+- name: "KONTOR_NR_A"
+  description: "Familievernkontornummer"
+  from: 7
+  size: 3
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "017"
+    value: "Familievernkontoret Østfold"
+  - code: "023"
+    value: "Familievernkontoret Asker Bærum"
+  - code: "024"
+    value: "Familievernkontoret Follo"
+  - code: "025"
+    value: "Familievernkontoret Nedre Romerike"
+  - code: "027"
+    value: "Familievernkontoret Øvre Romerike Glåmdal"
+  - code: "030"
+    value: "Familiekontoret Oslo Nord"
+  - code: "037"
+    value: "Familievernkontoret Homansbyen"
+  - code: "038"
+    value: "Familievernkontoret Enerhaugen"
+  - code: "039"
+    value: "Familievernkontoret Chrisiania"
+  - code: "046"
+    value: "Familievernkontoret Innlandet vest"
+  - code: "047"
+    value: "Familievernkontoret Innlandet øst"
+  - code: "052"
+    value: "Familievernkontoret Otta SKF"
+  - code: "061"
+    value: "Familievernkontoret i Buskerud"
+  - code: "065"
+    value: "Familievernkontoret Ringerike - Hallingdal"
+  - code: "071"
+    value: "Familievernkontoret i Vestfold"
+  - code: "073"
+    value: "Familievernkontoret i Søndre Vestfold"
+  - code: "081"
+    value: "Grenland familievernkontor"
+  - code: "082"
+    value: "Familiekontoret Øvre Telemark"
+  - code: "091"
+    value: "Familievernkontoret i Arendal"
+  - code: "101"
+    value: "Familiekontoret i Vest-Agder"
+  - code: "111"
+    value: "Familievernkontoret i Sør-Rogaland"
+  - code: "112"
+    value: "Familievernkontoret Haugalandet"
+  - code: "125"
+    value: "Bergen og omland familiekontor"
+  - code: "127"
+    value: "Bjørgvin familiekontor"
+  - code: "141"
+    value: "Familiekontora for Sunnfjord og Sogn"
+  - code: "142"
+    value: "Nordfjord familiekontor"
+  - code: "151"
+    value: "Familievernkontoret i Romsdal"
+  - code: "152"
+    value: "Familievernkontoret Sunnmøre"
+  - code: "153"
+    value: "Familievernkontoret Nordmøre"
+  - code: "162"
+    value: "Familiervernkontoret i Trondheim"
+  - code: "171"
+    value: "Familievernkontoret Innherred"
+  - code: "172"
+    value: "Familievernkontoret Namdalen"
+  - code: "181"
+    value: "Bodø familievernkontor"
+  - code: "183"
+    value: "Familievernkontoret i Mo i Rana"
+  - code: "184"
+    value: "Familievernkontoret i Mosjøen"
+  - code: "185"
+    value: "Lofoten og Vesterålen Familievernkontor"
+  - code: "192"
+    value: "Tromsø familievernkontor"
+  - code: "193"
+    value: "Finnsnes familievernkontor"
+  - code: "194"
+    value: "Harstad og Narvik familievernkontor"
+  - code: "202"
+    value: "Familievernkontoret i Øst-Finnmark"
+  - code: "203"
+    value: "Indre Finnmark familievernkontor - Sis Finnmarkku Bearassuojalanguovddas"
+  - code: "205"
+    value: "Alta og Hammerfest familievernkontor"
+- name: "JOURNAL_NR_A"
+  description: "Journalnummer"
+  from: 10
+  size: 9
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "HENV_DATO_A"
+  description: "Henvendelsesdato (ddmmåååå)"
+  from: 19
+  size: 8
+  dataType: "DATE_TYPE"
+  mandatory: true
+  datePattern: "ddMMyyyy"
+  codeList: []
+- name: "KONTAKT_TIDL_A"
+  description: "Primærklientens tidligere klientforhold ved kontoret"
+  from: 27
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "under 6 md siden"
+  - code: "2"
+    value: "mellom 6 md og 3 år siden"
+  - code: "3"
+    value: "3 år eller mer siden"
+  - code: "4"
+    value: "har ikke vært i kontakt med familievernet tidligere"
+- name: "HENV_GRUNN_A"
+  description: "Primærklientens viktigste begrunnelse for å ta kontakt"
+  from: 28
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Parforholdet"
+  - code: "2"
+    value: "Foreldresamarbeid/- veiledning"
+  - code: "3"
+    value: "Andre eller sammensatte problemer i familien"
+  - code: "4"
+    value: "Hjelp til barn og ungdom"
+- name: "PRIMK_KJONN_A"
+  description: "Primærklienten kjønn"
+  from: 29
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Mann"
+  - code: "2"
+    value: "Kvinne"
+- name: "PRIMK_FODT_A"
+  description: "Primærklientens fødselsår (fire siffer)"
+  from: 30
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "PRIMK_SIVILS_A"
+  description: "Primærklientens \"samlivsstatus\" ved sakens opprettelse"
+  from: 34
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Gift"
+  - code: "2"
+    value: "Registrert partner"
+  - code: "3"
+    value: "Samboer"
+  - code: "4"
+    value: "Lever ikke i samliv"
+- name: "FORMELL_SIVILS_A"
+  description: "Om samboer eller Lever ikke i samliv skal det krysses av for sivilstand"
+  from: 35
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ugift"
+  - code: "2"
+    value: "Gift"
+  - code: "3"
+    value: "Registrert partner"
+  - code: "4"
+    value: "Separert / separert partner"
+  - code: "5"
+    value: "Skilt / skilt partner"
+  - code: "6"
+    value: "Enke / enkemann / gjenlevende partner"
+- name: "PRIMK_SAMBO_A"
+  description: "Ved henvendelsestidspunktet bor primærklienten sammen med"
+  from: 36
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Partner (og eventuelt barn)"
+  - code: "2"
+    value: "Barn"
+  - code: "3"
+    value: "Foreldre / Andre omsorgspersoner"
+  - code: "4"
+    value: "Andre"
+  - code: "5"
+    value: "Ikke sammen med andre"
+- name: "PRIMK_ARBSIT_A"
+  description: "Primærklientens viktigste tilknyting til utdanning og arbeidsliv"
+  from: 37
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Arbeid heltid"
+  - code: "2"
+    value: "Arbeid deltid"
+  - code: "3"
+    value: "Arbeidssøker"
+  - code: "4"
+    value: "Under utdanning"
+  - code: "5"
+    value: "Fødselspermisjon / Fedrekvote"
+  - code: "6"
+    value: "Annen inntekt fre NAV"
+  - code: "7"
+    value: "Uten inntekt"
+- name: "PRIMK_VSRELASJ_A"
+  description: "Primærklientens relasjon til viktigste deltaker i saken"
+  from: 38
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Partner"
+  - code: "2"
+    value: "Ekspartner"
+  - code: "3"
+    value: "Forelder"
+  - code: "4"
+    value: "Sønn/datter under 18 år"
+  - code: "5"
+    value: "Sønn/datter 18 år eller eldre"
+  - code: "6"
+    value: "Øvrig familie"
+  - code: "7"
+    value: "Venn"
+  - code: "8"
+    value: "Annet"
+- name: "PART_LENGDE_A"
+  description: "Om Partnere, varighet parforhold"
+  from: 39
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Har ikke bodd sammen"
+  - code: "2"
+    value: "Under 2 år"
+  - code: "3"
+    value: "2 - 4 år"
+  - code: "4"
+    value: "5 - 9 år"
+  - code: "5"
+    value: "10 - 19 år"
+  - code: "6"
+    value: "20 år eller mer"
+- name: "EKSPART_LENGDE_A"
+  description: "Om Ekspartnere, tid siden brudd"
+  from: 40
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Har ikke bodd sammen"
+  - code: "2"
+    value: "Under 2 år"
+  - code: "3"
+    value: "2 - 4 år"
+  - code: "4"
+    value: "5 - 9 år"
+  - code: "5"
+    value: "10 - 19 år"
+  - code: "6"
+    value: "20 år eller mer"
+- name: "EKSPART_VARIGH_A"
+  description: "Om Ekspartnere, varighet tidligere parforhold"
+  from: 41
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Har ikke bodd sammen"
+  - code: "2"
+    value: "Under 2 år"
+  - code: "3"
+    value: "2 - 4 år"
+  - code: "4"
+    value: "5 - 9 år"
+  - code: "5"
+    value: "10 - 19 år"
+  - code: "6"
+    value: "20 år eller mer"
+- name: "PRIMKREL_PART_A"
+  description: "Primærklientens viktigste relasjon til de andre deltakerne i saken hvis flere enn to deltakere (flere kryss mulig)"
+  from: 42
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Partner"
+- name: "PRIMKREL_EKSPART_A"
+  description: null
+  from: 43
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ekspartner"
+- name: "PRIMKREL_FORELD_A"
+  description: null
+  from: 44
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Forelder"
+- name: "PRIMKREL_BU18_A"
+  description: null
+  from: 45
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Sønn/datter (under 18 år)"
+- name: "PRIMKREL_B18_A"
+  description: null
+  from: 46
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Sønn/datter (18 år eller eldre)"
+- name: "PRIMKREL_OVRIG_A"
+  description: null
+  from: 47
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Øvrig familie"
+- name: "PRIMKREL_VENN_A"
+  description: null
+  from: 48
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Venner"
+- name: "PRIMKREL_ANDRE_A"
+  description: null
+  from: 49
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Annet"
+- name: "FORSTE_SAMT_A"
+  description: "Første behandlingssamtale fant sted (ddmmåååå)"
+  from: 50
+  size: 8
+  dataType: "DATE_TYPE"
+  mandatory: true
+  datePattern: "ddMMyyyy"
+  codeList: []
+- name: "SAMT_FORHOLD_A"
+  description: "Dersom tiden fra hendvendelse til første behandlingssamtale overstiger 4 uker, hva skyldes dette?"
+  from: 58
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Forhold hos kontoret"
+  - code: "2"
+    value: "Forhold hos klient/klientene"
+- name: "TEMA_PARREL_A"
+  description: "Hvilke områder har vært arbeidet med siden saken ble opprettet? (flere kryss mulig)"
+  from: 59
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Styrke parforholdet"
+- name: "TEMA_AVKLAR_A"
+  description: null
+  from: 60
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Avklare/avslutte parforholdet"
+- name: "TEMA_SAMLBRUDD_A"
+  description: null
+  from: 61
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Samlivsbrudd i familien"
+- name: "TEMA_SAMSPILL_A"
+  description: null
+  from: 62
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Samspillsvansker"
+- name: "TEMA_BARNSIT_A"
+  description: null
+  from: 63
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Barnets opplevelse av sin livssituasjon"
+- name: "TEMA_BARNFOR_A"
+  description: null
+  from: 64
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Barnets situasjon i foreldrenes konflikt"
+- name: "TEMA_BOSTED_A"
+  description: null
+  from: 65
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "bostedsavklaring/samvær"
+- name: "TEMA_FORELDRE_A"
+  description: null
+  from: 66
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "foreldrerollen"
+- name: "TEMA_FORBARN_A"
+  description: null
+  from: 67
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "foreldre-barn-relasjonen"
+- name: "TEMA_FLERGEN_A"
+  description: null
+  from: 68
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "flergenerasjonsproblematikk"
+- name: "TEMA_SAMBARN_A"
+  description: null
+  from: 69
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "samarb. om felles barn (foreldre bor ikke sammen)"
+- name: "TEMA_SÆRBARN_A"
+  description: null
+  from: 70
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "særkullsbarn og/eller ny familie"
+- name: "TEMA_KULTUR_A"
+  description: null
+  from: 71
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "kultur-/minoritetsspørsmål"
+- name: "TEMA_TVANG_A"
+  description: null
+  from: 72
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "tvangsekteskap"
+- name: "TEMA_RUS_A"
+  description: null
+  from: 73
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "bruk av rusmidler"
+- name: "TEMA_SYKD_A"
+  description: null
+  from: 74
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "sykdom / nedsatt funksjonsevne"
+- name: "TEMA_VOLD_A"
+  description: null
+  from: 75
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "fysisk / psykisk vold / seksuelt misbruk"
+- name: "TEMA_ALVH_A"
+  description: null
+  from: 76
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "annen alvorlig hendelse"
+- name: "HOVEDF_BEHAND_A"
+  description: "Hva har vært hovedformen på behandlingstilbudet siden saken ble opprettet?"
+  from: 77
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Parsamtale"
+  - code: "2"
+    value: "Foreldresamtale"
+  - code: "3"
+    value: "Familiesamtale"
+  - code: "4"
+    value: "Individualsamtale"
+- name: "BEKYMR_MELD_A"
+  description: "Bekymringsmelding sendt barnevernet"
+  from: 78
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_PARTNER_A"
+  description: "Partner"
+  from: 79
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_EKSPART_A"
+  description: "Ekspartner"
+  from: 80
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_BARNU18_A"
+  description: "Sønn/datter under 18 år"
+  from: 81
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_BARNO18_A"
+  description: "Sønn/datter 18 år eller eldre"
+  from: 82
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_FORELDRE_A"
+  description: "Foreldre"
+  from: 83
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_OVRFAM_A"
+  description: "Øvrig familie"
+  from: 84
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_VENN_A"
+  description: "Venner"
+  from: 85
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "DELT_ANDR_A"
+  description: "Annet"
+  from: 86
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "SAMT_PRIMK_A"
+  description: "Primærkrient"
+  from: 87
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_PARTNER_A"
+  description: "Partner"
+  from: 89
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_EKSPART_A"
+  description: "Ekspartner"
+  from: 91
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_BARNU18_A"
+  description: "Sønn/datter under 18 år"
+  from: 93
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_BARNO18_A"
+  description: "Sønn/datter 18 år eller eldre"
+  from: 95
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_FORELDRE_A"
+  description: "Foreldre"
+  from: 97
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_OVRFAM_A"
+  description: "Øvrig familie"
+  from: 99
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_VENN_A"
+  description: "Venn"
+  from: 101
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "SAMT_ANDRE_A"
+  description: "Annet"
+  from: 103
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "ANTSAMT_HOVEDT_A"
+  description: "Hovedterapaut"
+  from: 105
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "ANTSAMT_ANDREANS_A"
+  description: "Andre utenom hovedterapeut (Co-terapaut)"
+  from: 108
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "ANTSAMT_IARET_A"
+  description: "I løpet av året"
+  from: 111
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANTSAMT_OPPR_A"
+  description: "Siden opprettelsen"
+  from: 114
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TLFSAMT_IARET_A"
+  description: "I løpet av året"
+  from: 117
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "TLFSAMT_OPPR_A"
+  description: "Siden opprettelsen"
+  from: 120
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList: []
+- name: "TIMER_IARET_A"
+  description: "I løpet av året"
+  from: 123
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TIMER_OPPR_A"
+  description: "Siden opprettelsen"
+  from: 126
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TOLK_A"
+  description: "Tolk benyttet i forbindelse med én eller flere behandlingssamtaler siden saken ble opprettet"
+  from: 129
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "SAMARB_INGEN_A"
+  description: null
+  from: 130
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ikke samarbeid med med annen instans"
+- name: "SAMARB_LEGE_A"
+  description: null
+  from: 131
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Fastlege"
+- name: "SAMARB_HELSE_A"
+  description: null
+  from: 132
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Helsestasjon / Familiesenter"
+- name: "SAMARB_PSYKH_A"
+  description: null
+  from: 133
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Psykisk helsevern"
+- name: "SAMARB_JURIST_A"
+  description: null
+  from: 134
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Jurist"
+- name: "SAMARB_KRISES_A"
+  description: null
+  from: 135
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Krisesenter"
+- name: "SAMARB_SKOLE_A"
+  description: null
+  from: 136
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Skole/PP-tjeneste"
+- name: "SAMARB_SOS_A"
+  description: null
+  from: 137
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "NAV"
+- name: "SAMARB_KOMMB_A"
+  description: null
+  from: 138
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Kommunalt barnevern"
+- name: "SAMARB_STATB_A"
+  description: null
+  from: 139
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Statlig barnevern"
+- name: "SAMARB_ANDRE_A"
+  description: null
+  from: 140
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Annet"
+- name: "STATUS_ARETSSL_A"
+  description: "Status for saken ved årets slutt"
+  from: 141
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Avsluttet etter avtale med klient"
+  - code: "2"
+    value: "Klient uteblitt"
+  - code: "3"
+    value: "Saken ikke avsluttet i inneværende år"
+- name: "HOVEDTEMA_A"
+  description: "Sakens hovedtema (fylles ut når saken avsluttes)"
+  from: 142
+  size: 2
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codeList:
+  - code: "01"
+    value: "styrke parforholdet"
+  - code: "02"
+    value: "avklare/avslutte parforholdet"
+  - code: "03"
+    value: "samlivsbrudd i familien"
+  - code: "04"
+    value: "samspillvansker"
+  - code: "05"
+    value: "barnets opplevelse av sin livssituasjon"
+  - code: "06"
+    value: "barnets situasjon i foreldrenes konflikt"
+  - code: "07"
+    value: "bostedsavklaring/ samvær"
+  - code: "08"
+    value: "foreldrerollen"
+  - code: "09"
+    value: "foreldre-barn-relasjonen"
+  - code: "10"
+    value: "flergenerasjons- problematikk"
+  - code: "11"
+    value: "samarb. om felles barn (foreldre bor ikke sammen)"
+  - code: "12"
+    value: "særkullsbarn og/eller ny familie"
+  - code: "13"
+    value: "kultur-/minoritetsspørsmål"
+  - code: "14"
+    value: "tvangsekteskap"
+  - code: "15"
+    value: "bruk av rusmidler"
+  - code: "16"
+    value: "sykdom / nedsatt funksjonsevne"
+  - code: "17"
+    value: "fysisk / psykisk vold / seksuelt misbruk"
+  - code: "18"
+    value: "annen alvorlig hendelse"
+- name: "DATO_AVSL_A"
+  description: "Dato for avslutning av saken (ddmmåååå)"
+  from: 144
+  size: 8
+  dataType: "DATE_TYPE"
+  mandatory: false
+  datePattern: "ddMMyyyy"
+  codeList: []

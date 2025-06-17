@@ -1,0 +1,275 @@
+---
+title: "52BF Gruppeskjema for familievernet"
+reportingYear: 2025
+description: "Filbeskrivelse for 52BF Gruppeskjema for familievernet for 2025"
+fields:
+- name: "REGION_NR_B"
+  description: "Familievernregionnummer"
+  from: 1
+  size: 6
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "667200"
+    value: "Region øst"
+  - code: "667300"
+    value: "Region sør"
+  - code: "667400"
+    value: "Region vest"
+  - code: "667500"
+    value: "Region Midt-Norge"
+  - code: "667600"
+    value: "Region nord"
+- name: "KONTOR_NR_B"
+  description: "Familievernkontornummer"
+  from: 7
+  size: 3
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "017"
+    value: "Familievernkontoret Østfold"
+  - code: "023"
+    value: "Familievernkontoret Asker Bærum"
+  - code: "024"
+    value: "Familievernkontoret Follo"
+  - code: "025"
+    value: "Familievernkontoret Nedre Romerike"
+  - code: "027"
+    value: "Familievernkontoret Øvre Romerike Glåmdal"
+  - code: "030"
+    value: "Familiekontoret Oslo Nord"
+  - code: "037"
+    value: "Familievernkontoret Homansbyen"
+  - code: "038"
+    value: "Familievernkontoret Enerhaugen"
+  - code: "039"
+    value: "Familievernkontoret Chrisiania"
+  - code: "046"
+    value: "Familievernkontoret Innlandet vest"
+  - code: "047"
+    value: "Familievernkontoret Innlandet øst"
+  - code: "052"
+    value: "Familievernkontoret Otta SKF"
+  - code: "061"
+    value: "Familievernkontoret i Buskerud"
+  - code: "065"
+    value: "Familievernkontoret Ringerike - Hallingdal"
+  - code: "071"
+    value: "Familievernkontoret i Vestfold"
+  - code: "073"
+    value: "Familievernkontoret i Søndre Vestfold"
+  - code: "081"
+    value: "Grenland familievernkontor"
+  - code: "082"
+    value: "Familiekontoret Øvre Telemark"
+  - code: "091"
+    value: "Familievernkontoret i Arendal"
+  - code: "101"
+    value: "Familiekontoret i Vest-Agder"
+  - code: "111"
+    value: "Familievernkontoret i Sør-Rogaland"
+  - code: "112"
+    value: "Familievernkontoret Haugalandet"
+  - code: "125"
+    value: "Bergen og omland familiekontor"
+  - code: "127"
+    value: "Bjørgvin familiekontor"
+  - code: "141"
+    value: "Familiekontora for Sunnfjord og Sogn"
+  - code: "142"
+    value: "Nordfjord familiekontor"
+  - code: "151"
+    value: "Familievernkontoret i Romsdal"
+  - code: "152"
+    value: "Familievernkontoret Sunnmøre"
+  - code: "153"
+    value: "Familievernkontoret Nordmøre"
+  - code: "162"
+    value: "Familiervernkontoret i Trondheim"
+  - code: "171"
+    value: "Familievernkontoret Innherred"
+  - code: "172"
+    value: "Familievernkontoret Namdalen"
+  - code: "181"
+    value: "Bodø familievernkontor"
+  - code: "183"
+    value: "Familievernkontoret i Mo i Rana"
+  - code: "184"
+    value: "Familievernkontoret i Mosjøen"
+  - code: "185"
+    value: "Lofoten og Vesterålen Familievernkontor"
+  - code: "192"
+    value: "Tromsø familievernkontor"
+  - code: "193"
+    value: "Finnsnes familievernkontor"
+  - code: "194"
+    value: "Harstad og Narvik familievernkontor"
+  - code: "202"
+    value: "Familievernkontoret i Øst-Finnmark"
+  - code: "203"
+    value: "Indre Finnmark familievernkontor - Sis Finnmarkku Bearassuojalanguovddas"
+  - code: "205"
+    value: "Alta og Hammerfest familievernkontor"
+- name: "GRUPPE_NR_B"
+  description: "Gruppenummer"
+  from: 10
+  size: 8
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "GRUPPE_NAVN_B"
+  description: "Gruppenavn"
+  from: 18
+  size: 30
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "DATO_GRSTART_B"
+  description: "Dato for gruppebehandlingens start (ddmmåååå)"
+  from: 48
+  size: 8
+  dataType: "DATE_TYPE"
+  mandatory: true
+  datePattern: "ddMMyyyy"
+  codeList: []
+- name: "STRUKTUR_GR_B"
+  description: "Målgruppe"
+  from: 56
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Par"
+  - code: "2"
+    value: "Barn (under 18 år)"
+  - code: "3"
+    value: "Individ"
+  - code: "4"
+    value: "Familie"
+  - code: "5"
+    value: "Foreldre"
+- name: "HOVEDI_GR_B"
+  description: "Hvilket hovedinnhold/tema har gruppen?"
+  from: 57
+  size: 2
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "01"
+    value: "Samlivskurs"
+  - code: "02"
+    value: "Samlivsbrudd"
+  - code: "03"
+    value: "Samarbeid om barn etter brudd"
+  - code: "04"
+    value: "Barn som har opplevd brudd i familien"
+  - code: "05"
+    value: "Vold/overgrep"
+  - code: "06"
+    value: "Sinnemestring"
+  - code: "07"
+    value: "Kultur-/Minoritetsspørsmål"
+  - code: "08"
+    value: "Foreldreveiledning"
+  - code: "09"
+    value: "Foreldre som har mistet omsorgen for egne barn"
+  - code: "10"
+    value: "Andre alvorlige hendelser"
+  - code: "11"
+    value: "Annet, spesifiser"
+- name: "ANTMOTERTOT_IARET_B"
+  description: "Antall gruppemøter gjennomført totalt i løpet av året"
+  from: 59
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANTMOTERTOT_OPPR_B"
+  description: "Antall gruppemøter gjennomført totalt siden opprettelsen"
+  from: 62
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TIMERTOT_IARET_B"
+  description: "Antall timer anvendt i gruppen totalt i løpet av året"
+  from: 65
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TIMERTOT_OPPR_B"
+  description: "Antall timer anvendt i gruppen totalt siden opprettelsen"
+  from: 68
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANTDELT_IARET_B"
+  description: "Antall deltakere i gruppen i løpet av året"
+  from: 71
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANTDELT_OPPR_B"
+  description: "Antall deltakere i gruppen siden opprettelsen"
+  from: 74
+  size: 3
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANTTER_GRUPPEB_B"
+  description: "Antall terapauter involvert i gruppebehandlingen"
+  from: 77
+  size: 2
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TOLK_B"
+  description: "Tolk benyttet i forbindelse med en eller flere gruppesamtaler siden gruppen ble opprettet"
+  from: 79
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Ja"
+  - code: "2"
+    value: "Nei"
+- name: "STATUS_ARETSSL_B"
+  description: "Status for gruppen ved årets slutt ved årets slutt?"
+  from: 80
+  size: 1
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "1"
+    value: "Gruppebehandlingen ikke avsluttet i inneværende år"
+  - code: "2"
+    value: "Avsluttet"
+- name: "DATO_GRAVSLUTN_B"
+  description: "Dato for gruppens avslutning (ddmmåååå)"
+  from: 81
+  size: 8
+  dataType: "DATE_TYPE"
+  mandatory: false
+  datePattern: "ddMMyyyy"
+  codeList: []

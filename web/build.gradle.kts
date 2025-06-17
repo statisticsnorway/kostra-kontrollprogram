@@ -1,9 +1,9 @@
 application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 
 plugins {
-    id("com.google.devtools.ksp") version "2.1.10-1.0.31"
-    id("io.micronaut.application") version "4.5.3"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.micronaut.application)
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
@@ -30,7 +30,7 @@ dependencies {
 }
 
 micronaut {
-    version = libs.versions.micronautPlatform
+    version = libs.versions.micronaut.platform.version
     runtime("netty")
     testRuntime("kotest5")
     processing {

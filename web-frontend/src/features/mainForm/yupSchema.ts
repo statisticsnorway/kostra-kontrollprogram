@@ -6,11 +6,15 @@ const COMPANY_ID_REQUIRED_MSG = "Organisasjonsnummer er påkrevet"
 const COMPANY_ID_REGEX_MSG = "Må starte med '8' eller '9' etterfulgt av 8 siffer"
 const MEBIBYTE_10 = 10485760
 
+const errorMessageYear = "Årgang er påkrevet";
+
 export const createValidationSchema = (includeCompanyId: boolean): yup.ObjectSchema<KostraFormVm> =>
     yup.object().shape({
         skjema: yup.string().required("Skjematype er påkrevet"),
-        aar: yup.number().typeError("Årgang er påkrevet")
-            .required().positive("Årgang er påkrevet"),
+        aar: yup.number()
+            .required(errorMessageYear)
+            .typeError(errorMessageYear)
+            .positive(errorMessageYear),
 
         region: yup.string()
             .required("Region er påkrevet")

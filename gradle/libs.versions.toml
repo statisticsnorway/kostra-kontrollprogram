@@ -26,13 +26,12 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson-version" }
 jackson-jakarta-rs-xml-provider = { group = "com.fasterxml.jackson.jakarta.rs", name = "jackson-jakarta-rs-xml-provider", version.ref = "jackson-version" }
 jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jackson-version" }
-# jackson-datatype-jsr310 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version.ref = "jackson-version" }
 jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson-version" }
 
 woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version.ref = "woodstox-core-version" }
 picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli-version"}
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback-classic-version" }
-micronautPlatform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
+micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
 swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version.ref = "swagger-annotations-version" }
 
 # Tests

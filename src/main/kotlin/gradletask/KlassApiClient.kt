@@ -1,14 +1,10 @@
 package gradletask
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import jakarta.inject.Singleton
 import no.ssb.kostra.program.Code
 import java.io.BufferedReader
-import java.io.File
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URI
@@ -31,7 +27,8 @@ class KlassApiClient : KlassClient {
                     .apply { this.requestMethod = "GET" }
 
             if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                val reader = BufferedReader(InputStreamReader(connection.inputStream))
+                val reader =
+                    BufferedReader(InputStreamReader(connection.inputStream))
                 var line: String?
 
                 while (reader.readLine().also { line = it } != null) {

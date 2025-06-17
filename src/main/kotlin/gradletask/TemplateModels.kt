@@ -39,7 +39,6 @@ data class FieldDefinitionTemplate(
 }
 
 fun FileDescriptionTemplate.toFileDescription(): FileDescription {
-    val klassApiClient = KlassApiClient()
     val fieldDefinitions: List<FieldDefinition> =
         this.fields
             .map {
@@ -49,7 +48,7 @@ fun FileDescriptionTemplate.toFileDescription(): FileDescription {
                             it.codeList
 
                         it.codeListSource?.isNotEmpty() == true ->
-                            klassApiClient.fetchCodes(
+                            KlassApiClient().fetchCodes(
                                 it.codeListSource,
                                 reportingYear.toString()
                             )
@@ -90,15 +89,14 @@ data class FamvernMappingTemplate(
 )
 
 fun FamvernMappingTemplate.toFamvernHierarchyMapping() : FamilievernConstants.FamvernHierarchyMapping {
-    val klassApiClient = KlassApiClient()
     val countiesToRegions =
-        klassApiClient.fetchCorrespondence(
+        KlassApiClient().fetchCorrespondence(
         counties,
         regions,
         reportingYear.toString()
     ).toMap()
 
-    val mappings = klassApiClient.fetchCorrespondence(
+    val mappings = KlassApiClient().fetchCorrespondence(
         offices,
         counties,
         reportingYear.toString()

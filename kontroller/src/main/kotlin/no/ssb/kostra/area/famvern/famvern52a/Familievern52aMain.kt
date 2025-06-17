@@ -1,6 +1,6 @@
 package no.ssb.kostra.area.famvern.famvern52a
 
-import no.ssb.kostra.area.famvern.FamilievernConstants.kontorFylkeRegionMappingList
+import no.ssb.kostra.area.famvern.FamilievernConstants.famvernHierarchyKontorFylkeRegionMappingList
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.PositionedFileValidator
 import no.ssb.kostra.validation.rule.AbstractRule
@@ -17,9 +17,9 @@ class Familievern52aMain(arguments: KotlinArguments) : PositionedFileValidator(a
 
     override val validationRules = listOf(
         Rule002FileDescription(fieldDefinitions.fieldDefinitions),
-        Rule003Regionsnummer(kontorFylkeRegionMappingList),
-        Rule004Kontornummer(kontorFylkeRegionMappingList),
-        Rule005RegionsnummerKontornummer(kontorFylkeRegionMappingList),
+        Rule003Regionsnummer(famvernHierarchyKontorFylkeRegionMappingList),
+        Rule004Kontornummer(famvernHierarchyKontorFylkeRegionMappingList),
+        Rule005RegionsnummerKontornummer(famvernHierarchyKontorFylkeRegionMappingList),
         Rule006Dubletter(),
         Rule007Henvendelsesdato(),
         Rule009KontaktTidligere(),

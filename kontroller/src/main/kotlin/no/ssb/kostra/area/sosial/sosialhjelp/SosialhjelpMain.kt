@@ -10,6 +10,7 @@ import no.ssb.kostra.validation.report.StatsEntryHeading
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
+import no.ssb.kostra.validation.rule.Rule002FileDescription
 import no.ssb.kostra.validation.rule.sosial.extensions.varighetAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.rule.*
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.extensions.deltakereByAlderAsStatsEntries

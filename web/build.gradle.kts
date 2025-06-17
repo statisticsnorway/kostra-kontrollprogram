@@ -12,6 +12,7 @@ dependencies {
     ksp("io.micronaut.openapi:micronaut-openapi")
 
     implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.serde:micronaut-serde-jackson:${libs.versions.micronautSerde.get()}")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")

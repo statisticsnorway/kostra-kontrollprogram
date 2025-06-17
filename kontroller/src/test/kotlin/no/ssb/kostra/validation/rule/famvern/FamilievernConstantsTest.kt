@@ -1,7 +1,6 @@
 package no.ssb.kostra.validation.rule.famvern
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldContain
 import no.ssb.kostra.area.famvern.FamilievernConstants
 import no.ssb.kostra.program.FileLoader
 

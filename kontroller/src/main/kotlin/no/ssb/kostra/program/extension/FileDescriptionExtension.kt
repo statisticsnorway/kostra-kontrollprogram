@@ -9,7 +9,7 @@ fun FileDescription.toMarkdown(): String = buildString {
     appendLine()
     appendLine("## Feltdefinisjoner")
     appendLine()
-    appendLine("| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |")
+    appendLine("| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |")
     appendLine("|------|-------------|--------|---------|----------|--------------|------------|-----------|")
     for (field in fields) {
         val desc =
@@ -19,7 +19,7 @@ fun FileDescription.toMarkdown(): String = buildString {
                 ?.let { if (it.length == 300) "$it..." else it } ?: ""
         val codes =
             field.codeList
-                .joinToString("<br>") { "`" + it.code + "`: " + it.value }
-        appendLine("| `${field.name}` | $desc | ${field.size} | ${field.from}-${field.to} | ${field.dataType} | ${if (field.mandatory) "\uFE0F" else ""} | ${field.datePattern} | $codes |")
+                .joinToString("<br/>") { "`" + it.code + "`: " + it.value }
+        appendLine("| `${field.name}` | $desc | ${field.size} | ${field.from}‑${field.to} | ${field.dataType} | ${if (field.mandatory) "☑\uFE0F" else ""} | ${field.datePattern} | $codes |")
     }
 }

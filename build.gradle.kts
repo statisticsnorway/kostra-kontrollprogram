@@ -36,7 +36,8 @@ sonarqube {
             **/KostraRecordExtensionsGenerics.kt,
             **/KostraKontrollprogramCommand.kt,
             **/MappingToConsoleAppExtensions.kt,
-            **/kostra/barnevern/**/*
+            **/kostra/barnevern/**/*,
+            **/gradletask/**/*
             """.trimIndent(),
         )
     }
@@ -80,7 +81,7 @@ tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
     outputs.dir(outputDir)
 
     classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("GeneratorKt")
+    mainClass.set("gradletask.ApplicationKt")
 }
 
 tasks.named("build") {

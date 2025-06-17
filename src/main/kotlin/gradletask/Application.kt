@@ -1,11 +1,9 @@
+package gradletask
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import klass.FamvernMappingTemplate
-import klass.FileDescriptionTemplate
-import klass.toFamvernHierarchyMapping
-import klass.toFileDescription
 import no.ssb.kostra.program.extension.toMarkdown
 import java.io.File
 

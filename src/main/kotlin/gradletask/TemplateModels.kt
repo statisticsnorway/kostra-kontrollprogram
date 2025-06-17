@@ -1,4 +1,4 @@
-package klass
+package gradletask
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.micronaut.serde.annotation.Serdeable
@@ -39,6 +39,7 @@ data class FieldDefinitionTemplate(
 }
 
 fun FileDescriptionTemplate.toFileDescription(): FileDescription {
+    val klassApiClient = KlassApiClient()
     val fieldDefinitions: List<FieldDefinition> =
         this.fields
             .map {
@@ -48,7 +49,7 @@ fun FileDescriptionTemplate.toFileDescription(): FileDescription {
                             it.codeList
 
                         it.codeListSource?.isNotEmpty() == true ->
-                            KlassApiClient.fetchCodes(
+                            klassApiClient.fetchCodes(
                                 it.codeListSource,
                                 reportingYear.toString()
                             )
@@ -89,14 +90,15 @@ data class FamvernMappingTemplate(
 )
 
 fun FamvernMappingTemplate.toFamvernHierarchyMapping() : FamilievernConstants.FamvernHierarchyMapping {
+    val klassApiClient = KlassApiClient()
     val countiesToRegions =
-        KlassApiClient.fetchCorrespondence(
+        klassApiClient.fetchCorrespondence(
         counties,
         regions,
         reportingYear.toString()
     ).toMap()
 
-    val mappings = KlassApiClient.fetchCorrespondence(
+    val mappings = klassApiClient.fetchCorrespondence(
         offices,
         counties,
         reportingYear.toString()
@@ -124,5 +126,4 @@ fun FamvernMappingTemplate.toFamvernHierarchyMapping() : FamilievernConstants.Fa
         description = description,
         mappings = mappings
     )
-
 }

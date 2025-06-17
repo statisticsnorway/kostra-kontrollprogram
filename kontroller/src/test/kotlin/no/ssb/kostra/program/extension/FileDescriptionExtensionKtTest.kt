@@ -20,9 +20,9 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
 
 ## Feltdefinisjoner
 
-| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
+| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `~name~` | line<br/>break | 1 | 1-1 | INTEGER_TYPE |  |  |  |
+| `~name~` | line<br/>break | 1 | 1‑1 | INTEGER_TYPE |  |  |  |
 """
             ),
             row(
@@ -34,9 +34,9 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
 
 ## Feltdefinisjoner
 
-| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
+| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `~name~` | ${" ".repeat(300) + "..."} | 1 | 1-1 | INTEGER_TYPE |  |  |  |
+| `~name~` | ${" ".repeat(300) + "..."} | 1 | 1‑1 | INTEGER_TYPE |  |  |  |
 """
             ),
             row(
@@ -46,9 +46,9 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
 
 ## Feltdefinisjoner
 
-| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
+| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `~name~` |  | 1 | 1-1 | INTEGER_TYPE |  |  |  |
+| `~name~` |  | 1 | 1‑1 | INTEGER_TYPE |  |  |  |
 """
             ),
 
@@ -84,9 +84,9 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
 
 ## Feltdefinisjoner
 
-| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
+| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `~name~` | ~description~ | 1 | 1-1 | INTEGER_TYPE | ️ |  |  |
+| `~name~` | ~description~ | 1 | 1‑1 | INTEGER_TYPE | ☑️ |  |  |
 """
             ),
             row(
@@ -98,9 +98,9 @@ class FileDescriptionExtensionKtTest : BehaviorSpec({
 
 ## Feltdefinisjoner
 
-| Navn | Beskrivelse | Lengde | Fra-Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
+| Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `~name~` | ~description~ | 1 | 1-1 | INTEGER_TYPE |  |  |  |
+| `~name~` | ~description~ | 1 | 1‑1 | INTEGER_TYPE |  |  |  |
 """
             ),
         ) { description, isMandatory, expectedMarkdown ->

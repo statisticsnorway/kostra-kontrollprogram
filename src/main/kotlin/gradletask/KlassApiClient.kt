@@ -1,10 +1,11 @@
-package klass
+package gradletask
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import jakarta.inject.Singleton
 import no.ssb.kostra.program.Code
 import java.io.BufferedReader
 import java.io.File
@@ -14,9 +15,10 @@ import java.net.URI
 import java.net.URL
 
 
-object KlassApiClient {
+@Singleton
+class KlassApiClient : KlassClient {
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
-    private const val API_URL =
+    private val apiUrl =
         "https://data.ssb.no/api/klass/v1/classifications"
 
     private fun fetch(requestUrl: String, defaultResponse: String): String {
@@ -49,12 +51,12 @@ object KlassApiClient {
         return response.toString()
     }
 
-    fun fetchCodes(
+    override fun fetchCodes(
         classificationId: String,
         year: String
     ): List<Code> {
         val requestUrl =
-            "$API_URL/${classificationId}/codesAt?date=${year}-12-31&language=nb"
+            "$apiUrl/${classificationId}/codesAt?date=${year}-12-31&language=nb"
 
         return objectMapper.readValue(
             fetch(requestUrl, "{codes:}"),
@@ -62,29 +64,17 @@ object KlassApiClient {
         ).toCodeList()
     }
 
-    fun fetchCorrespondence(
+    override fun fetchCorrespondence(
         sourceClassificationId: String,
         targetClassificationId: String,
         year: String
     ): List<Pair<Code, Code>> {
         val requestUrl =
-            "$API_URL/${sourceClassificationId}/correspondsAt?targetClassificationId=${targetClassificationId}&date=${year}-12-31&language=nb"
+            "$apiUrl/${sourceClassificationId}/correspondsAt?targetClassificationId=${targetClassificationId}&date=${year}-12-31&language=nb"
 
         return objectMapper.readValue(
             fetch(requestUrl, "{correspondenceItems:}"),
             KlassCorrespondence::class.java
         ).toCodePairList()
     }
-
-    fun writeObjectAsYamlStringToFileAtPath(value: Any, path: String) {
-        return YAMLFactory()
-            .apply {
-                configure(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE, false)
-                configure(YAMLGenerator.Feature.SPLIT_LINES, false)
-            }
-            .let { yamlFactory -> ObjectMapper(yamlFactory).registerKotlinModule() }
-            .writeValueAsString(value)
-            .let { yamlString -> File(path).writeText(yamlString) }
-    }
-
 }

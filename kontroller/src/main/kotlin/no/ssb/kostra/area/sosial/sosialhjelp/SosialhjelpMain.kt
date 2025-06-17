@@ -26,7 +26,6 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
     )
 
     override val validationRules = listOf(
-        Rule002FileDescription(SosialhjelpFieldDefinitions.fieldDefinitions),
         Rule003Kommunenummer(),
         Rule003Bydelsnummer(),
         Rule004OppgaveAar(),

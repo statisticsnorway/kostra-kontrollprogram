@@ -1,7 +1,11 @@
 [versions]
+assertj = "3.26.3"
+micronaut = "4.7.0"
 micronautPlatform = "4.7.6"
+micronautTestJunit5 = "4.5.0"
 kotlin = "2.1.10"
 jackson = "2.19.0"
+micronautSerde = "2.13.0"
 kotest = "5.9.1"
 
 [libraries]

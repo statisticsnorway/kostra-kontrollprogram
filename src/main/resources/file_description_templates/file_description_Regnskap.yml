@@ -1,6 +1,6 @@
 title: Regnskap
-reportingYear: 2024
-description: Filbeskrivelse for alle regnskap for 2024 som blir rapportert via skjema.ssb.no
+reportingYear: 2025
+description: Filbeskrivelse for alle regnskap for 2025 som blir rapportert via skjema.ssb.no
 fields:
   - name: skjema
     description: Type regnskap

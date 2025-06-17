@@ -64,7 +64,7 @@ class FileLoaderTest :
                 row("52BF Gruppeskjema for familievernet", "52BF_2024", 88),
                 row("53F Utadrettet virksomhet i familieverntjenesten", "53F_2024", 61),
                 row("55F Meklingssaker i familieverntjenesten", "55F_2024", 986),
-                row("Alle regnskapsskjema", "Regnskap", 48),
+                row("Alle regnskapsskjema", "Regnskap_2025", 48),
             ) { description, schema, recordLength ->
                 When("comparing consecutive FieldDefinitions for $description") {
                     val sut =

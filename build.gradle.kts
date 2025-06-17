@@ -8,6 +8,21 @@ plugins {
     jacoco
 }
 
+dependencies {
+    api(project(":kostra-kontroller"))
+
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${libs.versions.jackson.get()}")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${libs.versions.jackson.get()}")
+    implementation("io.micronaut.serde:micronaut-serde-jackson:${libs.versions.micronautSerde.get()}")
+    implementation("io.micronaut:micronaut-http-client:${libs.versions.micronaut.get()}")
+    implementation("io.micronaut.test:micronaut-test-junit5:${libs.versions.micronautTestJunit5.get()}")
+
+    testImplementation(libs.kotest.assertions.core.jvm)
+    testImplementation(libs.kotest.runner.junit5.jvm)
+    testImplementation(libs.mockk.jvm)
+    testImplementation("org.assertj:assertj-core:${libs.versions.assertj.get()}")
+}
+
 sonarqube {
     properties {
         property("sonar.organization", "statisticsnorway")
@@ -21,7 +36,8 @@ sonarqube {
             **/KostraRecordExtensionsGenerics.kt,
             **/KostraKontrollprogramCommand.kt,
             **/MappingToConsoleAppExtensions.kt,
-            **/kostra/barnevern/**/*
+            **/kostra/barnevern/**/*,
+            **/gradletask/**/*
             """.trimIndent(),
         )
     }
@@ -45,4 +61,29 @@ subprojects {
             reports { xml.required = true }
         }
     }
+}
+
+tasks.test {
+    useJUnitPlatform() // IMPORTANT for Kotest 5+
+}
+
+tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
+    group = "documentation"
+    description = "Generates Markdown files from YAML in file_description_templates"
+
+    val inputDir = file("kontroller/src/test/resources/file_description_templates")
+    val outputDir = file("kravspesifikasjon")
+
+    inputs.files(fileTree(inputDir) {
+        include("file_description_*.yaml", "file_description_*.yml")
+    })
+
+    outputs.dir(outputDir)
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("gradletask.ApplicationKt")
+}
+
+tasks.named("build") {
+    dependsOn("generateMarkdownFromFileDescriptions")
 }

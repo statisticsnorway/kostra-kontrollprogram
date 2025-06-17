@@ -3,7 +3,7 @@ application { mainClass = "no.ssb.kostra.web.ApplicationKt" }
 plugins {
     id("com.google.devtools.ksp") version "2.1.10-1.0.31"
     id("io.micronaut.application") version "4.5.3"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "8.3.6"
 }
 
 dependencies {
@@ -12,6 +12,7 @@ dependencies {
     ksp("io.micronaut.openapi:micronaut-openapi")
 
     implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.serde:micronaut-serde-jackson:${libs.versions.micronautSerde.get()}")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")

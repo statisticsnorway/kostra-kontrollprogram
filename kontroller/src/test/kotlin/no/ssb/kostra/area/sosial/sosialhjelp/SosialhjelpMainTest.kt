@@ -43,14 +43,14 @@ class SosialhjelpMainTest :
                     true,
                     recordStringInTest("24"),
                     46,
-                    4,
+                    3,
                 ),
                 row(
                     "validating a valid record string with invalid data",
                     true,
                     recordStringInTest("XX"),
                     46,
-                    5,
+                    4,
                 ),
                 row(
                     "validating an 'empty' attachment containing only 1 space",

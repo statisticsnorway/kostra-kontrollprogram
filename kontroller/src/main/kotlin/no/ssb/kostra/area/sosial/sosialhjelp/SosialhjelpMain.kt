@@ -10,14 +10,14 @@ import no.ssb.kostra.validation.report.StatsEntryHeading
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
-import no.ssb.kostra.validation.rule.Rule002FileDescription
 import no.ssb.kostra.validation.rule.sosial.extensions.varighetAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.rule.*
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.extensions.deltakereByAlderAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.extensions.stonadAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.rule.*
 
-class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(arguments) {
+class SosialhjelpMain(arguments: KotlinArguments) :
+    PositionedFileValidator(arguments) {
     override val fieldDefinitions = SosialhjelpFieldDefinitions
 
     override val preValidationRules = listOf(
@@ -73,31 +73,34 @@ class SosialhjelpMain(arguments: KotlinArguments) : PositionedFileValidator(argu
         Rule043UtfyltVilkar()
     )
 
-    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> = Pair(
-        kostraRecordList.sumOf { it.fieldAsIntOrDefault(BIDRAG_COL_NAME) },
-        kostraRecordList.sumOf { it.fieldAsIntOrDefault(LAAN_COL_NAME) }
-    ).let { (sumBidrag, sumLaan) ->
-        listOf(
-            StatsReportEntry(
-                heading = StatsEntryHeading("Stønad", "Sum"),
-                entries = listOf(
-                    StatsEntry("I alt", "${sumBidrag + sumLaan}"),
-                    StatsEntry("Bidrag", "$sumBidrag"),
-                    StatsEntry("Lån", "$sumLaan")
+    override fun createStats(kostraRecordList: List<KostraRecord>): List<StatsReportEntry> =
+        Pair(
+            kostraRecordList.sumOf { it.fieldAsIntOrDefault(BIDRAG_COL_NAME) },
+            kostraRecordList.sumOf { it.fieldAsIntOrDefault(LAAN_COL_NAME) }
+        ).let { (sumBidrag, sumLaan) ->
+            listOf(
+                StatsReportEntry(
+                    heading = StatsEntryHeading("Stønad", "Sum"),
+                    entries = listOf(
+                        StatsEntry("I alt", "${sumBidrag + sumLaan}"),
+                        StatsEntry("Bidrag", "$sumBidrag"),
+                        StatsEntry("Lån", "$sumLaan")
+                    )
+                ),
+                StatsReportEntry(
+                    heading = StatsEntryHeading("Alder", "Deltakere"),
+                    entries = kostraRecordList.deltakereByAlderAsStatsEntries(
+                        arguments
+                    )
+                ),
+                StatsReportEntry(
+                    heading = StatsEntryHeading("Stønadsvarighet", "Deltakere"),
+                    entries = kostraRecordList.varighetAsStatsEntries()
+                ),
+                StatsReportEntry(
+                    heading = StatsEntryHeading("Stønad", "Deltakere"),
+                    entries = kostraRecordList.stonadAsStatsEntries()
                 )
-            ),
-            StatsReportEntry(
-                heading = StatsEntryHeading("Alder", "Deltakere"),
-                entries = kostraRecordList.deltakereByAlderAsStatsEntries(arguments)
-            ),
-            StatsReportEntry(
-                heading = StatsEntryHeading("Stønadsvarighet", "Deltakere"),
-                entries = kostraRecordList.varighetAsStatsEntries()
-            ),
-            StatsReportEntry(
-                heading = StatsEntryHeading("Stønad", "Deltakere"),
-                entries = kostraRecordList.stonadAsStatsEntries()
             )
-        )
-    }
+        }
 }

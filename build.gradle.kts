@@ -1,10 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+
 group = "no.ssb.kostra"
 
 repositories { mavenCentral() }
 
 plugins {
-    kotlin("jvm") version libs.versions.kotlin
-    id("org.sonarqube") version "6.2.0.5505"
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.sonarqube)
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
@@ -30,20 +32,25 @@ sonarqube {
 
 subprojects {
     if (name != "kostra-kontrollprogram-web-frontend") {
+        repositories { mavenCentral() }
+
         apply(plugin = "kotlin")
         apply(plugin = "jacoco")
 
-        kotlin { jvmToolchain(21) }
-        repositories { mavenCentral() }
+        configure<KotlinJvmProjectExtension> {
+            jvmToolchain(21)
+        }
 
-        tasks.test {
+        tasks.withType<Test> {
             useJUnitPlatform()
             jvmArgs("-Xshare:off", "-XX:+EnableDynamicAgentLoading")
         }
 
-        tasks.jacocoTestReport {
-            dependsOn(tasks.test)
-            reports { xml.required = true }
+        tasks.withType<JacocoReport> {
+            dependsOn(tasks.withType<Test>())
+            reports {
+                xml.required.set(true)
+            }
         }
     }
 }

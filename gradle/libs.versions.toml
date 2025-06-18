@@ -1,30 +1,50 @@
 [versions]
-jackson = "2.19.0"
-kotest = "5.9.1"
-kotlin = "2.1.10"
-ktlint = "12.1.2"
-micronautHttp = "4.8.14"
-micronautPlatform = "4.7.6"
-micronautSerde = "2.13.0"
+micronaut-platform-version = "4.7.6"
+kotlin-version = "2.1.10"
+jackson-version = "2.19.0"
+kotest-version = "5.9.1"
+mockk-version = "1.14.2"
+woodstox-core-version = "7.1.1"
+picocli-version = "4.7.7"
+logback-classic-version = "1.5.18"
+swagger-annotations-version = "2.2.32"
+
+# plugins
+sonarqube-version = "6.2.0.5505"
+spring-dependency-management-version = "1.1.7"
+shadow-version = "8.3.6"
+gradle-git-properties-version = "2.5.0"
+devtools-ksp-version = "2.1.10-1.0.31"
+micronaut-application-version = "4.5.3"
+siouan-frontend-jdk21-version = "10.0.0"
 
 [libraries]
-jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jackson" }
-jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson" }
-jackson-jakarta-rs-xml-provider = { group = "com.fasterxml.jackson.jakarta.rs", name = "jackson-jakarta-rs-xml-provider", version.ref = "jackson" }
-jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
-kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest" }
-kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.18" }
-micronaut-http-client = { module = "io.micronaut:micronaut-http-client", version.ref = "micronautHttp" }
-micronaut-serde-jackson = { module = "io.micronaut.serde:micronaut-serde-jackson", version.ref = "micronautSerde" }
-micronaut-test-junit5 = { module = "io.micronaut.test:micronaut-test-junit5", version = "4.7.0" }
-micronautPlatform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronautPlatform" }
-mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version = "1.14.2" }
-picocli = { group = "info.picocli", name = "picocli", version = "4.7.7"}
-swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version = "2.2.31" }
-woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version = "7.1.0" }
+# Kotlin
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin-version" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin-version" }
+
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson-version" }
+jackson-jakarta-rs-xml-provider = { group = "com.fasterxml.jackson.jakarta.rs", name = "jackson-jakarta-rs-xml-provider", version.ref = "jackson-version" }
+jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-xml", version.ref = "jackson-version" }
+jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson-version" }
+
+woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version.ref = "woodstox-core-version" }
+picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli-version"}
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback-classic-version" }
+micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
+swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version.ref = "swagger-annotations-version" }
+
+# Tests
+kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest-version" }
+kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest-version" }
+mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version.ref = "mockk-version" }
 
 [plugins]
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube-version" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management-version" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow-version" }
+gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gradle-git-properties-version" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtools-ksp-version" }
+micronaut-application = { id = "io.micronaut.application", version.ref = "micronaut-application-version" }
+siouan-frontend-jdk21 = { id = "org.siouan.frontend-jdk21", version.ref = "siouan-frontend-jdk21-version" }

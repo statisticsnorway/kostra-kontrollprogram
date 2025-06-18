@@ -113,7 +113,7 @@ const MainForm = ({formTypes, years, onSubmit}: {
                     {...register("aar")}
                     isValid={!errors.aar}
                     isInvalid={errors.aar != null}>
-                    <option>Velg årgang</option>
+                    <option value="">Velg årgang</option>
                     {years.map((it, index) => <option key={index}>{it}</option>)}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">{errors.aar?.message}</Form.Control.Feedback>

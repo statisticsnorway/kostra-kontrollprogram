@@ -5,7 +5,6 @@ import no.ssb.kostra.web.viewmodel.KostraFormVm
 import java.io.BufferedReader
 import java.io.InputStream
 
-private const val SEPARATOR_CHAR = ","
 internal const val QUARTER_FALLBACK_VALUE = " "
 internal const val NAME_FALLBACK_VALUE = "UOPPGITT"
 private val FALLBACK_COMPANY_ID = " ".repeat(9)

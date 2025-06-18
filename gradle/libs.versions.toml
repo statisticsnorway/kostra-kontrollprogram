@@ -20,9 +20,7 @@ siouan-frontend-jdk21-version = "10.0.0"
 assertj-core-version = "3.26.3"
 
 micronaut-platform-version = "4.7.6"
-micronaut-version = "4.7.0"
 micronaut-serde-jackson-version = "2.13.0"
-micronaut-test-junit5-version = "4.5.0"
 
 [libraries]
 # Kotlin
@@ -41,8 +39,7 @@ swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotation
 
 micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
 micronaut-serde-jackson = { group = "io.micronaut.serde", name = "micronaut-serde-jackson", version.ref = "micronaut-serde-jackson-version" }
-micronaut-http-client = { group = "io.micronaut", name = "micronaut-http-client", version.ref = "micronaut-version" }
-micronaut-test-junit5 = { group = "io.micronaut.test", name = "micronaut-test-junit5", version.ref = "micronaut-test-junit5-version" }
+
 
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest-version" }

@@ -1,16 +1,13 @@
 package no.ssb.kostra.web.viewmodel
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.micronaut.core.annotation.Introspected
 import io.micronaut.serde.annotation.Serdeable
-import jakarta.validation.Valid
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import no.ssb.kostra.web.validation.ValidForm
 import no.ssb.kostra.web.validation.ValidFormType
 
-@Introspected
 @Serdeable
 @JsonInclude(JsonInclude.Include.ALWAYS)
 @ValidForm

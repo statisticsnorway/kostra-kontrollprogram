@@ -12,6 +12,10 @@ plugins {
 
 dependencies {
     implementation(project(":kostra-kontroller"))
+    compileOnly(libs.micronaut.serde.jackson)
+    implementation(libs.jackson.dataformat.yaml)
+
+    testImplementation(libs.assertj.core)
 }
 
 sonarqube {
@@ -60,16 +64,9 @@ allprojects {
         }
 
         dependencies {
-            implementation(localLibs.findLibrary("jackson.dataformat.yaml").get())
-            implementation(localLibs.findLibrary("jackson.module.kotlin").get())
-            implementation(localLibs.findLibrary("micronaut.serde.jackson").get())
-            implementation(localLibs.findLibrary("micronaut.http.client").get())
-
-            testImplementation(localLibs.findLibrary("micronaut.test.junit5").get())
-            testImplementation(localLibs.findLibrary("kotest.assertions.core.jvm").get())
             testImplementation(localLibs.findLibrary("kotest.runner.junit5.jvm").get())
+            testImplementation(localLibs.findLibrary("kotest.assertions.core.jvm").get())
             testImplementation(localLibs.findLibrary("mockk.jvm").get())
-            testImplementation(localLibs.findLibrary("assertj.core").get())
         }
     }
 }

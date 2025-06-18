@@ -1,6 +1,6 @@
 package no.ssb.kostra.web.error
 
-import io.micronaut.core.annotation.Introspected
+import io.micronaut.serde.annotation.Serdeable
 
 /**
  * Enum for error types.
@@ -8,7 +8,7 @@ import io.micronaut.core.annotation.Introspected
  * @author roar.skinderviken@ssb.no
  * @since 1.0
  */
-@Introspected
+@Serdeable
 enum class ApiErrorType {
 
     /**

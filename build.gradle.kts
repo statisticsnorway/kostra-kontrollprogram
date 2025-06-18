@@ -5,24 +5,13 @@ group = "no.ssb.kostra"
 repositories { mavenCentral() }
 
 plugins {
-    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.sonarqube)
     jacoco
 }
 
 dependencies {
-////    api(project(":kostra-kontroller"))
-//
-//    implementation(libs.jackson.dataformat.yaml)
-//    implementation(libs.jackson.module.kotlin)
-////    implementation("io.micronaut.serde:micronaut-serde-jackson:${libs.versions.micronautSerde.get()}")
-////    implementation("io.micronaut:micronaut-http-client:${libs.versions.micronaut.get()}")
-////    implementation("io.micronaut.test:micronaut-test-junit5:${libs.versions.micronautTestJunit5.get()}")
-//
-//    testImplementation(libs.kotest.assertions.core.jvm)
-//    testImplementation(libs.kotest.runner.junit5.jvm)
-//    testImplementation(libs.mockk.jvm)
-//    testImplementation("org.assertj:assertj-core:${libs.versions.assertj.get()}")
+    implementation(project(":kostra-kontroller"))
 }
 
 sonarqube {
@@ -45,11 +34,13 @@ sonarqube {
     }
 }
 
-subprojects {
+val localLibs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+allprojects {
     if (name != "kostra-kontrollprogram-web-frontend") {
         repositories { mavenCentral() }
 
-        apply(plugin = "kotlin")
+        apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "jacoco")
 
         configure<KotlinJvmProjectExtension> {
@@ -66,6 +57,19 @@ subprojects {
             reports {
                 xml.required.set(true)
             }
+        }
+
+        dependencies {
+            implementation(localLibs.findLibrary("jackson.dataformat.yaml").get())
+            implementation(localLibs.findLibrary("jackson.module.kotlin").get())
+            implementation(localLibs.findLibrary("micronaut.serde.jackson").get())
+            implementation(localLibs.findLibrary("micronaut.http.client").get())
+
+            testImplementation(localLibs.findLibrary("micronaut.test.junit5").get())
+            testImplementation(localLibs.findLibrary("kotest.assertions.core.jvm").get())
+            testImplementation(localLibs.findLibrary("kotest.runner.junit5.jvm").get())
+            testImplementation(localLibs.findLibrary("mockk.jvm").get())
+            testImplementation(localLibs.findLibrary("assertj.core").get())
         }
     }
 }

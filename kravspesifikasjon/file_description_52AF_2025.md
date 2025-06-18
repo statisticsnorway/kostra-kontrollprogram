@@ -12,7 +12,7 @@ Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2025
 | `HENV_DATO_A` | Henvendelsesdato (ddmmåååå) | 8 | 19‑26 | DATE_TYPE | ☑️ | ddMMyyyy |  |
 | `KONTAKT_TIDL_A` | Primærklientens tidligere klientforhold ved kontoret | 1 | 27‑27 | STRING_TYPE | ☑️ |  | `1`: under 6 md siden<br/>`2`: mellom 6 md og 3 år siden<br/>`3`: 3 år eller mer siden<br/>`4`: har ikke vært i kontakt med familievernet tidligere |
 | `HENV_GRUNN_A` | Primærklientens viktigste begrunnelse for å ta kontakt | 1 | 28‑28 | STRING_TYPE | ☑️ |  | `1`: Parforholdet<br/>`2`: Foreldresamarbeid/- veiledning<br/>`3`: Andre eller sammensatte problemer i familien<br/>`4`: Hjelp til barn og ungdom |
-| `PRIMK_KJONN_A` | Primærklienten kjønn | 1 | 29‑29 | STRING_TYPE | ☑️ |  | `1`: Mann<br/>`2`: Kvinne |
+| `PRIMK_KJONN_A` | Primærklienten kjønn | 1 | 29‑29 | STRING_TYPE | ☑️ |  | `1`: Mann/gutt<br/>`2`: Kvinne/jente |
 | `PRIMK_FODT_A` | Primærklientens fødselsår (fire siffer) | 4 | 30‑33 | INTEGER_TYPE |  |  |  |
 | `PRIMK_SIVILS_A` | Primærklientens "samlivsstatus" ved sakens opprettelse | 1 | 34‑34 | STRING_TYPE | ☑️ |  | `1`: Gift<br/>`2`: Registrert partner<br/>`3`: Samboer<br/>`4`: Lever ikke i samliv |
 | `FORMELL_SIVILS_A` | Om samboer eller Lever ikke i samliv skal det krysses av for sivilstand | 1 | 35‑35 | STRING_TYPE |  |  | `1`: Ugift<br/>`2`: Gift<br/>`3`: Registrert partner<br/>`4`: Separert / separert partner<br/>`5`: Skilt / skilt partner<br/>`6`: Enke / enkemann / gjenlevende partner |

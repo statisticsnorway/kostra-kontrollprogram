@@ -6,36 +6,32 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultatTest : BehaviorSpec({
+class Rule018BekymringsmeldingSendtTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
-            sut = Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultat(),
+            sut = Rule018BekymringsmeldingSendt(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "1"),
+                kostraRecordInTest("1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("2", "3", "4"),
-                expectedErrorMessage = "Summen (AVTALE_SEP_TOT) med verdi (2) er ulik summen (1) av følgende liste ([(AVTALE_SEP_1, 1), (AVTALE_SEP_2, 0), (AVTALE_SEP_3, 0)])",
-                expectedSize = 4
+                kostraRecordInTest("4"),
+                expectedErrorMessage = "Summen (BEKYMR_TOT) med verdi (4) er ulik summen (1) av følgende liste ([(BEKYMR_SENDT, 1), (BEKYMR_IKKE_SENDT, 0)])",
+                expectedSize = 1
             ),
         )
     )
 }) {
     companion object {
         private fun kostraRecordInTest(
-            rowSum: String,
-            columnSum: String,
             sumOfSums: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.AVTALE_SEP_1_COL_NAME to "1",
-                    Familievern55ColumnNames.AVTALE_SEP_TOT_COL_NAME to rowSum,
-                    Familievern55ColumnNames.AVTALE_TOT_1_COL_NAME to columnSum,
-                    Familievern55ColumnNames.AVTALE_TOT_TOT_COL_NAME to sumOfSums
+                    Familievern55ColumnNames.BEKYMR_SENDT_COL_NAME to "1",
+                    Familievern55ColumnNames.BEKYMR_TOT_COL_NAME to sumOfSums,
                 )
             )
         )

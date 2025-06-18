@@ -170,9 +170,9 @@ fields:
   datePattern: ""
   codeList:
   - code: "1"
-    value: "Mann"
+    value: "Mann/gutt"
   - code: "2"
-    value: "Kvinne"
+    value: "Kvinne/jente"
 - name: "PRIMK_FODT_A"
   description: "Primærklientens fødselsår (fire siffer)"
   from: 30

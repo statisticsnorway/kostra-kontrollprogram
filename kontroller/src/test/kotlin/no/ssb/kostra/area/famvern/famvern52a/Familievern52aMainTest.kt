@@ -35,7 +35,7 @@ class Familievern52aMainTest :
                         region = REGION,
                         inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength),
                     ),
-                    37,
+                    NUMBER_OF_VALIDATIONS,
                     41,
                 ),
                 row(
@@ -48,7 +48,7 @@ class Familievern52aMainTest :
                     "validating a valid record string with invalid data",
                     argumentsInTest(region = "XXXXXX"),
                     NUMBER_OF_VALIDATIONS,
-                    2,
+                    3,
                 ),
             ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
                 When(description) {
@@ -66,7 +66,7 @@ class Familievern52aMainTest :
     }) {
     companion object {
         private const val SKJEMA = "52AF"
-        private const val REGION = "667600"
+        private const val REGION = "667200"
         private const val NUMBER_OF_VALIDATIONS = 37
 
         private fun argumentsInTest(region: String): KotlinArguments =

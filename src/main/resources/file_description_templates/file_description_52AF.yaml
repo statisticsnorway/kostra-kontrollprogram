@@ -59,7 +59,11 @@ fields:
     size: 1
     dataType: STRING_TYPE
     mandatory: true
-    codeListSource: "2" # Standard for kjønn
+    codeList:
+      - code: 1
+        value: Mann/gutt
+      - code: 2
+        value: Kvinne/jente
   - name: PRIMK_FODT_A
     description: Primærklientens fødselsår (fire siffer)
     size: 4

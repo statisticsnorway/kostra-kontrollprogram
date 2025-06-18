@@ -36,7 +36,6 @@ class Rule014KontrollAvTotalsummerForMeklinger :
                 Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME,
                 Familievern55ColumnNames.VARIGHET_TOT_TOT_COL_NAME,
                 Familievern55ColumnNames.RESULT_TOT_TOT_COL_NAME,
-                Familievern55ColumnNames.BEKYMR_TOT_TOT_COL_NAME,
             )
     }
 }

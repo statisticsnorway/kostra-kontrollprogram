@@ -24,12 +24,11 @@ class Familievern55Main(arguments: KotlinArguments) : PositionedFileValidator(ar
         Rule007AvsluttedeMeklingerEtterTidsbruk(),
         Rule008AvsluttedeMeklingerIkkeOverholdtTidsfrist(),
         Rule009AvsluttedeMeklingerEtterVarighet(),
-        Rule010AvsluttedeMeklingerHvorBarnHarDeltatt(),
         Rule011ResultatAvAvsluttedeMeklinger(),
-        Rule012AntallAvsluttedeMeklingerSkriftligAvtaleEtterResultat(),
-        Rule013AvsluttedeMeklingerOgBekymringsmeldinger(),
         Rule014KontrollAvTotalsummerForMeklinger(),
-        Rule015KontrollAvTotalsummerForSkriftligeAvtaler(),
-        Rule016AvsluttedeMeklingerUtenOppmote()
+        Rule017BarnDeltatt(),
+        Rule018BekymringsmeldingSendt(),
+        Rule019VoldSomTema(),
+        Rule020KontrollAvTotalsummerForMeklinger(),
     )
 }

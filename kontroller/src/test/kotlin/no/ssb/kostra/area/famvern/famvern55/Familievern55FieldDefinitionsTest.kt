@@ -7,7 +7,7 @@ class Familievern55FieldDefinitionsTest : BehaviorSpec({
     Given("Familievern55FieldDefinitions") {
         When("sut") {
             Then("length is as expected") {
-                Familievern55FieldDefinitions.fieldLength shouldBe 986
+                Familievern55FieldDefinitions.fieldLength shouldBe 659
             }
         }
     }

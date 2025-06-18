@@ -1,4 +1,5 @@
 [versions]
+micronaut-platform-version = "4.7.6"
 kotlin-version = "2.1.10"
 jackson-version = "2.19.0"
 kotest-version = "5.9.1"
@@ -19,7 +20,7 @@ siouan-frontend-jdk21-version = "10.0.0"
 # to be removed
 assertj-core-version = "3.26.3"
 
-micronaut-platform-version = "4.7.6"
+micronaut-platform-version = "4.8.3"
 micronaut-serde-jackson-version = "2.13.0"
 
 [libraries]
@@ -39,7 +40,6 @@ swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotation
 
 micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
 micronaut-serde-jackson = { group = "io.micronaut.serde", name = "micronaut-serde-jackson", version.ref = "micronaut-serde-jackson-version" }
-
 
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest-version" }

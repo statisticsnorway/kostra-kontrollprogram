@@ -8,6 +8,7 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor
 import io.micronaut.validation.exceptions.ConstraintExceptionHandler
+import io.micronaut.validation.validator.ValidatorConfiguration
 import jakarta.inject.Singleton
 import jakarta.validation.ConstraintViolationException
 import java.time.Instant
@@ -22,8 +23,10 @@ import java.time.Instant
 @Singleton
 @Replaces(ConstraintExceptionHandler::class)
 @Requires(classes = [ConstraintViolationException::class, ConstraintExceptionHandler::class])
-class CustomConstraintExceptionHandler(responseProcessor: ErrorResponseProcessor<*>) :
-    ConstraintExceptionHandler(responseProcessor) {
+class CustomConstraintExceptionHandler(
+    responseProcessor: ErrorResponseProcessor<*>,
+    validatorConfiguration: ValidatorConfiguration
+) : ConstraintExceptionHandler(responseProcessor, validatorConfiguration) {
 
     override fun handle(request: HttpRequest<*>, exception: ConstraintViolationException): HttpResponse<*> =
         HttpResponse.badRequest(

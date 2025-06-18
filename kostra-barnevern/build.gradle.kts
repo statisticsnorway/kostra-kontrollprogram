@@ -1,5 +1,5 @@
 plugins {
-    id("io.spring.dependency-management") version "1.1.7"
+    alias(libs.plugins.spring.dependency.management)
 //    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
 //    `maven-publish`
 }
@@ -10,7 +10,7 @@ plugins {
 
 dependencyManagement {
     dependencies {
-        dependency("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${libs.versions.jackson.get()}")
+        dependency("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${libs.versions.jackson.version.get()}")
     }
 }
 

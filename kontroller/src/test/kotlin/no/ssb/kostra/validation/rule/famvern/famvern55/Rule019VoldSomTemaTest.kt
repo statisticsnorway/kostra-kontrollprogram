@@ -6,36 +6,32 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Rule013AvsluttedeMeklingerOgBekymringsmeldingerTest : BehaviorSpec({
+class Rule019VoldSomTemaTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
-            sut = Rule013AvsluttedeMeklingerOgBekymringsmeldinger(),
+            sut = Rule019VoldSomTema(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("1", "1", "1"),
+                kostraRecordInTest("1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("2", "3", "4"),
-                expectedErrorMessage = "Summen (BEKYMR_SEP_TOT) med verdi (2) er ulik summen (1) av følgende liste ([(BEKYMR_SEP_1, 1), (BEKYMR_SEP_2, 0)])",
-                expectedSize = 4
+                kostraRecordInTest("4"),
+                expectedErrorMessage = "Summen (VOLD_TOT) med verdi (4) er ulik summen (1) av følgende liste ([(VOLD_TEMA, 1), (VOLD_IKKE_TEMA, 0)])",
+                expectedSize = 1
             ),
         )
     )
 }) {
     companion object {
         private fun kostraRecordInTest(
-            rowSum: String,
-            columnSum: String,
             sumOfSums: String
         ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.BEKYMR_SEP_1_COL_NAME to "1",
-                    Familievern55ColumnNames.BEKYMR_SEP_TOT_COL_NAME to rowSum,
-                    Familievern55ColumnNames.BEKYMR_TOT_1_COL_NAME to columnSum,
-                    Familievern55ColumnNames.BEKYMR_TOT_TOT_COL_NAME to sumOfSums
+                    Familievern55ColumnNames.VOLD_TEMA_COL_NAME to "1",
+                    Familievern55ColumnNames.VOLD_TOT_COL_NAME to sumOfSums,
                 )
             )
         )

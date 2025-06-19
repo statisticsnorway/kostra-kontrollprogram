@@ -35,12 +35,12 @@ class Familievern52aMainTest :
                         region = REGION,
                         inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength),
                     ),
-                    37,
+                    NUMBER_OF_VALIDATIONS,
                     41,
                 ),
                 row(
                     "validating a valid record string",
-                    argumentsInTest(region = "667200"),
+                    argumentsInTest(region = "667600"),
                     NUMBER_OF_VALIDATIONS,
                     1,
                 ),
@@ -48,7 +48,7 @@ class Familievern52aMainTest :
                     "validating a valid record string with invalid data",
                     argumentsInTest(region = "XXXXXX"),
                     NUMBER_OF_VALIDATIONS,
-                    2,
+                    3,
                 ),
             ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
                 When(description) {

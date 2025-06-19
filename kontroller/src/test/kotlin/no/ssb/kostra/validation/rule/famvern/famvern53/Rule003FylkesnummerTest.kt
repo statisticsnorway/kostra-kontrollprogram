@@ -12,19 +12,19 @@ class Rule003FylkesnummerTest : BehaviorSpec({
         KostraTestFactory.validationRuleNoContextTest(
             sut = Rule003Fylkesnummer(
                 listOf(
-                    FamilievernConstants.KontorFylkeRegionMapping("017", "30", "667600")
+                    FamilievernConstants.FamvernHierarchyKontorFylkeRegionMapping(kontor = "017", fylke = "31", region = "667200")
                 )
             ),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid fylke",
-                kostraRecordInTest("30"),
+                kostraRecordInTest("31"),
             ),
             ForAllRowItem(
                 "invalid fylke",
                 kostraRecordInTest("XX"),
                 expectedErrorMessage = "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med " +
-                        "gyldige fylkesnumre. Fant 'XX', forventet én av : [30].",
+                        "gyldige fylkesnumre. Fant 'XX', forventet én av : [31].",
             ),
         )
     )

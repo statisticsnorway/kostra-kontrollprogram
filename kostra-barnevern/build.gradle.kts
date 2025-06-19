@@ -23,11 +23,6 @@ dependencies {
     // Direct dependencies
     implementation(libs.jackson.jakarta.rs.xml.provider)
     implementation(libs.woodstox.core)
-
-    // Test dependencies
-    testImplementation(libs.kotest.assertions.core.jvm)
-    testImplementation(libs.kotest.runner.junit5.jvm)
-    testImplementation(libs.mockk.jvm)
 }
 
 // publishing {

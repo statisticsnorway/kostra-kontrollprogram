@@ -34,7 +34,7 @@ class Familievern53MainTest : BehaviorSpec({
                     inputFileContent = " ".repeat(Familievern53FieldDefinitions.fieldLength)
                 ),
                 NUMBER_OF_VALIDATIONS,
-                10
+                26
             ),
             row(
                 "validating a valid record string",
@@ -46,7 +46,7 @@ class Familievern53MainTest : BehaviorSpec({
                 "validating a valid record string with invalid data",
                 argumentsInTest(fylke = "XX"),
                 NUMBER_OF_VALIDATIONS,
-                2
+                3
             )
         ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
             When(description) {
@@ -64,7 +64,7 @@ class Familievern53MainTest : BehaviorSpec({
 }) {
     companion object {
         private const val SKJEMA = "53F"
-        private const val REGION = "667600"
+        private const val REGION = "667200"
         private const val NUMBER_OF_VALIDATIONS = 7
 
         private fun argumentsInTest(fylke: String): KotlinArguments = KotlinArguments(

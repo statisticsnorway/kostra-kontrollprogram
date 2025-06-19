@@ -6,31 +6,32 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.ForAllRowItem
 import no.ssb.kostra.validation.rule.KostraTestFactory
 
-class Rule016AvsluttedeMeklingerUtenOppmoteTest : BehaviorSpec({
+class Rule017BarnDeltattTest : BehaviorSpec({
     include(
         KostraTestFactory.validationRuleNoContextTest(
-            sut = Rule016AvsluttedeMeklingerUtenOppmote(),
+            sut = Rule017BarnDeltatt(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "valid numbers",
-                kostraRecordInTest("2"),
+                kostraRecordInTest("1"),
             ),
             ForAllRowItem(
                 "invalid numbers",
-                kostraRecordInTest("3"),
-                expectedErrorMessage = "Summen (UTEN_OPPM_TOT) med verdi (3) er ulik summen (2) av følgende liste ([(UTEN_OPPM_1, 1), (UTEN_OPPM_2, 1), (UTEN_OPPM_3, 0), (UTEN_OPPM_4, 0), (UTEN_OPPM_5, 0)])",
+                kostraRecordInTest("4"),
+                expectedErrorMessage = "Summen (BARN_TOT) med verdi (4) er ulik summen (1) av følgende liste ([(BARN_DELT, 1), (BARN_IKKE_DELT, 0)])",
                 expectedSize = 1
             ),
         )
     )
 }) {
     companion object {
-        private fun kostraRecordInTest(rowSum: String) = listOf(
+        private fun kostraRecordInTest(
+            sumOfSums: String
+        ) = listOf(
             Familievern55TestUtils.familievernRecordInTest(
                 mapOf(
-                    Familievern55ColumnNames.UTEN_OPPM_1_COL_NAME to "1",
-                    Familievern55ColumnNames.UTEN_OPPM_2_COL_NAME to "1",
-                    Familievern55ColumnNames.UTEN_OPPM_TOT_COL_NAME to rowSum
+                    Familievern55ColumnNames.BARN_DELT_COL_NAME to "1",
+                    Familievern55ColumnNames.BARN_TOT_COL_NAME to sumOfSums,
                 )
             )
         )

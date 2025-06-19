@@ -5,9 +5,9 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
-class Rule015KontrollAvTotalsummerForSkriftligeAvtaler :
+class Rule020KontrollAvTotalsummerForMeklinger :
     AbstractNoArgsRule<List<KostraRecord>>(
-        Familievern55RuleId.FAMILIEVERN55_RULE015.title,
+        Familievern55RuleId.FAMILIEVERN55_RULE020.title,
         Severity.WARNING,
     ) {
     override fun validate(context: List<KostraRecord>) =
@@ -15,9 +15,9 @@ class Rule015KontrollAvTotalsummerForSkriftligeAvtaler :
             .filterNot {
                 fieldList
                     .map { field ->
-                        it.fieldAsIntOrDefault(field)
-                    }.all { value ->
-                        value == it.fieldAsIntOrDefault(fieldList.first())
+                        field to it.fieldAsIntOrDefault(field)
+                    }.all { item ->
+                        item.second == it.fieldAsIntOrDefault(fieldList.first())
                     }
             }.map {
                 val fieldValueList =
@@ -31,8 +31,9 @@ class Rule015KontrollAvTotalsummerForSkriftligeAvtaler :
     companion object {
         private val fieldList =
             listOf(
-                Familievern55ColumnNames.RESULT_TOT_1_COL_NAME,
-                Familievern55ColumnNames.AVTALE_TOT_TOT_COL_NAME,
+                Familievern55ColumnNames.BARN_TOT_COL_NAME,
+                Familievern55ColumnNames.BEKYMR_TOT_COL_NAME,
+                Familievern55ColumnNames.VOLD_TOT_COL_NAME,
             )
     }
 }

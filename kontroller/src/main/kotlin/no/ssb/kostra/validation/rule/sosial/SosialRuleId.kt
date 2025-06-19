@@ -4,6 +4,7 @@ enum class SosialRuleId(val title: String) {
     KOMMUNENUMMER_03("Kontroll 03 : Kommunenummer"),
     BYDELSNUMMER_03("Kontroll 03 : Bydelsnummer"),
     OPPGAVE_AAR_04("Kontroll 04 : Oppgaveår"),
+    FODSELSDATO_04A("Kontroll 04A : Fødselsdato"),
     FODSELSNUMMER_05("Kontroll 05 : Fødselsnummer"),
 
     FODSELSNUMMER_DUBLETTER_05A("Kontroll 05A : Fødselsnummer, dubletter"),

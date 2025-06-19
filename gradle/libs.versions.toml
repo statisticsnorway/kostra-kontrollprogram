@@ -1,5 +1,4 @@
 [versions]
-micronaut-platform-version = "4.8.3"
 kotlin-version = "2.1.10"
 jackson-version = "2.19.0"
 kotest-version = "5.9.1"
@@ -17,6 +16,11 @@ gradle-git-properties-version = "2.5.0"
 devtools-ksp-version = "2.1.10-1.0.31"
 micronaut-application-version = "4.5.3"
 siouan-frontend-jdk21-version = "10.0.0"
+# to be removed
+assertj-core-version = "3.26.3"
+
+micronaut-platform-version = "4.8.3"
+micronaut-serde-jackson-version = "2.13.0"
 
 [libraries]
 # Kotlin
@@ -29,15 +33,19 @@ jackson-dataformat-xml = { group = "com.fasterxml.jackson.dataformat", name = "j
 jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson-version" }
 
 woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version.ref = "woodstox-core-version" }
-picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli-version"}
+picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli-version" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback-classic-version" }
-micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
 swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version.ref = "swagger-annotations-version" }
+
+micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
+micronaut-serde-jackson = { group = "io.micronaut.serde", name = "micronaut-serde-jackson", version.ref = "micronaut-serde-jackson-version" }
 
 # Tests
 kotest-assertions-core-jvm = { group = "io.kotest", name = "kotest-assertions-core-jvm", version.ref = "kotest-version" }
 kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest-version" }
 mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version.ref = "mockk-version" }
+assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertj-core-version" }
+
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

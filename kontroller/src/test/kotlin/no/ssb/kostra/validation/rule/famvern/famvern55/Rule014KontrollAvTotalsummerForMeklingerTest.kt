@@ -18,7 +18,7 @@ class Rule014KontrollAvTotalsummerForMeklingerTest : BehaviorSpec({
             ForAllRowItem(
                 "values vary",
                 kostraRecordInTest("9"),
-                expectedErrorMessage = "Én eller flere i følgende liste har ulik verdi i forhold til de andre: [(MEKLING_TOT_ALLE, 9), (ENBEGGE_TOT, 1), (VENTETID_TOT_TOT, 1), (VARIGHET_TOT_TOT, 1), (RESULT_TOT_TOT, 1), (BEKYMR_TOT_TOT, 1)]",
+                expectedErrorMessage = "Én eller flere i følgende liste har ulik verdi i forhold til de andre: [(MEKLING_TOT_ALLE, 9), (ENBEGGE_TOT, 1), (VENTETID_TOT_TOT, 1), (VARIGHET_TOT_TOT, 1), (RESULT_TOT_TOT, 1)]",
             ),
         )
     )
@@ -32,7 +32,6 @@ class Rule014KontrollAvTotalsummerForMeklingerTest : BehaviorSpec({
                     Familievern55ColumnNames.VENTETID_TOT_TOT_COL_NAME to "1",
                     Familievern55ColumnNames.VARIGHET_TOT_TOT_COL_NAME to "1",
                     Familievern55ColumnNames.RESULT_TOT_TOT_COL_NAME to "1",
-                    Familievern55ColumnNames.BEKYMR_TOT_TOT_COL_NAME to "1"
                 )
             )
         )

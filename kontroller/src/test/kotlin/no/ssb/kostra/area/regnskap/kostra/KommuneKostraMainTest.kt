@@ -116,7 +116,7 @@ class KommuneKostraMainTest :
     companion object {
         private val regions = listOf("123400", "030100", "040000")
         private val validSkjemaTypes = listOf("0A", "0B", "0C", "0D", "0I", "0J", "0K", "0L", "0M", "0N", "0P", "0Q")
-        private const val NUMBER_OF_VALIDATIONS = 52
+        private const val NUMBER_OF_VALIDATIONS = 53
 
         private fun argumentsInTest(
             argumentsVersion: String = RuleTestData.argumentsInTest.aargang,

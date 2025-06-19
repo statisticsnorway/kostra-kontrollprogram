@@ -7,5 +7,5 @@ import no.ssb.kostra.program.FileLoader
 object Familievern53FieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> =
         FileLoader
-            .getResourceAsFieldDefinitionList("file_description_53F_2024.yaml")
+            .getResourceAsFieldDefinitionList("file_description_53F_2025.yaml")
 }

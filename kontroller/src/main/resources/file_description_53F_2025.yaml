@@ -1,0 +1,249 @@
+---
+title: "53F Utadrettet virksomhet i familieverntjenesten"
+reportingYear: 2025
+description: "Filbeskrivelse for 53F Utadrettet virksomhet i familieverntjenesten for 2025"
+fields:
+- name: "FYLKE_NR"
+  description: "Fylkesnummer"
+  from: 1
+  size: 2
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "03"
+    value: "Oslo"
+  - code: "11"
+    value: "Rogaland"
+  - code: "15"
+    value: "Møre og Romsdal"
+  - code: "18"
+    value: "Nordland - Nordlánnda"
+  - code: "31"
+    value: "Østfold"
+  - code: "32"
+    value: "Akershus"
+  - code: "33"
+    value: "Buskerud"
+  - code: "34"
+    value: "Innlandet"
+  - code: "39"
+    value: "Vestfold"
+  - code: "40"
+    value: "Telemark"
+  - code: "42"
+    value: "Agder"
+  - code: "46"
+    value: "Vestland"
+  - code: "50"
+    value: "Trøndelag - Trööndelage"
+  - code: "55"
+    value: "Troms - Romsa - Tromssa"
+  - code: "56"
+    value: "Finnmark - Finnmárku - Finmarkku"
+  - code: "99"
+    value: "Uoppgitt"
+- name: "KONTORNR"
+  description: "Familievernkontornummer"
+  from: 3
+  size: 3
+  dataType: "STRING_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList:
+  - code: "017"
+    value: "Familievernkontoret Østfold"
+  - code: "023"
+    value: "Familievernkontoret Asker Bærum"
+  - code: "024"
+    value: "Familievernkontoret Follo"
+  - code: "025"
+    value: "Familievernkontoret Nedre Romerike"
+  - code: "027"
+    value: "Familievernkontoret Øvre Romerike Glåmdal"
+  - code: "030"
+    value: "Familiekontoret Oslo Nord"
+  - code: "037"
+    value: "Familievernkontoret Homansbyen"
+  - code: "038"
+    value: "Familievernkontoret Enerhaugen"
+  - code: "039"
+    value: "Familievernkontoret Chrisiania"
+  - code: "046"
+    value: "Familievernkontoret Innlandet vest"
+  - code: "047"
+    value: "Familievernkontoret Innlandet øst"
+  - code: "052"
+    value: "Familievernkontoret Otta SKF"
+  - code: "061"
+    value: "Familievernkontoret i Buskerud"
+  - code: "065"
+    value: "Familievernkontoret Ringerike - Hallingdal"
+  - code: "071"
+    value: "Familievernkontoret i Vestfold"
+  - code: "073"
+    value: "Familievernkontoret i Søndre Vestfold"
+  - code: "081"
+    value: "Grenland familievernkontor"
+  - code: "082"
+    value: "Familiekontoret Øvre Telemark"
+  - code: "091"
+    value: "Familievernkontoret i Arendal"
+  - code: "101"
+    value: "Familiekontoret i Vest-Agder"
+  - code: "111"
+    value: "Familievernkontoret i Sør-Rogaland"
+  - code: "112"
+    value: "Familievernkontoret Haugalandet"
+  - code: "125"
+    value: "Bergen og omland familiekontor"
+  - code: "127"
+    value: "Bjørgvin familiekontor"
+  - code: "141"
+    value: "Familiekontora for Sunnfjord og Sogn"
+  - code: "142"
+    value: "Nordfjord familiekontor"
+  - code: "151"
+    value: "Familievernkontoret i Romsdal"
+  - code: "152"
+    value: "Familievernkontoret Sunnmøre"
+  - code: "153"
+    value: "Familievernkontoret Nordmøre"
+  - code: "162"
+    value: "Familiervernkontoret i Trondheim"
+  - code: "171"
+    value: "Familievernkontoret Innherred"
+  - code: "172"
+    value: "Familievernkontoret Namdalen"
+  - code: "181"
+    value: "Bodø familievernkontor"
+  - code: "183"
+    value: "Familievernkontoret i Mo i Rana"
+  - code: "184"
+    value: "Familievernkontoret i Mosjøen"
+  - code: "185"
+    value: "Lofoten og Vesterålen Familievernkontor"
+  - code: "192"
+    value: "Tromsø familievernkontor"
+  - code: "193"
+    value: "Finnsnes familievernkontor"
+  - code: "194"
+    value: "Harstad og Narvik familievernkontor"
+  - code: "202"
+    value: "Familievernkontoret i Øst-Finnmark"
+  - code: "203"
+    value: "Indre Finnmark familievernkontor - Sis Finnmarkku Bearassuojalanguovddas"
+  - code: "205"
+    value: "Alta og Hammerfest familievernkontor"
+- name: "TILTAK_PUBLIKUM_TILTAK"
+  description: "Andre tiltak mot publikum publikum, tiltak"
+  from: 6
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TILTAK_PUBLIKUM_TIMER"
+  description: "Andre tiltak mot publikum publikum, timer"
+  from: 10
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "VEILEDNING_STUDENTER_TILTAK"
+  description: "Undervisning/veiledning av studenter, tiltak"
+  from: 14
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "VEILEDNING_STUDENTER_TIMER"
+  description: "Undervisning/veiledning av studenter, timer"
+  from: 18
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "VEILEDNING_HJELPEAP_TILTAK"
+  description: "Veiledning/konsultasjon av hjelpeapparatet, tiltak"
+  from: 22
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "VEILEDNING_HJELPEAP_TIMER"
+  description: "Veiledning/konsultasjon av hjelpeapparatet, timer"
+  from: 26
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "INFO_MEDIA_TILTAK"
+  description: "Informasjon i media, tiltak"
+  from: 30
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "INFO_MEDIA_TIMER"
+  description: "Informasjon i media, timer"
+  from: 34
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TILSYN_TILTAK"
+  description: "Tilsyn, tiltak"
+  from: 38
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "TILSYN_TIMER"
+  description: "Tilsyn, timer"
+  from: 42
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "FORELDREVEIL_TILTAK"
+  description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning"
+  from: 46
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "FORELDREVEIL_TIMER"
+  description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning"
+  from: 50
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANNET_TILTAK"
+  description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - tiltak"
+  from: 54
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []
+- name: "ANNET_TIMER"
+  description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - timer"
+  from: 58
+  size: 4
+  dataType: "INTEGER_TYPE"
+  mandatory: true
+  datePattern: ""
+  codeList: []

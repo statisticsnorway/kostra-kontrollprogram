@@ -10,6 +10,7 @@ object KvalifiseringColumnNames {
     const val BYDELSNR_COL_NAME = "BYDELSNR"
     const val DISTRIKTSNR_COL_NAME = "DISTRIKTSNR"
     const val VERSION_COL_NAME = "VERSION"
+    const val FODSELSDATO_COL_NAME = "FODSELSDATO"
 
     const val KJONN_COL_NAME = "KJONN"
     const val STATUS_COL_NAME = "STATUS"

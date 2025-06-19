@@ -1,7 +1,7 @@
 package no.ssb.kostra.web.error
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.micronaut.core.annotation.Introspected
+import io.micronaut.serde.annotation.Serdeable
 import io.swagger.v3.oas.annotations.media.Schema
 
 /**
@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema
  * @author roar.skinderviken@ssb.no
  * @since 1.0
  */
-@Introspected
+@Serdeable
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 data class ApiError(
     @Schema(description = "System timestamp in milliseconds since 1970")

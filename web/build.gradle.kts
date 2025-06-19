@@ -7,6 +7,10 @@ plugins {
 }
 
 dependencies {
+    // https://micronaut-projects.github.io/micronaut-serialization/latest/guide/
+    ksp("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
     ksp("io.micronaut:micronaut-http-validation")
     ksp("io.micronaut.validation:micronaut-validation-processor")
     ksp("io.micronaut.openapi:micronaut-openapi")
@@ -14,6 +18,7 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
+    implementation(libs.kotlin.reflect)
     implementation("io.projectreactor:reactor-core")
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib.jdk8)

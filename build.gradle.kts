@@ -12,8 +12,9 @@ plugins {
 
 dependencies {
     implementation(project(":kostra-kontroller"))
-    compileOnly(libs.micronaut.serde.jackson)
     implementation(libs.jackson.dataformat.yaml)
+
+    compileOnly(libs.micronaut.serde.jackson)
 
     testImplementation(libs.assertj.core)
 }
@@ -71,27 +72,27 @@ allprojects {
     }
 }
 
-//tasks.test {
-//    useJUnitPlatform() // IMPORTANT for Kotest 5+
-//}
-//
-//tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
-//    group = "documentation"
-//    description = "Generates Markdown files from YAML in file_description_templates"
-//
-//    val inputDir = file("kontroller/src/test/resources/file_description_templates")
-//    val outputDir = file("kravspesifikasjon")
-//
-//    inputs.files(fileTree(inputDir) {
-//        include("file_description_*.yaml", "file_description_*.yml")
-//    })
-//
-//    outputs.dir(outputDir)
-//
-//    classpath = sourceSets["main"].runtimeClasspath
-//    mainClass.set("gradletask.ApplicationKt")
-//}
-//
-//tasks.named("build") {
-//    dependsOn("generateMarkdownFromFileDescriptions")
-//}
+tasks.test {
+    useJUnitPlatform() // IMPORTANT for Kotest 5+
+}
+
+tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
+    group = "documentation"
+    description = "Generates Markdown files from YAML in file_description_templates"
+
+    val inputDir = file("src/main/resources/file_description_templates")
+    val outputDir = file("kravspesifikasjon")
+
+    inputs.files(fileTree(inputDir) {
+        include("file_description_*.yaml", "file_description_*.yml")
+    })
+
+    outputs.dir(outputDir)
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("gradletask.ApplicationKt")
+}
+
+tasks.named("build") {
+    dependsOn("generateMarkdownFromFileDescriptions")
+}

@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: gradle
     directory: "/"
     schedule:
-      interval: weekly
-      day: wednesday
+      interval: monthly
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 20
@@ -13,8 +12,7 @@ updates:
     versioning-strategy: increase
     directory: "/web-frontend"
     schedule:
-      interval: weekly
-      day: wednesday
+      interval: monthly
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 20
@@ -22,8 +20,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: weekly
-      day: wednesday
+      interval: monthly
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10

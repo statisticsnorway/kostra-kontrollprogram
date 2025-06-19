@@ -1,12 +1,12 @@
 [versions]
 kotlin-version = "2.1.10"
-jackson-version = "2.19.0"
+jackson-version = "2.19.1"
 kotest-version = "5.9.1"
 mockk-version = "1.14.2"
 woodstox-core-version = "7.1.1"
 picocli-version = "4.7.7"
 logback-classic-version = "1.5.18"
-swagger-annotations-version = "2.2.32"
+swagger-annotations-version = "2.2.33"
 
 # plugins
 sonarqube-version = "6.2.0.5505"

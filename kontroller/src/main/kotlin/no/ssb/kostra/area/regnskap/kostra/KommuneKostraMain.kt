@@ -1,5 +1,6 @@
 package no.ssb.kostra.area.regnskap.kostra
 
+import no.ssb.kostra.area.regnskap.RegnskapConstants.osloBydeler
 import no.ssb.kostra.area.regnskap.RegnskapConstants.osloKommuner
 import no.ssb.kostra.area.regnskap.RegnskapValidator
 import no.ssb.kostra.program.KotlinArguments
@@ -55,7 +56,7 @@ class KommuneKostraMain(
         )
     // @formatter:on
 
-    private val osloFunksjoner =
+    private val osloBydelFunksjoner =
         listOf("691", "692", "693", "694", "696")
 
     private val kommuneFinansielleFunksjoner =
@@ -103,8 +104,11 @@ class KommuneKostraMain(
             }
 
             if (arguments.region in osloKommuner) {
-                result.addAll(osloFunksjoner)
                 result.addAll(fylkeskommunaleFunksjoner)
+            }
+
+            if (arguments.region in osloBydeler) {
+                result.addAll(osloBydelFunksjoner)
             }
 
             result.map { it.padEnd(4, ' ') }.distinct().sorted()
@@ -183,11 +187,11 @@ class KommuneKostraMain(
         )
     // @formatter:on
 
-    private val osloArter =
+    private val osloBydelArter =
         listOf("298", "379", "798")
 
     private val kommunaleArter =
-        listOf("871", "872", "873", "875", "876")
+        listOf("871", "872", "873", "876", "878", "879")
 
     override val artList: List<String> =
         if (arguments.skjema in listOf("0A", "0C", "0I", "0K", "0M", "0P")) {
@@ -197,8 +201,8 @@ class KommuneKostraMain(
                         in listOf("0A", "0M") -> {
                             addAll(kommunaleArter)
 
-                            if (arguments.region in osloKommuner) {
-                                addAll(osloArter)
+                            if (arguments.region in osloBydeler) {
+                                addAll(osloBydelArter)
                             }
                         }
                     }
@@ -251,7 +255,7 @@ class KommuneKostraMain(
             "240",
             "509", "570", "590",
             "600", "629", "630", "640",
-            "800", "870", "871", "872", "873", "875", "876", "877",
+            "800", "870", "871", "872", "873", "876", "877", "878", "879",
             "909", "990",
         )
     // @formatter:on

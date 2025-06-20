@@ -9,15 +9,16 @@ const ReportView = ({appReleaseVersion, fileReport}: {
     appReleaseVersion: string,
     fileReport: FileReportVm
 }) => {
-    // TODO: Temp fix that needs more love
-    const hasErrors = fileReport.feil && fileReport.feil?.length > 0
+    const feil = fileReport.feil ?? []
+    const hasErrors = feil.length > 0
 
     return <>
         <ReportSummary appReleaseVersion={appReleaseVersion} fileReport={fileReport}/>
-        {(hasErrors && fileReport.feil) && (<>
-            <ErrorSummary reportEntries={fileReport.feil}/>
-            <ErrorDetailsTable reportEntries={fileReport.feil}/>
-        </>)}
+        {hasErrors && (
+            <>
+                <ErrorSummary reportEntries={feil}/>
+                <ErrorDetailsTable reportEntries={feil}/>
+            </>)}
     </>
 }
 

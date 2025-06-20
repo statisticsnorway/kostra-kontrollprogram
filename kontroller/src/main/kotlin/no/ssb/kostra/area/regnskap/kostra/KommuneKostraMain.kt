@@ -103,7 +103,7 @@ class KommuneKostraMain(
                 result.addAll(fylkeskommunaleSbdrOgLaanefondFinansielleFunksjoner)
             }
 
-            if (arguments.region in osloKommuner) {
+            if (arguments.region in osloKommuner.plus(osloBydeler)) {
                 result.addAll(fylkeskommunaleFunksjoner)
             }
 

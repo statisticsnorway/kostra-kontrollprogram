@@ -18,7 +18,7 @@ describe("ErrorLevel", () => {
             render(<ErrorLevel level={KostraSeverity.INFO}/>)
             expect(screen.queryByText("Info")).toBeInTheDocument()
         })
-        it("if, expect cssClass 'text-info'", () => {
+        it("info, expect cssClass 'text-info'", () => {
             render(<ErrorLevel level={KostraSeverity.INFO}/>)
             expect(screen.getByText("Info").classList.contains("text-info")).toBeTruthy()
         })
@@ -45,7 +45,7 @@ describe("ErrorLevel", () => {
             render(<ErrorLevel level={KostraSeverity.FATAL}/>)
             expect(screen.queryByText("Kritisk")).toBeInTheDocument()
         })
-        it("critical error, expect cssClass 'text-danger'", () => {
+        it("fatal error, expect cssClass 'text-danger'", () => {
             render(<ErrorLevel level={KostraSeverity.FATAL}/>)
             expect(screen.getByText("Kritisk").classList.contains("text-danger")).toBeTruthy()
         })

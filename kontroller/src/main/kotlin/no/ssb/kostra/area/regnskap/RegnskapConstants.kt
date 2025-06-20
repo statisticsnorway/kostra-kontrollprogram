@@ -39,9 +39,10 @@ object RegnskapConstants {
 
     val WARNING_QUARTERS = setOf('1', '2')
 
-    val osloKommuner = listOf(
+    val osloKommuner = listOf("030100")
+
+    val osloBydeler = listOf(
         // @formatter:off
-        "030100",
         "030101", "030102", "030103", "030104", "030105",
         "030106", "030107", "030108", "030109", "030110",
         "030111", "030112", "030113", "030114", "030115"

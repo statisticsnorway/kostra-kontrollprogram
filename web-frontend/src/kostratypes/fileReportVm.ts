@@ -6,7 +6,7 @@ import Nullable from "./nullable"
 interface FileReportVm {
     readonly innparametere: NonNullable<KostraFormVm>
     readonly antallKontroller: NonNullable<number>
-    readonly feilkode: NonNullable<KostraSeverity>
+    readonly severity: NonNullable<KostraSeverity>
     readonly feil: Nullable<FileReportEntryVm[]>
 }
 

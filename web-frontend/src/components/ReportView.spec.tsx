@@ -11,7 +11,7 @@ describe("ReportView", () => {
                 appReleaseVersion={appReleaseVersionInTest}
                 fileReport={{
                     ...fileReportInTest,
-                    feilkode: KostraSeverity.OK,
+                    severity: KostraSeverity.OK,
                     feil: []
                 }}
             />)

@@ -31,7 +31,7 @@ const ReportSummary = ({appReleaseVersion, fileReport}: {
                     Organisasjonsnummer: {fileReport.innparametere.orgnrForetak}
                 </li>}
             <li className="list-group-item">
-                Høyeste alvorlighetsgrad: <ErrorLevel level={fileReport.feilkode}/>
+                Høyeste alvorlighetsgrad: <ErrorLevel level={fileReport.severity}/>
             </li>
             <li className="list-group-item">
                 Antall kontroller utført: {fileReport.antallKontroller}

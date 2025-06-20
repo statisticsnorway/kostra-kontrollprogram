@@ -49,5 +49,14 @@ describe("ErrorLevel", () => {
             render(<ErrorLevel level={KostraSeverity.FATAL}/>)
             expect(screen.getByText("Kritisk").classList.contains("text-danger")).toBeTruthy()
         })
+
+        it("unknown error, expect text 'Ukjent'", () => {
+            render(<ErrorLevel level={"UNKNOWN" as any}/>)
+            expect(screen.queryByText("Ukjent")).toBeInTheDocument()
+        })
+        it("unknown error, expect cssClass 'text-muted'", () => {
+            render(<ErrorLevel level={"UNKNOWN" as any}/>)
+            expect(screen.getByText("Ukjent").classList.contains("text-muted")).toBeTruthy()
+        })
     })
 })

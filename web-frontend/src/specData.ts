@@ -54,6 +54,6 @@ export const fileReportEntryInTestWithAllPropsSet: FileReportEntryVm = {
 export const fileReportInTest: FileReportVm = {
     innparametere: kostraFormInTest,
     antallKontroller: 42,
-    feilkode: KostraSeverity.WARNING,
+    severity: KostraSeverity.WARNING,
     feil: [fileReportEntryInTestWithAllPropsSet]
 }

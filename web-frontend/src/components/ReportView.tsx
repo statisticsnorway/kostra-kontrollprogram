@@ -8,11 +8,17 @@ import ErrorDetailsTable from "../features/report/ErrorDetailsTable"
 const ReportView = ({appReleaseVersion, fileReport}: {
     appReleaseVersion: string,
     fileReport: FileReportVm
-}) =>
-    <>
+}) => {
+    // TODO: Temp fix that needs more love
+    const hasErrors = fileReport.feil && fileReport.feil?.length > 0
+
+    return <>
         <ReportSummary appReleaseVersion={appReleaseVersion} fileReport={fileReport}/>
-        {fileReport.feil?.length  && <ErrorSummary reportEntries={fileReport.feil}/>}
-        {fileReport.feil?.length && <ErrorDetailsTable reportEntries={fileReport.feil}/>}
+        {(hasErrors && fileReport.feil) && (<>
+            <ErrorSummary reportEntries={fileReport.feil}/>
+            <ErrorDetailsTable reportEntries={fileReport.feil}/>
+        </>)}
     </>
+}
 
 export default ReportView

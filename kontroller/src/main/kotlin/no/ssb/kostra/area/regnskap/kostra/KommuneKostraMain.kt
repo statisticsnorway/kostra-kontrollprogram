@@ -57,7 +57,7 @@ class KommuneKostraMain(
     // @formatter:on
 
     private val osloBydelFunksjoner =
-        listOf("691", "692", "693", "694", "696")
+        listOf("691", "692", "693", "694", "695", "696")
 
     private val kommuneFinansielleFunksjoner =
         listOf("800", "840", "841", "850", "860", "870", "880", "899")

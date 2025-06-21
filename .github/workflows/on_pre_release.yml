@@ -5,6 +5,9 @@ on:
     types:
       - prereleased
 
+permissions:
+  contents: read
+
 jobs:
   build:
     uses: ./.github/workflows/build-template.yml

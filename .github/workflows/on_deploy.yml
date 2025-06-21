@@ -6,6 +6,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 env:
   REGISTRY: europe-north1-docker.pkg.dev/artifact-registry-5n/kostra-docker
   IMAGE: kostra-kontrollprogram

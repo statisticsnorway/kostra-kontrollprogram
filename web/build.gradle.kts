@@ -18,7 +18,6 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
-    implementation(libs.kotlin.reflect)
     implementation("io.projectreactor:reactor-core")
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib.jdk8)
@@ -32,6 +31,7 @@ dependencies {
 
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation(libs.kotest.assertions.json.jvm)
 }
 
 micronaut {

@@ -7,7 +7,8 @@ on:
       - master
 
 permissions:
-  contents: read
+  contents: write
+  id-token: write
 
 env:
   REGISTRY: europe-north1-docker.pkg.dev/artifact-registry-5n/kostra-docker

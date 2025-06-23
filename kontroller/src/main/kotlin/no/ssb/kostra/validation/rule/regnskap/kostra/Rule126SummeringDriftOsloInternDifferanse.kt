@@ -6,7 +6,7 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDriftRegnskap
-import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloInternRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 
 class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 126 : Summeringskontroller driftsregnskapet for de Oslointerne artene 298 og 798, " +
@@ -14,7 +14,7 @@ class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<Kostra
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isOsloInternRegnskap() }
+        .filter { it.isOsloBydel() }
         .filter { it.isBevilgningDriftRegnskap() }
         .takeIf { it.any() }
         ?.filter { kostraRecord -> kostraRecord[FIELD_ART] in listOf("298", "798") }

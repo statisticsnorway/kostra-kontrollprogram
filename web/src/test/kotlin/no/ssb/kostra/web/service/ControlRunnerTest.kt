@@ -29,9 +29,15 @@ class ControlRunnerTest(
                         inputStream = PLAIN_TEXT.toByteArray().inputStream(),
                     )
 
-                Then("errorReportVm should be as expected") {
+                Then("errorReport.severity should be OK") {
                     errorReport.severity shouldBe Severity.OK
+                }
+
+                Then("errorReport.antallKontroller should be greater than 50") {
                     errorReport.antallKontroller.shouldBeGreaterThan(50)
+                }
+
+                Then("errorReport.feil should be empty") {
                     errorReport.feil.shouldBeEmpty()
                 }
             }
@@ -49,8 +55,8 @@ class ControlRunnerTest(
     companion object {
         private val PLAIN_TEXT =
             """
-            6672000170201001000101202011119761 1113  1       0302202021                 12122222220302              003000003005      00300521          10120052020
-            6672000170201024000101202011119761 1113  1       0302202021                 12 22222220302              003000003005      00300521          10120052020
+            667600203020103600010120251111976121113  1       0302202521                 12122222220302              003000003005      00300521          10120052025
+            667600205020103700010120251111976121113  1       0302202521                 12122222220302              003000003005      00300521          10120052025
             """.trimIndent()
     }
 }

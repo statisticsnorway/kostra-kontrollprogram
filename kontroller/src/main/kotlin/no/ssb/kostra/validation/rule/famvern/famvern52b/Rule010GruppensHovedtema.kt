@@ -21,7 +21,7 @@ class Rule010GruppensHovedtema :
             .map {
                 createValidationReportEntry(
                     messageText =
-                        "Det er ikke fylt ut hva som er målgruppe for behandlingen. " +
+                        "Det er ikke fylt ut hva som er hovedtema for behandlingen. " +
                             "Fant '${it[HOVEDI_GR_B_COL_NAME]}', forventet én av: ${fieldDefinition.codeList}.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(

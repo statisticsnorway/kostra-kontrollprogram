@@ -36,13 +36,13 @@ class Familievern52aMainTest :
                         inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength),
                     ),
                     NUMBER_OF_VALIDATIONS,
-                    41,
+                    52,
                 ),
                 row(
                     "validating a valid record string",
-                    argumentsInTest(region = "667600"),
+                    argumentsInTest(region = "667200"),
                     NUMBER_OF_VALIDATIONS,
-                    1,
+                    0,
                 ),
                 row(
                     "validating a valid record string with invalid data",
@@ -114,6 +114,13 @@ class Familievern52aMainTest :
                                         ).codeList
                                         .first()
                                         .code,
+                                Familievern52aColumnNames.FORMELL_SIVILS_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.FORMELL_SIVILS_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
                                 Familievern52aColumnNames.PRIMK_SAMBO_A_COL_NAME to
                                     Familievern52aFieldDefinitions.fieldDefinitions
                                         .byColumnName(
@@ -150,8 +157,71 @@ class Familievern52aMainTest :
                                         ).codeList
                                         .first()
                                         .code,
+                                Familievern52aColumnNames.DELT_EKSPART_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_EKSPART_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_BARNU18_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_BARNU18_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_BARNO18_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_BARNO18_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_FORELDRE_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_FORELDRE_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_OVRFAM_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_OVRFAM_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_VENN_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_VENN_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.DELT_ANDR_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.DELT_ANDR_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
+                                Familievern52aColumnNames.TOLK_A_COL_NAME to
+                                    Familievern52aFieldDefinitions.fieldDefinitions
+                                        .byColumnName(
+                                            Familievern52aColumnNames.TOLK_A_COL_NAME,
+                                        ).codeList
+                                        .first()
+                                        .code,
                                 Familievern52aColumnNames.SAMT_PRIMK_A_COL_NAME to "1",
-                                Familievern52aColumnNames.SAMT_PARTNER_A_COL_NAME to "1",
+                                Familievern52aColumnNames.SAMT_PARTNER_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_EKSPART_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_BARNU18_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_BARNO18_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_FORELDRE_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_OVRFAM_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_VENN_A_COL_NAME to "10",
+                                Familievern52aColumnNames.SAMT_ANDRE_A_COL_NAME to "10",
                                 Familievern52aColumnNames.ANTSAMT_HOVEDT_A_COL_NAME to "1",
                                 Familievern52aColumnNames.ANTSAMT_IARET_A_COL_NAME to "1",
                                 Familievern52aColumnNames.ANTSAMT_OPPR_A_COL_NAME to "1",

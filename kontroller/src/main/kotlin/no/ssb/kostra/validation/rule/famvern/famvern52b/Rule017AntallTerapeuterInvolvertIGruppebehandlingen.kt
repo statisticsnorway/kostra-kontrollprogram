@@ -18,7 +18,7 @@ class Rule017AntallTerapeuterInvolvertIGruppebehandlingen :
             .map {
                 createValidationReportEntry(
                     messageText =
-                        "Det er ikke oppgitt hvor mange hovedterapeut eller " +
+                        "Det er ikke oppgitt hvor mange hovedterapeuter eller " +
                             "andre ansatte som har deltatt i gruppen.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(

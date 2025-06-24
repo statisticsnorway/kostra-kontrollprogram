@@ -18,7 +18,7 @@ class Rule010GruppensHovedtemaTest : BehaviorSpec({
             ForAllRowItem(
                 "invalid code",
                 kostraRecordInTest("XX"),
-                expectedErrorMessage = "Det er ikke fylt ut hva som er målgruppe for behandlingen. " +
+                expectedErrorMessage = "Det er ikke fylt ut hva som er hovedtema for behandlingen. " +
                         "Fant 'XX', forventet én av: [01=Samlivskurs, 02=Samlivsbrudd, " +
                         "03=Samarbeid om barn etter brudd, 04=Barn som har opplevd brudd i familien, " +
                         "05=Vold/overgrep, 06=Sinnemestring, 07=Kultur-/Minoritetsspørsmål, 08=Foreldreveiledning, " +

@@ -140,7 +140,7 @@ fields:
   from: 6
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TILTAK_PUBLIKUM_TIMER"
@@ -148,7 +148,7 @@ fields:
   from: 10
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "VEILEDNING_STUDENTER_TILTAK"
@@ -156,7 +156,7 @@ fields:
   from: 14
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "VEILEDNING_STUDENTER_TIMER"
@@ -164,7 +164,7 @@ fields:
   from: 18
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "VEILEDNING_HJELPEAP_TILTAK"
@@ -172,7 +172,7 @@ fields:
   from: 22
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "VEILEDNING_HJELPEAP_TIMER"
@@ -180,7 +180,7 @@ fields:
   from: 26
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "INFO_MEDIA_TILTAK"
@@ -188,7 +188,7 @@ fields:
   from: 30
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "INFO_MEDIA_TIMER"
@@ -196,7 +196,7 @@ fields:
   from: 34
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TILSYN_TILTAK"
@@ -204,7 +204,7 @@ fields:
   from: 38
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TILSYN_TIMER"
@@ -212,7 +212,7 @@ fields:
   from: 42
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "FORELDREVEIL_TILTAK"
@@ -220,7 +220,7 @@ fields:
   from: 46
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "FORELDREVEIL_TIMER"
@@ -228,7 +228,7 @@ fields:
   from: 50
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANNET_TILTAK"
@@ -236,7 +236,7 @@ fields:
   from: 54
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANNET_TIMER"
@@ -244,6 +244,6 @@ fields:
   from: 58
   size: 4
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []

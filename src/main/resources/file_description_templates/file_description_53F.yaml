@@ -19,69 +19,55 @@ fields:
     description: Andre tiltak mot publikum publikum, tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TILTAK_PUBLIKUM_TIMER
     description: Andre tiltak mot publikum publikum, timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: VEILEDNING_STUDENTER_TILTAK
     description: Undervisning/veiledning av studenter, tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: VEILEDNING_STUDENTER_TIMER
     description: Undervisning/veiledning av studenter, timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: VEILEDNING_HJELPEAP_TILTAK
     description: Veiledning/konsultasjon av hjelpeapparatet, tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: VEILEDNING_HJELPEAP_TIMER
     description: Veiledning/konsultasjon av hjelpeapparatet, timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: INFO_MEDIA_TILTAK
     description: Informasjon i media, tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: INFO_MEDIA_TIMER
     description: Informasjon i media, timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TILSYN_TILTAK
     description: Tilsyn, tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TILSYN_TIMER
     description: Tilsyn, timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: FORELDREVEIL_TILTAK
     description: Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: FORELDREVEIL_TIMER
     description: Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANNET_TILTAK
     description: Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - tiltak
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANNET_TIMER
     description: Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - timer
     size: 4
     dataType: INTEGER_TYPE
-    mandatory: true

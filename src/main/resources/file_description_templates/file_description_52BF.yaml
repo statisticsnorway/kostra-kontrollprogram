@@ -24,7 +24,6 @@ fields:
     description: Gruppenavn
     size: 30
     dataType: STRING_TYPE
-    mandatory: true
   - name: DATO_GRSTART_B
     description: Dato for gruppebehandlingens start (ddmmåååå)
     size: 8
@@ -79,37 +78,30 @@ fields:
     description: Antall gruppemøter gjennomført totalt i løpet av året
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANTMOTERTOT_OPPR_B
     description: Antall gruppemøter gjennomført totalt siden opprettelsen
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TIMERTOT_IARET_B
     description: Antall timer anvendt i gruppen totalt i løpet av året
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TIMERTOT_OPPR_B
     description: Antall timer anvendt i gruppen totalt siden opprettelsen
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANTDELT_IARET_B
     description: Antall deltakere i gruppen i løpet av året
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANTDELT_OPPR_B
     description: Antall deltakere i gruppen siden opprettelsen
     size: 3
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: ANTTER_GRUPPEB_B
     description: Antall terapauter involvert i gruppebehandlingen
     size: 2
     dataType: INTEGER_TYPE
-    mandatory: true
   - name: TOLK_B
     description: Tolk benyttet i forbindelse med en eller flere gruppesamtaler siden gruppen ble opprettet
     size: 1

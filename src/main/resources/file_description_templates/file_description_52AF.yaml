@@ -86,6 +86,7 @@ fields:
     description: Om samboer eller Lever ikke i samliv skal det krysses av for sivilstand
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeList:
       - code: 1
         value: Ugift
@@ -404,41 +405,49 @@ fields:
     description: Partner
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_EKSPART_A
     description: Ekspartner
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_BARNU18_A
     description: Sønn/datter under 18 år
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_BARNO18_A
     description: Sønn/datter 18 år eller eldre
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_FORELDRE_A
     description: Foreldre
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_OVRFAM_A
     description: Øvrig familie
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_VENN_A
     description: Venner
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: DELT_ANDR_A
     description: Annet
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: SAMT_PRIMK_A
     description: Primærkrient
@@ -516,6 +525,7 @@ fields:
     description: Tolk benyttet i forbindelse med én eller flere behandlingssamtaler siden saken ble opprettet
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: SAMARB_INGEN_A
     size: 1
@@ -587,6 +597,7 @@ fields:
     description: Status for saken ved årets slutt
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeList:
       - code: 1
         value: Avsluttet etter avtale med klient

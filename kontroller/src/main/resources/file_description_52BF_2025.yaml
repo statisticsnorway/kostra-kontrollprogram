@@ -126,7 +126,7 @@ fields:
   from: 18
   size: 30
   dataType: "STRING_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "DATO_GRSTART_B"
@@ -190,7 +190,7 @@ fields:
   from: 59
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANTMOTERTOT_OPPR_B"
@@ -198,7 +198,7 @@ fields:
   from: 62
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TIMERTOT_IARET_B"
@@ -206,7 +206,7 @@ fields:
   from: 65
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TIMERTOT_OPPR_B"
@@ -214,7 +214,7 @@ fields:
   from: 68
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANTDELT_IARET_B"
@@ -222,7 +222,7 @@ fields:
   from: 71
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANTDELT_OPPR_B"
@@ -230,7 +230,7 @@ fields:
   from: 74
   size: 3
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "ANTTER_GRUPPEB_B"
@@ -238,7 +238,7 @@ fields:
   from: 77
   size: 2
   dataType: "INTEGER_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList: []
 - name: "TOLK_B"

@@ -86,6 +86,7 @@ fields:
     description: Om samboer eller Lever ikke i samliv skal det krysses av for sivilstand
     size: 1
     dataType: STRING_TYPE
+    mandatory: true
     codeList:
       - code: 1
         value: Ugift

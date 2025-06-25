@@ -44,5 +44,8 @@
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_11CF_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kontroller/src/main/resources/file_description_11CF_2025.yaml)
 * XML-baserte filvedlegg
-  * [Barnevern](/kravspesifikasjon/specs_barnevernstjenesten_15F_barnevern_20YY.md)
-    * * [Filbeskrivelse maskinlesbar (.xsd)](/kontroller/src/main/resources/file_description_11CF_2025.yaml)
+  * Barnevern
+    * [Kravspesifikasjon](/kravspesifikasjon/specs_barnevernstjenesten_15F_barnevern_20YY.md)
+    * [Filbeskrivelse KostraBarnevern, maskinlesbar (.xsd)](/kostra-barnevern/src/main/resources/KostraBarnevern.xsd)
+    * [Filbeskrivelse Avgiver, maskinlesbar (.xsd)](/kostra-barnevern/src/main/resources/Avgiver.xsd)
+    * [Filbeskrivelse Individ, maskinlesbar (.xsd)](/kostra-barnevern/src/main/resources/Individ.xsd)

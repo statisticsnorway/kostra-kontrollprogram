@@ -36,7 +36,7 @@ class Familievern52aMainTest :
                         inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength),
                     ),
                     NUMBER_OF_VALIDATIONS,
-                    52,
+                    51,
                 ),
                 row(
                     "validating a valid record string",

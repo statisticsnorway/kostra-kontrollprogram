@@ -202,7 +202,7 @@ fields:
   from: 35
   size: 1
   dataType: "STRING_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codeList:
   - code: "1"

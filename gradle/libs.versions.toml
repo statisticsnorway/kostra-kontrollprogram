@@ -19,7 +19,7 @@ siouan-frontend-jdk21-version = "10.0.0"
 # to be removed
 assertj-core-version = "3.27.3"
 
-micronaut-platform-version = "4.8.3"
+micronaut-platform-version = "4.9.0"
 micronaut-serde-jackson-version = "2.15.0"
 
 [libraries]

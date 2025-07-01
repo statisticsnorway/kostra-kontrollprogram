@@ -2,7 +2,7 @@
 kotlin-version = "2.1.10"
 jackson-version = "2.19.1"
 kotest-version = "5.9.1"
-mockk-version = "1.14.2"
+mockk-version = "1.14.4"
 woodstox-core-version = "7.1.1"
 picocli-version = "4.7.7"
 logback-classic-version = "1.5.18"

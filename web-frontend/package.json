@@ -16,7 +16,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@popperjs/core": "^2.11.8",
-    "@tanstack/react-query": "^5.80.10",
+    "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "bootstrap": "^5.3.7",
     "match-sorter": "^8.0.3",

@@ -44,6 +44,11 @@ micronaut {
     }
 }
 
+tasks.test {
+    @Suppress("UNNECESSARY_SAFE_CALL")
+    jvmArgs?.add("-Dkotest.framework.config.fqn=no.ssb.kostra.web.ProjectConfig")
+}
+
 tasks.register<Copy>("processFrontendResources") {
     val backendTargetDir = project.layout.buildDirectory.dir("resources/main/static")
     val frontendBuildDir =

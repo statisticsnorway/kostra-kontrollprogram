@@ -10,3 +10,8 @@ dependencies {
     implementation(libs.picocli)
     runtimeOnly(libs.logback.classic)
 }
+
+tasks.test {
+    @Suppress("UNNECESSARY_SAFE_CALL")
+    jvmArgs?.add("-Dkotest.framework.config.fqn=no.ssb.kostra.program.ProjectConfig")
+}

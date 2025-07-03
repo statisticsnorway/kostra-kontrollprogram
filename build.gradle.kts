@@ -50,11 +50,22 @@ allprojects {
 
         configure<KotlinJvmProjectExtension> {
             jvmToolchain(21)
+            compilerOptions {
+                freeCompilerArgs
+                    .addAll(
+                        "-Xjsr305=strict",
+                        "-Xannotation-default-target=param-property"
+                    )
+            }
         }
 
         tasks.withType<Test> {
             useJUnitPlatform()
-            jvmArgs("-Xshare:off", "-XX:+EnableDynamicAgentLoading")
+            jvmArgs(
+                "-Xshare:off",
+                "-XX:+EnableDynamicAgentLoading",
+                "-Dkotest.framework.classpath.scanning.autoscan.disable=true"
+            )
         }
 
         tasks.withType<JacocoReport> {

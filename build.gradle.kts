@@ -83,10 +83,6 @@ allprojects {
     }
 }
 
-tasks.test {
-    useJUnitPlatform() // IMPORTANT for Kotest 5+
-}
-
 tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
     group = "documentation"
     description = "Generates Markdown files from YAML in file_description_templates"

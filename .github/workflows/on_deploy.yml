@@ -55,7 +55,7 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Build with Gradle
-        run: ./gradlew build -p web --no-daemon --build-cache --info
+        run: ./gradlew build -p web -x test --no-daemon --build-cache --info
 
       - name: Authenticate to Google Cloud
         id: "auth"

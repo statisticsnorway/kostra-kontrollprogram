@@ -54,7 +54,7 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
-          --no-daemon --parallel --build-cache --info
+          --parallel --build-cache --info
 
 #      - id: "auth"
 #        name: Authenticate to Google Cloud

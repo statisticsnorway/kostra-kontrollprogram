@@ -19,7 +19,7 @@
     "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "bootstrap": "^5.3.7",
-    "match-sorter": "^8.0.3",
+    "match-sorter": "^8.1.0",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",

@@ -1,7 +1,7 @@
 ---
 title: Kvalifiseringsstønd, Kostra-skjema 11CF
 reportingYear: 2024
-description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2024
+description: Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2024
 fields:
   - name: KOMMUNE_NR
     description: Kommunenummer

@@ -119,7 +119,7 @@ fields:
       - code: 6
         value: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
   - name: KVP_MED_ASTONAD
-    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
     size: 1
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
@@ -247,7 +247,7 @@ fields:
     dataType: INTEGER_TYPE
     size: 7
   - name: STATUS
-    description: Hva er status for deltakelsen i kvalifiseringsprogrammet?
+    description: Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12?
     dataType: STRING_TYPE
     size: 1
     mandatory: true

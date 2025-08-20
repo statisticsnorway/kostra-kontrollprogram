@@ -27,7 +27,8 @@ class Rule020BViktigsteKildeTilLivsOppholdKode3Test : BehaviorSpec({
                 expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                         "sosial-/NAV-kontoret er Trygd/pensjon. " +
                         "Trygdesituasjonen er '(00)', forventet én av '([" +
-                        "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, 06=Etterlattpensjon, " +
+                        "01=Sykepenger, 02=Dagpenger, 04=Uføretrygd, 05=Overgangsstønad, " +
+                        "06=Omstillingsstønad/tidl. Etterlattepensjon, " +
                         "07=Alderspensjon, 09=Supplerende stønad (kort botid), 10=Annen trygd, " +
                         "11=Arbeidsavklaringspenger, 13=Barnetrygd" +
                         "])'. Feltet er obligatorisk å fylle ut.",

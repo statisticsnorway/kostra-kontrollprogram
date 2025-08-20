@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import gradletask.extensions.toChangeLogMarkdown
+import gradletask.extensions.toFileDescriptionTemplate
 import no.ssb.kostra.program.extension.toMarkdown
 import java.io.File
 
@@ -13,57 +15,123 @@ fun main() {
 }
 
 fun createFileDescriptions() {
-    val inputDir =
-        File("src/main/resources/file_description_templates")
-    val markdownOutputDir = File("kravspesifikasjon")
-    markdownOutputDir.mkdirs()
-    val fileDescriptionOutputDir = File("kontroller/src/main/resources")
-    fileDescriptionOutputDir.mkdirs()
+    val inputPath = "src/main/resources/file_description_templates"
+    val inputDir = File(inputPath)
+    val specsOutputDir = File("kravspesifikasjon")
+    specsOutputDir.mkdirs()
+    val resourcesOutputDir = File("kontroller/src/main/resources")
+    resourcesOutputDir.mkdirs()
     val mapper = createYAMLMapper()
 
-    inputDir
+    val forms = inputDir
         .listFiles()
         ?.filter { file ->
-            file.name.startsWith("file")
-                    && file.extension in listOf("yaml", "yml")
+            file.name.startsWith("file_description_")
+                    && file.extension == "yaml"
         }
-        ?.forEach { yamlFile ->
-            try {
-                val yamlString = yamlFile.readText()
-                val fileDescriptionTemplate: FileDescriptionTemplate =
-                    mapper.readValue(
-                        yamlString,
-                        FileDescriptionTemplate::class.java
-                    )
-                val fileName =
-                    "${yamlFile.nameWithoutExtension}${if (fileDescriptionTemplate.reportingYear == 0) "" else "_" + fileDescriptionTemplate.reportingYear}"
-                val fileDescription =
-                    fileDescriptionTemplate.toFileDescription()
-                val markdown = fileDescription.toMarkdown()
+        ?.mapNotNull { file ->
+            file
+                .nameWithoutExtension
+                .substringAfter("file_description_")
+                .let { formIdAndYear ->
+                    if (formIdAndYear.contains("_")) {
+                        formIdAndYear.substringBefore("_") to file
+                    } else {
+                        formIdAndYear to file
+                    }
+                }
+        }
+        ?.groupBy(
+            keySelector = { it.first },      // group by formId
+            valueTransform = { it.second }   // keep (filename)
+        )
+        ?.mapValues { (_, list) ->
+            list.sorted()       // sort by filename / year ascending
+        }
 
-                val yamlOutputFile =
-                    File(fileDescriptionOutputDir, "${fileName}.yaml")
-                mapper.writeValue(yamlOutputFile, fileDescription)
-                println("✅ Wrote: $fileDescriptionOutputDir/${fileName}.yaml")
+    // write YAML and markdown versions of the file descriptions to their respective directories
+    forms?.entries
+        ?.forEach { (formId, list) ->
+            println("\uD83D\uDE80 Processing file descriptions for $formId")
+            list.forEach { yamlFile ->
+                try {
+                    val yamlString = yamlFile.readText()
+                    val fileDescriptionTemplate: FileDescriptionTemplate =
+                        mapper.readValue(
+                            yamlString,
+                            FileDescriptionTemplate::class.java
+                        )
+                    val fileName = yamlFile.nameWithoutExtension
+                    val fileDescription =
+                        fileDescriptionTemplate.toFileDescription()
+                    val markdown = fileDescription.toMarkdown()
 
-                val outputFile = File(markdownOutputDir, "${fileName}.md")
-                outputFile.writeText(markdown)
-                println("✅ Wrote: $markdownOutputDir/${fileName}.md")
-            } catch (e: Exception) {
-                println("❌ Failed to process ${yamlFile.absolutePath}: ${e.message}")
+                    val resourcesYamlOutputFile =
+                        File(resourcesOutputDir, "${fileName}.yaml")
+                    mapper.writeValue(resourcesYamlOutputFile, fileDescription)
+                    println("✅ Wrote: $resourcesOutputDir/${fileName}.yaml")
+
+                    val specsYamlOutputFile =
+                        File(specsOutputDir, "${fileName}.yaml")
+                    mapper.writeValue(specsYamlOutputFile, fileDescription)
+                    println("✅ Wrote: $specsOutputDir/${fileName}.yaml")
+
+                    val outputFile = File(specsOutputDir, "${fileName}.md")
+                    outputFile.writeText(markdown)
+                    println("✅ Wrote: $specsOutputDir/${fileName}.md")
+                } catch (e: Exception) {
+                    println("❌ Failed to process ${yamlFile.absolutePath}: ${e.message}")
+                }
             }
+        }
+
+    // write markdown changelogs between versions of the file descriptions
+    forms?.entries
+        ?.filter { (_, list) -> list.size > 1 }
+        ?.forEach { (formId, list) ->
+            println("\uD83D\uDE80 Processing changelogs for $formId")
+            list
+                .map { yamlFile ->
+                    try {
+                        yamlFile
+                        .readText()
+                        .toFileDescriptionTemplate()
+                    } catch (e: Exception) {
+                        println("❌ Failed to process ${yamlFile.absolutePath}: ${e.message}")
+                    }
+
+                }
+                .zipWithNext()
+                .forEach { (a, b ) ->
+                    val fileDescriptionTemplateA = a as FileDescriptionTemplate
+                    val fileDescriptionTemplateB = b as FileDescriptionTemplate
+                    val markdown = (fileDescriptionTemplateA to fileDescriptionTemplateB).toChangeLogMarkdown()
+
+                    val fileName = "changelog_for_${fileDescriptionTemplateA.id}_from_${fileDescriptionTemplateA.reportingYear}_to_${fileDescriptionTemplateB.reportingYear}.md"
+                    val outputFile = File(specsOutputDir, fileName)
+                    outputFile.writeText(markdown)
+                    println("✅ Wrote: $specsOutputDir/${fileName}")
+
+                }
         }
 }
 
 fun createFamvernMapping() {
+    val inputDir =
+        File("src/main/resources/famvern_hierarchy")
     val markdownOutputDir = File("kravspesifikasjon")
     markdownOutputDir.mkdirs()
     val yamlOutputDir = File("kontroller/src/main/resources")
     yamlOutputDir.mkdirs()
     val mapper = createYAMLMapper()
 
-    File("src/main/resources/famvern_hierarchy/mapping_familievern_region_fylke_kontor.yaml")
-        .let { yamlFile ->
+    inputDir
+        .listFiles()
+        ?.filter { file ->
+            file.name.startsWith("mapping_familievern_region_fylke_kontor")
+                    && file.extension in listOf("yaml", "yml")
+        }
+        ?.forEach { yamlFile ->
             try {
                 val famvernMappingTemplate: FamvernMappingTemplate =
                     mapper.readValue(
@@ -77,18 +145,18 @@ fun createFamvernMapping() {
                 val yamlOutputFile =
                     File(
                         yamlOutputDir,
-                        yamlFile.nameWithoutExtension + "_${famvernMappingTemplate.reportingYear}.yaml"
+                        yamlFile.name
                     )
                 mapper.writeValue(yamlOutputFile, famvernHierarchyMapping)
-                println("✅ Wrote: $yamlOutputDir/${yamlFile.nameWithoutExtension}_${famvernMappingTemplate.reportingYear}.yaml")
+                println("✅ Wrote: $yamlOutputDir/${yamlFile.name}")
 
                 val markDownOutputFile =
                     File(
                         markdownOutputDir,
-                        yamlFile.nameWithoutExtension + "_${famvernMappingTemplate.reportingYear}.md"
+                        yamlFile.nameWithoutExtension + ".md"
                     )
                 markDownOutputFile.writeText(markdown)
-                println("✅ Wrote: $markdownOutputDir/${yamlFile.nameWithoutExtension}_${famvernMappingTemplate.reportingYear}.md")
+                println("✅ Wrote: $markdownOutputDir/${yamlFile.nameWithoutExtension}.md")
             } catch (e: Exception) {
                 println("❌ Failed to process ${yamlFile.absolutePath}: ${e.message}")
             }

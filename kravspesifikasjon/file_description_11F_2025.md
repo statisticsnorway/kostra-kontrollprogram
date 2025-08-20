@@ -18,7 +18,7 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `BU18` | Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen? | 1 | 50‑50 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
 | `ANTBU18` | Hvis ja, hvor mange? | 2 | 51‑52 | INTEGER_TYPE |  |  |  |
 | `VKLO` | Hva er mottakerens viktigste kilde til livsopphold ved siste kontakt? | 1 | 53‑53 | STRING_TYPE | ☑️ |  | `1`: Arbeidsinntekt<br/>`2`: Kursstønad/lønn i arbeidsmarkedstiltak<br/>`3`: Trygd/stønad<br/>`4`: Stipend/lån<br/>`5`: Sosialhjelp<br/>`6`: Introduksjonsstøtte<br/>`7`: Ektefelle/samboers inntekt<br/>`8`: Kvalifiseringsstønad<br/>`9`: Annen inntekt |
-| `TRYGDESIT` | Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt | 2 | 54‑55 | STRING_TYPE | ☑️ |  | `01`: Sykepenger<br/>`02`: Dagpenger<br/>`04`: Uføretrygd<br/>`05`: Overgangsstønad<br/>`06`: Etterlattpensjon<br/>`07`: Alderspensjon<br/>`09`: Supplerende stønad (kort botid)<br/>`10`: Annen trygd<br/>`11`: Arbeidsavklaringspenger<br/>`12`: Har ingen trygd/pensjon<br/>`13`: Barnetrygd |
+| `TRYGDESIT` | Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt | 2 | 54‑55 | STRING_TYPE | ☑️ |  | `01`: Sykepenger<br/>`02`: Dagpenger<br/>`04`: Uføretrygd<br/>`05`: Overgangsstønad<br/>`06`: Omstillingsstønad/tidl. Etterlattepensjon<br/>`07`: Alderspensjon<br/>`09`: Supplerende stønad (kort botid)<br/>`10`: Annen trygd<br/>`11`: Arbeidsavklaringspenger<br/>`12`: Har ingen trygd/pensjon<br/>`13`: Barnetrygd |
 | `ARBSIT` | Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt? | 2 | 56‑57 | STRING_TYPE | ☑️ |  | `01`: Arbeid, heltid<br/>`02`: Arbeid, deltid<br/>`03`: Under utdanning<br/>`04`: Ikke arbeidssøker<br/>`05`: Arbeidsmarkedstiltak (statlig)<br/>`06`: Kommunalt tiltak<br/>`07`: Registrert arbeidsledig<br/>`08`: Arbeidsledig, men ikke registrert hos NAV<br/>`09`: Introduksjonsordning<br/>`10`: Kvalifiseringsprogram |
 | `STMND_1` | Har mottakeren fått økonomisk stønad i januar? | 2 | 58‑59 | STRING_TYPE |  |  | `01`: Januar |
 | `STMND_2` | Har mottakeren fått økonomisk stønad i februar? | 2 | 60‑61 | STRING_TYPE |  |  | `02`: Februar |
@@ -32,8 +32,8 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `STMND_10` | Har mottakeren fått økonomisk stønad i oktober? | 2 | 76‑77 | STRING_TYPE |  |  | `10`: Oktober |
 | `STMND_11` | Har mottakeren fått økonomisk stønad i november? | 2 | 78‑79 | STRING_TYPE |  |  | `11`: November |
 | `STMND_12` | Har mottakeren fått økonomisk stønad i desember? | 2 | 80‑81 | STRING_TYPE |  |  | `12`: Desember |
-| `BIDRAG` | Bidrag | 7 | 82‑88 | INTEGER_TYPE | ☑️ |  |  |
-| `LAAN` | Lån | 7 | 89‑95 | INTEGER_TYPE | ☑️ |  |  |
+| `BIDRAG` | Hva fikk mottakeren utbetalt i bidrag i løpet av året? | 7 | 82‑88 | INTEGER_TYPE | ☑️ |  |  |
+| `LAAN` | Hva fikk mottakeren utbetalt i lån i løpet av året? | 7 | 89‑95 | INTEGER_TYPE | ☑️ |  |  |
 | `BIDRAG_1` | Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag | 7 | 96‑102 | INTEGER_TYPE |  |  |  |
 | `LAAN_1` | Januar, lån | 7 | 103‑109 | INTEGER_TYPE |  |  |  |
 | `BIDRAG_2` | Februar, bidrag | 7 | 110‑116 | INTEGER_TYPE |  |  |  |
@@ -62,10 +62,10 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `FAAT_INDIVIDUELL_PLAN` | Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)? | 1 | 265‑265 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
 | `SAKSBEHANDLER` | Saksbehandlernummer | 10 | 266‑275 | STRING_TYPE | ☑️ |  |  |
 | `BOSIT` | Hva er mottakerens bosituasjon ved siste kontakt? | 1 | 276‑276 | STRING_TYPE | ☑️ |  | `1`: Leid privat bolig<br/>`2`: Leid kommunal bolig<br/>`3`: Eid bolig<br/>`4`: Uten bolig<br/>`5`: Annet<br/>`6`: Institusjon  |
-| `VILKARSOSLOV` | Stilles det vilkår til mottakeren etter sosialtjenesteloven? | 1 | 277‑277 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
-| `VILKARSAMEKT` | Stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven? | 1 | 278‑278 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
-| `UTBETDATO` | Oppgi utbetalingsvedtakets dato (DDMMÅÅÅÅ) | 8 | 279‑286 | DATE_TYPE |  | ddMMyyyy |  |
-| `UTBETTOMDATO` | Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅÅÅ) | 8 | 287‑294 | DATE_TYPE |  | ddMMyyyy |  |
+| `VILKARSOSLOV` | I forbindelse med vedtak om utbetaling av stønad, stilles det vilkår til mottakeren etter sosialtjenesteloven? | 1 | 277‑277 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
+| `VILKARSAMEKT` | I forbindelse med vedtak om utbetaling av stønad, stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven? | 1 | 278‑278 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
+| `UTBETDATO` | Hvis "ja" på spørsmålet "Stilles det vilkår til mottakeren etter sosialtjenesteloven?" Oppgi utbetalingsvedtakets dato (DDMMÅÅÅÅ) | 8 | 279‑286 | DATE_TYPE |  | ddMMyyyy |  |
+| `UTBETTOMDATO` | Hvis "ja" på spørsmålet "Stilles det vilkår til mottakeren etter sosialtjenesteloven?" Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅÅÅ) | 8 | 287‑294 | DATE_TYPE |  | ddMMyyyy |  |
 | `VILKARARBEID` | Oppgi hvilke vilkår det stilles til mottakeren. Flere kryss mulig | 2 | 295‑296 | STRING_TYPE |  |  | `16`: Delta på arbeidstrening/arbeidspraksis |
 | `VILKARKURS` |  | 2 | 297‑298 | STRING_TYPE |  |  | `17`: Delta på arbeidsrettede kurs, opplæring eller jobbsøkingskurs |
 | `VILKARUTD` |  | 2 | 299‑300 | STRING_TYPE |  |  | `04`: Benytte rett til skole |
@@ -83,5 +83,5 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `VEDTAKAKT` |  | 2 | 329‑330 | STRING_TYPE |  |  | `02`: Mottaker er allerede i aktivitet knyttet til mottak av statlig eller annen kommunal ytelse |
 | `VEDTAKHELSE` |  | 2 | 331‑332 | STRING_TYPE |  |  | `03`: Mottakers helsemessige eller sosiale situasjon hindrer deltakelse i aktivitet |
 | `VEDTAKGRUNN` |  | 2 | 333‑334 | STRING_TYPE |  |  | `04`: Andre tungtveiende grunner taler mot at det stilles vilkår om aktivitet |
-| `SANKSJONRED` | Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20a | 2 | 335‑336 | STRING_TYPE |  |  | `01`: Redusert stønad |
+| `SANKSJONRED` | Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20 eller § 20a | 2 | 335‑336 | STRING_TYPE |  |  | `01`: Redusert stønad |
 | `SANKSJONANDRE` |  | 2 | 337‑338 | STRING_TYPE |  |  | `02`: Andre konsekvenser |

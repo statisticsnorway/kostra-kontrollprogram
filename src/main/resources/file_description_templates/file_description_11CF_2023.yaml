@@ -1,8 +1,8 @@
 ---
 id: 11CF
-title: Kvalifiseringsstønd, Kostra-skjema 11CF
-reportingYear: 2025
-description: Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2025
+title: Kvalifiseringsstønad, Kostra-skjema 11CF
+reportingYear: 2023
+description: Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2023
 fields:
   - name: KOMMUNE_NR
     description: Kommunenummer
@@ -18,12 +18,6 @@ fields:
     description: Bydelsnummer
     dataType: STRING_TYPE
     size: 2
-  - name: FODSELSDATO
-    description: Fødselsdato (DDMMÅÅÅÅ)
-    dataType: DATE_TYPE
-    size: 8
-    mandatory: true
-    datePattern: ddMMyyyy
   - name: PERSON_JOURNALNR
     description: Journalnummer
     dataType: STRING_TYPE
@@ -59,21 +53,21 @@ fields:
   - name: REG_DATO
     description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ
     dataType: DATE_TYPE
-    size: 8
+    size: 6
     mandatory: true
-    datePattern: ddMMyyyy
+    datePattern: ddMMyy
   - name: VEDTAK_DATO
     description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ
     dataType: DATE_TYPE
-    size: 8
+    size: 6
     mandatory: true
-    datePattern: ddMMyyyy
+    datePattern: ddMMyy
   - name: BEGYNT_DATO
     description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ
     dataType: DATE_TYPE
-    size: 8
+    size: 6
     mandatory: true
-    datePattern: ddMMyyyy
+    datePattern: ddMMyy
   - name: KVP_KOMM
     description: Kommer deltakeren fra kvalifiseringsprogram i annen kommune?
     dataType: STRING_TYPE
@@ -120,7 +114,7 @@ fields:
       - code: 6
         value: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
   - name: KVP_MED_ASTONAD
-    description: Har deltakeren i 2025 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
     size: 1
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
@@ -248,7 +242,7 @@ fields:
     dataType: INTEGER_TYPE
     size: 7
   - name: STATUS
-    description: Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.2025?
+    description: Hva er status for deltakelsen i kvalifiseringsprogrammet?
     dataType: STRING_TYPE
     size: 1
     mandatory: true
@@ -256,8 +250,8 @@ fields:
   - name: AVSL_DATO
     description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
     dataType: DATE_TYPE
-    size: 8
-    datePattern: ddMMyyyy
+    size: 6
+    datePattern: ddMMyy
   - name: AVSL_ORDINAERTARB
     description: Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE

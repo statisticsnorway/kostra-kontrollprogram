@@ -7,5 +7,5 @@ import no.ssb.kostra.program.FileLoader
 object RegnskapFieldDefinitions : FieldDefinitions {
     override val fieldDefinitions: List<FieldDefinition> =
         FileLoader
-            .getResourceAsFieldDefinitionList("file_description_Regnskap_2025.yaml")
+            .getResourceAsFieldDefinitionList("file_description_Regnskap.yaml")
 }

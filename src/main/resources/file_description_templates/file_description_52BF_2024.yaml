@@ -1,0 +1,125 @@
+id: 52BF
+title: 52BF Gruppeskjema for familievernet
+reportingYear: 2025
+description: Filbeskrivelse for 52BF Gruppeskjema for familievernet for 2025
+fields:
+  - name: REGION_NR_B
+    description: Familievernregionnummer
+    size: 6
+    dataType: STRING_TYPE
+    mandatory: true
+    codeListSource: "557" # Standard for familievernregioner
+  - name: KONTOR_NR_B
+    description: Familievernkontornummer
+    size: 3
+    dataType: STRING_TYPE
+    mandatory: true
+    codeListSource: "558" # Standard for familievernkontor
+  - name: GRUPPE_NR_B
+    description: Gruppenummer
+    size: 8
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: GRUPPE_NAVN_B
+    description: Gruppenavn
+    size: 30
+    dataType: STRING_TYPE
+  - name: DATO_GRSTART_B
+    description: Dato for gruppebehandlingens start (ddmmåååå)
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy
+    mandatory: true
+  - name: STRUKTUR_GR_B
+    description: Målgruppe
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Par
+      - code: 2
+        value: Barn (under 18 år)
+      - code: 3
+        value: Individ
+      - code: 4
+        value: Familie
+      - code: 5
+        value: Foreldre
+  - name: HOVEDI_GR_B
+    description: Hvilket hovedinnhold/tema har gruppen?
+    size: 2
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 01
+        value: Samlivskurs
+      - code: 02
+        value: Samlivsbrudd
+      - code: 03
+        value: Samarbeid om barn etter brudd
+      - code: 04
+        value: Barn som har opplevd brudd i familien
+      - code: 05
+        value: Vold/overgrep
+      - code: 06
+        value: Sinnemestring
+      - code: 07
+        value: Kultur-/Minoritetsspørsmål
+      - code: 08
+        value: Foreldreveiledning
+      - code: 09
+        value: Foreldre som har mistet omsorgen for egne barn
+      - code: 10
+        value: Andre alvorlige hendelser
+      - code: 11
+        value: "Annet, spesifiser"
+  - name: ANTMOTERTOT_IARET_B
+    description: Antall gruppemøter gjennomført totalt i løpet av året
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTMOTERTOT_OPPR_B
+    description: Antall gruppemøter gjennomført totalt siden opprettelsen
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TIMERTOT_IARET_B
+    description: Antall timer anvendt i gruppen totalt i løpet av året
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: TIMERTOT_OPPR_B
+    description: Antall timer anvendt i gruppen totalt siden opprettelsen
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTDELT_IARET_B
+    description: Antall deltakere i gruppen i løpet av året
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTDELT_OPPR_B
+    description: Antall deltakere i gruppen siden opprettelsen
+    size: 3
+    dataType: INTEGER_TYPE
+  - name: ANTTER_GRUPPEB_B
+    description: Antall terapauter involvert i gruppebehandlingen
+    size: 2
+    dataType: INTEGER_TYPE
+  - name: TOLK_B
+    description: Tolk benyttet i forbindelse med en eller flere gruppesamtaler siden gruppen ble opprettet
+    size: 1
+    dataType: STRING_TYPE
+    codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
+    mandatory: true
+  - name: STATUS_ARETSSL_B
+    description: Status for gruppen ved årets slutt ved årets slutt?
+    size: 1
+    dataType: STRING_TYPE
+    mandatory: true
+    codeList:
+      - code: 1
+        value: Gruppebehandlingen ikke avsluttet i inneværende år
+      - code: 2
+        value: Avsluttet
+  - name: DATO_GRAVSLUTN_B
+    description: Dato for gruppens avslutning (ddmmåååå)
+    size: 8
+    dataType: DATE_TYPE
+    datePattern: ddMMyyyy

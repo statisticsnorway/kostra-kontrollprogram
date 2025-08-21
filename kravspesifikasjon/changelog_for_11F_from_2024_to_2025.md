@@ -9,9 +9,9 @@
 ## Endret
 | Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `KOMMUNE_NR` | Kommunenummer | 4 | 1 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
-| `VERSION` | Rapporteringsår / versjon / oppgaveår | 2 | 5 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
-| `BYDELSNR` | Bydelsnummer | 2 | 7 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
+| `KOMMUNE_NR` | Kommunenummer | 4 | 1-4 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
+| `VERSION` | Rapporteringsår / versjon / oppgaveår | 2 | 5-6 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
+| `BYDELSNR` | Bydelsnummer | 2 | 7-8 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
 | `PERSON_JOURNALNR` | Journalnummer | 8 | 9-16 <br/> endret til <br/> 17-24 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |
 | `PERSON_FODSELSNR` | Hva er mottakerens fødselsnummer? | 11 | 17-27 <br/> endret til <br/> 25-35 | STRING_TYPE |  |  | Ingen endringer |
 | `PERSON_DUFNR` | Hva er mottakerens DUF-nummer? | 12 | 28-39 <br/> endret til <br/> 36-47 | STRING_TYPE | ❌ <br/> endret til <br/> ✅ |  | Ingen endringer |

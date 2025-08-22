@@ -1,4 +1,5 @@
 ---
+id: "55F"
 title: "55F Meklingssaker i familieverntjenesten"
 reportingYear: 2024
 description: "Filbeskrivelse for 55F Meklingssaker i familieverntjenesten for 2024"
@@ -10,6 +11,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FYLKE_NAVN"
   description: null
@@ -18,6 +20,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "KONTOR_NR"
   description: null
@@ -26,6 +29,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SEP_1"
   description: null
@@ -34,6 +38,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SEP_2"
   description: null
@@ -42,6 +47,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SEP_3"
   description: null
@@ -50,6 +56,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SEP_TOT"
   description: null
@@ -58,6 +65,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SEP_AVLYST"
   description: null
@@ -66,6 +74,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAM_1"
   description: null
@@ -74,6 +83,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAM_2"
   description: null
@@ -82,6 +92,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAM_3"
   description: null
@@ -90,6 +101,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAM_TOT"
   description: null
@@ -98,6 +110,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAM_AVLYST"
   description: null
@@ -106,6 +119,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAK_1"
   description: null
@@ -114,6 +128,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAK_2"
   description: null
@@ -122,6 +137,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAK_3"
   description: null
@@ -130,6 +146,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAK_TOT"
   description: null
@@ -138,6 +155,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_SAK_AVLYST"
   description: null
@@ -146,6 +164,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TILB_1"
   description: null
@@ -154,6 +173,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TILB_2"
   description: null
@@ -162,6 +182,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TILB_3"
   description: null
@@ -170,6 +191,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TILB_TOT"
   description: null
@@ -178,6 +200,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TILB_AVLYST"
   description: null
@@ -186,6 +209,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_FLY_1"
   description: null
@@ -194,6 +218,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_FLY_2"
   description: null
@@ -202,6 +227,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_FLY_3"
   description: null
@@ -210,6 +236,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_FLY_TOT"
   description: null
@@ -218,6 +245,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_FLY_AVLYST"
   description: null
@@ -226,6 +254,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TOT_1"
   description: null
@@ -234,6 +263,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TOT_2"
   description: null
@@ -242,6 +272,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TOT_3"
   description: null
@@ -250,6 +281,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TOT_ALLE"
   description: null
@@ -258,6 +290,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "MEKLING_TOT_AVLYST"
   description: null
@@ -266,6 +299,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SEP_BEGGE"
   description: null
@@ -274,6 +308,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SEP_EN"
   description: null
@@ -282,6 +317,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SEP_TOT"
   description: null
@@ -290,6 +326,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAM_BEGGE"
   description: null
@@ -298,6 +335,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAM_EN"
   description: null
@@ -306,6 +344,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAM_TOT"
   description: null
@@ -314,6 +353,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAK_BEGGE"
   description: null
@@ -322,6 +362,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAK_EN"
   description: null
@@ -330,6 +371,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAK_TOT"
   description: null
@@ -338,6 +380,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILB_BEGGE"
   description: null
@@ -346,6 +389,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILB_EN"
   description: null
@@ -354,6 +398,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILB_TOT"
   description: null
@@ -362,6 +407,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FLY_BEGGE"
   description: null
@@ -370,6 +416,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FLY_EN"
   description: null
@@ -378,6 +425,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FLY_TOT"
   description: null
@@ -386,6 +434,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEGGE_TOT"
   description: null
@@ -394,6 +443,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "EN_TOT"
   description: null
@@ -402,6 +452,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ENBEGGE_TOT"
   description: null
@@ -410,6 +461,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SEP_1"
   description: null
@@ -418,6 +470,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SEP_2"
   description: null
@@ -426,6 +479,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SEP_3"
   description: null
@@ -434,6 +488,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SEP_4"
   description: null
@@ -442,6 +497,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SEP_TOT"
   description: null
@@ -450,6 +506,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAM_1"
   description: null
@@ -458,6 +515,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAM_2"
   description: null
@@ -466,6 +524,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAM_3"
   description: null
@@ -474,6 +533,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAM_4"
   description: null
@@ -482,6 +542,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAM_TOT"
   description: null
@@ -490,6 +551,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAK_1"
   description: null
@@ -498,6 +560,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAK_2"
   description: null
@@ -506,6 +569,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAK_3"
   description: null
@@ -514,6 +578,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAK_4"
   description: null
@@ -522,6 +587,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_SAK_TOT"
   description: null
@@ -530,6 +596,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TILB_1"
   description: null
@@ -538,6 +605,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TILB_2"
   description: null
@@ -546,6 +614,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TILB_3"
   description: null
@@ -554,6 +623,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TILB_4"
   description: null
@@ -562,6 +632,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TILB_TOT"
   description: null
@@ -570,6 +641,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_FLY_1"
   description: null
@@ -578,6 +650,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_FLY_2"
   description: null
@@ -586,6 +659,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_FLY_3"
   description: null
@@ -594,6 +668,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_FLY_4"
   description: null
@@ -602,6 +677,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_FLY_TOT"
   description: null
@@ -610,6 +686,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TOT_1"
   description: null
@@ -618,6 +695,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TOT_2"
   description: null
@@ -626,6 +704,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TOT_3"
   description: null
@@ -634,6 +713,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TOT_4"
   description: null
@@ -642,6 +722,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VENTETID_TOT_TOT"
   description: null
@@ -650,6 +731,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FORHOLD_MEKLER"
   description: null
@@ -658,6 +740,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FORHOLD_KLIENT"
   description: null
@@ -666,6 +749,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FORHOLD_TOT"
   description: null
@@ -674,6 +758,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SEP_1"
   description: null
@@ -682,6 +767,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SEP_2"
   description: null
@@ -690,6 +776,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SEP_3"
   description: null
@@ -698,6 +785,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SEP_TOT"
   description: null
@@ -706,6 +794,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAM_1"
   description: null
@@ -714,6 +803,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAM_2"
   description: null
@@ -722,6 +812,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAM_3"
   description: null
@@ -730,6 +821,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAM_TOT"
   description: null
@@ -738,6 +830,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAK_1"
   description: null
@@ -746,6 +839,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAK_2"
   description: null
@@ -754,6 +848,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAK_3"
   description: null
@@ -762,6 +857,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_SAK_TOT"
   description: null
@@ -770,6 +866,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TILB_1"
   description: null
@@ -778,6 +875,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TILB_2"
   description: null
@@ -786,6 +884,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TILB_3"
   description: null
@@ -794,6 +893,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TILB_TOT"
   description: null
@@ -802,6 +902,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_FLY_1"
   description: null
@@ -810,6 +911,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_FLY_2"
   description: null
@@ -818,6 +920,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_FLY_3"
   description: null
@@ -826,6 +929,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_FLY_TOT"
   description: null
@@ -834,6 +938,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TOT_1"
   description: null
@@ -842,6 +947,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TOT_2"
   description: null
@@ -850,6 +956,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TOT_3"
   description: null
@@ -858,6 +965,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VARIGHET_TOT_TOT"
   description: null
@@ -866,6 +974,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_SEP_TOT"
   description: null
@@ -874,6 +983,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_SAM_TOT"
   description: null
@@ -882,6 +992,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_SAK_TOT"
   description: null
@@ -890,6 +1001,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_TILB_TOT"
   description: null
@@ -898,6 +1010,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_FLY_TOT"
   description: null
@@ -906,6 +1019,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BARNDELT_TOT_TOT"
   description: null
@@ -914,6 +1028,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SEP_1"
   description: null
@@ -922,6 +1037,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SEP_2"
   description: null
@@ -930,6 +1046,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SEP_3"
   description: null
@@ -938,6 +1055,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SEP_TOT"
   description: null
@@ -946,6 +1064,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAM_1"
   description: null
@@ -954,6 +1073,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAM_2"
   description: null
@@ -962,6 +1082,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAM_3"
   description: null
@@ -970,6 +1091,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAM_TOT"
   description: null
@@ -978,6 +1100,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAK_1"
   description: null
@@ -986,6 +1109,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAK_2"
   description: null
@@ -994,6 +1118,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAK_3"
   description: null
@@ -1002,6 +1127,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_SAK_TOT"
   description: null
@@ -1010,6 +1136,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TILB_1"
   description: null
@@ -1018,6 +1145,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TILB_2"
   description: null
@@ -1026,6 +1154,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TILB_3"
   description: null
@@ -1034,6 +1163,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TILB_TOT"
   description: null
@@ -1042,6 +1172,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_FLY_1"
   description: null
@@ -1050,6 +1181,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_FLY_2"
   description: null
@@ -1058,6 +1190,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_FLY_3"
   description: null
@@ -1066,6 +1199,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_FLY_TOT"
   description: null
@@ -1074,6 +1208,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TOT_1"
   description: null
@@ -1082,6 +1217,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TOT_2"
   description: null
@@ -1090,6 +1226,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TOT_3"
   description: null
@@ -1098,6 +1235,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "RESULT_TOT_TOT"
   description: null
@@ -1106,6 +1244,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SEP_1"
   description: null
@@ -1114,6 +1253,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SEP_2"
   description: null
@@ -1122,6 +1262,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SEP_3"
   description: null
@@ -1130,6 +1271,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SEP_TOT"
   description: null
@@ -1138,6 +1280,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAM_1"
   description: null
@@ -1146,6 +1289,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAM_2"
   description: null
@@ -1154,6 +1298,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAM_3"
   description: null
@@ -1162,6 +1307,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAM_TOT"
   description: null
@@ -1170,6 +1316,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAK_1"
   description: null
@@ -1178,6 +1325,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAK_2"
   description: null
@@ -1186,6 +1334,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAK_3"
   description: null
@@ -1194,6 +1343,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_SAK_TOT"
   description: null
@@ -1202,6 +1352,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TILB_1"
   description: null
@@ -1210,6 +1361,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TILB_2"
   description: null
@@ -1218,6 +1370,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TILB_3"
   description: null
@@ -1226,6 +1379,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TILB_TOT"
   description: null
@@ -1234,6 +1388,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_FLY_1"
   description: null
@@ -1242,6 +1397,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_FLY_2"
   description: null
@@ -1250,6 +1406,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_FLY_3"
   description: null
@@ -1258,6 +1415,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_FLY_TOT"
   description: null
@@ -1266,6 +1424,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TOT_1"
   description: null
@@ -1274,6 +1433,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TOT_2"
   description: null
@@ -1282,6 +1442,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TOT_3"
   description: null
@@ -1290,6 +1451,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "AVTALE_TOT_TOT"
   description: null
@@ -1298,6 +1460,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SEP_1"
   description: null
@@ -1306,6 +1469,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SEP_2"
   description: null
@@ -1314,6 +1478,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SEP_TOT"
   description: null
@@ -1322,6 +1487,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAM_1"
   description: null
@@ -1330,6 +1496,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAM_2"
   description: null
@@ -1338,6 +1505,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAM_TOT"
   description: null
@@ -1346,6 +1514,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAK_1"
   description: null
@@ -1354,6 +1523,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAK_2"
   description: null
@@ -1362,6 +1532,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_SAK_TOT"
   description: null
@@ -1370,6 +1541,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TILB_1"
   description: null
@@ -1378,6 +1550,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TILB_2"
   description: null
@@ -1386,6 +1559,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TILB_TOT"
   description: null
@@ -1394,6 +1568,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_FLY_1"
   description: null
@@ -1402,6 +1577,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_FLY_2"
   description: null
@@ -1410,6 +1586,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_FLY_TOT"
   description: null
@@ -1418,6 +1595,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TOT_1"
   description: null
@@ -1426,6 +1604,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TOT_2"
   description: null
@@ -1434,6 +1613,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "BEKYMR_TOT_TOT"
   description: null
@@ -1442,6 +1622,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_1"
   description: null
@@ -1450,6 +1631,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_2"
   description: null
@@ -1458,6 +1640,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_3"
   description: null
@@ -1466,6 +1649,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_4"
   description: null
@@ -1474,6 +1658,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_5"
   description: null
@@ -1482,6 +1667,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "UTEN_OPPM_TOT"
   description: null
@@ -1490,4 +1676,5 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []

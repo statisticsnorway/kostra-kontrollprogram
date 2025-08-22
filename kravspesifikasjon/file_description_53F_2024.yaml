@@ -1,4 +1,5 @@
 ---
+id: "53F"
 title: "53F Utadrettet virksomhet i familieverntjenesten"
 reportingYear: 2024
 description: "Filbeskrivelse for 53F Utadrettet virksomhet i familieverntjenesten for 2024"
@@ -10,6 +11,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/104"
   codeList:
   - code: "03"
     value: "Oslo"
@@ -50,6 +52,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/558"
   codeList:
   - code: "017"
     value: "Familievernkontoret Østfold"
@@ -142,6 +145,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILTAK_PUBLIKUM_TIMER"
   description: "Andre tiltak mot publikum publikum, timer"
@@ -150,6 +154,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VEILEDNING_STUDENTER_TILTAK"
   description: "Undervisning/veiledning av studenter, tiltak"
@@ -158,6 +163,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VEILEDNING_STUDENTER_TIMER"
   description: "Undervisning/veiledning av studenter, timer"
@@ -166,6 +172,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VEILEDNING_HJELPEAP_TILTAK"
   description: "Veiledning/konsultasjon av hjelpeapparatet, tiltak"
@@ -174,6 +181,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "VEILEDNING_HJELPEAP_TIMER"
   description: "Veiledning/konsultasjon av hjelpeapparatet, timer"
@@ -182,6 +190,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "INFO_MEDIA_TILTAK"
   description: "Informasjon i media, tiltak"
@@ -190,6 +199,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "INFO_MEDIA_TIMER"
   description: "Informasjon i media, timer"
@@ -198,6 +208,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILSYN_TILTAK"
   description: "Tilsyn, tiltak"
@@ -206,6 +217,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TILSYN_TIMER"
   description: "Tilsyn, timer"
@@ -214,6 +226,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FORELDREVEIL_TILTAK"
   description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning"
@@ -222,6 +235,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "FORELDREVEIL_TIMER"
   description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – foreldreveiledning"
@@ -230,6 +244,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANNET_TILTAK"
   description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - tiltak"
@@ -238,6 +253,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANNET_TIMER"
   description: "Undervisning/kurs/samarbeidsmøter hjelpeapparat – annet - timer"
@@ -246,4 +262,5 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []

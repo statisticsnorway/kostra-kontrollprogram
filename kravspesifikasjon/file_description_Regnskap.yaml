@@ -1,4 +1,5 @@
 ---
+id: ""
 title: "Regnskap"
 reportingYear: 2025
 description: "Filbeskrivelse for alle regnskap for 2025 som blir rapportert via skjema.ssb.no"
@@ -10,6 +11,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "0A"
     value: "0A. Bevilgningsregnskap kommunekasse"
@@ -50,6 +52,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "kvartal"
   description: "Årsregnskap / kvartalsvis regnskap"
@@ -58,6 +61,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: " "
     value: "Årsregnskap"
@@ -76,6 +80,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "orgnr"
   description: "Benyttes der det rapporteres for virksomheter, f.eks. regnskap 0F, 0G, 0I, 0J, 0K 0L, 0X, 0Y"
@@ -84,6 +89,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "foretaksnr"
   description: "Benyttes der det rapporteres for foretak, f.eks regnskap 0X"
@@ -92,6 +98,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "kontoklasse"
   description: "Se regnskapets veiledning for aktuelle koder for kontoklasse"
@@ -100,6 +107,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: " "
     value: "Helseforetakregnskap"
@@ -122,6 +130,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "art_sektor"
   description: "Se regnskapets veiledning for aktuelle koder for art / sektor"
@@ -130,6 +139,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "belop"
   description: "Beløpet skal gis i 1000 kr og høyrejusteres.\nFor bevilgnings-/resultatregnskap:\n* Utgifter (debet) rapporteres i positive verdier. \n* Inntekter (kredit) rapporteres i negative verdier (med minustegnet i posisjonen foran beløpet).\nFor balanseregnskap:\n* Eiendeler rapporteres i positive verdier\n* Gjeld og egenkapital rapporteres i negative verdier (med minustegnet i posisjonen foran beløpet).\n"
@@ -138,4 +148,5 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []

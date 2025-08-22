@@ -1,4 +1,5 @@
 ---
+id: "52BF"
 title: "52BF Gruppeskjema for familievernet"
 reportingYear: 2025
 description: "Filbeskrivelse for 52BF Gruppeskjema for familievernet for 2025"
@@ -10,6 +11,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/557"
   codeList:
   - code: "667200"
     value: "Region øst"
@@ -28,6 +30,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/558"
   codeList:
   - code: "017"
     value: "Familievernkontoret Østfold"
@@ -120,6 +123,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "GRUPPE_NAVN_B"
   description: "Gruppenavn"
@@ -128,6 +132,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "DATO_GRSTART_B"
   description: "Dato for gruppebehandlingens start (ddmmåååå)"
@@ -136,6 +141,7 @@ fields:
   dataType: "DATE_TYPE"
   mandatory: true
   datePattern: "ddMMyyyy"
+  codelistSource: null
   codeList: []
 - name: "STRUKTUR_GR_B"
   description: "Målgruppe"
@@ -144,6 +150,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Par"
@@ -162,6 +169,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "01"
     value: "Samlivskurs"
@@ -192,6 +200,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTMOTERTOT_OPPR_B"
   description: "Antall gruppemøter gjennomført totalt siden opprettelsen"
@@ -200,6 +209,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TIMERTOT_IARET_B"
   description: "Antall timer anvendt i gruppen totalt i løpet av året"
@@ -208,6 +218,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TIMERTOT_OPPR_B"
   description: "Antall timer anvendt i gruppen totalt siden opprettelsen"
@@ -216,6 +227,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTDELT_IARET_B"
   description: "Antall deltakere i gruppen i løpet av året"
@@ -224,6 +236,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTDELT_OPPR_B"
   description: "Antall deltakere i gruppen siden opprettelsen"
@@ -232,6 +245,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTTER_GRUPPEB_B"
   description: "Antall terapauter involvert i gruppebehandlingen"
@@ -240,6 +254,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TOLK_B"
   description: "Tolk benyttet i forbindelse med en eller flere gruppesamtaler siden gruppen ble opprettet"
@@ -248,6 +263,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -260,6 +276,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Gruppebehandlingen ikke avsluttet i inneværende år"
@@ -272,4 +289,5 @@ fields:
   dataType: "DATE_TYPE"
   mandatory: false
   datePattern: "ddMMyyyy"
+  codelistSource: null
   codeList: []

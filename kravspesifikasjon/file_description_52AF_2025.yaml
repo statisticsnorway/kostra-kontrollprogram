@@ -1,4 +1,5 @@
 ---
+id: "52AF"
 title: "52AF Familievernsaker, klientrapportering"
 reportingYear: 2025
 description: "Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2025"
@@ -10,6 +11,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/557"
   codeList:
   - code: "667200"
     value: "Region øst"
@@ -28,6 +30,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/558"
   codeList:
   - code: "017"
     value: "Familievernkontoret Østfold"
@@ -120,6 +123,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "HENV_DATO_A"
   description: "Henvendelsesdato (ddmmåååå)"
@@ -128,6 +132,7 @@ fields:
   dataType: "DATE_TYPE"
   mandatory: true
   datePattern: "ddMMyyyy"
+  codelistSource: null
   codeList: []
 - name: "KONTAKT_TIDL_A"
   description: "Primærklientens tidligere klientforhold ved kontoret"
@@ -136,6 +141,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "under 6 md siden"
@@ -152,6 +158,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Parforholdet"
@@ -168,6 +175,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Mann/gutt"
@@ -180,6 +188,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "PRIMK_SIVILS_A"
   description: "Primærklientens \"samlivsstatus\" ved sakens opprettelse"
@@ -188,6 +197,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Gift"
@@ -204,6 +214,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Ugift"
@@ -224,6 +235,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Partner (og eventuelt barn)"
@@ -242,6 +254,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Arbeid heltid"
@@ -264,6 +277,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Partner"
@@ -288,6 +302,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Har ikke bodd sammen"
@@ -308,6 +323,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Har ikke bodd sammen"
@@ -328,6 +344,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Har ikke bodd sammen"
@@ -348,6 +365,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Partner"
@@ -358,6 +376,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Ekspartner"
@@ -368,6 +387,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Forelder"
@@ -378,6 +398,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Sønn/datter (under 18 år)"
@@ -388,6 +409,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Sønn/datter (18 år eller eldre)"
@@ -398,6 +420,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Øvrig familie"
@@ -408,6 +431,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Venner"
@@ -418,6 +442,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Annet"
@@ -428,6 +453,7 @@ fields:
   dataType: "DATE_TYPE"
   mandatory: true
   datePattern: "ddMMyyyy"
+  codelistSource: null
   codeList: []
 - name: "SAMT_FORHOLD_A"
   description: "Dersom tiden fra hendvendelse til første behandlingssamtale overstiger 4 uker, hva skyldes dette?"
@@ -436,6 +462,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Forhold hos kontoret"
@@ -448,6 +475,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Styrke parforholdet"
@@ -458,6 +486,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Avklare/avslutte parforholdet"
@@ -468,6 +497,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Samlivsbrudd i familien"
@@ -478,6 +508,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Samspillsvansker"
@@ -488,6 +519,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Barnets opplevelse av sin livssituasjon"
@@ -498,6 +530,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Barnets situasjon i foreldrenes konflikt"
@@ -508,6 +541,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "bostedsavklaring/samvær"
@@ -518,6 +552,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "foreldrerollen"
@@ -528,6 +563,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "foreldre-barn-relasjonen"
@@ -538,6 +574,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "flergenerasjonsproblematikk"
@@ -548,6 +585,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "samarb. om felles barn (foreldre bor ikke sammen)"
@@ -558,6 +596,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "særkullsbarn og/eller ny familie"
@@ -568,6 +607,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "kultur-/minoritetsspørsmål"
@@ -578,6 +618,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "tvangsekteskap"
@@ -588,6 +629,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "bruk av rusmidler"
@@ -598,6 +640,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "sykdom / nedsatt funksjonsevne"
@@ -608,6 +651,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "fysisk / psykisk vold / seksuelt misbruk"
@@ -618,6 +662,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "annen alvorlig hendelse"
@@ -628,6 +673,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Parsamtale"
@@ -644,6 +690,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -656,6 +703,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -668,6 +716,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -680,6 +729,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -692,6 +742,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -704,6 +755,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -716,6 +768,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -728,6 +781,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -740,6 +794,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -752,6 +807,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_PARTNER_A"
   description: "Partner"
@@ -760,6 +816,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_EKSPART_A"
   description: "Ekspartner"
@@ -768,6 +825,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_BARNU18_A"
   description: "Sønn/datter under 18 år"
@@ -776,6 +834,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_BARNO18_A"
   description: "Sønn/datter 18 år eller eldre"
@@ -784,6 +843,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_FORELDRE_A"
   description: "Foreldre"
@@ -792,6 +852,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_OVRFAM_A"
   description: "Øvrig familie"
@@ -800,6 +861,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_VENN_A"
   description: "Venn"
@@ -808,6 +870,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "SAMT_ANDRE_A"
   description: "Annet"
@@ -816,6 +879,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTSAMT_HOVEDT_A"
   description: "Hovedterapaut"
@@ -824,6 +888,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTSAMT_ANDREANS_A"
   description: "Andre utenom hovedterapeut (Co-terapaut)"
@@ -832,6 +897,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTSAMT_IARET_A"
   description: "I løpet av året"
@@ -840,6 +906,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "ANTSAMT_OPPR_A"
   description: "Siden opprettelsen"
@@ -848,6 +915,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TLFSAMT_IARET_A"
   description: "I løpet av året"
@@ -856,6 +924,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TLFSAMT_OPPR_A"
   description: "Siden opprettelsen"
@@ -864,6 +933,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TIMER_IARET_A"
   description: "I løpet av året"
@@ -872,6 +942,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TIMER_OPPR_A"
   description: "Siden opprettelsen"
@@ -880,6 +951,7 @@ fields:
   dataType: "INTEGER_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList: []
 - name: "TOLK_A"
   description: "Tolk benyttet i forbindelse med én eller flere behandlingssamtaler siden saken ble opprettet"
@@ -888,6 +960,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/463"
   codeList:
   - code: "1"
     value: "Ja"
@@ -900,6 +973,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Ikke samarbeid med med annen instans"
@@ -910,6 +984,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Fastlege"
@@ -920,6 +995,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Helsestasjon / Familiesenter"
@@ -930,6 +1006,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Psykisk helsevern"
@@ -940,6 +1017,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Jurist"
@@ -950,6 +1028,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Krisesenter"
@@ -960,6 +1039,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Skole/PP-tjeneste"
@@ -970,6 +1050,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "NAV"
@@ -980,6 +1061,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Kommunalt barnevern"
@@ -990,6 +1072,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Statlig barnevern"
@@ -1000,6 +1083,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Annet"
@@ -1010,6 +1094,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Avsluttet etter avtale med klient"
@@ -1024,6 +1109,7 @@ fields:
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
+  codelistSource: null
   codeList:
   - code: "01"
     value: "styrke parforholdet"
@@ -1068,4 +1154,5 @@ fields:
   dataType: "DATE_TYPE"
   mandatory: false
   datePattern: "ddMMyyyy"
+  codelistSource: null
   codeList: []

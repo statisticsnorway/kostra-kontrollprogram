@@ -1,8 +1,8 @@
 ---
 id: "52AF"
 title: "52AF Familievernsaker, klientrapportering"
-reportingYear: 2025
-description: "Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2025"
+reportingYear: 2024
+description: "Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2024"
 fields:
 - name: "REGION_NR_A"
   description: "Familievernregionnummer"

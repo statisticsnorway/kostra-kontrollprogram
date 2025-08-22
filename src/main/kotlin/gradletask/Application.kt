@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import gradletask.extensions.toChangeLogMarkdown
 import gradletask.extensions.toFileDescriptionTemplate
+import no.ssb.kostra.program.FileDescription
 import no.ssb.kostra.program.extension.toMarkdown
 import java.io.File
 
@@ -96,6 +97,7 @@ fun createFileDescriptions() {
                         yamlFile
                         .readText()
                         .toFileDescriptionTemplate()
+                        .toFileDescription()
                     } catch (e: Exception) {
                         println("❌ Failed to process ${yamlFile.absolutePath}: ${e.message}")
                     }
@@ -103,11 +105,11 @@ fun createFileDescriptions() {
                 }
                 .zipWithNext()
                 .forEach { (a, b ) ->
-                    val fileDescriptionTemplateA = a as FileDescriptionTemplate
-                    val fileDescriptionTemplateB = b as FileDescriptionTemplate
-                    val markdown = (fileDescriptionTemplateA to fileDescriptionTemplateB).toChangeLogMarkdown()
+                    val fileDescriptionA = a as FileDescription
+                    val fileDescriptionB = b as FileDescription
+                    val markdown = (fileDescriptionA to fileDescriptionB).toChangeLogMarkdown()
 
-                    val fileName = "changelog_for_${fileDescriptionTemplateA.id}_from_${fileDescriptionTemplateA.reportingYear}_to_${fileDescriptionTemplateB.reportingYear}.md"
+                    val fileName = "changelog_for_${fileDescriptionA.id}_from_${fileDescriptionA.reportingYear}_to_${fileDescriptionB.reportingYear}.md"
                     val outputFile = File(specsOutputDir, fileName)
                     outputFile.writeText(markdown)
                     println("✅ Wrote: $specsOutputDir/${fileName}")

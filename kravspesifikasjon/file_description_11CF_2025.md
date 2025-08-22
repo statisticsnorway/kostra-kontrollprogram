@@ -1,6 +1,6 @@
 # Filbeskrivelse: Kvalifiseringsstønd, Kostra-skjema 11CF (2025)
 
-Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
+Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2025
 
 ## Feltdefinisjoner
 
@@ -26,7 +26,7 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `YTELSE_INTRO` | Andre ytelser | 1 | 72‑72 | STRING_TYPE |  |  | `4`: Introduksjonsstønad |
 | `YTELSE_INDIVIDSTONAD` |  | 1 | 73‑73 | STRING_TYPE |  |  | `5`: Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak |
 | `YTELSE_FOLKETRYGDL` |  | 1 | 74‑74 | STRING_TYPE |  |  | `6`: Livsoppholdsytelse etter folketrygdloven - jf veiledningen |
-| `KVP_MED_ASTONAD` | Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp? Hvis ja, hvilke? (kan krysse av for flere svaralternativer) | 1 | 75‑75 | STRING_TYPE |  |  | `1`: Ja<br/>`2`: Nei |
+| `KVP_MED_ASTONAD` | Har deltakeren i 2025 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer) | 1 | 75‑75 | STRING_TYPE |  |  | `1`: Ja<br/>`2`: Nei |
 | `KVP_MED_KOMMBOS` |  | 1 | 76‑76 | STRING_TYPE |  |  | `4`: Kommunal bostøtte |
 | `KVP_MED_HUSBANKBOS` |  | 1 | 77‑77 | STRING_TYPE |  |  | `5`: Husbankens bostøtte |
 | `KVP_MED_SOSHJ_ENGANG` |  | 1 | 78‑78 | STRING_TYPE |  |  | `9`: Mottok økonomisk sosialhjelp som engangsstønad |
@@ -45,7 +45,7 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `STMND_11` |  | 2 | 101‑102 | STRING_TYPE |  |  | `11`: November |
 | `STMND_12` |  | 2 | 103‑104 | STRING_TYPE |  |  | `12`: Desember |
 | `KVP_STONAD` | Samlet utbetalt kvalifiseringsstønad i løpet av 2024 | 7 | 105‑111 | INTEGER_TYPE |  |  |  |
-| `STATUS` | Hva er status for deltakelsen i kvalifiseringsprogrammet? | 1 | 112‑112 | STRING_TYPE | ☑️ |  | `1`: Fortsatt i program<br/>`2`: Permisjon/avtalt avbrudd fra program<br/>`3`: Fullført program eller avsluttet etter avtale<br/>`4`: Program er varig avbrutt på grunn av uteblivelse<br/>`5`: Program ble avbrutt på grunn av flytting til annen kommune<br/>`6`: Kun for Oslos bydeler: Flyttet til annen bydel før programperioden var over<br/>`7`: Deltakerens program er avsluttet etter avbrudd |
+| `STATUS` | Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.2025? | 1 | 112‑112 | STRING_TYPE | ☑️ |  | `1`: Fortsatt i program<br/>`2`: Permisjon/avtalt avbrudd fra program<br/>`3`: Fullført program eller avsluttet etter avtale<br/>`4`: Program er varig avbrutt på grunn av uteblivelse<br/>`5`: Program ble avbrutt på grunn av flytting til annen kommune<br/>`6`: Kun for Oslos bydeler: Flyttet til annen bydel før programperioden var over<br/>`7`: Deltakerens program er avsluttet etter avbrudd |
 | `AVSL_DATO` | Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ) | 8 | 113‑120 | DATE_TYPE |  | ddMMyyyy |  |
 | `AVSL_ORDINAERTARB` | Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer) | 2 | 121‑122 | STRING_TYPE |  |  | `01`: Ordinært arbeid (heltid/deltid) |
 | `AVSL_ARBLONNSTILS` |  | 2 | 123‑124 | STRING_TYPE |  |  | `11`: Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften) |

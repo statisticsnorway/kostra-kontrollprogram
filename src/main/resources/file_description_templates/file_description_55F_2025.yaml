@@ -1,0 +1,513 @@
+id: 55F
+title: 55F Meklingssaker i familieverntjenesten
+reportingYear: 2025
+description: Filbeskrivelse for 55F Meklingssaker i familieverntjenesten for 2025
+fields:
+  - name: FYLKE_NR
+    description: Fylkesnummer
+    size: 2
+    dataType: STRING_TYPE
+    mandatory: true
+    codeListSource: "104" # Standard for fylkesinndeling
+  - name: FYLKE_NAVN
+    description: Fylkesnavn
+    size: 34
+    dataType: STRING_TYPE
+    mandatory: true
+  - name: KONTOR_NR
+    description: Familievernkontornummer
+    size: 3
+    dataType: STRING_TYPE
+    mandatory: true
+    codeListSource: "558" # Standard for familievernkontor
+  - name: MEKLING_SEP_1
+    description: Avsluttede meklinger, separasjon/skilsmisse, 1 time
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_2
+    description: Avsluttede meklinger, separasjon/skilsmisse, 2-4 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_3
+    description: Avsluttede meklinger, separasjon/skilsmisse, 5-7 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_TOT
+    description: Avsluttede meklinger, separasjon/skilsmisse, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SEP_AVLYST
+    description: Avsluttede meklinger, separasjon/skilsmisse, avlyste
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_1
+    description: Avsluttede meklinger, samboerbrudd, 1 time
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_2
+    description: Avsluttede meklinger, samboerbrudd, 2-4 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_3
+    description: Avsluttede meklinger, samboerbrudd, 5-7 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_TOT
+    description: Avsluttede meklinger, samboerbrudd, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAM_AVLYST
+    description: Avsluttede meklinger, samboerbrudd, avlyste
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_1
+    description: Avsluttede meklinger, sak, 1 time
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_2
+    description: Avsluttede meklinger, sak, 2-4 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_3
+    description: Avsluttede meklinger, sak, 5-7 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_TOT
+    description: Avsluttede meklinger, sak, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_SAK_AVLYST
+    description: Avsluttede meklinger, sak, avlyste
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_1
+    description: Avsluttede meklinger, tilbakesendelse, 1 time
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_2
+    description: Avsluttede meklinger, tilbakesendelse, 2-4 timer
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_3
+    description: Avsluttede meklinger, tilbakesendelse, 5-7 timer
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_TOT
+    description: Avsluttede meklinger, tilbakesendelse, totalt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TILB_AVLYST
+    description: Avsluttede meklinger, tilbakesendelse, avlyste
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_1
+    description: Avsluttede meklinger, flytting, 1 time
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_2
+    description: Avsluttede meklinger, flytting, 2-4 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_3
+    description: Avsluttede meklinger, flytting, 5-7 timer
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_TOT
+    description: Avsluttede meklinger, flytting, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_FLY_AVLYST
+    description: Avsluttede meklinger, flytting, avlyste
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_1
+    description: Avsluttede meklinger, totalt, 1 time
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_2
+    description: Avsluttede meklinger, totalt, 2-4 timer
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_3
+    description: Avsluttede meklinger, totalt, 5-7 timer
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: MEKLING_TOT_ALLE
+    description: Avsluttede meklinger, totalt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: MEKLING_TOT_AVLYST
+    description: Avsluttede meklinger, totalt, avlyste
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_BEGGE
+    description: Oppmøte, separasjon/skilsmisse, begge møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_EN
+    description: Oppmøte, separasjon/skilsmisse, en møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SEP_TOT
+    description: Oppmøte, separasjon/skilsmisse, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: SAM_BEGGE
+    description: Oppmøte, samboere, begge møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAM_EN
+    description: Oppmøte, samboere, en møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAM_TOT
+    description: Oppmøte, samboere, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: SAK_BEGGE
+    description: Oppmøte, sak, begge møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAK_EN
+    description: Oppmøte, sak, en møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: SAK_TOT
+    description: Oppmøte, sak, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: TILB_BEGGE
+    description: Oppmøte, tilbakesendt fra retten, begge møtt
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILB_EN
+    description: Oppmøte, tilbakesendt fra retten, en møtt
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: TILB_TOT
+    description: Oppmøte, tilbakesendt fra retten, totalt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_BEGGE
+    description: Oppmøte, flytting, begge møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_EN
+    description: Oppmøte, flytting, en møtt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FLY_TOT
+    description: Oppmøte, flytting, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEGGE_TOT
+    description: Oppmøte, begge møtt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: EN_TOT
+    description: Oppmøte, en møtt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: ENBEGGE_TOT
+    description: Oppmøte, totalt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+
+  - name: VENTETID_SEP_1
+    description: Ventetid, separasjon/skilsmisse, 0-1 uke
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_2
+    description: Ventetid, separasjon/skilsmisse, 1-2 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_3
+    description: Ventetid, separasjon/skilsmisse, 2-3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_4
+    description: Ventetid, separasjon/skilsmisse, lengre enn 3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SEP_TOT
+    description: Ventetid, separasjon/skilsmisse, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_1
+    description: Ventetid, samboerbrudd, 0-1 uke
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_2
+    description: Ventetid, samboerbrudd, 1-2 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_3
+    description: Ventetid, samboerbrudd, 2-3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_4
+    description: Ventetid, samboerbrudd, lengre enn 3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAM_TOT
+    description: Ventetid, samboerbrudd, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_1
+    description: Ventetid, sak, 0-1 uke
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_2
+    description: Ventetid, sak, 1-2 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_3
+    description: Ventetid, sak, 2-3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_4
+    description: Ventetid, sak, lengre enn 3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_SAK_TOT
+    description: Ventetid, sak, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_1
+    description: Ventetid, tilbakesendt fra retten, 0-1 uke
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_2
+    description: Ventetid, tilbakesendt fra retten, 1-2 uker
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_3
+    description: Ventetid, tilbakesendt fra retten, 2-3 uker
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_4
+    description: Ventetid, tilbakesendt fra retten, lengre enn 3 uker
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TILB_TOT
+    description: Ventetid, tilbakesendt fra retten, totalt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_1
+    description: Ventetid, flytting, 0-1 uke
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_2
+    description: Ventetid, flytting, 1-2 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_3
+    description: Ventetid, flytting, 2-3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_4
+    description: Ventetid, flytting, lengre enn 3 uker
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VENTETID_FLY_TOT
+    description: Ventetid, flytting, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_1
+    description: Ventetid, totalt, 0-1 uke
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_2
+    description: Ventetid, totalt, 1-2 uker
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_3
+    description: Ventetid, totalt, 2-3 uker
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_4
+    description: Ventetid, totalt, lengre enn 3 uker
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VENTETID_TOT_TOT
+    description: Ventetid, totalt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+
+
+  - name: FORHOLD_MEKLER
+    description: Forhold, lengre enn 3 uker skyldes forhold hos mekler, antall
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FORHOLD_KLIENT
+    description: Forhold, lengre enn 3 uker skyldes forhold hos foreldre, antall
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: FORHOLD_TOT
+    description: Forhold, lengre enn 3 uker totalt, antall
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+
+
+  - name: VARIGHET_SEP_1
+    description: Varighet, separasjon/skilsmisse, 0-2 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_2
+    description: Varighet, separasjon/skilsmisse, 2-6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_3
+    description: Varighet, separasjon/skilsmisse, lengre enn 6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SEP_TOT
+    description: Varighet, separasjon/skilsmisse, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_1
+    description: Varighet, samboerbrudd, 0-2 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_2
+    description: Varighet, samboerbrudd, 2-6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_3
+    description: Varighet, samboerbrudd, lengre enn 6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAM_TOT
+    description: Varighet, samboerbrudd, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_1
+    description: Varighet, sak, 0-2 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_2
+    description: Varighet, sak, 2-6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_3
+    description: Varighet, sak, lengre enn 6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_SAK_TOT
+    description: Varighet, sak, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_1
+    description: Varighet, tilbakesendt fra retten, 0-2 mnd.
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_2
+    description: Varighet, tilbakesendt fra retten, 2-6 mnd.
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_3
+    description: Varighet, tilbakesendt fra retten, lengre enn 6 mnd.
+    size: 4
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TILB_TOT
+    description: Varighet, tilbakesendt fra retten, totalt
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_1
+    description: Varighet, flytting, 0-2 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_2
+    description: Varighet, flytting, 2-6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_3
+    description: Varighet, flytting, lengre enn 6 mnd.
+    size: 5
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_FLY_TOT
+    description: Varighet, flytting, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_1
+    description: Varighet, totalt, 0-2 mnd.
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_2
+    description: Varighet, totalt, 2-6 mnd.
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_3
+    description: Varighet, totalt, lengre enn 6 mnd.
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VARIGHET_TOT_TOT
+    description: Varighet, totalt, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+
+
+  - name: RESULT_TOT_1
+    description: Resultat, avtale inngått
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_2
+    description: Resultat, avtale ikke inngått
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_3
+    description: Resultat, uavklart
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: RESULT_TOT_TOT
+    description: Resultat, totalt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BARN_DELT
+    description: Saksgang, Barn deltatt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BARN_IKKE_DELT
+    description: Saksgang, Barn ikke deltatt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BARN_TOT
+    description: Saksgang, Barn delt/ikke delt i alt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BEKYMR_SENDT
+    description: Saksgang, Bekymringsmelding sendt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: BEKYMR_IKKE_SENDT
+    description: Saksgang, Bekymringsmelding ikke sendt
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: BEKYMR_TOT
+    description: Saksgang, Bekymring. sendt/ikke sendt i alt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: VOLD_TEMA
+    description: Saksgang, Vold tema for mekling
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true
+  - name: VOLD_IKKE_TEMA
+    description: Saksgang, Vold ikke tema for mekling
+    size: 6
+    dataType: INTEGER_TYPE
+  - name: VOLD_TOT
+    description: Saksgang, Vold tema/ikke tema i alt
+    size: 6
+    dataType: INTEGER_TYPE
+    mandatory: true

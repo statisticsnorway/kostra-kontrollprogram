@@ -65,11 +65,19 @@ fun FileDescriptionTemplate.toFileDescription(): FileDescription {
                     dataType = it.dataType,
                     datePattern = it.datePattern ?: "",
                     mandatory = it.mandatory ?: false,
+                    codelistSource = it.codeListSource
+                        ?.let { klassId ->
+                            if (klassId.isBlank())
+                                null
+                            else
+                                "https://www.ssb.no/klass/klassifikasjoner/$klassId"
+                        },
                     codeList = codeList,
                 )
             }.buildFieldDefinitions()
 
     return FileDescription(
+        id = this.id,
         title = this.title,
         reportingYear = this.reportingYear,
         description = this.description,
@@ -88,13 +96,13 @@ data class FamvernMappingTemplate(
     val offices: String = "0",
 )
 
-fun FamvernMappingTemplate.toFamvernHierarchyMapping() : FamilievernConstants.FamvernHierarchyMapping {
+fun FamvernMappingTemplate.toFamvernHierarchyMapping(): FamilievernConstants.FamvernHierarchyMapping {
     val countiesToRegions =
         KlassApiClient().fetchCorrespondence(
-        counties,
-        regions,
-        reportingYear.toString()
-    ).toMap()
+            counties,
+            regions,
+            reportingYear.toString()
+        ).toMap()
 
     val mappings = KlassApiClient().fetchCorrespondence(
         offices,

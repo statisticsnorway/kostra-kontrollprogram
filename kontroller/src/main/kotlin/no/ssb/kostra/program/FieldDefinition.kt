@@ -12,6 +12,7 @@ data class FieldDefinition(
     val dataType: DataType = INTEGER_TYPE,
     val mandatory: Boolean = false,
     val datePattern: String = "",
+    val codelistSource: String? = null,
     val codeList: List<Code> = emptyList(),
 ) {
     init {

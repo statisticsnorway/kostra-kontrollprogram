@@ -13,18 +13,22 @@
       * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_52AF_familievernsaker_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_52AF_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_52AF_2025.yaml)
+      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_52AF_from_2024_to_2025.md)
     * Gruppeskjema for familievernet
       * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_52BF_gruppeskjema_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_52BF_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_52BF_2025.yaml)
+      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_52BF_from_2024_to_2025.md)
     * Utadrettet virksonhet i familievernet
       * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_53F_utadrettet_virksomhet_i_familievernet_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_53F_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_53F_2025.yaml)
+      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_53F_from_2024_to_2025.md)
     * Meklingssaker i familieverntjenesten
       * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_55F_meklingssaker_i_familieverntjenesten_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_55F_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_55F_2025.yaml)
+      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_55F_from_2024_to_2025.md)
   * Regnskap
     * [Kravspesifikasjon felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_Regnskap_2025.md)

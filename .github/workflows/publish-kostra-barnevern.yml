@@ -39,5 +39,7 @@ jobs:
         run: echo "PROJECT_VERSION=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
       - name: Build and Publish Module
-        working-directory: kostra-barnevern
-        run: ./gradlew publish --no-daemon
+        run: ./gradlew publish -p kostra-barnevern --no-daemon --build-cache --info
+        env:
+          PROJECT_VERSION: ${{ env.PROJECT_VERSION }}
+          GAR_PROJECT_ID: ${{ secrets.GAR_PROJECT_ID }}

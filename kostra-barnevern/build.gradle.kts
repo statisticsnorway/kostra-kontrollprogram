@@ -4,9 +4,9 @@ plugins {
     `maven-publish`
 }
 
- if (!project.version.toString().contains("SNAPSHOT")) {
+if (!project.version.toString().contains("SNAPSHOT")) {
     apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
- }
+}
 
 dependencyManagement {
     dependencies {

@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.spring.dependency.management)
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4"
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
     `maven-publish`
+}
+
+if (!project.version.toString().contains("SNAPSHOT")) {
+    apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
 }
 
 dependencyManagement {

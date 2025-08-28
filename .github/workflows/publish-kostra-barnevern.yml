@@ -62,7 +62,7 @@ jobs:
           EOF
 
       - name: Build and Publish Module
-        run: ./gradlew :kostra-barnevern:publish -Pversion=${{ github.run_number }} --no-daemon --build-cache --info
+        run: ./gradlew :kostra-barnevern:publish -Pversion=${{ github.run_number }} -PenablePublishing --no-daemon --build-cache --info
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

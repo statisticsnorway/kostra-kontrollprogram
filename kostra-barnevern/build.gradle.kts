@@ -28,6 +28,9 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("gpr") {
+            groupId = "no.ssb.kostra"
+            artifactId = "kostra-barnevern"
+            version = project.findProperty("version") as String? ?: "LOCAL-SNAPSHOT"
             from(components["java"])
         }
     }

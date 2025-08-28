@@ -87,7 +87,7 @@ jobs:
                       repositories {
                           maven {
                               name = "GoogleArtifactRegistry"
-                              url = uri("artifactregistry://europe-north1-maven.pkg.dev/${System.getenv("GAR_PROJECT_ID")}/kostra-maven/")
+                              url = uri("https://europe-north1-maven.pkg.dev/${System.getenv("GAR_PROJECT_ID")}/kostra-maven/")
                               credentials {
                                   username = "oauth2accesstoken"
                                   password = System.getenv("GAR_ACCESS_TOKEN")

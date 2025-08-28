@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.spring.dependency.management)
-//    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.4" apply false
-//    `maven-publish`
+    `maven-publish`
 }
 
-//if (!project.version.toString().contains("SNAPSHOT")) {
-//    apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
-//}
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
 
 dependencyManagement {
     dependencies {
@@ -25,17 +25,16 @@ dependencies {
     implementation(libs.woodstox.core)
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("mavenJava") {
-//            groupId = "no.ssb.kostra"
-//            artifactId = "kostra-barnevern"
-//            version = System.getenv("PROJECT_VERSION") ?: "LOCAL-SNAPSHOT"
-//
-//            from(components["java"])
-//        }
-//    }
-//    repositories {
-//        maven("artifactregistry://europe-north1-maven.pkg.dev/${System.getenv("GAR_PROJECT_ID")}/kostra-maven")
-//    }
-//}
+publishing {
+    publications {
+        create<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.withType<PublishToMavenRepository>().configureEach {
+    onlyIf {
+        project.hasProperty("enablePublishing")
+    }
+}

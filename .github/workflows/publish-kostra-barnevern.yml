@@ -4,53 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish-to-github-packages:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-          cache: gradle
-
-      - name: Configure Gradle publishing repos
-        run: |
-          mkdir -p ~/.gradle
-          cat > ~/.gradle/init.gradle.kts <<'EOF'
-          allprojects {
-              plugins.withId("maven-publish") {
-                  extensions.configure<org.gradle.api.publish.PublishingExtension>("publishing") {
-                      repositories {
-                          maven {
-                              name = "GitHubPackages"
-                              url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_REPOSITORY")}")
-                              credentials {
-                                  username = System.getenv("GITHUB_ACTOR")
-                                  password = System.getenv("GITHUB_TOKEN")
-                              }
-                          }
-                      }
-                  }
-              }
-          }
-          EOF
-
-      - name: Build and Publish Module
-        run: ./gradlew :kostra-barnevern:publish -Pversion=${{ github.run_number }} -PenablePublishing --no-daemon --build-cache --info
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-to-google-artifact-registry:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     permissions:
@@ -86,6 +40,15 @@ jobs:
                   extensions.configure<org.gradle.api.publish.PublishingExtension>("publishing") {
                       repositories {
                           maven {
+                              name = "GitHubPackages"
+                              url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_REPOSITORY")}")
+                              credentials {
+                                  username = System.getenv("GITHUB_ACTOR")
+                                  password = System.getenv("GITHUB_TOKEN")
+                              }
+                          }
+
+                          maven {
                               name = "GoogleArtifactRegistry"
                               url = uri("https://europe-north1-maven.pkg.dev/${System.getenv("GAR_PROJECT_ID")}/kostra-maven/")
                               credentials {
@@ -99,7 +62,10 @@ jobs:
           }
           EOF
 
-      - name: Build and Publish Module
+      - name: Build Module
+        run: ./gradlew :kostra-barnevern:build # only build the kostra-barnevern module
+
+      - name: Publish Module
         run: ./gradlew :kostra-barnevern:publish -Pversion=${{ github.run_number }} -PenablePublishing --no-daemon --build-cache --info
         env:
           GITHUB_ACTOR: ${{ github.actor }}

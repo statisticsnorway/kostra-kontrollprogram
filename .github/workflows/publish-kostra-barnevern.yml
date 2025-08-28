@@ -9,6 +9,7 @@ jobs:
 
     permissions:
       contents: read
+      packages: write
       id-token: write   # required for Workload Identity Federation
 
     steps:
@@ -30,16 +31,40 @@ jobs:
           service_account: gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com
           token_format: access_token
 
-      - name: Export GAR credentials for Gradle/Maven
+      - name: Configure Gradle publishing repos
         run: |
-          echo "MAVEN_USERNAME=oauth2accesstoken" >> $GITHUB_ENV
-          echo "MAVEN_PASSWORD=${{ steps.auth.outputs.access_token }}" >> $GITHUB_ENV
-
-      - name: Set version using GitHub run number
-        run: echo "PROJECT_VERSION=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+          mkdir -p ~/.gradle
+          cat > ~/.gradle/init.gradle.kts <<'EOF'
+          allprojects {
+              plugins.withId("maven-publish") {
+                  extensions.configure<org.gradle.api.publish.PublishingExtension>("publishing") {
+                      repositories {
+                          maven {
+                              name = "GitHubPackages"
+                              url = uri("https://maven.pkg.github.com/${System.getenv("GITHUB_REPOSITORY")}")
+                              credentials {
+                                  username = System.getenv("GITHUB_ACTOR")
+                                  password = System.getenv("GITHUB_TOKEN")
+                              }
+                          }
+                          maven {
+                              name = "GoogleArtifactRegistry"
+                              url = uri("https://europe-north1-maven.pkg.dev/${System.getenv("GAR_PROJECT_ID")}/kostra-maven/")
+                              credentials {
+                                  username = "oauth2accesstoken"
+                                  password = System.getenv("GAR_ACCESS_TOKEN")
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          EOF
 
       - name: Build and Publish Module
-        run: ./gradlew publish -p kostra-barnevern --no-daemon --build-cache --info
+        run: ./gradlew :kostra-barnevern:publish -Pversion=${{ github.run_number }} --no-daemon --build-cache --info
         env:
-          PROJECT_VERSION: ${{ env.PROJECT_VERSION }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GAR_PROJECT_ID: ${{ secrets.GAR_PROJECT_ID }}
+          GAR_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}

@@ -6,7 +6,7 @@ mockk-version = "1.14.5"
 woodstox-core-version = "7.1.1"
 picocli-version = "4.7.7"
 logback-classic-version = "1.5.18"
-swagger-annotations-version = "2.2.35"
+swagger-annotations-version = "2.2.36"
 
 # plugins
 sonarqube-version = "6.3.1.5724"

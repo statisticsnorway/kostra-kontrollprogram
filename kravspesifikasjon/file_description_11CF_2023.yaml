@@ -31,9 +31,18 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
+- name: "DISTRIKTSNR"
+  description: "Distriktsnummer"
+  from: 9
+  size: 2
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codelistSource: null
+  codeList: []
 - name: "PERSON_JOURNALNR"
   description: "Journalnummer"
-  from: 9
+  from: 11
   size: 8
   dataType: "STRING_TYPE"
   mandatory: true
@@ -42,7 +51,7 @@ fields:
   codeList: []
 - name: "PERSON_FODSELSNR"
   description: "Fødsels- og personnummer"
-  from: 17
+  from: 19
   size: 11
   dataType: "STRING_TYPE"
   mandatory: true
@@ -51,7 +60,7 @@ fields:
   codeList: []
 - name: "KJONN"
   description: "Kjønn"
-  from: 28
+  from: 30
   size: 1
   dataType: "STRING_TYPE"
   mandatory: true
@@ -64,7 +73,7 @@ fields:
     value: "Kvinne"
 - name: "EKTSTAT"
   description: "Sivilstand"
-  from: 29
+  from: 31
   size: 1
   dataType: "STRING_TYPE"
   mandatory: true
@@ -83,7 +92,7 @@ fields:
     value: "Enke/enkemann"
 - name: "BU18"
   description: "Har deltakeren barn under 18 år som deltakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?"
-  from: 30
+  from: 32
   size: 1
   dataType: "STRING_TYPE"
   mandatory: true
@@ -96,7 +105,7 @@ fields:
     value: "Nei"
 - name: "ANTBU18"
   description: "Hvis ja, hvor mange?"
-  from: 31
+  from: 33
   size: 2
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -105,7 +114,7 @@ fields:
   codeList: []
 - name: "REG_DATO"
   description: "Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ"
-  from: 33
+  from: 35
   size: 6
   dataType: "DATE_TYPE"
   mandatory: true
@@ -114,7 +123,7 @@ fields:
   codeList: []
 - name: "VEDTAK_DATO"
   description: "Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ"
-  from: 39
+  from: 41
   size: 6
   dataType: "DATE_TYPE"
   mandatory: true
@@ -123,7 +132,7 @@ fields:
   codeList: []
 - name: "BEGYNT_DATO"
   description: "Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ"
-  from: 45
+  from: 47
   size: 6
   dataType: "DATE_TYPE"
   mandatory: true
@@ -132,7 +141,7 @@ fields:
   codeList: []
 - name: "KVP_KOMM"
   description: "Kommer deltakeren fra kvalifiseringsprogram i annen kommune?"
-  from: 51
+  from: 53
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -145,7 +154,7 @@ fields:
     value: "Nei"
 - name: "KOMMNR_KVP_KOMM"
   description: "Hvis ja, velg kommunenummer fra liste"
-  from: 52
+  from: 54
   size: 4
   dataType: "STRING_TYPE"
   mandatory: false
@@ -868,7 +877,7 @@ fields:
     value: "Uoppgitt"
 - name: "YTELSE_SOSHJELP"
   description: "Hadde deltakeren i løpet av de siste to månedene før registrert søknad ved NAV-kontoret en eller flere av følgende ytelser? Kan krysse av for flere svaralternativer)"
-  from: 56
+  from: 58
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -879,7 +888,7 @@ fields:
     value: "Sosialhjelp"
 - name: "YTELSE_TYPE_SOSHJ"
   description: "Hvis sosialhjelp"
-  from: 57
+  from: 59
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -892,7 +901,7 @@ fields:
     value: "Supplerende sosialhjelp"
 - name: "YTELSE_INTRO"
   description: "Andre ytelser"
-  from: 58
+  from: 60
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -903,7 +912,7 @@ fields:
     value: "Introduksjonsstønad"
 - name: "YTELSE_INDIVIDSTONAD"
   description: null
-  from: 59
+  from: 61
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -914,7 +923,7 @@ fields:
     value: "Individstønad - stønad til livsopphold etter forskrift om arbeidsmarkedstiltak"
 - name: "YTELSE_FOLKETRYGDL"
   description: null
-  from: 60
+  from: 62
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -924,8 +933,8 @@ fields:
   - code: "6"
     value: "Livsoppholdsytelse etter folketrygdloven - jf veiledningen"
 - name: "KVP_MED_ASTONAD"
-  description: "Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)"
-  from: 61
+  description: "Har deltakeren i 2023 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)"
+  from: 63
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -938,7 +947,7 @@ fields:
     value: "Nei"
 - name: "KVP_MED_KOMMBOS"
   description: null
-  from: 62
+  from: 64
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -949,7 +958,7 @@ fields:
     value: "Kommunal bostøtte"
 - name: "KVP_MED_HUSBANKBOS"
   description: null
-  from: 63
+  from: 65
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -960,7 +969,7 @@ fields:
     value: "Husbankens bostøtte"
 - name: "KVP_MED_SOSHJ_ENGANG"
   description: null
-  from: 64
+  from: 66
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -971,7 +980,7 @@ fields:
     value: "Mottok økonomisk sosialhjelp som engangsstønad"
 - name: "KVP_MED_SOSHJ_PGM"
   description: null
-  from: 65
+  from: 67
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -982,7 +991,7 @@ fields:
     value: "Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet"
 - name: "KVP_MED_SOSHJ_SUP"
   description: null
-  from: 66
+  from: 68
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -992,8 +1001,8 @@ fields:
   - code: "7"
     value: "Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter"
 - name: "STMND_1"
-  description: "For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?"
-  from: 67
+  description: "For hvilke måneder i løpet av 2023 har deltakeren fått kvalifiseringsstønad?"
+  from: 69
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1004,7 +1013,7 @@ fields:
     value: "Januar"
 - name: "STMND_2"
   description: null
-  from: 69
+  from: 71
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1015,7 +1024,7 @@ fields:
     value: "Februar"
 - name: "STMND_3"
   description: null
-  from: 71
+  from: 73
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1026,7 +1035,7 @@ fields:
     value: "Mars"
 - name: "STMND_4"
   description: null
-  from: 73
+  from: 75
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1037,7 +1046,7 @@ fields:
     value: "April"
 - name: "STMND_5"
   description: null
-  from: 75
+  from: 77
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1048,7 +1057,7 @@ fields:
     value: "Mai"
 - name: "STMND_6"
   description: null
-  from: 77
+  from: 79
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1059,7 +1068,7 @@ fields:
     value: "Juni"
 - name: "STMND_7"
   description: null
-  from: 79
+  from: 81
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1070,7 +1079,7 @@ fields:
     value: "Juli"
 - name: "STMND_8"
   description: null
-  from: 81
+  from: 83
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1081,7 +1090,7 @@ fields:
     value: "August"
 - name: "STMND_9"
   description: null
-  from: 83
+  from: 85
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1092,7 +1101,7 @@ fields:
     value: "September"
 - name: "STMND_10"
   description: null
-  from: 85
+  from: 87
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1103,7 +1112,7 @@ fields:
     value: "Oktober"
 - name: "STMND_11"
   description: null
-  from: 87
+  from: 89
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1114,7 +1123,7 @@ fields:
     value: "November"
 - name: "STMND_12"
   description: null
-  from: 89
+  from: 91
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1124,8 +1133,8 @@ fields:
   - code: "12"
     value: "Desember"
 - name: "KVP_STONAD"
-  description: "Samlet utbetalt kvalifiseringsstønad i løpet av 2024"
-  from: 91
+  description: "Samlet utbetalt kvalifiseringsstønad i løpet av 2023"
+  from: 93
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -1134,30 +1143,30 @@ fields:
   codeList: []
 - name: "STATUS"
   description: "Hva er status for deltakelsen i kvalifiseringsprogrammet?"
-  from: 98
+  from: 100
   size: 1
   dataType: "STRING_TYPE"
   mandatory: true
   datePattern: ""
-  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/555"
+  codelistSource: null
   codeList:
   - code: "1"
-    value: "Fortsatt i program"
+    value: "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"
   - code: "2"
-    value: "Permisjon/avtalt avbrudd fra program"
+    value: "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"
   - code: "3"
-    value: "Fullført program eller avsluttet etter avtale"
+    value: "Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)"
   - code: "4"
-    value: "Program er varig avbrutt på grunn av uteblivelse"
+    value: " Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)"
   - code: "5"
-    value: "Program ble avbrutt på grunn av flytting til annen kommune"
+    value: "Deltakerens program ble avbrutt på grunn av flytting til annen kommune"
   - code: "6"
-    value: "Kun for Oslos bydeler: Flyttet til annen bydel før programperioden var over"
+    value: "Kun for Oslos bydeler: Deltakeren flyttet til annen bydel før programperioden var over"
   - code: "7"
     value: "Deltakerens program er avsluttet etter avbrudd"
 - name: "AVSL_DATO"
   description: "Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)"
-  from: 99
+  from: 101
   size: 6
   dataType: "DATE_TYPE"
   mandatory: false
@@ -1166,7 +1175,7 @@ fields:
   codeList: []
 - name: "AVSL_ORDINAERTARB"
   description: "Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer)"
-  from: 105
+  from: 107
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1177,7 +1186,7 @@ fields:
     value: "Ordinært arbeid (heltid/deltid)"
 - name: "AVSL_ARBLONNSTILS"
   description: null
-  from: 107
+  from: 109
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1188,7 +1197,7 @@ fields:
     value: "Ordinært arbeid (heltid/deltid) med midlertidig lønnstilskudd (jamfør tiltaksforskriften)"
 - name: "AVSL_ARBMARK"
   description: null
-  from: 109
+  from: 111
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1199,7 +1208,7 @@ fields:
     value: "Andre arbeidsmarkedstiltak i statlig regi (jamfør tiltaksforskriften)"
 - name: "AVSL_SKOLE"
   description: null
-  from: 111
+  from: 113
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1210,7 +1219,7 @@ fields:
     value: "Skole/utdanning"
 - name: "AVSL_UFORE"
   description: null
-  from: 113
+  from: 115
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1221,7 +1230,7 @@ fields:
     value: "Uføretrygd"
 - name: "AVSL_AAP"
   description: null
-  from: 115
+  from: 117
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1232,7 +1241,7 @@ fields:
     value: "Arbeidsavklaringspenger"
 - name: "AVSL_OK_AVKLAR"
   description: null
-  from: 117
+  from: 119
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1243,7 +1252,7 @@ fields:
     value: "Økonomisk sosialhjelp i påvente av avklaring av uføretrygd/AAP"
 - name: "AVSL_UTEN_OK_AVKLAR"
   description: null
-  from: 119
+  from: 121
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1254,7 +1263,7 @@ fields:
     value: "Økonomisk sosialhjelp uten slik avklaring"
 - name: "AVSL_ANNET"
   description: null
-  from: 121
+  from: 123
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1265,7 +1274,7 @@ fields:
     value: "Annet"
 - name: "AVSL_UKJENT"
   description: null
-  from: 123
+  from: 125
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1276,7 +1285,7 @@ fields:
     value: "Ukjent"
 - name: "AVSL_VIKTIGSTE_INNTEKT"
   description: "Hva var deltakerens viktigste inntektskilde umiddelbart etter avslutningen? (Kun ett kryss)"
-  from: 125
+  from: 127
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -1305,7 +1314,7 @@ fields:
     value: "Ukjent"
 - name: "SAKSBEHANDLER"
   description: "Saksbehandlernummer"
-  from: 127
+  from: 129
   size: 10
   dataType: "STRING_TYPE"
   mandatory: false

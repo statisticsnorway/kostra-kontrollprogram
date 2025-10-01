@@ -17,7 +17,7 @@ devtools-ksp-version = "2.2.10-2.0.2"
 micronaut-application-version = "4.5.4"
 siouan-frontend-jdk21-version = "10.0.0"
 # to be removed
-assertj-core-version = "3.27.4"
+assertj-core-version = "3.27.6"
 
 micronaut-platform-version = "4.9.3"
 micronaut-serde-jackson-version = "2.15.1"

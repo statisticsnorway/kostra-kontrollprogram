@@ -20,7 +20,7 @@ siouan-frontend-jdk21-version = "10.0.0"
 assertj-core-version = "3.27.4"
 
 micronaut-platform-version = "4.9.3"
-micronaut-serde-jackson-version = "2.15.1"
+micronaut-serde-jackson-version = "2.16.1"
 
 [libraries]
 jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson-version" }

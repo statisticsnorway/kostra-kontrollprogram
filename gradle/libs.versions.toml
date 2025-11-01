@@ -1,5 +1,5 @@
 [versions]
-kotlin-version = "2.2.10"
+kotlin-version = "2.2.21"
 jackson-version = "2.20.0"
 kotest-version = "5.9.1"
 mockk-version = "1.14.5"

@@ -50,7 +50,7 @@ jobs:
           cache: 'gradle'
 
       - name: Set up gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 

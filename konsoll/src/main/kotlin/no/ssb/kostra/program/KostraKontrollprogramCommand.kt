@@ -45,9 +45,8 @@ class KostraKontrollprogramCommand : Callable<Int> {
     @Option(names = ["-f", "--output-format"], defaultValue = "HTML", description = ["..."])
     private var outputFormat: String = "HTML"
 
-    @Option(names = ["-c", "--output-charset"], description = ["..."])
+    @Option(names = ["-c", "--output-charset"], defaultValue = "ISO-8859-1", description = ["..."])
     private var outputCharset: String = "ISO-8859-1"
-
     @Option(names = ["-e", "--external-process"], description = ["..."])
     private var isRunAsExternalProcess: Boolean = false
 

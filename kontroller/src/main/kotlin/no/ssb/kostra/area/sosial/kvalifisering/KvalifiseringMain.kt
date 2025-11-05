@@ -35,7 +35,7 @@ class KvalifiseringMain(
         Rule005aFoedselsnummerDubletter(),
         Rule005bJournalnummerDubletter(),
         Rule006AlderUnder18Aar(),
-        Rule007AlderEr68AarEllerOver(),
+        Rule007AlderErOver68Aar(),
         Rule008Kjonn(),
         Rule009Sivilstand(),
         Rule010HarBarnUnder18(),

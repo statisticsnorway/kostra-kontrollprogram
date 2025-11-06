@@ -1,35 +1,29 @@
 ---
 id: 11F
 title: Økonomisk sosialhjelp, Kostra-skjema 11F
-reportingYear: 2025
-description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
+reportingYear: 2023
+description: Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2023
 fields:
   - name: KOMMUNE_NR
     description: Kommunenummer
     dataType: STRING_TYPE
     size: 4
-    mandatory: true
   - name: VERSION
     description: Rapporteringsår / versjon / oppgaveår
     dataType: STRING_TYPE
     size: 2
-    mandatory: true
   - name: BYDELSNR
     description: Bydelsnummer
     dataType: STRING_TYPE
     size: 2
-    mandatory: true
-  - name: FODSELSDATO
-    description: Fødselsdato (DDMMÅÅÅÅ)
-    dataType: DATE_TYPE
-    size: 8
-    mandatory: true
-    datePattern: ddMMyyyy
+  - name: DISTRIKTSNR
+    description: Distriktsnummer
+    dataType: STRING_TYPE
+    size: 2
   - name: PERSON_JOURNALNR
     description: Journalnummer
     dataType: STRING_TYPE
     size: 8
-    mandatory: true
   - name: PERSON_FODSELSNR
     description: Hva er mottakerens fødselsnummer?
     dataType: STRING_TYPE
@@ -42,19 +36,16 @@ fields:
     description: Hva er mottakerens kjønn?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "2" # Standard for kjønn
   - name: EKTSTAT
     description: Hva er mottakerens sivilstand/sivilstatus ved siste kontakt?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "553" # Kodeliste for samlivsform, KVP
   - name: BU18
     description: Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: ANTBU18
     description: Hvis ja, hvor mange?
@@ -64,20 +55,75 @@ fields:
     description: Hva er mottakerens viktigste kilde til livsopphold ved siste kontakt?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
-    codeListSource: "751" # Kodeliste for Viktigste kilde til livsopphold, sosialhjelp
+    codeList:
+      - code: "1"
+        value: "Arbeidsinntekt"
+      - code: "2"
+        value: "Kursstønad/lønn i arbeidsmarkedstiltak"
+      - code: "3"
+        value: "Trygd/pensjon"
+      - code: "4"
+        value: "Stipend/lån"
+      - code: "5"
+        value: "Sosialhjelp"
+      - code: "6"
+        value: "Introduksjonsstøtte"
+      - code: "7"
+        value: "Ektefelle/samboers arbeidsinntekt"
+      - code: "8"
+        value: "Kvalifiseringsstønad"
+      - code: "9"
+        value: "Annen inntekt"
   - name: TRYGDESIT
     description: Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt
     dataType: STRING_TYPE
     size: 2
-    mandatory: true
-    codeListSource: "753" # Kodeliste for Trygdesituasjon, sosialhjelp
+    codeList:
+      - code: "01"
+        value: "Sykepenger"
+      - code: "02"
+        value: "Dagpenger"
+      - code: "04"
+        value: "Uføretrygd"
+      - code: "05"
+        value: "Overgangsstønad"
+      - code: "06"
+        value: "Etterlattepensjon"
+      - code: "07"
+        value: "Alderspensjon"
+      - code: "09"
+        value: "Supplerende stønad (kort botid)"
+      - code: "10"
+        value: "Annen trygd"
+      - code: "11"
+        value: "Arbeidsavklaringspenger"
+      - code: "12"
+        value: "Har ingen trygd/pensjon"
   - name: ARBSIT
     description: Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt?
     dataType: STRING_TYPE
     size: 2
-    mandatory: true
-    codeListSource: "752" # Kodeliste for Viktigste arbeidssituasjon/livssituasjon, sosialhjelp
+    codeList:
+      - code: "01"
+        value: "Arbeid, heltid"
+      - code: "02"
+        value: "Arbeid, deltid"
+      - code: "03"
+        value: "Under utdanning"
+      - code: "04"
+        value: "Ikke arbeidssøker"
+      - code: "05"
+        value: "Arbeidsmarkedstiltak (statlig)"
+      - code: "06"
+        value: "Kommunalt tiltak"
+      - code: "07"
+        value: "Registrert arbeidsledig"
+      - code: "08"
+        value: "Arbeidsledig, men ikke registrert hos NAV"
+      - code: "09"
+        value: "Introduksjonsordning"
+      - code: "10"
+        value: "Kvalifiseringsprogram"
   - name: STMND_1
     description: Har mottakeren fått økonomisk stønad i januar?
     dataType: STRING_TYPE
@@ -163,15 +209,13 @@ fields:
       - code: 12
         value: Desember
   - name: BIDRAG
-    description: Hva fikk mottakeren utbetalt i bidrag i løpet av året?
+    description: Bidrag
     dataType: INTEGER_TYPE
     size: 7
-    mandatory: true
   - name: LAAN
-    description: Hva fikk mottakeren utbetalt i lån i løpet av året?
+    description: Lån
     dataType: INTEGER_TYPE
     size: 7
-    mandatory: true
   - name: BIDRAG_JAN
     description: Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag
     dataType: INTEGER_TYPE
@@ -272,47 +316,45 @@ fields:
     description: Er det gitt økonomisk rådgivning på nivå II (midlertidig betalingsudyktighet) eller III (varig betalingsudyktighet) i forbindelse med utbetaling? (Se NAVs veileder til bruk ved økonomisk rådgivning)
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
-    codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
+    codeList:
+      - code: 1
+        value: Ja
+      - code: 2
+        value: Nei
   - name: FAAT_INDIVIDUELL_PLAN
     description: Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: SAKSBEHANDLER
     description: Saksbehandlernummer
     dataType: STRING_TYPE
     size: 10
-    mandatory: true
   - name: BOSIT
     description: Hva er mottakerens bosituasjon ved siste kontakt?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "511" # Kodeliste for bosituasjon
   - name: VILKARSOSLOV
-    description: I forbindelse med vedtak om utbetaling av stønad, stilles det vilkår til mottakeren etter sosialtjenesteloven?
+    description: Stilles det vilkår til mottakeren etter sosialtjenesteloven?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: VILKARSAMEKT
-    description: I forbindelse med vedtak om utbetaling av stønad, stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven?
+    description: Stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven?
     dataType: STRING_TYPE
     size: 1
-    mandatory: true
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
   - name: UTBETDATO
-    description:  Hvis "ja" på spørsmålet "Stilles det vilkår til mottakeren etter sosialtjenesteloven?" Oppgi utbetalingsvedtakets dato (DDMMÅÅÅÅ)
+    description: Oppgi utbetalingsvedtakets dato (DDMMÅÅ)
     dataType: DATE_TYPE
-    size: 8
-    datePattern: ddMMyyyy
+    size: 6
+    datePattern: ddMMyy
   - name: UTBETTOMDATO
-    description:  Hvis "ja" på spørsmålet "Stilles det vilkår til mottakeren etter sosialtjenesteloven?" Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅÅÅ)
+    description: Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅ)
     dataType: DATE_TYPE
-    size: 8
-    datePattern: ddMMyyyy
+    size: 6
+    datePattern: ddMMyy
   - name: VILKARARBEID
     description: Oppgi hvilke vilkår det stilles til mottakeren. Flere kryss mulig
     dataType: STRING_TYPE
@@ -390,18 +432,11 @@ fields:
     codeList:
       - code: 19
         value: Bruke og følge opp digital aktivitetsplan
-  - name: VILKARNORSKSAMISKOPPL
-    description: Norsk- eller samiskopplæring
-    dataType: STRING_TYPE
-    size: 2
-    codeList:
-      - code: 20
-        value: Norsk- eller samiskopplæring
   - name: VEDTAKDATO
-    description: Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅÅÅ)
+    description: Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)
     dataType: DATE_TYPE
-    size: 8
-    datePattern: ddMMyyyy
+    size: 6
+    datePattern: ddMMyy
   - name: VEDTAKARB
     description: Begrunnelse for første unntak fra sosialtjenestelovens § 20a
     dataType: STRING_TYPE
@@ -431,7 +466,7 @@ fields:
       - code: 04
         value: Andre tungtveiende grunner taler mot at det stilles vilkår om aktivitet
   - name: SANKSJONRED
-    description: Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20 eller § 20a
+    description: Sanksjonering av mottaker. Sanksjon i løpet av året som følge av brudd på vilkår etter sosialtjenestelovens § 20a
     dataType: STRING_TYPE
     size: 2
     codeList:

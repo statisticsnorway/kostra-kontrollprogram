@@ -12,7 +12,7 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `FODSELSDATO` | Fødselsdato (DDMMÅÅÅÅ) | 8 | 9‑16 | DATE_TYPE | ☑️ | ddMMyyyy |  |
 | `PERSON_JOURNALNR` | Journalnummer | 8 | 17‑24 | STRING_TYPE | ☑️ |  |  |
 | `PERSON_FODSELSNR` | Hva er mottakerens fødselsnummer? | 11 | 25‑35 | STRING_TYPE |  |  |  |
-| `PERSON_DUFNR` | Hva er mottakerens DUF-nummer? | 12 | 36‑47 | STRING_TYPE | ☑️ |  |  |
+| `PERSON_DUF` | Hva er mottakerens DUF-nummer? | 12 | 36‑47 | STRING_TYPE |  |  |  |
 | `KJONN` | Hva er mottakerens kjønn? | 1 | 48‑48 | STRING_TYPE | ☑️ |  | `1`: Mann<br/>`2`: Kvinne |
 | `EKTSTAT` | Hva er mottakerens sivilstand/sivilstatus ved siste kontakt? | 1 | 49‑49 | STRING_TYPE | ☑️ |  | `1`: Ugift<br/>`2`: Gift<br/>`3`: Samboer<br/>`4`: Skilt/separert<br/>`5`: Enke/enkemann |
 | `BU18` | Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen? | 1 | 50‑50 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
@@ -34,30 +34,30 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2025
 | `STMND_12` | Har mottakeren fått økonomisk stønad i desember? | 2 | 80‑81 | STRING_TYPE |  |  | `12`: Desember |
 | `BIDRAG` | Hva fikk mottakeren utbetalt i bidrag i løpet av året? | 7 | 82‑88 | INTEGER_TYPE | ☑️ |  |  |
 | `LAAN` | Hva fikk mottakeren utbetalt i lån i løpet av året? | 7 | 89‑95 | INTEGER_TYPE | ☑️ |  |  |
-| `BIDRAG_1` | Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag | 7 | 96‑102 | INTEGER_TYPE |  |  |  |
-| `LAAN_1` | Januar, lån | 7 | 103‑109 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_2` | Februar, bidrag | 7 | 110‑116 | INTEGER_TYPE |  |  |  |
-| `LAAN_2` | Februar, lån | 7 | 117‑123 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_3` | Mars, bidrag | 7 | 124‑130 | INTEGER_TYPE |  |  |  |
-| `LAAN_3` | Mars, lån | 7 | 131‑137 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_4` | April, bidrag | 7 | 138‑144 | INTEGER_TYPE |  |  |  |
-| `LAAN_4` | April, lån | 7 | 145‑151 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_5` | Mai, bidrag | 7 | 152‑158 | INTEGER_TYPE |  |  |  |
-| `LAAN_5` | Mai, lån | 7 | 159‑165 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_6` | Juni, bidrag | 7 | 166‑172 | INTEGER_TYPE |  |  |  |
-| `LAAN_6` | Juni, lån | 7 | 173‑179 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_7` | Juli, bidrag | 7 | 180‑186 | INTEGER_TYPE |  |  |  |
-| `LAAN_7` | Juli, lån | 7 | 187‑193 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_8` | August, bidrag | 7 | 194‑200 | INTEGER_TYPE |  |  |  |
-| `LAAN_8` | August, lån | 7 | 201‑207 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_9` | September, bidrag | 7 | 208‑214 | INTEGER_TYPE |  |  |  |
-| `LAAN_9` | September, lån | 7 | 215‑221 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_10` | Oktober, bidrag | 7 | 222‑228 | INTEGER_TYPE |  |  |  |
-| `LAAN_10` | Oktober, lån | 7 | 229‑235 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_11` | November, bidrag | 7 | 236‑242 | INTEGER_TYPE |  |  |  |
-| `LAAN_11` | November, lån | 7 | 243‑249 | INTEGER_TYPE |  |  |  |
-| `BIDRAG_12` | Desember, bidrag | 7 | 250‑256 | INTEGER_TYPE |  |  |  |
-| `LAAN_12` | Desember, lån | 7 | 257‑263 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_JAN` | Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag | 7 | 96‑102 | INTEGER_TYPE |  |  |  |
+| `LAAN_JAN` | Januar, lån | 7 | 103‑109 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_FEB` | Februar, bidrag | 7 | 110‑116 | INTEGER_TYPE |  |  |  |
+| `LAAN_FEB` | Februar, lån | 7 | 117‑123 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_MARS` | Mars, bidrag | 7 | 124‑130 | INTEGER_TYPE |  |  |  |
+| `LAAN_MARS` | Mars, lån | 7 | 131‑137 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_APRIL` | April, bidrag | 7 | 138‑144 | INTEGER_TYPE |  |  |  |
+| `LAAN_APRIL` | April, lån | 7 | 145‑151 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_MAI` | Mai, bidrag | 7 | 152‑158 | INTEGER_TYPE |  |  |  |
+| `LAAN_MAI` | Mai, lån | 7 | 159‑165 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_JUNI` | Juni, bidrag | 7 | 166‑172 | INTEGER_TYPE |  |  |  |
+| `LAAN_JUNI` | Juni, lån | 7 | 173‑179 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_JULI` | Juli, bidrag | 7 | 180‑186 | INTEGER_TYPE |  |  |  |
+| `LAAN_JULI` | Juli, lån | 7 | 187‑193 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_AUG` | August, bidrag | 7 | 194‑200 | INTEGER_TYPE |  |  |  |
+| `LAAN_AUG` | August, lån | 7 | 201‑207 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_SEPT` | September, bidrag | 7 | 208‑214 | INTEGER_TYPE |  |  |  |
+| `LAAN_SEPT` | September, lån | 7 | 215‑221 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_OKT` | Oktober, bidrag | 7 | 222‑228 | INTEGER_TYPE |  |  |  |
+| `LAAN_OKT` | Oktober, lån | 7 | 229‑235 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_NOV` | November, bidrag | 7 | 236‑242 | INTEGER_TYPE |  |  |  |
+| `LAAN_NOV` | November, lån | 7 | 243‑249 | INTEGER_TYPE |  |  |  |
+| `BIDRAG_DES` | Desember, bidrag | 7 | 250‑256 | INTEGER_TYPE |  |  |  |
+| `LAAN_DES` | Desember, lån | 7 | 257‑263 | INTEGER_TYPE |  |  |  |
 | `GITT_OKONOMIRAD` | Er det gitt økonomisk rådgivning på nivå II (midlertidig betalingsudyktighet) eller III (varig betalingsudyktighet) i forbindelse med utbetaling? (Se NAVs veileder til bruk ved økonomisk rådgivning) | 1 | 264‑264 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
 | `FAAT_INDIVIDUELL_PLAN` | Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)? | 1 | 265‑265 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
 | `SAKSBEHANDLER` | Saksbehandlernummer | 10 | 266‑275 | STRING_TYPE | ☑️ |  |  |

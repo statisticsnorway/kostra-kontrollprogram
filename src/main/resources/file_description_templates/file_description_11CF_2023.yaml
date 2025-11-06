@@ -18,6 +18,10 @@ fields:
     description: Bydelsnummer
     dataType: STRING_TYPE
     size: 2
+  - name: DISTRIKTSNR
+    description: Distriktsnummer
+    dataType: STRING_TYPE
+    size: 2
   - name: PERSON_JOURNALNR
     description: Journalnummer
     dataType: STRING_TYPE
@@ -114,7 +118,7 @@ fields:
       - code: 6
         value: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
   - name: KVP_MED_ASTONAD
-    description: Har deltakeren i 2024 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    description: Har deltakeren i 2023 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
     size: 1
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
@@ -154,7 +158,7 @@ fields:
       - code: 7
         value: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter
   - name: STMND_1
-    description: For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?
+    description: For hvilke måneder i løpet av 2023 har deltakeren fått kvalifiseringsstønad?
     dataType: STRING_TYPE
     size: 2
     codeList:
@@ -238,7 +242,7 @@ fields:
       - code: 12
         value: Desember
   - name: KVP_STONAD
-    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2024
+    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2023
     dataType: INTEGER_TYPE
     size: 7
   - name: STATUS
@@ -246,7 +250,21 @@ fields:
     dataType: STRING_TYPE
     size: 1
     mandatory: true
-    codeListSource: "555" # Kodeliste for deltakelse i kvalifiseringsprogram per 31.12., KVP
+    codeList:
+      - code: "1"
+        value: "Deltakeren er fortsatt i program (skjema er ferdig utfylt)"
+      - code: "2"
+        value: "Deltakeren er i permisjon fra program (skjemaet er ferdig utfylt)"
+      - code: "3"
+        value: "Deltakeren har fullført program eller avsluttet program etter avtale (gjelder ikke flytting)"
+      - code: "4"
+        value: " Deltakerens program er varig avbrutt på grunn av uteblivelse (gjelder ikke flytting)"
+      - code: "5"
+        value: "Deltakerens program ble avbrutt på grunn av flytting til annen kommune"
+      - code: "6"
+        value: "Kun for Oslos bydeler: Deltakeren flyttet til annen bydel før programperioden var over"
+      - code: "7"
+        value: "Deltakerens program er avsluttet etter avbrudd"
   - name: AVSL_DATO
     description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
     dataType: DATE_TYPE

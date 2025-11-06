@@ -160,7 +160,7 @@ fields:
       - code: 7
         value: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter
   - name: STMND_1
-    description: For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad?
+    description: For hvilke måneder i løpet av 2025 har deltakeren fått kvalifiseringsstønad?
     dataType: STRING_TYPE
     size: 2
     codeList:
@@ -244,7 +244,7 @@ fields:
       - code: 12
         value: Desember
   - name: KVP_STONAD
-    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2024
+    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2025
     dataType: INTEGER_TYPE
     size: 7
   - name: STATUS

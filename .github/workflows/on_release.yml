@@ -12,7 +12,10 @@ permissions:
 jobs:
   build:
     uses: ./.github/workflows/build-template.yml
-    secrets: inherit
+    secrets:
+      GAR_PROJECT_NUMBER: ${{ secrets.GAR_PROJECT_NUMBER }}
+      GAR_PROJECT_ID: ${{ secrets.GAR_PROJECT_ID }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
       gradle-targets: build shadowJar
       gradle-args: -Pversion=${{github.ref_name}}

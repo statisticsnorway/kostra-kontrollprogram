@@ -39,10 +39,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout #  v5.0.0
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@v5.0.0
 
       - name: Set up JDK 21 # v5.0.0
-        uses: actions/setup-java@2c3a0dfb53e69b4b14a5a9322a8f3aa24dfb2b3c
+        uses: actions/setup-java@v5.0.0
         with:
           java-version: '21'
           distribution: 'temurin'

@@ -10,10 +10,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.DELT_PART
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.DELT_VENN_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.JOURNAL_NR_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.KONTOR_NR_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.byColumnName
-import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -24,13 +21,8 @@ class Rule024DeltagelseBehandlingssamtaler :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot {
-                deltakere.any { deltaker ->
-                    fieldDefinitions
-                        .byColumnName(
-                            deltaker,
-                        ).codeExists(it[deltaker])
-                }
+            .filter {
+                deltakere.none { deltaker -> it[deltaker] == JA }
             }.map {
                 createValidationReportEntry(
                     messageText =
@@ -44,6 +36,7 @@ class Rule024DeltagelseBehandlingssamtaler :
             }.ifEmpty { null }
 
     companion object {
+        private const val JA = "1"
         private val deltakere =
             listOf(
                 DELT_PARTNER_A_COL_NAME,

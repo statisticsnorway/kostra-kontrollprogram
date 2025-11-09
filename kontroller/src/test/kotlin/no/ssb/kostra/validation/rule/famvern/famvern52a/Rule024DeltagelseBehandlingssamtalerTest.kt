@@ -12,8 +12,14 @@ class Rule024DeltagelseBehandlingssamtalerTest : BehaviorSpec({
             sut = Rule024DeltagelseBehandlingssamtaler(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
-                "valid code",
+                "valid code, participant",
                 kostraRecordInTest("1"),
+            ),
+            ForAllRowItem(
+                "valid code, no participant",
+                kostraRecordInTest("2"),
+                expectedErrorMessage = "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler " +
+                        "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "missing code",

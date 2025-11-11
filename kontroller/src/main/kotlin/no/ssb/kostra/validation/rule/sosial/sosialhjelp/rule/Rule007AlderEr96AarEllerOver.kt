@@ -13,10 +13,10 @@ class Rule007AlderEr96AarEllerOver : AbstractRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-//        .filter {
-//            it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())
-//                ?.let { age -> 96 <= age } ?: false
-//        }
+        .filter {
+            it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())
+                ?.let { age -> 96 <= age } ?: false
+        }
         .map {
             val alder = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt())
 

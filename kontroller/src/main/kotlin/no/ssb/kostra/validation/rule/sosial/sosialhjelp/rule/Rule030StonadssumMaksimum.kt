@@ -13,8 +13,8 @@ class Rule030StonadssumMaksimum : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
-            (it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)) < MAX
+        .filter {
+            MAX < (it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME))
         }.map {
             val stonad = it.fieldAsIntOrDefault(BIDRAG_COL_NAME) + it.fieldAsIntOrDefault(LAAN_COL_NAME)
             createValidationReportEntry(
@@ -30,6 +30,6 @@ class Rule030StonadssumMaksimum : AbstractNoArgsRule<List<KostraRecord>>(
         }.ifEmpty { null }
 
     companion object {
-        internal const val MAX = 600000
+        internal const val MAX = 1_000_000
     }
 }

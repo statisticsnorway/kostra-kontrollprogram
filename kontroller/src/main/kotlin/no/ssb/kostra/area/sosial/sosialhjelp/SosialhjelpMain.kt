@@ -34,7 +34,7 @@ class SosialhjelpMain(arguments: KotlinArguments) :
         Rule005aFoedselsnummerDubletter(),
         Rule005bJournalnummerDubletter(),
         Rule006AlderUnder18Aar(),
-        Rule007AlderEr68AarEllerOver(),
+        Rule007AlderEr96AarEllerOver(),
         Rule008Kjonn(),
         Rule009Sivilstand(),
         Rule010HarBarnUnder18(),

@@ -31,7 +31,7 @@
       * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_55F_from_2024_to_2025.md)
   * Regnskap
     * [Kravspesifikasjon felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
-      * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_Regnskap_2025.md)
+      * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_Regnskap.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_Regnskap.yaml)
       * KOSTRA
         * Kommune (årlig)
@@ -39,6 +39,7 @@
         * Kvartal (kvartal)
       * Helseforetak
   * Sosialtjenesten
+    * [Kravspesifikasjon felles for sosialtjenesten](/kravspesifikasjon/specs_felles_sosialtjenesten_2025.md)
     * Økonomisk sosialhjelp
       * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp_2025)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_11F_2025.md)

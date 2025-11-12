@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.sosialhjelp
 
 enum class SosialhjelpRuleId(val title: String) {
+    SOSIALHJELP_K007_ALDER_ER_96_AAR_ELLER_OVER("Kontroll 07 : Alder over 96 år eller over"),
     SOSIALHJELP_K014_VKLO_GYLDIGE_VERDIER("Kontroll 14: Viktigste kilde til livsopphold. Gyldige verdier"),
     SOSIALHJELP_K015_VKLO_ARBEIDSINNTEKT("Kontroll 15: Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Arbeidsinntekt"),
     SOSIALHJELP_K016_VKLO_KURS("Kontroll 16: Viktigste kilde til livsopphold i relasjon til arbeidssituasjon. Kursstønad/lønn i arbeidsmarkedstiltak."),

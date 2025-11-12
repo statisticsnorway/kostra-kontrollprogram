@@ -32,11 +32,11 @@ class Rule007AlderErOver68AarTest : BehaviorSpec({
                 "record with invalid age",
                 kostraRecordInTest(
                     RandomUtils.generateRandomSsn(
-                        70,
+                        69,
                         RuleTestData.argumentsInTest.aargang.toInt()
                     )
                 ),
-                expectedErrorMessage = "Deltakeren (70 år) er over 68 år.",
+                expectedErrorMessage = "Deltakeren (69 år) er over 68 år.",
             )
         )
     )
@@ -47,7 +47,10 @@ class Rule007AlderErOver68AarTest : BehaviorSpec({
                 KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to foedselsnummer,
                 KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                 KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to "~journalId~"
-            ).toKostraRecord(lineNumber = 1, fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions)
+            ).toKostraRecord(
+                lineNumber = 1,
+                fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions
+            )
         )
     }
 }

@@ -1,6 +1,8 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering.rule
 
-import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME
+import no.ssb.kostra.area.sosial.kvalifisering.KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.ageInYears
@@ -13,24 +15,23 @@ class Rule007AlderErOver68Aar : AbstractRule<List<KostraRecord>>(
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filter {
-            it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME]
-                .ageInYears(arguments.aargang.toInt())
-                ?.let { age -> MAX_AGE < age } ?: false
-        }.map {
-            val alder = it[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME]
-                .ageInYears(arguments.aargang.toInt())
-
+        .map { kostraRecord ->
+            val age = kostraRecord[PERSON_FODSELSNR_COL_NAME]
+                .ageInYears(arguments.aargang.toInt()) ?: 0
+            kostraRecord to age
+        }.filter { (_, age) ->
+            AGE_THRESHOLD < age
+        }.map { (kostraRecord, age) ->
             createValidationReportEntry(
-                messageText = "Mottakeren ($alder år) er over $MAX_AGE år.",
-                lineNumbers = listOf(it.lineNumber)
+                messageText = "Deltakeren ($age år) er over $AGE_THRESHOLD år.",
+                lineNumbers = listOf(kostraRecord.lineNumber)
             ).copy(
-                caseworker = it[KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME],
+                caseworker = kostraRecord[SAKSBEHANDLER_COL_NAME],
+                journalId = kostraRecord[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 
     companion object {
-        const val MAX_AGE = 68
+        const val AGE_THRESHOLD = 68
     }
 }

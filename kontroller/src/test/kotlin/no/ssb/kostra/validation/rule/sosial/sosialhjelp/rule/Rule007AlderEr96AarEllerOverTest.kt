@@ -16,7 +16,7 @@ class Rule007AlderEr96AarEllerOverTest : BehaviorSpec({
             sut = Rule007AlderEr96AarEllerOver(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
-                "record with valid age",
+                "record with valid age, 95 years",
                 kostraRecordInTest(
                     RandomUtils.generateRandomSsn(
                         95,
@@ -29,15 +29,25 @@ class Rule007AlderEr96AarEllerOverTest : BehaviorSpec({
                 kostraRecordInTest(" ".repeat(11)),
             ),
             ForAllRowItem(
-                "record with invalid age",
+                "record with invalid age, 96 years",
                 kostraRecordInTest(
                     RandomUtils.generateRandomSsn(
                         96,
                         RuleTestData.argumentsInTest.aargang.toInt()
                     )
                 ),
-                expectedErrorMessage = "Deltakeren (96 år) er 96 år eller eldre.",
-            )
+                expectedErrorMessage = "Mottakeren (96 år) er 96 år eller eldre.",
+            ),
+            ForAllRowItem(
+                "record with invalid age, 97 years",
+                kostraRecordInTest(
+                    RandomUtils.generateRandomSsn(
+                        97,
+                        RuleTestData.argumentsInTest.aargang.toInt()
+                    )
+                ),
+                expectedErrorMessage = "Mottakeren (97 år) er 96 år eller eldre.",
+            ),
         )
     )
 }) {
@@ -47,7 +57,10 @@ class Rule007AlderEr96AarEllerOverTest : BehaviorSpec({
                 KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME to foedselsnummer,
                 KvalifiseringColumnNames.SAKSBEHANDLER_COL_NAME to "Sara Saksbehandler",
                 KvalifiseringColumnNames.PERSON_JOURNALNR_COL_NAME to "~journalId~"
-            ).toKostraRecord(lineNumber = 1, fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions)
+            ).toKostraRecord(
+                lineNumber = 1,
+                fieldDefinitions = KvalifiseringFieldDefinitions.fieldDefinitions
+            )
         )
     }
 }

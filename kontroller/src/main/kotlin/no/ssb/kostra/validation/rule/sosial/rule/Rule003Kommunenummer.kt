@@ -15,15 +15,19 @@ class Rule003Kommunenummer : AbstractRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>, arguments: KotlinArguments) = context
-        .filterNot { arguments.region.municipalityIdFromRegion() == it[KOMMUNE_NR_COL_NAME] }
-        .map {
+        .map { kostraRecord ->
+            val kommunenummer = arguments.region.municipalityIdFromRegion()
+            kostraRecord to kommunenummer
+        }.filter { (kostraRecord, kommunenummer) ->
+            kostraRecord[KOMMUNE_NR_COL_NAME] != kommunenummer
+        }.map { (kostraRecord, kommunenummer) ->
             createValidationReportEntry(
-                "Korrigér kommunenummeret. Fant ${it[KOMMUNE_NR_COL_NAME]}, " +
-                        "forventet ${arguments.region.municipalityIdFromRegion()}.",
-                lineNumbers = listOf(it.lineNumber)
+                "Korrigér kommunenummeret. Fant ${kostraRecord[KOMMUNE_NR_COL_NAME]}, " +
+                        "forventet $kommunenummer.",
+                lineNumbers = listOf(kostraRecord.lineNumber)
             ).copy(
-                caseworker = it[SAKSBEHANDLER_COL_NAME],
-                journalId = it[PERSON_JOURNALNR_COL_NAME],
+                caseworker = kostraRecord[SAKSBEHANDLER_COL_NAME],
+                journalId = kostraRecord[PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

@@ -14,7 +14,7 @@ class Rule013AntallBarnUnder18 : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot { it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME) < CHILD_COUNT_THRESHOLD }
+        .filter { CHILD_COUNT_THRESHOLD <= it.fieldAs<Int>(ANT_BARN_UNDER_18_COL_NAME)  }
         .map {
             createValidationReportEntry(
                 "Antall barn (${it[ANT_BARN_UNDER_18_COL_NAME]}) under 18 år i husholdningen " +

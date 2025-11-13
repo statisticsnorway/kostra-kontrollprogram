@@ -29,6 +29,16 @@ yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_descrip
 
 ## Krav
 
+### Kontroll 000: Skal levere filuttrekk
+
+Definert i [Kravspesifikasjon for alle posisjonsbaserte filvedlegg]( specs_posisjonsbaserte_filvedlegg_felles.md#kontroll-000--skal-levere-filuttrekk)
+
 ### Kontroll 001: Recordlengde
 
-Definert i [felles spesifikasjon for posisjonsbaserte filer]( felles_posisjonsbaserte_filvedlegg.md#001)
+Definert i [Kravspesifikasjon for alle posisjonsbaserte filvedlegg]( specs_posisjonsbaserte_filvedlegg_felles.md#kontroll-001--recordlengde)
+
+### Kontroll 003: Kommunenummer
+
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-003--kommunenummer)
+
+

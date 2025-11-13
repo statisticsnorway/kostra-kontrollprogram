@@ -25,8 +25,10 @@ Disse er:
 ## Filbeskrivelse
 
 Filbeskrivelse finnes som en mennesklig- og maskinlesbar
-yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_description_11CF_2024.yaml).
+yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_description_11CF_2025.yaml).
 
 ## Krav
 
-Kommer senere
+### Kontroll 001: Recordlengde
+
+Definert i [felles spesifikasjon for posisjonsbaserte filer]( felles_posisjonsbaserte_filvedlegg.md#Kontroll-001)

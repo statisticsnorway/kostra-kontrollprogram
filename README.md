@@ -41,12 +41,12 @@
   * Sosialtjenesten
     * [Kravspesifikasjon felles for sosialtjenesten](/kravspesifikasjon/specs_felles_sosialtjenesten_2025.md)
     * Økonomisk sosialhjelp
-      * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp_2025)
+      * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_11F_2025.md)
       * [Filbeskrivelse maskin lesbar (.yaml)](/kravspesifikasjon/file_description_11F_2025.yaml)
       * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_11F_from_2024_to_2025.md)
     * Kvalifiseringsstønad
-      * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11CF_kvalifiseringsstonad_2025)
+      * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11CF_kvalifiseringsstonad_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_11CF_2025.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_11CF_2025.yaml)
       * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_11CF_from_2024_to_2025.md)

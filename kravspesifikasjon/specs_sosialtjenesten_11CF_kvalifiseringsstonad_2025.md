@@ -31,4 +31,4 @@ yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_descrip
 
 ### Kontroll 001: Recordlengde
 
-Definert i [felles spesifikasjon for posisjonsbaserte filer]( felles_posisjonsbaserte_filvedlegg.md#Kontroll-001)
+Definert i [felles spesifikasjon for posisjonsbaserte filer]( felles_posisjonsbaserte_filvedlegg.md#001)

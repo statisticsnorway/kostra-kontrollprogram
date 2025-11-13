@@ -41,4 +41,44 @@ Definert i [Kravspesifikasjon for alle posisjonsbaserte filvedlegg]( specs_posis
 
 Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-003--kommunenummer)
 
+### Kontroll 003: Bydelsnummer
+
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-003--bydelsnummer)
+
+### Kontroll 003: Kommunenummer
+
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-003--kommunenummer)
+
+### Kontroll 004 : Oppgaveår
+
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-004--oppgaveår)
+
+### Kontroll 004A : Fødselsdato
+
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-004a--fødselsdato)
+
+
+### Kontroll 005 : Fødselsdato
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-005--fødselsdato)
+
+### Kontroll 008 : Kjønn
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-008--kjønn)
+
+### Kontroll 009 : Sivilstand
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-009--sivilstand)
+
+### Kontroll 010 : Har barn under 18 år
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-010--har-barn-under-18-år)
+
+### Kontroll 011 : Det bor barn under 18 år i husholdningen. Mangler antall barn.
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-011--det-bor-barn-under-18-år-i-husholdningen-mangler-antall-barn)
+
+### Kontroll 012 : Det bor barn under 18 år i husholdningen. Feil i antall barn.
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-012---det-bor-barn-under-18-år-i-husholdningen-feil-i-antall-barn)
+
+### Kontroll 013 : Mange barn under 18 år i husholdningen.
+Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-013--mange-barn-under-18-år-i-husholdningen)
+
+
+
 

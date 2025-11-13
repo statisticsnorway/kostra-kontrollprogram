@@ -7,7 +7,7 @@
 
 ## Kravspesifikasjoner
 
-* [Kravspesifikasjon for alle posisjonsbaserte filvedlegg](/kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md)
+* [Kravspesifikasjon for alle posisjonsbaserte filvedlegg](/kravspesifikasjon/specs_posisjonsbaserte_filvedlegg_felles.md)
   * Familievern
     * Familievernssaker
       * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_52AF_familievernsaker_2025.md)
@@ -30,7 +30,7 @@
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_55F_2025.yaml)
       * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_55F_from_2024_to_2025.md)
   * Regnskap
-    * [Kravspesifikasjon felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
+    * [Kravspesifikasjon felles for alle regnskap](/kravspesifikasjon/specs_regnskap_felles.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_Regnskap.md)
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_Regnskap.yaml)
       * KOSTRA
@@ -39,7 +39,7 @@
         * Kvartal (kvartal)
       * Helseforetak
   * Sosialtjenesten
-    * [Kravspesifikasjon felles for sosialtjenesten](/kravspesifikasjon/specs_felles_sosialtjenesten_2025.md)
+    * [Kravspesifikasjon felles for sosialtjenesten](/kravspesifikasjon/specs_sosialtjenesten_felles_2025.md)
     * Økonomisk sosialhjelp
       * [Kravspesifikasjon](/kravspesifikasjon/specs_sosialtjenesten_11F_okonomisk_sosialhjelp_2025.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_11F_2025.md)

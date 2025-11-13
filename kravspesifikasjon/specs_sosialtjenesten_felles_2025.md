@@ -1,4 +1,4 @@
-# Kravspesifikasjon felles for Soosialtjenesten
+# Kravspesifikasjon felles for Sosialtjenesten
 
 ## Begrep
 
@@ -25,6 +25,7 @@ Disse er:
 
 ## Krav
 
+<a id="003"></a>
 ### Kontroll 003 : Kommunenummer
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for KOMMUNE_NR, en datafil med verdi for KOMMUNE_NR i alle rader og den
@@ -52,6 +53,7 @@ preutfylte verdien for variablen KOMMUNE_NR (her kalt 'kommunenummer') og BYDELS
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule003Bydelsnummer.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule003BydelsnummerTest.kt)
 
+<a id="004"></a>
 ### Kontroll 004 : Oppgaveår
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for VERSION, en datafil med verdi for VERSION i alle rader og den
@@ -62,6 +64,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004OppgaveAar.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004OppgaveAarTest.kt)
 
+<a id="004A"></a>
 ### Kontroll 004A : Fødselsdato
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for FODSELSDATO, en datafil med verdi for FODSELSDATO i alle rader<br/>
@@ -71,6 +74,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004AFodselsDato.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004AFodselsDatoTest.kt)
 
+<a id="005"></a>
 ### Kontroll 005 : Fødselsdato
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for PERSON_FODSELSNR, en datafil med verdi for PERSON_FODSELSNR i alle rader<br/>
@@ -80,6 +84,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule005Fodselsnummer.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule005FodselsnummerTest.kt)
 
+<a id="008"></a>
 ### Kontroll 008 : Kjønn
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for KJONN som har en kodeliste med gyldige koder, en datafil med verdi for KJONN i alle rader<br/>
@@ -89,6 +94,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule008Kjonn.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule008KjonnTest.kt)
 
+<a id="009"></a>
 ### Kontroll 009 : Sivilstand
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for EKTSTAT (sivilstand) som har en kodeliste med gyldige koder, en datafil med verdi for EKTSTAT i alle rader<br/>
@@ -98,6 +104,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule009Sivilstand.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule009SivilstandTest.kt)
 
+<a id="010"></a>
 ### Kontroll 010 : Har barn under 18 år
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for BU18 (har barn under 18 år) som har en kodeliste med gyldige koder, en datafil med verdi for BU18 i alle rader<br/>
@@ -107,6 +114,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule010HarBarnUnder18.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule010HarBarnUnder18Test.kt)
 
+<a id="011"></a>
 ### Kontroll 011 : Det bor barn under 18 år i husholdningen. Mangler antall barn.
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for BU18 (har barn under 18 år) og ANTBU18 (antall barn under 18 år), en datafil med verdi for BU18 og ANTBU18<br/>
@@ -116,6 +124,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule011HarBarnUnder18MotAntallBarnUnder18.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule011HarBarnUnder18MotAntallBarnUnder18Test.kt)
 
+<a id="012"></a>
 ### Kontroll 012 : Det bor barn under 18 år i husholdningen.
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for BU18 (har barn under 18 år) og ANTBU18 (antall barn under 18 år), en datafil med verdi for BU18 og ANTBU18<br/>
@@ -125,6 +134,7 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule012AntallBarnUnder18MotHarBarnUnder18.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule012AntallBarnUnder18MotHarBarnUnder18Test.kt)
 
+<a id="013"></a>
 ### Kontroll 013 : Mange barn under 18 år i husholdningen.
 
 Definisjon:<br/>

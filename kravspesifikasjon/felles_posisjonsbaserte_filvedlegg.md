@@ -21,6 +21,7 @@ I forbindelse med kontrollering så blir noen variabler sendt med fra portalen o
 
 ## Krav
 
+<a id="000"></a>
 ### Kontroll 000 : Skal levere filuttrekk
 
 **Gitt at** en i Kostra-skjemaet har merket av for at man skal rapportere<br/>
@@ -44,6 +45,7 @@ Kryptert fil uten innhold kan lastes ned fra https://www.ssb.no/innrapportering/
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/Rule000HasAttachment.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/Rule000HasAttachmentTest.kt)
 
+<a id="001"></a>
 ### Kontroll 001 : Recordlengde
 
 **Gitt at** en har en filbeskrivelse og et filvedlegg med data<br/>
@@ -54,6 +56,7 @@ Kryptert fil uten innhold kan lastes ned fra https://www.ssb.no/innrapportering/
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/Rule001RecordLengthTest.kt)
 
 
+<a id="002"></a>
 ### Kontroll 002 : Filbeskrivelse, mangler obligatorisk verdi
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon som sier at feltet er obligatorisk å fylle ut<br/>

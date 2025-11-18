@@ -20,10 +20,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_SAMS
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_SYKD_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_TVANG_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.TEMA_VOLD_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.byColumnName
-import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -34,15 +31,13 @@ class Rule022OmraaderArbeidet :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot {
-                tema.any { tema ->
-                    fieldDefinitions.byColumnName(tema).codeExists(it[tema])
-                }
+            .filter {
+                temaer.none { tema -> it[tema] == "1" }
             }.map {
                 createValidationReportEntry(
                     messageText =
                         "Det er ikke fylt ut hvilke områder det har vært arbeidet med siden saken ble opprettet. " +
-                            "Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
+                                "Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(
                     caseworker = it[KONTOR_NR_A_COL_NAME],
@@ -51,7 +46,7 @@ class Rule022OmraaderArbeidet :
             }.ifEmpty { null }
 
     companion object {
-        private val tema =
+        private val temaer =
             listOf(
                 TEMA_PARREL_A_COL_NAME,
                 TEMA_AVKLAR_A_COL_NAME,

@@ -72,7 +72,19 @@ OSLO = "0301"
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/kvalifisering/rule/Rule005aFoedselsnummerDubletter.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/kvalifisering/rule/Rule005aFoedselsnummerDubletterTest.kt)
 
+### Kontroll 005B : Journalnummer, dubletter
 
+Definisjon:
+OSLO = "0301"
+
+**Gitt at** en har en filbeskrivelse med feltdefinisjon for KOMMUNE_NR og PERSON_JOURNALNR, en datafil med verdi for KOMMUNE_NR og PERSON_JOURNALNR i alle rader<br/>
+**når** {KOMMUNE_NR} er ulik {OSLO}, gruppér så på {PERSON_JOURNALNR} og finn alle PERSON_JOURNALNR der antall er større enn 1 og legg antall forekomster inn i PERSON_JOURNALNR_ANTALL<br/>
+**så** gi en :no_entry:**FEIL** med meldingen **"Journalnummer {PERSON_JOURNALNR} forekommer {PERSON_JOURNALNR_ANTALL} ganger."** for hver rad hvor dette inntreffer
+
+[Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/kvalifisering/rule/Rule005bJournalnummerDubletter.kt)
+[Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/kvalifisering/rule/Rule005bJournalnummerDubletterTest.kt)
+
+### Kontroll 006 : Alder under 18 år
 
 ### Kontroll 008 : Kjønn
 Definert i [Kravspesifikasjon felles for Sosialtjenesten]( specs_sosialtjenesten_felles_2025.md#kontroll-008--kjønn)

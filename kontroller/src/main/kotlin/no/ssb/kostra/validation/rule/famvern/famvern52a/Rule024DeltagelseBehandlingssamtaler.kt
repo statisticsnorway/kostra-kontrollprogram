@@ -22,12 +22,12 @@ class Rule024DeltagelseBehandlingssamtaler :
     override fun validate(context: List<KostraRecord>) =
         context
             .filter {
-                deltakere.none { deltaker -> it[deltaker] == JA }
+                fields.none { deltaker -> it[deltaker] == JA }
             }.map {
                 createValidationReportEntry(
                     messageText =
                         "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler " +
-                            "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.",
+                                "med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(
                     caseworker = it[KONTOR_NR_A_COL_NAME],
@@ -37,7 +37,7 @@ class Rule024DeltagelseBehandlingssamtaler :
 
     companion object {
         private const val JA = "1"
-        private val deltakere =
+        private val fields =
             listOf(
                 DELT_PARTNER_A_COL_NAME,
                 DELT_EKSPART_A_COL_NAME,

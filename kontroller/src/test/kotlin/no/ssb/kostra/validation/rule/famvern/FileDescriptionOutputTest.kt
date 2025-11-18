@@ -27,7 +27,7 @@ class FileDescriptionOutputTest : BehaviorSpec({
                     .enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)
                     .enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
                     .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
-                val mapper = ObjectMapper(factory).setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                val mapper = ObjectMapper(factory)
                 val fileName = "src/main/resources/file_description_$id.yaml"
                 val fileDescription = FileDescription(
                     title = title,

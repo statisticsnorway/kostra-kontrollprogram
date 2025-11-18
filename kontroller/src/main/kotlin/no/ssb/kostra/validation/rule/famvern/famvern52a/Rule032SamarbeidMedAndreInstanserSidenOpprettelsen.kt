@@ -13,10 +13,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_PS
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_SKOLE_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_SOS_A_COL_NAME
 import no.ssb.kostra.area.famvern.famvern52a.Familievern52aColumnNames.SAMARB_STATB_A_COL_NAME
-import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fieldDefinitions
 import no.ssb.kostra.program.KostraRecord
-import no.ssb.kostra.program.extension.byColumnName
-import no.ssb.kostra.program.extension.codeExists
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -27,15 +24,14 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot {
-                fields.any { field ->
-                    fieldDefinitions.byColumnName(field).codeExists(it[field])
-                }
+            .filter {
+                (it[SAMARB_INGEN_A_COL_NAME] == "1" && fields.any { field -> it[field] == "1" }) ||
+                        (it[SAMARB_INGEN_A_COL_NAME] == " " && fields.none { field -> it[field] == "1" })
             }.map {
                 createValidationReportEntry(
                     messageText =
                         "Det er ikke krysset av for om det har vært samarbeid med andre " +
-                            "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
+                                "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(
                     caseworker = it[KONTOR_NR_A_COL_NAME],
@@ -46,7 +42,6 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen :
     companion object {
         private val fields =
             listOf(
-                SAMARB_INGEN_A_COL_NAME,
                 SAMARB_LEGE_A_COL_NAME,
                 SAMARB_HELSE_A_COL_NAME,
                 SAMARB_PSYKH_A_COL_NAME,

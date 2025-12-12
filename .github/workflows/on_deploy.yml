@@ -40,7 +40,7 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up JDK 21
         uses: actions/setup-java@v5
@@ -91,10 +91,10 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Deploy to NAIS Test # v2
-        uses: nais/deploy/actions/deploy@961addd1e4d4211f1a7333ada5fde85f7c9aa5b7
+        uses: nais/deploy/actions/deploy@56e14061f2a8437bd9119e7b8f92749a3b288db1
         env:
           CLUSTER: test
           RESOURCE: .nais/test.yaml

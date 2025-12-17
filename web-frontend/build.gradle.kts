@@ -3,7 +3,7 @@ plugins {
 }
 
 frontend {
-    nodeVersion.set("22.14.0")
+    nodeVersion.set("24.12.0")
     assembleScript.set("run build")
     checkScript.set("run check")
 }

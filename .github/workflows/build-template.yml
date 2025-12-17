@@ -55,7 +55,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew clean ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
+          ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
           --no-daemon --parallel --build-cache --info --stacktrace
 
 #      - id: "auth"

@@ -1,0 +1,58 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '31 2 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout #  v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21 # v5.0.0
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Initialize CodeQL # v4.31.9
+        uses: github/codeql-action/init@v4
+        with:
+          languages: java,javascript,kotlin
+          # Optional but recommended for Kotlin-heavy projects
+          queries: security-extended
+
+      # 🚫 No autobuild — we control the build explicitly
+      - name: Build backend only (exclude frontend Node tasks)
+        run: |
+          ./gradlew \
+            testClasses \
+            -x :kostra-kontrollprogram-web-frontend:build \
+            -x :kostra-kontrollprogram-web-frontend:assemble \
+            -x :kostra-kontrollprogram-web-frontend:check \
+            -x :kostra-kontrollprogram-web-frontend:installNode
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4

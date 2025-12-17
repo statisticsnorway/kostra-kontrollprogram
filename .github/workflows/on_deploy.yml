@@ -40,10 +40,12 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -91,7 +93,7 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
 
       - name: Deploy to NAIS Test # v2
         uses: nais/deploy/actions/deploy@56e14061f2a8437bd9119e7b8f92749a3b288db1

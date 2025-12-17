@@ -38,11 +38,13 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout #  v5.0.0
-        uses: actions/checkout@v6
+      - name: Checkout #  v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 21 # v5.0.0
-        uses: actions/setup-java@v5.0.0
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
         with:
           java-version: '21'
           distribution: 'temurin'

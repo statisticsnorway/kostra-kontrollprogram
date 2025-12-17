@@ -16,29 +16,29 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@popperjs/core": "^2.11.8",
-    "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-query": "^5.90.12",
     "axios": "^1.13.1",
     "bootstrap": "^5.3.8",
-    "match-sorter": "^8.1.0",
+    "match-sorter": "^8.2.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
-    "react-hook-form": "^7.66.0",
-    "react-router-dom": "^7.9.5",
+    "react-hook-form": "^7.68.0",
+    "react-router-dom": "^7.10.1",
     "yup": "^1.7.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0",
-    "jsdom": "^27.1.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "jsdom": "^27.3.0",
     "mkdirp": "~3",
-    "sass": "^1.93.3",
+    "sass": "^1.97.0",
     "typescript": "^5.9.3",
-    "vite": "^7.1.12",
-    "vitest": "^4.0.6"
+    "vite": "^7.3.0",
+    "vitest": "^4.0.16"
   },
   "overrides": {
     "eslint": {

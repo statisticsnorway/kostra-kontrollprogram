@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin
 import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNodeTaskType
 import org.siouan.frontendgradleplugin.infrastructure.gradle.RunNpmTaskType
 
@@ -6,12 +5,9 @@ plugins {
     id("org.siouan.frontend-jdk21") version "9.1.0"
 }
 
-//val preinstalledNodeDistributionDirectory = file(<path-to-nodejs-install-directory>);
-val preinstalledNodeDistributionDirectory = null as File?;
-
 frontend {
     nodeDistributionProvided.set(true)
-    nodeInstallDirectory.set(preinstalledNodeDistributionDirectory)
+    nodeDistributionUrlRoot.set("https://nodejs.org")
     nodeVersion.set("24.12.0")
     assembleScript.set("run build")
     checkScript.set("run check")

@@ -15,7 +15,6 @@ shadow-version = "8.3.8"
 gradle-git-properties-version = "2.5.4"
 devtools-ksp-version = "2.3.3"
 micronaut-application-version = "4.6.1"
-siouan-frontend-jdk21-version = "9.0.0"
 # to be removed
 assertj-core-version = "3.27.6"
 
@@ -52,4 +51,3 @@ shadow = { id = "com.gradleup.shadow", version.ref = "shadow-version" }
 gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gradle-git-properties-version" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtools-ksp-version" }
 micronaut-application = { id = "io.micronaut.application", version.ref = "micronaut-application-version" }
-siouan-frontend-jdk21 = { id = "org.siouan.frontend-jdk21", version.ref = "siouan-frontend-jdk21-version" }

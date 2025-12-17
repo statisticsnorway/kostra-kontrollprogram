@@ -22,7 +22,7 @@ object KostraBarnevernConverter {
 
     @JvmStatic
     val XML_MAPPER = XmlMapper(JacksonXmlModule()).apply {
-        this.setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+        this.setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY)
             .registerModule(kotlinModule)
             .registerModule(JavaTimeModule())
             .registerModule(JakartaXmlBindAnnotationModule())

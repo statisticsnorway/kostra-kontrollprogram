@@ -14,14 +14,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
         with:
-          distribution: temurin
-          java-version: 21
-          cache: gradle
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
 
       - id: auth
         name: Authenticate to Google Cloud # v3.0.0

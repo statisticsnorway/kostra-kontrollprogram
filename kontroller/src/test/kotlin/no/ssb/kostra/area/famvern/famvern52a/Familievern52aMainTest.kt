@@ -36,7 +36,7 @@ class Familievern52aMainTest :
                         inputFileContent = " ".repeat(Familievern52aFieldDefinitions.fieldLength),
                     ),
                     NUMBER_OF_VALIDATIONS,
-                    51,
+                    50,
                 ),
                 row(
                     "validating a valid record string",
@@ -67,7 +67,7 @@ class Familievern52aMainTest :
     companion object {
         private const val SKJEMA = "52AF"
         private const val REGION = "667200"
-        private const val NUMBER_OF_VALIDATIONS = 37
+        private const val NUMBER_OF_VALIDATIONS = 36
 
         private fun argumentsInTest(region: String): KotlinArguments =
             KotlinArguments(

@@ -37,7 +37,6 @@ class Familievern52aMain(arguments: KotlinArguments) : PositionedFileValidator(a
         Rule021DatoForsteBehandlingssamtaleEtterHenvendelse(),
         Rule022OmraaderArbeidet(),
         Rule023HovedformPaaBehandlingstilbudet(),
-        Rule024DeltagelseBehandlingssamtaler(),
         Rule025Behandlingssamtaler(),
         Rule026RelasjonBehandlingssamtalerDeltatt(),
         Rule027AntallBehandlingssamtalerForAnsatteVedKontoret(),

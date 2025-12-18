@@ -5,7 +5,7 @@ kotest-version = "5.9.1"
 mockk-version = "1.14.6"
 woodstox-core-version = "7.1.1"
 picocli-version = "4.7.7"
-logback-classic-version = "1.5.21"
+logback-classic-version = "1.5.22"
 swagger-annotations-version = "2.2.41"
 
 # plugins

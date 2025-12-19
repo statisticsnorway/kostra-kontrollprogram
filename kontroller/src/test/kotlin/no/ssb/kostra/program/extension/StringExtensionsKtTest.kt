@@ -54,14 +54,15 @@ class StringExtensionsKtTest :
 
         Given("getAgeFromSocialSecurityId") {
             forAll(
-                row("invalid fødselsnummer, expect null", "123", null),
-                row("valid fødselsnummer, expect age", "05011399292", 9),
-                row("valid D-nr, expect age", "41011088188", 12),
+                row("invalid format, invalid fødselsnummer, expect null", "123", null),
+                row("valid format, valid fødselsnummer, expect age", "05011399292", 9),
+                row("valid format, valid D-nr, expect age", "41011088188", 12),
+                row("valid format, invalid fødselsnummer, unborn child, expect age", "01012399999", -1),
             ) { description, socialSecurityId, expectedAge ->
                 When(description) {
                     val ageInYears = socialSecurityId.ageInYears(2022)
 
-                    Then("ageInYears should be as expected") {
+                    Then("ageInYears ($ageInYears) should be expected age ($expectedAge)") {
                         ageInYears shouldBe expectedAge
                     }
                 }

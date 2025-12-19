@@ -18,7 +18,20 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("05011399292", "fnr", LocalDate.of(2013, 1, 5)),
             row("41011088188", "dnr", LocalDate.of(2010, 1, 1)),
             row("01811088188", "tnr", LocalDate.of(2010, 1, 1)),
+        ) { socialSecurityId, type, expectedDate ->
+            When("$socialSecurityId $type") {
 
+                val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId)
+
+                Then("dateOfBirth ($dateOfBirth) should be as expected ($expectedDate)") {
+                    dateOfBirth shouldBe expectedDate
+                }
+            }
+        }
+    }
+
+    Given("parseDateWithAutoPivotYear") {
+        forAll(
             row("01015450068", "fnr", LocalDate.of(1854, 1, 1)),
             row("31129974810", "fnr", LocalDate.of(1899, 12, 31)),
 
@@ -30,10 +43,14 @@ class SsnValidationUtilsTest : BehaviorSpec({
 
             row("01010050053", "fnr", LocalDate.of(2000, 1, 1)),
             row("31123999854", "fnr", LocalDate.of(2039, 12, 31)),
+
+            row("31124588890", "fnr", LocalDate.of(2045, 12, 31)),
+            row("31123974912", "fnr", LocalDate.of(2039, 12, 31)),
+            row("01014074912", "fnr", LocalDate.of(2040, 1, 1)),
         ) { socialSecurityId, type, expectedDate ->
             When("$socialSecurityId $type") {
 
-                val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId)
+                val dateOfBirth = SsnValidationUtils.parseDateWithAutoPivotYear(socialSecurityId)
 
                 Then("dateOfBirth ($dateOfBirth) should be as expected ($expectedDate)") {
                     dateOfBirth shouldBe expectedDate

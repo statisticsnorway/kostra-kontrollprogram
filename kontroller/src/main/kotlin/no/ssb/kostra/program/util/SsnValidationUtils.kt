@@ -28,7 +28,7 @@ object SsnValidationUtils {
         null
     }
 
-    private fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate {
+    internal fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate {
         val individualDigits = Integer.parseInt(socialSecurityId.substring(6, 9))
         val individualYear = Integer.parseInt(socialSecurityId.substring(4, 6))
         val date = LocalDate.parse(socialSecurityId.take(6), LOCAL_DATE_FORMATTER)

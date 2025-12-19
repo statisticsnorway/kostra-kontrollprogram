@@ -1,6 +1,7 @@
 package no.ssb.kostra.validation.rule.sosial.kvalifisering
 
 enum class KvalifiseringRuleId(val title: String) {
+    KVALIFISERING_07_ALDER_ER_OVER_68_AAR("Kontroll 07 : Alder er 68 år eller over"),
     REG_DATO_14("Kontroll 14 : Dato for registrert søknad ved NAV-kontoret"),
     VEDTAK_DATO_15("Kontroll 15 : Dato for fattet vedtak om program (søknad innvilget)"),
     BEGYNT_DATO_16("Kontroll 16 : Dato for når deltakeren begynte i program (iverksettelse)"),

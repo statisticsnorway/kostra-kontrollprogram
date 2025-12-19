@@ -23,7 +23,36 @@ class SsnValidationUtilsTest : BehaviorSpec({
 
                 val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId)
 
-                Then("dateOfBirth should be as expected") {
+                Then("dateOfBirth ($dateOfBirth) should be as expected ($expectedDate)") {
+                    dateOfBirth shouldBe expectedDate
+                }
+            }
+        }
+    }
+
+    Given("parseDateWithAutoPivotYear") {
+        forAll(
+            row("01015450068", "fnr", LocalDate.of(1854, 1, 1)),
+            row("31129974810", "fnr", LocalDate.of(1899, 12, 31)),
+
+            row("01010000110", "fnr", LocalDate.of(1900, 1, 1)),
+            row("31129949980", "fnr", LocalDate.of(1999, 12, 31)),
+
+            row("01014090017", "fnr", LocalDate.of(1940, 1, 1)),
+            row("31129999813", "fnr", LocalDate.of(1999, 12, 31)),
+
+            row("01010050053", "fnr", LocalDate.of(2000, 1, 1)),
+            row("31123999854", "fnr", LocalDate.of(2039, 12, 31)),
+
+            row("31124588890", "fnr", LocalDate.of(2045, 12, 31)),
+            row("31123974912", "fnr", LocalDate.of(2039, 12, 31)),
+            row("01014074912", "fnr", LocalDate.of(2040, 1, 1)),
+        ) { socialSecurityId, type, expectedDate ->
+            When("$socialSecurityId $type") {
+
+                val dateOfBirth = SsnValidationUtils.parseDateWithAutoPivotYear(socialSecurityId)
+
+                Then("dateOfBirth ($dateOfBirth) should be as expected ($expectedDate)") {
                     dateOfBirth shouldBe expectedDate
                 }
             }
@@ -35,12 +64,20 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("socialSecurityId does not match regex", "abc", false),
             row("socialSecurityId does matches regex", "12345612345", false),
             row("invalid date of birth in socialSecurityId", "01840612345", false),
-            row("valid FREG socialSecurityId", "31925298037", true),
+
+            row("valid socialSecurityId from 1854, 500 - 749 series", "01015450068", true),
+            row("valid socialSecurityId from 1899, 500 - 749 series", "31129974810", true),
+            row("valid socialSecurityId from 1900, 000 - 499 series", "01010000110", true),
+            row("valid socialSecurityId from 1999, 000 - 499 series", "31129949980", true),
+            row("valid socialSecurityId from 1940, 900 - 999 series", "01014090017", true),
+            row("valid socialSecurityId from 1999, 900 - 999 series", "31129999813", true),
+            row("valid socialSecurityId from 2000, 500 - 999 series", "01010050053", true),
+            row("valid socialSecurityId from 2039, 500 - 999 series", "31123999854", true),
         ) { description, socialSecurityId, expectedResult ->
             When(description) {
                 val isValidSocialSecurityId = isValidSocialSecurityId(socialSecurityId)
 
-                Then("isValidSocialSecurityId should be expectedResult") {
+                Then("isValidSocialSecurityId($socialSecurityId) should be $expectedResult") {
                     isValidSocialSecurityId shouldBe expectedResult
                 }
             }
@@ -54,12 +91,12 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("valid D-number", "41011088188", true),
             row("invalid date of birth in ssn", "01840612345", false),
             row("valid freg ssn", "01840699478", true),
-            row("valid unborn ssn", "05012399999", true),
+            row("valid unborn ssn", "05012999999", true),
         ) { description, socialSecurityId, expectedResult ->
             When(description) {
                 val isValidSocialSecurityIdOrDnr = isValidSocialSecurityIdOrDnr(socialSecurityId)
 
-                Then("isValidSocialSecurityId should be expectedResult") {
+                Then("isValidSocialSecurityIdOrDnr($socialSecurityId) should be $expectedResult") {
                     isValidSocialSecurityIdOrDnr shouldBe expectedResult
                 }
             }
@@ -79,7 +116,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             When("validate norwegian social security number $fnr ($type)") {
                 val isValidSocialSecurityId = isModulo11Valid(fnr)
 
-                Then("isValidSocialSecurityId should be expectedResult") {
+                Then("isValidSocialSecurityId should be $expectedResult") {
                     isValidSocialSecurityId shouldBe expectedResult
                 }
             }
@@ -99,7 +136,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             When("validateDUF: $duf") {
                 val isValidDuf = validateDUF(duf)
 
-                Then("isValidDuf should be expectedResult") {
+                Then("isValidDuf should be $expectedResult") {
                     isValidDuf shouldBe expectedResult
                 }
             }

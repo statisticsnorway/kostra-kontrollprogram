@@ -40,40 +40,42 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Set up gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Set up gradle # v5.0.0
+        uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Build with Gradle
         run: ./gradlew build -p web --no-daemon --build-cache --info
 
-      - name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud # v3.0.0
         id: "auth"
-        uses: google-github-actions/auth@v3
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
         with:
           workload_identity_provider: "projects/${{ vars.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-kostra@${{ vars.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
           token_format: "access_token"
 
-      - name: Login to registry
-        uses: docker/login-action@v3
+      - name: Login to registry # v3.6.0
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef
         with:
           registry: ${{ env.REGISTRY }}
           username: "oauth2accesstoken"
           password: "${{ steps.auth.outputs.access_token }}"
 
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v6
+      - name: Build and push Docker images # v6.18.0
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
         with:
           context: ./web
           push: true
@@ -91,10 +93,10 @@ jobs:
       id-token: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
 
-      - name: Deploy to NAIS Test
-        uses: nais/deploy/actions/deploy@v2
+      - name: Deploy to NAIS Test # v2
+        uses: nais/deploy/actions/deploy@56e14061f2a8437bd9119e7b8f92749a3b288db1
         env:
           CLUSTER: test
           RESOURCE: .nais/test.yaml

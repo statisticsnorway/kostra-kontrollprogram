@@ -18,12 +18,6 @@ class Rule020AViktigsteKildeTilLivsOppholdKode3 : AbstractNoArgsRule<List<Kostra
         .filterNot { it[VKLO_COL_NAME] == "3" }
         .filterNot { it[TRYGDESIT_COL_NAME] in validCodes }
         .map { kostraRecord ->
-            val vkloNullable = SosialhjelpFieldDefinitions
-                .fieldDefinitions
-                .byColumnName(VKLO_COL_NAME)
-                .codeList
-                .firstOrNull { item -> item.code == kostraRecord[VKLO_COL_NAME] }
-
             val codeList = SosialhjelpFieldDefinitions
                 .fieldDefinitions
                 .byColumnName(TRYGDESIT_COL_NAME)

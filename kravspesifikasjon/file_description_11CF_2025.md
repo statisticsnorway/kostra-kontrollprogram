@@ -32,7 +32,7 @@ Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2025
 | `KVP_MED_SOSHJ_ENGANG` |  | 1 | 78‑78 | STRING_TYPE |  |  | `9`: Mottok økonomisk sosialhjelp som engangsstønad |
 | `KVP_MED_SOSHJ_PGM` |  | 1 | 79‑79 | STRING_TYPE |  |  | `8`: Mottok økonomisk sosialhjelp til dekking av særskilte utgifter knyttet til deltakelsen i programmet |
 | `KVP_MED_SOSHJ_SUP` |  | 1 | 80‑80 | STRING_TYPE |  |  | `7`: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter |
-| `STMND_1` | For hvilke måneder i løpet av 2024 har deltakeren fått kvalifiseringsstønad? | 2 | 81‑82 | STRING_TYPE |  |  | `01`: Januar |
+| `STMND_1` | For hvilke måneder i løpet av 2025 har deltakeren fått kvalifiseringsstønad? | 2 | 81‑82 | STRING_TYPE |  |  | `01`: Januar |
 | `STMND_2` |  | 2 | 83‑84 | STRING_TYPE |  |  | `02`: Februar |
 | `STMND_3` |  | 2 | 85‑86 | STRING_TYPE |  |  | `03`: Mars |
 | `STMND_4` |  | 2 | 87‑88 | STRING_TYPE |  |  | `04`: April |
@@ -44,7 +44,7 @@ Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2025
 | `STMND_10` |  | 2 | 99‑100 | STRING_TYPE |  |  | `10`: Oktober |
 | `STMND_11` |  | 2 | 101‑102 | STRING_TYPE |  |  | `11`: November |
 | `STMND_12` |  | 2 | 103‑104 | STRING_TYPE |  |  | `12`: Desember |
-| `KVP_STONAD` | Samlet utbetalt kvalifiseringsstønad i løpet av 2024 | 7 | 105‑111 | INTEGER_TYPE |  |  |  |
+| `KVP_STONAD` | Samlet utbetalt kvalifiseringsstønad i løpet av 2025 | 7 | 105‑111 | INTEGER_TYPE |  |  |  |
 | `STATUS` | Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.2025? | 1 | 112‑112 | STRING_TYPE | ☑️ |  | `1`: Fortsatt i program<br/>`2`: Permisjon/avtalt avbrudd fra program<br/>`3`: Fullført program eller avsluttet etter avtale<br/>`4`: Program er varig avbrutt på grunn av uteblivelse<br/>`5`: Program ble avbrutt på grunn av flytting til annen kommune<br/>`6`: Kun for Oslos bydeler: Flyttet til annen bydel før programperioden var over<br/>`7`: Deltakerens program er avsluttet etter avbrudd |
 | `AVSL_DATO` | Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ) | 8 | 113‑120 | DATE_TYPE |  | ddMMyyyy |  |
 | `AVSL_ORDINAERTARB` | Ved fullført program eller program avsluttet etter avtale (gjelder ikke flytting) - hva var deltakerens situasjon umiddelbart etter avslutningen? (kan krysse av for flere svaralternativer) | 2 | 121‑122 | STRING_TYPE |  |  | `01`: Ordinært arbeid (heltid/deltid) |

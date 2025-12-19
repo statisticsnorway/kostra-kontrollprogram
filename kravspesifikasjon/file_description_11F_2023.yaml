@@ -1,8 +1,8 @@
 ---
 id: "11F"
 title: "Økonomisk sosialhjelp, Kostra-skjema 11F"
-reportingYear: 2024
-description: "Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2024"
+reportingYear: 2023
+description: "Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2023"
 fields:
 - name: "KOMMUNE_NR"
   description: "Kommunenummer"
@@ -31,9 +31,18 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
+- name: "DISTRIKTSNR"
+  description: "Distriktsnummer"
+  from: 9
+  size: 2
+  dataType: "STRING_TYPE"
+  mandatory: false
+  datePattern: ""
+  codelistSource: null
+  codeList: []
 - name: "PERSON_JOURNALNR"
   description: "Journalnummer"
-  from: 9
+  from: 11
   size: 8
   dataType: "STRING_TYPE"
   mandatory: false
@@ -42,7 +51,7 @@ fields:
   codeList: []
 - name: "PERSON_FODSELSNR"
   description: "Hva er mottakerens fødselsnummer?"
-  from: 17
+  from: 19
   size: 11
   dataType: "STRING_TYPE"
   mandatory: false
@@ -51,7 +60,7 @@ fields:
   codeList: []
 - name: "PERSON_DUF"
   description: "Hva er mottakerens DUF-nummer?"
-  from: 28
+  from: 30
   size: 12
   dataType: "STRING_TYPE"
   mandatory: false
@@ -60,7 +69,7 @@ fields:
   codeList: []
 - name: "KJONN"
   description: "Hva er mottakerens kjønn?"
-  from: 40
+  from: 42
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -73,7 +82,7 @@ fields:
     value: "Kvinne"
 - name: "EKTSTAT"
   description: "Hva er mottakerens sivilstand/sivilstatus ved siste kontakt?"
-  from: 41
+  from: 43
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -92,7 +101,7 @@ fields:
     value: "Enke/enkemann"
 - name: "BU18"
   description: "Har mottakeren barn under 18 år som mottakeren (eventuelt ektefelle/samboer) har forsørgerplikt for og som bor i husholdningen?"
-  from: 42
+  from: 44
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -105,7 +114,7 @@ fields:
     value: "Nei"
 - name: "ANTBU18"
   description: "Hvis ja, hvor mange?"
-  from: 43
+  from: 45
   size: 2
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -114,19 +123,19 @@ fields:
   codeList: []
 - name: "VKLO"
   description: "Hva er mottakerens viktigste kilde til livsopphold ved siste kontakt?"
-  from: 45
+  from: 47
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
-  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/751"
+  codelistSource: null
   codeList:
   - code: "1"
     value: "Arbeidsinntekt"
   - code: "2"
     value: "Kursstønad/lønn i arbeidsmarkedstiltak"
   - code: "3"
-    value: "Trygd/stønad"
+    value: "Trygd/pensjon"
   - code: "4"
     value: "Stipend/lån"
   - code: "5"
@@ -134,19 +143,19 @@ fields:
   - code: "6"
     value: "Introduksjonsstøtte"
   - code: "7"
-    value: "Ektefelle/samboers inntekt"
+    value: "Ektefelle/samboers arbeidsinntekt"
   - code: "8"
     value: "Kvalifiseringsstønad"
   - code: "9"
     value: "Annen inntekt"
 - name: "TRYGDESIT"
   description: "Oppgi trygd/pensjon som utgjør størst økonomisk verdi ved siste kontakt"
-  from: 46
+  from: 48
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
-  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/753"
+  codelistSource: null
   codeList:
   - code: "01"
     value: "Sykepenger"
@@ -157,7 +166,7 @@ fields:
   - code: "05"
     value: "Overgangsstønad"
   - code: "06"
-    value: "Omstillingsstønad/tidl. Etterlattepensjon"
+    value: "Etterlattepensjon"
   - code: "07"
     value: "Alderspensjon"
   - code: "09"
@@ -168,16 +177,14 @@ fields:
     value: "Arbeidsavklaringspenger"
   - code: "12"
     value: "Har ingen trygd/pensjon"
-  - code: "13"
-    value: "Barnetrygd"
 - name: "ARBSIT"
   description: "Hva er mottakerens viktigste arbeidssituasjon/livssituasjon ved siste kontakt?"
-  from: 48
+  from: 50
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
   datePattern: ""
-  codelistSource: "https://www.ssb.no/klass/klassifikasjoner/752"
+  codelistSource: null
   codeList:
   - code: "01"
     value: "Arbeid, heltid"
@@ -201,7 +208,7 @@ fields:
     value: "Kvalifiseringsprogram"
 - name: "STMND_1"
   description: "Har mottakeren fått økonomisk stønad i januar?"
-  from: 50
+  from: 52
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -212,7 +219,7 @@ fields:
     value: "Januar"
 - name: "STMND_2"
   description: "Har mottakeren fått økonomisk stønad i februar?"
-  from: 52
+  from: 54
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -223,7 +230,7 @@ fields:
     value: "Februar"
 - name: "STMND_3"
   description: "Har mottakeren fått økonomisk stønad i mars?"
-  from: 54
+  from: 56
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -234,7 +241,7 @@ fields:
     value: "Mars"
 - name: "STMND_4"
   description: "Har mottakeren fått økonomisk stønad i april?"
-  from: 56
+  from: 58
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -245,7 +252,7 @@ fields:
     value: "April"
 - name: "STMND_5"
   description: "Har mottakeren fått økonomisk stønad i mai?"
-  from: 58
+  from: 60
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -256,7 +263,7 @@ fields:
     value: "Mai"
 - name: "STMND_6"
   description: "Har mottakeren fått økonomisk stønad i juni?"
-  from: 60
+  from: 62
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -267,7 +274,7 @@ fields:
     value: "Juni"
 - name: "STMND_7"
   description: "Har mottakeren fått økonomisk stønad i juli?"
-  from: 62
+  from: 64
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -278,7 +285,7 @@ fields:
     value: "Juli"
 - name: "STMND_8"
   description: "Har mottakeren fått økonomisk stønad i august?"
-  from: 64
+  from: 66
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -289,7 +296,7 @@ fields:
     value: "August"
 - name: "STMND_9"
   description: "Har mottakeren fått økonomisk stønad i september?"
-  from: 66
+  from: 68
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -300,7 +307,7 @@ fields:
     value: "September"
 - name: "STMND_10"
   description: "Har mottakeren fått økonomisk stønad i oktober?"
-  from: 68
+  from: 70
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -311,7 +318,7 @@ fields:
     value: "Oktober"
 - name: "STMND_11"
   description: "Har mottakeren fått økonomisk stønad i november?"
-  from: 70
+  from: 72
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -322,7 +329,7 @@ fields:
     value: "November"
 - name: "STMND_12"
   description: "Har mottakeren fått økonomisk stønad i desember?"
-  from: 72
+  from: 74
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -333,7 +340,7 @@ fields:
     value: "Desember"
 - name: "BIDRAG"
   description: "Bidrag"
-  from: 74
+  from: 76
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -342,7 +349,7 @@ fields:
   codeList: []
 - name: "LAAN"
   description: "Lån"
-  from: 81
+  from: 83
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -351,7 +358,7 @@ fields:
   codeList: []
 - name: "BIDRAG_JAN"
   description: "Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag"
-  from: 88
+  from: 90
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -360,7 +367,7 @@ fields:
   codeList: []
 - name: "LAAN_JAN"
   description: "Januar, lån"
-  from: 95
+  from: 97
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -369,7 +376,7 @@ fields:
   codeList: []
 - name: "BIDRAG_FEB"
   description: "Februar, bidrag"
-  from: 102
+  from: 104
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -378,7 +385,7 @@ fields:
   codeList: []
 - name: "LAAN_FEB"
   description: "Februar, lån"
-  from: 109
+  from: 111
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -387,7 +394,7 @@ fields:
   codeList: []
 - name: "BIDRAG_MARS"
   description: "Mars, bidrag"
-  from: 116
+  from: 118
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -396,7 +403,7 @@ fields:
   codeList: []
 - name: "LAAN_MARS"
   description: "Mars, lån"
-  from: 123
+  from: 125
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -405,7 +412,7 @@ fields:
   codeList: []
 - name: "BIDRAG_APRIL"
   description: "April, bidrag"
-  from: 130
+  from: 132
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -414,7 +421,7 @@ fields:
   codeList: []
 - name: "LAAN_APRIL"
   description: "April, lån"
-  from: 137
+  from: 139
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -423,7 +430,7 @@ fields:
   codeList: []
 - name: "BIDRAG_MAI"
   description: "Mai, bidrag"
-  from: 144
+  from: 146
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -432,7 +439,7 @@ fields:
   codeList: []
 - name: "LAAN_MAI"
   description: "Mai, lån"
-  from: 151
+  from: 153
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -441,7 +448,7 @@ fields:
   codeList: []
 - name: "BIDRAG_JUNI"
   description: "Juni, bidrag"
-  from: 158
+  from: 160
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -450,7 +457,7 @@ fields:
   codeList: []
 - name: "LAAN_JUNI"
   description: "Juni, lån"
-  from: 165
+  from: 167
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -459,7 +466,7 @@ fields:
   codeList: []
 - name: "BIDRAG_JULI"
   description: "Juli, bidrag"
-  from: 172
+  from: 174
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -468,7 +475,7 @@ fields:
   codeList: []
 - name: "LAAN_JULI"
   description: "Juli, lån"
-  from: 179
+  from: 181
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -477,7 +484,7 @@ fields:
   codeList: []
 - name: "BIDRAG_AUG"
   description: "August, bidrag"
-  from: 186
+  from: 188
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -486,7 +493,7 @@ fields:
   codeList: []
 - name: "LAAN_AUG"
   description: "August, lån"
-  from: 193
+  from: 195
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -495,7 +502,7 @@ fields:
   codeList: []
 - name: "BIDRAG_SEPT"
   description: "September, bidrag"
-  from: 200
+  from: 202
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -504,7 +511,7 @@ fields:
   codeList: []
 - name: "LAAN_SEPT"
   description: "September, lån"
-  from: 207
+  from: 209
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -513,7 +520,7 @@ fields:
   codeList: []
 - name: "BIDRAG_OKT"
   description: "Oktober, bidrag"
-  from: 214
+  from: 216
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -522,7 +529,7 @@ fields:
   codeList: []
 - name: "LAAN_OKT"
   description: "Oktober, lån"
-  from: 221
+  from: 223
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -531,7 +538,7 @@ fields:
   codeList: []
 - name: "BIDRAG_NOV"
   description: "November, bidrag"
-  from: 228
+  from: 230
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -540,7 +547,7 @@ fields:
   codeList: []
 - name: "LAAN_NOV"
   description: "November, lån"
-  from: 235
+  from: 237
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -549,7 +556,7 @@ fields:
   codeList: []
 - name: "BIDRAG_DES"
   description: "Desember, bidrag"
-  from: 242
+  from: 244
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -558,7 +565,7 @@ fields:
   codeList: []
 - name: "LAAN_DES"
   description: "Desember, lån"
-  from: 249
+  from: 251
   size: 7
   dataType: "INTEGER_TYPE"
   mandatory: false
@@ -567,7 +574,7 @@ fields:
   codeList: []
 - name: "GITT_OKONOMIRAD"
   description: "Er det gitt økonomisk rådgivning på nivå II (midlertidig betalingsudyktighet) eller III (varig betalingsudyktighet) i forbindelse med utbetaling? (Se NAVs veileder til bruk ved økonomisk rådgivning)"
-  from: 256
+  from: 258
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -580,7 +587,7 @@ fields:
     value: "Nei"
 - name: "FAAT_INDIVIDUELL_PLAN"
   description: "Har mottakeren fått utarbeidet individuell plan (lov om sosiale tjenester i NAV § 28)?"
-  from: 257
+  from: 259
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -593,7 +600,7 @@ fields:
     value: "Nei"
 - name: "SAKSBEHANDLER"
   description: "Saksbehandlernummer"
-  from: 258
+  from: 260
   size: 10
   dataType: "STRING_TYPE"
   mandatory: false
@@ -602,7 +609,7 @@ fields:
   codeList: []
 - name: "BOSIT"
   description: "Hva er mottakerens bosituasjon ved siste kontakt?"
-  from: 268
+  from: 270
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -623,7 +630,7 @@ fields:
     value: "Institusjon "
 - name: "VILKARSOSLOV"
   description: "Stilles det vilkår til mottakeren etter sosialtjenesteloven?"
-  from: 269
+  from: 271
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -636,7 +643,7 @@ fields:
     value: "Nei"
 - name: "VILKARSAMEKT"
   description: "Stilles det vilkår til søkerens samboer/ektefelle etter sosialtjenesteloven?"
-  from: 270
+  from: 272
   size: 1
   dataType: "STRING_TYPE"
   mandatory: false
@@ -649,7 +656,7 @@ fields:
     value: "Nei"
 - name: "UTBETDATO"
   description: "Oppgi utbetalingsvedtakets dato (DDMMÅÅ)"
-  from: 271
+  from: 273
   size: 6
   dataType: "DATE_TYPE"
   mandatory: false
@@ -658,7 +665,7 @@ fields:
   codeList: []
 - name: "UTBETTOMDATO"
   description: "Oppgi utbetalingsvedtakets til og med dato (DDMMÅÅ)"
-  from: 277
+  from: 279
   size: 6
   dataType: "DATE_TYPE"
   mandatory: false
@@ -667,7 +674,7 @@ fields:
   codeList: []
 - name: "VILKARARBEID"
   description: "Oppgi hvilke vilkår det stilles til mottakeren. Flere kryss mulig"
-  from: 283
+  from: 285
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -678,7 +685,7 @@ fields:
     value: "Delta på arbeidstrening/arbeidspraksis"
 - name: "VILKARKURS"
   description: null
-  from: 285
+  from: 287
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -689,7 +696,7 @@ fields:
     value: "Delta på arbeidsrettede kurs, opplæring eller jobbsøkingskurs"
 - name: "VILKARUTD"
   description: null
-  from: 287
+  from: 289
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -700,7 +707,7 @@ fields:
     value: "Benytte rett til skole"
 - name: "VILKARJOBBLOG"
   description: null
-  from: 289
+  from: 291
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -711,7 +718,7 @@ fields:
     value: "Registrere seg som arbeidssøker/føre jobblogg"
 - name: "VILKARJOBBTILB"
   description: null
-  from: 291
+  from: 293
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -722,7 +729,7 @@ fields:
     value: "Ta imot et konkret jobbtilbud"
 - name: "VILKARSAMT"
   description: null
-  from: 293
+  from: 295
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -733,7 +740,7 @@ fields:
     value: "Møte til veiledningssamtaler"
 - name: "VILKAROKRETT"
   description: null
-  from: 295
+  from: 297
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -744,7 +751,7 @@ fields:
     value: "Gjøre gjeldende andre økonomiske rettigheter"
 - name: "VILKARLIVSH"
   description: null
-  from: 297
+  from: 299
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -755,7 +762,7 @@ fields:
     value: "Realisere formuesgoder/ redusere boutgifter"
 - name: "VILKARHELSE"
   description: null
-  from: 299
+  from: 301
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -766,7 +773,7 @@ fields:
     value: "Oppsøke helsetjenester/ lege"
 - name: "VILKARANNET"
   description: null
-  from: 301
+  from: 303
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -777,7 +784,7 @@ fields:
     value: "Annet"
 - name: "VILKARDIGPLAN"
   description: "Bruke og følge opp digital aktivitetsplan"
-  from: 303
+  from: 305
   size: 2
   dataType: "STRING_TYPE"
   mandatory: false
@@ -786,17 +793,6 @@ fields:
   codeList:
   - code: "19"
     value: "Bruke og følge opp digital aktivitetsplan"
-- name: "VILKARNORSKSAMISKOPPL"
-  description: "Norsk- eller samiskopplæring"
-  from: 305
-  size: 2
-  dataType: "STRING_TYPE"
-  mandatory: false
-  datePattern: ""
-  codelistSource: null
-  codeList:
-  - code: "20"
-    value: "Norsk- eller samiskopplæring"
 - name: "VEDTAKDATO"
   description: "Unntak for mottaker under 30 år. Begrunnelse for første unntak fra sosialtjenestelovens § 20a for mottaker under 30 år. Oppgi vedtaksdato (DDMMÅÅ)"
   from: 307

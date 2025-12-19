@@ -58,12 +58,12 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "PERSON_DUFNR"
+- name: "PERSON_DUF"
   description: "Hva er mottakerens DUF-nummer?"
   from: 36
   size: 12
   dataType: "STRING_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codelistSource: null
   codeList: []
@@ -358,7 +358,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_1"
+- name: "BIDRAG_JAN"
   description: "Hva fikk mottakeren utbetalt i den enkelte måned? Januar, bidrag"
   from: 96
   size: 7
@@ -367,7 +367,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_1"
+- name: "LAAN_JAN"
   description: "Januar, lån"
   from: 103
   size: 7
@@ -376,7 +376,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_2"
+- name: "BIDRAG_FEB"
   description: "Februar, bidrag"
   from: 110
   size: 7
@@ -385,7 +385,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_2"
+- name: "LAAN_FEB"
   description: "Februar, lån"
   from: 117
   size: 7
@@ -394,7 +394,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_3"
+- name: "BIDRAG_MARS"
   description: "Mars, bidrag"
   from: 124
   size: 7
@@ -403,7 +403,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_3"
+- name: "LAAN_MARS"
   description: "Mars, lån"
   from: 131
   size: 7
@@ -412,7 +412,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_4"
+- name: "BIDRAG_APRIL"
   description: "April, bidrag"
   from: 138
   size: 7
@@ -421,7 +421,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_4"
+- name: "LAAN_APRIL"
   description: "April, lån"
   from: 145
   size: 7
@@ -430,7 +430,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_5"
+- name: "BIDRAG_MAI"
   description: "Mai, bidrag"
   from: 152
   size: 7
@@ -439,7 +439,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_5"
+- name: "LAAN_MAI"
   description: "Mai, lån"
   from: 159
   size: 7
@@ -448,7 +448,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_6"
+- name: "BIDRAG_JUNI"
   description: "Juni, bidrag"
   from: 166
   size: 7
@@ -457,7 +457,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_6"
+- name: "LAAN_JUNI"
   description: "Juni, lån"
   from: 173
   size: 7
@@ -466,7 +466,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_7"
+- name: "BIDRAG_JULI"
   description: "Juli, bidrag"
   from: 180
   size: 7
@@ -475,7 +475,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_7"
+- name: "LAAN_JULI"
   description: "Juli, lån"
   from: 187
   size: 7
@@ -484,7 +484,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_8"
+- name: "BIDRAG_AUG"
   description: "August, bidrag"
   from: 194
   size: 7
@@ -493,7 +493,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_8"
+- name: "LAAN_AUG"
   description: "August, lån"
   from: 201
   size: 7
@@ -502,7 +502,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_9"
+- name: "BIDRAG_SEPT"
   description: "September, bidrag"
   from: 208
   size: 7
@@ -511,7 +511,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_9"
+- name: "LAAN_SEPT"
   description: "September, lån"
   from: 215
   size: 7
@@ -520,7 +520,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_10"
+- name: "BIDRAG_OKT"
   description: "Oktober, bidrag"
   from: 222
   size: 7
@@ -529,7 +529,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_10"
+- name: "LAAN_OKT"
   description: "Oktober, lån"
   from: 229
   size: 7
@@ -538,7 +538,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_11"
+- name: "BIDRAG_NOV"
   description: "November, bidrag"
   from: 236
   size: 7
@@ -547,7 +547,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_11"
+- name: "LAAN_NOV"
   description: "November, lån"
   from: 243
   size: 7
@@ -556,7 +556,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "BIDRAG_12"
+- name: "BIDRAG_DES"
   description: "Desember, bidrag"
   from: 250
   size: 7
@@ -565,7 +565,7 @@ fields:
   datePattern: ""
   codelistSource: null
   codeList: []
-- name: "LAAN_12"
+- name: "LAAN_DES"
   description: "Desember, lån"
   from: 257
   size: 7

@@ -38,23 +38,25 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - name: Checkout #  v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+        with:
+          fetch-depth: 0
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v5
+      - name: Set up JDK 21 # v5.0.0
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Setup Gradle # v5.0.0
+        uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2
 
       - name: Build with Gradle
         run: |
           ./gradlew ${{ inputs.gradle-targets }} ${{ inputs.gradle-args }} ${{ env.SONAR_TARGETS }} \
-          --no-daemon --parallel --build-cache --info
+          --no-daemon --parallel --build-cache --info --stacktrace
 
 #      - id: "auth"
 #        name: Authenticate to Google Cloud
@@ -69,9 +71,9 @@ jobs:
 #        if: ${{ inputs.publish-kostra-barnevern }}
 #        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
 
-      - name: Release
+      - name: Release # v2.4.1
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@5be0e66d93ac7ed76da52eca8bb058f665c3a5fe
         with:
           files: |
             ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar

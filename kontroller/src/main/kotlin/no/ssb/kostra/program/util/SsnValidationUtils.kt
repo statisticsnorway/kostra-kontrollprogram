@@ -28,12 +28,19 @@ object SsnValidationUtils {
         null
     }
 
-    private fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate =
-        LocalDate.parse(socialSecurityId, LOCAL_DATE_FORMATTER).let {
-            /** unborn will have date of birth in the future, do not subtract a century for those */
-            if (it.isAfter(LocalDate.now().plusYears(1))) it.minusYears(CENTURY)
-            else it
+    internal fun parseDateWithAutoPivotYear(socialSecurityId: String): LocalDate {
+        val individualDigits = Integer.parseInt(socialSecurityId.substring(6, 9))
+        val individualYear = Integer.parseInt(socialSecurityId.substring(4, 6))
+        val date = LocalDate.parse(socialSecurityId.take(6), LOCAL_DATE_FORMATTER)
+
+        return when (individualDigits) {
+            in 500..999 if individualYear <= 39 -> date // 2000-2039
+            in 500..749 if individualYear >= 54 -> date.minusYears(2 * CENTURY) // 1854-1899
+            in 0..499 -> date.minusYears(CENTURY) // 1900-1999
+            in 900..999 -> date.minusYears(CENTURY) // 1940-1999
+            else -> date
         }
+    }
 
 
     fun isValidSocialSecurityId(personId: String) = SSN_PATTERN.matcher(personId).matches() && isModulo11Valid(personId)
@@ -61,14 +68,14 @@ object SsnValidationUtils {
 
     private fun convertDNumber(socialSecurityId: String): String =
         socialSecurityId.first().toString().toInt().let {
-            (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 6))
+            (if (it > 3) it - 4 else it).toString().plus(socialSecurityId.substring(1, 11))
         }
 
     private fun convertFregMonth(socialSecurityId: String): String =
         socialSecurityId[2].toString().toInt().let {
             (socialSecurityId.substring(0, 2))
-                .plus((if (it > 1) it - 8 else it).toString())
-                .plus(socialSecurityId.substring(3, 6))
+                .plus((if (it >= 8) it - 8 else it).toString())
+                .plus(socialSecurityId.substring(3, 11))
         }
 
     internal fun isModulo11Valid(socialSecurityId: String): Boolean =

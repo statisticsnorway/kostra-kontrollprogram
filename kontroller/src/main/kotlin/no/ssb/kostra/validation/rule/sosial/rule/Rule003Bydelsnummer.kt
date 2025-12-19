@@ -16,10 +16,10 @@ class Rule003Bydelsnummer : AbstractNoArgsRule<List<KostraRecord>>(
     Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filterNot {
+        .filter {
             when (it[KOMMUNE_NR_COL_NAME]) {
-                OSLO_MUNICIPALITY_ID -> it[BYDELSNR_COL_NAME] in OSLO_DISTRICTS
-                else -> it[BYDELSNR_COL_NAME].isBlank()
+                OSLO_MUNICIPALITY_ID -> it[BYDELSNR_COL_NAME] !in OSLO_DISTRICTS
+                else -> it[BYDELSNR_COL_NAME].isNotBlank()
             }
         }.map {
             createValidationReportEntry(

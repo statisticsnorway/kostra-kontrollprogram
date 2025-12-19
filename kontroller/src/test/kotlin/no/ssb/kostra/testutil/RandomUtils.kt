@@ -18,10 +18,16 @@ object RandomUtils {
         endExclusive: LocalDate
     ): String = (startInclusive.toEpochDay() until endExclusive.toEpochDay()).random()
         .let { randomDay ->
-            LocalDate.ofEpochDay(randomDay).format(DATE_TIME_FORMATTER)
-        }.let { birthDate123456 ->
+            LocalDate.ofEpochDay(randomDay).format(DATE_TIME_FORMATTER) to
+                LocalDate.ofEpochDay(randomDay).year
+        }.let { (birthDate123456, birthYear) ->
             generateSequence {
-                birthDate123456.plus((100 until 499).random().toString())
+                val indidualNumber = when (birthYear) {
+                    in 1854..1899 -> (500 until 750).random()
+                    in 1900..1999 -> (100 until 500).random()
+                    else -> (750 until 999).random()
+                }
+                birthDate123456.plus(indidualNumber.toString())
             }.map { nineDigitSeed ->
                 buildSsnRecursive(
                     nineDigitSeed,

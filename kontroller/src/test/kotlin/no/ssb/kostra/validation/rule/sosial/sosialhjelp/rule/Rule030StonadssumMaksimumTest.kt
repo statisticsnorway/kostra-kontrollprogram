@@ -14,22 +14,22 @@ class Rule030StonadssumMaksimumTest : BehaviorSpec({
             sut = Rule030StonadssumMaksimum(),
             expectedSeverity = Severity.WARNING,
             ForAllRowItem(
-                "bidrag = 1000, laan = 0",
-                kostraRecordInTest("1000", "0"),
+                "bidrag = 1000000, laan = 0",
+                kostraRecordInTest("1000000", "0"),
             ),
             ForAllRowItem(
-                "bidrag = 600000, laan = 0",
-                kostraRecordInTest("600000", "0"),
-                expectedErrorMessage = "Det samlede stønadsbeløpet (summen (600000) av bidrag (600000) og lån (0)) " +
+                "bidrag = 1000000, laan = 1",
+                kostraRecordInTest("1000000", "1"),
+                expectedErrorMessage = "Det samlede stønadsbeløpet (summen (1000001) av bidrag (1000000) og lån (1)) " +
                         "som mottakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +
-                        "kontrollgrense på kr. (600000),-.",
+                        "kontrollgrense på kr. (1000000),-.",
             ),
             ForAllRowItem(
-                "bidrag = 0, laan = 600000",
-                kostraRecordInTest("0", "600000"),
-                expectedErrorMessage = "Det samlede stønadsbeløpet (summen (600000) av bidrag (0) og lån (600000)) " +
+                "bidrag = 1, laan = 1000000",
+                kostraRecordInTest("1", "1000000"),
+                expectedErrorMessage = "Det samlede stønadsbeløpet (summen (1000001) av bidrag (1) og lån (1000000)) " +
                         "som mottakeren har fått i løpet av rapporteringsåret overstiger Statistisk sentralbyrås " +
-                        "kontrollgrense på kr. (600000),-.",
+                        "kontrollgrense på kr. (1000000),-.",
             )
         )
     )

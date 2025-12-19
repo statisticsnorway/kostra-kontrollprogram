@@ -21,11 +21,11 @@ class StructuredValidationReport(
         .registerModule(JavaTimeModule())
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
-    val now = LocalDateTime.now()
-    val reportGenerationTime = Duration.between(validationReportArguments.kotlinArguments.startTime, now)
-
     @Override
     override fun toString(): String {
+        val now = LocalDateTime.now()
+        val reportGenerationTime = Duration.between(validationReportArguments.kotlinArguments.startTime, now)
+
         with(validationReportArguments.validationResult) {
             val validationSummary = ValidationSummary(
                 region = validationReportArguments.kotlinArguments.region,

@@ -1,5 +1,6 @@
 package no.ssb.kostra.program
 
+import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.StructuredValidationReport
 import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
@@ -86,23 +87,26 @@ class KostraKontrollprogramCommand : Callable<Int> {
                         BLANK_CHAR
             )
         ).let { validationReportArguments ->
-            if (outputFormat == "HTML") {
-                PrintStream(System.out, true, outputCharset).use { printStream ->
-                    printStream.print(ValidationReport(validationReportArguments))
+            return when (outputFormat) {
+                "HTML" -> {
+                    PrintStream(System.out, true, outputCharset).use { printStream ->
+                        printStream.print(ValidationReport(validationReportArguments))
+                    }
+                    validationReportArguments.validationResult.severity.info.returnCode
                 }
-                return validationReportArguments.validationResult.severity.info.returnCode
-            } else if (outputFormat == "JSON") {
-                PrintStream(System.out, true, outputCharset).use { printStream ->
-                    printStream.print(StructuredValidationReport(validationReportArguments))
-                }
-                return validationReportArguments.validationResult.severity.info.returnCode
+                "JSON" -> {
+                    PrintStream(System.out, true, outputCharset).use { printStream ->
+                        printStream.print(StructuredValidationReport(validationReportArguments))
+                    }
+                    validationReportArguments.validationResult.severity.info.returnCode
 
-            } else {
-                System.err.println("Ukjent output format: $outputFormat. Bruk HTML eller JSON.")
-                -1
+                }
+                else -> {
+                    System.err.println("Ukjent output format: $outputFormat. Bruk HTML eller JSON.")
+                    Severity.FATAL.info.returnCode
+                }
             }
         }
-        return 0
     }
 
     private fun dumpParamsToOutput() {

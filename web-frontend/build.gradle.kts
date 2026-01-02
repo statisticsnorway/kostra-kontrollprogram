@@ -4,6 +4,7 @@ plugins {
 
 frontend {
     nodeVersion.set("24.12.0")
+    nodeDistributionUrlRoot.set("https://nodejs.org/dist/")
     assembleScript.set("run build")
     checkScript.set("run check")
 }

@@ -38,7 +38,7 @@ class KvalifiseringMainTest :
                     "validating a valid record string",
                     recordStringInTest("24"),
                     34,
-                    4,
+                    5,
                 ),
                 row(
                     "validating a valid record string with invalid data",

@@ -43,7 +43,7 @@ class SosialhjelpMainTest :
                     true,
                     recordStringInTest("24"),
                     46,
-                    3,
+                    4,
                 ),
                 row(
                     "validating a valid record string with invalid data",

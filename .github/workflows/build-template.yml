@@ -50,6 +50,14 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version: '20.19.6'
+
+      - name: Build frontend
+        run: cd web-frontend && npm install --ignore-scripts && npm ci --ignore-scripts && npm run build
+
       - name: Setup Gradle # v5.0.0
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2
 

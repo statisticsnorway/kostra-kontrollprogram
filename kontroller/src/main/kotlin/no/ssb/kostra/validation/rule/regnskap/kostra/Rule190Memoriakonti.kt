@@ -6,14 +6,16 @@ import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBalanseRegnskap
+import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isMemoriaKonti
 
 class Rule190Memoriakonti : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 190 : Memoriakonti",
     Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it.isBalanseRegnskap() && it.fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999 }
+        .filter { it.isBalanseRegnskap() }
         .takeIf { it.any() }
+        ?.filter { it.isMemoriaKonti() }
         ?.partition { it.fieldAsIntOrDefault(FIELD_KAPITTEL) == 9999 }
         ?.let { (motpostMemoriakontiPosteringer, memoriakontiPosteringer) ->
             Pair(
@@ -22,7 +24,7 @@ class Rule190Memoriakonti : AbstractNoArgsRule<List<KostraRecord>>(
             )
         }
         ?.takeUnless { (motpostMemoriakonti, memoriakonti) ->
-            memoriakonti + motpostMemoriakonti in -30..30
+            memoriakonti + motpostMemoriakonti in -10..10
         }
         ?.let { (motpostMemoriakonti, memoriakonti) ->
             createSingleReportEntryList(

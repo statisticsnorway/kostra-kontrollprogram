@@ -1,0 +1,17 @@
+name: "Kostra Kontrollprogram Gradle Config"
+
+queries:
+  - uses: security-extended
+
+paths-ignore:
+  - '**/test/**'
+  - '**/build/**'          # Ignore Gradle build output
+  - '**/bin/**'
+  - '**/docs/**'
+  - 'kravspesifikasjon/**'
+  - '**/node_modules/**'
+
+query-filters:
+  - exclude:
+      id:
+        - java/spring-disabled-csrf-protection

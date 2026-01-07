@@ -1,5 +1,5 @@
 [versions]
-kotlin-version = "2.2.21"
+kotlin-version = "2.3.0"
 jackson-version = "2.20.1"
 kotest-version = "5.9.1"
 mockk-version = "1.14.6"
@@ -9,9 +9,9 @@ logback-classic-version = "1.5.22"
 swagger-annotations-version = "2.2.41"
 
 # plugins
-sonarqube-version = "7.1.0.6387"
+sonarqube-version = "7.2.2.6593"
 spring-dependency-management-version = "1.1.7"
-shadow-version = "8.3.8"
+shadow-version = "9.3.1"
 gradle-git-properties-version = "2.5.4"
 devtools-ksp-version = "2.3.4"
 micronaut-application-version = "4.6.1"

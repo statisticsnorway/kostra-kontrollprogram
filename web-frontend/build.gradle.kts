@@ -3,7 +3,7 @@ plugins {
 }
 
 node {
-    version.set("20.19.6")         // Node version to use
+    version.set("24.12.0")         // Node version to use
     npmVersion.set("11.6.2")         // Optional npm version
     download.set(true)              // auto-download Node
 

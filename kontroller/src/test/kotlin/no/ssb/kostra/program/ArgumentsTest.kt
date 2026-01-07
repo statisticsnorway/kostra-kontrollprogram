@@ -18,6 +18,7 @@ class ArgumentsTest :
                         navn = "NNNNN",
                         orgnr = "987654321",
                         harVedlegg = true,
+                        outputFormat = "HTML",
                         isRunAsExternalProcess = false,
                         inputFileContent = "record1",
                         startTime = LocalDateTime.of(2022, 1, 1, 1, 1, 1),
@@ -27,7 +28,7 @@ class ArgumentsTest :
 
                 Then("result should formatted as expected") {
                     result shouldBe
-                        """KotlinArguments(skjema=S, aargang=YYYY, kvartal=K, region=RRRR, navn=NNNNN, orgnr=987654321, harVedlegg=true, isRunAsExternalProcess=false, inputFileContent=record1, startTime=2022-01-01T01:01:01)"""
+                            """KotlinArguments(skjema=S, aargang=YYYY, kvartal=K, region=RRRR, navn=NNNNN, orgnr=987654321, harVedlegg=true, isRunAsExternalProcess=false, inputFileContent=record1, outputFormat=HTML, startTime=2022-01-01T01:01:01)"""
                 }
             }
 
@@ -44,7 +45,7 @@ class ArgumentsTest :
 
                 Then("result should formatted as expected") {
                     result shouldBe
-                        """KotlinArguments(skjema=S, aargang=YYYY, kvartal= , region=RRRR, navn=Uoppgitt, orgnr=         , harVedlegg=true, isRunAsExternalProcess=false, inputFileContent= , startTime=2022-01-01T01:01:01)"""
+                            """KotlinArguments(skjema=S, aargang=YYYY, kvartal= , region=RRRR, navn=Uoppgitt, orgnr=         , harVedlegg=true, isRunAsExternalProcess=false, inputFileContent= , outputFormat=HTML, startTime=2022-01-01T01:01:01)"""
                 }
             }
         }

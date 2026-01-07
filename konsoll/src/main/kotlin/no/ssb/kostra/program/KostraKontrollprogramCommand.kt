@@ -1,5 +1,7 @@
 package no.ssb.kostra.program
 
+import no.ssb.kostra.validation.report.Severity
+import no.ssb.kostra.validation.report.StructuredValidationReport
 import no.ssb.kostra.validation.report.ValidationReport
 import picocli.CommandLine
 import picocli.CommandLine.Command
@@ -41,6 +43,11 @@ class KostraKontrollprogramCommand : Callable<Int> {
     @Option(names = ["-a", "--attachment"], description = ["..."])
     private var hasAttachment: String = "1"
 
+    @Option(names = ["-f", "--output-format"], defaultValue = "HTML", description = ["..."])
+    private var outputFormat: String = "HTML"
+
+    @Option(names = ["-c", "--output-charset"], defaultValue = "ISO-8859-1", description = ["..."])
+    private var outputCharset: String = "ISO-8859-1"
     @Option(names = ["-e", "--external-process"], description = ["..."])
     private var isRunAsExternalProcess: Boolean = false
 
@@ -53,7 +60,16 @@ class KostraKontrollprogramCommand : Callable<Int> {
     override fun call(): Int {
         if (verbose) dumpParamsToOutput()
 
-        return ControlDispatcher.validate(
+        when (outputCharset) {
+            "ISO-8859-1", "LATIN1" -> outputCharset = StandardCharsets.ISO_8859_1.name()
+            "UTF-8", "UTF8" -> outputCharset = StandardCharsets.UTF_8.name()
+            else -> {
+                System.err.println("Ukjent tegnsett for output: $outputCharset. Bruk ISO-8859-1 eller UTF-8.")
+                return -1
+            }
+        }
+
+        ControlDispatcher.validate(
             KotlinArguments(
                 skjema = schema,
                 aargang = year,
@@ -62,18 +78,34 @@ class KostraKontrollprogramCommand : Callable<Int> {
                 navn = name,
                 orgnr = companyId,
                 harVedlegg = (hasAttachment == "1"),
+                outputFormat = outputFormat,
                 isRunAsExternalProcess = isRunAsExternalProcess,
                 inputFileContent =
-                if (schema.isNotBlank() && hasAttachment == "1")
-                    System.`in`.bufferedReader().use(BufferedReader::readText)
-                else
-                    BLANK_CHAR
+                    if (schema.isNotBlank() && hasAttachment == "1")
+                        System.`in`.bufferedReader().use(BufferedReader::readText)
+                    else
+                        BLANK_CHAR
             )
         ).let { validationReportArguments ->
-            PrintStream(System.out, true, StandardCharsets.ISO_8859_1).use { printStream ->
-                printStream.print(ValidationReport(validationReportArguments))
+            return when (outputFormat) {
+                "HTML" -> {
+                    PrintStream(System.out, true, outputCharset).use { printStream ->
+                        printStream.print(ValidationReport(validationReportArguments))
+                    }
+                    validationReportArguments.validationResult.severity.info.returnCode
+                }
+                "JSON" -> {
+                    PrintStream(System.out, true, outputCharset).use { printStream ->
+                        printStream.print(StructuredValidationReport(validationReportArguments))
+                    }
+                    validationReportArguments.validationResult.severity.info.returnCode
+
+                }
+                else -> {
+                    System.err.println("Ukjent output format: $outputFormat. Bruk HTML eller JSON.")
+                    Severity.FATAL.info.returnCode
+                }
             }
-            validationReportArguments.validationResult.severity.info.returnCode
         }
     }
 

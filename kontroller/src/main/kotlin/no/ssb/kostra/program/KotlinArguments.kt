@@ -13,6 +13,7 @@ data class KotlinArguments(
     val harVedlegg: Boolean = true,
     val isRunAsExternalProcess: Boolean = false,
     val inputFileContent: String = BLANK_CHAR,
+    val outputFormat: String = "HTML",
     val startTime: LocalDateTime = LocalDateTime.now(),
 ) {
     init {

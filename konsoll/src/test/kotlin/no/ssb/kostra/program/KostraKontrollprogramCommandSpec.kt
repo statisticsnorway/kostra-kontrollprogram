@@ -67,8 +67,35 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 PLAIN_TEXT_0G,
                 2,
                 "Oppsummering pr. kontroll"
-            )
-        ) { description, args, input, expectedExitCode, expectedOutput ->
+            ),
+            row(
+                "Invocation with output format as JSON",
+                arrayOf(
+                    "--schema", "0G",
+                    "--year", "$previousYear",
+                    "--region", "1234",
+                    "--output-format", "JSON",
+                    "--output-charset", "UTF-8"
+                ),
+                PLAIN_TEXT_0G,
+                2,
+                "Fant ugyldig aargang '2020'"
+            ),
+            row(
+                "Invocation of output format with UTF-8 charset",
+                arrayOf(
+                    "--schema", "0G",
+                    "--year", "$previousYear",
+                    "--region", "1234",
+                    "--output-format", "HTML",
+                    "--output-charset", "UTF-8"
+                ),
+                PLAIN_TEXT_0G,
+                2,
+                String("Årgang".toByteArray(), StandardCharsets.UTF_8)
+            ),
+
+            ) { description, args, input, expectedExitCode, expectedOutput ->
             When(description) {
                 val originalSystemOut = System.out
                 val originalSystemIn = System.`in`

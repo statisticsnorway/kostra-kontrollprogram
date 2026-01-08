@@ -31,13 +31,6 @@ class UiConfigTest(
                     it.tittel.shouldContain("${it.kvartal}. kvartal")
                 }
             }
-
-            "tittel, labelOrgnr and labelOrgnrVirksomhetene should be mapped".asClue {
-                assertSoftly(sut.skjematyper.first { it.id == "0X" }) {
-                    tittel shouldBe "0X. Resultatregnskap for helseforetak"
-                    labelOrgnr shouldBe "Organisasjonsnummer for foretaket"
-                }
-            }
         }
     }
 })

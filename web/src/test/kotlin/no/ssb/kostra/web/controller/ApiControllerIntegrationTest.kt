@@ -61,12 +61,6 @@ class ApiControllerIntegrationTest(
 
                 uiData.formTypes.shouldNotBeNull()
                 uiData.formTypes.size shouldBeGreaterThan 30
-
-                assertSoftly(uiData.formTypes.first { it.id == "0X" }) {
-                    it.id shouldBe "0X"
-                    it.tittel shouldBe "0X. Resultatregnskap for helseforetak"
-                    it.labelOrgnr shouldBe "Organisasjonsnummer for foretaket"
-                }
             }
         }
     }
@@ -197,18 +191,6 @@ class ApiControllerIntegrationTest(
                     skjema = "0F",
                     region = "667600",
                     orgnrForetak = "  ",
-                    filnavn = "test.dat",
-                ),
-                "orgnrForetak",
-                "Må starte med 8 eller 9 etterfulgt av 8 siffer",
-            ),
-            row(
-                "invalid orgnrForetak",
-                KostraFormVm(
-                    aar = Year.now().value,
-                    skjema = "0X",
-                    region = "667600",
-                    orgnrForetak = "a",
                     filnavn = "test.dat",
                 ),
                 "orgnrForetak",

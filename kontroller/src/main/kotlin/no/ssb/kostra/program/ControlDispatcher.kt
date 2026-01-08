@@ -4,7 +4,6 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aMain
 import no.ssb.kostra.area.famvern.famvern52b.Familievern52bMain
 import no.ssb.kostra.area.famvern.famvern53.Familievern53Main
 import no.ssb.kostra.area.famvern.famvern55.Familievern55Main
-import no.ssb.kostra.area.regnskap.helseforetak.HelseForetakMain
 import no.ssb.kostra.area.regnskap.kostra.KirkeKostraMain
 import no.ssb.kostra.area.regnskap.kostra.KommuneKostraMain
 import no.ssb.kostra.area.regnskap.kostra.KvartalKostraMain
@@ -28,8 +27,6 @@ object ControlDispatcher {
         "0M", "0N", "0P", "0Q" -> KommuneKostraMain(kotlinArguments).validate()
 
         "0F", "0G" -> KirkeKostraMain(kotlinArguments).validate()
-
-        "0X", "0Y" -> HelseForetakMain(kotlinArguments).validate()
 
         "11F" -> SosialhjelpMain(kotlinArguments).validate()
 

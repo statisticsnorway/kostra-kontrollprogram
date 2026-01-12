@@ -15,7 +15,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
         include(
             KostraTestFactory.validationRuleNoArgsTest(
                 sut = Rule081KombinasjonBevilgningFunksjonArt(),
-                expectedSeverity = Severity.ERROR,
+                expectedSeverity = Severity.WARNING,
                 ForAllRowItem(
                     description = "annually, isBevilgningRegnskap = false",
                     context = kostraRecordsInTest("0B", 850, 450, 1),
@@ -45,7 +45,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     description = "annually, all conditions match, 0A",
                     context = kostraRecordsInTest("0A", 850, 100, 1),
                     expectedErrorMessage =
-                        "Det er kun art 450 og art 810 som er logiske i kombinasjon med funksjon 850. " +
+                        "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                     arguments = kostraArguments(" "),
                 ),
@@ -53,7 +53,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     description = "annually, all conditions match, 0I",
                     context = kostraRecordsInTest("0I", 850, 100, 1),
                     expectedErrorMessage =
-                        "Det er kun art 450 og art 810 som er logiske i kombinasjon med funksjon 850. " +
+                        "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                     arguments = kostraArguments(" "),
                 ),
@@ -61,7 +61,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     description = "annually, all conditions match, 0M",
                     context = kostraRecordsInTest("0M", 850, 100, 1),
                     expectedErrorMessage =
-                        "Det er kun art 450 og art 810 som er logiske i kombinasjon med funksjon 850. " +
+                        "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                     arguments = kostraArguments(" "),
                 ),
@@ -69,7 +69,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     description = "1. quarter, all conditions match",
                     context = kostraRecordsInTest("0A", 850, 100, 1),
                     expectedErrorMessage =
-                        "Det er kun art 450 og art 810 som er logiske i kombinasjon med funksjon 850. " +
+                "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                     arguments = kostraArguments("1"),
                     expectedSeverity = Severity.WARNING,
@@ -78,7 +78,7 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     description = "4. quarter, all conditions match",
                     context = kostraRecordsInTest("0A", 850, 100, 1),
                     expectedErrorMessage =
-                        "Det er kun art 450 og art 810 som er logiske i kombinasjon med funksjon 850. " +
+                        "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                     arguments = kostraArguments("4"),
                     expectedSeverity = Severity.ERROR,
@@ -102,3 +102,4 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
         private fun kostraArguments(kvartal: String) = RuleTestData.argumentsInTest.copy(kvartal = kvartal)
     }
 }
+

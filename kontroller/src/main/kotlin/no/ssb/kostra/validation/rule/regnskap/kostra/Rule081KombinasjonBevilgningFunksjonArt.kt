@@ -12,7 +12,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isFylkeRegnskap
 
 class Rule081KombinasjonBevilgningFunksjonArt :
     AbstractRule<List<KostraRecord>>(
-        "Kontroll 081 : Ugyldig kombinasjon i bevilgningsregnskapet, funksjon og art",
+        "Kontroll 081 : Ulogisk kombinasjon i bevilgningsregnskapet, funksjon og art",
         Severity.WARNING,
     ) {
     override fun validate(
@@ -22,9 +22,9 @@ class Rule081KombinasjonBevilgningFunksjonArt :
         .filter { kostraRecord ->
             kostraRecord.isBevilgningRegnskap() &&
                 !kostraRecord.isFylkeRegnskap() &&
+                kostraRecord.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) != 0 &&
                 kostraRecord[FIELD_FUNKSJON].trim() == REQUIRED_FUNCTION &&
-                kostraRecord[FIELD_ART] !in qualifyingArtCodes &&
-                kostraRecord.fieldAsIntOrDefault(RegnskapConstants.FIELD_BELOP) != 0
+                kostraRecord[FIELD_ART] !in qualifyingArtCodes
         }.map { kostraRecord ->
             createValidationReportEntry(
                 messageText =

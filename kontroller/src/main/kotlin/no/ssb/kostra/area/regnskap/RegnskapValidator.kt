@@ -54,7 +54,7 @@ abstract class RegnskapValidator(
         Rule020KombinasjonDriftKontoklasseFunksjon(invalidDriftFunksjonList = invalidDriftFunksjonList),
         Rule025KombinasjonDriftKontoklasseArt(invalidDriftArtList = invalidDriftArtList),
         Rule030KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("285", "660")),
-        Rule035KombinasjonDriftKontoklasseArt(illogicalDriftArtList = listOf("520", "920")),
+        Rule035KombinasjonDriftKontoklasseArt(),
         Rule040KombinasjonInvesteringKontoklasseFunksjon(invalidInvesteringFunksjonList = invalidInvesteringFunksjonList),
         Rule045KombinasjonInvesteringKontoklasseFunksjon(illogicalInvesteringFunksjonArtList = illogicalInvesteringFunksjonList),
         Rule050KombinasjonInvesteringKontoklasseArt(invalidInvesteringArtList = invalidInvesteringArtList),

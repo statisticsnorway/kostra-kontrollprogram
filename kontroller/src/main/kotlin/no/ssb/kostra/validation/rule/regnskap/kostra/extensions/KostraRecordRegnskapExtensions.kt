@@ -65,6 +65,9 @@ fun KostraRecord.isAktiva() =
 fun KostraRecord.isPassiva() =
     fieldAsIntOrDefault(FIELD_KAPITTEL) in 31..5999
 
+fun KostraRecord.isMemoriaKonti() =
+    fieldAsIntOrDefault(FIELD_KAPITTEL) in 9100..9999
+
 fun KostraRecord.isOsloInternRegnskap() =
     this.isOslo()
             && fieldAsString(FIELD_SKJEMA) in setOf("0A", "0M")

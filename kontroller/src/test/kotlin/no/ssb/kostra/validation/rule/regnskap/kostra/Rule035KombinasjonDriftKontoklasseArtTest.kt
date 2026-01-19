@@ -40,6 +40,10 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                 kostraRecordsInTest(1, 325, 520, 1),
             ),
             ForAllRowItem(
+                "art = 520, funksjon = 701",
+                kostraRecordsInTest(1, 701, 520, 1),
+            ),
+            ForAllRowItem(
                 "art = 920, funksjon = 281",
                 kostraRecordsInTest(1, 281, 920, 1),
             ),
@@ -48,19 +52,25 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
                 kostraRecordsInTest(1, 325, 920, 1),
             ),
             ForAllRowItem(
+                "art = 920, funksjon = 701",
+                kostraRecordsInTest(1, 701, 920, 1),
+            ),
+            ForAllRowItem(
                 "all conditions match",
                 kostraRecordsInTest(1, 100, 520, 1),
-                expectedErrorMessage = "Feilmelding: (520) er kun gyldig i driftsregnskapet mot funksjonene 281 og 325. " +
-                        "Art 520 Utlån – kun gyldig i drift for sosiale utlån, (funksjon 281) og næringsutlån (funksjon 325) som finansieres av driftsinntekter. " +
-                        "Art 920 Mottatte avdrag på utlån – kun gyldig i drift for mottatte avdrag på sosiale utlån (funksjon 281) og næringsutlån (funksjon 325) som har blitt finansiert av driftsinntekter. " +
+                expectedErrorMessage = "Artene 520 Utlån og 920 Mottatte avdrag på utlån er kun gyldig i driftsregnskapet " +
+                        "for funksjonene 281 Mottatte avdrag på sosiale utlån, 325 Næringsutlån og " +
+                        "701 Tilrettelegging, støttefunksjoner og finansieringsbistand for næringslivet, " +
+                        "som har blitt finansiert av driftsinntekter. " +
                         "Fant art (520), funksjon (100).",
             ),
             ForAllRowItem(
                 "all conditions match",
                 kostraRecordsInTest(1, 100, 920, 1),
-                expectedErrorMessage = "Feilmelding: (920) er kun gyldig i driftsregnskapet mot funksjonene 281 og 325. " +
-                        "Art 520 Utlån – kun gyldig i drift for sosiale utlån, (funksjon 281) og næringsutlån (funksjon 325) som finansieres av driftsinntekter. " +
-                        "Art 920 Mottatte avdrag på utlån – kun gyldig i drift for mottatte avdrag på sosiale utlån (funksjon 281) og næringsutlån (funksjon 325) som har blitt finansiert av driftsinntekter. " +
+                expectedErrorMessage = "Artene 520 Utlån og 920 Mottatte avdrag på utlån er kun gyldig i driftsregnskapet " +
+                        "for funksjonene 281 Mottatte avdrag på sosiale utlån, 325 Næringsutlån og " +
+                        "701 Tilrettelegging, støttefunksjoner og finansieringsbistand for næringslivet, " +
+                        "som har blitt finansiert av driftsinntekter. " +
                         "Fant art (920), funksjon (100).",
             ),
         )

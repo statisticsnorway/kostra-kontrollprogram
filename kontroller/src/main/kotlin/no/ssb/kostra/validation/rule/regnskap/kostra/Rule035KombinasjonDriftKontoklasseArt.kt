@@ -19,7 +19,8 @@ class Rule035KombinasjonDriftKontoklasseArt : AbstractNoArgsRule<List<KostraReco
                 && kostraRecord[FIELD_FUNKSJON] !in funksjonList
     }.map { kostraRecord ->
         createValidationReportEntry(
-            messageText = "Artene 520 Utlån og 920 Mottatte avdrag på utlån er kun gyldig i driftsregnskapet " +
+            messageText = "Art (${kostraRecord[FIELD_ART]}) er kun gyldig i driftsregnskapet mot funksjonene 281,  325 og 701. " +
+                    "Artene 520 Utlån og 920 Mottatte avdrag på utlån er kun gyldig i driftsregnskapet " +
                     "for funksjonene 281 Mottatte avdrag på sosiale utlån, 325 Næringsutlån og " +
                     "701 Tilrettelegging, støttefunksjoner og finansieringsbistand for næringslivet, " +
                     "som har blitt finansiert av driftsinntekter. " +

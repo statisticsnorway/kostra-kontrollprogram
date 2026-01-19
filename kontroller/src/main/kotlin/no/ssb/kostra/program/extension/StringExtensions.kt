@@ -12,7 +12,10 @@ fun String.districtIdFromRegion() = this.substring(4, 6)
 
 fun String.ageInYears(reportingYear: Int): Int? =
     SsnValidationUtils
-        .extractBirthDateFromSocialSecurityId(socialSecurityId = this)
+        .extractBirthDateFromSocialSecurityId(
+            socialSecurityId = this,
+            reportingYear = reportingYear
+        )
         ?.let { dateOfBirth ->
             reportingYear - dateOfBirth.year
         }

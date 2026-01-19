@@ -21,8 +21,8 @@ fun KostraRecord.hasNotVarighet() = (1..12)
 fun KostraRecord.ageInYears(arguments: KotlinArguments): Int =
     this[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1
 
-fun KostraRecord.hasFnr(): Boolean =
-    SsnValidationUtils.isValidSocialSecurityIdOrDnr(this[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME])
+fun KostraRecord.hasFnr(reportingYear: Int): Boolean =
+    SsnValidationUtils.isValidSocialSecurityIdOrDnr(this[KvalifiseringColumnNames.PERSON_FODSELSNR_COL_NAME], reportingYear)
 
 fun Collection<KostraRecord>.varighetAsStatsEntries() = this
     .map { kostraRecord ->

@@ -11,6 +11,7 @@ import no.ssb.kostra.program.util.SsnValidationUtils.validateDUF
 import java.time.LocalDate
 
 class SsnValidationUtilsTest : BehaviorSpec({
+    val reportingYear = 2025
 
     Given("extractBirthDateFromSocialSecurityId") {
         forAll(
@@ -18,10 +19,16 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("05011399292", "fnr", LocalDate.of(2013, 1, 5)),
             row("41011088188", "dnr", LocalDate.of(2010, 1, 1)),
             row("01811088188", "tnr", LocalDate.of(2010, 1, 1)),
+            row("01010100100", "N/A", LocalDate.of(2001, 1, 1)),
+            row("01018000100", "N/A", LocalDate.of(1980, 1, 1)),
+            row("01018000200", "N/A", LocalDate.of(1980, 1, 1)),
+            row("01012599999", "N/A", LocalDate.of(2025, 1, 1)),
+            row("01012699999", "N/A", LocalDate.of(2026, 1, 1)),
+            row("01012799999", "N/A", LocalDate.of(1927, 1, 1)),
         ) { socialSecurityId, type, expectedDate ->
             When("$socialSecurityId $type") {
 
-                val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId)
+                val dateOfBirth = SsnValidationUtils.extractBirthDateFromSocialSecurityId(socialSecurityId, reportingYear)
 
                 Then("dateOfBirth ($dateOfBirth) should be as expected ($expectedDate)") {
                     dateOfBirth shouldBe expectedDate
@@ -94,7 +101,7 @@ class SsnValidationUtilsTest : BehaviorSpec({
             row("valid unborn ssn", "05012999999", true),
         ) { description, socialSecurityId, expectedResult ->
             When(description) {
-                val isValidSocialSecurityIdOrDnr = isValidSocialSecurityIdOrDnr(socialSecurityId)
+                val isValidSocialSecurityIdOrDnr = isValidSocialSecurityIdOrDnr(socialSecurityId, reportingYear)
 
                 Then("isValidSocialSecurityIdOrDnr($socialSecurityId) should be $expectedResult") {
                     isValidSocialSecurityIdOrDnr shouldBe expectedResult

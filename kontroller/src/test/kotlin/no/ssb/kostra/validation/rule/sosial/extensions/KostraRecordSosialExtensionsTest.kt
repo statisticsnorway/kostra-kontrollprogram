@@ -88,7 +88,7 @@ class KostraRecordSosialExtensionsTest : BehaviorSpec({
                 val sut = kostraRecordInTest(fnr = fnr)
 
                 Then("result should be as expected") {
-                    sut.first().hasFnr() shouldBe expectedResult
+                    sut.first().hasFnr(RuleTestData.argumentsInTest.aargang.toInt()) shouldBe expectedResult
                 }
             }
         }

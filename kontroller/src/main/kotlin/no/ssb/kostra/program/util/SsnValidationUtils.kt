@@ -19,12 +19,13 @@ object SsnValidationUtils {
     private val CONTROL_SUM_DIGITS_1 = listOf(3, 7, 6, 1, 8, 9, 4, 5, 2, 1)
     private val CONTROL_SUM_DIGITS_2 = listOf(5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1)
 
-    fun extractBirthDateFromSocialSecurityId(socialSecurityId: String): LocalDate? = try {
+    fun extractBirthDateFromSocialSecurityId(socialSecurityId: String, reportingYear: Int): LocalDate? = try {
         when {
             !SSN_PATTERN.matcher(socialSecurityId).matches() -> null
+            SSN_SUFFIX_EXCEPTIONS.any { suffix -> socialSecurityId.endsWith(suffix) } -> parseDateWithSuffixExceptions(socialSecurityId, reportingYear)
             else -> parseDateWithAutoPivotYear(convertFregMonth(convertDNumber(socialSecurityId)))
         }
-    } catch (ex: DateTimeParseException) {
+    } catch (_: DateTimeParseException) {
         null
     }
 
@@ -42,15 +43,25 @@ object SsnValidationUtils {
         }
     }
 
+    internal fun parseDateWithSuffixExceptions(socialSecurityId: String, year: Int): LocalDate {
+        val date = LocalDate.parse(socialSecurityId.take(6), LOCAL_DATE_FORMATTER)
+        val referenceDate = LocalDate.of(year, 12, 31)
+
+        return if (referenceDate.plusYears(1L).isBefore(date)) {
+            date.minusYears(CENTURY) // 1900-1999
+        } else {
+            date
+        }
+    }
 
     fun isValidSocialSecurityId(personId: String) = SSN_PATTERN.matcher(personId).matches() && isModulo11Valid(personId)
 
-    fun isValidSocialSecurityIdOrDnr(personId: String) = SSN_PATTERN.matcher(personId).matches()
+    fun isValidSocialSecurityIdOrDnr(personId: String, reportingYear: Int) = SSN_PATTERN.matcher(personId).matches()
             &&
             (
                     isModulo11Valid(personId)
                             ||
-                            extractBirthDateFromSocialSecurityId(personId) != null
+                            extractBirthDateFromSocialSecurityId(personId, reportingYear) != null
                             && SSN_SUFFIX_EXCEPTIONS.contains(personId.takeLast(PERSON_ID_LENGTH))
                     )
 

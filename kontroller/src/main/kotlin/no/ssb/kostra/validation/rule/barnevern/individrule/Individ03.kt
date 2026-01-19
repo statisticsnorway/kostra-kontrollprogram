@@ -15,7 +15,7 @@ class Individ03 : AbstractRule<KostraIndividType>(
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) = context.run {
         when {
             fodselsnummer != null -> when {
-                isValidSocialSecurityIdOrDnr(fodselsnummer!!) -> null
+                isValidSocialSecurityIdOrDnr(fodselsnummer!!, arguments.aargang.toInt()) -> null
                 else -> createSingleReportEntryList(
                     contextId = context.id,
                     messageText = "Feil i fødselsnummer. Kan ikke identifisere individet."

@@ -13,7 +13,7 @@ class Individ12 : AbstractRule<KostraIndividType>(
 ) {
     override fun validate(context: KostraIndividType, arguments: KotlinArguments) =
         if (context.fodselsnummer == null
-            || !isValidSocialSecurityIdOrDnr(context.fodselsnummer!!)
+            || !isValidSocialSecurityIdOrDnr(context.fodselsnummer!!, arguments.aargang.toInt())
         ) {
             createSingleReportEntryList(
                 contextId = context.id,

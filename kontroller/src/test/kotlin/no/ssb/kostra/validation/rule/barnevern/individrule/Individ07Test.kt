@@ -25,21 +25,36 @@ class Individ07Test : BehaviorSpec({
             ForAllRowItem(
                 "individ with fodselsnummer, age below 25",
                 individInTest.copy(
-                    fodselsnummer = RandomUtils.generateRandomSsn(24, Year.now().value - 1)
+                    fodselsnummer = RandomUtils.generateRandomSsn(
+                        24,
+                        Year.now().value - 1
+                    )
                 )
             ),
             ForAllRowItem(
                 "individ with fodselsnummer, age is 25",
                 individInTest.copy(
-                    fodselsnummer = RandomUtils.generateRandomSsn(25, Year.now().value - 1)
+                    fodselsnummer = RandomUtils.generateRandomSsn(
+                        25,
+                        Year.now().value - 1
+                    )
                 )
             ),
             ForAllRowItem(
                 "individ age above 25",
                 individInTest.copy(
-                    fodselsnummer = RandomUtils.generateRandomSsn(26, Year.now().value - 1)
+                    fodselsnummer = RandomUtils.generateRandomSsn(
+                        26,
+                        Year.now().value - 1
+                    )
                 ),
                 expectedErrorMessage = "Individet er 26 år og skal avsluttes som klient"
+            ),
+            ForAllRowItem(
+                "individ age 18 with incomplete fodselsnummer",
+                individInTest.copy(
+                    fodselsnummer = "0101${Year.now().value.minus(18).toString().takeLast(2)}00100"
+                ),
             )
         )
     )

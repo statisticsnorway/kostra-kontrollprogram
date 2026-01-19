@@ -18,7 +18,7 @@ class Rule035KombinasjonDriftKontoklasseArtTest : BehaviorSpec({
     include(
         validationRuleNoArgsTest(
             sut = Rule035KombinasjonDriftKontoklasseArt(),
-            expectedSeverity = Severity.ERROR,
+            expectedSeverity = Severity.WARNING,
             ForAllRowItem(
                 "isBevilgningDriftRegnskap = false",
                 kostraRecordsInTest(0, 520, 100, 1),

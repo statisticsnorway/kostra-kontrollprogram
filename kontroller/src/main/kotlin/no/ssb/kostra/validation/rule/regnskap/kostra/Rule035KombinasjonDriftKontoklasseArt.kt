@@ -10,7 +10,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isBevilgningDrif
 
 class Rule035KombinasjonDriftKontoklasseArt : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 035 : Kombinasjon i driftsregnskapet, kontoklasse og art",
-    Severity.ERROR
+    Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context.filter { kostraRecord ->
         kostraRecord.isBevilgningDriftRegnskap()

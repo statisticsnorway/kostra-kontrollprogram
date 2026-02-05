@@ -19,7 +19,7 @@ fields:
     dataType: STRING_TYPE
     size: 2
   - name: FODSELSDATO
-    description: Fødselsdato (DDMMÅÅÅÅ)
+    description: Fødselsdato (DDMMÅÅÅÅÅÅ)
     dataType: DATE_TYPE
     size: 8
     mandatory: true
@@ -57,19 +57,19 @@ fields:
     dataType: INTEGER_TYPE
     size: 2
   - name: REG_DATO
-    description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ
+    description: Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅÅÅ
     dataType: DATE_TYPE
     size: 8
     mandatory: true
     datePattern: ddMMyyyy
   - name: VEDTAK_DATO
-    description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ
+    description: Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅÅÅ
     dataType: DATE_TYPE
     size: 8
     mandatory: true
     datePattern: ddMMyyyy
   - name: BEGYNT_DATO
-    description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ
+    description: Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅÅÅ
     dataType: DATE_TYPE
     size: 8
     mandatory: true
@@ -107,7 +107,7 @@ fields:
     codeList:
       - code: 4
         value: Introduksjonsstønad
-  - name: YTELSE_INDIVIDSTONAD
+  - name: YTELSE_TILTAKSPENGER
     dataType: STRING_TYPE
     size: 1
     codeList:
@@ -120,7 +120,7 @@ fields:
       - code: 6
         value: Livsoppholdsytelse etter folketrygdloven - jf veiledningen
   - name: KVP_MED_ASTONAD
-    description: Har deltakeren i 2025 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
+    description: Har deltakeren i 2026 i løpet av perioden med kvalifiseringsstønad også mottatt økonomisk sosialhjelp, kommunal bostøtte eller husbankens bostøtte? Hvis ja, hvilke? (kan krysse av for flere svaralternativer)
     dataType: STRING_TYPE
     size: 1
     codeListSource: "463" # Kodeliste for Ja/Nei (1,2)
@@ -160,7 +160,7 @@ fields:
       - code: 7
         value: Mottok økonomisk sosialhjelp som fast supplement til dekking av løpende livsholdsutgifter
   - name: STMND_1
-    description: For hvilke måneder i løpet av 2025 har deltakeren fått kvalifiseringsstønad?
+    description: For hvilke måneder i løpet av 2026 har deltakeren fått kvalifiseringsstønad?
     dataType: STRING_TYPE
     size: 2
     codeList:
@@ -244,17 +244,17 @@ fields:
       - code: 12
         value: Desember
   - name: KVP_STONAD
-    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2025
+    description: Samlet utbetalt kvalifiseringsstønad i løpet av 2026
     dataType: INTEGER_TYPE
     size: 7
   - name: STATUS
-    description: Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.2025?
+    description: Hva er status for deltakelsen i kvalifiseringsprogrammet per 31.12.2026?
     dataType: STRING_TYPE
     size: 1
     mandatory: true
     codeListSource: "555" # Kodeliste for deltakelse i kvalifiseringsprogram per 31.12., KVP
   - name: AVSL_DATO
-    description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅ)
+    description: Hvilken dato avsluttet deltakeren programmet? (gjelder ikke for permisjoner) (DDMMÅÅÅÅ)
     dataType: DATE_TYPE
     size: 8
     datePattern: ddMMyyyy

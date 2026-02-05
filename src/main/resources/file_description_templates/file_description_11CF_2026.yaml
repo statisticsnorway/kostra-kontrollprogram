@@ -19,7 +19,7 @@ fields:
     dataType: STRING_TYPE
     size: 2
   - name: FODSELSDATO
-    description: Fødselsdato (DDMMÅÅÅÅÅÅ)
+    description: Fødselsdato (DDMMÅÅÅÅ)
     dataType: DATE_TYPE
     size: 8
     mandatory: true

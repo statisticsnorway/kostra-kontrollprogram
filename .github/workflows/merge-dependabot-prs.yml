@@ -1,0 +1,339 @@
+# Dependabot PR Automation
+# Documentation: .github/workflows/dependabot/README_DEPENDABOT.md
+# This workflow combines multiple Dependabot PRs into a single PR for easier review
+
+name: Merge Dependabot PRs
+
+on:
+  # Run every Monday at 9 AM UTC
+  schedule:
+    - cron: '0 9 * * 1'
+
+  # Allow manual trigger with options
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (preview only, no PR created)'
+        required: false
+        type: boolean
+        default: false
+      base_branch:
+        description: 'Base branch to merge into'
+        required: false
+        type: string
+        default: 'main'
+
+jobs:
+  merge-dependabot-prs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Count and filter Dependabot PRs
+        id: filter_prs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Fetching open Dependabot PRs..."
+          
+          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          
+          # Get all open Dependabot PRs with merge status
+          ALL_PRS=$(gh pr list \
+            --author "app/dependabot" \
+            --state open \
+            --json number,title,headRefName,baseRefName,mergeable,mergeStateStatus \
+            --jq '[.[] | select(.baseRefName == "'"$BASE_BRANCH"'")]')
+          
+          PR_COUNT=$(echo "$ALL_PRS" | jq 'length')
+          
+          if [ "$PR_COUNT" -eq 0 ]; then
+            echo "count=0" >> $GITHUB_OUTPUT
+            echo "mergeable_prs=" >> $GITHUB_OUTPUT
+            echo "skipped_prs=" >> $GITHUB_OUTPUT
+            echo "No open Dependabot PRs found."
+            exit 0
+          fi
+          
+          echo "Found $PR_COUNT Dependabot PR(s)"
+          echo "Fetching fresh merge status for each PR..."
+          
+          # Filter PRs that are mergeable (we'll let CI checks run on the combined PR)
+          MERGEABLE_PRS=""
+          SKIPPED_PRS=""
+          MERGEABLE_COUNT=0
+          SKIPPED_COUNT=0
+          
+          for i in $(seq 0 $((PR_COUNT - 1))); do
+            pr=$(echo "$ALL_PRS" | jq -r ".[$i]")
+            number=$(echo "$pr" | jq -r '.number')
+            title=$(echo "$pr" | jq -r '.title')
+            branch=$(echo "$pr" | jq -r '.headRefName')
+          
+            # Fetch fresh status for this specific PR to force GitHub to calculate it
+            pr_status=$(gh pr view "$number" --json mergeable,mergeStateStatus)
+            mergeable=$(echo "$pr_status" | jq -r '.mergeable')
+            mergeState=$(echo "$pr_status" | jq -r '.mergeStateStatus')
+          
+            echo "DEBUG: PR #$number - mergeable='$mergeable' mergeState='$mergeState'"
+          
+            # Check if PR is mergeable and has passing checks
+            # MERGEABLE = no conflicts
+            # CLEAN/UNSTABLE/HAS_HOOKS = merge state (we only want CLEAN)
+            # Skip DIRTY (conflicts) and UNSTABLE (failing checks)
+            if [ "$mergeable" = "MERGEABLE" ] && [ "$mergeState" = "CLEAN" ]; then
+              MERGEABLE_PRS+="$number|$title|$branch"$'\n'
+              MERGEABLE_COUNT=$((MERGEABLE_COUNT + 1))
+              echo "✓ PR #$number: $title (mergeable: $mergeable, state: $mergeState)"
+            else
+              reason="not ready (mergeable: $mergeable, state: $mergeState)"
+              if [ "$mergeState" = "DIRTY" ]; then
+                reason="has merge conflicts"
+              elif [ "$mergeState" = "UNSTABLE" ]; then
+                reason="has failing CI checks"
+              elif [ "$mergeable" = "UNKNOWN" ]; then
+                reason="merge status not calculated yet"
+              fi
+              SKIPPED_PRS+="$number|$title|$reason"$'\n'
+              SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
+              echo "⚠ Skipped PR #$number: $title ($reason)"
+            fi
+          done
+          
+          # Remove trailing newlines
+          MERGEABLE_PRS=$(echo "$MERGEABLE_PRS" | sed '/^$/d')
+          SKIPPED_PRS=$(echo "$SKIPPED_PRS" | sed '/^$/d')
+          
+          echo "count=$MERGEABLE_COUNT" >> $GITHUB_OUTPUT
+          echo "skipped_count=$SKIPPED_COUNT" >> $GITHUB_OUTPUT
+          
+          # Save to files for next steps
+          echo "$MERGEABLE_PRS" > /tmp/mergeable_prs.txt
+          echo "$SKIPPED_PRS" > /tmp/skipped_prs.txt
+
+      - name: Report status if no PRs to merge
+        if: steps.filter_prs.outputs.count == '0'
+        run: |
+          echo "### ℹ️ No mergeable Dependabot PRs found" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -s /tmp/skipped_prs.txt ]; then
+            echo "**Skipped PRs (${{ steps.filter_prs.outputs.skipped_count }}):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            while IFS='|' read -r number title reason; do
+              echo "- PR #$number: $title ($reason)" >> $GITHUB_STEP_SUMMARY
+            done < /tmp/skipped_prs.txt
+          else
+            echo "No open Dependabot PRs found." >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "At least one PR without merge conflicts is needed." >> $GITHUB_STEP_SUMMARY
+
+      - name: Dry run summary
+        if: steps.filter_prs.outputs.count > 0 && inputs.dry_run == true
+        run: |
+          echo "### 🔍 Dry Run - Preview Only" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Would merge ${{ steps.filter_prs.outputs.count }} Dependabot PR(s):**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          while IFS='|' read -r number title branch; do
+            echo "- PR #$number: $title" >> $GITHUB_STEP_SUMMARY
+          done < /tmp/mergeable_prs.txt
+          
+          if [ -s /tmp/skipped_prs.txt ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Would skip (${{ steps.filter_prs.outputs.skipped_count }}):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            while IFS='|' read -r number title reason; do
+              echo "- PR #$number: $title ($reason)" >> $GITHUB_STEP_SUMMARY
+            done < /tmp/skipped_prs.txt
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**No changes were made (dry run mode)**" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create combined branch and merge PRs
+        if: steps.filter_prs.outputs.count > 0 && inputs.dry_run != true
+        id: merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          COMBINED_BRANCH="merge-dependabot-updates-$(date +%Y%m%d-%H%M%S)"
+          
+          echo "branch=$COMBINED_BRANCH" >> $GITHUB_OUTPUT
+          
+          # Checkout base branch and update
+          git checkout "$BASE_BRANCH"
+          git pull origin "$BASE_BRANCH"
+          
+          # Create combined branch
+          git checkout -b "$COMBINED_BRANCH"
+          
+          # Merge each PR
+          MERGED_COUNT=0
+          FAILED_COUNT=0
+          MERGED_PRS=""
+          FAILED_PRS=""
+          
+          while IFS='|' read -r number title branch; do
+            echo "Merging PR #$number: $title"
+          
+            if git fetch origin "$branch":"$branch" 2>/dev/null; then
+              if git merge "$branch" --no-edit -m "Merge PR #$number: $title"; then
+                echo "✓ Successfully merged PR #$number"
+                MERGED_COUNT=$((MERGED_COUNT + 1))
+                MERGED_PRS+="- Closes #$number: $title"$'\n'
+              else
+                echo "✗ Failed to merge PR #$number"
+                FAILED_COUNT=$((FAILED_COUNT + 1))
+                FAILED_PRS+="- #$number: $title"$'\n'
+                git merge --abort 2>/dev/null || true
+              fi
+            else
+              echo "✗ Failed to fetch branch for PR #$number"
+              FAILED_COUNT=$((FAILED_COUNT + 1))
+              FAILED_PRS+="- #$number: $title"$'\n'
+            fi
+          done < /tmp/mergeable_prs.txt
+          
+          echo "merged_count=$MERGED_COUNT" >> $GITHUB_OUTPUT
+          echo "failed_count=$FAILED_COUNT" >> $GITHUB_OUTPUT
+          
+          # Save for PR body
+          echo "$MERGED_PRS" > /tmp/merged_prs.txt
+          echo "$FAILED_PRS" > /tmp/failed_prs.txt
+          
+          if [ "$MERGED_COUNT" -eq 0 ]; then
+            echo "No PRs were successfully merged"
+            git checkout "$BASE_BRANCH"
+            git branch -D "$COMBINED_BRANCH" 2>/dev/null || true
+            exit 1
+          fi
+          
+          # Push the combined branch
+          git push origin "$COMBINED_BRANCH"
+
+      - name: Create combined PR
+        if: steps.filter_prs.outputs.count > 0 && inputs.dry_run != true && steps.merge.outputs.merged_count > 0
+        id: create_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          COMBINED_BRANCH="${{ steps.merge.outputs.branch }}"
+          
+          # Build PR body in a file to avoid shell escaping issues
+          cat > /tmp/pr_body.md <<'EOF'
+          ## 📦 Combined Dependabot Updates
+          
+          This PR combines multiple Dependabot dependency updates into a single PR for easier review and merging.
+          
+          ### ✅ Merged PRs (${{ steps.merge.outputs.merged_count }}):
+          EOF
+          
+          cat /tmp/merged_prs.txt >> /tmp/pr_body.md
+          
+          if [ -s /tmp/failed_prs.txt ]; then
+            echo "" >> /tmp/pr_body.md
+            echo "### ⚠️ Skipped during merge:" >> /tmp/pr_body.md
+            cat /tmp/failed_prs.txt >> /tmp/pr_body.md
+          fi
+          
+          if [ -s /tmp/skipped_prs.txt ]; then
+            echo "" >> /tmp/pr_body.md
+            echo "### ❌ Not included (failing checks or conflicts):" >> /tmp/pr_body.md
+            while IFS='|' read -r number title reason; do
+              echo "- #$number: $title ($reason)" >> /tmp/pr_body.md
+            done < /tmp/skipped_prs.txt
+          fi
+          
+          cat >> /tmp/pr_body.md <<'EOF'
+          
+          ---
+          *This PR was automatically created by GitHub Actions*
+          *Only PRs without merge conflicts were included*
+          
+          ### 📋 Review Checklist:
+          - [ ] All tests pass
+          - [ ] No breaking changes introduced
+          - [ ] Dependencies are compatible with each other
+          
+          After approval, the original Dependabot PRs can be closed manually.
+          EOF
+          
+          # Create PR
+          PR_TITLE="chore: merge multiple dependabot updates ($(date +%Y-%m-%d))"
+          
+          # Create PR with only the dependencies label (dependabot label may not exist)
+          PR_URL=$(gh pr create \
+            --base "$BASE_BRANCH" \
+            --head "$COMBINED_BRANCH" \
+            --title "$PR_TITLE" \
+            --body-file /tmp/pr_body.md \
+            --label "dependencies" || \
+          gh pr create \
+            --base "$BASE_BRANCH" \
+            --head "$COMBINED_BRANCH" \
+            --title "$PR_TITLE" \
+            --body-file /tmp/pr_body.md)
+          
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          
+          # Extract PR number
+          PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Summary
+        if: steps.filter_prs.outputs.count > 0 && inputs.dry_run != true && steps.merge.outputs.merged_count > 0
+        run: |
+          echo "### ✅ Combined Dependabot PR Created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Successfully merged ${{ steps.merge.outputs.merged_count }} Dependabot PR(s)**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📝 **Combined PR:** ${{ steps.create_pr.outputs.pr_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "**Merged PRs:**" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/merged_prs.txt >> $GITHUB_STEP_SUMMARY
+          
+          if [ -s /tmp/failed_prs.txt ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**⚠️ Failed to merge:**" >> $GITHUB_STEP_SUMMARY
+            cat /tmp/failed_prs.txt >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ -s /tmp/skipped_prs.txt ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**⚠️ Skipped (failing checks or conflicts):**" >> $GITHUB_STEP_SUMMARY
+            while IFS='|' read -r number title reason; do
+              echo "- #$number: $title ($reason)" >> $GITHUB_STEP_SUMMARY
+            done < /tmp/skipped_prs.txt
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review the combined PR" >> $GITHUB_STEP_SUMMARY
+          echo "2. Wait for CI/CD checks to pass" >> $GITHUB_STEP_SUMMARY
+          echo "3. Approve and merge the PR" >> $GITHUB_STEP_SUMMARY
+          echo "4. Original Dependabot PRs will be automatically closed" >> $GITHUB_STEP_SUMMARY

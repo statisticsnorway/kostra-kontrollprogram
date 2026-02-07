@@ -1,0 +1,100 @@
+# Cleanup Dependabot PRs after combined PR is merged
+name: Cleanup Dependabot PRs
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  cleanup:
+    # Only run if PR was merged and title indicates it's a combined dependabot PR
+    if: |
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.title, 'chore: merge multiple dependabot updates')
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Extract PR numbers from description
+        id: extract
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          echo "Extracting Dependabot PR numbers from combined PR description..."
+          
+          # Extract all PR numbers mentioned with "Closes #" pattern
+          PR_NUMBERS=$(echo "$PR_BODY" | grep -oP "Closes #\K\d+" | tr '\n' ' ')
+          
+          if [ -z "$PR_NUMBERS" ]; then
+            echo "No Dependabot PRs found to close"
+            echo "count=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "Found PRs to close: $PR_NUMBERS"
+          echo "pr_numbers=$PR_NUMBERS" >> $GITHUB_OUTPUT
+          echo "count=$(echo $PR_NUMBERS | wc -w)" >> $GITHUB_OUTPUT
+
+      - name: Close Dependabot PRs and delete branches
+        if: steps.extract.outputs.count > 0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBERS: ${{ steps.extract.outputs.pr_numbers }}
+        run: |
+          echo "### 🧹 Cleaning up Dependabot PRs" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          SUCCESS_COUNT=0
+          FAIL_COUNT=0
+          
+          for pr_num in $PR_NUMBERS; do
+            echo "Processing PR #$pr_num..."
+          
+            # Get PR details
+            pr_data=$(gh pr view "$pr_num" --json state,headRefName,author 2>/dev/null || echo "")
+          
+            if [ -z "$pr_data" ]; then
+              echo "❌ PR #$pr_num not found or already closed" >> $GITHUB_STEP_SUMMARY
+              FAIL_COUNT=$((FAIL_COUNT + 1))
+              continue
+            fi
+          
+            state=$(echo "$pr_data" | jq -r '.state')
+            branch=$(echo "$pr_data" | jq -r '.headRefName')
+            author=$(echo "$pr_data" | jq -r '.author.login')
+          
+            # Only close open Dependabot PRs
+            if [ "$state" != "OPEN" ]; then
+              echo "⚠️ PR #$pr_num is already $state" >> $GITHUB_STEP_SUMMARY
+              continue
+            fi
+          
+            if [ "$author" != "dependabot[bot]" ]; then
+              echo "⚠️ PR #$pr_num is not from Dependabot (author: $author)" >> $GITHUB_STEP_SUMMARY
+              continue
+            fi
+          
+            # Close the PR
+            if gh pr close "$pr_num" --comment "Closed in favor of combined PR #${{ github.event.pull_request.number }}" 2>/dev/null; then
+              echo "✅ Closed PR #$pr_num" >> $GITHUB_STEP_SUMMARY
+              SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+          
+              # Delete the branch
+              if git push origin --delete "$branch" 2>/dev/null; then
+                echo "  🗑️ Deleted branch: $branch" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "  ⚠️ Could not delete branch: $branch" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "❌ Failed to close PR #$pr_num" >> $GITHUB_STEP_SUMMARY
+              FAIL_COUNT=$((FAIL_COUNT + 1))
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Summary:** Closed $SUCCESS_COUNT PRs, $FAIL_COUNT failed" >> $GITHUB_STEP_SUMMARY

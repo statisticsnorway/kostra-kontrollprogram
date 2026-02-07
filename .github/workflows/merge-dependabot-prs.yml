@@ -21,7 +21,7 @@ on:
         description: 'Base branch to merge into'
         required: false
         type: string
-        default: 'main'
+        default: 'master'
 
 jobs:
   merge-dependabot-prs:

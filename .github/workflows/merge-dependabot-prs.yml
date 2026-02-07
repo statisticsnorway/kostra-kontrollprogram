@@ -21,7 +21,7 @@ on:
         description: 'Base branch to merge into'
         required: false
         type: string
-        default: 'main'
+        default: 'master'
 
 jobs:
   merge-dependabot-prs:
@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "Fetching open Dependabot PRs..."
           
-          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          BASE_BRANCH="${{ inputs.base_branch || 'master' }}"
           
           # Get all open Dependabot PRs with merge status
           ALL_PRS=$(gh pr list \
@@ -178,7 +178,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          BASE_BRANCH="${{ inputs.base_branch || 'master' }}"
           COMBINED_BRANCH="merge-dependabot-updates-$(date +%Y%m%d-%H%M%S)"
           
           echo "branch=$COMBINED_BRANCH" >> $GITHUB_OUTPUT
@@ -240,7 +240,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BASE_BRANCH="${{ inputs.base_branch || 'main' }}"
+          BASE_BRANCH="${{ inputs.base_branch || 'master' }}"
           COMBINED_BRANCH="${{ steps.merge.outputs.branch }}"
           
           # Build PR body in a file to avoid shell escaping issues

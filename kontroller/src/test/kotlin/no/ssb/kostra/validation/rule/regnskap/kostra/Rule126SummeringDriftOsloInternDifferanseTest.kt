@@ -13,7 +13,7 @@ class Rule126SummeringDriftOsloInternDifferanseTest :
         include(
             KostraTestFactory.validationRuleNoArgsTest(
                 sut = Rule126SummeringDriftOsloInternDifferanse(),
-                expectedSeverity = Severity.ERROR,
+                expectedSeverity = Severity.WARNING,
                 ForAllRowItem(
                     "All good",
                     listOf(

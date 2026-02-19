@@ -11,7 +11,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isOsloBydel
 class Rule126SummeringDriftOsloInternDifferanse : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 126 : Summeringskontroller driftsregnskapet for de Oslointerne artene 298 og 798, " +
             "differanse i driftsregnskapet",
-    Severity.ERROR
+    Severity.WARNING
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isOsloBydel() }

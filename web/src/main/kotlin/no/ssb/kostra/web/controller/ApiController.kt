@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
@@ -17,14 +18,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.ConstraintViolationException
 import no.ssb.kostra.felles.git.GitProperties
+import no.ssb.kostra.program.ControlDispatcher
+import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.error.ApiError
+import no.ssb.kostra.web.extensions.toAltinnReport
 import no.ssb.kostra.web.service.ControlRunner
+import no.ssb.kostra.web.viewmodel.AltinnReport
+import no.ssb.kostra.web.viewmodel.AltinnRequest
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import no.ssb.kostra.web.viewmodel.UiDataVm
 import reactor.core.publisher.Mono
 import java.io.ByteArrayOutputStream
+import java.util.Base64
+import java.nio.charset.StandardCharsets
 
 /**
  * API controller
@@ -106,7 +114,7 @@ open class ApiController(
         ApiResponse(
             responseCode = "500",
             description = "System error",
-            content = [io.swagger.v3.oas.annotations.media.Content(
+            content = [Content(
                 mediaType = MediaType.APPLICATION_JSON,
                 schema = Schema(implementation = ApiError::class)
             )]
@@ -117,4 +125,59 @@ open class ApiController(
         years = uiConfig.aarganger,
         formTypes = uiConfig.skjematyper
     )
+
+    @Post(
+        value = "/kontroller-altinn-skjema",
+        consumes = [MediaType.MULTIPART_FORM_DATA],
+        produces = [MediaType.APPLICATION_JSON]
+    )
+    @Operation(
+        summary = "Runs controls on supplied data file/input parameters and returns a report"
+    )
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = [Content(mediaType = "application/json", schema = Schema(implementation = FileReportVm::class))]
+        ),
+        ApiResponse(
+            responseCode = "400",
+            description = "Bad request",
+            content = [Content(mediaType = "application/json", schema = Schema(implementation = ApiError::class))]
+        ),
+        ApiResponse(
+            responseCode = "500",
+            description = "System error",
+            content = [Content(mediaType = "application/json", schema = Schema(implementation = ApiError::class))]
+        )
+    )
+    @SingleResult
+    fun kontrollerAltinnSkjema(
+        @Body request: AltinnRequest
+    ): Mono<HttpResponse<AltinnReport>> {
+
+        return Mono.fromCallable {
+            // Decode Base64 file content
+            val inputFileContent = String(
+                Base64.getDecoder().decode(request.base64EncodedFileAttachment),
+                StandardCharsets.ISO_8859_1
+            )
+
+            HttpResponse.ok(
+                ControlDispatcher.validate(
+                    KotlinArguments(
+                        aargang = request.period.toString(),
+                        kvartal = request.quarter,
+                        skjema = request.formId,
+                        region = request.region,
+                        navn = request.name ?: "Ukjent navn",
+                        orgnr = request.organizationId ?: " ".repeat(9),
+                        inputFileContent = inputFileContent,
+
+
+                    )
+                ).toAltinnReport()
+            )
+        }
+    }
 }

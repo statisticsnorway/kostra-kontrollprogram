@@ -128,7 +128,7 @@ open class ApiController(
 
     @Post(
         value = "/kontroller-altinn-skjema",
-        consumes = [MediaType.MULTIPART_FORM_DATA],
+        consumes = [MediaType.APPLICATION_JSON],
         produces = [MediaType.APPLICATION_JSON]
     )
     @Operation(

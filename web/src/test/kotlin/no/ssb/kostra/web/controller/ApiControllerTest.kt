@@ -85,26 +85,29 @@ class ApiControllerTest : BehaviorSpec({
         forAll(
             row(
                 "valid request, valid data OK",
-                altinnRequestInTest.copy(
-                    base64EncodedFileAttachment = altinnTestFileContentOK
-                ),
+                "03030   1   1   1   1   1   1   1   1   1   1   1   1   1   1",
                 Severity.OK
             ),
             row(
                 "valid request, valid data with errors",
-                altinnRequestInTest.copy(
-                    base64EncodedFileAttachment = altinnTestFileContentError
-                ),
+                "XXXXX                                                        ",
                 Severity.ERROR
             ),
             row(
                 "valid request, invalid data",
-                altinnRequestInTest.copy(
-                    base64EncodedFileAttachment = altinnTestFileContentFatal
-                ),
+                "FATAL",
                 Severity.FATAL
             )
-        ) { description, request, expectedSeverity ->
+        ) { description, data, expectedSeverity ->
+            val base64encodedData = Base64
+                .getEncoder()
+                .encodeToString(
+                    data.toByteArray(StandardCharsets.ISO_8859_1)
+                )
+            val request = altinnRequestInTest.copy(
+                base64EncodedFileAttachment = base64encodedData
+            )
+
             When(description) {
                 val monoResult = sut.kontrollerAltinnSkjema(request)
 
@@ -138,30 +141,6 @@ class ApiControllerTest : BehaviorSpec({
             skjema = "15F",
             region = "667600"
         )
-
-        private val altinnTestFileContentOK =
-            Base64
-                .getEncoder()
-                .encodeToString(
-                    "03030   1   1   1   1   1   1   1   1   1   1   1   1   1   1"
-                        .toByteArray(StandardCharsets.ISO_8859_1)
-                )
-
-        private val altinnTestFileContentError =
-            Base64
-                .getEncoder()
-                .encodeToString(
-                    "XXXXX                                                        "
-                        .toByteArray(StandardCharsets.ISO_8859_1)
-                )
-
-        private val altinnTestFileContentFatal =
-            Base64
-                .getEncoder()
-                .encodeToString(
-                    "FATAL"
-                        .toByteArray(StandardCharsets.ISO_8859_1)
-                )
 
         private val altinnRequestInTest = AltinnRequest(
             period = 2026,

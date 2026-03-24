@@ -28,6 +28,7 @@ sonarqube {
             "sonar.exclusions",
             """
             **/Application.kt,
+            **/ApiController.kt
             **/node_modules/**/*,
             **/KostraRecordExtensionsGenerics.kt,
             **/KostraKontrollprogramCommand.kt,

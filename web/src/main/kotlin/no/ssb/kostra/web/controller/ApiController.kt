@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
+import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.http.multipart.StreamingFileUpload
 import io.micronaut.validation.validator.Validator
 import io.swagger.v3.oas.annotations.Operation
@@ -24,7 +26,7 @@ import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.error.ApiError
 import no.ssb.kostra.web.extensions.toAltinnReport
 import no.ssb.kostra.web.service.ControlRunner
-import no.ssb.kostra.web.viewmodel.AltinnReport
+import no.ssb.kostra.web.viewmodel.AltinnRapport
 import no.ssb.kostra.web.viewmodel.AltinnRequest
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -138,7 +140,7 @@ open class ApiController(
         ApiResponse(
             responseCode = "200",
             description = "OK",
-            content = [Content(mediaType = "application/json", schema = Schema(implementation = AltinnReport::class))]
+            content = [Content(mediaType = "application/json", schema = Schema(implementation = AltinnRapport::class))]
         ),
         ApiResponse(
             responseCode = "400",
@@ -154,24 +156,30 @@ open class ApiController(
     @SingleResult
     fun kontrollerAltinnSkjema(
         @Body request: AltinnRequest
-    ): Mono<HttpResponse<AltinnReport>> {
+    ): Mono<HttpResponse<AltinnRapport>> {
 
         return Mono.fromCallable {
+            if (request.base64KodedeData.trim().isBlank()){
+                throw HttpStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Filvedlegget kan ikke være tomt"
+                )
+            }
+
             // Decode Base64 file content
             val inputFileContent = String(
-                Base64.getDecoder().decode(request.base64EncodedFileAttachment),
+                Base64.getDecoder().decode(request.base64KodedeData),
                 StandardCharsets.ISO_8859_1
             )
 
             HttpResponse.ok(
                 ControlDispatcher.validate(
                     KotlinArguments(
-                        aargang = request.period.toString(),
-                        kvartal = request.quarter,
-                        skjema = request.formId,
-                        region = request.region,
-                        navn = request.name ?: "Ukjent navn",
-                        orgnr = request.organizationId ?: " ".repeat(9),
+                        aargang = request.respondent.aar.toString(),
+                        kvartal = request.respondent.kvartal,
+                        skjema = request.respondent.skjema,
+                        region = request.respondent.region,
+                        orgnr = request.respondent.orgnr,
                         inputFileContent = inputFileContent,
 
 

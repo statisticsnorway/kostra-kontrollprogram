@@ -15,6 +15,7 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.web.config.UiConfig
 import no.ssb.kostra.web.service.ControlRunner
 import no.ssb.kostra.web.viewmodel.AltinnRequest
+import no.ssb.kostra.web.viewmodel.AltinnRespondent
 import no.ssb.kostra.web.viewmodel.KostraFormVm
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
@@ -105,7 +106,7 @@ class ApiControllerTest : BehaviorSpec({
                     data.toByteArray(StandardCharsets.ISO_8859_1)
                 )
             val request = altinnRequestInTest.copy(
-                base64EncodedFileAttachment = base64encodedData
+                base64KodedeData = base64encodedData
             )
 
             When(description) {
@@ -125,7 +126,7 @@ class ApiControllerTest : BehaviorSpec({
 
                             val altinnReport = response.body()
                             altinnReport.shouldNotBeNull()
-                            altinnReport.severity shouldBe expectedSeverity
+                            altinnReport.alvorlighetsgrad shouldBe expectedSeverity
                         }
                         .verifyComplete()
                 }
@@ -143,10 +144,12 @@ class ApiControllerTest : BehaviorSpec({
         )
 
         private val altinnRequestInTest = AltinnRequest(
-            period = 2026,
-            formId = "53F",
-            region = "667200",
-            base64EncodedFileAttachment = "",
+            respondent = AltinnRespondent(
+                aar = 2026,
+                skjema = "53F",
+                region = "667200",
+            ),
+            base64KodedeData = "",
         )
     }
 }

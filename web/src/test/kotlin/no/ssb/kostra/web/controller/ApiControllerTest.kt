@@ -126,7 +126,7 @@ class ApiControllerTest : BehaviorSpec({
 
                             val altinnReport = response.body()
                             altinnReport.shouldNotBeNull()
-                            altinnReport.alvorlighetsgrad shouldBe expectedSeverity
+                            altinnReport.alvorlighetsgrad shouldBe expectedSeverity.info.description
                         }
                         .verifyComplete()
                 }

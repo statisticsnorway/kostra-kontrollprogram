@@ -217,7 +217,7 @@ class ApiControllerIntegrationTest(
                         url shouldBe urlInTest
                         validationErrors.shouldNotBeNull()
 
-                        assertSoftly(validationErrors as Map<String, String>) {
+                        assertSoftly(validationErrors ) {
                             it[propertyPath] shouldBe expectedValidationError
                         }
                     }

@@ -16,7 +16,7 @@ class ViewsControllerTest(@Client("/") client: HttpClient) : BehaviorSpec({
         val request: HttpRequest<Any> = HttpRequest.GET("/")
 
         When("request") {
-            val response = client.toBlocking().exchange(request, Argument.of(Object::class.java))
+            val response = client.toBlocking().exchange(request, Argument.of(Any::class.java))
 
             Then("response should be OK") {
                 response.status shouldBe HttpStatus.OK

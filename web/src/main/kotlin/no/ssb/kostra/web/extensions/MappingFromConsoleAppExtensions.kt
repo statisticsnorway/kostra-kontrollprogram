@@ -54,7 +54,7 @@ fun ValidationReportArguments.toAltinnReport(): AltinnRapport =
         .groupReportEntries()
         .map {
             AltinnRapportMelding(
-                alvorlighetsgrad = it.severity,
+                alvorlighetsgrad = it.severity.info.description,
                 kontrollNavn = it.ruleName,
                 meldingTekst = it.messageText.replace("<br/>", ""),
                 linjenumre = it.lineNumbers,
@@ -73,6 +73,10 @@ fun ValidationReportArguments.toAltinnReport(): AltinnRapport =
                     },
                 antallKontroller = this.validationResult.numberOfControls,
                 meldinger = reportEntries,
-                alvorlighetsgrad = reportEntries.map { it.alvorlighetsgrad }.maxByOrNull { it.ordinal } ?: Severity.OK,
+                alvorlighetsgrad = this.validationResult.reportEntries
+                    .map { it.severity }
+                    .let { severities ->  severities.maxByOrNull { it.ordinal } ?: Severity.OK }
+                    .info.description
+                ,
             )
         }

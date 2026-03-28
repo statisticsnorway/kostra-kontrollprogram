@@ -16,7 +16,7 @@ gradle-git-properties-version = "2.5.4"
 devtools-ksp-version = "2.3.4"
 micronaut-application-version = "4.6.1"
 # to be removed
-assertj-core-version = "3.27.6"
+assertj-core-version = "3.27.7"
 
 micronaut-platform-version = "4.10.2"
 micronaut-serde-jackson-version = "2.16.2"

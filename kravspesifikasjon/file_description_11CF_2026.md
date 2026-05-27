@@ -9,7 +9,7 @@ Filbeskrivelse for Kvalifiseringsstønad for rapporteringsår 2026
 | `KOMMUNE_NR` | Kommunenummer | 4 | 1‑4 | STRING_TYPE | ☑️ |  |  |
 | `VERSION` | Rapporteringsår / versjon / oppgaveår | 2 | 5‑6 | STRING_TYPE | ☑️ |  |  |
 | `BYDELSNR` | Bydelsnummer | 2 | 7‑8 | STRING_TYPE |  |  |  |
-| `FODSELSDATO` | Fødselsdato (DDMMÅÅÅÅÅÅ) | 8 | 9‑16 | DATE_TYPE | ☑️ | ddMMyyyy |  |
+| `FODSELSDATO` | Fødselsdato (DDMMÅÅÅÅ) | 8 | 9‑16 | DATE_TYPE | ☑️ | ddMMyyyy |  |
 | `PERSON_JOURNALNR` | Journalnummer | 8 | 17‑24 | STRING_TYPE | ☑️ |  |  |
 | `PERSON_FODSELSNR` | Fødsels- og personnummer | 11 | 25‑35 | STRING_TYPE | ☑️ |  |  |
 | `KJONN` | Kjønn | 1 | 36‑36 | STRING_TYPE | ☑️ |  | `1`: Mann<br/>`2`: Kvinne |

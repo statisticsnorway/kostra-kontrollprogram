@@ -32,7 +32,7 @@ fields:
   codelistSource: null
   codeList: []
 - name: "FODSELSDATO"
-  description: "Fødselsdato (DDMMÅÅÅÅÅÅ)"
+  description: "Fødselsdato (DDMMÅÅÅÅ)"
   from: 9
   size: 8
   dataType: "DATE_TYPE"

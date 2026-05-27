@@ -14,7 +14,6 @@
 ## Endret
 | Navn | Beskrivelse | Lengde | Fra‑Til | Datatype | Obligatorisk | Dato-maske | Kodeliste |
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
-| `FODSELSDATO` | Fødselsdato (DDMMÅÅÅÅ)<br/> endret til <br/>Fødselsdato (DDMMÅÅÅÅÅÅ) | 8 | 9-16 | DATE_TYPE | ✅ | ddMMyyyy | Ingen endringer |
 | `REG_DATO` | Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅ<br/> endret til <br/>Hvilken dato ble søknaden registrert ved NAV-kontoret? DDMMÅÅÅÅ | 8 | 41-48 | DATE_TYPE | ✅ | ddMMyyyy | Ingen endringer |
 | `VEDTAK_DATO` | Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅ<br/> endret til <br/>Hvilken dato ble det fattet vedtak om program (søknad innvilget)? DDMMÅÅÅÅ | 8 | 49-56 | DATE_TYPE | ✅ | ddMMyyyy | Ingen endringer |
 | `BEGYNT_DATO` | Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅ<br/> endret til <br/>Hvilken dato begynte deltakeren i program (iverksettelse)? DDMMÅÅÅÅ | 8 | 57-64 | DATE_TYPE | ✅ | ddMMyyyy | Ingen endringer |

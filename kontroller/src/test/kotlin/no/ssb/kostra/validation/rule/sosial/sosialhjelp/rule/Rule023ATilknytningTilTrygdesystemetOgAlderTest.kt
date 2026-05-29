@@ -10,11 +10,11 @@ import no.ssb.kostra.validation.rule.KostraTestFactory.validationRuleNoContextTe
 import no.ssb.kostra.validation.rule.RuleTestData
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpTestUtils
 
-class Rule022TilknytningTilTrygdesystemetOgAlderTest :
+class Rule023ATilknytningTilTrygdesystemetOgAlderTest :
     BehaviorSpec({
         include(
             validationRuleNoContextTest(
-                sut = Rule022TilknytningTilTrygdesystemetOgAlder(),
+                sut = Rule023ATilknytningTilTrygdesystemetOgAlder(),
                 expectedSeverity = Severity.ERROR,
                 ForAllRowItem(
                     "trygdesitCode = 00, fodselsNummer = 00",
@@ -24,19 +24,19 @@ class Rule022TilknytningTilTrygdesystemetOgAlderTest :
                     ),
                 ),
                 ForAllRowItem(
-                    "trygdesitCode = 07, alder = 60",
+                    "trygdesitCode = 07, alder = 62",
                     kostraRecordInTest(
                         "07",
-                        RandomUtils.generateRandomSsn(age = 60, year = RuleTestData.argumentsInTest.aargang.toInt()),
+                        RandomUtils.generateRandomSsn(age = 62, year = RuleTestData.argumentsInTest.aargang.toInt()),
                     ),
                 ),
                 ForAllRowItem(
-                    "trygdesitCode = 07, alder = 59",
+                    "trygdesitCode = 07, alder = 61",
                     kostraRecordInTest(
                         "07",
-                        RandomUtils.generateRandomSsn(age = 59, year = RuleTestData.argumentsInTest.aargang.toInt()),
+                        RandomUtils.generateRandomSsn(age = 61, year = RuleTestData.argumentsInTest.aargang.toInt()),
                     ),
-                    expectedErrorMessage = "Mottakeren (59 år) er yngre enn 60 år og mottar alderspensjon.",
+                    expectedErrorMessage = "Mottakeren (61 år) er yngre enn 62 år og mottar alderspensjon.",
                 ),
                 ForAllRowItem(
                     "trygdesitCode = 07, alder = -1 (pga. feil dato-del i fnr)",
@@ -44,7 +44,7 @@ class Rule022TilknytningTilTrygdesystemetOgAlderTest :
                         "07",
                         "32138800000",
                     ),
-                    expectedErrorMessage = "Mottakeren (-1 år) er yngre enn 60 år og mottar alderspensjon.",
+                    expectedErrorMessage = "Mottakeren (-1 år) er yngre enn 62 år og mottar alderspensjon.",
                 ),
             ),
         )

@@ -10,26 +10,25 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractRule
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.SosialhjelpRuleId
 
-class Rule022TilknytningTilTrygdesystemetOgAlder :
+class Rule023ATilknytningTilTrygdesystemetOgAlder :
     AbstractRule<List<KostraRecord>>(
-        SosialhjelpRuleId.SOSIALHJELP_K022_TRYGDESYSTEMET_ALDER.title,
+        SosialhjelpRuleId.SOSIALHJELP_K023A_TRYGDESYSTEMET_ALDER.title,
         Severity.ERROR,
     ) {
     override fun validate(
         context: List<KostraRecord>,
         arguments: KotlinArguments,
     ) = context
-        .filter { it[TRYGDESIT_COL_NAME] == "07" }
-        .filterNot { (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1) >= 60 }
-        .map {
+        .filter { record ->  record[TRYGDESIT_COL_NAME] == "07" }
+        .map { record ->  (record to (record[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)) }
+        .filter { (_, age) -> age < 62 }
+        .map {(record, age) ->
             createValidationReportEntry(
-                "Mottakeren (${
-                    (it[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)
-                } år) er yngre enn 60 år og mottar alderspensjon.",
-                lineNumbers = listOf(it.lineNumber),
+                "Mottakeren (${age} år) er yngre enn 62 år og mottar alderspensjon.",
+                lineNumbers = listOf(record.lineNumber),
             ).copy(
-                caseworker = it[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
-                journalId = it[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
+                caseworker = record[SosialhjelpColumnNames.SAKSBEHANDLER_COL_NAME],
+                journalId = record[SosialhjelpColumnNames.PERSON_JOURNALNR_COL_NAME],
             )
         }.ifEmpty { null }
 }

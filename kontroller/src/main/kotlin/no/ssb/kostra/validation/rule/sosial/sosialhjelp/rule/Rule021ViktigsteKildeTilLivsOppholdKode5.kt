@@ -8,5 +8,5 @@ class Rule021ViktigsteKildeTilLivsOppholdKode5 : ViktigsteKildeTilLivsOppholdRul
     Severity.WARNING
 ) {
     override val vkldColumnFilter = "5"
-    override val validCodes = setOf("02", "04", "05", "06", "07", "08")
+    override val validCodes = setOf("02", "03", "04", "05", "06", "07", "08")
 }

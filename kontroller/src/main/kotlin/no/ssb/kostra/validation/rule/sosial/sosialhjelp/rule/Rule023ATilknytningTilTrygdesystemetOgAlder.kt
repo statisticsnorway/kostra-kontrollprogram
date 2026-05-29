@@ -19,10 +19,13 @@ class Rule023ATilknytningTilTrygdesystemetOgAlder :
         context: List<KostraRecord>,
         arguments: KotlinArguments,
     ) = context
-        .filter { record ->  record[TRYGDESIT_COL_NAME] == "07" }
-        .map { record ->  (record to (record[PERSON_FODSELSNR_COL_NAME].ageInYears(arguments.aargang.toInt()) ?: -1)) }
-        .filter { (_, age) -> age < 62 }
-        .map {(record, age) ->
+        .map { record ->
+            (record to (record[PERSON_FODSELSNR_COL_NAME].ageInYears(
+                arguments.aargang.toInt()
+            ) ?: -1))
+        }
+        .filter { (record, age) -> record[TRYGDESIT_COL_NAME] == "07" && age < 62 }
+        .map { (record, age) ->
             createValidationReportEntry(
                 "Mottakeren (${age} år) er yngre enn 62 år og mottar alderspensjon.",
                 lineNumbers = listOf(record.lineNumber),

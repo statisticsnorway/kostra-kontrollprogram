@@ -25,12 +25,12 @@ class Rule021ViktigsteKildeTilLivsOppholdKode5Test : BehaviorSpec({
                 "vkloCode = 5, arbsitCode = XX",
                 kostraRecordInTest("5", "XX"),
 
-                expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er Sosialhjelp. " +
+                expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
+                        "sosial-/NAV-kontoret er Sosialhjelp. " +
                         "Arbeidssituasjonen er '(XX)', forventet én av '([" +
                         "02=Arbeid, deltid, 03=Under utdanning, 04=Ikke arbeidssøker, 05=Arbeidsmarkedstiltak (statlig), " +
                         "06=Kommunalt tiltak, 07=Registrert arbeidsledig, 08=Arbeidsledig, men ikke registrert hos NAV" +
-                        "])'. " +
-                        "Feltet er obligatorisk å fylle ut.",
+                        "])'. Feltet er obligatorisk å fylle ut.",
             )
         )
     )

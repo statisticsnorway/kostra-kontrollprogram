@@ -24,7 +24,6 @@ class Rule021ViktigsteKildeTilLivsOppholdKode5Test : BehaviorSpec({
             ForAllRowItem(
                 "vkloCode = 5, arbsitCode = 00",
                 kostraRecordInTest("5", "00"),
-
                 expectedErrorMessage = "Mottakerens viktigste kilde til livsopphold ved siste kontakt med " +
                         "sosial-/NAV-kontoret er Sosialhjelp. " +
                         "Arbeidssituasjonen er '(00)', forventet én av '([" +

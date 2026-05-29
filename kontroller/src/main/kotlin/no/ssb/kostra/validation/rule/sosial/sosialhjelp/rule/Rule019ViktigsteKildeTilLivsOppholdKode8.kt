@@ -7,6 +7,6 @@ class Rule019ViktigsteKildeTilLivsOppholdKode8 : ViktigsteKildeTilLivsOppholdRul
     SosialhjelpRuleId.SOSIALHJELP_K019_KVALIFISERINGSTONAD.title,
     Severity.ERROR
 ) {
-    override val vkldColumnFilter = "8"
-    override val validCodes = setOf("10")
+    override val vkloColumnFilter = "8"
+    override val validArbSitCodes = setOf("10")
 }

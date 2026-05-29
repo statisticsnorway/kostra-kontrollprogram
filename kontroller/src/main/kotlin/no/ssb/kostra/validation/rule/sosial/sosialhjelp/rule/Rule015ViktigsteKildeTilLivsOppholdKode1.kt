@@ -7,6 +7,6 @@ class Rule015ViktigsteKildeTilLivsOppholdKode1 : ViktigsteKildeTilLivsOppholdRul
     SosialhjelpRuleId.SOSIALHJELP_K015_VKLO_ARBEIDSINNTEKT.title,
     Severity.ERROR
 ) {
-    override val vkldColumnFilter = "1"
-    override val validCodes = setOf("01", "02")
+    override val vkloColumnFilter = "1"
+    override val validArbSitCodes = setOf("01", "02")
 }

@@ -36,7 +36,7 @@ class SosialhjelpMainTest :
                     true,
                     " ".repeat(SosialhjelpFieldDefinitions.fieldLength),
                     48,
-                    20,
+                    21,
                 ),
                 row(
                     "validating a valid record string",

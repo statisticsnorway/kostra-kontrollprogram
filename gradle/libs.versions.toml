@@ -1,6 +1,6 @@
 [versions]
 kotlin-version = "2.3.21"
-jackson-version = "2.21.3"
+jackson-version = "2.22.0"
 kotest-version = "5.9.1"
 mockk-version = "1.14.9"
 woodstox-core-version = "7.1.1"

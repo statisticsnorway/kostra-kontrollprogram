@@ -1,7 +1,7 @@
 [versions]
 # platform versions
 micronaut-platform-version = "4.10.13"
-kotlin-version = "2.3.21"
+kotlin-version = "2.3.0"
 
 # library versions
 assertj-core-version = "3.27.7"

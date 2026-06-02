@@ -20,6 +20,7 @@ dependencies {
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")
     implementation(libs.logback.classic)
+    implementation(libs.micronaut.security.jwt)
     implementation(libs.swagger.annotations)
 
     implementation(project(":kostra-kontroller"))

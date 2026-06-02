@@ -4,10 +4,10 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'kontroller/**'
-      - 'web/**'
-      - 'web-frontend/**'
+#    paths:
+#      - 'kontroller/**'
+#      - 'web/**'
+#      - 'web-frontend/**'
 
 jobs:
   detect-changes:

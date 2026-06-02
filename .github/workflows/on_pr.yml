@@ -2,8 +2,6 @@ name: Build and deploy PR
 
 on:
   pull_request:
-    branches:
-      - master
 #    paths:
 #      - 'kontroller/**'
 #      - 'web/**'

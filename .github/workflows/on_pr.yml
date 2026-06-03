@@ -37,9 +37,6 @@ jobs:
             gradle-pr-${{ github.event.pull_request.number }}-
             gradle-main-
 
-      - name: Build with Gradle
-        run: ./gradlew build -p web --configuration-cache --parallel --build-cache --warn
-
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
@@ -54,6 +51,9 @@ jobs:
           registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Build with Gradle
+        run: ./gradlew build -p web --configuration-cache --parallel --build-cache --warn
 
       - name: Build Docker image
         id: docker-build

@@ -2,9 +2,9 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
   labels:
-    team: dftjen
+    team: kostra
   name: dev-kontrollprogram-{{pr}}
-  namespace: dftjen
+  namespace: kostra
 spec:
   # application settings
   env:

@@ -4,56 +4,8 @@ on:
   pull_request:
 
 jobs:
-  detect-changes:
-    name: Detect apps changed in PR
-    runs-on: ubuntu-24.04
-    outputs:
-      changed: ${{ steps.detect.outputs.has_changes }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed apps across whole PR
-        id: detect
-        run: |
-          BASE="${{ github.event.pull_request.base.sha }}"
-          HEAD="${{ github.event.pull_request.head.sha }}"
-
-          echo "Base SHA: $BASE"
-          echo "Head SHA: $HEAD"
-
-          # Detect backend changes
-          controls_changed=$(git diff --name-only "$BASE" "$HEAD" | grep "^kontroller/" | wc -l)
-          api_changed=$(git diff --name-only "$BASE" "$HEAD" | grep "^web/" | wc -l)
-          frontend_changed=$(git diff --name-only "$BASE" "$HEAD" | grep "^web-frontend/" | wc -l)
-
-          # Convert to booleans
-          controls_flag=$([ "controls_changed" -gt 0 ] && echo "true" || echo "false")
-          api_flag=$([ "api_changed" -gt 0 ] && echo "true" || echo "false")
-          frontend_flag=$([ "$frontend_changed" -gt 0 ] && echo "true" || echo "false")
-
-          # Determine if anything changed
-          if [ "$rest_flag" = "true" ] || [ "$gateway_flag" = "true" ] || [ "$frontend_flag" = "true" ]; then
-            any_flag="true"
-          else
-            any_flag="false"
-          fi
-
-          echo "has_changes=$any_flag" >> $GITHUB_OUTPUT
-
-          echo "Detected:"
-          echo "  controls: $controls_flag"
-          echo "  api     : $api_flag"
-          echo "  frontend: $frontend_flag"
-          echo "  has_changes: $any_flag"
-
   build-and-deploy:
     name: Build and deploy
-    needs: detect-changes
-    if: needs.detect-changes.outputs.has_changes == 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: read

@@ -43,7 +43,7 @@ jobs:
         with:
           token_format: access_token
           workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
-          service_account: "gh-actions-kostra@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+          service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
       - name: Login to Artifact Registry
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121
@@ -59,7 +59,7 @@ jobs:
         id: docker-build
         uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
         with:
-          team: kostra
+          team: dftjen
           docker_context: ./web
           pull: false
           tag: ${{ github.sha }}
@@ -69,7 +69,7 @@ jobs:
         env:
           CLUSTER: test
           RESOURCE: .nais/nais-dev.yaml
-          NAMESPACE: kostra
+          NAMESPACE: dftjen
           WORKLOAD_IMAGE: ${{ steps.docker-build.outputs.image }}
           TELEMETRY: ${{ steps.docker-build.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

@@ -72,15 +72,22 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'gradle'
 
-      - name: Set up Gradle # v5.0.0
-        uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2
+      - name: Set up caching for Gradle and Maven
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
         with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: gradle-pr-${{ github.event.pull_request.number }}-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-pr-${{ github.event.pull_request.number }}-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
+            gradle-pr-${{ github.event.pull_request.number }}-
+            gradle-main-
 
       - name: Build with Gradle
-        run: ./gradlew build -p web --configuration-cache --no-daemon --parallel --build-cache --warn
+        run: ./gradlew build -p web --configuration-cache --parallel --build-cache --warn
 
       - name: Authenticate to Google Cloud
         id: auth

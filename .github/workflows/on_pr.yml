@@ -73,7 +73,6 @@ jobs:
           WORKLOAD_IMAGE: ${{ steps.docker-build.outputs.image }}
           TELEMETRY: ${{ steps.docker-build.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
-          VAR: pr=${{github.event.pull_request.number}}
 
       - name: Deployment Summary
         run: |

@@ -55,9 +55,8 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.has_changes == 'true'
     runs-on: ubuntu-24.04
-    environment: dev
     permissions:
-      contents: write
+      contents: read
       id-token: write
 
     steps:

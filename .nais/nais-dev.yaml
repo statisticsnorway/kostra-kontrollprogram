@@ -10,6 +10,8 @@ spec:
   env:
     - name: MICRONAUT_ENVIRONMENTS
       value: nais-dev
+  ingresses:
+    - https://dev-kontrollprogram-{{pr}}.intern.test.ssb.no
   port: 8080
   replicas:
     max: 1
@@ -18,4 +20,4 @@ spec:
     requests:
       cpu: 50m
       memory: 160Mi
-  ttl: 5h
+  ttl: 2h

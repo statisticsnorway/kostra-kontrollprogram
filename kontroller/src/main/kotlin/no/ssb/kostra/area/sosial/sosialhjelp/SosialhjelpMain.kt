@@ -10,6 +10,7 @@ import no.ssb.kostra.validation.report.StatsEntryHeading
 import no.ssb.kostra.validation.report.StatsReportEntry
 import no.ssb.kostra.validation.rule.Rule000HasAttachment
 import no.ssb.kostra.validation.rule.Rule001RecordLength
+import no.ssb.kostra.validation.rule.Rule002FileDescription
 import no.ssb.kostra.validation.rule.sosial.extensions.varighetAsStatsEntries
 import no.ssb.kostra.validation.rule.sosial.rule.*
 import no.ssb.kostra.validation.rule.sosial.sosialhjelp.extensions.deltakereByAlderAsStatsEntries
@@ -26,6 +27,7 @@ class SosialhjelpMain(arguments: KotlinArguments) :
     )
 
     override val validationRules = listOf(
+        Rule002FileDescription(SosialhjelpFieldDefinitions.fieldDefinitions),
         Rule003Kommunenummer(),
         Rule003Bydelsnummer(),
         Rule004OppgaveAar(),
@@ -48,7 +50,6 @@ class SosialhjelpMain(arguments: KotlinArguments) :
         Rule017ViktigsteKildeTilLivsOppholdKode4(),
         Rule018ViktigsteKildeTilLivsOppholdKode6(),
         Rule019ViktigsteKildeTilLivsOppholdKode8(),
-        Rule020AViktigsteKildeTilLivsOppholdKode3(),
         Rule020BViktigsteKildeTilLivsOppholdKode3(),
         Rule021ViktigsteKildeTilLivsOppholdKode5(),
         Rule022TrygdeSituasjonGyldigeKoder(),

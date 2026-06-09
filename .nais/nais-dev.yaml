@@ -14,6 +14,8 @@ spec:
   env:
     - name: MICRONAUT_ENVIRONMENTS
       value: nais-dev
+  envFrom:
+    - secret: login-config-dev-kontrollprogram
   ingresses:
     - https://dev-kontrollprogram.intern.test.ssb.no
   login:

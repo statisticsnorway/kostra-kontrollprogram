@@ -30,4 +30,4 @@ spec:
     requests:
       cpu: 50m
       memory: 160Mi
-  ttl: 2h
+  ttl: 8h

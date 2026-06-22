@@ -54,11 +54,36 @@ jobs:
         with:
           node-version: '20.19.6'
 
-      - name: Build frontend
-        run: cd web-frontend && npm install --ignore-scripts && npm ci --ignore-scripts && npm run build
-
       - name: Setup Gradle # v5.0.0
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2
+        with:
+          cache-read-only: false
+
+      - name: Restore main Gradle cache
+        if: github.ref == 'refs/heads/master'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: gradle-main-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
+
+      - name: Restore PR Gradle cache
+        if: github.event_name == 'pull_request'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: gradle-pr-${{ github.event.pull_request.number }}-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-pr-${{ github.event.pull_request.number }}-
+            gradle-main-
+
+      - name: Build frontend
+        run: cd web-frontend && npm install --ignore-scripts && npm ci --ignore-scripts && npm run build
 
       - name: Build with Gradle
         run: |

@@ -50,6 +50,7 @@ allprojects {
         apply(plugin = "jacoco")
 
         configure<KotlinJvmProjectExtension> {
+            jvmToolchain(25)
             compilerOptions {
                 freeCompilerArgs
                     .addAll(

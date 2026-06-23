@@ -23,7 +23,6 @@ jobs:
         with:
           java-version: '25'
           distribution: 'temurin'
-          cache: 'gradle'
 
       - id: auth
         name: Authenticate to Google Cloud # v3.0.0

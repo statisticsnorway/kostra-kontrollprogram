@@ -50,7 +50,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            ~/.m2/repository
+            ~/.gradle/tmp
           key: gradle-main-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
 
       - name: Restore PR Gradle cache
@@ -60,7 +60,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            ~/.m2/repository
+            ~/.gradle/tmp
           key: gradle-pr-${{ github.event.pull_request.number }}-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-pr-${{ github.event.pull_request.number }}-

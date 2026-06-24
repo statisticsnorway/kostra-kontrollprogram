@@ -23,6 +23,7 @@ class Rule006AlderUnder18AarTest : BehaviorSpec({
             ForAllRowItem(
                 "record with blank fødselsnummer",
                 kostraRecordInTest(" ".repeat(11)),
+                expectedErrorMessage = "Deltakeren (-1 år) er under 18 år.",
             ),
             ForAllRowItem(
                 "record with invalid age",

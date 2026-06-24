@@ -16,18 +16,20 @@ abstract class ViktigsteKildeTilLivsOppholdRule(
     ruleName = ruleName,
     severity = severity
 ) {
-    protected abstract val vkldColumnFilter: String
-    protected abstract val validCodes: Set<String>
+    protected abstract val vkloColumnFilter: String
+    protected abstract val validArbSitCodes: Set<String>
 
     override fun validate(context: List<KostraRecord>) = context
-        .filter { it[VKLO_COL_NAME] == vkldColumnFilter }
-        .filterNot { it[ARBSIT_COL_NAME] in validCodes }
+        .filter { it[VKLO_COL_NAME] == vkloColumnFilter }
+        .filterNot { it[ARBSIT_COL_NAME] in validArbSitCodes }
         .map {
+            val vkloValue = vkloFieldDefinition.codeList.first { item -> item.code == it[VKLO_COL_NAME] }.value
+            val validArbSitFieldDefinitions = arbSitFieldDefinition.codeList.filter { item -> item.code in validArbSitCodes }
             createValidationReportEntry(
                 "Mottakerens viktigste kilde til livsopphold ved siste kontakt med sosial-/NAV-kontoret er " +
-                        "${vkldFieldDefinition.codeList.first { item -> item.code == it[VKLO_COL_NAME] }.value}. " +
+                        "${vkloValue}. " +
                         "Arbeidssituasjonen er '(${it[ARBSIT_COL_NAME]})', forventet én av " +
-                        "'(${arbSitFieldDefinition.codeList.filter { item -> item.code in validCodes }})'. " +
+                        "'(${validArbSitFieldDefinitions})'. " +
                         "Feltet er obligatorisk å fylle ut.",
                 lineNumbers = listOf(it.lineNumber)
             ).copy(
@@ -37,7 +39,7 @@ abstract class ViktigsteKildeTilLivsOppholdRule(
         }.ifEmpty { null }
 
     companion object {
-        private val vkldFieldDefinition = SosialhjelpFieldDefinitions.fieldDefinitions.byColumnName(VKLO_COL_NAME)
+        private val vkloFieldDefinition = SosialhjelpFieldDefinitions.fieldDefinitions.byColumnName(VKLO_COL_NAME)
         private val arbSitFieldDefinition = SosialhjelpFieldDefinitions.fieldDefinitions.byColumnName(ARBSIT_COL_NAME)
     }
 }

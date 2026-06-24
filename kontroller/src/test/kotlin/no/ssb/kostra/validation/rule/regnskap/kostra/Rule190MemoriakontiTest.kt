@@ -17,7 +17,7 @@ class Rule190MemoriakontiTest : BehaviorSpec({
     include(
         validationRuleNoArgsTest(
             sut = Rule190Memoriakonti(),
-            expectedSeverity = Severity.WARNING,
+            expectedSeverity = Severity.ERROR,
             ForAllRowItem(
                 "isBalanseRegnskap = true, kapittel match, kapittel #2 match, sum belop match #1",
                 listOf(

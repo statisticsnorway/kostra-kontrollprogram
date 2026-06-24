@@ -7,6 +7,6 @@ class Rule018ViktigsteKildeTilLivsOppholdKode6 : ViktigsteKildeTilLivsOppholdRul
     SosialhjelpRuleId.SOSIALHJELP_K018_VKLO_INTRODUKSJONSTONAD.title,
     Severity.ERROR
 ) {
-    override val vkldColumnFilter = "6"
-    override val validCodes = setOf("09")
+    override val vkloColumnFilter = "6"
+    override val validArbSitCodes = setOf("09")
 }

@@ -7,6 +7,6 @@ class Rule017ViktigsteKildeTilLivsOppholdKode4 : ViktigsteKildeTilLivsOppholdRul
     SosialhjelpRuleId.SOSIALHJELP_K017_VKLO_STIPEND.title,
     Severity.ERROR
 ) {
-    override val vkldColumnFilter = "4"
-    override val validCodes = setOf("03")
+    override val vkloColumnFilter = "4"
+    override val validArbSitCodes = setOf("03")
 }

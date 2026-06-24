@@ -10,7 +10,7 @@ import no.ssb.kostra.validation.rule.regnskap.kostra.extensions.isMemoriaKonti
 
 class Rule190Memoriakonti : AbstractNoArgsRule<List<KostraRecord>>(
     "Kontroll 190 : Memoriakonti",
-    Severity.WARNING
+    Severity.ERROR
 ) {
     override fun validate(context: List<KostraRecord>) = context
         .filter { it.isBalanseRegnskap() }

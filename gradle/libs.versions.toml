@@ -9,7 +9,7 @@ logback-classic-version = "1.5.32"
 swagger-annotations-version = "2.2.49"
 
 # plugins
-sonarqube-version = "7.3.0.8198"
+sonarqube-version = "7.3.1.8318"
 spring-dependency-management-version = "1.1.7"
 shadow-version = "9.3.1"
 gradle-git-properties-version = "2.5.7"

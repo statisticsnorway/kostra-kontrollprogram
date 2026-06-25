@@ -12,7 +12,7 @@ micronaut-security-version = "4.16.1"
 micronaut-serde-jackson-version = "2.16.2"
 mockk-version = "1.14.9"
 picocli-version = "4.7.7"
-swagger-annotations-version = "2.2.49"
+swagger-annotations-version = "2.2.52"
 woodstox-core-version = "7.1.1"
 
 # plugin versions

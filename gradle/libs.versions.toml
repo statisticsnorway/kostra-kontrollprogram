@@ -18,7 +18,7 @@ micronaut-application-version = "5.0.1"
 # to be removed
 assertj-core-version = "3.27.7"
 
-micronaut-platform-version = "4.10.13"
+micronaut-platform-version = "5.0.2"
 micronaut-serde-jackson-version = "2.16.2"
 
 [libraries]

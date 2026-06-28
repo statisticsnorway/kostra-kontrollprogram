@@ -16,6 +16,7 @@ dependencies {
     ksp("io.micronaut.openapi:micronaut-openapi")
 
     implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")

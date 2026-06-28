@@ -23,36 +23,7 @@ micronaut:
         mapping: /swagger/**
 
   security:
-    cors:
-      enabled: true
-
-    intercept-url-map:
-
-      - pattern: /api/**
-        access: isAuthenticated()
-
     enabled: true
-    authentication: bearer
-    token:
-      jwt:
-        enabled: true
-        signatures:
-          jwks:
-            ssb-issuer:
-              url: https://auth.test.ssb.no/realms/ssb/protocol/openid-connect/certs
-            dapla-issuer:
-              url: https://labid.lab.dapla-test-external.ssb.no/jwks
-
-  metrics:
-    sensitive: false
-    enabled: true
-    tags:
-      application: ${micronaut.application.name}
-    export:
-      prometheus:
-        enabled: true
-        descriptions: true
-        step: PT1M
 
   server:
     multipart:
@@ -89,6 +60,9 @@ logging:
     io.micronaut.security: WARN
     io.micronaut.security.token: WARN
     io.micronaut.security.token.jwt: WARN
+
+api-keys:
+  allowed: ${KONTROLLPROGRAM_API_KEYS:}
 
 api:
   title: "Kostra Kontrollprogram API"

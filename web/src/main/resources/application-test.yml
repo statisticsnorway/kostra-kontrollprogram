@@ -2,3 +2,5 @@ micronaut:
   security:
     enabled: false
 
+  security:
+    enabled: false

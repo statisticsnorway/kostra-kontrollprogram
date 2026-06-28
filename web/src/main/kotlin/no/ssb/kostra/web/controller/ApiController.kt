@@ -12,6 +12,8 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.http.multipart.StreamingFileUpload
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import io.micronaut.validation.validator.Validator
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -40,6 +42,7 @@ import java.nio.charset.StandardCharsets
  * API controller
  */
 @Controller("/api")
+@Secured(SecurityRule.IS_AUTHENTICATED)
 open class ApiController(
     private val uiConfig: UiConfig,
     private val controlRunner: ControlRunner,

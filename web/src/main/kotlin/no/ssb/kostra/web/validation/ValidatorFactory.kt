@@ -21,7 +21,9 @@ class ValidatorFactory(
     @Singleton
     fun validForm(): ConstraintValidator<ValidForm, KostraFormVm> =
         ConstraintValidator { value, _, context ->
-            uiConfig.skjematyper.firstOrNull { it.id == value.skjema }?.let { formTypeFromConfig ->
+            val form = value ?: return@ConstraintValidator true
+
+            uiConfig.skjematyper.firstOrNull { it.id == form.skjema }?.let { formTypeFromConfig ->
                 when {
                     formTypeFromConfig.labelOrgnr != null && value.orgnrForetak.isNullOrEmpty() -> {
                         context.messageTemplate("Skjema krever orgnr")

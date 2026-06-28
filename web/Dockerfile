@@ -1,4 +1,4 @@
-FROM bellsoft/liberica-openjdk-alpine-musl:21
+FROM bellsoft/liberica-openjre-alpine-musl:25
 RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
 ARG JAR_FILE=build/libs/*-all.jar
 COPY ${JAR_FILE} app.jar

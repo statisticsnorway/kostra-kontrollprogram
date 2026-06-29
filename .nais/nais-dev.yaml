@@ -7,21 +7,10 @@ metadata:
   namespace: dftjen
 spec:
   # application settings
-  accessPolicy:
-    outbound:
-      external:
-        - host: auth.test.ssb.no
-  env:
-    - name: MICRONAUT_ENVIRONMENTS
-      value: nais-dev
   envFrom:
-    - secret: login-config-dev-kontrollprogram
+    - secret: kontrollprogram-api-keys-dev
   ingresses:
     - https://dev-kontrollprogram.intern.test.ssb.no
-  login:
-    enforce:
-      enabled: true
-    provider: openid
   port: 8080
   replicas:
     max: 1

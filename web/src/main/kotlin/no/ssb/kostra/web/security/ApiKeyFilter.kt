@@ -22,13 +22,13 @@ class ApiKeyFilter(
         request: HttpRequest<*>,
         chain: ServerFilterChain
     ): Publisher<MutableHttpResponse<*>> {
+        if (apiKeyConfiguration.isSecurityDisabled) {
+            return chain.proceed(request)
+        }
 
         val providedKey = request.headers["X-API-Key"]
 
-        return if (
-            apiKeyConfiguration.isSecurityDisabled ||
-            apiKeyConfiguration.isValid(providedKey)
-        ) {
+        return if (apiKeyConfiguration.isValid(providedKey)) {
             chain.proceed(request)
         } else {
             Mono.just(

@@ -30,6 +30,7 @@ dependencies {
     runtimeOnly("io.micronaut:micronaut-jackson-databind")
 
     testImplementation("io.micronaut:micronaut-http-client")
+    testImplementation("io.micronaut.security:micronaut-security")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation(libs.kotest.assertions.json.jvm)
 }

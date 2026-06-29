@@ -4,33 +4,9 @@
       <verify-metadata>true</verify-metadata>
       <verify-signatures>true</verify-signatures>
       <trusted-artifacts>
-         <trust group="^[a-z]+($|([.].*))" regex="true" reason="We trust ALL artifacts"/>
-         <trust group="^biz[.]aQute($|([.].*))" regex="true" reason="We trust all aQute artifacts"/>
-
-         <trust group="^commons-codec($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
-         <trust group="^commons-logging($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
-         <trust group="^commons-io($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
-         <trust group="^com[.]diffplug($|([.].*))" regex="true" reason="We trust all Diffplug artifacts"/>
-         <trust group="^com[.]google($|([.].*))" regex="true" reason="We trust all Google artifacts"/>
-         <trust group="^com[.]fasterxml($|([.].*))" regex="true" reason="We trust all Fasterxml artifacts"/>
-
-         <trust group="^io[.]micrometer($|([.].*))" regex="true" reason="We trust all Micrometer artifacts"/>
-         <trust group="^io[.]micronaut($|([.].*))" regex="true" reason="We trust all Micronaut artifacts"/>
-
-         <trust group="^jakarta($|([.].*))" regex="true" reason="We trust all Jakarta artifacts"/>
-         <trust group="^javax($|([.].*))" regex="true" reason="We trust all JavaX artifacts"/>
-
-         <trust group="^org[.]apache($|([.].*))" regex="true" reason="We trust all Apache artifacts"/>
-         <trust group="^org[.]checkerframework($|([.].*))" regex="true" reason="We trust all Checkerframework artifacts"/>
-         <trust group="^org[.]codehaus($|([.].*))" regex="true" reason="We trust all Codehaus artifacts"/>
-         <trust group="^org[.]jetbrains($|([.].*))" regex="true" reason="We trust all JetBrains artifacts"/>
-         <trust group="^org[.]sonarsource($|([.].*))" regex="true" reason="We trust all Sonar artifacts"/>
-
          <trust group="com.github.json-template" reason="We trust Json Template artifacts"/>
          <trust group="com.squareup" reason="We trust SquareUp artifacts"/>
-
          <trust group="info.picocli" reason="We trust Pico artifacts"/>
-
          <trust group="io.github.hakky54" reason="We trust Hacky54 artifacts"/>
          <trust group="io.grpc" reason="We trust gRPC artifacts"/>
          <trust group="io.netty" reason="We trust Netty artifacts"/>
@@ -38,9 +14,7 @@
          <trust group="io.opentelemetry" reason="We trust Opentelemetry artifacts"/>
          <trust group="io.projectreactor" reason="We trust Project Reactor artifacts"/>
          <trust group="io.prometheus" reason="We trust Netty artifacts"/>
-
          <trust group="net.logstash.logback" reason="We trust Logstash artifacts"/>
-
          <trust group="org.antlr" reason="We trust Antlr artifacts"/>
          <trust group="org.bouncycastle" reason="We trust Bouncycastle artifacts"/>
          <trust group="org.conscrypt" reason="We trust Conscrypt artifacts"/>
@@ -49,13 +23,34 @@
          <trust group="org.reactivestreams" reason="We trust Reactivestreams artifacts"/>
          <trust group="org.slf4j" reason="We trust SLF4J artifacts"/>
          <trust group="org.threeten" reason="We trust Threeten artifacts"/>
+         <trust group="^[a-z]+($|([.].*))" regex="true" reason="We trust ALL artifacts"/>
+         <trust group="^biz[.]aQute($|([.].*))" regex="true" reason="We trust all aQute artifacts"/>
+         <trust group="^com[.]diffplug($|([.].*))" regex="true" reason="We trust all Diffplug artifacts"/>
+         <trust group="^com[.]fasterxml($|([.].*))" regex="true" reason="We trust all Fasterxml artifacts"/>
+         <trust group="^com[.]google($|([.].*))" regex="true" reason="We trust all Google artifacts"/>
+         <trust group="^commons-codec($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
+         <trust group="^commons-io($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
+         <trust group="^commons-logging($|([.].*))" regex="true" reason="We trust all Commons artifacts"/>
+         <trust group="^io[.]micrometer($|([.].*))" regex="true" reason="We trust all Micrometer artifacts"/>
+         <trust group="^io[.]micronaut($|([.].*))" regex="true" reason="We trust all Micronaut artifacts"/>
+         <trust group="^jakarta($|([.].*))" regex="true" reason="We trust all Jakarta artifacts"/>
+         <trust group="^javax($|([.].*))" regex="true" reason="We trust all JavaX artifacts"/>
+         <trust group="^org[.]apache($|([.].*))" regex="true" reason="We trust all Apache artifacts"/>
+         <trust group="^org[.]checkerframework($|([.].*))" regex="true" reason="We trust all Checkerframework artifacts"/>
+         <trust group="^org[.]codehaus($|([.].*))" regex="true" reason="We trust all Codehaus artifacts"/>
+         <trust group="^org[.]jetbrains($|([.].*))" regex="true" reason="We trust all JetBrains artifacts"/>
+         <trust group="^org[.]sonarsource($|([.].*))" regex="true" reason="We trust all Sonar artifacts"/>
       </trusted-artifacts>
       <ignored-keys>
          <ignored-key id="0181B45EA58677BC" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="04C8C902FEFB1A01" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="0AA3E5C3D232E79B" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="0E325BECB6962A24" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="153E7A3C2B4E5118" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="2753A900612D3FF1" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="2841610663AFBB1F" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="3967D4EDA591B991" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="3D5839A2262CBBFB" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="3FAAD2CD5ECBB314" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="4D1670765EF90EAB" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="55C7E5E701832382" reason="Key couldn't be downloaded from any key server"/>
@@ -73,29 +68,45 @@
          <ignored-key id="8118B3BCDB1A5000" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="85911F425EC61B51" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="86FDC7E2A11262CB" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="928FBF39003C0425" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="953E02E4F573B46F" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="991EFB94DB91127D" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="9AEE152CDCCEBFCB" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="9E31AB27445478DB" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="9EB80E92EB2135B1" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="A6ADFC93EF34893E" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="A6EA2E2BF22E0543" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="A81A0262AC5515FE" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="AC107B386692DADD" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="BCF4173966770193" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="BF984B4145EA13F7" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="C71FB765CD9DE313" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="CF776DADF519DEE3" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="D908A43FB7EC07AC" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="DB901B24CAD38BC4" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="E270B36858DB4EAE" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="F0D228D8FF31B515" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="F1F111AF65925306" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="F3D1600878E85A3D" reason="Key couldn't be downloaded from any key server"/>
+         <ignored-key id="F5C81DE10A0B8ECC" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="FD116C1969FCCFF3" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="FD1194CE4F5E7F1A" reason="Key couldn't be downloaded from any key server"/>
          <ignored-key id="FEFE78456EDDC34A" reason="Key couldn't be downloaded from any key server"/>
       </ignored-keys>
       <trusted-keys>
+         <trusted-key id="0181A4828FA27B6BE6F1F5A68611CD28F472E006" group="org.apache.maven"/>
+         <trusted-key id="073F7A9345756F3B40CDB99E6C70A3B7599C5736" group="org.codehaus.plexus" name="plexus-utils" version="4.0.2"/>
          <trusted-key id="077E8893A6DCC33DD4A4D5B256E73BA9A0B592D0" group="^org[.]apache[.]logging($|([.].*))" regex="true"/>
+         <trusted-key id="0A123C1ED3F13A6A0140E166C71FB765CD9DE313" group="org.apache.ant"/>
          <trusted-key id="0D35D3F60078655126908E8AF3D1600878E85A3D" group="io.netty"/>
          <trusted-key id="0E008698344E62B90633B7C62841610663AFBB1F" group="ognl" name="ognl" version="3.3.4"/>
          <trusted-key id="101939C3B0C9014F6D3356CE154560B16C7614AC" group="org.thymeleaf.extras" name="thymeleaf-extras-java8time" version="3.0.4.RELEASE"/>
+         <trusted-key id="147B691A19097624902F4EA9689CBE64F4BC997F" group="org.mockito" name="mockito-bom"/>
+         <trusted-key id="19BEAB2D799C020F17C69126B16698A4ADF4D638" group="org.checkerframework" name="checker-qual" version="3.49.4"/>
          <trusted-key id="1BD97A6A154E7810EE0BC832E2F38302C8075E3D" group="org.gradle.toolchains" name="foojay-resolver" version="1.0.0"/>
          <trusted-key id="1D0A8B5E77C678A7C724445ABF984B4145EA13F7" group="com.squareup" name="javapoet" version="1.13.0"/>
+         <trusted-key id="1F47744C9B6E14F2049C2857F1F111AF65925306" group="io.github.classgraph" name="classgraph" version="4.8.172"/>
+         <trusted-key id="206DF7C48E3D6CB145DDA835FF844A3256C7FB01" group="de.siegmar" name="fastcsv" version="3.7.0"/>
          <trusted-key id="21D09437979F5953FFEEA59C2753A900612D3FF1" group="jakarta.validation" name="jakarta.validation-api" version="3.1.0"/>
          <trusted-key id="24D04176586361FDA94EE0315F7786DF73E61F56" group="com.google.devtools.ksp"/>
          <trusted-key id="2655176F748FD83725B4805FF2A01147D830C125" group="org.testcontainers" name="testcontainers-bom"/>
@@ -105,7 +116,15 @@
          </trusted-key>
          <trusted-key id="2B1042677FD8190C7B9FC0DC2161D72E7DCD4258" group="^org[.]sonarsource($|([.].*))" regex="true"/>
          <trusted-key id="2B34821418CF19CF1F2A8352953E02E4F573B46F" group="jakarta.platform"/>
+         <trusted-key id="2DB4F1EF0FA761ECC4EA935C86FDC7E2A11262CB">
+            <trusting group="commons-codec"/>
+            <trusting group="commons-io"/>
+            <trusting group="org.apache.commons"/>
+         </trusted-key>
+         <trusted-key id="2E3A1AFFE42B5F53AF19F780BCF4173966770193" group="org.jetbrains" name="annotations" version="13.0"/>
+         <trusted-key id="2F39E2A1EB9BC4E78F403B22F6BC09712C8DF6EC" group="net.minidev"/>
          <trusted-key id="2FC53E6B1F681184F4CCD637F5C81DE10A0B8ECC" group="org.yaml" name="snakeyaml" version="2.4"/>
+         <trusted-key id="32118CF76C9EC5D918E54967CA80D1F0EB6CA4BA" group="org.codehaus.plexus" name="plexus-xml" version="4.1.1"/>
          <trusted-key id="33FD4BFD33554634053D73C0C2148900BCD3C2AF" group="org.jetbrains" name="annotations" version="23.0.0"/>
          <trusted-key id="34441E504A937F43EB0DAEF96A65176A0FB1CD0B">
             <trusting group="org.apache.groovy"/>
@@ -114,8 +133,10 @@
          <trusted-key id="3E61D8C230332482009D7F0EDB901B24CAD38BC4" group="io.swagger.core.v3"/>
          <trusted-key id="3F05DDA9F317301E927136D417A27CE7A60FF5F0" group="^io[.]opentelemetry($|([.].*))" regex="true"/>
          <trusted-key id="4008F9DFF7DBC968F35F9E712642156411CCE8B3" group="com.vladsch.flexmark"/>
+         <trusted-key id="41D266DB4427983A1A4AFB0C3684155E9365C30E" group="com.jayway.jsonpath" name="json-path" version="2.9.0"/>
          <trusted-key id="475F3B8E59E6E63AA78067482C7B12F2A511E325" group="org.slf4j"/>
          <trusted-key id="4797B4F5DCC46CEA61059071A1AE06236CA2BA62" group="^com[.]diffplug($|([.].*))" regex="true"/>
+         <trusted-key id="4857D1CE04E78FAB2A172E8F39B48E1BADDB933F" group="com.gradleup.shadow" name="shadow-gradle-plugin" version="9.4.2"/>
          <trusted-key id="48B086A7D843CFA258E83286928FBF39003C0425">
             <trusting group="io.projectreactor"/>
             <trusting group="io.spring.gradle"/>
@@ -125,16 +146,25 @@
          <trusted-key id="53C935821AA6A755BD337DB53595395EB3D8E1BA" group="org.apache.logging.log4j"/>
          <trusted-key id="5989BAF76217B843D66BE55B2D0E1FB8FE4B68B4" group="org.eclipse.jetty" name="jetty-bom"/>
          <trusted-key id="5CBA19E56141E78D54BF716F08A4A4958D61FC3D" group="io.kotest"/>
+         <trusted-key id="624B96CEB9896889C97B258F7DC3076FE22D4F88" group="org.nibor.autolink" name="autolink" version="0.6.0"/>
          <trusted-key id="6DE9B8077FBB2F8A019F4904BD17A565509DEE20" group="com.github.javaparser"/>
          <trusted-key id="6F538074CCEBF35F28AF9B066A0975F8B1127B83" group="org.jetbrains.kotlin"/>
-         <trusted-key id="79156E0351AF8604DE9B186B09A79E1E15A04694" group="org.vafer" name="jdependency" version="2.8.0"/>
-         <trusted-key id="7B121B76A7ED6CE6E60AD51784E913A8E3A748C0" group="org.bouncycastle" name="bcprov-jdk18on" version="1.78.1"/>
+         <trusted-key id="79156E0351AF8604DE9B186B09A79E1E15A04694">
+            <trusting group="org.vafer" name="jdependency" version="2.16"/>
+            <trusting group="org.vafer" name="jdependency" version="2.8.0"/>
+         </trusted-key>
+         <trusted-key id="7B121B76A7ED6CE6E60AD51784E913A8E3A748C0">
+            <trusting group="org.bouncycastle"/>
+            <trusting group="org.bouncycastle" name="bcprov-jdk18on" version="1.78.1"/>
+         </trusted-key>
          <trusted-key id="7E22D50A7EBD9D2CD269B2D4056ACA74D46000BF" group="io.netty"/>
+         <trusted-key id="82F0964816AD7319CB0CCCF93EFD9D223D715E9A" group="com.nimbusds" name="nimbus-jose-jwt" version="10.5"/>
          <trusted-key id="839323A4780D5BF9A6978970152888E10EF880B3">
             <trusting group="org.attoparser"/>
             <trusting group="org.thymeleaf"/>
             <trusting group="org.unbescape"/>
          </trusted-key>
+         <trusted-key id="84789D24DF77A32433CE1F079EB80E92EB2135B1" group="^org[.]apache($|([.].*))" regex="true"/>
          <trusted-key id="8756C4F765C9AC3CB6B85D62379CE192D401AB61">
             <trusting group="com.diffplug.durian"/>
             <trusting group="com.github.ajalt"/>
@@ -142,12 +172,17 @@
          </trusted-key>
          <trusted-key id="94FAC9D5B165E80F1F2D9A103FFA7DB1EC0FF1A2" group="io.github.resilience4j"/>
          <trusted-key id="9E3044071B758EBCB7E45673700E4F39BC05364B" group="org.eclipse.platform"/>
+         <trusted-key id="A31DDE881C3E3C4C985BD0D02C7F998F4272C851" group="com.diffplug.gradle" name="goomph" version="4.4.1"/>
          <trusted-key id="A413F67D71BEEC23ADD0CE0ACB43338E060CF9FA" group="org.jacoco"/>
          <trusted-key id="A42FEF087AF29AE864684EAEE6039456D5BBD4F8" group="io.fabric8" name="kubernetes-client-bom" version="5.12.2"/>
+         <trusted-key id="A5BD02B93E7A40482EB1D66A5F69AD087600B22C" group="org.ow2.asm"/>
          <trusted-key id="AA417737BD805456DB3CBDDE6601E5C08DCCBB96" group="info.picocli" name="picocli"/>
+         <trusted-key id="AEE8A343247713A5A198640D4D1670765EF90EAB" group="io.methvin" name="directory-watcher" version="0.19.1"/>
+         <trusted-key id="BE685132AFD2740D9095F9040CC0B712FEE75827" group="org.assertj" name="assertj-core" version="3.27.7"/>
          <trusted-key id="C7BE5BCC9FEC15518CFDA882B0F3710FA64900E7" group="com.google.code.gson"/>
          <trusted-key id="C8D37E9675158FF5B29B6D6452FC3551DA8DC57E" group="org.graalvm.buildtools"/>
          <trusted-key id="D066F5C471D32A00D244F99D6ED0F678B90EB06E" group="com.github.johnrengelman" name="shadow" version="8.1.1"/>
+         <trusted-key id="D1436C0DBACEA48702AF97C363F1DD7753B8B315" group="^org[.]sonarsource($|([.].*))" regex="true"/>
          <trusted-key id="DAAFA2D622EBEFC36428B033A81A0262AC5515FE" group="com.github.chhorz"/>
          <trusted-key id="E2ACB037933CDEAAB7BF77D49A2C7A98E457C53D">
             <trusting group="io.projectreactor"/>
@@ -156,14 +191,25 @@
          <trusted-key id="E5138A8E9F2E7E42D38B14D99AEE152CDCCEBFCB" group="io.github.hakky54"/>
          <trusted-key id="E5C3B1929191DF06136CCB2B164779204E106A76" group="org.javassist" name="javassist" version="3.29.0-GA"/>
          <trusted-key id="E7DC75FC24FB3C8DFE8086AD3D5839A2262CBBFB" group="org.jetbrains.kotlinx"/>
+         <trusted-key id="EAFC1F3B2FCED6AFD046C7D5734AEF3D43509290" group="org.osgi"/>
          <trusted-key id="EE0CA873074092F806F59B65D364ABAA39A47320" group="com.google.errorprone"/>
          <trusted-key id="F254B35617DC255D9344BCFA873A8E86B4372146" group="org.codehaus.plexus" name="plexus-utils" version="3.5.1"/>
-         <trusted-key id="F3184BCD55F4D016E30D4C9BF42E87F9665015C9" group="org.jsoup" name="jsoup" version="1.18.1"/>
+         <trusted-key id="F3184BCD55F4D016E30D4C9BF42E87F9665015C9">
+            <trusting group="org.jsoup" name="jsoup" version="1.18.1"/>
+            <trusting group="org.jsoup" name="jsoup" version="1.22.1"/>
+         </trusted-key>
+         <trusted-key id="F4DD59C90148BDC52BEB90A4530AA5F25C25011F" group="commons-codec"/>
          <trusted-key id="F4FD8D1EA4A590D774A6BA777B534D9959CF9EAC" group="biz.aQute.bnd"/>
          <trusted-key id="FA7929F83AD44C4590F6CC6815C71C0A4E0B8EDD" group="net.java.dev.jna"/>
+         <trusted-key id="FC411CD3CB7DCB0ABC9801058118B3BCDB1A5000" group="jakarta.xml.bind"/>
          <trusted-key id="FEB9209F2F2F3F4664841E55AC107B386692DADD">
             <trusting group="com.amazonaws"/>
             <trusting group="software.amazon.awssdk"/>
+         </trusted-key>
+         <trusted-key id="FF6E2C001948C5F2F38B0CC385911F425EC61B51">
+            <trusting group="org.apiguardian"/>
+            <trusting group="^org[.]junit($|([.].*))" regex="true"/>
+            <trusting group="^org[.]opentest4j($|([.].*))" regex="true"/>
          </trusted-key>
       </trusted-keys>
    </configuration>

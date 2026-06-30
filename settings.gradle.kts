@@ -18,3 +18,6 @@ project(":kostra-kontrollprogram-web").projectDir = file("web")
 
 include("kostra-kontrollprogram-web-frontend")
 project(":kostra-kontrollprogram-web-frontend").projectDir = file("web-frontend")
+
+include("altinn-api")
+project(":altinn-api").projectDir = file("altinn-api")

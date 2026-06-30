@@ -1,6 +1,4 @@
 micronaut:
-  security:
-    enabled: false
-
-  security:
-    enabled: false
+  http:
+    client:
+      read-timeout: 60s

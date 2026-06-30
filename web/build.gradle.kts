@@ -16,12 +16,10 @@ dependencies {
     ksp("io.micronaut.openapi:micronaut-openapi")
 
     implementation("io.micronaut:micronaut-http-server-netty")
-    implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")
     implementation(libs.logback.classic)
-    implementation(libs.micronaut.security.jwt)
     implementation(libs.swagger.annotations)
 
     implementation(project(":kostra-kontroller"))
@@ -30,7 +28,6 @@ dependencies {
     runtimeOnly("io.micronaut:micronaut-jackson-databind")
 
     testImplementation("io.micronaut:micronaut-http-client")
-    testImplementation("io.micronaut.security:micronaut-security")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation(libs.kotest.assertions.json.jvm)
 }

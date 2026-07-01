@@ -16,22 +16,23 @@ class ApiKeyTokenValidator(
         LoggerFactory.getLogger(ApiKeyTokenValidator::class.java)
 
     override fun validateToken(token: String, request: HttpRequest<*>?): Publisher<Authentication> {
-        if (request == null || !request.path.startsWith("/api")) {
-            logger.info("validateToken invalid request (${request.toString()}), returning unauthorized response")
+        if (request == null) {
+            logger.info("empty request, returning unauthorized response")
             return Publishers.empty();
         }
 
-        if (apiKeyConfiguration.isSecurityDisabled()){
-            logger.info("apiKeyConfiguration.isSecurityDisabled == true, skipping API key validation")
-            return Publishers.just(Authentication.build("anonymous"))
+        if (!request.path.startsWith("/api")) {
+            logger.info("invalid path, returning unauthorized response")
+            return Publishers.empty();
         }
 
-        if (apiKeyConfiguration.isValid(token)) {
-            logger.info("apiKeyConfiguration.isValid(token) == true, proceeding with request")
-            return Publishers.just(Authentication.build(token))
-        } else {
-            logger.info("apiKeyConfiguration.isValid($token) == false, returning unauthorized response")
+        if (!apiKeyConfiguration.isValid(token)) {
+            logger.info("invalid token, returning unauthorized response")
             return Publishers.empty()
         }
+
+        logger.info("valid token, proceeding with request")
+        return Publishers.just(Authentication.build(token))
+
     }
 }

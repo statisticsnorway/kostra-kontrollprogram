@@ -14,9 +14,5 @@ class ApiKeyConfiguration {
             .filter { it.isNotBlank() }
             .toSet()
 
-    fun isSecurityDisabled(): Boolean =
-        apiKeys().isEmpty()
-
-    fun isValid(key: String?): Boolean =
-        key != null && apiKeys().contains(key)
+    fun isValid(key: String?): Boolean = apiKeys().any { it == key?.trim() }
 }

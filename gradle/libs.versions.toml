@@ -11,6 +11,7 @@ logback-classic-version = "1.5.36"
 micronaut-security-version = "4.16.1"
 micronaut-serde-jackson-version = "2.16.2"
 mockk-version = "1.14.11"
+netty-version = "4.2.15.Final"
 picocli-version = "4.7.7"
 swagger-annotations-version = "2.2.52"
 woodstox-core-version = "7.1.1"
@@ -32,6 +33,7 @@ logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.
 micronaut-security-jwt = { module = "io.micronaut.security:micronaut-security-jwt", version.ref = "micronaut-security-version" }
 micronaut-serde-jackson = { group = "io.micronaut.serde", name = "micronaut-serde-jackson", version.ref = "micronaut-serde-jackson-version" }
 micronaut-platform = { group = "io.micronaut.platform", name = "micronaut-parent", version.ref = "micronaut-platform-version" }
+netty-bom = { group = "io.netty", name = "netty-bom", version.ref = "netty-version" }
 picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli-version" }
 swagger-annotations = { group = "io.swagger.core.v3", name = "swagger-annotations", version.ref = "swagger-annotations-version" }
 woodstox-core = { group = "com.fasterxml.woodstox", name = "woodstox-core", version.ref = "woodstox-core-version" }

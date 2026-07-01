@@ -99,6 +99,6 @@ jobs:
           echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: [View Kostra Kontrollprogram](https://dev-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: [View Altinn API](https://dev-altinn-api.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Kostra Kontrollprogram](https://dev-kostra-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Altinn API](https://dev-kostra-altinn-api.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

@@ -4,8 +4,8 @@ on:
   pull_request:
 
 jobs:
-  build-and-deploy:
-    name: Build and deploy
+  build:
+    name: Build
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -53,10 +53,10 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
 
       - name: Build with Gradle
-        run: ./gradlew build -p web --configuration-cache --parallel --build-cache --warn
+        run: ./gradlew build --configuration-cache --parallel --build-cache --warn
 
-      - name: Build Docker image
-        id: docker-build
+      - name: Build Docker image Kostra Kontrollprogram
+        id: docker-build-kostra-kp
         uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
         with:
           team: dftjen
@@ -64,20 +64,41 @@ jobs:
           pull: false
           tag: ${{ github.sha }}
 
-      - name: Deploy PR to Dev
+      - name: Deploy Kostra Kontrollprogram to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
           CLUSTER: test
-          RESOURCE: .nais/nais-dev.yaml
+          RESOURCE: .nais/kontrollprogram-dev.yaml
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: ${{ steps.docker-build.outputs.image }}
-          TELEMETRY: ${{ steps.docker-build.outputs.telemetry }}
+          WORKLOAD_IMAGE: ${{ steps.docker-build-kostra-kp.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-kostra-kp.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
+
+      - name: Build Docker image Altinn API
+        id: docker-build-altinn-api
+        uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
+        with:
+          team: dftjen
+          docker_context: ./altinn-api
+          pull: false
+          tag: ${{ github.sha }}
+
+      - name: Deploy Altinn API to Dev
+        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
+        env:
+          CLUSTER: test
+          RESOURCE: .nais/altinn-api-dev.yaml
+          NAMESPACE: dftjen
+          WORKLOAD_IMAGE: ${{ steps.docker-build-altinn-api.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
+          DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
+
 
       - name: Deployment Summary
         run: |
           echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: [View deployment](https://dev-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Kostra Kontrollprogram](https://dev-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Altinn API](https://dev-altinn-api.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

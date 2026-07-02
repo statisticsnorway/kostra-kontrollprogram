@@ -62,7 +62,7 @@ jobs:
           team: dftjen
           docker_context: ./web
           pull: false
-          tag: ${{ github.sha }}
+          tag: kkp-${{ github.sha }}
 
       - name: Deploy Kostra Kontrollprogram to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
@@ -81,7 +81,7 @@ jobs:
           team: dftjen
           docker_context: ./altinn-api
           pull: false
-          tag: ${{ github.sha }}
+          tag: kaa-${{ github.sha }}
 
       - name: Deploy Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

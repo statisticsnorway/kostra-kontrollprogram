@@ -77,6 +77,7 @@ allprojects {
 
         dependencies {
             implementation(enforcedPlatform(localLibs.findLibrary("netty.bom").get()))
+            implementation(enforcedPlatform(localLibs.findLibrary("jackson.bom").get()))
             testImplementation(localLibs.findLibrary("kotest.runner.junit5.jvm").get())
             testImplementation(localLibs.findLibrary("kotest.assertions.core.jvm").get())
             testImplementation(localLibs.findLibrary("mockk.jvm").get())

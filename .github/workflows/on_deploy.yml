@@ -44,7 +44,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 25
+      - name: Set up Java
         uses: actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287
         with:
           java-version: '25'
@@ -79,8 +79,10 @@ jobs:
           context: ./web
           push: true
           provenance: false
+          salsa: true
           tags: |
             ${{needs.setup.outputs.docker-image}}
+          team: kostra
 
   test_deploy:
     name: Deploy to NAIS test

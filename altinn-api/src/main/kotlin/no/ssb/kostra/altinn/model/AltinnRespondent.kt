@@ -1,9 +1,8 @@
-package no.ssb.kostra.web.viewmodel
+package no.ssb.kostra.altinn.model
 
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Pattern
-import no.ssb.kostra.web.validation.ValidFormType
 
 @Serdeable
 data class AltinnRespondent(
@@ -13,7 +12,6 @@ data class AltinnRespondent(
     @field:Pattern(regexp = "^[1-4 ]$", message = "Kvartal er én av: 1, 2, 3, 4 eller et mellomrom for årlig rapportering. Default er mellomrom for årlig rapportering.")
     val kvartal: String = " ",
 
-    @field:ValidFormType
     val skjema: String = "",
 
     @field:Pattern(regexp = "\\d{6}", message = "Region må bestå av 6 siffer uten mellomrom")

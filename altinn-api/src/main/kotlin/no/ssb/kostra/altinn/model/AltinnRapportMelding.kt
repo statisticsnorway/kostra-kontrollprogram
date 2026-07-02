@@ -1,4 +1,4 @@
-package no.ssb.kostra.web.viewmodel
+package no.ssb.kostra.altinn.model
 
 import io.micronaut.serde.annotation.Serdeable
 

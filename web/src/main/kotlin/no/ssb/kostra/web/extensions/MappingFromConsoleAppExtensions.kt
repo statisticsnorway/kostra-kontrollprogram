@@ -3,9 +3,6 @@ package no.ssb.kostra.web.extensions
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
-import no.ssb.kostra.web.viewmodel.AltinnRapport
-import no.ssb.kostra.web.viewmodel.AltinnRapportMelding
-import no.ssb.kostra.web.viewmodel.AltinnRespondent
 import no.ssb.kostra.web.viewmodel.FileReportEntryVm
 import no.ssb.kostra.web.viewmodel.FileReportVm
 import no.ssb.kostra.web.viewmodel.KostraFormVm
@@ -49,34 +46,3 @@ fun ValidationReportArguments.toErrorReportVm(): FileReportVm =
             )
         }
 
-fun ValidationReportArguments.toAltinnReport(): AltinnRapport =
-    this.validationResult.reportEntries
-        .groupReportEntries()
-        .map {
-            AltinnRapportMelding(
-                alvorlighetsgrad = it.severity.info.description,
-                kontrollNavn = it.ruleName,
-                meldingTekst = it.messageText.replace("<br/>", ""),
-                linjenumre = it.lineNumbers,
-            )
-        }.let { reportEntries ->
-            AltinnRapport(
-                respondent =
-                    with(this.kotlinArguments) {
-                        AltinnRespondent(
-                            aar = aargang.toInt(),
-                            kvartal = kvartal,
-                            skjema = skjema,
-                            region = region,
-                            orgnr = orgnr,
-                        )
-                    },
-                antallKontroller = this.validationResult.numberOfControls,
-                meldinger = reportEntries,
-                alvorlighetsgrad = this.validationResult.reportEntries
-                    .map { it.severity }
-                    .let { severities ->  severities.maxByOrNull { it.ordinal } ?: Severity.OK }
-                    .info.description
-                ,
-            )
-        }

@@ -2,6 +2,11 @@ micronaut:
   application:
     name: kostra-kontrollprogram-web
 
+  http:
+    client:
+      read-timeout: 60s
+      connect-timeout: 10s
+
   views:
     folder: static
 
@@ -120,8 +125,6 @@ iu-innstillinger:
       tittel: "11CF. Kvalifiseringsstønad"
     - id: 11F
       tittel: "11F. Sosialhjelp"
-    - id: 15F
-      tittel: "15F. Barnevern"
 
     - id: 52AF
       tittel: "52AF. Familievernsaker, klientrapportering"

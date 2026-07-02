@@ -1,6 +1,7 @@
-FROM bellsoft/liberica-runtime-container:jre-25-slim-musl
+FROM bellsoft/liberica-openjre-alpine-musl:25
 
-RUN addgroup -S nonroot && adduser -S nonroot -G nonroot && \
+RUN addgroup -S nonroot && \
+    adduser -S nonroot -G nonroot && \
     apk update && \
     apk upgrade --no-cache libcrypto3 libssl3
 

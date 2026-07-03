@@ -6,40 +6,16 @@ on:
     branches:
       - master
 
-permissions:
-  contents: write
-  id-token: write
-
-env:
-  REGISTRY: europe-north1-docker.pkg.dev/artifact-registry-5n/kostra-docker
-  IMAGE: kostra-kontrollprogram
-
 jobs:
-  setup:
-    name: Setup global environment variable
-    environment: setup
-    runs-on: ubuntu-24.04
-      # Map a step output to a job output
-    outputs:
-      docker-image: ${{ steps.setup.outputs.image }}
-    steps:
-      - name: Create and store image tag
-        id: setup
-        run: echo "image=${REGISTRY}/${IMAGE}:$(date +'%Y%m%d')-${{github.run_number}}" >> "$GITHUB_OUTPUT"
-
-      - name: Echo image tag
-        run: echo ${{ steps.setup.outputs.image }}
-
-  docker_build:
-    name: Create Docker image
+  build:
+    name: Build
     environment: build
-    runs-on: ubuntu-24.04
-    needs: setup
+    runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       id-token: write
     steps:
-      - name: Check out code
+      - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
@@ -50,56 +26,84 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
 
-      - name: Set up gradle # v5.0.0
-        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92
+      - name: Set up Main caching for Gradle and Maven
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
         with:
-          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: gradle-main-${{ hashFiles('**/*.gradle*', '**/gradle/libs.versions.toml', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-main-
 
-      - name: Build with Gradle
-        run: ./gradlew build -p web --no-daemon --build-cache --info
-
-      - name: Authenticate to Google Cloud # v3.0.0
-        id: "auth"
+      - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
         with:
-          workload_identity_provider: "projects/${{ vars.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
-          service_account: "gh-actions-kostra@${{ vars.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
-          token_format: "access_token"
+          token_format: access_token
+          workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
-      - name: Login to registry # v3.6.0
-        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee
+      - name: Login to Artifact Registry
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121
         with:
-          registry: ${{ env.REGISTRY }}
-          username: "oauth2accesstoken"
-          password: "${{ steps.auth.outputs.access_token }}"
+          registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
-      - name: Build and push Docker images # v6.18.0
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf
+      - name: Build with Gradle
+        run: ./gradlew build --configuration-cache --parallel --build-cache --warn
+
+      - name: Build Docker image Kostra Kontrollprogram Web
+        id: docker-build-web
+        uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
         with:
-          context: ./web
-          push: true
-          provenance: false
-          salsa: true
-          tags: |
-            ${{needs.setup.outputs.docker-image}}
-          team: kostra
+          team: dftjen
+          docker_context: ./web
+          pull: false
+          image_suffix: "web"
+          tag: |
+            ${{ github.sha }}
+            latest
 
-  test_deploy:
-    name: Deploy to NAIS test
-    environment: test
-    runs-on: ubuntu-24.04
-    needs: [setup, docker_build]
-    permissions:
-      contents: write
-      id-token: write
-    steps:
-      - name: Check out code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-
-      - name: Deploy to NAIS Test # v2
-        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
+      - name: Deploy Kostra Kontrollprogram Web to TEST
+        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
           CLUSTER: test
-          RESOURCE: .nais/test.yaml
-          VAR: image=${{needs.setup.outputs.docker-image}}
+          RESOURCE: .nais/web-test.yaml
+          NAMESPACE: dftjen
+          WORKLOAD_IMAGE: ${{ steps.docker-build-web.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
+
+      - name: Build Docker image Kostra Kontrollprogram Altinn API
+        id: docker-build-altinn-api
+        uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
+        with:
+          team: dftjen
+          docker_context: ./altinn-api
+          pull: false
+          image_suffix: "altinn-api"
+          tag: |
+            ${{ github.sha }}
+            latest
+
+      - name: Deploy Kostra Kontrollprogram Altinn API to TEST
+        uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
+        env:
+          CLUSTER: test
+          RESOURCE: .nais/altinn-api-test.yaml
+          NAMESPACE: dftjen
+          WORKLOAD_IMAGE: ${{ steps.docker-build-altinn-api.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
+          DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
+
+      - name: Deployment Summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Kostra Kontrollprogram](https://kostra-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: [View Altinn API](https://https://kostra-kontrollprogram-altinn-api.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY

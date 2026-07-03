@@ -3,13 +3,11 @@ kind: Application
 metadata:
   labels:
     team: dftjen
-  name: dev-kostra-kontrollprogram-altinn-api
+  name: test-kostra-kontrollprogram-web
   namespace: dftjen
 spec:
-  envFrom:
-    - secret: kostra-kontrollprogram-altinn-api-keys-dev
   ingresses:
-    - https://dev-kostra-kontrollprogram-altinn-api.intern.test.ssb.no
+    - https://kostra-kontrollprogram.intern.test.ssb.no
   port: 8080
   replicas:
     max: 1

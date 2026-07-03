@@ -1,12 +1,13 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: kontrollprogram
-  namespace: kostra
+  labels:
+    team: dftjen
+  name: qa-kostra-kontrollprogram-web
+  namespace: dftjen
 spec:
   ingresses:
     - https://kostra-kontrollprogram.test.ssb.no
-  image: {{image}}
   port: 8080
   replicas:
     max: 1

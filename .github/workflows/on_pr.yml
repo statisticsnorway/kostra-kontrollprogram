@@ -72,8 +72,8 @@ jobs:
           TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
         run: |
           echo "Deploy-workflow initiated with the following parameters:"
-          echo " - WORKLOAD_IMAGE = WORKLOAD_IMAGE"
-          echo " - TELEMETRY = TELEMETRY"
+          echo " - WORKLOAD_IMAGE = $WORKLOAD_IMAGE"
+          echo " - TELEMETRY = $TELEMETRY"
 
       - name: Deploy Kostra Kontrollprogram Web to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
@@ -103,8 +103,8 @@ jobs:
           TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
         run: |
           echo "Deploy-workflow initiated with the following parameters:"
-          echo " - WORKLOAD_IMAGE = WORKLOAD_IMAGE"
-          echo " - TELEMETRY = TELEMETRY"
+          echo " - WORKLOAD_IMAGE = $WORKLOAD_IMAGE"
+          echo " - TELEMETRY = $TELEMETRY"
 
       - name: Deploy Kostra Kontrollprogram Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

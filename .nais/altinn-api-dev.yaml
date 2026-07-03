@@ -6,7 +6,6 @@ metadata:
   name: dev-kostra-altinn-api
   namespace: dftjen
 spec:
-  # application settings
   envFrom:
     - secret: kostra-altinn-api-keys-dev
   ingresses:

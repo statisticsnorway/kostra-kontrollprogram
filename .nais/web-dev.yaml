@@ -6,7 +6,6 @@ metadata:
   name: dev-kostra-kontrollprogram
   namespace: dftjen
 spec:
-  # application settings
   ingresses:
     - https://dev-kostra-kontrollprogram.intern.test.ssb.no
   port: 8080

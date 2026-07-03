@@ -62,13 +62,16 @@ jobs:
           team: dftjen
           docker_context: ./web
           pull: false
-          tag: kkp-${{ github.sha }}
+          tag: |
+            dev-${{ github.sha }}
+            dev-latest
+          image_suffix: "-web"
 
-      - name: Deploy Kostra Kontrollprogram to Dev
+      - name: Deploy Kostra Kontrollprogram web to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
           CLUSTER: test
-          RESOURCE: .nais/kontrollprogram-dev.yaml
+          RESOURCE: .nais/web-dev.yaml
           NAMESPACE: dftjen
           WORKLOAD_IMAGE: ${{ steps.docker-build-kostra-kp.outputs.image }}
           TELEMETRY: ${{ steps.docker-build-kostra-kp.outputs.telemetry }}
@@ -81,7 +84,10 @@ jobs:
           team: dftjen
           docker_context: ./altinn-api
           pull: false
-          tag: kaa-${{ github.sha }}
+          tag: |
+            dev-${{ github.sha }}
+            dev-latest
+          image_suffix: "-altinn-api"
 
       - name: Deploy Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

@@ -62,7 +62,7 @@ logging:
     io.micronaut.security.token.jwt: WARN
 
 api-keys:
-  allowed: ${KONTROLLPROGRAM_API_KEYS:}
+  allowed: ${KOSTRA_KONTROLLPROGRAM_ALTINN_API_KEYS:}
 
 api:
   title: "Altinn Kontrollprogram API"

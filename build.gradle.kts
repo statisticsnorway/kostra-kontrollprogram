@@ -101,7 +101,3 @@ tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("gradletask.ApplicationKt")
 }
-
-tasks.named("build") {
-    dependsOn("generateMarkdownFromFileDescriptions")
-}

@@ -107,6 +107,5 @@ jobs:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: ${{ env.APPLICATION }}:${{ inputs.image_tag }}
-          TELEMETRY: ${{ env.APPLICATION }}:${{ inputs.image_tag }}
+          WORKLOAD_IMAGE: dftjen/${{ env.APPLICATION }}:${{ inputs.image_tag }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

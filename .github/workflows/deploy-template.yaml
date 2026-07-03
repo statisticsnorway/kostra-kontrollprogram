@@ -1,0 +1,108 @@
+name: Reusable deploy workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      application:
+        description: "Module to deploy"
+        required: true
+        type: choice
+        default: altinn-api
+        options:
+          - altinn-api
+          - web
+      environment:
+        description: "Environment (qa|prod)"
+        required: true
+        type: choice
+        default: QA
+        options:
+          - QA
+          - PROD
+      image_tag:
+        description: "Docker image tag"
+        required: true
+        default: "latest"
+
+jobs:
+  deploy:
+    name: Deploy ${{inputs.application}} to ${{inputs.environment}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Determine cluster based on environment
+        env:
+          INPUT_ENVIRONMENT: ${{ inputs.environment }}
+        run: |
+          env_lower=$(echo "$INPUT_ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
+
+          case "$env_lower" in
+            qa)
+              echo "CLUSTER=test" >> $GITHUB_ENV
+              ;;
+            prod)
+              echo "CLUSTER=prod" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "Invalid environment: '$INPUT_ENVIRONMENT'" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Determine manifest file
+        id: manifest
+        env:
+          INPUT_APPLICATION: ${{ inputs.application }}
+          INPUT_ENVIRONMENT: ${{ inputs.environment }}
+        run: |
+          app_lower=$(echo "$INPUT_APPLICATION" | tr '[:upper:]' '[:lower:]')
+          env_lower=$(echo "$INPUT_ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
+          manifest_file="${app_lower}-${env_lower}.yaml"
+          echo "MANIFEST=${manifest_file}" >> $GITHUB_ENV
+          echo "APPLICATION=kostra-kontrollprogram-${app_lower}" >> $GITHUB_ENV
+
+      - name: Echo parameters
+        env:
+          APPLICATION: ${{ env.APPLICATION }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          CLUSTER: ${{ env.CLUSTER }}
+          MANIFEST: ${{ env.MANIFEST }}
+        run: |
+          echo "Deploy-workflow initiated with the following parameters:"
+          echo " - application = $APPLICATION"
+          echo " - environment = $ENVIRONMENT"
+          echo " - image_tag = $IMAGE_TAG"
+          echo "Extrapolated the following parameters:"
+          echo " - cluster = $CLUSTER"
+          echo " - manifest = $MANIFEST"
+
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          token_format: access_token
+          workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4
+        with:
+          registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+
+      - name: Deploy ${{env.APPLICATION}} to ${{inputs.environment}}
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
+        env:
+          CLUSTER: ${{ steps.cluster.outputs.cluster }}
+          RESOURCE: .nais/${{ env.MANIFEST }}
+          NAMESPACE: dftjen
+          WORKLOAD_IMAGE: ${{ env.APPLICATION }}:${{ inputs.image_tag }}
+          TELEMETRY: ${{ env.APPLICATION }}:${{ inputs.image_tag }}
+          DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

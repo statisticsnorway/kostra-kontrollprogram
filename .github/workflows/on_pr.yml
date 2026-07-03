@@ -62,9 +62,7 @@ jobs:
           docker_context: ./web
           pull: false
           image_suffix: "web"
-          tag: |
-            dev-${{ github.sha }}
-            dev-latest
+          tag: ${{ github.sha }}
 
       - name: Deploy Kostra Kontrollprogram Web to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
@@ -84,9 +82,7 @@ jobs:
           docker_context: ./altinn-api
           pull: false
           image_suffix: "altinn-api"
-          tag: |
-            dev-${{ github.sha }}
-            dev-latest
+          tag: dev-latest
 
       - name: Deploy Kostra Kontrollprogram Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

@@ -65,7 +65,7 @@ jobs:
           tag: |
             dev-${{ github.sha }}
             dev-latest
-          image_suffix: "-web"
+          image_suffix: "web"
 
       - name: Deploy Kostra Kontrollprogram web to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
@@ -87,7 +87,7 @@ jobs:
           tag: |
             dev-${{ github.sha }}
             dev-latest
-          image_suffix: "-altinn-api"
+          image_suffix: "altinn-api"
 
       - name: Deploy Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

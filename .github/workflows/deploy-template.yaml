@@ -104,7 +104,7 @@ jobs:
       - name: Deploy ${{env.APPLICATION}} to ${{inputs.environment}}
         uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
-          CLUSTER: ${{ steps.cluster.outputs.cluster }}
+          CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}
           NAMESPACE: dftjen
           WORKLOAD_IMAGE: ${{ env.APPLICATION }}:${{ inputs.image_tag }}

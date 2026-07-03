@@ -19,10 +19,6 @@ on:
         options:
           - QA
           - PROD
-      image_tag:
-        description: "Docker image tag"
-        required: true
-        default: "latest"
 
 permissions:
   contents: read
@@ -68,17 +64,18 @@ jobs:
 
       - name: Echo parameters
         env:
-          APPLICATION: ${{ env.APPLICATION }}
+          INPUT_APPLICATION: ${{ inputs.application }}
           ENVIRONMENT: ${{ inputs.environment }}
-          IMAGE_TAG: ${{ inputs.image_tag }}
+          APPLICATION: ${{ env.APPLICATION }}
           CLUSTER: ${{ env.CLUSTER }}
           MANIFEST: ${{ env.MANIFEST }}
         run: |
           echo "Deploy-workflow initiated with the following parameters:"
-          echo " - application = $APPLICATION"
+          echo " - input-application = $INPUT_APPLICATION"
           echo " - environment = $ENVIRONMENT"
-          echo " - image_tag = $IMAGE_TAG"
+          echo " - image_tag = latest"
           echo "Extrapolated the following parameters:"
+          echo " - application = $APPLICATION"
           echo " - cluster = $CLUSTER"
           echo " - manifest = $MANIFEST"
 
@@ -107,5 +104,5 @@ jobs:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: dftjen/${{ env.APPLICATION }}:${{ inputs.image_tag }}
+          WORKLOAD_IMAGE: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}/dftjen/kostra-kontrollprogram-${{ inputs.application }}:latest
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

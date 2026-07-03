@@ -70,8 +70,8 @@ jobs:
           CLUSTER: test
           RESOURCE: .nais/web-dev.yaml
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: ${{ steps.docker-build-kostra-kp.outputs.image }}
-          TELEMETRY: ${{ steps.docker-build-kostra-kp.outputs.telemetry }}
+          WORKLOAD_IMAGE: ${{ steps.docker-build-web.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
 
       - name: Build Docker image Kostra Kontrollprogram Altinn API

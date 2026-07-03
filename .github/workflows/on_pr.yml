@@ -66,6 +66,15 @@ jobs:
             dev-${{ github.sha }}
             dev-latest
 
+      - name: Echo parameters web
+        env:
+          WORKLOAD_IMAGE: ${{ steps.docker-build-web.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
+        run: |
+          echo "Deploy-workflow initiated with the following parameters:"
+          echo " - WORKLOAD_IMAGE = WORKLOAD_IMAGE"
+          echo " - TELEMETRY = TELEMETRY"
+
       - name: Deploy Kostra Kontrollprogram Web to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
@@ -87,6 +96,15 @@ jobs:
           tag: |
             dev-${{ github.sha }}
             dev-latest
+
+      - name: Echo parameters altinn-api
+        env:
+          WORKLOAD_IMAGE: ${{ steps.docker-build-altinn-api.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
+        run: |
+          echo "Deploy-workflow initiated with the following parameters:"
+          echo " - WORKLOAD_IMAGE = WORKLOAD_IMAGE"
+          echo " - TELEMETRY = TELEMETRY"
 
       - name: Deploy Kostra Kontrollprogram Altinn API to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb

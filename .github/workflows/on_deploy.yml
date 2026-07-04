@@ -107,18 +107,3 @@ jobs:
           echo "- **URL**: [View Kostra Kontrollprogram](https://kostra-kontrollprogram.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
           echo "- **URL**: [View Altinn API](https://https://kostra-kontrollprogram-altinn-api.intern.test.ssb.no)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
-      - name: Docker Summary
-        env:
-            DOCKER_WEB_IMAGE: ${{ steps.docker-build-web.outputs.image }}
-            DOCKER_WEB_TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
-            DOCKER_ALTINN_API_IMAGE: ${{ steps.docker-build-altinn-api.outputs.image }}
-            DOCKER_ALTINN_API_TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
-        run: |
-          echo "## Docker Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **DOCKER_WEB_IMAGE**: $DOCKER_WEB_IMAGE" >> $GITHUB_STEP_SUMMARY
-          echo "- **DOCKER_WEB_TELEMETRY**: $DOCKER_WEB_TELEMETRY" >> $GITHUB_STEP_SUMMARY
-          echo "- **DOCKER_ALTINN_API_IMAGE**: $DOCKER_ALTINN_API_IMAGE" >> $GITHUB_STEP_SUMMARY
-          echo "- **DOCKER_ALTINN_API_TELEMETRY**: DOCKER_ALTINN_API_TELEMETRY" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY

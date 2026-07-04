@@ -54,7 +54,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --configuration-cache --parallel --build-cache --warn
 
-      - name: Build Docker image Kostra Kontrollprogram Web
+      - name: Kostra Kontrollprogram Web - Build Docker image
         id: docker-build-web
         uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
         with:
@@ -66,16 +66,7 @@ jobs:
             dev-${{ github.sha }}
             dev-latest
 
-      - name: Echo parameters web
-        env:
-          WORKLOAD_IMAGE: ${{ steps.docker-build-web.outputs.image }}
-          TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
-        run: |
-          echo "Deploy-workflow initiated with the following parameters:"
-          echo " - WORKLOAD_IMAGE = $WORKLOAD_IMAGE"
-          echo " - TELEMETRY = $TELEMETRY"
-
-      - name: Deploy Kostra Kontrollprogram Web to Dev
+      - name: Kostra Kontrollprogram Web - Deploy to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
           CLUSTER: test
@@ -85,7 +76,7 @@ jobs:
           TELEMETRY: ${{ steps.docker-build-web.outputs.telemetry }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443
 
-      - name: Build Docker image Kostra Kontrollprogram Altinn API
+      - name: Kostra Kontrollprogram Altinn API - Build Docker image
         id: docker-build-altinn-api
         uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
         with:
@@ -97,16 +88,7 @@ jobs:
             dev-${{ github.sha }}
             dev-latest
 
-      - name: Echo parameters altinn-api
-        env:
-          WORKLOAD_IMAGE: ${{ steps.docker-build-altinn-api.outputs.image }}
-          TELEMETRY: ${{ steps.docker-build-altinn-api.outputs.telemetry }}
-        run: |
-          echo "Deploy-workflow initiated with the following parameters:"
-          echo " - WORKLOAD_IMAGE = $WORKLOAD_IMAGE"
-          echo " - TELEMETRY = $TELEMETRY"
-
-      - name: Deploy Kostra Kontrollprogram Altinn API to Dev
+      - name: Kostra Kontrollprogram Altinn API - Deploy to Dev
         uses: nais/deploy/actions/deploy@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb
         env:
           CLUSTER: test

@@ -13,19 +13,19 @@ jobs:
 
     steps:
       - name: Checkout repository at PR head
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
       - name: Set up Java
-        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a
         with:
           java-version: '25'
           distribution: 'temurin'
 
       - name: Set up PR caching for Gradle and Maven
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: |
             ~/.gradle/caches
@@ -45,7 +45,7 @@ jobs:
           service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
       - name: Login to Artifact Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0
         with:
           registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
           username: oauth2accesstoken
@@ -56,7 +56,7 @@ jobs:
 
       - name: Kostra Kontrollprogram Web - Build Docker image
         id: docker-build-web
-        uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
+        uses: nais/docker-build-push@31c3a7321909bcb20799fdf46153fec721fd9512
         with:
           team: dftjen
           docker_context: ./web
@@ -78,7 +78,7 @@ jobs:
 
       - name: Kostra Kontrollprogram Altinn API - Build Docker image
         id: docker-build-altinn-api
-        uses: nais/docker-build-push@751a312f0803eb96a05a41fadf51be19b7be362c
+        uses: nais/docker-build-push@31c3a7321909bcb20799fdf46153fec721fd9512
         with:
           team: dftjen
           docker_context: ./altinn-api

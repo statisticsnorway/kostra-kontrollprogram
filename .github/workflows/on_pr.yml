@@ -41,8 +41,8 @@ jobs:
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
         with:
           token_format: access_token
-          workload_identity_provider: "projects/${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
-          service_account: "gh-actions-dftjen@${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}.iam.gserviceaccount.com"
+          workload_identity_provider: "projects/${{ vars.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
+          service_account: "gh-actions-dftjen@${{ vars.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
       - name: Login to Artifact Registry
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121

@@ -14,7 +14,7 @@ mockk-version = "1.14.11"
 netty-version = "4.2.15.Final"
 picocli-version = "4.7.7"
 swagger-annotations-version = "2.2.52"
-woodstox-core-version = "7.1.1"
+woodstox-core-version = "7.2.1"
 
 # plugin versions
 devtools-ksp-version = "2.3.9"

@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:
+    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
     name: Build
     runs-on: ubuntu-latest
     permissions:

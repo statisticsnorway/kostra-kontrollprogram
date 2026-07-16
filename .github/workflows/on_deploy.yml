@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build
     environment: build
     runs-on: ubuntu-latest

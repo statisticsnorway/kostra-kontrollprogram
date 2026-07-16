@@ -1,6 +1,6 @@
 [versions]
 # platform versions
-micronaut-platform-version = "4.10.13"
+micronaut-platform-version = "5.0.5"
 kotlin-version = "2.4.0"
 
 # library versions

@@ -24,7 +24,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.80.0",
-    "react-router-dom": "^7.18.0",
+    "react-router-dom": "^7.18.1",
     "yup": "^1.7.1"
   },
   "devDependencies": {

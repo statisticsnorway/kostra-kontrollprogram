@@ -3,8 +3,8 @@ plugins {
 }
 
 node {
-    version.set("24.12.0")         // Node version to use
-    npmVersion.set("11.6.2")         // Optional npm version
+    version.set("26.5.1")         // Node version to use
+    npmVersion.set("12.0.2")         // Optional npm version
     download.set(true)              // auto-download Node
 
     workDir.set(layout.buildDirectory.dir("nodejs"))

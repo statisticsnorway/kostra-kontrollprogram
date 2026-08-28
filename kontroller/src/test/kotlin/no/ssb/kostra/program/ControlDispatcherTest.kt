@@ -41,24 +41,5 @@ class ControlDispatcherTest : BehaviorSpec({
                 }
             }
         }
-
-        forAll(
-            row("15F"),
-
-            ) { schema ->
-            When(schema) {
-                val kotlinArguments = KotlinArguments(
-                    skjema = schema,
-                    aargang = "2023",
-                    region = "1234"
-                )
-
-                val validationReportArguments = ControlDispatcher.validate(kotlinArguments = kotlinArguments)
-
-                Then("result should be as expected") {
-                    validationReportArguments.validationResult.severity shouldBe Severity.ERROR
-                }
-            }
-        }
     }
 })

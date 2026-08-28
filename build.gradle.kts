@@ -84,24 +84,17 @@ allprojects {
         }
     }
 }
-
-tasks.register<JavaExec>("generateMarkdownFromFileDescriptions") {
+tasks.register<gradletask.GenerateResourcesAndDocsTask>("generateMarkdownFromFileDescriptions") {
     group = "documentation"
     description = "Generates Markdown files from YAML in file_description_templates"
 
-    val inputDir = file("src/main/resources/file_description_templates")
-    val outputDir = file("kravspesifikasjon")
-
-    inputs.files(fileTree(inputDir) {
-        include("file_description_*.yaml", "file_description_*.yml")
-    })
-
-    outputs.dir(outputDir)
-
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("gradletask.ApplicationKt")
+    inputBaseDir.set(layout.projectDirectory.dir("buildSrc/src/main/resources"))
+    specsOutputDir.set(layout.projectDirectory.dir("kravspesifikasjon"))
+    resourcesOutputDir.set(layout.projectDirectory.dir("kontroller/src/main/resources"))
 }
 
-tasks.named("build") {
-    dependsOn("generateMarkdownFromFileDescriptions")
+project(":kostra-kontroller") {
+    tasks.named<ProcessResources>("processResources") {
+        dependsOn(rootProject.tasks.named("generateMarkdownFromFileDescriptions"))
+    }
 }

@@ -36,7 +36,6 @@ node/
 
 #Gradle
 build/
-buildSrc/
 .gradle/
 .frontend-gradle-plugin/
 .DS_Store

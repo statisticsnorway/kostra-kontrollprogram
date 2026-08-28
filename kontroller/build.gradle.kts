@@ -3,9 +3,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":kostra-barnevern"))
-
     implementation(libs.jackson.dataformat.yaml)
+    implementation(libs.jackson.datatype.jsr310)
     implementation(libs.jackson.module.kotlin)
     compileOnly(libs.micronaut.serde.jackson)
 }

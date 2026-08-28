@@ -13,7 +13,6 @@ import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.report.ValidationReportArguments
 import no.ssb.kostra.validation.report.ValidationReportEntry
 import no.ssb.kostra.validation.report.ValidationResult
-import no.ssb.kostra.validation.rule.barnevern.BarnevernValidator
 
 object ControlDispatcher {
     fun validate(kotlinArguments: KotlinArguments): ValidationReportArguments = when (kotlinArguments.skjema) {
@@ -31,8 +30,6 @@ object ControlDispatcher {
         "11F" -> SosialhjelpMain(kotlinArguments).validate()
 
         "11CF" -> KvalifiseringMain(kotlinArguments).validate()
-
-        "15F" -> BarnevernValidator(kotlinArguments).validate()
 
         "52AF" -> Familievern52aMain(kotlinArguments).validate()
 

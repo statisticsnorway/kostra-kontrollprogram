@@ -19,6 +19,8 @@ dependencies {
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.projectreactor:reactor-core")
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.module.kotlin)
     implementation(libs.logback.classic)
     implementation(libs.swagger.annotations)
 

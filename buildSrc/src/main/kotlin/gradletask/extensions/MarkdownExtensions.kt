@@ -2,11 +2,11 @@ package gradletask.extensions
 
 import gradletask.FileDescriptionTemplate
 import gradletask.createYAMLMapper
-import no.ssb.kostra.SharedConstants.CHECKMARK
-import no.ssb.kostra.SharedConstants.XMARK
-import no.ssb.kostra.program.Code
-import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.FileDescription
+import gradletask.SharedConstants.CHECKMARK
+import gradletask.SharedConstants.XMARK
+import gradletask.program.Code
+import gradletask.program.FieldDefinition
+import gradletask.program.FileDescription
 
 fun String.toFileDescriptionTemplate(): FileDescriptionTemplate =
     createYAMLMapper().readValue(this, FileDescriptionTemplate::class.java)

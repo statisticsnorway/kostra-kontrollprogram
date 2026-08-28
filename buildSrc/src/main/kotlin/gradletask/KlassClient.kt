@@ -1,6 +1,6 @@
 package gradletask
 
-import no.ssb.kostra.program.Code
+import gradletask.program.Code
 
 interface KlassClient {
     fun fetchCodes(classificationId: String, year: String): List<Code>

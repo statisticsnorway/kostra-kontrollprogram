@@ -2,12 +2,11 @@ package gradletask
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.micronaut.serde.annotation.Serdeable
-import no.ssb.kostra.area.famvern.FamilievernConstants
-import no.ssb.kostra.program.Code
-import no.ssb.kostra.program.DataType
-import no.ssb.kostra.program.FieldDefinition
-import no.ssb.kostra.program.FileDescription
-import no.ssb.kostra.program.extension.buildFieldDefinitions
+import gradletask.program.Code
+import gradletask.program.DataType
+import gradletask.program.FieldDefinition
+import gradletask.program.FileDescription
+import gradletask.extensions.buildFieldDefinitions
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Serdeable

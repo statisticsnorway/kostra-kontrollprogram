@@ -3,12 +3,12 @@ package gradletask
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.micronaut.serde.annotation.Serdeable
-import no.ssb.kostra.program.Code
+import gradletask.program.Code
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Serdeable
 data class KlassCodes(
-    @JsonProperty("codes")
+    @param:JsonProperty("codes")
     val codes: List<KlassCode>,
 )
 
@@ -25,7 +25,7 @@ fun KlassCodes.toCodeList(): List<Code> =
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Serdeable
 data class KlassCorrespondence(
-    @JsonProperty("correspondenceItems")
+    @param:JsonProperty("correspondenceItems")
     val correspondenceItems: List<KlassCorrespondenceItem>,
 )
 

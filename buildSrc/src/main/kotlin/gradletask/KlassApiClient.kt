@@ -2,8 +2,7 @@ package gradletask
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import jakarta.inject.Singleton
-import no.ssb.kostra.program.Code
+import gradletask.program.Code
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -11,7 +10,6 @@ import java.net.URI
 import java.net.URL
 
 
-@Singleton
 class KlassApiClient : KlassClient {
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
     private val apiUrl =

@@ -80,8 +80,8 @@ class Rule081KombinasjonBevilgningFunksjonArtTest :
                     expectedErrorMessage =
                         "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                             "Andre arter er ulogiske i kombinasjon med funksjon 850.",
-                    arguments = kostraArguments("4"),
-                    expectedSeverity = Severity.ERROR,
+                    arguments = kostraArguments("3"),
+                    expectedSeverity = Severity.WARNING,
                 ),
             ),
         )

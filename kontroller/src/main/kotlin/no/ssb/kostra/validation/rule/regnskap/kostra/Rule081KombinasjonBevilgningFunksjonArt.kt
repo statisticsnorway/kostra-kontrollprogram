@@ -31,7 +31,7 @@ class Rule081KombinasjonBevilgningFunksjonArt :
                     "Det er kun artene 450, 810 og 850 som er logiske i kombinasjon med funksjon 850. " +
                         "Andre arter er ulogiske i kombinasjon med funksjon 850.",
                 lineNumbers = listOf(kostraRecord.lineNumber),
-                severity = if (arguments.kvartal.first() in setOf('3', '4')) Severity.ERROR else Severity.WARNING,
+                severity = Severity.WARNING,
             )
         }.ifEmpty { null }
 

@@ -82,7 +82,7 @@ jobs:
 
 
       - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{inputs.environment}}
-        uses: nais/deploy/actions/deploy@fc3eae3edebabdf67f7592102ae16176d5ba3b5f
+        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}

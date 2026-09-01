@@ -67,7 +67,7 @@ jobs:
             gradle-main-
 
       - name: Set up Java
-        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95
+        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -78,7 +78,7 @@ jobs:
           node-version: '20.19.6'
 
       - name: Setup Gradle # v5.0.0
-        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb
         with:
           cache-read-only: false
 
@@ -105,7 +105,7 @@ jobs:
 
       - name: Release # v2.4.1
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
         with:
           files: |
             ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar

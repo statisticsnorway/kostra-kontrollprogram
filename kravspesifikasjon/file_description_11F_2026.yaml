@@ -27,7 +27,7 @@ fields:
   from: 7
   size: 2
   dataType: "STRING_TYPE"
-  mandatory: true
+  mandatory: false
   datePattern: ""
   codelistSource: null
   codeList: []

@@ -8,7 +8,7 @@ Filbeskrivelse for Økonomisk sosialhjelp for rapporteringsår 2026
 |------|-------------|--------|---------|----------|--------------|------------|-----------|
 | `KOMMUNE_NR` | Kommunenummer | 4 | 1‑4 | STRING_TYPE | ☑️ |  |  |
 | `VERSION` | Rapporteringsår / versjon / oppgaveår | 2 | 5‑6 | STRING_TYPE | ☑️ |  |  |
-| `BYDELSNR` | Bydelsnummer | 2 | 7‑8 | STRING_TYPE | ☑️ |  |  |
+| `BYDELSNR` | Bydelsnummer | 2 | 7‑8 | STRING_TYPE |  |  |  |
 | `FODSELSDATO` | Fødselsdato (DDMMÅÅÅÅ) | 8 | 9‑16 | DATE_TYPE | ☑️ | ddMMyyyy |  |
 | `PERSON_JOURNALNR` | Journalnummer | 8 | 17‑24 | STRING_TYPE | ☑️ |  |  |
 | `PERSON_FODSELSNR` | Hva er mottakerens fødselsnummer? | 11 | 25‑35 | STRING_TYPE |  |  |  |

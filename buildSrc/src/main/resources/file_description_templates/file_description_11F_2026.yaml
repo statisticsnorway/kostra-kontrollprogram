@@ -18,7 +18,6 @@ fields:
     description: Bydelsnummer
     dataType: STRING_TYPE
     size: 2
-    mandatory: true
   - name: FODSELSDATO
     description: Fødselsdato (DDMMÅÅÅÅ)
     dataType: DATE_TYPE

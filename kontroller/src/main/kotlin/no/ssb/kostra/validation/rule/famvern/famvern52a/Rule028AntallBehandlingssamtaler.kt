@@ -14,7 +14,7 @@ class Rule028AntallBehandlingssamtaler :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { 0 < it.fieldAsIntOrDefault(ANTSAMT_IARET_A_COL_NAME) }
+            .filter { it.fieldAsIntOrDefault(ANTSAMT_IARET_A_COL_NAME) <= 0 }
             .map {
                 createValidationReportEntry(
                     messageText =

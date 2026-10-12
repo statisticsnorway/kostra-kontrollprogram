@@ -16,7 +16,7 @@ class Rule035SakenAvsluttetManglerAvslutningsdato :
     override fun validate(context: List<KostraRecord>) =
         context
             .filter { it[STATUS_ARETSSL_A_COL_NAME] in listOf("1", "2") }
-            .filterNot { it.fieldAsLocalDate(DATO_AVSL_A_COL_NAME) != null }
+            .filter { it.fieldAsLocalDate(DATO_AVSL_A_COL_NAME) == null }
             .map {
                 createValidationReportEntry(
                     messageText =

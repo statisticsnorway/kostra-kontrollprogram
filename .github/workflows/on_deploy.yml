@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Java
-        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Web
         id: docker-build-web
-        uses: nais/docker-build-push@31c3a7321909bcb20799fdf46153fec721fd9512
+        uses: nais/docker-build-push@423a915c9b72edf2ba848b88171ccb0489e2a40a
         with:
           team: dftjen
           docker_context: ./web
@@ -68,7 +68,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Web to TEST
-        uses: nais/deploy/actions/deploy@fc3eae3edebabdf67f7592102ae16176d5ba3b5f
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120
         env:
           CLUSTER: test
           RESOURCE: .nais/web-test.yaml
@@ -79,7 +79,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Altinn API
         id: docker-build-altinn-api
-        uses: nais/docker-build-push@31c3a7321909bcb20799fdf46153fec721fd9512
+        uses: nais/docker-build-push@423a915c9b72edf2ba848b88171ccb0489e2a40a
         with:
           team: dftjen
           docker_context: ./altinn-api
@@ -90,7 +90,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Altinn API to TEST
-        uses: nais/deploy/actions/deploy@fc3eae3edebabdf67f7592102ae16176d5ba3b5f
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120
         env:
           CLUSTER: test
           RESOURCE: .nais/altinn-api-test.yaml

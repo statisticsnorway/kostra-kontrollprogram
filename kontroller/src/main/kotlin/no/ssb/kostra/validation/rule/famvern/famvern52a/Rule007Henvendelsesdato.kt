@@ -14,11 +14,11 @@ class Rule007Henvendelsesdato :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { it.fieldAsLocalDate(HENV_DATO_A_COL_NAME) != null }
+            .filter { it.fieldAsLocalDate(HENV_DATO_A_COL_NAME) == null }
             .map {
                 createValidationReportEntry(
                     messageText =
-                        "Dette er ikke oppgitt dato (${it[HENV_DATO_A_COL_NAME]}) for når " +
+                        "Det er ikke oppgitt dato (${it[HENV_DATO_A_COL_NAME]}) for når " +
                             "primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format " +
                             "(DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut.",
                     lineNumbers = listOf(it.lineNumber),

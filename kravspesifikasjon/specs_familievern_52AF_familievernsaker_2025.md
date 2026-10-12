@@ -25,8 +25,8 @@ Disse er:
 ## Filbeskrivelse
 
 Filbeskrivelse finnes som en mennesklig- og maskinlesbar
-yaml-fil, [lenke til filbeskrivelse](/kontroller/src/main/resources/file_description_52AF_2024.yaml).
+yaml-fil, [lenke til filbeskrivelse](file_description_52AF_2025.md).
 
 ## Krav
 
-Kommer senere
+Kontroll 001: Recordlengde

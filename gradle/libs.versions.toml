@@ -1,27 +1,27 @@
 [versions]
 # platform versions
 micronaut-platform-version = "4.10.13"
-kotlin-version = "2.4.10"
+kotlin-version = "2.4.20"
 
 # library versions
 assertj-core-version = "3.27.7"
-jackson-version = "2.22.1"
+jackson-version = "2.22.3"
 kotest-version = "5.9.1"
-logback-classic-version = "1.6.1"
+logback-classic-version = "1.6.4"
 micronaut-security-version = "4.16.1"
-micronaut-serde-jackson-version = "3.1.0"
+micronaut-serde-jackson-version = "3.2.2"
 mockk-version = "1.14.11"
-netty-version = "4.2.16.Final"
+netty-version = "4.2.18.Final"
 picocli-version = "4.7.7"
-swagger-annotations-version = "2.2.52"
+swagger-annotations-version = "2.2.55"
 woodstox-core-version = "7.2.1"
 
 # plugin versions
-devtools-ksp-version = "2.3.10"
+devtools-ksp-version = "2.3.12"
 gradle-git-properties-version = "4.0.1"
 micronaut-application-version = "5.0.2"
 shadow-version = "9.6.1"
-sonarqube-version = "7.3.1.8318"
+sonarqube-version = "7.5.0.8588"
 spring-dependency-management-version = "1.1.7"
 
 [libraries]

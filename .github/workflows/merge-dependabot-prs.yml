@@ -85,18 +85,21 @@ jobs:
             branch=$(echo "$pr" | jq -r '.headRefName')
           
             # Fetch fresh status for this specific PR to force GitHub to calculate it
-            pr_status=$(gh pr view "$number" --json mergeable,mergeStateStatus)
+            pr_status=$(gh pr view "$number" --json mergeable,mergeStateStatus,statusCheckRollup)
             mergeable=$(echo "$pr_status" | jq -r '.mergeable')
             mergeState=$(echo "$pr_status" | jq -r '.mergeStateStatus')
+            
+            # Check if there are any failing status checks
+            failing_checks=$(echo "$pr_status" | jq '[.statusCheckRollup[] | select(.conclusion == "FAILURE")] | length')
           
-            echo "DEBUG: PR #$number - mergeable='$mergeable' mergeState='$mergeState'"
+            echo "DEBUG: PR #$number - mergeable='$mergeable' mergeState='$mergeState' failing_checks=$failing_checks"
           
-            # Check if PR is mergeable (no conflicts) and has passing checks
+            # Check if PR is mergeable (no conflicts), has acceptable merge state, and no failing checks
             # MERGEABLE = no conflicts
             # CLEAN = ready to merge
             # BLOCKED = mergeable but requires admin approval or other restrictions
-            # Skip DIRTY (conflicts) and UNSTABLE (failing checks)
-            if [ "$mergeable" = "MERGEABLE" ] && ( [ "$mergeState" = "CLEAN" ] || [ "$mergeState" = "BLOCKED" ] ); then
+            # Skip DIRTY (conflicts), UNSTABLE (failing checks), and any PR with failing status checks
+            if [ "$mergeable" = "MERGEABLE" ] && ( [ "$mergeState" = "CLEAN" ] || [ "$mergeState" = "BLOCKED" ] ) && [ "$failing_checks" -eq 0 ]; then
               MERGEABLE_PRS+="$number|$title|$branch"$'\n'
               MERGEABLE_COUNT=$((MERGEABLE_COUNT + 1))
               echo "✓ PR #$number: $title (mergeable: $mergeable, state: $mergeState)"
@@ -108,6 +111,8 @@ jobs:
                 reason="has failing CI checks"
               elif [ "$mergeable" = "UNKNOWN" ]; then
                 reason="merge status not calculated yet"
+              elif [ "$failing_checks" -gt 0 ]; then
+                reason="has $failing_checks failing check(s)"
               fi
               SKIPPED_PRS+="$number|$title|$reason"$'\n'
               SKIPPED_COUNT=$((SKIPPED_COUNT + 1))

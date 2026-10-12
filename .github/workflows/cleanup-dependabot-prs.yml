@@ -84,11 +84,11 @@ jobs:
               echo "✅ Closed PR #$pr_num" >> $GITHUB_STEP_SUMMARY
               SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
           
-              # Delete the branch
-              if git push origin --delete "$branch" 2>/dev/null; then
+              # Delete the branch using GitHub API
+              if gh api repos/${{ github.repository }}/git/refs/heads/$branch -X DELETE 2>/dev/null; then
                 echo "  🗑️ Deleted branch: $branch" >> $GITHUB_STEP_SUMMARY
               else
-                echo "  ⚠️ Could not delete branch: $branch" >> $GITHUB_STEP_SUMMARY
+                echo "  ⚠️ Could not delete branch: $branch (may already be deleted)" >> $GITHUB_STEP_SUMMARY
               fi
             else
               echo "❌ Failed to close PR #$pr_num" >> $GITHUB_STEP_SUMMARY

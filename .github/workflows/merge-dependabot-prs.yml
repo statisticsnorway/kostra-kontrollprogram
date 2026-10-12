@@ -5,10 +5,6 @@
 name: Merge Dependabot PRs
 
 on:
-  # Run every Monday at 9 AM UTC
-  schedule:
-    - cron: '0 9 * * 1'
-
   # Allow manual trigger with options
   workflow_dispatch:
     inputs:
@@ -95,11 +91,12 @@ jobs:
           
             echo "DEBUG: PR #$number - mergeable='$mergeable' mergeState='$mergeState'"
           
-            # Check if PR is mergeable and has passing checks
+            # Check if PR is mergeable (no conflicts) and has passing checks
             # MERGEABLE = no conflicts
-            # CLEAN/UNSTABLE/HAS_HOOKS = merge state (we only want CLEAN)
+            # CLEAN = ready to merge
+            # BLOCKED = mergeable but requires admin approval or other restrictions
             # Skip DIRTY (conflicts) and UNSTABLE (failing checks)
-            if [ "$mergeable" = "MERGEABLE" ] && [ "$mergeState" = "CLEAN" ]; then
+            if [ "$mergeable" = "MERGEABLE" ] && ( [ "$mergeState" = "CLEAN" ] || [ "$mergeState" = "BLOCKED" ] ); then
               MERGEABLE_PRS+="$number|$title|$branch"$'\n'
               MERGEABLE_COUNT=$((MERGEABLE_COUNT + 1))
               echo "✓ PR #$number: $title (mergeable: $mergeable, state: $mergeState)"

@@ -249,8 +249,8 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 **når** ingen av feltene er utfylt med kode `1 = Ja`,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut."
 
-kode MANGLER!
-test MANGLER!
+[kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule024DeltagelseBehandlingssamtaler.kt)
+[test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule024DeltagelseBehandlingssamtalerTest.kt)
 
 
 ### Kontroll 025 : Behandlingssamtaler for de involverte i saken i løpet av året

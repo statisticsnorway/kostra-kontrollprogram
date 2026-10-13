@@ -219,7 +219,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 **TEMA_RUS_A**,
 **TEMA_SYKD_A**,
 **TEMA_VOLD_A**,
-**TEMA_ALVH_A**
+**TEMA_ALVH_A**<br/>
 **når** ingen av feltene er utfylt med kode `1 = Ja`,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut hvilke områder det har vært arbeidet med siden saken ble opprettet. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område."
 
@@ -245,7 +245,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 **DELT_FORELDRE_A**,
 **DELT_OVRFAM_A**,
 **DELT_VENN_A**,
-**DELT_ANDR_A**
+**DELT_ANDR_A**<br/>
 **når** ingen av feltene er utfylt med kode `1 = Ja`,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke krysset av for om andre deltakere i saken har deltatt i samtaler med primærklienten i løpet av rapporteringsåret. Feltene er obligatorisk å fylle ut."
 
@@ -263,7 +263,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 **SAMT_FORELDRE_A**,
 **SAMT_OVRFAM_A**,
 **SAMT_VENN_A**,
-**SAMT_ANDRE_A**
+**SAMT_ANDRE_A**<br/>
 **når** ingen av feltene er utfylt med antall timer større enn 0,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut hvor mange behandlingssamtaler de ulike deltakerne i saken har deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område."
 
@@ -282,8 +282,9 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 | Øvrige familie   | `DELT_OVRFAM_A`   | `SAMT_OVRFAM_A`   |
 | Venner           | `DELT_VENN_A`     | `SAMT_VENN_A`     |
 | Andre            | `DELT_ANDR_A`     | `SAMT_ANDRE_A`    |
-**For** hver kategori
-**Gitt** feltene for deltagelse og antall samtaler for hver kategori<br/>
+
+**For** hver kategori<br/>
+**Gitt** feltene for **Deltagelse** og **Samtale** for hver kategori<br/>
 **når** feltet for **Deltagelse** er utfylt med kode `1 = Ja`, men feltet for antall samtaler er utfylt med `0` eller ikke utfylt,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er oppgitt at andre personer ({**Kategori**}) har deltatt i samtaler med primærklient i løpet av året, men det er ikke oppgitt hvor mange behandlingssamtaler ({**Samtale**}) de ulike personene har deltatt i gjennom av året."
 
@@ -294,7 +295,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 ### Kontroll 027 : Antall behandlingssamtaler for ansatte ved kontoret i løpet av året
 **Gitt** feltene
 **ANTSAMT_HOVEDT_A**,
-**ANTSAMT_ANDREANS_A**
+**ANTSAMT_ANDREANS_A**<br/>
 **når** ingen av feltene er utfylt med antall timer større enn 0,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke oppgitt hvor mange behandlingssamtaler hovedterapeut eller andre ansatte har deltatt i gjennom året. Feltet er obligatorisk å fylle ut."
 
@@ -350,7 +351,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 **SAMARB_SOS_A**,
 **SAMARB_KOMMB_A**,
 **SAMARB_STATB_A**,
-**SAMARB_ANDRE_A**,
+**SAMARB_ANDRE_A**<br/>
 **når** ingen av feltene er utfylt med antall timer større enn 0,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut hvor mange timer hovedterapeut eller andre ved kontoret har anvendt siden saken ble opprettet (for og etterarbeid skal ikke regnes med). Feltet er obligatorisk å fylle ut."
 

@@ -18,7 +18,7 @@ class Rule004Kontornummer(
 
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { mappingList.any { mapping -> it[KONTORNR_COL_NAME] == mapping.kontor } }
+            .filter { mappingList.none { mapping -> it[KONTORNR_COL_NAME] == mapping.kontor } }
             .map {
                 createValidationReportEntry(
                     messageText =

@@ -1,0 +1,91 @@
+# Kravspesifikasjon Utadrettet virksomhet i familieverntjenesten, skjema 53F, 2026
+
+## Begrep
+
+### <a name="alvorligehetsgrader">Alvorlighetsgrader</a>
+* :skull: **FATAL**, når en kontroll ender med alvorlighetsgraden FATAL så stopper all videre kontrollering umiddelbart. FATAL hindrer da andre kontrollene i bli kjørt. Videre så hindrer denne innsending av filvedlegget til SSB.
+* :no_entry: **ERROR**, når en kontroll ender med alvorlighetsgraden ERROR så hindrer denne innsending av filvedlegget til SSB.
+* :warning: **WARNING**, når en kontroll ender med alvorlighetsgraden WARNING så kan filvedlegget bli sendt inn til SSB med advarsler.
+* :information_source: **INFO**, når en kontroll ender med alvorlighetsgraden INFO så kan filvedlegget bli sendt inn til SSB med tilbakemeldinger som er til informasjon for avgiveren.
+* :white_check_mark:**OK**, når en kontroll ender med alvorlighetsgraden vises ingen tilbakemelding av noe slag da alt er i orden.
+
+### <a name="variabler">Variabler fra skjema</a>
+
+I forbindelse med kontrollering så blir noen variabler sendt med fra portalen og blir benyttet i noen av kontrollene.
+Disse er:
+
+* <a name="skjemanummer">**skjemanummer**</a>, for eksempel **0A**, **11F** og **55F**
+* <a name="rapporteringsar">**rapporteringsår**</a>, for eksempel **2024**
+* <a name="kommunenummer">**kommunenummer**</a>, for eksempel **0301**
+* <a name="kommunenavn">**kommunenavn**</a>, for eksempel **Oslo**
+* <a name="organisasjonsnummer">**organisasjonsnummer**</a>, for eksempel **958935420**
+* <a name="foretaksnummer">**foretakssjonsnummer**</a>, for eksempel **958935420**
+* <a name="skal_rapportere">**skal rapportere**</a>, for eksempel **Ja / Nei**
+
+## Filbeskrivelse
+
+Filbeskrivelse finnes som [markdown](file_description_52AF_2026.md) og [yaml](file_description_52AF_2026.yaml)
+.
+Endringslogg for filbeskrivelse finnes som [markdown](file_description_52AF_2026_changelog.md).
+
+## Krav
+
+### Kontroll 001: Recordlengde
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
+
+
+### Kontroll 002: Filbeskrivelse
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
+
+
+### Kontroll 003: Fylkesnummer
+**Gitt** gyldige fylker i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
+**når** feltet **FYLKE_NR** inneholder ingen av de gyldige fylkene i listen,<br/>
+**så** gi :warning: **ADVARSEL** med meldingen "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. Fant '{FYLKE_NR}', forventet én av : {GYLDIGE_FYLKER}."
+
+[kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule003Fylkesnummer.kt)
+[test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule003FylkesnummerTest.kt)
+
+
+### Kontroll 004: Kontornummer
+**Gitt** gyldige kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
+**når** feltet **KONTORNR** inneholder ingen av de gyldige kontornumrene i listen,<br/>
+**så** gi :warning: **ADVARSEL** med meldingen "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. Fant '{KONTORNR}', forventet én av : {GYLDIGE_KONTORER}. Feltet er obligatorisk og må fylles ut."
+
+[kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule004Kontornummer.kt)
+[test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule004KontornummerTest.kt)
+
+
+### Kontroll 005 : Manglende samsvar mellom fylkes- og kontornummer
+**Gitt** koblingene mellom regioner og kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
+**når** feltet **FYLKE_NR** og **KONTOR_NR_B** ikke samsvarer med koblingene i listen,<br/>
+**så** gi :warning: **ADVARSEL** med meldingen "Fylkesnummer '{FYLKE_NR}' og kontornummer '{KONTOR_NR_B}' stemmer ikke overens."
+
+[kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule005FylkesnummerKontornummer.kt)
+[test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule005FylkesnummerKontornummerTest.kt)
+
+
+### Kontroll 010 : Tiltak og timer
+| Kategori                                    | Tiltak                        | Timer                        |
+|---------------------------------------------|-------------------------------|------------------------------|
+| Andre tiltak mot publikum                   | `TILTAK_PUBLIKUM_TILTAK`      | `TILTAK_PUBLIKUM_TIMER`      |
+| Undervisning/veiledning studenter           | `VEILEDNING_STUDENTER_TILTAK` | `VEILEDNING_STUDENTER_TIMER` |
+| Veiledning/konsultasjon for hjelpeapparatet | `VEILEDNING_HJELPEAP_TILTAK`  | `VEILEDNING_HJELPEAP_TIMER`  |
+| Informasjon i media                         | `INFO_MEDIA_TILTAK`           | `INFO_MEDIA_TIMER`           |
+| Tilsyn                                      | `TILSYN_TILTAK`               | `TILSYN_TIMER`               |
+| Foreldreveiledning                          | `FORELDREVEIL_TILTAK`         | `FORELDREVEIL_TIMER`         |
+| Annet                                       | `ANNET_TILTAK`                | `ANNET_TIMER`                |
+
+**For** hver **Kategori**<br/>
+**Gitt** feltene for **Kategori** og **Tiltak**<br/>
+**når** feltet for **Tiltak** er 0 eller mangler utfylling,<br/>
+**så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt hvor mange tiltak ({Tiltak}) kontoret har gjennomført når det gjelder '{Kategori}, tiltak'. Sjekk om det er glemt å rapportere '{Kategori}'."
+
+**så** sett tittelen på kontrollen til "Kontroll 010 : {Kategori}, tiltak"
+
+**For** hver **Kategori**<br/>
+**Gitt** feltene for **Kategori**, **Tiltak** og **Timer**<br/>
+**når** feltet for **Tiltak** er større enn 0 og **Timer** er 0 eller mangler utfylling,<br/>
+**så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt hvor mange timer '{Timer}' kontoret har gjennomført når det gjelder '{Kategori}, timer'. Sjekk om det er glemt å rapportere '{Kategori}, timer'."
+
+**så** sett tittelen på kontrollen til "Kontroll 010 : {Kategori}, timer"

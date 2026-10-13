@@ -30,15 +30,15 @@ Endringslogg for filbeskrivelse finnes som [markdown](file_description_52AF_2026
 
 ## Krav
 
-### Kontroll 001: Recordlengde
+### Kontroll 001 : Recordlengde
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
-### Kontroll 002: Filbeskrivelse
+### Kontroll 002 : Filbeskrivelse
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
 
 
-### Kontroll 003: Regionsnummer
+### Kontroll 003 : Regionsnummer
 **Gitt** gyldige regioner i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **REGION_NR_B** inneholder ingen av de gyldige regionene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. Fant '{REGION_NR_B}', forventet én av : {GYLDIGE_REGIONER}."
@@ -47,7 +47,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52b/Rule003RegionsnummerTest.kt)
 
 
-### Kontroll 004: Kontornummer
+### Kontroll 004 : Kontornummer
 **Gitt** gyldige kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **KONTOR_NR_B** inneholder ingen av de gyldige kontornumrene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. Fant '{KONTOR_NR_B}', forventet én av : {GYLDIGE_KONTORER}."
@@ -56,7 +56,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52b/Rule004KontornummerTest.kt)
 
 
-### Kontroll 005: Manglende samsvar mellom regions- og kontornummer
+### Kontroll 005 : Manglende samsvar mellom regions- og kontornummer
 **Gitt** koblingene mellom regioner og kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **REGION_NR_B** og **KONTOR_NR_B** ikke samsvarer med koblingene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Regionsnummer '{REGION_NR_B}' og kontornummer '{KONTOR_NR_B}' stemmer ikke overens."
@@ -65,7 +65,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52b/Rule005RegionsnummerKontornummerTest.kt)
 
 
-### Kontroll 006: Dubletter
+### Kontroll 006 : Dubletter
 **Gitt** feltene **KONTOR_NR_B** og **GRUPPE_NR_B**<br/>
 **når** feltet **GRUPPE_NR_** forekommer mer enn én gang per **KONTOR_NR_B**,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Gruppenummeret er benyttet på mer enn en sak ({ANTALL_SAKER} stk). Dubletter på kontornummer '{KONTOR_NR_B}' - gruppenummer '{GRUPPE_NR_B}'.

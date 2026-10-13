@@ -30,15 +30,15 @@ Endringslogg for filbeskrivelse finnes som [markdown](file_description_52AF_2026
 
 ## Krav
 
-### Kontroll 001: Recordlengde
+### Kontroll 001 : Recordlengde
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
-### Kontroll 002: Filbeskrivelse
+### Kontroll 002 : Filbeskrivelse
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
 
 
-### Kontroll 003: Regionsnummer
+### Kontroll 003 : Regionsnummer
 **Gitt** gyldige regioner i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/> 
 **når** feltet **REGION_NR_A** inneholder ingen av de gyldige regionene i listen,<br/> 
 **så** gi :warning: **ADVARSEL** med meldingen "Regionsnummeret som er oppgitt i recorden fins ikke i listen med gyldige regionsnumre. Fant '{REGION_NR_A}', forventet én av : {GYLDIGE_REGIONER}."
@@ -47,7 +47,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule003RegionsnummerTest.kt)
 
 
-### Kontroll 004: Kontornummer
+### Kontroll 004 : Kontornummer
 **Gitt** gyldige kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **KONTOR_NR_A** inneholder ingen av de gyldige kontornumrene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. Fant '{KONTOR_NR_A}', forventet én av : {GYLDIGE_KONTORER}."
@@ -56,7 +56,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule004KontornummerTest.kt)
 
 
-### Kontroll 005: Manglende samsvar mellom regions- og kontornummer
+### Kontroll 005 : Manglende samsvar mellom regions- og kontornummer
 **Gitt** koblingene mellom regioner og kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **REGION_NR_A** og **KONTOR_NR_A** ikke samsvarer med koblingene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Regionsnummer '{REGION_NR_A}' og kontornummer '{KONTOR_NR_A}' stemmer ikke overens."
@@ -65,7 +65,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule005RegionsnummerKontornummerTest.kt)
 
 
-### Kontroll 006: Dubletter
+### Kontroll 006 : Dubletter
 **Gitt** feltene **KONTOR_NR_A** og **JOURNAL_NR_A**<br/>
 **når** feltet **JOURNAL_NR_A** forekommer mer enn én gang per **KONTOR_NR_A**,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Journalnummeret er benyttet på mer enn en sak ({ANTALL_SAKER} stk). Dubletter på kontornummer '{KONTOR_NR_A}' - journalnummer '{KONTOR_NR_A}."
@@ -74,7 +74,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule006DubletterTest.kt)
 
 
-### Kontroll 007: Henvendelsesdato
+### Kontroll 007 : Henvendelsesdato
 **Gitt** feltet **HENV_DATO_A**<br/>
 **når** feltet **HENV_DATO_A** ikke er en gyldig dato i formatet **ddMMyyyy**,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke oppgitt dato ({HENV_DATO_A}) for når primærklienten henvendte seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). Feltet er obligatorisk å fylle ut."
@@ -83,7 +83,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule007HenvendelsesdatoTest.kt)
 
 
-### Kontroll 009: Primærklient hatt kontakt med eller vært klient tidligere
+### Kontroll 009 : Primærklient hatt kontakt med eller vært klient tidligere
 **Gitt** gyldige kode fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **KONTAKT_TIDL_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut om primærklienten har vært i kontakt med/klient ved familievernet tidligere, eller feil kode er benyttet. Fant '{KONTAKT_TIDL_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut."
@@ -92,7 +92,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule009KontaktTidligereTest.kt)
 
 
-### Kotroll 011: Primærklientens viktigste begrunnelse for å ta kontakt
+### Kotroll 011 : Primærklientens viktigste begrunnelse for å ta kontakt
 **Gitt** gyldige koder fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **HENV_GRUNN_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller feltet har ugyldig format. Fant '{HENV_GRUNN_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut."
@@ -101,7 +101,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule011HenvendelsesBegrunnelseTest.kt)
 
 
-### Kontroll 013: Primærklientens kjønn
+### Kontroll 013 : Primærklientens kjønn
 **Gitt** gyldige koder fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **PRIMK_KJONN_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Primærklientens kjønn er ikke fylt ut eller feil kode er benyttet. Fant '{PRIMK_KJONN_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut." 
@@ -110,7 +110,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule013KjonnTest.kt)
 
 
-### Kontroll 014: Primærklientens fødselsår
+### Kontroll 014 : Primærklientens fødselsår
 **Gitt** årgangen til filuttrekket **ÅRGANG** og feltet **PRIMK_FODT_A** er utfylt og inneholder et 4-sifret årstall<br/>
 **når** feltet **PRIMK_FODT_A** er utenfor intervallet {**ÅRGANG** - 100 .. **ÅRGANG**},<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Dette er ikke oppgitt fødselsår på primærklienten eller feltet har ugyldig format, årgang gir negativ alder, eller alder større enn 100 år. Fant '{PRIMK_FODT_A}'. Feltet er obligatorisk å fylle ut. Fyll inn fødselsår eller sjekk at fødselsårsfeltet har korrekt format og logisk verdi i forhold til alder."
@@ -119,7 +119,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule014FodselsaarTest.kt)
 
 
-### Kontroll 015: Primærklientens samlivsstatus
+### Kontroll 015 : Primærklientens samlivsstatus
 **Gitt** gyldige koder fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **PRIMK_SIVILS_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Primærklientens samlivsstatus ved sakens opprettelse er ikke fylt ut eller feil kode er benyttet. Fant '{PRIMK_SIVILS_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut."
@@ -128,7 +128,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule015SamlivsstatusTest.kt)
 
 
-### Kontroll 016: Utdypende om primærklientens formelle sivilstand
+### Kontroll 016 : Utdypende om primærklientens formelle sivilstand
 **Gitt** gyldige koder for feltet **FORMELL_SIVILS_A** fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **PRIMK_SIVILS_A** er utfylt med kode `3 = Samboer` eller `4 = Lever ikke i samliv`, og feltet **FORMELL_SIVILS_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er oppgitt at primærklientens samlivsstatus er Samboer eller at primærklient ikke lever i samliv, men det er ikke fylt ut hva som er primærklientens korrekt sivilstand. Fant '{FORMELL_SIVILS_A}', forventet én av: {GYLDIGE KODER}."   
@@ -137,7 +137,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule016FormellSivilstandTest.kt)
 
 
-### Kontroll 017: Primærklientens bosituasjon ved opprettelsen
+### Kontroll 017 : Primærklientens bosituasjon ved opprettelsen
 **Gitt** gyldige koder fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **PRIMK_SAMBO_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut om primærklienten bor sammen med andre ved sakens opprettelse eller feil kode er benyttet. Fant '{PRIMK_SAMBO_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut.
@@ -146,7 +146,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule017BosituasjonTest.kt)
 
 
-### Kontroll 018: Primærklientens tilknytning til utdanning og arbeidsliv
+### Kontroll 018 : Primærklientens tilknytning til utdanning og arbeidsliv
 **Gitt** gyldige koder fra [filbeskrivelsen for skjema 52AF](file_description_52AF_2026.md)<br/>
 **når** feltet **PRIMK_UTDANN_A** inneholder ingen av de gyldige kodene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke krysset av for primærklientens tilknytning til arbeidslivet ved sakens opprettelse eller feil kode er benyttet. Fant '{PRIMK_UTDANN_A}', forventet én av: {GYLDIGE KODER}. Feltet er obligatorisk å fylle ut."
@@ -284,7 +284,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 | Andre            | `DELT_ANDR_A`     | `SAMT_ANDRE_A`    |
 
 **For** hver kategori<br/>
-**Gitt** feltene for **Deltagelse** og **Samtale** for hver kategori<br/>
+**Gitt** feltene for **Deltagelse** og **Samtale**<br/>
 **når** feltet for **Deltagelse** er utfylt med kode `1 = Ja`, men feltet for antall samtaler er utfylt med `0` eller ikke utfylt,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er oppgitt at andre personer ({**Kategori**}) har deltatt i samtaler med primærklient i løpet av året, men det er ikke oppgitt hvor mange behandlingssamtaler ({**Samtale**}) de ulike personene har deltatt i gjennom av året."
 

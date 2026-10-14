@@ -18,13 +18,13 @@ class Rule025BehandlingssamtalerTest : BehaviorSpec({
             ForAllRowItem(
                 "missing count",
                 kostraRecordInTest(" "),
-                expectedErrorMessage = "Det er ikke fylt ut ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
+                expectedErrorMessage = "Det er ikke fylt ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
                         "deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
             ),
             ForAllRowItem(
                 "invalid count, illegal characters",
                 kostraRecordInTest("X"),
-                expectedErrorMessage = "Det er ikke fylt ut ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
+                expectedErrorMessage = "Det er ikke fylt ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
                         "deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
             ),
         )

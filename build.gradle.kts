@@ -93,8 +93,8 @@ tasks.register<gradletask.GenerateResourcesAndDocsTask>("generateMarkdownFromFil
     resourcesOutputDir.set(layout.projectDirectory.dir("kontroller/src/main/resources"))
 }
 
-project(":kostra-kontroller") {
-    tasks.named<ProcessResources>("processResources") {
-        dependsOn(rootProject.tasks.named("generateMarkdownFromFileDescriptions"))
-    }
-}
+//project(":kostra-kontroller") {
+//    tasks.named<ProcessResources>("processResources") {
+//        dependsOn(rootProject.tasks.named("generateMarkdownFromFileDescriptions"))
+//    }
+//}

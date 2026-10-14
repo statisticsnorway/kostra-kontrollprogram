@@ -18,14 +18,14 @@ class Rule007HenvendelsesdatoTest : BehaviorSpec({
             ForAllRowItem(
                 "invalid date, invalid day",
                 kostraRecordInTest("32102023"),
-                expectedErrorMessage = "Dette er ikke oppgitt dato (32102023) for når primærklienten henvendte " +
+                expectedErrorMessage = "Det er ikke oppgitt dato (32102023) for når primærklienten henvendte " +
                         "seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). " +
                         "Feltet er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "invalid date, illegal characters",
                 kostraRecordInTest("XXXXXXXX"),
-                expectedErrorMessage = "Dette er ikke oppgitt dato (XXXXXXXX) for når primærklienten henvendte " +
+                expectedErrorMessage = "Det er ikke oppgitt dato (XXXXXXXX) for når primærklienten henvendte " +
                         "seg til familievernkontoret eller feltet har ugyldig format (DDMMÅÅÅÅ). " +
                         "Feltet er obligatorisk å fylle ut.",
             ),

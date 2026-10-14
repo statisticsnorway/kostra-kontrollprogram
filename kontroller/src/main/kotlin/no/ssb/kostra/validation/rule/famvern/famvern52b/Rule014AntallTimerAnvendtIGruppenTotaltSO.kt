@@ -14,7 +14,7 @@ class Rule014AntallTimerAnvendtIGruppenTotaltSO :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { 0 < it.fieldAsIntOrDefault(TIMERTOT_OPPR_B_COL_NAME) }
+            .filter { it.fieldAsIntOrDefault(TIMERTOT_OPPR_B_COL_NAME) <= 0 }
             .map {
                 createValidationReportEntry(
                     messageText =

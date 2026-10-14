@@ -22,7 +22,7 @@ class Rule003Fylkesnummer(
                 createValidationReportEntry(
                     messageText =
                         "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige " +
-                            "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList." +
+                            "fylkesnumre. Fant '${it[FYLKE_NR_COL_NAME]}', forventet én av : $fylkeList. " +
                             "Feltet er obligatorisk og må fylles ut.",
                     lineNumbers = listOf(it.lineNumber),
                 )

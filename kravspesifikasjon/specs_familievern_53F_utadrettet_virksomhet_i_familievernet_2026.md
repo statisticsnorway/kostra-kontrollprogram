@@ -24,18 +24,18 @@ Disse er:
 
 ## Filbeskrivelse
 
-Filbeskrivelse finnes som [markdown](file_description_52AF_2026.md) og [yaml](file_description_52AF_2026.yaml)
+Filbeskrivelse finnes som [markdown](file_description_53F_2026.md) og [yaml](file_description_53F_2026.yaml)
 .
-Endringslogg for filbeskrivelse finnes som [markdown](file_description_52AF_2026_changelog.md).
+Endringslogg for filbeskrivelse finnes som [markdown](changelog_for_53F_from_2025_to_2026.md).
 
 ## Krav
 
 ### Kontroll 001: Recordlengde
-Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
 ### Kontroll 002: Filbeskrivelse
-Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
 
 
 ### Kontroll 003: Fylkesnummer
@@ -85,7 +85,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifik
 
 **For** hver **Kategori**<br/>
 **Gitt** feltene for **Kategori**, **Tiltak** og **Timer**<br/>
-**når** feltet for **Tiltak** er større enn 0 og **Timer** er 0 eller mangler utfylling,<br/>
+**når** feltet for **Tiltak** er større enn 0 og feltet for **Timer** er 0 eller mangler utfylling,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt hvor mange timer '{Timer}' kontoret har gjennomført når det gjelder '{Kategori}, timer'. Sjekk om det er glemt å rapportere '{Kategori}, timer'."
 
 **så** sett tittelen på kontrollen til "Kontroll 010 : {Kategori}, timer"

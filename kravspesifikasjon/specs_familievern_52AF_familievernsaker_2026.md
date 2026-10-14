@@ -26,16 +26,17 @@ Disse er:
 
 Filbeskrivelse finnes som [markdown](file_description_52AF_2026.md) og [yaml](file_description_52AF_2026.yaml)
 . 
-Endringslogg for filbeskrivelse finnes som [markdown](file_description_52AF_2026_changelog.md).
+Endringslogg for filbeskrivelse finnes som [markdown](changelog_for_52AF_from_2025_to_2026.md).
 
 ## Krav
 
-### Kontroll 001 : Recordlengde
-Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
+### Kontroll 001: Recordlengde
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
-### Kontroll 002 : Filbeskrivelse
-Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
+### Kontroll 002: Filbeskrivelse
+Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
+
 
 
 ### Kontroll 003 : Regionsnummer

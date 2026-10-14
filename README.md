@@ -25,10 +25,10 @@
       * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_53F_2026.yaml)
       * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_53F_from_2025_to_2026.md)
     * Meklingssaker i familieverntjenesten
-      * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_55F_meklingssaker_i_familieverntjenesten_2025.md)
-      * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_55F_2025.md)
-      * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_55F_2025.yaml)
-      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_55F_from_2024_to_2025.md)
+      * [Kravspesifikasjon](/kravspesifikasjon/specs_familievern_55F_meklingssaker_i_familieverntjenesten_2026.md)
+      * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_55F_2026.md)
+      * [Filbeskrivelse maskinlesbar (.yaml)](/kravspesifikasjon/file_description_55F_2026.yaml)
+      * [Endringsbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/changelog_for_55F_from_2025_to_2026.md)
   * Regnskap
     * [Kravspesifikasjon felles for alle regnskap](/kravspesifikasjon/felles_regnskap.md)
       * [Filbeskrivelse menneskelig lesbar (.md)](/kravspesifikasjon/file_description_Regnskap.md)

@@ -24,21 +24,24 @@ Disse er:
 
 ## Filbeskrivelse
 
-Filbeskrivelse finnes som [markdown](file_description_53F_2026.md) og [yaml](file_description_53F_2026.yaml)
-.
+Filbeskrivelse finnes som [markdown](file_description_53F_2026.md) og [yaml](file_description_53F_2026.yaml).
 Endringslogg for filbeskrivelse finnes som [markdown](changelog_for_53F_from_2025_to_2026.md).
 
 ## Krav
 
-### Kontroll 001: Recordlengde
+### Filbeskrivelseskontroller
+
+#### Kontroll 001: Recordlengde
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
-### Kontroll 002: Filbeskrivelse
+#### Kontroll 002: Filbeskrivelse
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
 
 
-### Kontroll 003: Fylkesnummer
+### Integritetskontroller
+
+#### Kontroll 003: Fylkesnummer
 **Gitt** gyldige fylker i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **FYLKE_NR** inneholder ingen av de gyldige fylkene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. Fant '{FYLKE_NR}', forventet én av : {GYLDIGE_FYLKER}."
@@ -47,7 +50,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posis
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule003FylkesnummerTest.kt)
 
 
-### Kontroll 004: Kontornummer
+#### Kontroll 004: Kontornummer
 **Gitt** gyldige kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **KONTORNR** inneholder ingen av de gyldige kontornumrene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Kontornummeret som er oppgitt i recorden fins ikke i listen med gyldige kontornumre. Fant '{KONTORNR}', forventet én av : {GYLDIGE_KONTORER}. Feltet er obligatorisk og må fylles ut."
@@ -56,7 +59,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posis
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule004KontornummerTest.kt)
 
 
-### Kontroll 005 : Manglende samsvar mellom fylkes- og kontornummer
+#### Kontroll 005 : Manglende samsvar mellom fylkes- og kontornummer
 **Gitt** koblingene mellom regioner og kontornumre i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **FYLKE_NR** og **KONTOR_NR_B** ikke samsvarer med koblingene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Fylkesnummer '{FYLKE_NR}' og kontornummer '{KONTOR_NR_B}' stemmer ikke overens."
@@ -65,7 +68,7 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posis
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern53/Rule005FylkesnummerKontornummerTest.kt)
 
 
-### Kontroll 010 : Tiltak og timer
+#### Kontroll 010 : Tiltak og timer
 | Kategori                                    | Tiltak                        | Timer                        |
 |---------------------------------------------|-------------------------------|------------------------------|
 | Andre tiltak mot publikum                   | `TILTAK_PUBLIKUM_TILTAK`      | `TILTAK_PUBLIKUM_TIMER`      |

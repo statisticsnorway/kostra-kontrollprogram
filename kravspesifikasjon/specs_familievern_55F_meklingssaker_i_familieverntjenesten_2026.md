@@ -24,22 +24,24 @@ Disse er:
 
 ## Filbeskrivelse
 
-Filbeskrivelse finnes som [markdown](file_description_55F_2026.md) og [yaml](file_description_55F_2026.yaml)
-.
+Filbeskrivelse finnes som [markdown](file_description_55F_2026.md) og [yaml](file_description_55F_2026.yaml).
 Endringslogg for filbeskrivelse finnes som [markdown](changelog_for_55F_from_2025_to_2026.md).
 
 ## Krav
 
-### Kontroll 001: Recordlengde
+### Filbeskrivelseskontroller
+
+#### Kontroll 001: Recordlengde
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-001--recordlengde)
 
 
-### Kontroll 002: Filbeskrivelse
+#### Kontroll 002: Filbeskrivelse
 Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posisjonsbaserte_filvedlegg.md#kontroll-002--filbeskrivelse-mangler-obligatorisk-verdi)
 
 
+### Integritetskontroller
 
-### Kontroll 003: Fylkesnummer
+#### Kontroll 003: Fylkesnummer
 **Gitt** gyldige fylker i [koblingshierarkiet for familievern](mapping_familievern_region_fylke_kontor_2026.md)<br/>
 **når** feltet **FYLKE_NR** inneholder ingen av de gyldige fylkene i listen,<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Fylkesnummeret som er oppgitt i recorden fins ikke i listen med gyldige fylkesnumre. Fant '{FYLKE_NR}', forventet én av : {GYLDIGE_FYLKER}. Feltet er obligatorisk og må fylles ut."
@@ -48,7 +50,9 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posis
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule003FylkesnummerTest.kt)
 
 
-### Kontroll 005 : Avsluttede meklinger etter tidsbruk, (sumfelt)
+### Meklinger
+
+#### Kontroll 005 : Avsluttede meklinger etter tidsbruk, (sumfelt)
 
 | MEKLING  | 1                 | 2                 | 3                 | TOT                  |
 |----------|-------------------|-------------------|-------------------|----------------------|
@@ -70,7 +74,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule005AvsluttedeMeklingerEtterTidsbrukTest.kt)
 
 
-### Kontroll 006 : Avsluttede meklinger etter deltakere, (sumfelt)
+#### Kontroll 006 : Avsluttede meklinger etter deltakere, (sumfelt)
 
 |          | BEGGE         | EN         | TOT             |
 |----------|---------------|------------|-----------------|
@@ -92,7 +96,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule006AvsluttedeMeklingerEtterDeltakereTest.kt)
 
 
-### Kontroll 007 : Avsluttede meklinger etter tidsbruk, (sumfelt)
+#### Kontroll 007 : Avsluttede meklinger etter tidsbruk, (sumfelt)
 
 | VENTETID | 1                  | 2                  | 3                  | 4                  | TOT                   |
 |----------|--------------------|--------------------|--------------------|--------------------|-----------------------|
@@ -114,7 +118,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule007AvsluttedeMeklingerEtterTidsbrukTest.kt)
 
 
-### Kontroll 008 : Avsluttede meklinger, ikke overholdt tidsfrist
+#### Kontroll 008 : Avsluttede meklinger, ikke overholdt tidsfrist
 
 |         | MEKLER         | KLIENT         | TOT             |
 |---------|----------------|----------------|-----------------|
@@ -131,7 +135,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule008AvsluttedeMeklingerIkkeOverholdtTidsfristTest.kt)
 
 
-### Kontroll 009 : Avsluttede meklinger etter varighet, (sumfelt)
+#### Kontroll 009 : Avsluttede meklinger etter varighet, (sumfelt)
 
 | VARIGHET | 1                  | 2                  | 3                  | TOT                   |
 |----------|--------------------|--------------------|--------------------|-----------------------|
@@ -153,7 +157,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule009AvsluttedeMeklingerEtterVarighetTest.kt)
 
 
-### Kontroll 011 : Resultat av avsluttede meklinger, (sumfelt)
+#### Kontroll 011 : Resultat av avsluttede meklinger, (sumfelt)
 
 |                | 1                | 2                | 3                | TOT                |
 |----------------|------------------|------------------|------------------|--------------------|
@@ -170,7 +174,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule011ResultatAvAvsluttedeMeklingerTest.kt)
 
 
-### Kontroll 014 : Kontroll av totalsummer for meklinger
+#### Kontroll 014 : Kontroll av totalsummer for meklinger
 **Gitt** feltene **MEKLING_TOT_ALLE**, **ENBEGGE_TOT**, **VENTETID_TOT_TOT**, **VARIGHET_TOT_TOT**, **RESULT_TOT_TOT** og deres verdier<br/>
 **når** verdiene i disse feltene er forskjellig<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Én eller flere i følgende liste har ulik verdi i forhold til de andre: {LISTE med feltene og deres verdier}."
@@ -179,7 +183,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule014KontrollAvTotalsummerForMeklingerTest.kt)
 
 
-### Kontroll 017 : Barn deltatt, (sumfelt)
+#### Kontroll 017 : Barn deltatt, (sumfelt)
 
 |          | DELT      | IKKE DELT      | TOT          |
 |----------|-----------|----------------|--------------|
@@ -196,7 +200,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule017BarnDeltattTest.kt)
 
 
-### Kontroll 018 : Bekymringsmelding sendt, (sumfelt)
+#### Kontroll 018 : Bekymringsmelding sendt, (sumfelt)
 
 |            | SENDT        | IKKE SENDT        | TOT            |
 |------------|--------------|-------------------|----------------|
@@ -213,7 +217,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule018BekymringsmeldingSendtTest.kt)
 
 
-### Kontroll 019 : Vold som tema, (sumfelt)
+#### Kontroll 019 : Vold som tema, (sumfelt)
 
 |          | TEMA      | IKKE TEMA      | TOT          |
 |----------|-----------|----------------|--------------|
@@ -230,7 +234,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern55/Rule019VoldSomTemaTest.kt)
 
 
-### Kontroll 020 : Kontroll av totalsummer for meklinger
+#### Kontroll 020 : Kontroll av totalsummer for meklinger
 **Gitt** feltene **BARN_TOT**, **BEKYMR_TOT**, **VOLD_TOT** og deres verdier<br/>
 **når** verdiene i disse feltene er forskjellig<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Én eller flere i følgende liste har ulik verdi i forhold til de andre: {LISTE med feltene og deres verdier}."

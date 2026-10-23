@@ -7,6 +7,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fiel
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
+import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -17,7 +18,7 @@ class Rule015Samlivsstatus :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { fieldDefinition.codeExists(it[PRIMK_SIVILS_A_COL_NAME]) }
+            .filter { fieldDefinition.codeIsMissing(it[PRIMK_SIVILS_A_COL_NAME]) }
             .map {
                 createValidationReportEntry(
                     messageText =

@@ -18,7 +18,7 @@ class Rule011HenvendelsesBegrunnelseTest : BehaviorSpec({
             ForAllRowItem(
                 "invalid code",
                 kostraRecordInTest("X"),
-                expectedErrorMessage = "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med " +
+                expectedErrorMessage = "Det er ikke oppgitt hva som er primærklientens viktigste ønsker med " +
                         "kontakten, eller feltet har ugyldig format. Fant 'X', forventet én av: [" +
                         "1=Parforholdet, 2=Foreldresamarbeid/- veiledning, " +
                         "3=Andre eller sammensatte problemer i familien, 4=Hjelp til barn og ungdom]. " +

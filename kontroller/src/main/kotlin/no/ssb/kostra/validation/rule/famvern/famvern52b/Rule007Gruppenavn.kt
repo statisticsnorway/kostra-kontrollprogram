@@ -14,7 +14,7 @@ class Rule007Gruppenavn :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { it[GRUPPE_NAVN_B_COL_NAME].isNotBlank() }
+            .filter { it[GRUPPE_NAVN_B_COL_NAME].isBlank() }
             .map {
                 createValidationReportEntry(
                     messageText = "Det er ikke oppgitt navn på gruppen. Tekstfeltet skal ha maksimalt 30 posisjoner.",

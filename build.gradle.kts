@@ -43,6 +43,15 @@ sonarqube {
 val localLibs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 allprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "ognl" && requested.name == "ognl") {
+                useVersion("3.4.13")
+                because("Fix known issues in ognl:ognl:3.3.4")
+            }
+        }
+    }
+
     if (name != "kostra-kontrollprogram-web-frontend") {
         repositories { mavenCentral() }
 

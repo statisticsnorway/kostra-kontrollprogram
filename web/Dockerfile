@@ -1,5 +1,7 @@
 FROM gcr.io/distroless/java25-debian13:nonroot
 
+WORKDIR /app
+
 ARG JAR_FILE=build/libs/*-all.jar
 
 # Copy the fat JAR from the build output
@@ -11,4 +13,4 @@ EXPOSE 8080
 USER 65532:65532
 
 # Run the application
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]

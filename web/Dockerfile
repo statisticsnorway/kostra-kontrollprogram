@@ -1,16 +1,14 @@
-FROM gcr.io/distroless/java25-debian13:nonroot
+FROM bellsoft/liberica-runtime-container:jre-25.0.4.1-musl
 
-WORKDIR /app
+RUN addgroup -S nonroot && \
+    adduser -S nonroot -G nonroot && \
+    apk update && \
+    apk upgrade --no-cache libcrypto3 libssl3
 
 ARG JAR_FILE=build/libs/*-all.jar
 
-# Copy the fat JAR from the build output
 COPY ${JAR_FILE} app.jar
 
-EXPOSE 8080
+USER nonroot:nonroot
 
-# Run as non-root user (distroless nonroot uid=65532)
-USER 65532:65532
-
-# Run the application
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]

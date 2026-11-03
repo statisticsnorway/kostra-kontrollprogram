@@ -8,6 +8,7 @@ import no.ssb.kostra.program.FieldDefinition
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
+import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -18,7 +19,7 @@ class Rule009KontaktTidligere :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { fieldDefinition.codeExists(it[KONTAKT_TIDL_A_COL_NAME]) }
+            .filter { fieldDefinition.codeIsMissing(it[KONTAKT_TIDL_A_COL_NAME]) }
             .map {
                 createValidationReportEntry(
                     messageText =

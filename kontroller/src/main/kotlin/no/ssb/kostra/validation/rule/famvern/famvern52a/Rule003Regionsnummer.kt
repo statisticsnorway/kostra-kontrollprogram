@@ -16,7 +16,7 @@ class Rule003Regionsnummer(
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { mappingList.any { mapping -> it[REGION_NR_A_COL_NAME] == mapping.region } }
+            .filter { mappingList.none { mapping -> it[REGION_NR_A_COL_NAME] == mapping.region } }
             .map {
                 val regionList =
                     mappingList.map { item -> item.region }.distinct().sorted()

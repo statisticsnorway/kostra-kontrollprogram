@@ -14,7 +14,7 @@ class Rule020DatoForsteBehandlingssamtale :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { it.fieldAsLocalDate(FORSTE_SAMT_A_COL_NAME) != null }
+            .filter { it.fieldAsLocalDate(FORSTE_SAMT_A_COL_NAME) == null }
             .map {
                 createValidationReportEntry(
                     messageText =

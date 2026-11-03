@@ -7,6 +7,7 @@ import no.ssb.kostra.area.famvern.famvern52a.Familievern52aFieldDefinitions.fiel
 import no.ssb.kostra.program.KostraRecord
 import no.ssb.kostra.program.extension.byColumnName
 import no.ssb.kostra.program.extension.codeExists
+import no.ssb.kostra.program.extension.codeIsMissing
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.AbstractNoArgsRule
 
@@ -17,11 +18,11 @@ class Rule011HenvendelsesBegrunnelse :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { fieldDefinition.codeExists(it[HENV_GRUNN_A_COL_NAME]) }
+            .filter { fieldDefinition.codeIsMissing(it[HENV_GRUNN_A_COL_NAME]) }
             .map {
                 createValidationReportEntry(
                     messageText =
-                        "Dette er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller " +
+                        "Det er ikke oppgitt hva som er primærklientens viktigste ønsker med kontakten, eller " +
                             "feltet har ugyldig format. Fant '${it[HENV_GRUNN_A_COL_NAME]}', forventet én av: " +
                             "${fieldDefinition.codeList}. Feltet er obligatorisk å fylle ut.",
                     lineNumbers = listOf(it.lineNumber),

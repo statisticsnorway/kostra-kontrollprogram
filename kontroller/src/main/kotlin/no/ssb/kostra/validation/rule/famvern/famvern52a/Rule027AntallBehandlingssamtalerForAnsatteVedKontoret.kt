@@ -15,7 +15,7 @@ class Rule027AntallBehandlingssamtalerForAnsatteVedKontoret :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { fields.any { field -> 0 < it.fieldAsIntOrDefault(field) } }
+            .filter { fields.none { field -> 0 < it.fieldAsIntOrDefault(field) } }
             .map {
                 createValidationReportEntry(
                     messageText =

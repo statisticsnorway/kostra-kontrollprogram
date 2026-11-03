@@ -16,7 +16,7 @@ class Rule020GruppebehandlingenAvsluttetManglerAvslutningsdato :
     override fun validate(context: List<KostraRecord>) =
         context
             .filter { it[STATUS_ARETSSL_B_COL_NAME] == "2" }
-            .filterNot { it.fieldAsLocalDate(DATO_GRAVSLUTN_B_COL_NAME) != null }
+            .filter { it.fieldAsLocalDate(DATO_GRAVSLUTN_B_COL_NAME) == null }
             .map {
                 createValidationReportEntry(
                     messageText =

@@ -15,7 +15,7 @@ class Rule004Kontornummer(
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { mappingList.any { mapping -> it[KONTOR_NR_A_COL_NAME] == mapping.kontor } }
+            .filter { mappingList.none { mapping -> it[KONTOR_NR_A_COL_NAME] == mapping.kontor } }
             .map {
                 val kontorList =
                     mappingList.map { item -> item.kontor }.distinct().sorted()

@@ -34,6 +34,7 @@ class Rule020KontrollAvTotalsummerForMeklinger :
                 Familievern55ColumnNames.BARN_TOT_COL_NAME,
                 Familievern55ColumnNames.BEKYMR_TOT_COL_NAME,
                 Familievern55ColumnNames.VOLD_TOT_COL_NAME,
+                Familievern55ColumnNames.RESULT_TOT_TOT_COL_NAME,
             )
     }
 }

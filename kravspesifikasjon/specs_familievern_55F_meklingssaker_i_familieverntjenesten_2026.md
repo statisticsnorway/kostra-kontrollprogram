@@ -175,7 +175,7 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 
 
 #### Kontroll 014 : Kontroll av totalsummer for meklinger
-**Gitt** feltene **MEKLING_TOT_ALLE**, **ENBEGGE_TOT**, **VENTETID_TOT_TOT**, **VARIGHET_TOT_TOT**, **RESULT_TOT_TOT** og deres verdier<br/>
+**Gitt** feltene **MEKLING_TOT_ALLE**, **ENBEGGE_TOT**, **VENTETID_TOT_TOT**, **VARIGHET_TOT_TOT** og deres verdier<br/>
 **når** verdiene i disse feltene er forskjellig<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Én eller flere i følgende liste har ulik verdi i forhold til de andre: {LISTE med feltene og deres verdier}."
 
@@ -235,6 +235,6 @@ og summen av **LISTE**, her kalt **LISTESUM**<br/>
 
 
 #### Kontroll 020 : Kontroll av totalsummer for meklinger
-**Gitt** feltene **BARN_TOT**, **BEKYMR_TOT**, **VOLD_TOT** og deres verdier<br/>
+**Gitt** feltene **BARN_TOT**, **BEKYMR_TOT**, **VOLD_TOT**, **RESULT_TOT_TOT** og deres verdier<br/>
 **når** verdiene i disse feltene er forskjellig<br/>
 **så** gi :warning: **ADVARSEL** med meldingen "Én eller flere i følgende liste har ulik verdi i forhold til de andre: {LISTE med feltene og deres verdier}."

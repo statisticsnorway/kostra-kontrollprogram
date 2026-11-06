@@ -18,8 +18,9 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsenTest : BehaviorSpec({
             ForAllRowItem(
                 "No cooperation is checked, but other is also checked",
                 kostraRecordInTest("1", "1"),
-                expectedErrorMessage = "Det er ikke krysset av for om det har vært samarbeid med andre " +
-                        "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
+                expectedErrorMessage = "Det er krysset av for at det ikke har vært samarbeid, " +
+                        "men det er også krysset av for et eller flere samarbeid. " +
+                        "Feltet er obligatorisk å fylle ut.",
             ),
             ForAllRowItem(
                 "No cooperation is unchecked, other is checked",

@@ -3,24 +3,48 @@ updates:
   - package-ecosystem: gradle
     directory: "/"
     schedule:
-      interval: monthly
+      interval: weekly
       time: "03:00"
       timezone: Europe/Oslo
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 30
+    groups:
+      micronaut:
+        patterns:
+          - "io.micronaut*"
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.kotlinx*"
+          - "com.google.devtools.ksp"
+      testing:
+        patterns:
+          - "org.testcontainers*"
+          - "org.mockito*"
+          - "io.mockk*"
+          - "io.rest-assured*"
+          - "org.assertj*"
+          - "org.junit*"
 
   - package-ecosystem: npm
     versioning-strategy: increase
     directory: "/web-frontend"
     schedule:
-      interval: monthly
+      interval: weekly
       time: "03:00"
       timezone: Europe/Oslo
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 30
+    groups:
+      frontend-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: monthly
+      interval: weekly
       time: "03:00"
       timezone: Europe/Oslo
     open-pull-requests-limit: 10
@@ -28,3 +52,15 @@ updates:
       github-actions-dependencies:
         patterns:
           - "*"
+
+  - package-ecosystem: docker
+    directories:
+      - "/.nais"
+      - "/altinn-api"
+      - "/web"
+    schedule:
+      # Weekly: base images are pinned by digest, so OS security fixes only arrive via these PRs
+      interval: weekly
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 10

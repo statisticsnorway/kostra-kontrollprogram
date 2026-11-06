@@ -361,10 +361,10 @@ Se krav i [kravspesifikasjon/felles_posisjonsbaserte_filvedlegg.md](felles_posis
 **SAMARB_ANDRE_A**<br/>
 
 **når** **SAMARB_INGEN_A** er `1 = Ja` og hvilken som helst av feltene er utfylt med antall timer større enn 0,<br/>
-**så** gi :warning: **ADVARSEL** med meldingen "Det er fylt ut at det ikke har vært samarbeid, men det er utfylt med antall timer større enn 0 for et eller flere samarbeid. Feltet er obligatorisk å fylle ut."
+**så** gi :warning: **ADVARSEL** med meldingen "Det er krysset av for at det ikke har vært samarbeid, men det er også krysset av for et eller flere samarbeid. Feltet er obligatorisk å fylle ut."
 
 **når** **SAMARB_INGEN_A** er blank og ingen av feltene er utfylt med antall timer større enn 0,<br/>
-**så** gi :warning: **ADVARSEL** med meldingen "Det er ikke fylt ut hvor mange timer hovedterapeut eller andre ved kontoret har anvendt siden saken ble opprettet (for og etterarbeid skal ikke regnes med). Feltet er obligatorisk å fylle ut."
+**så** gi :warning: **ADVARSEL** med meldingen "Det er ikke krysset av for om det har vært samarbeid med andre instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut."
 
 [kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule032SamarbeidMedAndreInstanserSidenOpprettelsen.kt)
 [test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/famvern/famvern52a/Rule032SamarbeidMedAndreInstanserSidenOpprettelsenTest.kt)

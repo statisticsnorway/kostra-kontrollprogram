@@ -14,7 +14,7 @@ class Rule015AntallDeltagereIGruppenILA :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { 0 < it.fieldAsIntOrDefault(ANTDELT_IARET_B_COL_NAME) }
+            .filter { it.fieldAsIntOrDefault(ANTDELT_IARET_B_COL_NAME) <= 0 }
             .map {
                 createValidationReportEntry(
                     messageText =

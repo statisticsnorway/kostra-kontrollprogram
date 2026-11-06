@@ -46,7 +46,7 @@ jobs:
           service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
       - name: Login to Artifact Registry
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6
         with:
           registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
           username: oauth2accesstoken
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Web
         id: docker-build-web
-        uses: nais/docker-build-push@423a915c9b72edf2ba848b88171ccb0489e2a40a
+        uses: nais/docker-build-push@dd7421d5068057a020ca46ead966c26190c516b1
         with:
           team: dftjen
           docker_context: ./web
@@ -68,7 +68,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Web to TEST
-        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120
+        uses: nais/deploy/actions/deploy@3944168fd20b7eea3818e97de3810f74b54c78ff
         env:
           CLUSTER: test
           RESOURCE: .nais/web-test.yaml
@@ -79,7 +79,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Altinn API
         id: docker-build-altinn-api
-        uses: nais/docker-build-push@423a915c9b72edf2ba848b88171ccb0489e2a40a
+        uses: nais/docker-build-push@dd7421d5068057a020ca46ead966c26190c516b1
         with:
           team: dftjen
           docker_context: ./altinn-api
@@ -90,7 +90,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Altinn API to TEST
-        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120
+        uses: nais/deploy/actions/deploy@3944168fd20b7eea3818e97de3810f74b54c78ff
         env:
           CLUSTER: test
           RESOURCE: .nais/altinn-api-test.yaml

@@ -16,8 +16,8 @@ class Rule005RegionsnummerKontornummer(
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot {
-                mappingList.any { mapping ->
+            .filter {
+                mappingList.none { mapping ->
                     it[REGION_NR_B_COL_NAME] == mapping.region &&
                         it[KONTOR_NR_B_COL_NAME] == mapping.kontor
                 }

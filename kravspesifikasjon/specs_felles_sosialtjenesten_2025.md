@@ -1,4 +1,6 @@
-# Kravspesifikasjon felles for Soosialtjenesten
+# Kravspesifikasjon felles for Sosialtjenesten, 2025
+
+Gjelder for filvedleggene 11F Økonomisk sosialhjelp og 11CF Kvalifiseringsstønad.
 
 ## Begrep
 
@@ -65,13 +67,13 @@ preutfylte verdien for variablen AARGANG fra skjemaet i portalen<br/>
 ### Kontroll 004A : Fødselsdato
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for FODSELSDATO, en datafil med verdi for FODSELSDATO i alle rader<br/>
-**når** {FODSELSDATO} er en gyldig dato eller inneholder ugyldige tegn<br/>
+**når** {FODSELSDATO} er en ugyldig dato eller inneholder ugyldige tegn<br/>
 **så** gi en :no_entry:**FEIL** med meldingen **"Det er ikke oppgitt fødselsdato eller fødselsdato er ugyldig. Korriger fødselsdato til en gyldig dato. Fant ({FODSELSDATO}), forventet (DDMMÅÅÅÅ)"** for hver rad hvor dette inntreffer
 
 [Kode](/kontroller/src/main/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004AFodselsDato.kt)
 [Test](/kontroller/src/test/kotlin/no/ssb/kostra/validation/rule/sosial/rule/Rule004AFodselsDatoTest.kt)
 
-### Kontroll 005 : Fødselsdato
+### Kontroll 005 : Fødselsnummer
 
 **Gitt at** en har en filbeskrivelse med feltdefinisjon for PERSON_FODSELSNR, en datafil med verdi for PERSON_FODSELSNR i alle rader<br/>
 **når** {PERSON_FODSELSNR} er matematisk ugyldig<br/>

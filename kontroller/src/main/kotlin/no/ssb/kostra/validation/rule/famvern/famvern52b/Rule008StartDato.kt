@@ -14,7 +14,7 @@ class Rule008StartDato :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { it.fieldAsLocalDate(DATO_GRSTART_B_COL_NAME) != null }
+            .filter { it.fieldAsLocalDate(DATO_GRSTART_B_COL_NAME) == null }
             .map {
                 createValidationReportEntry(
                     messageText =

@@ -22,11 +22,11 @@ class Rule025Behandlingssamtaler :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { fields.any { field -> 0 < it.fieldAsIntOrDefault(field) } }
+            .filter { fields.none { field -> 0 < it.fieldAsIntOrDefault(field) } }
             .map {
                 createValidationReportEntry(
                     messageText =
-                        "Det er ikke fylt ut ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
+                        "Det er ikke fylt ut hvor mange behandlingssamtaler de ulike deltakerne i saken har " +
                             "deltatt i gjennom året. Feltet er obligatorisk å fylle ut, og kan inneholde mer enn ett område.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(

@@ -14,7 +14,7 @@ class Rule017AntallTerapeuterInvolvertIGruppebehandlingen :
     ) {
     override fun validate(context: List<KostraRecord>) =
         context
-            .filterNot { 0 < it.fieldAsIntOrDefault(ANTTER_GRUPPEB_B_COL_NAME) }
+            .filter { it.fieldAsIntOrDefault(ANTTER_GRUPPEB_B_COL_NAME) <= 0 }
             .map {
                 createValidationReportEntry(
                     messageText =

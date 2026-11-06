@@ -19,21 +19,18 @@ class Rule038Ventetid :
         context
             .filter {
                 it[HENV_DATO_A_COL_NAME].isNotBlank() &&
-                    it[FORSTE_SAMT_A_COL_NAME].isNotBlank()
-            }.filterNot {
-                it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null &&
-                    it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null &&
-                    it
-                        .fieldAs<LocalDate>(HENV_DATO_A_COL_NAME)
-                        .plusYears(1L)
-                        .plusDays(1L)
-                        .isAfter(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
+                        it[FORSTE_SAMT_A_COL_NAME].isNotBlank() &&
+                        it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null &&
+                        it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null &&
+                        it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME).isBefore(
+                                it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME).minusYears(1L)
+                        )
             }.map {
                 createValidationReportEntry(
                     messageText =
                         "Dato for primærklientens henvendelse '${it[HENV_DATO_A_COL_NAME]}' " +
-                            "til familievernkontoret er mer enn 1 år før første behandlingssamtale " +
-                            "'${it[FORSTE_SAMT_A_COL_NAME]}'.",
+                                "til familievernkontoret er mer enn 1 år før første behandlingssamtale " +
+                                "'${it[FORSTE_SAMT_A_COL_NAME]}'.",
                     lineNumbers = listOf(it.lineNumber),
                 ).copy(
                     caseworker = it[KONTOR_NR_A_COL_NAME],

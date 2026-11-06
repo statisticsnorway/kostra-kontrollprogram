@@ -78,7 +78,7 @@ Filbeskrivelse for 52AF Familievernsaker, klientrapportering for 2026
 | `TIMER_IARET_A` | I løpet av året | 3 | 123‑125 | INTEGER_TYPE | ☑️ |  |  |
 | `TIMER_OPPR_A` | Siden opprettelsen | 3 | 126‑128 | INTEGER_TYPE | ☑️ |  |  |
 | `TOLK_A` | Tolk benyttet i forbindelse med én eller flere behandlingssamtaler siden saken ble opprettet | 1 | 129‑129 | STRING_TYPE | ☑️ |  | `1`: Ja<br/>`2`: Nei |
-| `SAMARB_INGEN_A` |  | 1 | 130‑130 | STRING_TYPE |  |  | `1`: Ikke samarbeid med med annen instans |
+| `SAMARB_INGEN_A` |  | 1 | 130‑130 | STRING_TYPE |  |  | `1`: Ikke samarbeid med annen instans |
 | `SAMARB_LEGE_A` |  | 1 | 131‑131 | STRING_TYPE |  |  | `1`: Fastlege |
 | `SAMARB_HELSE_A` |  | 1 | 132‑132 | STRING_TYPE |  |  | `1`: Helsestasjon / Familiesenter |
 | `SAMARB_PSYKH_A` |  | 1 | 133‑133 | STRING_TYPE |  |  | `1`: Psykisk helsevern |

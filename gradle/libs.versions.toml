@@ -17,7 +17,7 @@ swagger-annotations-version = "2.2.55"
 woodstox-core-version = "7.3.0"
 
 # plugin versions
-devtools-ksp-version = "2.3.12"
+devtools-ksp-version = "2.3.13"
 gradle-git-properties-version = "4.0.1"
 micronaut-application-version = "5.0.2"
 shadow-version = "9.6.1"

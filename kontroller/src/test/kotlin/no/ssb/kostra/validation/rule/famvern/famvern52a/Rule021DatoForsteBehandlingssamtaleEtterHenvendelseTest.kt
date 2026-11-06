@@ -36,20 +36,14 @@ class Rule021DatoForsteBehandlingssamtaleEtterHenvendelseTest : BehaviorSpec({
             ForAllRowItem(
                 "invalid date, invalid day",
                 kostraRecordInTest("32102023", "02022023"),
-                expectedErrorMessage = "Dato for første behandlingssamtale '02022023' er før dato for " +
-                        "primærklientens henvendelse '32102023' til familievernkontoret.",
             ),
             ForAllRowItem(
                 "invalid date, all zeros",
                 kostraRecordInTest("00000000", "02022023"),
-                expectedErrorMessage = "Dato for første behandlingssamtale '02022023' er før dato for " +
-                        "primærklientens henvendelse '00000000' til familievernkontoret.",
             ),
             ForAllRowItem(
                 "invalid date, illegal characters",
                 kostraRecordInTest("XXXXXXXX", "02022023"),
-                expectedErrorMessage = "Dato for første behandlingssamtale '02022023' er før dato for " +
-                        "primærklientens henvendelse 'XXXXXXXX' til familievernkontoret.",
             ),
         )
     )

@@ -531,7 +531,7 @@ fields:
     dataType: STRING_TYPE
     codeList:
       - code: 1
-        value: Ikke samarbeid med med annen instans
+        value: Ikke samarbeid med annen instans
   - name: SAMARB_LEGE_A
     size: 1
     dataType: STRING_TYPE

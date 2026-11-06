@@ -27,16 +27,39 @@ class Rule032SamarbeidMedAndreInstanserSidenOpprettelsen :
             .filter {
                 (it[SAMARB_INGEN_A_COL_NAME] == "1" && fields.any { field -> it[field] == "1" }) ||
                         (it[SAMARB_INGEN_A_COL_NAME] == " " && fields.none { field -> it[field] == "1" })
-            }.map {
-                createValidationReportEntry(
-                    messageText =
-                        "Det er ikke krysset av for om det har vært samarbeid med andre " +
-                                "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
-                    lineNumbers = listOf(it.lineNumber),
-                ).copy(
-                    caseworker = it[KONTOR_NR_A_COL_NAME],
-                    journalId = it[JOURNAL_NR_A_COL_NAME],
-                )
+
+            }.partition {
+                (it[SAMARB_INGEN_A_COL_NAME] == "1" && fields.any { field -> it[field] == "1" })
+
+            }.let {
+                it.first
+                    .map {
+                        createValidationReportEntry(
+                            messageText =
+                                "Det er krysset av for at det ikke har vært samarbeid, " +
+                                        "men det er også krysset av for et eller flere samarbeid. " +
+                                        "Feltet er obligatorisk å fylle ut.",
+                            lineNumbers = listOf(it.lineNumber),
+                        ).copy(
+                            caseworker = it[KONTOR_NR_A_COL_NAME],
+                            journalId = it[JOURNAL_NR_A_COL_NAME],
+                        )
+                    } +
+                it.second
+                    .map {
+                        createValidationReportEntry(
+                            messageText =
+                                "Det er ikke krysset av for om det har vært samarbeid med andre " +
+                                        "instanser siden saken ble opprettet. Feltet er obligatorisk å fylle ut.",
+                            lineNumbers = listOf(it.lineNumber),
+                        ).copy(
+                            caseworker = it[KONTOR_NR_A_COL_NAME],
+                            journalId = it[JOURNAL_NR_A_COL_NAME],
+                        )
+                    }
+
+
+
             }.ifEmpty { null }
 
     companion object {

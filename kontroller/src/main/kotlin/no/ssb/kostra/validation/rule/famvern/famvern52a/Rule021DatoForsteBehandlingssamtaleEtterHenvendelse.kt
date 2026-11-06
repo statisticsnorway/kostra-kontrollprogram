@@ -20,13 +20,11 @@ class Rule021DatoForsteBehandlingssamtaleEtterHenvendelse :
             .filter {
                 it[HENV_DATO_A_COL_NAME].isNotBlank() &&
                     it[FORSTE_SAMT_A_COL_NAME].isNotBlank()
-            }.filterNot {
-                it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) != null &&
-                    it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) != null &&
-                    it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME) <=
-                    it.fieldAs<LocalDate>(
-                        FORSTE_SAMT_A_COL_NAME,
-                    )
+            }.filter {
+                it.fieldAs<LocalDate?>(HENV_DATO_A_COL_NAME) == null ||
+                    it.fieldAs<LocalDate?>(FORSTE_SAMT_A_COL_NAME) == null ||
+                    it.fieldAs<LocalDate>(HENV_DATO_A_COL_NAME)
+                        .isAfter(it.fieldAs<LocalDate>(FORSTE_SAMT_A_COL_NAME))
             }.map {
                 createValidationReportEntry(
                     messageText =

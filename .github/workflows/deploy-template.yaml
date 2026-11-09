@@ -74,7 +74,7 @@ jobs:
           service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
       - name: Login to Artifact Registry
-        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
         with:
           registry: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
           username: oauth2accesstoken
@@ -82,7 +82,7 @@ jobs:
 
 
       - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{inputs.environment}}
-        uses: nais/deploy/actions/deploy@7b60caaded00332e9aa117a8342daa0876851dfe
+        uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}

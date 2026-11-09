@@ -63,4 +63,11 @@ updates:
       interval: weekly
       time: "03:00"
       timezone: Europe/Oslo
+    groups:
+      # One PR per image across all directories. Both apps share the distroless base image, and
+      # Trivy scans both Dockerfiles, so per-directory PRs each fail on the app they don't bump.
+      docker-images:
+        group-by: dependency-name
+        patterns:
+          - "*"
     open-pull-requests-limit: 10

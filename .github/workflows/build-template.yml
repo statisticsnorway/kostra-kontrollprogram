@@ -67,7 +67,7 @@ jobs:
             gradle-main-
 
       - name: Set up Java
-        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -105,7 +105,7 @@ jobs:
 
       - name: Release # v2.4.1
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3
         with:
           files: |
             ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar

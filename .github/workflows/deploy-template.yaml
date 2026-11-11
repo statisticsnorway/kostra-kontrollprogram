@@ -159,12 +159,11 @@ jobs:
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
 
-
       - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{ inputs.environment }}
         uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: ${{ env.WORKLOAD_IMAGE_PINNED }}
+          WORKLOAD_IMAGE: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}/dftjen/kostra-kontrollprogram-${{ inputs.application }}:${{ env.IMAGE_TAG }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

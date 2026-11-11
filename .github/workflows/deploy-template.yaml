@@ -19,6 +19,10 @@ on:
         options:
           - QA
           - PROD
+      image_tag:
+        description: "Container image tag to deploy"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -26,7 +30,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy ${{inputs.application}} to ${{inputs.environment}}
+    name: Deploy ${{ inputs.application }} to ${{ inputs.environment }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -39,10 +43,10 @@ jobs:
 
           case "$env_lower" in
             qa)
-              echo "CLUSTER=test" >> $GITHUB_ENV
+              echo "CLUSTER=test" >> "$GITHUB_ENV"
               ;;
             prod)
-              echo "CLUSTER=prod" >> $GITHUB_ENV
+              echo "CLUSTER=prod" >> "$GITHUB_ENV"
               ;;
             *)
               echo "Invalid environment: '$INPUT_ENVIRONMENT'" >&2
@@ -59,8 +63,27 @@ jobs:
           app_lower=$(echo "$INPUT_APPLICATION" | tr '[:upper:]' '[:lower:]')
           env_lower=$(echo "$INPUT_ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
           manifest_file="${app_lower}-${env_lower}.yaml"
-          echo "MANIFEST=${manifest_file}" >> $GITHUB_ENV
+          echo "MANIFEST=${manifest_file}" >> "$GITHUB_ENV"
 
+      - name: Resolve image tag
+        env:
+          INPUT_IMAGE_TAG: ${{ inputs.image_tag }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          if [ -n "$INPUT_IMAGE_TAG" ]; then
+            resolved_tag="$INPUT_IMAGE_TAG"
+          else
+            resolved_tag="$GITHUB_SHA"
+          fi
+
+          # Validate Docker tag characters
+          if [[ ! "$resolved_tag" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "Invalid image tag: $resolved_tag" >&2
+            exit 1
+          fi
+
+          echo "IMAGE_TAG=$resolved_tag" >> "$GITHUB_ENV"
+          echo "Using image tag: $resolved_tag"
 
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -73,6 +96,62 @@ jobs:
           workload_identity_provider: "projects/${{ secrets.GAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/gh-actions/providers/gh-actions"
           service_account: "gh-actions-dftjen@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com"
 
+      - name: Resolve and pin image digest from Artifact Registry
+        env:
+          PROJECT_ID: ${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}
+          REPOSITORY: dftjen
+          IMAGE_NAME: kostra-kontrollprogram-${{ inputs.application }}
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+        run: |
+          set -euo pipefail
+
+          image_path="europe-north1-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}"
+          tagged_ref="${image_path}:${IMAGE_TAG}"
+
+          echo "Looking up digest for ${tagged_ref}"
+
+          digest="$(
+            gcloud artifacts docker images list "${image_path}" \
+              --include-tags \
+              --format='csv[no-heading](version,tags)' \
+            | awk -F, -v t="${IMAGE_TAG}" '
+                {
+                  v=$1
+                  tags=$2
+                  n=split(tags, a, /;/)
+                  for (i=1; i<=n; i++) {
+                    gsub(/^ +| +$/, "", a[i])
+                    if (a[i] == t) {
+                      sub(/^sha256:/, "", v)
+                      print v
+                    }
+                  }
+                }
+              ' \
+            | sort -u
+          )"
+
+          if [ -z "${digest}" ]; then
+            echo "Tag not found in Artifact Registry: ${tagged_ref}" >&2
+            exit 1
+          fi
+
+          digest_count="$(printf '%s\n' "${digest}" | sed '/^$/d' | wc -l | tr -d ' ')"
+          if [ "${digest_count}" -ne 1 ]; then
+            echo "Expected exactly one digest for ${tagged_ref}, found ${digest_count}:" >&2
+            printf '%s\n' "${digest}" >&2
+            exit 1
+          fi
+
+          digest_value="$(printf '%s\n' "${digest}" | head -n1)"
+          pinned_ref="${image_path}@sha256:${digest_value}"
+
+          echo "IMAGE_DIGEST=sha256:${digest_value}" >> "$GITHUB_ENV"
+          echo "WORKLOAD_IMAGE_PINNED=${pinned_ref}" >> "$GITHUB_ENV"
+
+          echo "Resolved digest: sha256:${digest_value}"
+          echo "Will deploy pinned image: ${pinned_ref}"
+
       - name: Login to Artifact Registry
         uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
         with:
@@ -81,11 +160,11 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
 
 
-      - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{inputs.environment}}
+      - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{ inputs.environment }}
         uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}
           NAMESPACE: dftjen
-          WORKLOAD_IMAGE: europe-north1-docker.pkg.dev/${{ secrets.NAIS_MANAGEMENT_PROJECT_ID }}/dftjen/kostra-kontrollprogram-${{ inputs.application }}:latest
+          WORKLOAD_IMAGE: ${{ env.WORKLOAD_IMAGE_PINNED }}
           DEPLOY_SERVER: deploy.ssb.cloud.nais.io:443

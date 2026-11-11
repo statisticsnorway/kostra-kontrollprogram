@@ -32,7 +32,33 @@ env:
   SONAR_TARGETS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend_changed: ${{ steps.filter.outputs.backend }}
+      frontend_changed: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed paths
+        id: filter
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        with:
+          filters: |
+            backend:
+              - 'altinn-api/**'
+              - 'konsoll/**'
+              - 'kontroller/**'
+              - 'web/**'
+            frontend:
+              - 'web-frontend/**'
+
   build-with-gradle:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend_changed == 'true' || needs.changes.outputs.frontend_changed == 'true' }}
     permissions:
       contents: write
       id-token: write
@@ -73,17 +99,17 @@ jobs:
           distribution: 'temurin'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7.1.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '20.19.6'
 
-      - name: Setup Gradle # v5.0.0
-        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v5.0.0
         with:
           cache-read-only: false
 
       - name: Build frontend
-        run: cd web-frontend && npm install --ignore-scripts && npm ci --ignore-scripts && npm run build
+        run: cd web-frontend && npm ci --ignore-scripts && npm run build
 
       - name: Build with Gradle
         run: |
@@ -103,9 +129,9 @@ jobs:
 #        if: ${{ inputs.publish-kostra-barnevern }}
 #        run: ./gradlew -p kostra-barnevern -Pversion=${{github.ref_name}} publishMavenPublicationToMavenRepository --info
 
-      - name: Release # v2.4.1
+      - name: Release
         if : ${{ contains(inputs.gradle-targets, 'shadowJar') }}
-        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v2.4.1
         with:
           files: |
             ./konsoll/build/libs/kostra-kontrollprogram-${{github.ref_name}}-all.jar

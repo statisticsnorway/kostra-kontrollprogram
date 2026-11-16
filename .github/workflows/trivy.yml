@@ -1,0 +1,83 @@
+name: Trivy Security Scan
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/*.md"
+      - ".editorconfig"
+      - ".gitignore"
+      - ".gitattributes"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "**/*.md"
+      - ".editorconfig"
+      - ".gitignore"
+      - ".gitattributes"
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+concurrency:
+  # Scope concurrency per event type so that a push-to-main does not cancel
+  # an in-flight pull_request scan.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trivy-backend:
+    name: Trivy Vulnerability Scan – Backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Fail build on Critical/High Vulnerabilities (backend)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: 'fs'
+          format: 'table'
+          scan-ref: '.'
+          scanners: 'vuln,secret,misconfig'
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
+          exit-code: 1
+          skip-dirs: 'frontend,clients'
+
+  # The fs scan above does not see OS packages in the runtime image (e.g. libbrotli1 in distroless).
+  # Scan the pinned base image from each app Dockerfile so those CVEs show up here, not only in NAIS Console.
+  trivy-base-images:
+    name: Trivy Vulnerability Scan – Base image (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [altinn-api, web]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Read base image from Dockerfile
+        id: base
+        run: echo "image=$(grep -m1 '^FROM' ${{ matrix.app }}/Dockerfile | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Fail build on Critical/High Vulnerabilities (base image)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: 'image'
+          image-ref: ${{ steps.base.outputs.image }}
+          format: 'table'
+          scanners: 'vuln'
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
+          exit-code: 1

@@ -3,6 +3,9 @@ name: Build and deploy PR
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   detect-changes:
     if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}

@@ -1,5 +1,5 @@
 # Use Distroless Java 25 runtime, pinned by digest (includes libbrotli1 1.1.0-2+deb13u1, CVE-2026-111497)
-FROM gcr.io/distroless/java25-debian13:nonroot@sha256:8ac5525549d14b8ddd34562f9fc8e6ba4840c995363a1507b17cadf8bb7ab57e
+FROM gcr.io/distroless/java25-debian13:nonroot@sha256:573ef04c0f84aaf4b34e0cb6eeef91c25a83290334586c4c44ef41ecae13a25e
 
 # Set working directory
 WORKDIR /app

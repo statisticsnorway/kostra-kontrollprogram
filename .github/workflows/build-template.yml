@@ -32,36 +32,7 @@ env:
   SONAR_TARGETS: ${{ secrets.SONAR_TOKEN && format('jacocoTestReport sonar -Dsonar.token={0}', secrets.SONAR_TOKEN) || '' }}
 
 jobs:
-  detect-changes:
-    name:  Detect changes
-    runs-on: ubuntu-latest
-    outputs:
-      needs_deploy: ${{ steps.filter.outputs.build_changed }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed paths
-        id: filter
-        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
-        with:
-          filters: |
-            build_changed:
-              - 'altinn-api/**'
-              - 'konsoll/**'
-              - 'kontroller/**'
-              - 'web/**'
-              - 'web-frontend/**'
-              - '**/gradle/libs.versions.toml'
-              - '**/gradle/wrapper/gradle-wrapper.properties'
-              - '**/*.gradle*'
-              - '**/gradle.properties'
-
   build-with-gradle:
-    needs: detect-changes
-    if: ${{ needs.changes.outputs.needs_deploy == 'true' }}
     name: Build
     permissions:
       contents: write

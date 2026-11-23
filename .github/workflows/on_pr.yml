@@ -3,9 +3,6 @@ name: Build and deploy PR
 on:
   pull_request:
 
-permissions:
-  contents: write
-
 jobs:
   detect-changes:
     if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
@@ -13,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       needs_deploy: ${{ steps.filter.outputs.code_changed }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

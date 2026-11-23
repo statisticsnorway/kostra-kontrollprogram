@@ -103,7 +103,7 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
 
       - name: Deploy kostra-kontrollprogram-${{ inputs.application }} to ${{ inputs.environment }}
-        uses: nais/deploy/actions/deploy@6a9dcd6df697ec2d38edc78cadb0b9acd1232f50
+        uses: nais/deploy/actions/deploy@b1a9a40dae937091497f8f29c5ea5334cc1c0643
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: .nais/${{ env.MANIFEST }}

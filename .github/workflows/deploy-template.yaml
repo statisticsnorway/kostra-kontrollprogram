@@ -24,15 +24,14 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   deploy:
     name: Deploy ${{ inputs.application }} to ${{ inputs.environment }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Determine cluster based on environment

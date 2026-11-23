@@ -5,12 +5,12 @@ on:
     types:
       - prereleased
 
-permissions:
-  contents: write
-  id-token: write
 
 jobs:
   build:
+    permissions:
+      contents: write
+      id-token: write
     uses: ./.github/workflows/build-template.yml
     secrets:
       GAR_PROJECT_NUMBER: ${{ secrets.GAR_PROJECT_NUMBER }}

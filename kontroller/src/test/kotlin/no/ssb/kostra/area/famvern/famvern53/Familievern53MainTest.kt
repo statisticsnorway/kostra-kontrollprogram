@@ -2,8 +2,6 @@ package no.ssb.kostra.area.famvern.famvern53
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.program.extension.plus
@@ -14,8 +12,15 @@ import no.ssb.kostra.validation.rule.RuleTestData
 class Familievern53MainTest :
     BehaviorSpec({
         Given("Familievern53Main") {
-            forAll(
-                row(
+            data class Case(
+                val description: String,
+                val kotlinArguments: KotlinArguments,
+                val expectedNumberOfControls: Int,
+                val expectedReportEntriesSize: Int,
+            )
+
+            listOf(
+                Case(
                     "validating an invalid record string",
                     KotlinArguments(
                         skjema = SKJEMA,
@@ -26,7 +31,7 @@ class Familievern53MainTest :
                     1,
                     1,
                 ),
-                row(
+                Case(
                     "validating an empty record string",
                     KotlinArguments(
                         skjema = SKJEMA,
@@ -37,19 +42,19 @@ class Familievern53MainTest :
                     NUMBER_OF_VALIDATIONS,
                     12,
                 ),
-                row(
+                Case(
                     "validating a valid record string",
                     argumentsInTest(fylke = "03"),
                     NUMBER_OF_VALIDATIONS,
                     0,
                 ),
-                row(
+                Case(
                     "validating a valid record string with invalid data",
                     argumentsInTest(fylke = "XX"),
                     NUMBER_OF_VALIDATIONS,
                     3,
                 ),
-            ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
+            ).forEach { (description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize) ->
                 When(description) {
                     val validationResult = Familievern53Main(kotlinArguments).validate()
 

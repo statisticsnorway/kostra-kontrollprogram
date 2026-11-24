@@ -2,8 +2,6 @@ package no.ssb.kostra.area.regnskap.kostra
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
@@ -16,10 +14,17 @@ import no.ssb.kostra.validation.rule.RuleTestData
 class KirkeKostraMainTest :
     BehaviorSpec({
         Given("KirkeKostraMain") {
-            forAll(
+            data class Case(
+                val description: String,
+                val kotlinArguments: KotlinArguments,
+                val expectedNumberOfControls: Int,
+                val expectedReportEntriesSize: Int,
+            )
+
+            listOf(
                 *validSkjemaTyper
                     .map { skjema ->
-                        row(
+                        Case(
                             "skjema $skjema -> validating an invalid record string",
                             KotlinArguments(
                                 skjema = skjema,
@@ -35,7 +40,7 @@ class KirkeKostraMainTest :
                     "0F" to 5,
                     "0G" to 5,
                 ).map { (skjema, expectedNumberOfControls) ->
-                    row(
+                    Case(
                         "skjema $skjema -> validating an empty record string",
                         KotlinArguments(
                             skjema = skjema,
@@ -51,7 +56,7 @@ class KirkeKostraMainTest :
                     "0F" to 0,
                     "0G" to 5,
                 ).map { (skjema, expectedNumberOfControls) ->
-                    row(
+                    Case(
                         "skjema $skjema -> validating a valid record string",
                         argumentsInTest(argumentsSkjema = skjema, recordSkjema = skjema),
                         NUMBER_OF_VALIDATIONS,
@@ -60,14 +65,14 @@ class KirkeKostraMainTest :
                 }.toTypedArray(),
                 *validSkjemaTyper
                     .map { skjema ->
-                        row(
+                        Case(
                             "skjema $skjema -> validating a valid record string with invalid data",
                             argumentsInTest(recordVersion = "XXXX"),
                             NUMBER_OF_VALIDATIONS,
                             1,
                         )
                     }.toTypedArray(),
-            ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
+            ).forEach { (description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize) ->
                 When(description) {
                     val validationResult = KirkeKostraMain(kotlinArguments).validate()
 

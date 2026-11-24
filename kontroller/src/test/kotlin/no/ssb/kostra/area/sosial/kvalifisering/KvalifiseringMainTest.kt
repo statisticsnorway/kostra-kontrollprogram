@@ -2,8 +2,6 @@ package no.ssb.kostra.area.sosial.kvalifisering
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.area.sosial.SosialConstants.MONTH_PREFIX
@@ -21,32 +19,39 @@ import java.time.Year
 class KvalifiseringMainTest :
     BehaviorSpec({
         Given("KvalifiseringMain") {
-            forAll(
-                row(
+            data class Case(
+                val description: String,
+                val inputFileContent: String,
+                val expectedNumberOfControls: Int,
+                val expectedReportEntriesSize: Int,
+            )
+
+            listOf(
+                Case(
                     "validating an invalid record string",
                     " ".repeat(KvalifiseringFieldDefinitions.fieldLength + 10),
                     2,
                     1,
                 ),
-                row(
+                Case(
                     "validating an empty record string",
                     " ".repeat(KvalifiseringFieldDefinitions.fieldLength),
                     34,
                     14,
                 ),
-                row(
+                Case(
                     "validating a valid record string",
                     recordStringInTest("24"),
                     34,
                     5,
                 ),
-                row(
+                Case(
                     "validating a valid record string with invalid data",
                     recordStringInTest("XX"),
                     34,
                     5,
                 ),
-            ) { description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
+            ).forEach { (description, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize) ->
                 When(description) {
                     val validationResult =
                         KvalifiseringMain(

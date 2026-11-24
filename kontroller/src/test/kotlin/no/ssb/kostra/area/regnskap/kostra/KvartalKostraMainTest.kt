@@ -2,8 +2,6 @@ package no.ssb.kostra.area.regnskap.kostra
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapConstants
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
@@ -16,7 +14,14 @@ import no.ssb.kostra.validation.rule.RuleTestData
 class KvartalKostraMainTest :
     BehaviorSpec({
         Given("KvartalKostraMain") {
-            forAll(
+            data class Case(
+                val description: String,
+                val kotlinArguments: KotlinArguments,
+                val expectedNumberOfControls: Int,
+                val expectedReportEntriesSize: Int,
+            )
+
+            listOf(
                 *regions
                     .flatMap { region ->
                         mapOf(
@@ -25,7 +30,7 @@ class KvartalKostraMainTest :
                             "0CK1" to 5,
                             "0DK1" to 5,
                         ).map { (skjema, expectedNumberOfControls) ->
-                            row(
+                            Case(
                                 "skjema = $skjema, region = $region -> validating an empty record string",
                                 KotlinArguments(
                                     skjema = skjema,
@@ -38,7 +43,7 @@ class KvartalKostraMainTest :
                             )
                         }.plus(
                             validSkjemaTyper.map { skjema ->
-                                row(
+                                Case(
                                     "skjema = $skjema, region = $region -> validating an invalid record string",
                                     KotlinArguments(
                                         skjema = skjema,
@@ -57,7 +62,7 @@ class KvartalKostraMainTest :
                                 "0CK1" to 2,
                                 "0DK1" to 2,
                             ).map { (skjema, expectedNumberOfControls) ->
-                                row(
+                                Case(
                                     "skjema = $skjema, region = $region -> validating a valid record string",
                                     argumentsInTest(
                                         argumentsSkjema = skjema,
@@ -76,7 +81,7 @@ class KvartalKostraMainTest :
                                 "0CK1" to 3,
                                 "0DK1" to 3,
                             ).map { (skjema, expectedNumberOfControls) ->
-                                row(
+                                Case(
                                     "skjema = $skjema, region = $region -> validating a valid record string with invalid data",
                                     argumentsInTest(
                                         argumentsSkjema = skjema,
@@ -91,7 +96,7 @@ class KvartalKostraMainTest :
                             },
                         )
                     }.toTypedArray(),
-            ) { description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize ->
+            ).forEach { (description, kotlinArguments, expectedNumberOfControls, expectedReportEntriesSize) ->
                 When(description) {
                     val validationResult = KvartalKostraMain(kotlinArguments).validate()
 

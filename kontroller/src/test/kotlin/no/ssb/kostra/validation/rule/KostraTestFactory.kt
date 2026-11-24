@@ -3,8 +3,6 @@ package no.ssb.kostra.validation.rule
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.behaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -12,6 +10,7 @@ import no.ssb.kostra.program.KotlinArguments
 import no.ssb.kostra.validation.report.Severity
 import no.ssb.kostra.validation.rule.RuleTestData.argumentsInTest
 import no.ssb.kostra.validation.rule.TestUtils.verifyValidationResult
+import kotlin.collections.toTypedArray
 
 private const val NO_ERROR = "N/A"
 
@@ -92,12 +91,21 @@ object KostraTestFactory {
         expectedContextId: String? = null,
         vararg forAllRows: ForAllRowItem<T>
     ) = behaviorSpec {
+        data class Case(
+            val description: String,
+            val context: T,
+            val expectedErrors: List<Pair<String, String>>,
+            val arguments: KotlinArguments = argumentsInTest,
+            val expectedSeverity: Severity? = null,
+            val expectedSize: Int? = null
+        )
+
         Given("context") {
-            forAll(
+            listOf(
                 *forAllRows.map { (description, context, expectedErrors, arguments, expectedSeverity, expectedSize) ->
-                    row(description, context, expectedErrors, arguments, expectedSeverity, expectedSize)
+                    Case(description, context, expectedErrors, arguments, expectedSeverity, expectedSize)
                 }.toTypedArray()
-            ) { description, context, expectedErrors, arguments, innerExpectedSeverity, expectedSize ->
+            ).forEach { (description, context, expectedErrors, arguments, innerExpectedSeverity, expectedSize) ->
                 When(description) {
                     val validationReportEntries = sut.validate(context, arguments)
 

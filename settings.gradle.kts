@@ -10,9 +10,6 @@ project(":kostra-kontrollprogram").projectDir = file("konsoll")
 include("kostra-kontroller")
 project(":kostra-kontroller").projectDir = file("kontroller")
 
-include("kostra-barnevern")
-project(":kostra-barnevern").projectDir = file("kostra-barnevern")
-
 include("kostra-kontrollprogram-web")
 project(":kostra-kontrollprogram-web").projectDir = file("web")
 

@@ -2,20 +2,17 @@ package no.ssb.kostra.program
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import java.time.Year
 
 class KotlinArgumentsTest : BehaviorSpec({
 
-
     Given("KotlinArguments") {
 
-        forAll(
-            row("empty skjema", ""),
-            row("blank skjema", "  "),
-        ) { description, skjema ->
+        listOf(
+            Case("empty skjema", ""),
+            Case("blank skjema", "  "),
+        ).forEach { (description, skjema) ->
             When("skjema is $description") {
                 val thrown = shouldThrow<IllegalArgumentException> {
                     KotlinArguments(
@@ -31,10 +28,10 @@ class KotlinArgumentsTest : BehaviorSpec({
             }
         }
 
-        forAll(
-            row("empty aargang", ""),
-            row("blank aargang", "  "),
-        ) { description, aargang ->
+        listOf(
+            Case("empty aargang", ""),
+            Case("blank aargang", "  "),
+        ).forEach { (description, aargang) ->
             When("aargang is $description") {
                 val thrown = shouldThrow<IllegalArgumentException> {
                     KotlinArguments(
@@ -50,10 +47,10 @@ class KotlinArgumentsTest : BehaviorSpec({
             }
         }
 
-        forAll(
-            row("empty region", ""),
-            row("blank region", "  "),
-        ) { description, region ->
+        listOf(
+            Case("empty region", ""),
+            Case("blank region", "  "),
+        ).forEach { (description, region) ->
             When("region is $description") {
                 val thrown = shouldThrow<IllegalArgumentException> {
                     KotlinArguments(
@@ -72,12 +69,12 @@ class KotlinArgumentsTest : BehaviorSpec({
 
     Given("KotlinArguments#getInputContentAsStringList()") {
 
-        forAll(
-            row("empty content", "", listOf()),
-            row("content with new line", "a\nb", listOf("a", "b")),
-            row("content with carriage return and new line", "a\r\nb", listOf("a", "b")),
-            row("content with carriage return and new line plus blank line at end", "a\r\nb\n", listOf("a", "b")),
-        ) { description, content, expectedList ->
+        listOf(
+            CaseWithExpected("empty content", "", listOf()),
+            CaseWithExpected("content with new line", "a\nb", listOf("a", "b")),
+            CaseWithExpected("content with carriage return and new line", "a\r\nb", listOf("a", "b")),
+            CaseWithExpected("content with carriage return and new line plus blank line at end", "a\r\nb\n", listOf("a", "b")),
+        ).forEach { (description, content, expectedList) ->
             When(description) {
                 val kotlinArguments = KotlinArguments(
                     skjema = "15",
@@ -94,4 +91,18 @@ class KotlinArgumentsTest : BehaviorSpec({
             }
         }
     }
-})
+}){
+    companion object{
+        data class Case(
+            val description: String,
+            val argument: String,
+        )
+
+        data class CaseWithExpected(
+            val description: String,
+            val argument: String,
+            val expected: List<String>,
+        )
+
+    }
+}

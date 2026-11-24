@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.program.extension.buildFieldDefinitions
@@ -57,15 +55,21 @@ class FileLoaderTest :
         }
 
         Given("a set of FileDescription") {
-            forAll(
-                row("11F Økonomisk sosialhjelp", "11F_2025", 338),
-                row("11CF Kvalifiseringsstønad", "11CF_2025", 152),
-                row("52AF Familievernsaker, klientrapportering", "52AF_2024", 151),
-                row("52BF Gruppeskjema for familievernet", "52BF_2024", 88),
-                row("53F Utadrettet virksomhet i familieverntjenesten", "53F_2024", 61),
-                row("55F Meklingssaker i familieverntjenesten", "55F_2024", 986),
-                row("Alle regnskapsskjema", "Regnskap", 48),
-            ) { description, schema, recordLength ->
+            data class Case(
+                val description: String,
+                val schema: String,
+                val recordLength: Int,
+            )
+
+            listOf(
+                Case("11F Økonomisk sosialhjelp", "11F_2025", 338),
+                Case("11CF Kvalifiseringsstønad", "11CF_2025", 152),
+                Case("52AF Familievernsaker, klientrapportering", "52AF_2024", 151),
+                Case("52BF Gruppeskjema for familievernet", "52BF_2024", 88),
+                Case("53F Utadrettet virksomhet i familieverntjenesten", "53F_2024", 61),
+                Case("55F Meklingssaker i familieverntjenesten", "55F_2024", 986),
+                Case("Alle regnskapsskjema", "Regnskap", 48),
+            ).forEach { (description, schema, recordLength) ->
                 When("comparing consecutive FieldDefinitions for $description") {
                     val sut =
                         FileLoader

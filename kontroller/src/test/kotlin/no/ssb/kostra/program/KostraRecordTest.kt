@@ -2,8 +2,6 @@ package no.ssb.kostra.program
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.program.DataType.DATE_TYPE
 import no.ssb.kostra.program.DataType.STRING_TYPE
@@ -11,317 +9,373 @@ import no.ssb.kostra.program.extension.fieldAs
 import no.ssb.kostra.program.extension.plus
 import java.time.LocalDate
 
-class KostraRecordTest : BehaviorSpec({
+class KostraRecordTest :
+    BehaviorSpec({
 
-    Given("That data is supplied by default values") {
-        val field = "field"
-        val expectedMap = emptyMap<String, String>()
+        Given("That data is supplied by default values") {
+            val field = "field"
+            val expectedMap = emptyMap<String, String>()
 
-        When("data is based on an empty record string") {
-            val kostraRecord = KostraRecord()
+            When("data is based on an empty record string") {
+                val kostraRecord = KostraRecord()
 
-            Then("valuesByName shouldBe '$expectedMap'") {
-                kostraRecord.valuesByName shouldBe expectedMap
-            }
-
-            Then("fieldAsString(\"$field\") should throw NoSuchFieldException") {
-                shouldThrow<NoSuchFieldException> {
-                    kostraRecord.fieldAsString(field)
+                Then("valuesByName shouldBe '$expectedMap'") {
+                    kostraRecord.valuesByName shouldBe expectedMap
                 }
-            }
 
-            Then("fieldAsTrimmedString(\"$field\") should throw NoSuchFieldException") {
-                shouldThrow<NoSuchFieldException> {
-                    kostraRecord.fieldAsTrimmedString(field)
-                }
-            }
-
-            Then("fieldAsInt(\"$field\") should throw NoSuchFieldException") {
-                shouldThrow<NoSuchFieldException> {
-                    kostraRecord.fieldAsInt(field)
-                }
-            }
-
-            Then("fieldAsIntOrDefault(\"$field\") should throw NoSuchFieldException") {
-                shouldThrow<NoSuchFieldException> {
-                    kostraRecord.fieldAsIntOrDefault(field)
-                }
-            }
-        }
-    }
-
-    Given("that dataType is string") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(
-                name = "Field",
-                dataType = STRING_TYPE,
-                from = 1,
-                size = 3
-            )
-        ).associateBy { it.name }
-
-        forAll(
-            row(
-                "no data",
-                mapOf("Field" to " ".repeat(3)),
-                "   ",
-                "",
-                null
-            ),
-            row(
-                "all fields filled",
-                mapOf("Field" to "AB "),
-                "AB ",
-                "AB",
-                "AB"
-            ),
-            row(
-                "field with 0",
-                mapOf("Field" to "0 "),
-                "0 ",
-                "0",
-                null
-            )
-        ) { description, valuesByName, string, trimmedString, trimmedToNull ->
-            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
-
-            When("$description, fieldAsString") {
-                kostraRecord.fieldAsString("Field").shouldBe(string)
-            }
-
-            And("$description, fieldAsTrimmedString") {
-                kostraRecord.fieldAsTrimmedString("Field").shouldBe(trimmedString)
-            }
-
-            And("$description, get") {
-                kostraRecord["Field"].shouldBe(string)
-            }
-
-            And("$description, fieldAs<String>") {
-                kostraRecord.fieldAs<String>("Field").shouldBe(trimmedString)
-            }
-
-            And("$description, fieldAs<String?>") {
-                kostraRecord.fieldAs<String?>("Field").shouldBe(trimmedToNull)
-            }
-        }
-    }
-
-    Given("that dataType is integer") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(
-                name = "Field",
-                from = 1,
-                size = 3
-            )
-        ).associateBy { it.name }
-
-        forAll(
-            row(
-                "no data",
-                mapOf("Field" to " ".repeat(3)),
-                null, 0
-            ),
-            row(
-                "all fields filled",
-                mapOf("Field" to "  1"),
-                1, 1
-            )
-        ) { description, valuesByName, intValue, defaultIntValue ->
-            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
-
-            When("$description, fieldAsInt") {
-                kostraRecord.fieldAsInt("Field").shouldBe(intValue)
-            }
-
-            And("$description, fieldAsIntOrDefault") {
-                kostraRecord.fieldAsIntOrDefault("Field") shouldBe defaultIntValue
-            }
-
-            And("$description, fieldAs<Int?>") {
-                kostraRecord.fieldAs<Int?>("Field").shouldBe(intValue)
-            }
-
-            And("$description, fieldAs<Int>") {
-                kostraRecord.fieldAs<Int>("Field").shouldBe(defaultIntValue)
-            }
-        }
-    }
-
-    Given("that dataType is date and using default datePattern of ddMMyyyy") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(
-                name = "Field",
-                dataType = DATE_TYPE,
-                from = 1,
-                size = 3,
-                datePattern = DATE8_PATTERN
-            )
-        ).associateBy { it.name }
-
-        forAll(
-            row(
-                "no data",
-                mapOf("Field" to " ".repeat(8)),
-                null
-            ),
-            row(
-                "all fields filled",
-                mapOf("Field" to "24122023"),
-                LocalDate.of(2023, 12, 24)
-            )
-        ) { description, valuesByName, dateValue ->
-            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
-
-            When("$description fieldAsLocalDate") {
-                kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
-            }
-
-            And("$description, fieldAs<LocalDate?>") {
-                kostraRecord.fieldAs<LocalDate?>("Field").shouldBe(dateValue)
-            }
-
-            And("$description, fieldAs<LocalDate>") {
-                if (dateValue == null) {
-                    shouldThrow<NullPointerException> {
-                        kostraRecord.fieldAs<LocalDate>("Field")
+                Then("fieldAsString(\"$field\") should throw NoSuchFieldException") {
+                    shouldThrow<NoSuchFieldException> {
+                        kostraRecord.fieldAsString(field)
                     }
-                } else {
-                    kostraRecord.fieldAs<LocalDate>("Field").shouldBe(dateValue)
+                }
+
+                Then("fieldAsTrimmedString(\"$field\") should throw NoSuchFieldException") {
+                    shouldThrow<NoSuchFieldException> {
+                        kostraRecord.fieldAsTrimmedString(field)
+                    }
+                }
+
+                Then("fieldAsInt(\"$field\") should throw NoSuchFieldException") {
+                    shouldThrow<NoSuchFieldException> {
+                        kostraRecord.fieldAsInt(field)
+                    }
+                }
+
+                Then("fieldAsIntOrDefault(\"$field\") should throw NoSuchFieldException") {
+                    shouldThrow<NoSuchFieldException> {
+                        kostraRecord.fieldAsIntOrDefault(field)
+                    }
                 }
             }
         }
-    }
 
-    Given("that dataType is date and using wrong datePattern of dd-MM-yyyy") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(
-                name = "Field",
-                dataType = DATE_TYPE,
-                from = 1,
-                size = 3,
-                datePattern = "dd-MM-yyyy"
+        Given("that dataType is string") {
+            data class Case(
+                val description: String,
+                val valuesByName: Map<String, String>,
+                val string: String,
+                val trimmedString: String,
+                val trimmedToNull: String?,
             )
-        ).associateBy { it.name }
 
-        forAll(
-            row(
-                "no data",
-                mapOf("Field" to " ".repeat(8)),
-                null
-            ),
-            row(
-                "all fields filled",
-                mapOf("Field" to "24122023"),
-                LocalDate.of(2023, 12, 24)
+            val fieldDefinitionsByName =
+                listOf(
+                    FieldDefinition(
+                        name = "Field",
+                        dataType = STRING_TYPE,
+                        from = 1,
+                        size = 3,
+                    ),
+                ).associateBy { it.name }
+
+            listOf(
+                Case(
+                    "no data",
+                    mapOf("Field" to " ".repeat(3)),
+                    "   ",
+                    "",
+                    null,
+                ),
+                Case(
+                    "all fields filled",
+                    mapOf("Field" to "AB "),
+                    "AB ",
+                    "AB",
+                    "AB",
+                ),
+                Case(
+                    "field with 0",
+                    mapOf("Field" to "0 "),
+                    "0 ",
+                    "0",
+                    null,
+                ),
+            ).forEach { (description, valuesByName, string, trimmedString, trimmedToNull) ->
+                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+
+                When("$description, fieldAsString") {
+                    kostraRecord.fieldAsString("Field").shouldBe(string)
+                }
+
+                And("$description, fieldAsTrimmedString") {
+                    kostraRecord.fieldAsTrimmedString("Field").shouldBe(trimmedString)
+                }
+
+                And("$description, get") {
+                    kostraRecord["Field"].shouldBe(string)
+                }
+
+                And("$description, fieldAs<String>") {
+                    kostraRecord.fieldAs<String>("Field").shouldBe(trimmedString)
+                }
+
+                And("$description, fieldAs<String?>") {
+                    kostraRecord.fieldAs<String?>("Field").shouldBe(trimmedToNull)
+                }
+            }
+        }
+
+        Given("that dataType is integer") {
+            data class Case(
+                val description: String,
+                val valuesByName: Map<String, String>,
+                val intValue: Int?,
+                val defaultIntValue: Int,
             )
-        ) { description, valuesByName, dateValue ->
-            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-            When(description) {
-                shouldThrow<IndexOutOfBoundsException> {
+            val fieldDefinitionsByName =
+                listOf(
+                    FieldDefinition(
+                        name = "Field",
+                        from = 1,
+                        size = 3,
+                    ),
+                ).associateBy { it.name }
+
+            listOf(
+                Case(
+                    "no data",
+                    mapOf("Field" to " ".repeat(3)),
+                    null,
+                    0,
+                ),
+                Case(
+                    "all fields filled",
+                    mapOf("Field" to "  1"),
+                    1,
+                    1,
+                ),
+            ).forEach { (description, valuesByName, intValue, defaultIntValue) ->
+                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+
+                When("$description, fieldAsInt") {
+                    kostraRecord.fieldAsInt("Field").shouldBe(intValue)
+                }
+
+                And("$description, fieldAsIntOrDefault") {
+                    kostraRecord.fieldAsIntOrDefault("Field") shouldBe defaultIntValue
+                }
+
+                And("$description, fieldAs<Int?>") {
+                    kostraRecord.fieldAs<Int?>("Field").shouldBe(intValue)
+                }
+
+                And("$description, fieldAs<Int>") {
+                    kostraRecord.fieldAs<Int>("Field").shouldBe(defaultIntValue)
+                }
+            }
+        }
+
+        Given("that dataType is date and using default datePattern of ddMMyyyy") {
+            data class Case(
+                val description: String,
+                val valuesByName: Map<String, String>,
+                val dateValue: LocalDate?,
+            )
+
+            val fieldDefinitionsByName =
+                listOf(
+                    FieldDefinition(
+                        name = "Field",
+                        dataType = DATE_TYPE,
+                        from = 1,
+                        size = 3,
+                        datePattern = DATE8_PATTERN,
+                    ),
+                ).associateBy { it.name }
+
+            listOf(
+                Case(
+                    "no data",
+                    mapOf("Field" to " ".repeat(8)),
+                    null,
+                ),
+                Case(
+                    "all fields filled",
+                    mapOf("Field" to "24122023"),
+                    LocalDate.of(2023, 12, 24),
+                ),
+            ).forEach { (description, valuesByName, dateValue) ->
+                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+
+                When("$description fieldAsLocalDate") {
                     kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
                 }
+
+                And("$description, fieldAs<LocalDate?>") {
+                    kostraRecord.fieldAs<LocalDate?>("Field").shouldBe(dateValue)
+                }
+
+                And("$description, fieldAs<LocalDate>") {
+                    if (dateValue == null) {
+                        shouldThrow<NullPointerException> {
+                            kostraRecord.fieldAs<LocalDate>("Field")
+                        }
+                    } else {
+                        kostraRecord.fieldAs<LocalDate>("Field").shouldBe(dateValue)
+                    }
+                }
             }
         }
-    }
 
-    Given("that fieldDefinitionsByName is set, but is missing a particular field") {
-        val fieldDefinitionsByName = listOf(
-            FieldDefinition(
-                name = "Field",
-                dataType = STRING_TYPE,
-                from = 1,
-                size = 3
+        Given("that dataType is date and using wrong datePattern of dd-MM-yyyy") {
+            data class Case(
+                val description: String,
+                val valuesByName: Map<String, String>,
+                val dateValue: LocalDate?,
             )
-        ).associateBy { it.name }
 
-        val valuesByName = mapOf("Field" to " ".repeat(8))
+            val fieldDefinitionsByName =
+                listOf(
+                    FieldDefinition(
+                        name = "Field",
+                        dataType = DATE_TYPE,
+                        from = 1,
+                        size = 3,
+                        datePattern = "dd-MM-yyyy",
+                    ),
+                ).associateBy { it.name }
 
-        When("Field is missing") {
-            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+            listOf(
+                Case(
+                    "no data",
+                    mapOf("Field" to " ".repeat(8)),
+                    null,
+                ),
+                Case(
+                    "all fields filled",
+                    mapOf("Field" to "24122023"),
+                    LocalDate.of(2023, 12, 24),
+                ),
+            ).forEach { (description, valuesByName, dateValue) ->
+                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
 
-            Then("getFieldDefinitionByName should throw NoSuchFieldException") {
-                shouldThrow<NoSuchFieldException> {
-                    kostraRecord.fieldDefinition("MissingField")
+                When(description) {
+                    shouldThrow<IndexOutOfBoundsException> {
+                        kostraRecord.fieldAsLocalDate("Field") shouldBe dateValue
+                    }
                 }
             }
         }
-    }
 
-    Given("testing of overridden function equals()") {
-        val kostraRecord1a = KostraRecord()
-        val kostraRecord1b = KostraRecord()
-        val kostraRecord2 = kostraRecord1a.plus("Added" to "be different")
+        Given("that fieldDefinitionsByName is set, but is missing a particular field") {
+            val fieldDefinitionsByName =
+                listOf(
+                    FieldDefinition(
+                        name = "Field",
+                        dataType = STRING_TYPE,
+                        from = 1,
+                        size = 3,
+                    ),
+                ).associateBy { it.name }
 
-        forAll(
-            row("instances are equal", kostraRecord1a, kostraRecord1a, true),
-            row("instances are context equal", kostraRecord1a, kostraRecord1b, true),
-            row("other instance is null", kostraRecord1a, null, false),
-            row("other is of different type", kostraRecord1a, "Hello World", false),
-            row("instances have different lineNumber", kostraRecord1a, kostraRecord1a.copy(lineNumber = 2), false),
-            row("instances have different valuesByName", kostraRecord1a, kostraRecord2, false),
-        ) { description, thisInstance, otherInstance, expectedResult ->
-            When(description) {
-                val testResult = thisInstance == otherInstance
+            val valuesByName = mapOf("Field" to " ".repeat(8))
 
-                Then("result should be as expected") {
-                    testResult shouldBe expectedResult
+            When("Field is missing") {
+                val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitionsByName)
+
+                Then("getFieldDefinitionByName should throw NoSuchFieldException") {
+                    shouldThrow<NoSuchFieldException> {
+                        kostraRecord.fieldDefinition("MissingField")
+                    }
                 }
             }
         }
-    }
 
-    Given("testing of overridden function toString()") {
-        val fieldDefinitions = listOf(
-            FieldDefinition(
-                name = "Field123",
-                dataType = STRING_TYPE,
-                from = 1,
-                size = 3,
-                datePattern = ""
+        Given("testing of overridden function equals()") {
+            data class Case(
+                val description: String,
+                val thisInstance: KostraRecord,
+                val otherInstance: Any?,
+                val expectedResult: Boolean,
             )
-        )
-        val valuesByName = mapOf("Field123" to "123")
-        val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
-        val result =
-            "{Field123=123}\n{Field123=FieldDefinition(name=Field123, description=null, from=1, size=3, dataType=STRING_TYPE, mandatory=false, datePattern=, codelistSource=null, codeList=[])}"
-        forAll(
-            row("happy path scenario is created", kostraRecord, result),
-        ) { description, thisInstance, expectedResult ->
-            When(description) {
-                val testResult = thisInstance.toString()
 
-                Then("result should be as expected") {
-                    testResult shouldBe expectedResult
+            val kostraRecord1a = KostraRecord()
+            val kostraRecord1b = KostraRecord()
+            val kostraRecord2 = kostraRecord1a.plus("Added" to "be different")
+
+            listOf(
+                Case("instances are equal", kostraRecord1a, kostraRecord1a, true),
+                Case("instances are context equal", kostraRecord1a, kostraRecord1b, true),
+                Case("other instance is null", kostraRecord1a, null, false),
+                Case("other is of different type", kostraRecord1a, "Hello World", false),
+                Case("instances have different lineNumber", kostraRecord1a, kostraRecord1a.copy(lineNumber = 2), false),
+                Case("instances have different valuesByName", kostraRecord1a, kostraRecord2, false),
+            ).forEach { (description, thisInstance, otherInstance, expectedResult) ->
+                When(description) {
+                    val testResult = thisInstance == otherInstance
+
+                    Then("result should be as expected") {
+                        testResult shouldBe expectedResult
+                    }
                 }
             }
         }
-    }
 
-    Given("testing of overridden function hashCode()") {
-        val fieldDefinitions = listOf(
-            FieldDefinition(
-                name = "Field123",
-                dataType = STRING_TYPE,
-                from = 1,
-                size = 3,
-                datePattern = ""
+        Given("testing of overridden function toString()") {
+            data class Case(
+                val description: String,
+                val thisInstance: KostraRecord,
+                val expectedResult: String,
             )
-        )
-        val valuesByName = mapOf("Field123" to "123")
-        val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
-        val result = -864379669
-        forAll(
-            row("happy path scenario is created", kostraRecord, result),
-        ) { description, thisInstance, expectedResult ->
-            When(description) {
-                val testResult = thisInstance.hashCode()
 
-                Then("result should be as expected") {
-                    testResult shouldBe expectedResult
+            val fieldDefinitions =
+                listOf(
+                    FieldDefinition(
+                        name = "Field123",
+                        dataType = STRING_TYPE,
+                        from = 1,
+                        size = 3,
+                        datePattern = "",
+                    ),
+                )
+            val valuesByName = mapOf("Field123" to "123")
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
+            val result =
+                "{Field123=123}\n{Field123=FieldDefinition(name=Field123, description=null, from=1, size=3, dataType=STRING_TYPE, mandatory=false, datePattern=, codelistSource=null, codeList=[])}"
+            listOf(
+                Case("happy path scenario is created", kostraRecord, result),
+            ).forEach { (description, thisInstance, expectedResult) ->
+                When(description) {
+                    val testResult = thisInstance.toString()
+
+                    Then("result should be as expected") {
+                        testResult shouldBe expectedResult
+                    }
                 }
             }
         }
-    }
-})
+
+        Given("testing of overridden function hashCode()") {
+            data class Case(
+                val description: String,
+                val thisInstance: KostraRecord,
+                val expectedResult: Int,
+            )
+
+            val fieldDefinitions =
+                listOf(
+                    FieldDefinition(
+                        name = "Field123",
+                        dataType = STRING_TYPE,
+                        from = 1,
+                        size = 3,
+                        datePattern = "",
+                    ),
+                )
+            val valuesByName = mapOf("Field123" to "123")
+            val kostraRecord = KostraRecord(0, valuesByName, fieldDefinitions.associateBy { it.name })
+            val result = -864379669
+            listOf(
+                Case("happy path scenario is created", kostraRecord, result),
+            ).forEach { (description, thisInstance, expectedResult) ->
+                When(description) {
+                    val testResult = thisInstance.hashCode()
+
+                    Then("result should be as expected") {
+                        testResult shouldBe expectedResult
+                    }
+                }
+            }
+        }
+    })

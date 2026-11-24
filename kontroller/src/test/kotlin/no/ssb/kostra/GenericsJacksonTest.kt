@@ -7,64 +7,67 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 
 data class MyNestedClass(
-    val someValue: Int
+    val someValue: Int,
 )
 
 data class MyGenericClass<T : Any>(
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
-    val innerValue: T
+    val innerValue: T,
 )
 
-class GenericsJacksonTest : BehaviorSpec({
+class GenericsJacksonTest :
+    BehaviorSpec({
 
-    Given("serialize/deserialize generic class") {
+        Given("serialize/deserialize generic class") {
+            data class Case(
+                val description: String,
+                val currentValue: Any,
+                val jsonValue: String,
+            )
 
-        forAll(
-            row("Int", 42, "42"),
-            row("Double", 0.0, "0.0"),
-            row("String", "Hello world", "\"Hello world\""),
-            row("LocalDate", dateInTest, "[\"java.time.LocalDate\",\"2023-04-22\"]"),
-            row("Long", 9223372036854775807L, "[\"java.lang.Long\",9223372036854775807]"),
-            row("Float", 2.7182817f, "[\"java.lang.Float\",2.7182817]"),
-            row("MyNestedClass", MyNestedClass(42), INNER_JSON),
-        ) { description, currentValue, jsonValue ->
+            listOf(
+                Case("Int", 42, "42"),
+                Case("Double", 0.0, "0.0"),
+                Case("String", "Hello world", "\"Hello world\""),
+                Case("LocalDate", dateInTest, "[\"java.time.LocalDate\",\"2023-04-22\"]"),
+                Case("Long", 9223372036854775807L, "[\"java.lang.Long\",9223372036854775807]"),
+                Case("Float", 2.7182817f, "[\"java.lang.Float\",2.7182817]"),
+                Case("MyNestedClass", MyNestedClass(42), INNER_JSON),
+            ).forEach { (description, currentValue, jsonValue) ->
 
-            When("serialize $description") {
-                val json = objectMapper.writeValueAsString(MyGenericClass(currentValue))
+                When("serialize $description") {
+                    val json = objectMapper.writeValueAsString(MyGenericClass(currentValue))
 
-                Then("result should be as expected") {
-                    json shouldBe createJson(jsonValue)
+                    Then("result should be as expected") {
+                        json shouldBe createJson(jsonValue)
+                    }
                 }
-            }
 
-            When("deserialize $description") {
-                val deserialized = objectMapper.readValue<MyGenericClass<Any>>(createJson(jsonValue))
+                When("deserialize $description") {
+                    val deserialized = objectMapper.readValue<MyGenericClass<Any>>(createJson(jsonValue))
 
-                Then("result should be as expected") {
-                    deserialized shouldBe MyGenericClass(innerValue = currentValue)
+                    Then("result should be as expected") {
+                        deserialized shouldBe MyGenericClass(innerValue = currentValue)
+                    }
                 }
             }
         }
-    }
-}) {
+    }) {
     companion object {
-
         private val dateInTest = LocalDate.of(2023, 4, 22)
 
-        private val objectMapper = jacksonObjectMapper()
-            .disable(DeserializationFeature.ACCEPT_FLOAT_AS_INT)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .registerModule(JavaTimeModule())
-
+        private val objectMapper =
+            jacksonObjectMapper()
+                .disable(DeserializationFeature.ACCEPT_FLOAT_AS_INT)
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .registerModule(JavaTimeModule())
 
         private const val INNER_JSON = "{\"@class\":\"no.ssb.kostra.MyNestedClass\",\"someValue\":42}"
 
-        private fun createJson(innerValue: String): String = "{\"innerValue\":${innerValue}}"
+        private fun createJson(innerValue: String): String = "{\"innerValue\":$innerValue}"
     }
 }

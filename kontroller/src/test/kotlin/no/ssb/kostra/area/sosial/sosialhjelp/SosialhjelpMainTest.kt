@@ -4,8 +4,6 @@ package no.ssb.kostra.area.sosial.sosialhjelp
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import no.ssb.kostra.area.sosial.SosialConstants.MONTH_PREFIX
@@ -23,43 +21,51 @@ import java.time.Year
 class SosialhjelpMainTest :
     BehaviorSpec({
         Given("SosialhjelpMain") {
-            forAll(
-                row(
+            data class Case(
+                val description: String,
+                val hasAttachment: Boolean,
+                val inputFileContent: String,
+                val expectedNumberOfControls: Int,
+                val expectedReportEntriesSize: Int,
+            )
+
+            listOf(
+                Case(
                     "validating an invalid record string",
                     true,
                     " ".repeat(SosialhjelpFieldDefinitions.fieldLength + 10),
                     2,
                     1,
                 ),
-                row(
+                Case(
                     "validating an empty record string",
                     true,
                     " ".repeat(SosialhjelpFieldDefinitions.fieldLength),
                     48,
                     38,
                 ),
-                row(
+                Case(
                     "validating a valid record string",
                     true,
                     recordStringInTest("24"),
                     48,
                     7,
                 ),
-                row(
+                Case(
                     "validating a valid record string with invalid data",
                     true,
                     recordStringInTest("XX"),
                     48,
                     7,
                 ),
-                row(
+                Case(
                     "validating an 'empty' attachment containing only 1 space",
                     false,
                     " ",
                     2,
                     1,
                 ),
-            ) { description, hasAttachment, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize ->
+            ).forEach { (description, hasAttachment, inputFileContent, expectedNumberOfControls, expectedReportEntriesSize) ->
                 When(description) {
                     val validationResult =
                         SosialhjelpMain(

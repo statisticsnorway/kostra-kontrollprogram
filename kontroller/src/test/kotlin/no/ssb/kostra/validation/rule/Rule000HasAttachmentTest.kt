@@ -1,8 +1,6 @@
 package no.ssb.kostra.validation.rule
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -35,26 +33,33 @@ class Rule000HasAttachmentTest : BehaviorSpec({
     }
 
     Given("invalid context") {
-        forAll(
-            row(
+        data class Case(
+            val description: String,
+            val hasAttachment: Boolean,
+            val inputFileContent: String,
+            val expectedSeverity: Severity
+        )
+
+        listOf(
+            Case(
                 "Has attachment is true, inputFileContent is missing (is only a space)",
                 true,
                 " ",
                 Severity.FATAL,
             ),
-            row(
+            Case(
                 "Has attachment is false, inputFileContent is present (other than a space)",
                 false,
                 "FAIL",
                 Severity.FATAL,
             ),
-            row(
+            Case(
                 "Has attachment is false, inputFileContent is missing (is only a space)",
                 false,
                 " ",
                 Severity.OK,
             ),
-        ) { description, hasAttachment, inputFileContent, expectedSeverity ->
+        ).forEach { (description, hasAttachment, inputFileContent, expectedSeverity) ->
             When(description) {
                 val sut = Rule000HasAttachment()
                 val result = sut.validate(

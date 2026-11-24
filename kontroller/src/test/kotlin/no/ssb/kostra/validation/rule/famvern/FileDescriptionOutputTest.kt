@@ -6,10 +6,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import no.ssb.kostra.area.regnskap.RegnskapFieldDefinitions
+import no.ssb.kostra.program.FieldDefinitions
 import no.ssb.kostra.program.FileDescription
 import java.io.File
 import java.io.IOException
@@ -18,10 +17,15 @@ import java.io.IOException
 class FileDescriptionOutputTest : BehaviorSpec({
 
     Given("Schema ID and field definitions object") {
+        data class Case(
+            val title: String,
+            val id: String,
+            val fieldDefinitionObject: FieldDefinitions
+        )
 
-        forAll(
-            row("Tittel Regnskap", "Regnskap", RegnskapFieldDefinitions),
-        ) { title, id, fieldDefinitionObject ->
+        listOf(
+            Case("Tittel Regnskap", "Regnskap", RegnskapFieldDefinitions),
+        ).forEach { (title, id, fieldDefinitionObject) ->
             When(id) {
                 val factory = YAMLFactory()
                     .enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)

@@ -1,8 +1,6 @@
 package no.ssb.kostra.program
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import picocli.CommandLine
@@ -14,15 +12,15 @@ import java.time.Year
 class KostraKontrollprogramCommandSpec : BehaviorSpec({
 
     Given("kostra-kontrollprogram-konsoll") {
-        forAll(
-            row(
+        listOf(
+            Case(
                 "invocation with no parameters",
                 arrayOf(" "),
                 " ",
                 2,
                 ""
             ),
-            row(
+            Case(
                 "invocation with non-existing schema",
                 arrayOf(
                     "--schema", "SS",
@@ -33,7 +31,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 2,
                 "Ukjent skjema"
             ),
-            row(
+            Case(
                 "invocation with blank schema",
                 arrayOf(
                     "--schema", "  ",
@@ -44,7 +42,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 1,
                 ""
             ),
-            row(
+            Case(
                 "invocation with valid schema, but hasAttachment = 0",
                 arrayOf(
                     "--schema", "0G",
@@ -56,7 +54,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 2,
                 "Recordlengde har funnet 1 kritiske feil som hindrer innsending"
             ),
-            row(
+            Case(
                 "invocation with valid schema, hasAttachment = 1",
                 arrayOf(
                     "--schema", "0G",
@@ -68,7 +66,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 2,
                 "Oppsummering pr. kontroll"
             ),
-            row(
+            Case(
                 "Invocation with output format as JSON",
                 arrayOf(
                     "--schema", "0G",
@@ -81,7 +79,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 2,
                 "Fant ugyldig aargang '2020'"
             ),
-            row(
+            Case(
                 "Invocation of output format with UTF-8 charset",
                 arrayOf(
                     "--schema", "0G",
@@ -95,7 +93,7 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
                 String("Årgang".toByteArray(), StandardCharsets.UTF_8)
             ),
 
-            ) { description, args, input, expectedExitCode, expectedOutput ->
+            ).forEach { (description, args, input, expectedExitCode, expectedOutput) ->
             When(description) {
                 val originalSystemOut = System.out
                 val originalSystemIn = System.`in`
@@ -131,5 +129,13 @@ class KostraKontrollprogramCommandSpec : BehaviorSpec({
             0G2020 300500976989732         510  123      263
             0G2020 300500976989732         510           263
         """.trimIndent()
+
+        data class Case(
+            val description: String,
+            val args: Array<String>,
+            val input: String,
+            val expectedExitCode: Int,
+            val expectedOutput: String
+        )
     }
 }

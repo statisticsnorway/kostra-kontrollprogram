@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Web
         id: docker-build-web
-        uses: nais/docker-build-push@ceabe305c64640175f133b7e59af6666b0a3c46c
+        uses: nais/docker-build-push@bfbdd06e303c63a7d697da6f391ffc6b81f60db2
         with:
           team: dftjen
           docker_context: ./web
@@ -68,7 +68,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Web to TEST
-        uses: nais/deploy/actions/deploy@b1a9a40dae937091497f8f29c5ea5334cc1c0643
+        uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7
         env:
           CLUSTER: test
           RESOURCE: .nais/web-test.yaml
@@ -79,7 +79,7 @@ jobs:
 
       - name: Build Docker image Kostra Kontrollprogram Altinn API
         id: docker-build-altinn-api
-        uses: nais/docker-build-push@ceabe305c64640175f133b7e59af6666b0a3c46c
+        uses: nais/docker-build-push@bfbdd06e303c63a7d697da6f391ffc6b81f60db2
         with:
           team: dftjen
           docker_context: ./altinn-api
@@ -90,7 +90,7 @@ jobs:
             latest
 
       - name: Deploy Kostra Kontrollprogram Altinn API to TEST
-        uses: nais/deploy/actions/deploy@b1a9a40dae937091497f8f29c5ea5334cc1c0643
+        uses: nais/deploy/actions/deploy@427e29c94d911626a023a76f402f6dcae1f840b7
         env:
           CLUSTER: test
           RESOURCE: .nais/altinn-api-test.yaml
